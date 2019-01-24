@@ -246,6 +246,22 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adworddialogRef;
   delgaldialogRef;
   cacheavoider = '';
+
+  frm_public_search_cap = '';
+  frm_adword_cap = '';
+  frm_loc_amen_cap = '';
+  frm_lang_cap = '';
+  frm_additional_cap = '';
+  frm_gallery_cap = '';
+  frm_social_cap = '';
+  frm_profile_name_cap = Messages.FRM_LEVEL_PROFILE_NAME_CAP;
+  frm_loc_cap = Messages.FRM_LEVEL_LOC_MSG;
+  frm_working_hr_cap = Messages.FRM_LEVEL_WORKING_MSG;
+  frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
+  frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
+  frm_verified_cap = Messages.FRM_LEVEL_VERI_MSG;
+  
+
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
@@ -275,6 +291,15 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.getGalleryImages();
     this.getProviderLocations();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'bprofile' };
+
+    this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]',this.customer_label);
+    this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]',this.customer_label);
+    this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]',this.customer_label);
+    this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]',this.customer_label);
+    this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]',this.customer_label);
+    this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]',this.customer_label);
+    this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]',this.customer_label);
+
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {

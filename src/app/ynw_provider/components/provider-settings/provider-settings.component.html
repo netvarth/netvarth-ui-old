@@ -15,6 +15,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_profile_search_cap}}</li>
                                 <li>
                                     <span class="ttle">
                                         {{public_search_cap}} <span class="sts" [class.active]="search_status">{{search_statusstr}}</span>
@@ -26,6 +27,7 @@
                                 <li>
                                     <span class="lnk" (click)="redirecTo('bprofile')">{{profile_cap}}</span>
                                 </li>
+                                <li class="form-level-settings">{{frm_profile_cap}}</li>
                             </ul>
                         </div>
                     </div>
@@ -38,6 +40,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_waitlist_cap}}</li>
                                 <li>
                                     <span class="ttle">
                                         {{accept_online_cap}} {{checkin_label |capitalizeFirst}} <span class="sts"
@@ -74,6 +77,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_license_cap}}</li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('license')">{{license_cap}} &amp;
                                         {{invoice_cap}}</span>
@@ -93,6 +97,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_pay_cap}}</li>
                                 <li>
                                     <span class="ttle">
                                         {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
@@ -121,6 +126,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_bill_cap}}</li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('items')">{{items_cap}} ({{item_count}})</span>
                                 </li>
@@ -132,6 +138,7 @@
                                     <!-- <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}} ({{coupon_count}})</span> -->
                                     <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
                                 </li>
+                                <li class="form-level-settings">{{frm_coupon_cap}}</li>
                             </ul>
                         </div>
                     </div>
@@ -144,6 +151,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_mis_cap}}</li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('nonworking')">{{non_work_cap}}</span>
                                 </li>

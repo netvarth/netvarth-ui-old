@@ -52,8 +52,7 @@
 
                             <div class="ctrl">
                                 <div class="ct-l">
-                                    <h2>{{public_search_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('public-search', $event)"></i></div>
+                                    <h2>{{public_search_cap}} 
                                         <!--<span matTooltip="{{searchquestiontooltip}}"  data-icon="F"></span>-->
                                     </h2>
 
@@ -69,7 +68,13 @@
                                 </div>
                             </div>
                             <div class="ctrl">
-                                <ng-container *ngIf="normal_search_active">
+                                <div>
+                                    <span class="form-level-settings">{{frm_public_search_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('public-search', $event)">Learn More</a>
+                                           
+                                    </span>
+                                    
+                                </div>
+                                <!-- <ng-container *ngIf="normal_search_active">
                                     <div class="ct-fl">
                                         <span class="success">{{profile_visible_cap}} {{customer_label}}s
                                             {{online_jaldee_cap}}</span>
@@ -79,7 +84,7 @@
                                     <div class="ct-fl">
                                         <span class="error"><i data-icon="m"></i>{{offline_cap}} {{customer_label}}s</span>
                                     </div>
-                                </ng-container>
+                                </ng-container> -->
                             </div>
                         </div>
                         <!-- <div class="adwds" *ngIf="!normal_adworkds_active && adwordsmaxcount == 0"> -->
@@ -89,8 +94,15 @@
                                 <span (click)="buyAdwords()" class="cs-btn bt3">{{buy_adowrds_btn}}</span>
                         </div>*ngIf="normal_adworkds_active && adwordsmaxcount > 0" -->
                         <div class="adwds w-dta">
-                            <h2>{{adowrds_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div><span
-                                    (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
+                            <h2>{{adowrds_cap}} 
+                                <!-- <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div><span -->
+                                    <span (click)="addAdwords()" class="addbt cs-btn bt8" *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
+                                    <div>
+                                            <span class="form-level-settings">{{frm_adword_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('adwords', $event)">Learn More</a>
+                                                   
+                                            </span>
+                                            
+                                        </div>
                             <div class="ad-tble" *ngIf="adwordsmaxcount > 0">
                                 <!-- <div class="ad-l" *ngIf="adwords_maxremaining>0">{{you_have_cap}} {{adword_list.length}} {{create_adword_cap}} {{adwords_maxremaining}} {{more_cap}}.</div>
                                 <div class="ad-l" *ngIf="adwords_maxremaining == 0">{{you_have_cap}} {{adword_list.length}} {{more_adword_cap}} <a routerLink="/provider/settings/license"><strong>{{license_cap}}</strong></a></div> -->
@@ -117,12 +129,21 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{profile_summary_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('basic-information', $event)"></i></div>
+                                        {{profile_summary_cap}} 
+                                        
+                                        <!-- <div class="helprighticon"><i data-icon="B" id="customer-help"
+                                                (click)="learnmore_clicked('basic-information', $event)"></i></div> -->
                                     </mat-panel-title>
+                                    
                                 </mat-expansion-panel-header>
 
                                 <div class="cd-t">
+                                        <div>
+                                                <span class="form-level-settings">{{frm_profile_name_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('basic-information', $event)">Learn More</a>
+                                                       
+                                                </span>
+                                                
+                                            </div>
                                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                                         <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                     </div>
@@ -192,6 +213,10 @@
                                             <div class="title">
                                                 <h3>{{location_cap}}</h3>
                                             </div>
+                                            <div>
+                                                <span class="form-level-settings">{{frm_loc_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('location', $event)">Learn More</a>    
+                                                </span>
+                                                </div>
                                             <div class="copy">
                                                 <div class="cop-l" *ngIf="loc_list.length>0">
                                                     <h4>{{base_loc.place | capitalizeFirst}}</h4>
@@ -219,6 +244,10 @@
 
                                             <h5>{{loc_amenities_cap}} <span (click)="editLocation('badge')" class="editbt"
                                                     *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation"></span></h5>
+                                                    <div>
+                                                            <span class="form-level-settings">{{frm_loc_amen_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('location-amenities', $event)">Learn More</a>    
+                                                            </span>
+                                                            </div> 
                                             <ng-container *ngIf="normal_locationamenities_show==3 && bProfile.baseLocation">
                                                 <div class="copy">
                                                     <ul class="amt-list">
@@ -248,6 +277,10 @@
                                             <div class="title">
                                                 <h3>{{working_hours_cap}}</h3>
                                             </div>
+                                            <div>
+                                                    <span class="form-level-settings">{{frm_working_hr_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('working-hours', $event)">Learn More</a>    
+                                                    </span>
+                                                    </div>
                                             <div class="copy wrk-hrs">
                                                 <ul class="whrs" *ngIf="display_schedule.length > 0">
                                                     <li *ngFor="let schedule of display_schedule">
@@ -282,10 +315,15 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{privacy_sett_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('privacy-settings', $event)"></i></div>
+                                        {{privacy_sett_cap}} 
+                                                  
                                     </mat-panel-title>
+                                    
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_privacy_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn More</a>    
+                                        </span>
+                                        </div>   
 
                                 <div class="no-dta" *ngIf="normal_privacy_settings_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
@@ -409,10 +447,13 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{special_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('specialization', $event)"></i></div>
+                                        {{special_cap}} 
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_specialization_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('specialization', $event)">Learn More</a>    
+                                        </span>
+                                        </div>  
                                 <div class="no-dta" *ngIf="normal_specilization_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -435,10 +476,14 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{lang_known_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('languages-known', $event)"></i></div>
+                                        {{lang_known_cap}} 
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_lang_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('languages-known', $event)">Learn More</a>    
+                                        </span>
+                                        </div>
+
                                 <div class="no-dta" *ngIf="normal_language_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -640,10 +685,13 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{additional_info_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('additional-info', $event)"></i></div>
+                                        {{additional_info_cap}} 
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_additional_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn More</a>    
+                                        </span>
+                                        </div>
                                 <div class="no-dta" *ngIf="normal_domainfield_show==1 || normal_subdomainfield_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -1002,10 +1050,13 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        Your verified level <div class="helprighticon"><i data-icon="B" id="verified-levels"
-                                                (click)="learnmore_clicked('verified-levels', $event)"></i></div>
+                                        Your verified level 
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_verified_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('verified-levels', $event)">Learn More</a>    
+                                        </span>
+                                        </div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -1026,10 +1077,13 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{gallery_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('photo-gallery', $event)"></i></div>
+                                        {{gallery_cap}} 
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_gallery_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('photo-gallery', $event)">Learn More</a>    
+                                        </span>
+                                        </div>
 
                                 <div class="no-dta" *ngIf="normal_gallery_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
@@ -1099,10 +1153,13 @@
                             <mat-expansion-panel [expanded]="true">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                        {{social_media_cap}} <div class="helprighticon"><i data-icon="B" id="customer-help"
-                                                (click)="learnmore_clicked('your-social-media', $event)"></i></div>
+                                        {{social_media_cap}} 
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
+                                <div>
+                                        <span class="form-level-settings">{{frm_social_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('your-social-media', $event)">Learn More</a>    
+                                        </span>
+                                        </div>
                                 <div class="no-dta" *ngIf="normal_socialmedia_show==1">
                                     <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
                                 </div>
@@ -1143,7 +1200,7 @@
                                 <div class="cd-b">
                                     <!-- *ngIf="normal_socialmedia_show==2" -->
                                     <ul class="info-lst" *ngIf="showaddsocialmedia">
-                                        <li>{{add_social_media}}.</li>
+                                        <!-- <li>{{add_social_media}}.</li> -->
                                     </ul>
                                 </div>
                             </mat-expansion-panel>

@@ -40,6 +40,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   coupons_cap = Messages.COUPONS_CAP;
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
+  
+  frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
+  // frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG;
+  frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG;
+  frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
+  frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
+  frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
+  frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
+  frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
+
   waitlist_status = false;
   waitlist_statusstr = 'Off';
   search_status = false;
@@ -72,12 +82,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   checkin_label = '';
   tooltipcls = projectConstants.TOOLTIP_CLS;
   subscription: Subscription;
+  customer_label = '';
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
     private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
@@ -85,6 +97,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   paymentTooltip = '';
   accountActiveMsg = '';
   billposTooltip = '';
+  frm_profile_cap = '';
+  
 
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
@@ -93,6 +107,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
    // this.accountActiveMsg = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
+    this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]',this.customer_label);
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();

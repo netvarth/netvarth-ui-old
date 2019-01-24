@@ -39,6 +39,8 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   checkin_label = '';
   prevcheckstatus;
   loc_list: any = [];
+
+  customer_label = '';
   breadcrumbs = [
     {
       title: 'Settings',
@@ -58,7 +60,13 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
+
+  
+  frm_set_ser_cap = '';
+  frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
+  frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
 
   ngOnInit() {
     this.getBusinessProfile();
@@ -67,6 +75,9 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.getQueuesCount();
     this.getServiceCount();
     this.getBusinessConfiguration();
+
+    
+    this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]',this.customer_label);
 
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
