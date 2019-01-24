@@ -241,4 +241,24 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
 
         });
   }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.shared_functions.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': mod };
+    return moreOptions;
+  }
 }

@@ -10,6 +10,8 @@
                 <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid"
                     (selectedIndexChange)="selectedIndexChange($event)">
                     <mat-tab label="Online Payment Settings">
+                            <span class="form-level-settings">{{payment_set_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('payment-settings', $event)">Learn More</a></span>
+
                         <mat-radio-group class="" [(ngModel)]="optJaldeeAccount">
                             <div class="lbr mt-3  col-sm-12 col-md-12 col-lg-12">
                                 <div class="rw">
@@ -236,6 +238,8 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Tax Settings">
+                            <span class="form-level-settings">{{tax_st_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('tax-settings', $event)">Learn More</a></span>
+
                         <div class="outermost">
                             <div class="taxouter">
 

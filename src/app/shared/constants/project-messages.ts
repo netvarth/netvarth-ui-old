@@ -1225,6 +1225,14 @@ export const Messages = {
   'FRM_LEVEL_SETT_LOC_MSG' : 'Add the location details of your business presence here. Manage it as and when required.',
   'FRM_LEVEL_SETT_SERV_MSG' : 'Enlist all the services that you provide to the [customer]s. You can always add new services here.',
   'FRM_LEVEL_SETT_WORKING_HR_MSG' : 'Setup and Manage multiple working hours of your business here.',
+
+
+  //form-level-provider-payment-settings
+  'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payment to settle your transactions on the line. Jaldee account can be used for fast and seamless transaction process. A [customer] can also use other payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
+  'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the “Tax Applicable” toggle switch to apply taxes for your services.',
+  // '' : '',
+  // '' : '',
+
   // '' : '',
   // '' : '',
   // '' : '',

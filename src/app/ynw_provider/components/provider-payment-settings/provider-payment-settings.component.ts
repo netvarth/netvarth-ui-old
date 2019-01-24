@@ -103,6 +103,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     maxcnt11 = 11;
     activeLicPkg;
     breadcrumb_moreoptions: any = [];
+    customer_label = '';
+    payment_set_cap = '';
+    tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
+
     breadcrumbs = [
         {
             title: 'Settings',
@@ -124,11 +128,13 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private shared_functions: SharedFunctions,
         private router: Router,
         private activated_route: ActivatedRoute
+        
     ) {
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(params => {
             this.tabid = (params.id) ? params.id : 0;
         });
-    }
+    } 
     ngOnInit() {
         this.resetApi();
         this.getPaymentSettings(2);
@@ -136,6 +142,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getProviderProfile();
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings' };
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.licPkgOrAddonId;
+        this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]',this.customer_label);
     }
     /**
      * Function to call the Learn More Page
@@ -153,7 +160,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      */
     getMode(mod) {
         let moreOptions = {};
-        moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+        moreOptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings', 'subKey': mod };
         return moreOptions;
     }
      /**
@@ -626,4 +633,5 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
     }
+    
 }
