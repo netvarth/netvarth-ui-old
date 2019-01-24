@@ -53,7 +53,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   tax_cap = Messages.TAX_CAP;
   amount_paid_cap = Messages.AMNT_PAID_CAP;
   amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
-  nettotal_cap =  Messages.NETTOTAL;
+  nettotal_cap = Messages.NETTOTAL;
   apply_cap = Messages.APPLY_CAP;
   value_cap = Messages.VALUE_CAP;
   back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
@@ -86,6 +86,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applycoupon_cap = Messages.APPLYCOUPON;
   notesfor_cap = Messages.NOTESFOR;
   privatenote_cap = Messages.PROVIDER_NOTE_CAP;
+  max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
   @ViewChild('itemservicesearch') item_service_search;
   @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
@@ -156,6 +157,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   uuid;
   jCouponsList: any = [];
   makPaydialogRef;
+  qty = '';
   breadcrumbs = [
     {
       title: Messages.DASHBOARD_TITLE,
@@ -217,6 +219,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.bill_load_complete = 0;
         });
   }
+
   getJaldeeActiveCoupons() {
     this.jCouponsList = [];
     let couponList: any = [];
@@ -609,7 +612,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.getPrePaymentDetails();
           console.log(this.bill_data);
           this.hideWorkBench();
-          this.actiontype  = null;
+          this.actiontype = null;
           this.curSelItm.typ = 'Services';
           this.curSelItm.qty = 1;
           resolve();
@@ -619,6 +622,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             reject(error);
           });
     });
+  }
+
+  isvalid() {
+    if (this.curSelItm.qty > this.max_num_limit) {
+      let numString = this.curSelItm.qty.toString();
+      if (numString.length > 6) {
+        numString = numString.substr(0, numString.length - 1);
+        this.curSelItm.qty = parseInt(numString);
+      }
+    }
   }
   /**
    * Add/Adjust Service/Item to the Bill
@@ -642,6 +655,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
       }
+
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;

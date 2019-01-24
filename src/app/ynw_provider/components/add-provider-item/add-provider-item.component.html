@@ -77,7 +77,9 @@
 
         <div class="form-group">
             <mat-form-field>
-                <textarea matInput class="form-control" id="shortDesc" placeholder="{{detailed_dec_cap}} *" formControlName="displayDesc" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"></textarea>
+                <textarea matInput class="form-control" id="shortDesc" placeholder="{{detailed_dec_cap}} *"
+                    formControlName="displayDesc" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                    maxlength="500"></textarea>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
@@ -91,7 +93,8 @@
         <div class="form-group">
             <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
             <mat-form-field>
-                <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="{{price_cap}} *" formControlName="price"
+                <input matInput type="number" min="0" max="100000" (keyup)="isvalid(curSelItm.price)" class="form-control number-ip-sm"
+                    [(ngModel)]="curSelItm.price" [ngModelOptions]="{standalone: true}" id="price" placeholder="{{price_cap}} *"
                     autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',

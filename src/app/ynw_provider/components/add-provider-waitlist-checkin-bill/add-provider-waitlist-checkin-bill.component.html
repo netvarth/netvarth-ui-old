@@ -73,7 +73,7 @@
 																<div class="spl col-md-8 col-sm-8 col-lg-8 no-padding">
 																	<div class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding" *ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
 																		<mat-form-field class="example-full-width"> <input type="text" #itemservicesearch aria-label="Number"
-																			 matInput [formControl]="itemServiceSearch" [matAutocomplete]="auto" >
+																			 matInput [formControl]="itemServiceSearch" [matAutocomplete]="auto">
 																			<mat-autocomplete #auto="matAutocomplete">
 																				<ng-container *ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
 																					<ng-container *ngFor="let group of ItemServiceGroupOptions | async">
@@ -93,18 +93,20 @@
 																		</mat-form-field>
 																	</div>
 																	<div class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding" *ngIf="(actiontype=='adjustService' || actiontype=='adjustItem')">
-																		<div class="rightalign pad-rt-10" >{{selectedItemService}}</div>
+																		<div class="rightalign pad-rt-10">{{selectedItemService}}</div>
 																	</div>
 																	<div class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
 																		<span class="label">{{qty_cap}}</span> <span class="number">
-																			<mat-form-field class="example-full-width"> <input type="number" matInput #itemserviceqty aria-label="Number"
+																			<mat-form-field class="example-full-width">
+																				<input type="number" min="0" max="100000" matInput #itemserviceqty aria-label="Number" (keyup)="isvalid(curSelItm.qty)"
 																				 matInput value="1" size="3" [(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)">
 																			</mat-form-field>
 																		</span>
 																	</div>
 																</div>
 																<div class="spr col-md-4 col-sm-4">
-																	<button class="cs-btn bt1" (click)="addService_Item()">{{(actiontype=='adjustService' || actiontype=='adjustItem')?'Change': add_btn_cap}}</button>
+																	<button class="cs-btn bt1" (click)="addService_Item()">{{(actiontype=='adjustService' ||
+																		actiontype=='adjustItem')?'Change': add_btn_cap}}</button>
 																	<button class="cs-btn bt2" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 																</div>
 															</div>
@@ -226,7 +228,8 @@
 																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="itemdiscounts.length > 0">
 																				<div class="item selectbox1">
 																					<mat-form-field>
-																						<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}" placeholder="{{select_discount_cap}}">
+																						<mat-select [(ngModel)]="bill_data.service[i].serviceDiscount" [ngModelOptions]="{standalone: true}"
+																						 placeholder="{{select_discount_cap}}">
 																							<mat-option *ngFor="let discount of itemdiscounts; let i = index" [value]="discount">
 																								{{ discount.name }} </mat-option>
 																						</mat-select>
@@ -302,7 +305,8 @@
 																			<div class="item selectbox col-md-8 col-sm-8 col-lg-8 no-padding" *ngIf="discounts.length > 0">
 																				<div class="item selectbox1">
 																					<mat-form-field>
-																						<mat-select [(ngModel)]="bill_data.items[i].itemDiscount" [ngModelOptions]="{standalone: true}" placeholder="{{select_discount_cap}}">
+																						<mat-select [(ngModel)]="bill_data.items[i].itemDiscount" [ngModelOptions]="{standalone: true}"
+																						 placeholder="{{select_discount_cap}}">
 																							<mat-option *ngFor="let discount of discounts; let i = index" [value]="discount">
 																								{{ discount.name }} </mat-option>
 																						</mat-select>
@@ -353,8 +357,8 @@
 																	<span>{{changeqty_cap}}</span>
 																</button>
 																<button mat-menu-item (click)="removeItem(item.itemId, item.quantity)">
-																		<span>{{removeitem_cap}}</span>
-																	</button>
+																	<span>{{removeitem_cap}}</span>
+																</button>
 															</mat-menu>
 														</div>
 													</div>

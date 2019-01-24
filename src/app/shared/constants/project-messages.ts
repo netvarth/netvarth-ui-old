@@ -10,7 +10,7 @@ export const Messages = {
   'PHONE_VERIFIED': 'Your phone number has been verified',
   'MEMBER_CREATED': 'Member added successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
-  'LICENSE_UPGRADED': 'License Package upgraded successfully',
+  'LICENSE_UPGRADED': 'License successfully upgraded to [package]',
   'LICENSE_TOOLTIP': 'This tooltip can be managed from the messages file',
   'ADDON_ADDED': 'Addon Package added successfully',
   'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',

@@ -24,7 +24,6 @@ export class AddProviderItemComponent implements OnInit {
   taxable_cap = Messages.TAXABLE_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -44,6 +43,7 @@ export class AddProviderItemComponent implements OnInit {
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxCharslong = projectConstants.VALIDATOR_MAX500;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
+  max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
@@ -57,10 +57,22 @@ export class AddProviderItemComponent implements OnInit {
        // console.log(data);
      }
      taxDetails: any = [];
+     curSelItm = { price: 0 };
   ngOnInit() {
      this.createForm();
      this.getTaxpercentage();
   }
+ 
+  isvalid(number) {
+    if (number > this.max_num_limit) {
+      let numString = number.toString();
+      if (numString.length > 6) {
+        numString = numString.substr(0, numString.length - 1);
+        this.curSelItm.price = parseInt(numString);
+      }
+    }
+  }
+  
   createForm() {
     if (this.data.type === 'add') {
       this.amForm = this.fb.group({
@@ -87,6 +99,7 @@ export class AddProviderItemComponent implements OnInit {
       this.updateForm();
     }
   }
+  
   setDescFocus() {
     this.isfocused = true;
     this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
@@ -184,11 +197,11 @@ export class AddProviderItemComponent implements OnInit {
   }
 
   addItem(post_data) {
+    this.resetApiErrors();
     this.provider_services.addItem(post_data)
         .subscribe(
           data => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
-            this.api_error = null;
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');           
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
@@ -198,9 +211,10 @@ export class AddProviderItemComponent implements OnInit {
           }
     );
   }
-  editItem(post_data) {
-    post_data.itemId =  this.data.item.itemId;
-    this.provider_services.editItem(post_data)
+  editItem(post_itemdata) {
+    this.resetApiErrors();
+    post_itemdata.itemId =  this.data.item.itemId;
+    this.provider_services.editItem(post_itemdata)
         .subscribe(
           data => {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
@@ -245,6 +259,7 @@ export class AddProviderItemComponent implements OnInit {
 
   handleTaxablechange() {
     // this.holdtaxable = !this.holdtaxable;
+    this.resetApiErrors();
       if (this.taxpercentage <= 0) {
         this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
         setTimeout(() => {

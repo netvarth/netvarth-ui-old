@@ -70,7 +70,7 @@ export class UpgradeLicenseComponent implements OnInit {
           loginuserdata['new_lic'] = this.selected_pac.displayName;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
           this.sharedfunctionObj.setitemonLocalStorage('ynw-user', loginuserdata);
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('LICENSE_UPGRADED');
+          this.api_success = Messages.LICENSE_UPGRADED.replace('[package]', this.selected_pac.pkgName);
           const pdata = { 'ttype': 'upgradelicence' };
           this.sharedfunctionObj.sendMessage(pdata);
           setTimeout(() => {
