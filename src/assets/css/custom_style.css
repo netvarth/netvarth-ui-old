@@ -1092,3 +1092,14 @@ Overriding mat input style
   padding-left:20px !important;
 }
 .picker-form-group input {height: 40px;}
+
+@media only screen and (max-width: 767px){
+.content .c-outer .c-body .srlst .top-sect .tp-r .other-jcs,
+.content .c-outer .c-body .srlst .top-sect .tp-r .first-time-jc {
+    margin-left: 0;}
+}
+@media (max-width: 991px) and (min-width: 768px){
+.content .c-outer .c-body .srlst .top-sect .tp-r .other-jcs,
+.content .c-outer .c-body .srlst .top-sect .tp-r .first-time-jc {
+    margin-left: 0;}
+}
