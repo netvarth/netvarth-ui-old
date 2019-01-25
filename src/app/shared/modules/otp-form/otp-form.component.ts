@@ -44,7 +44,6 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   cronHandle: Subscription;
   refreshTime = 30;
   otp_mobile = null;
-  changed = null;
 
   @Input() submitdata;
   @Input() type;
@@ -161,22 +160,14 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setMessage(type, data) {
-
     if (type === 'email') {
       const email = (data) ? data : 'your email';
-      this.message = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
       this.otp_mobile = Messages.OTP_SENT_EMAIL.replace('[your_email]', email);
     } else if (type === 'mobile') {
-      const phonenumber = (data) ? data : 'your mobile number';
-      this.message = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
-      this.changed = this.submitdata.userProfile.primaryMobileNo.value;
-      this.changed = new Array(this.submitdata.userProfile.primaryMobileNo.length - 4).join('*') + this.submitdata.userProfile.primaryMobileNo.substr(this.submitdata.userProfile.primaryMobileNo.length - 4, 6);
-      console.log(this.changed);
-      this.otp_mobile = Messages.OTP_SENT_LABEL.replace('[your_mobile]', this.changed);
+      const phonenumber = new Array(this.submitdata.userProfile.primaryMobileNo.length - 4).join('*') + this.submitdata.userProfile.primaryMobileNo.substr(this.submitdata.userProfile.primaryMobileNo.length - 4);
+      this.otp_mobile = Messages.OTP_SENT_LABEL.replace('[your_mobile]', phonenumber);
     }
-
   }
-
 
   doshowOTPEmailContainer() {
     this.showOTPContainer = false;
@@ -186,6 +177,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     this.doResetApiErrors();
     this.showOTPEmailContainer = false;
     this.showOTPContainer = true;
+    this.resetCounterVal = 0;
+    this.otp_mobile = null;
   }
-
 }

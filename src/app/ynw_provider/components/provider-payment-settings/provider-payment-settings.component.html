@@ -21,8 +21,8 @@
                                     </div>
                                 </div>
                                 <div class="rw">
-                                    <div class="form-group" [ngClass]="{'disabledradio' :activeLicPkg<3}">
-                                        <mat-radio-button [disabled]="activeLicPkg<3" [value]="'disable'"></mat-radio-button>
+                                    <div class="form-group" [ngClass]="{'disabledradio' :disableMyAcc}">
+                                        <mat-radio-button [disabled]="disableMyAcc" [value]="'disable'"></mat-radio-button>
                                         <label for="">{{my_own_account_cap}}</label>
                                         <div *ngIf="optJaldeeAccount!='enable'">
                                             <div class="outermost">

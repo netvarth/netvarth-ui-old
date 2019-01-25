@@ -102,6 +102,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     maxcnt10 = 10;
     maxcnt11 = 11;
     activeLicPkg;
+    disableMyAcc = false;
     breadcrumb_moreoptions: any = [];
     customer_label = '';
     payment_set_cap = '';
@@ -128,21 +129,24 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private shared_functions: SharedFunctions,
         private router: Router,
         private activated_route: ActivatedRoute
-        
+
     ) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(params => {
             this.tabid = (params.id) ? params.id : 0;
         });
-    } 
+    }
     ngOnInit() {
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings' };
-        this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.licPkgOrAddonId;
-        this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]',this.customer_label);
+        this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.name;
+        if (this.activeLicPkg == 'Basic' || this.activeLicPkg == 'Bronze' || this.activeLicPkg == 'Silver') {
+            this.disableMyAcc = true;
+        }
+        this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
     }
     /**
      * Function to call the Learn More Page
@@ -163,10 +167,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         moreOptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings', 'subKey': mod };
         return moreOptions;
     }
-     /**
-     * Clear all fields
-     * @param code field name
-     */
+    /**
+    * Clear all fields
+    * @param code field name
+    */
     resetApi(code?) {
         this.errorExist = false;
         if (code !== undefined) {
@@ -260,8 +264,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.taxpercentage = this.taxDetails.taxPercentage;
                 this.gstnumber = this.taxDetails.gstNumber || '';
             },
-            error => {
-            });
+                error => {
+                });
     }
     // showhidepaytype() {
     //     this.saveEnabled = true;
@@ -316,11 +320,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.saveEnabled = true;
                 // this.handleEditPaySettings(false);
             },
-            error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.getPaymentSettings(2);
-                this.saveEnabled = true;
-            });
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getPaymentSettings(2);
+                    this.saveEnabled = true;
+                });
     }
     /**
      * Save PayU/PayTM Account Information
@@ -442,10 +446,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
                     this.savetaxEnabled = true;
                 },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.savetaxEnabled = true;
-                });
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.savetaxEnabled = true;
+                    });
         }
     }
     /**
@@ -633,5 +637,5 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
     }
-    
+
 }

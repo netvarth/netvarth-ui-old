@@ -170,7 +170,7 @@
                                 <div class="coupon-outer">
                                     <div class="row" *ngFor="let coupon of couponsList let i=index">
                                         <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
-                                            {{coupon.couponCode}} Added. <span (click)="toggleterms(i)" class="pointer-cursor read-more-checkin">Read
+                                            {{coupon.couponCode}} Added. <span *ngIf="coupon.instructions" (click)="toggleterms(i)" class="pointer-cursor read-more-checkin">Read
                                                 T & C </span> <i class="fa fa-trash" (click)="removeJCoupon(i)"></i>
                                         </div>
                                         <div class="col-md-12 no-padding read-more-contents" *ngIf="coupon.showme">
