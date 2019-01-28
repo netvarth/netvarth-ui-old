@@ -98,7 +98,7 @@
 																	<div class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
 																		<span class="label">{{qty_cap}}</span> <span class="number">
 																			<mat-form-field class="example-full-width">
-																				<input type="number" min="0" max="100000" matInput #itemserviceqty aria-label="Number" (keyup)="isvalid(curSelItm.qty)"
+																				<input type="number" min="0" max="{{qty_limit}}" matInput #itemserviceqty aria-label="Number" (keyup)="isvalid($event)"
 																				 matInput value="1" size="3" [(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)">
 																			</mat-form-field>
 																		</span>
@@ -161,7 +161,7 @@
 																						<ng-container *ngIf="showDiscountSection && selOrderDiscount.discType=='OnDemand'">
 																							<span class="label">{{value_cap}}</span> <span class="number">
 																								<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
-																									 aria-label="Number" matInput value="1" size="3" [(ngModel)]="discAmount">
+																									 aria-label="Number" max="{{price_limit}}" min="0" matInput value="1" size="3" (keyup)="isvalid($event)" [(ngModel)]="discAmount">
 																								</mat-form-field>
 																							</span>
 
@@ -240,7 +240,7 @@
 																				<ng-container *ngIf="bill_data.service[i].serviceDiscount.discType=='OnDemand'">
 																					<span class="label">{{value_cap}}</span> <span class="number">
 																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
-																							 aria-label="Number" matInput value="1" size="3" [(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
+																							 aria-label="Number" max="{{price_limit}}" min="0" matInput value="1" size="3" (keyup)="isvalid($event)" [(ngModel)]="bill_data.service[i].serviceDiscount.discAmount"
 																							 (blur)="blurQty($event.target.value, bill_data.service[i].serviceDiscount.discAmount)">
 																						</mat-form-field>
 																					</span>
@@ -317,7 +317,7 @@
 																				<ng-container *ngIf="bill_data.items[i].itemDiscount.discType=='OnDemand'">
 																					<span class="label">Value</span> <span class="number">
 																						<mat-form-field class="example-full-width"> <input type="number" matInput #billdiscvalue
-																							 aria-label="Number" matInput value="1" size="3" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount"
+																							 aria-label="Number" max="{{price_limit}}" min="0" matInput value="1" size="3" (keyup)="isvalid($event)" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount"
 																							 (blur)="blurQty($event.target.value, bill_data.items[i].itemDiscount.discAmount)">
 																						</mat-form-field>
 																					</span>
@@ -497,7 +497,7 @@
 															<div class="item qty no-padding">
 																<span class="label">{{wbamount_cap}}</span> <span class="number">
 																	<mat-form-field class="example-full-width"> <input type="text" matInput #payamounttxt aria-label="Number"
-																		 matInput value="1" size="5" [(ngModel)]="amountpay" (keydown)="checkAmount($event)" autocomplete="off">
+																		 matInput value="1" size="5" max="{{price_limit}}" min="0" [(ngModel)]="amountpay" (keyup)="isvalid($event)" autocomplete="off">
 																	</mat-form-field>
 																</span>
 															</div>

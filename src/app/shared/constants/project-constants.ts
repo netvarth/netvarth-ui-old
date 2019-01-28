@@ -210,7 +210,10 @@ export const projectConstants = {
   VALIDATOR_MAX200: 200, // max char count
   VALIDATOR_MAX250: 250, // max char count
   VALIDATOR_MAX500: 500, // max char count
-  VALIDATOR_MAX_LAKH: 100000,
+  VALIDATOR_MAX_LAKH: 100,
+  QTY_MAX_VALUE: 100000,
+  PRICE_MAX_VALUE: 100000,
+  TIME_MAX_VALUE: 3600,
   WAITLIST_CANCEL_RESON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel' },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },

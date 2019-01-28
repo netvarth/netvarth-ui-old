@@ -11,85 +11,115 @@
         [min]="question.min" [max]="question.max"
         placeholder="{{placeholder}}" autocomplete="off" (blur)="onFieldBlur(question)">
     </mat-form-field> -->
-      <mat-form-field>
-        <input matInput *ngIf="question.type != 'checkbox'" class="form-control" [formControlName]="question.key" [id]="question.key"
-          [type]="question.type" [min]="question.min" [max]="question.max" placeholder="{{placeholder}}" autocomplete="off"
-          (blur)="onFieldBlur(question)">
-      </mat-form-field>
-      <mat-slide-toggle [id]="question.key" *ngIf="question.type === 'checkbox'" labelPosition="before" [checked]="(question.value == 'true') ? 'true' : 'false'"
-        (change)="setCheckBoxValue()">
-        {{question.label}}
-      </mat-slide-toggle>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput *ngIf="question.type != 'checkbox'" class="form-control" [formControlName]="question.key"
+            [id]="question.key" [type]="question.type" [min]="question.min" [max]="question.max" placeholder="{{placeholder}}"
+            autocomplete="off" (blur)="onFieldBlur(question)">
+        </mat-form-field>
+        <mat-slide-toggle [id]="question.key" *ngIf="question.type === 'checkbox'" labelPosition="before" [checked]="(question.value == 'true') ? 'true' : 'false'"
+          (change)="setCheckBoxValue()">
+          {{question.label}}
+        </mat-slide-toggle>
+        <app-field-error-display *ngIf="question.controlType =='textbox'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
+      </div>
     </ng-container>
 
     <mat-form-field *ngSwitchCase="'textarea'">
-      <textarea matInput matInput [id]="question.key" placeholder="{{question.label}}" [formControlName]="question.key"
-        (blur)="onFieldBlur(question.key)"></textarea>
+      <div class="form-group">
+        <textarea matInput matInput [id]="question.key" placeholder="{{question.label}}" [formControlName]="question.key"
+          (blur)="onFieldBlur(question.key)"></textarea>
+        <app-field-error-display *ngIf="question.controlType =='textarea'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
+      </div>
     </mat-form-field>
 
     <div *ngSwitchCase="'datagrid'" [formArrayName]="question.key">
-      <div *ngFor="let control of form['controls'][question.key]['controls']; let i = index;">
-        <div *ngFor="let col of question.columns[0]">
-          <app-question class="width-100" [showlabel]="'true'" [question]="col" [form]="form['controls'][question.key]['controls'][i]"
-            [messages]="messages"></app-question>
+      <div class="form-group">
+        <div *ngFor="let control of form['controls'][question.key]['controls']; let i = index;">
+          <div *ngFor="let col of question.columns[0]">
+            <app-question class="width-100" [showlabel]="'true'" [question]="col" [form]="form['controls'][question.key]['controls'][i]"
+              [messages]="messages"></app-question>
+          </div>
         </div>
       </div>
     </div>
 
     <mat-form-field *ngSwitchCase="'dropdown'">
-      <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key" [formControlName]="question.key">
-        <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-        <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
-          {{opt.displayName}}
-        </mat-option>
-      </mat-select>
+      <div class="form-group">
+        <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key" [formControlName]="question.key">
+          <!-- <mat-option [value]="''">- Select One-</mat-option> -->
+          <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
+            {{opt.displayName}}
+          </mat-option>
+        </mat-select>
+        <app-field-error-display *ngIf="question.controlType =='dropdown'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
+      </div>
     </mat-form-field>
 
 
     <mat-form-field *ngSwitchCase="'month_field'">
-      <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key" [formControlName]="question.key">
-        <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-        <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
-          {{opt.displayName}}
-        </mat-option>
-      </mat-select>
+      <div class="form-group">
+        <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key" [formControlName]="question.key">
+          <!-- <mat-option [value]="''">- Select One-</mat-option> -->
+          <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
+            {{opt.displayName}}
+          </mat-option>
+        </mat-select>
+        <app-field-error-display *ngIf="question.controlType =='month_field'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
+      </div>
     </mat-form-field>
 
 
     <mat-form-field *ngSwitchCase="'year_field'">
-      <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key" [formControlName]="question.key">
-        <!-- <mat-option [value]="''">- Select One-</mat-option> -->
-        <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
-          {{opt.displayName}}
-        </mat-option>
-      </mat-select>
+      <div class="form-group">
+        <mat-select panelClass="select-class" placeholder="{{question.label}}" [id]="question.key" [formControlName]="question.key">
+          <!-- <mat-option [value]="''">- Select One-</mat-option> -->
+          <mat-option *ngFor="let opt of question.options;first as isFirst" [value]="opt.name">
+            {{opt.displayName}}
+          </mat-option>
+        </mat-select>
+        <app-field-error-display *ngIf="question.controlType =='year_field'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
+      </div>
     </mat-form-field>
 
-
     <div class="form-check" *ngSwitchCase="'radio'" [id]="question.key">
-      <mat-radio-group [formControlName]="question.key">
-        <mat-radio-button [value]="option.name" *ngFor="let option of question.options;">
-          {{option.displayName}}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
-
-    <div class="form-check" *ngSwitchCase="'enumlist'" [id]="question.key" [formArrayName]="question.key">
-      <div [formGroup]="form['controls'][question.key]['controls'][0]">
-
-        <div *ngFor="let option of question.options;let i = index; ">
-          <mat-checkbox [value]="option.name" [formControlName]="option.name">
+      <div class="form-group">
+        <mat-radio-group [formControlName]="question.key">
+          <mat-radio-button [value]="option.name" *ngFor="let option of question.options;">
             {{option.displayName}}
-          </mat-checkbox>
-        </div>
-
+          </mat-radio-button>
+        </mat-radio-group>
+        <app-field-error-display *ngIf="question.controlType =='radio'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
       </div>
     </div>
 
+    <div class="form-check" *ngSwitchCase="'enumlist'" [id]="question.key" [formArrayName]="question.key">
+      <div class="form-group">
+        <div [formGroup]="form['controls'][question.key]['controls'][0]">
+
+          <div *ngFor="let option of question.options;let i = index; ">
+            <mat-checkbox [value]="option.name" [formControlName]="option.name">
+              {{option.displayName}}
+            </mat-checkbox>
+          </div>
+        </div>
+        <app-field-error-display *ngIf="question.controlType =='enumlist'" [displayError]="fed_service.isFieldValid(form,question.key)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+        </app-field-error-display>
+      </div>
+    </div>
+   
   </ng-container>
-  <div class="row">
-    <app-field-error-display *ngIf="question.controlType !='datagrid'" [displayError]="fed_service.isFieldValid(form,question.key)"
-      [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
-    </app-field-error-display>
-  </div>
 </div>

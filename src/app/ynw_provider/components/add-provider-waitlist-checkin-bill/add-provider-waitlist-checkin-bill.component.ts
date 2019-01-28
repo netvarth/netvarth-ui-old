@@ -14,6 +14,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { ActivatedRoute } from '@angular/router';
 import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
 import { MessageService } from '../../services/provider-message.service';
+import { VALID_ELEMENTS } from '@angular/core/src/sanitization/html_sanitizer';
 
 export interface ItemServiceGroup {
   type: string;
@@ -86,7 +87,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applycoupon_cap = Messages.APPLYCOUPON;
   notesfor_cap = Messages.NOTESFOR;
   privatenote_cap = Messages.PROVIDER_NOTE_CAP;
-  max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
+  price_limit = projectConstants.PRICE_MAX_VALUE;
+  qty_limit = projectConstants.QTY_MAX_VALUE;
   @ViewChild('itemservicesearch') item_service_search;
   @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
@@ -624,14 +626,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
   }
 
-  isvalid() {
-    if (this.curSelItm.qty > this.max_num_limit) {
-      let numString = this.curSelItm.qty.toString();
-      if (numString.length > 6) {
-        numString = numString.substr(0, numString.length - 1);
-        this.curSelItm.qty = parseInt(numString);
-      }
-    }
+  isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
   }
   /**
    * Add/Adjust Service/Item to the Bill

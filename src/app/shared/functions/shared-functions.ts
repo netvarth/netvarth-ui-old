@@ -94,7 +94,7 @@ export class SharedFunctions {
   consumerLogin(post_data, moreParams?) {
 
     post_data.mUniqueId = localStorage.getItem('mUniqueId');
-    // console.log('Key:' + localStorage.getItem('mUniqueId'));
+    console.log('Key:' + localStorage.getItem('mUniqueId'));
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ConsumerLogin(post_data)
@@ -428,7 +428,7 @@ export class SharedFunctions {
         for (const labelarr of searchlabels_arr.sectorLevelLabels) {
           for (const subsecarr of labelarr.subSectorLevelLabels) {
             // retdet.concat(subsecarr.specializationLabels);
-            const result = subsecarr.specializationLabels.map(function(el) {
+            const result = subsecarr.specializationLabels.map(function (el) {
               const o = Object.assign({}, el);
               o.type = 'special';
               return o;
@@ -443,9 +443,9 @@ export class SharedFunctions {
           if (labelarr.name === params['domain']) {
             // retdet = labelarr.sectorLabels;
             for (const subsecarr of labelarr.subSectorLevelLabels) {
-              retdet.push({'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain'});
+              retdet.push({ 'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain' });
               // retdet.concat(subsecarr.specializationLabels);
-              const result = subsecarr.specializationLabels.map(function(el) {
+              const result = subsecarr.specializationLabels.map(function (el) {
                 const o = Object.assign({}, el);
                 o.type = 'special';
                 return o;
@@ -1206,5 +1206,27 @@ export class SharedFunctions {
     const pubDate = new Date(dateStr);
     const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
     return obtshowdate;
+  }
+  isValid(evt) {
+    // tslint:disable-next-line:radix
+    const value = parseInt(evt.target.value);
+    // tslint:disable-next-line:radix
+    const max = parseInt(evt.target.max);
+    if (evt.which !== 8 && evt.which !== 0 &&
+      ((evt.which < 48 || evt.which > 57) &&
+        (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+      isNaN(value) || value < 0) {
+      evt.preventDefault();
+      return false;
+    }
+    if (value > max) {
+      let numString = evt.target.value;
+      numString = numString.substr(0, numString.length - 1);
+      // tslint:disable-next-line:radix
+      evt.target.value = parseInt(numString);
+      evt.preventDefault();
+      return false;
+    }
+    return true;
   }
 }
