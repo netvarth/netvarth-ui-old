@@ -927,14 +927,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  checkAmount(evt) {
-    if (evt.which !== 8 && evt.which !== 0 &&
-      ((evt.which < 48 || evt.which > 57) &&
-        (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
-      isNaN(this.amountpay) || this.amountpay < 0) {
-      evt.preventDefault();
-    }
-  }
+  // checkAmount(evt) {
+  //   if (evt.which !== 8 && evt.which !== 0 &&
+  //     ((evt.which < 48 || evt.which > 57) &&
+  //       (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+  //     isNaN(this.amountpay) || this.amountpay < 0) {
+  //     evt.preventDefault();
+  //   }
+  // }
   settleBill() {
     this.provider_services.settleWaitlistBill(this.uuid)
       .subscribe(
