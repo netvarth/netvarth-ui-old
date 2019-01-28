@@ -857,6 +857,8 @@ margin-top:10px;
 .clear-filter {margin-top: 2px;margin-right:5px; background: url(../images/icons8-clear-filters-40.png) no-repeat scroll 0 0/20px 20px !important;}
 .fltr .mat-content {display: inline !important}
 .fltr span {margin-left:none!important; float: right!important;}
+.fltr .search_sort_display span {float: left!important;}
+
 .signupmainclass .mat-dialog-content .message-one .p1, .loginmainclass .mat-dialog-content .message-one .p1, .moreoptionsmainclass .mat-dialog-content .message-one .p1, .forgotpasswordmainclass .mat-dialog-content .message-one .p1, .commonpopupmainclass .mat-dialog-content .message-one .p1, .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1, .specialclass .mat-dialog-content .message-one .p1{
   padding-bottom: 30px !important;
   color: black !important;

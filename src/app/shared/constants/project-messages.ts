@@ -396,7 +396,7 @@ export const Messages = {
   'SHOW_LESS_CAP': 'show less',
   'OTHER_FILTERS_CAP': 'Other Filters',
   'FOUND_CAP': 'found',
-  'NONE_CAP': 'None',
+  'NONE_CAP': 'Sort By',
   'DISTANCE_CAP': 'Distance',
   'JALDEE_VERIFIED_CAP': 'Jaldee Verified',
   'BASIC_CAP': 'Basic',
