@@ -165,7 +165,7 @@ export class AddProviderItemComponent implements OnInit {
                                 'displayName': form_data.displayName,
                                 'shortDesc': form_data.shortDesc,
                                 'displayDesc': form_data.displayDesc,
-                                'taxable': taxable,
+                                'taxable': form_data.taxable,
                                 'price': form_data.price
         };
 
@@ -189,7 +189,7 @@ export class AddProviderItemComponent implements OnInit {
             'displayName': form_data.displayName,
             'shortDesc': form_data.shortDesc,
             'displayDesc': form_data.displayDesc,
-            'taxable': taxable,
+            'taxable': form_data.taxable,
             'price': form_data.price
           };
           this.editItem(post_itemdata);

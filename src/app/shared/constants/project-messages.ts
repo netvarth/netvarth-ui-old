@@ -1190,7 +1190,7 @@ export const Messages = {
   'CURRENTMOBMSG': 'Your Current Mobile # ',
 
   // App-shared-components-set-password-form
-  'SET_PASSWORD_MSG' : 'Congratulations! You have become Jaldee partner! Please set your password to continue sign up process.',
+  'SET_PASSWORD_MSG' : 'Congratulations! You have become a Jaldee partner! Please set your password to continue sign up process.',
   'PASSWORD_ERR_MSG' : 'You haven\'t set your password. Next time you want to go through forgot password',
   'ADWORD_ERRMSG': 'Please enter AdWord',
   'ADWORD_MAXCOUNT' : 'Upgrade your License package to Gold or Diamond for free AdWords. You can also purchase AdWords as Add ons',

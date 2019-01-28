@@ -412,16 +412,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getProviderItems()
       .subscribe(
         (data: any) => {
-          this.items = data;
-          const items = this.items.map((ob) => ob.displayName);
-          this.itemServicesGroup[1]['values'] = items;
+          for (const ser of data) {
+            if (ser.status === 'ACTIVE') {
+              this.items.push(ser);
+            }
+          }
+          const itemslist = this.items.map((ob) => ob.displayName);
+          this.itemServicesGroup[1]['values'] = itemslist;
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-
         }
       );
   }
+
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       this.provider_services.getPaymentDetail(this.checkin.ynwUuid)

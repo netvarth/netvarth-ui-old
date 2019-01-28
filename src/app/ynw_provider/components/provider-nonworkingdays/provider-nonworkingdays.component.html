@@ -51,7 +51,7 @@
                                                 </span>
 
                                                 <span class="mbt-mobile-show">
-                                                    <button class="editcls" type="button" (click)="editHolidays(nonworking)">{{edit_btn}}</button>
+                                                    <button class="editcls" type="button" (click)="editHolidays(nonworking)" *ngIf="showEdit(nonworking.startDay)">{{edit_btn}}</button>
                                                     <button class="deletecls" type="button" (click)="doRemoveHolidays(nonworking)">{{delete_btn}}</button>
                                                 </span>
                                             </td>
