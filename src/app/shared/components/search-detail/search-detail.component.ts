@@ -26,7 +26,6 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { merge } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-detail',
@@ -1150,16 +1149,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (pasdomain) { // case if domain and subdomain are available
           if (data['refinedFilters']) {
             this.searchrefine_arr = data['refinedFilters'];
-            if (subdom) {
-              this.searchdetailserviceobj.getRefinedSearch(pasdomain, '')
-              .subscribe(refdata => {
-                if (refdata['refinedFilters']) {
-                  const mergedarray  = refdata['refinedFilters'];
-                  this.searchrefine_arr = (mergedarray.concat(this.searchrefine_arr));
-                  console.log(this.searchrefine_arr);
-                }
-              });
-            }
           }
           if (data['commonFilters']) {
             const mergedarray = this.searchrefine_arr.concat(data['commonFilters']); // merging the refine and common filters
@@ -1791,7 +1780,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkserviceClicked(name, obj) {
-    this.btn_clicked = true;
+    this.btn_clicked = false;
     if (this.shared_functions.checkLogin()) {
       const ctype = this.shared_functions.isBusinessOwner('returntyp');
       // if (ctype === 'consumer') {

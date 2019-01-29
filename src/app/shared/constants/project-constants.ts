@@ -334,10 +334,10 @@ export const projectConstants = {
     Cancelled: 'Cancelled'
   },
   CHECK_IN_STATUSES_FILTER: [
-    { displayName: 'Completed', value: 'done' },
-    { displayName: 'Started', value: 'started' },
-    { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'CheckedIn', value: 'checkedIn' },
+    { displayName: 'Arrived', value: 'arrived' },
+    { displayName: 'Started', value: 'started' },
+    { displayName: 'Completed', value: 'done' },
     { displayName: 'Cancelled', value: 'cancelled' }
   ],
   JCOUPON_STATES: {
