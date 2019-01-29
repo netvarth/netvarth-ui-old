@@ -289,13 +289,29 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
     });*/
   }
+  isNameExists(name) {
+    const found = this.holdisplaylist['label'].some(function (el) {
+      return el.autoname === name;
+    });
+    if (!found) {
+      return false;
+    }
+    return true;
+  }
   handleNormalSearchClick() {
+    console.log(this.holdisplaylist['label']);
     this.moreoptions_arr = [];
     this.showmoreoptionsSec = false;
     if (!this.kw_autoname || this.kw_autoname.trim() === '') {
       this.do_search(null, true);
     } else if (this.holdisplaylist['label'].length !== 0) {
-      this.setKeyword(this.holdisplaylist['label'][0]);
+        if (!this.isNameExists(this.kw_autoname)) {
+          this.do_search();
+        } else {
+          this.setKeyword(this.holdisplaylist['label'][0]);
+        }
+    } else {
+      this.do_search();
     }
   }
 

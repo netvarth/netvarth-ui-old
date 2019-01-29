@@ -403,8 +403,8 @@ export const Messages = {
   'BASIC_PLUS_CAP': 'Basic Plus',
   'PREMIUM_CAP': 'Premium',
   'CLAIM_BUSINESS_CAP': 'Claim my Business',
-  'SORRY_CAP': 'Sorry',
-  'NOT_ALLOWED_CAP': 'not allowed',
+  'SORRY_CAP': 'Sorry !! Online ',
+  'NOT_ALLOWED_CAP': ' is currently not allowed',
   'NO_YNW_RES_FOUND_CAP': 'No YNW results found',
 
   // App-shared-components-search-service-detail
