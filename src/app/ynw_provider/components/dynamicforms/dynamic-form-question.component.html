@@ -15,7 +15,7 @@
         <mat-form-field>
           <input matInput *ngIf="question.type != 'checkbox'" class="form-control" [formControlName]="question.key"
             [id]="question.key" [type]="question.type" [min]="question.min" [max]="question.max" placeholder="{{placeholder}}"
-            autocomplete="off" (blur)="onFieldBlur(question)">
+            autocomplete="off" (blur)="onFieldBlur(question)" (keyup)="isNumberField($event)">
         </mat-form-field>
         <mat-slide-toggle [id]="question.key" *ngIf="question.type === 'checkbox'" labelPosition="before" [checked]="(question.value == 'true') ? 'true' : 'false'"
           (change)="setCheckBoxValue()">

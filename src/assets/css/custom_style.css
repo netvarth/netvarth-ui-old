@@ -1,529 +1,869 @@
 /*New Style for Bill*/
+
 .bill-section .bill-section-content {
-  padding: 0px; }
-  .bill-section .bill-section-content .bill-wrapper {
-    background: #fff;
-    width: 100%;
-    margin: 0 auto; }
-    .bill-section .bill-section-content .bill-wrapper .section-one, .bill-section .bill-section-content .bill-wrapper .section-two, .bill-section .bill-section-content .bill-wrapper .section-three, .bill-section .bill-section-content .bill-wrapper .section-four {
-      padding: 20px;
-      border-bottom: 1px solid #dbdbdb; }
-    .bill-section .bill-section-content .bill-wrapper .section-one h3 {
-      font-size: 1rem;
-      margin-bottom: 15px;
-      text-align: center; }
-    .bill-section .bill-section-content .bill-wrapper .section-one .details {
-      display: flex;
-      flex-wrap: wrap;
-      font-size: .875rem;
-      font-weight: 500; }
-      .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
-        flex-basis: 50%; }
-        .bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title {
-          font-weight: 600;
-          position: relative;
-          margin-right: 10px; }
-          .bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title:after {
-            position: absolute;
-            content: ":";
-            right: -5px; }
-        .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(1), .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(2) {
-          margin-bottom: 10px; }
-      @media only screen and (max-width: 500px) {
-        .bill-section .bill-section-content .bill-wrapper .section-one .details {
-          flex-direction: column; }
-          .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
-            margin-bottom: 10px; }
-            .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:last-child {
-              margin-bottom: 0; } }
-    .bill-section .bill-section-content .bill-wrapper .section-two .add-button .bt3 {
-      text-transform: none;
-      letter-spacing: .2px; }
-    .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
-      font-size: .875rem;
-      font-weight: 500; }
-      .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
-        display: flex; }
-        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
-          display: flex;
-          flex-grow: 1;
-          align-items: center;
-          justify-content: space-between; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox {
-            flex-grow: 1; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
-              width: auto; }
-              .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
-                height: 30px;
-                width: 100%;
-                padding: 5px 10px; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty {
-            display: flex;
-            align-items: center;
-            margin-left: 15px;
-          width:90% !important }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .label {
-              font-weight: 600;
-              margin-right: 10px; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
-              width: auto; }
-              .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
-                height: 30px;
-                max-width: 80px;
-                min-width: 55px;
-                padding: 5px 5px 5px 10px; }
-        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
-          margin-left: 15px; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn {
-            height: 30px;
-            line-height: 12px;
-            padding: 6px 10px;
-            text-transform: none;
-            float: left;
-            font-size: .75rem; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn.bt2 {
-              margin-left: 10px; }
-        @media only screen and (max-width: 400px) {
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
-            flex-direction: column; }
-            .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
-              margin-bottom: 10px; } }
-      @media only screen and (max-width: 575px) {
-        .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
-          flex-direction: column; }
-          .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
-            margin-left: 0;
-            margin-top: 5px; } }
-    .bill-section .bill-section-content .bill-wrapper .section-three {
-      border: none; }
-      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup {
-        font-size: .875rem;
-        font-weight: 500; }
-        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list {
-          position: relative;
-          border-bottom: 1px solid #dbdbdb;
-          margin-bottom: 15px;
-          padding-bottom: 15px; }
-          .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
-            display: flex;
-            padding: 5px 0;
-            margin-right: 50px;
-           }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one {
-              display: flex; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name {
-                font-weight: 600;
-                flex-basis: 60%;
-                padding-right: 15px;
-                position: relative; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax {
-                  font-size: .60rem;
-                  font-weight: 600;
-                  position: absolute;
-                  top: -2px;
-                  right: -4px;
-                  color: #fda60d; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
-                flex-basis: 20%; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
-                flex-basis: 20%;
-                text-align: right; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two {
-              display: block;
-              margin-right: 0;
-              padding: 0; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row {
-                padding: 10px 0; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
-                  display: flex; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
-                    display: flex;
-                    flex-grow: 1;
-                    margin-right: 20px;
-                    justify-content: flex-end; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item {
-                      flex-basis: 100%; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
-                        width: auto; }
-                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
-                          height: 30px;
-                          width: 100%;
-                          padding: 5px 10px; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
-                        margin-left: 20px; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn {
-                    height: 30px;
-                    line-height: 12px;
-                    padding: 6px 10px;
-                    text-transform: none;
-                    float: left;
-                    font-size: .75rem; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn.bt2 {
-                      margin-left: 10px; }
-                  @media only screen and (max-width: 500px) {
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
-                      flex-direction: column; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
-                        margin-right: 0;
-                        flex-direction: column; }
-                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .selectbox1 {
-                          margin-bottom: 10px; }
-                        .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
-                          margin-left: 0; } }
-                  @media only screen and (max-width: 575px) {
-                    .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
-                      flex-direction: column; }
-                      .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup.discoup .spr {
-                        margin-top: 5px; } }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
-                margin-right: 50px;
-                display: flex;
-                padding: 5px 0;
-                color: #999999; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .name, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .name {
-                  flex-grow: 1;
-                  flex-basis: 60%;
-                  padding-right: 15px; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
-                  flex-basis: 40%; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three {
-              padding: 0; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .name {
-                flex-basis: 60%;
-                font-weight: 600;
-                padding: 5px 0;
-                padding-right: 15px; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .price {
-                flex-basis: 40%;
-                padding: 5px 0;
-                border-top: dashed 1px #dbdbdb; }
-            @media only screen and (max-width: 500px) {
-              .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
-                margin-right: 40px; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
-                  flex-basis: 30%; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
-                  margin-right: 40px; } }
-          .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more {
-            position: absolute;
-            right: 0;
-            top: 0; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more .mat-icon-button {
-              height: 30px;
-              width: 30px;
-              line-height: 30px; }
-      .bill-section .bill-section-content .bill-wrapper .section-three .amount-table {
-        position: relative; }
-        .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content {
-          /* font-size: 1rem; */
-          font-weight: 500;
-          width: 100%; }
-          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
-            text-align: right;
-            margin-right: 50px;
-            padding: 5px 0; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .name {
-              width: 60%;
-              text-align: right; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-              vertical-align: text-top;
-              width: 40%;
-              text-align: right;
-              padding: 0 50px 0 0px; }
-              @media(max-width:400px) {
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-                padding: 0 25px 0 0px;
-                }
-              }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
-              font-weight: 600;
-              /* font-size: 1rem;  */
-            }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount {
-                color: #00aef2;
-                font-size: .875rem;
-                display: block; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount span {
-                  text-decoration: underline;
-                  cursor: pointer; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price {
-              font-weight: 600;
-              /* font-size: 1rem;  */
-            }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price {
-              color: #999999;
-              font-size: .75rem;
-              font-weight: 600; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price {
-              font-size: .875rem;
-              font-weight: 600; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span {
-                display: block; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span.txn, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span.txn {
-                  font-weight: 500;
-                  font-size: .69rem; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price {
-              font-weight: 600;
-              font-size: .875rem; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name .link, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price .link {
-                color: #00aef2;
-                text-decoration: underline;
-                cursor: pointer; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
-              /* font-size: 1.1rem; */
-              font-weight: 700; }
-            @media only screen and (max-width: 500px) {
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
-                margin-right: 40px; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-                  flex-basis: 30%; } }
-            @media only screen and (max-width: 400px) {
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
-                flex-basis: 40%; } }
-          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row {
-            padding: 10px 0; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
-              display: flex; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
-                display: flex;
-                flex-grow: 1;
-                margin-right: 20px;
-                justify-content: flex-end; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item {
-                  flex-basis: 48%; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
-                    height: 30px;
-                    width: 100%;
-                    padding: 5px 10px; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
-                    margin-left: 20px; }
-              .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn {
-                height: 30px;
-                line-height: 12px;
-                padding: 6px 10px;
-                text-transform: none;
-                float: left;
-                font-size: .75rem; }
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn.bt2 {
-                  margin-left: 10px; }
-              @media only screen and (max-width: 500px) {
-                .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
-                  flex-direction: column; }
-                  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
-                    margin-right: 0;
-                    margin-bottom: 10px;
-                    flex-direction: column; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .selectbox1 {
-                      margin-bottom: 10px; }
-                    .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
-                      margin-left: 0; } }
-        .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
-          position: absolute;
-          top: 0;
-          right: 0;
-          display: none; }
-          .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn {
-            text-transform: none;
-            padding-left: 5px;
-            padding-right: 5px; }
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn.active {
-              background: #00aef2;
-              color: #fff; }
-          @media only screen and (max-width: 500px) {
-            .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
-              display: none; } }
-    .bill-section .bill-section-content .bill-wrapper .section-four {
-      border-bottom: none; }
-      .bill-section .bill-section-content .bill-wrapper .section-four .heading .back {
-        font-size: .75rem;
-        color: #00aef2;
-        display: table;
-        font-weight: 600;
-        position: relative;
-        padding-left: 20px;
-        margin-bottom: 20px;
-        cursor: pointer; }
-        .bill-section .bill-section-content .bill-wrapper .section-four .heading .back:before {
-          font-family: "custom-ynw" !important;
-          content: "\2e";
-          position: absolute;
-          left: 0;
-          top: 0; }
-      .bill-section .bill-section-content .bill-wrapper .section-four .heading h4 {
-        font-size: 1rem;
-        font-weight: 600;
-        margin-bottom: 10px; }
-      .bill-section .bill-section-content .bill-wrapper .section-four .list-outer {
-        border: 1px solid #dbdbdb;
-        font-size: .875rem;
-        font-weight: 500; }
-        .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th {
-          display: flex;
-          border-bottom: 1px solid #dbdbdb;
-          background: #dbdbdb; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th {
-            flex-basis: 33.3333%;
-            padding: 10px;
-            font-weight: 600;
-            text-align: center;
-            border-right: 1px solid #fff; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th:last-child {
-              border: none; }
-        .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing {
-          border-bottom: 1px solid #dbdbdb; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap {
-            display: flex;
-            align-items: center; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td {
-              flex-basis: 33.3333%;
-              padding: 10px;
-              text-align: center;
-              position: relative; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .date {
-                display: block;
-                font-weight: 600; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .time {
-                display: block; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .amt {
-                display: block;
-                font-weight: 600; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others {
-                font-size: .75rem; }
-                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode {
-                  display: block; }
-                  .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title {
-                    position: relative;
-                    margin-right: 5px; }
-                    .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title:after, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title:after {
-                      position: absolute;
-                      content: ":";
-                      right: -5px; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .amt {
-                display: block;
-                font-weight: 600;
-                margin-bottom: 3px; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .cs-btn {
-                height: 24px;
-                line-height: 12px;
-                padding: 6px 10px;
-                text-transform: none;
-                font-size: .75rem; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:after {
-                border-right: 1px solid #dbdbdb;
-                height: 30px;
-                width: 1px;
-                position: absolute;
-                content: "";
-                right: 0;
-                top: 50%;
-                margin-top: -15px; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:last-child:after {
-                display: none; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table {
-            margin: 10px;
-            border: 1px solid #dbdbdb; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th {
-              text-align: center;
-              padding: 5px;
-              background: transparent; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th h5 {
-                font-size: .875rem;
-                margin: 0 auto; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 {
-              display: flex;
-              border-bottom: 1px solid #dbdbdb; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th {
-                flex-basis: 33.3333%;
-                padding: 5px;
-                text-align: center;
-                border-right: 1px solid #dbdbdb;
-                font-weight: 600; }
-                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th:last-child {
-                  border: none; }
-            .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody {
-              display: flex; }
-              .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td {
-                flex-basis: 33.3333%;
-                padding: 5px;
-                text-align: center;
-                border-right: 1px solid #dbdbdb;
-                font-size: .75rem; }
-                .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td:last-child {
-                  border: none; }
-          .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing:last-child {
-            border: none; }
-    .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row {
-      margin-right: 50px; }
-      .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .discount-row, .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .coupon-row {
-        margin-right: 0px; }
-    .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .amount-table .amt-content .amt {
-      margin-right: 50px; }
+  padding: 0px;
+}
 
-    .bill-section .mat-form-field-infix {    
-      margin: 0;
-      padding: 0 ;
-      border: none;
-    }
-      .bill-section .mat-form-field {width:100%}
-      .bill-section .mat-form-field-wrapper {
-        padding: 0;
-        margin: 0;
-      }
-      .bill-section .mat-form-field-underline  {background-color: rgba(0, 0, 0, 0);
-        display: none; }
-      .bill-section .mat-form-field-appearance-legacy{background-color: rgba(0, 0, 0, 0)}
-      .bill-section .mat-input-element::-webkit-input-placeholder{color:rgba(0,0,0,0)}
-      .bill-section .mat-input-element {
-        padding: 10px;
-        background: white;
-        border: 1px solid #b6cdd8;
-        height: 40px;
-      }
-      .bill-section .add-item .mat-button-wrapper {padding-left:10px !important;}
-      .bill-section .bill-section-content .bill-wrapper .section-one .details {font-size:.800rem}
-      .bill-section .actiondiv { border-top:1px solid #ccc;padding-top:15px;}
-      .bill-section-content .mat-select {height: 30px !important; padding: 7px !important;}
-      .bill-section-content .notes {padding-top:15px!important}
-      .bill-section-content .discoup .border-tp {border-top:1px solid #ccc;}
-      .bill-section-content .discoup .spr .spl {padding-top:10px}
-      .bill-section-content .list .section-two {border-bottom: none !important}
-      /* .bill-section-content {min-width: 375px;} */
-      .commonpopupmainclass .bill-section-content div {font-size:0.75rem!important}
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, 
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name,
-      .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price
-      {font-size:0.80rem!important}
-      .coupon-section .coupon-outer .ig{float: right!important;}
-      .cpn-input{max-width: 300px!important;float: right;}
-      .cpn-input input {height:30px!important;}
-      @media only screen and (max-width: 500px){
-      .billpopup .mat-dialog-content .bill-wrapper .section-one .details {
-        flex-direction:row !important; 
-        /* font-size:.65rem!important */
-      }}
-      
-.billpopup .mat-dialog-content .bill-wrapper .section-one {padding-bottom: 5px!important;}
-.billpopup .mat-dialog-content .bill-wrapper .section-three{padding-top: 5px!important;}
-.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list {margin-bottom: 5px!important;padding-bottom: 5px!important}
+.bill-section .bill-section-content .bill-wrapper {
+  background: #fff;
+  width: 100%;
+  margin: 0 auto;
+}
 
-.billpopup .mat-dialog-content {max-height:80vh !important;overflow:scroll}
-.billpopup .mat-dialog-content .bill-section-content .bill-wrapper {min-width: 375px; max-width:500px; margin: none !important;float: left;}
+.bill-section .bill-section-content .bill-wrapper .section-one, .bill-section .bill-section-content .bill-wrapper .section-two, .bill-section .bill-section-content .bill-wrapper .section-three, .bill-section .bill-section-content .bill-wrapper .section-four {
+  padding: 20px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one h3 {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one .details {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
+  flex-basis: 50%;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title {
+  font-weight: 600;
+  position: relative;
+  margin-right: 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one .details .columns .title:after {
+  position: absolute;
+  content: ":";
+  right: -5px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(1), .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:nth-child(2) {
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .bill-section .bill-section-content .bill-wrapper .section-one .details {
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-one .details .columns {
+    margin-bottom: 10px;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-one .details .columns:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .add-button .bt3 {
+  text-transform: none;
+  letter-spacing: .2px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
+  display: flex;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox {
+  flex-grow: 1;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+  width: auto;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+  height: 30px;
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  width: 90% !important
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+  width: auto;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.qty .number .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+  height: 30px;
+  max-width: 80px;
+  min-width: 55px;
+  padding: 5px 5px 5px 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
+  margin-left: 15px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn {
+  height: 30px;
+  line-height: 12px;
+  padding: 6px 10px;
+  text-transform: none;
+  float: left;
+  font-size: .75rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr .cs-btn.bt2 {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 400px) {
+  .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service {
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .bill-section .bill-section-content .bill-wrapper .section-two .edit-row {
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spr {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three {
+  border: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup {
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list {
+  position: relative;
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
+  display: flex;
+  padding: 5px 0;
+  margin-right: 50px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one {
+  display: flex;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name {
+  font-weight: 600;
+  flex-basis: 60%;
+  padding-right: 15px;
+  position: relative;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax {
+  font-size: .60rem;
+  font-weight: 600;
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  color: #fda60d;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .quantity {
+  flex-basis: 20%;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
+  flex-basis: 20%;
+  text-align: right;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two {
+  display: block;
+  margin-right: 0;
+  padding: 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row {
+  padding: 10px 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
+  display: flex;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
+  display: flex;
+  flex-grow: 1;
+  margin-right: 20px;
+  justify-content: flex-end;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item {
+  flex-basis: 100%;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+  width: auto;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
+  height: 30px;
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
+  margin-left: 20px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn {
+  height: 30px;
+  line-height: 12px;
+  padding: 6px 10px;
+  text-transform: none;
+  float: left;
+  font-size: .75rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spr .cs-btn.bt2 {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl {
+    margin-right: 0;
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .selectbox1 {
+    margin-bottom: 10px;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup .spl .item.selectbox2 {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup {
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .edit-row.discoup.discoup .spr {
+    margin-top: 5px;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
+  margin-right: 50px;
+  display: flex;
+  padding: 5px 0;
+  color: #999999;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .name, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .name {
+  flex-grow: 1;
+  flex-basis: 60%;
+  padding-right: 15px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
+  flex-basis: 40%;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three {
+  padding: 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .name {
+  flex-basis: 60%;
+  font-weight: 600;
+  padding: 5px 0;
+  padding-right: 15px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.three .price {
+  flex-basis: 40%;
+  padding: 5px 0;
+  border-top: dashed 1px #dbdbdb;
+}
+
+@media only screen and (max-width: 500px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
+    margin-right: 40px;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price {
+    flex-basis: 30%;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
+    margin-right: 40px;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .bill-breakup .list .more .mat-icon-button {
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table {
+  position: relative;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content {
+  /* font-size: 1rem; */
+  font-weight: 500;
+  width: 100%;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
+  text-align: right;
+  margin-right: 50px;
+  padding: 5px 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .name {
+  width: 60%;
+  text-align: right;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+  vertical-align: text-top;
+  width: 40%;
+  text-align: right;
+  padding: 0 50px 0 0px;
+}
+
+@media(max-width:400px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+    padding: 0 25px 0 0px;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
+  font-weight: 600;
+  /* font-size: 1rem;  */
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount {
+  color: #00aef2;
+  font-size: .875rem;
+  display: block;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount span {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price {
+  font-weight: 600;
+  /* font-size: 1rem;  */
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price {
+  color: #999999;
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price {
+  font-size: .875rem;
+  font-weight: 600;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span {
+  display: block;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name span.txn, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price span.txn {
+  font-weight: 500;
+  font-size: .69rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price {
+  font-weight: 600;
+  font-size: .875rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .name .link, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.paid .price .link {
+  color: #00aef2;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
+  /* font-size: 1.1rem; */
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 500px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt {
+    margin-right: 40px;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+    flex-basis: 30%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt .price {
+    flex-basis: 40%;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row {
+  padding: 10px 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
+  display: flex;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
+  display: flex;
+  flex-grow: 1;
+  margin-right: 20px;
+  justify-content: flex-end;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item {
+  flex-basis: 48%;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
+  height: 30px;
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
+  margin-left: 20px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn {
+  height: 30px;
+  line-height: 12px;
+  padding: 6px 10px;
+  text-transform: none;
+  float: left;
+  font-size: .75rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spr .cs-btn.bt2 {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup {
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl {
+    margin-right: 0;
+    margin-bottom: 10px;
+    flex-direction: column;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .selectbox1 {
+    margin-bottom: 10px;
+  }
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .edit-row.discoup .spl .item.selectbox2 {
+    margin-left: 0;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn {
+  text-transform: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn .cs-btn.active {
+  background: #00aef2;
+  color: #fff;
+}
+
+@media only screen and (max-width: 500px) {
+  .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .bill-discount-btn {
+    display: none;
+  }
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four {
+  border-bottom: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .heading .back {
+  font-size: .75rem;
+  color: #00aef2;
+  display: table;
+  font-weight: 600;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .heading .back:before {
+  font-family: "custom-ynw" !important;
+  content: "\2e";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .heading h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer {
+  border: 1px solid #dbdbdb;
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th {
+  display: flex;
+  border-bottom: 1px solid #dbdbdb;
+  background: #dbdbdb;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th {
+  flex-basis: 33.3333%;
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+  border-right: 1px solid #fff;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th:last-child {
+  border: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing {
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap {
+  display: flex;
+  align-items: center;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td {
+  flex-basis: 33.3333%;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .date {
+  display: block;
+  font-weight: 600;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.one .time {
+  display: block;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .amt {
+  display: block;
+  font-weight: 600;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others {
+  font-size: .75rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode {
+  display: block;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title {
+  position: relative;
+  margin-right: 5px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .status .title:after, .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.two .others .mode .title:after {
+  position: absolute;
+  content: ":";
+  right: -5px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .amt {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td.three .cs-btn {
+  height: 24px;
+  line-height: 12px;
+  padding: 6px 10px;
+  text-transform: none;
+  font-size: .75rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:after {
+  border-right: 1px solid #dbdbdb;
+  height: 30px;
+  width: 1px;
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 50%;
+  margin-top: -15px;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td:last-child:after {
+  display: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table {
+  margin: 10px;
+  border: 1px solid #dbdbdb;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th {
+  text-align: center;
+  padding: 5px;
+  background: transparent;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th h5 {
+  font-size: .875rem;
+  margin: 0 auto;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 {
+  display: flex;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th {
+  flex-basis: 33.3333%;
+  padding: 5px;
+  text-align: center;
+  border-right: 1px solid #dbdbdb;
+  font-weight: 600;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .table-th1 .th:last-child {
+  border: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody {
+  display: flex;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td {
+  flex-basis: 33.3333%;
+  padding: 5px;
+  text-align: center;
+  border-right: 1px solid #dbdbdb;
+  font-size: .75rem;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .refunds-table .tbody .td:last-child {
+  border: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing:last-child {
+  border: none;
+}
+
+.bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row {
+  margin-right: 50px;
+}
+
+.bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .discount-row, .bill-section .bill-section-content .bill-wrapper.viewbill .section-three .bill-breakup .list .list-content .c-row .coupon-row {
+  margin-right: 0px;
+}
+
+.bill-section .bill-section-content .bill-wrapper.viewbill .section-three .amount-table .amt-content .amt {
+  margin-right: 50px;
+}
+
+.bill-section .mat-form-field-infix {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.bill-section .mat-form-field {
+  width: 100%
+}
+
+.bill-section .mat-form-field-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+.bill-section .mat-form-field-underline {
+  background-color: rgba(0, 0, 0, 0);
+  display: none;
+}
+
+.bill-section .mat-form-field-appearance-legacy {
+  background-color: rgba(0, 0, 0, 0)
+}
+
+.bill-section .mat-input-element::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0)
+}
+
+.bill-section .mat-input-element {
+  padding: 10px;
+  background: white;
+  border: 1px solid #b6cdd8;
+  height: 40px;
+}
+
+.bill-section .add-item .mat-button-wrapper {
+  padding-left: 10px !important;
+}
+
+.bill-section .bill-section-content .bill-wrapper .section-one .details {
+  font-size: .800rem
+}
+
+.bill-section .actiondiv {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+.bill-section-content .mat-select {
+  height: 30px !important;
+  padding: 7px !important;
+}
+
+.bill-section-content .notes {
+  padding-top: 15px!important
+}
+
+.bill-section-content .discoup .border-tp {
+  border-top: 1px solid #ccc;
+}
+
+.bill-section-content .discoup .spr .spl {
+  padding-top: 10px
+}
+
+.bill-section-content .list .section-two {
+  border-bottom: none !important
+}
+
+/* .bill-section-content {min-width: 375px;} */
+
+.commonpopupmainclass .bill-section-content div {
+  font-size: 0.75rem!important
+}
+
+.billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .name, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.tax .price, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .billpopup .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
+  font-size: 0.80rem!important
+}
+
+.coupon-section .coupon-outer .ig {
+  float: right!important;
+}
+
+.cpn-input {
+  max-width: 300px!important;
+  float: right;
+}
+
+.cpn-input input {
+  height: 30px!important;
+}
+
+@media only screen and (max-width: 500px) {
+  .billpopup .mat-dialog-content .bill-wrapper .section-one .details {
+    flex-direction: row !important;
+    /* font-size:.65rem!important */
+  }
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-one {
+  padding-bottom: 5px!important;
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-three {
+  padding-top: 5px!important;
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list {
+  margin-bottom: 5px!important;
+  padding-bottom: 5px!important
+}
+
+.billpopup .mat-dialog-content {
+  max-height: 80vh !important;
+  overflow: scroll
+}
+
+.billpopup .mat-dialog-content .bill-section-content .bill-wrapper {
+  min-width: 375px;
+  max-width: 500px;
+  margin: none !important;
+  float: left;
+}
+
 .billpopup .bill-section-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row {
-  text-align: left !important; }
-  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax{right:auto !important}
-  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price,
-  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price,
-  .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price{text-align: right}
+  text-align: left !important;
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .name .tax {
+  right: auto !important
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
+  text-align: right
+}
+
 /* coupon styles */
-      /* .coupon_cancel {   
+
+/* .coupon_cancel {   
         color: #00aef2;
         border: none;
         outline: 0;
@@ -539,180 +879,284 @@
         cursor: pointer;
       } */
 
-      .coupon_success{
-        font-size: 10px;
-        color : #008000;
-        padding-left: 5px;
-      }
-      .coupon-error{
-        font-size: 10px;
-        color : #ee1919;
-      }
-      .coupon-code{
-        padding: 0px !important;
-        font-size: 16px;
-        min-width: 160px;
-        outline: 0;
-        width: 280px;
-        max-width: 100%;
-      }
-      .couponcode-apply {
-        position: relative;
-        left: -60px;
-        font-size:.75rem !important;
-        background-color: transparent;
-    }
-    .no-padding {
-      padding: 0px !important;
-    }
-    .no-margin {
-      margin: 0px !important;
-    }
-    .coupon-apply-btn {
-      height: 35px !important;
-      border-radius: 0px;
-      background-color: #fff;
-      padding-left: 10px !important;
-      padding-right: 10px !important;
-    }
-    .coupon-text {
-      border-right: none !important;
-      border: 1px solid #b6cdd8 !important;
-      border-right: none !important;
-    }
-    .coupon::selection{
-      border-right: none !important;
-      border: 1px solid #b6cdd8 !important;
-    }
-    .couponcode-apply1 {
-      outline: 0px;
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      background-color: #FFFFFF;
-      border: 0px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: .75rem;
-      color: #00aef2;
-      text-transform: uppercase;
-      cursor: pointer;
+.coupon_success {
+  font-size: 10px;
+  color: #008000;
+  padding-left: 5px;
+}
 
-    }
+.coupon-error {
+  font-size: 10px;
+  color: #ee1919;
+}
 
-    .report .card.w-dta{margin:0px !important;padding: 0px !important}
-    .report .dash-list h6 {padding:5px 5px 5px 20px!important;}
-    .coupon-outer {padding-top: 10px;}
-    .bill_item_service {
-      width: 50px;
-      color: #999999;
-      font-size: .60rem;
-      /* padding-right: 5px; */
-      float: right;
-      text-align: right;
-      text-transform:uppercase;
-    }
-    sup {color: #fda60d;}
-    .billpopup .mat-dialog-container {width: auto;max-width:500px !important}
-    .billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title:after {content:none!important}
-    .billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title {font-weight: 500 !important}
-    .rightalign {text-align: right!important;}
-    .fl-right{float: right !important;}
-    .fl-left{float: left !important;}
-    .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {text-align: right}
-    .billpopup .mat-dialog-container .two-col .name {flex-basis:75%!important;text-align: right!important;}
-    .billpopup .mat-dialog-container .two-col .price {flex-basis:25%!important;text-align: right!important;}
-    .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price,
-    .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price{flex-basis:20%!important;}
-    .cust-btn {text-transform: none!important;margin-right: 10px;}
-     .billpopup .bill-section-content .title-sec {
-      height: auto;
-      font-weight: 600;
-      font-size: 0.875rem!important;
-      margin: 0px 0 5px 0px;
-      padding: 5px !important;
-     }
-     .jc-sec-bill .section-two{padding: 5px 0 15px 0!important;
-    border:none!important}
-    .bill-section-content .global-icons button {float: right;}
-    .bill-section-content .global-icons {
-    padding-bottom: 30px;
-    border-bottom: 1px solid #ccc;
-    }
-    .receipt .bill-content .section-three .bill-summary{border-bottom: none !important}
-    .other-section {border-top:1px solid #ccc!important}
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #receipt, #receipt * {
-        visibility: visible;
-      }
-      #receipt {
-        position:relative;
-        left: 0;
-        top: 0;
-      }
-      #receipt button{display: none !important;}
-      #receipt .link {text-decoration: none !important;color:#000 !important;}
-      #receipt .lg-tbl {display: none !important;}
-    }
-    .adjust-delay-heading {
-      font-size: 1.575rem;
-      color: #000;
-      padding-top: 15px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      margin-bottom: .5rem;
-      line-height: 1.2;
-      color: inherit;
-      margin-top: 0;
-      letter-spacing: .2px;
-      text-align: left;
-    }
-    .adjust-delay-para {
-      font-size: 1rem;
-      line-height: 1.75;
-      letter-spacing: .3px;
-      margin-top: 0;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 400;
-      text-align: left;
-    }
-    .adjust-delay-num {
-      line-height: 1.75;
-      letter-spacing: .3px;
-    }
-    .coupon-text-bill {height:30px!important}
-    .paytext .cust-btn {margin-left: 10px;  height: 25px;
-      line-height: 12px;
-      padding: 5px 10px;
-      text-transform: none;
-      font-size: .75rem;}
-      .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext span{
-        color: darkorange !important;
-      }
-      .btm-pad {padding-bottom:5px !important;}
-      .btm-pad-20 {padding-bottom:20px !important;}
-      @media(max-width:500px) {
-        .cdk-overlay-container .mat-autocomplete-panel .mat-option{line-height: 15px!important; }
-      }
+.coupon-code {
+  padding: 0px !important;
+  font-size: 16px;
+  min-width: 160px;
+  outline: 0;
+  width: 280px;
+  max-width: 100%;
+}
 
-      .content.loc-list .vw-rpt .item .ttle {
-        color: #999999;
-        display: block;
-        font-weight: 500;
-    }
-    .content.loc-list .vw-rpt .item {
-      font-weight: 600;
-      float: left;
-      margin-bottom: 20px;
+.couponcode-apply {
+  position: relative;
+  left: -60px;
+  font-size: .75rem !important;
+  background-color: transparent;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.no-margin {
+  margin: 0px !important;
+}
+
+.coupon-apply-btn {
+  height: 35px !important;
+  border-radius: 0px;
+  background-color: #fff;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.coupon-text {
+  border-right: none !important;
+  border: 1px solid #b6cdd8 !important;
+  border-right: none !important;
+}
+
+.coupon::selection {
+  border-right: none !important;
+  border: 1px solid #b6cdd8 !important;
+}
+
+.couponcode-apply1 {
+  outline: 0px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #FFFFFF;
+  border: 0px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: .75rem;
+  color: #00aef2;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.report .card.w-dta {
+  margin: 0px !important;
+  padding: 0px !important
+}
+
+.report .dash-list h6 {
+  padding: 5px 5px 5px 20px!important;
+}
+
+.coupon-outer {
+  padding-top: 10px;
+}
+
+.bill_item_service {
+  width: 50px;
+  color: #999999;
+  font-size: .60rem;
+  /* padding-right: 5px; */
+  float: right;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+sup {
+  color: #fda60d;
+}
+
+.billpopup .mat-dialog-container {
+  width: auto;
+  max-width: 500px !important
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title:after {
+  content: none!important
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-one .details .columns .title {
+  font-weight: 500 !important
+}
+
+.rightalign {
+  text-align: right!important;
+}
+
+.fl-right {
+  float: right !important;
+}
+
+.fl-left {
+  float: left !important;
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row {
+  text-align: right
+}
+
+.billpopup .mat-dialog-container .two-col .name {
+  flex-basis: 75%!important;
+  text-align: right!important;
+}
+
+.billpopup .mat-dialog-container .two-col .price {
+  flex-basis: 25%!important;
+  text-align: right!important;
+}
+
+.billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
+  flex-basis: 20%!important;
+}
+
+.cust-btn {
+  text-transform: none!important;
+  margin-right: 10px;
+}
+
+.billpopup .bill-section-content .title-sec {
+  height: auto;
+  font-weight: 600;
+  font-size: 0.875rem!important;
+  margin: 0px 0 5px 0px;
+  padding: 5px !important;
+}
+
+.jc-sec-bill .section-two {
+  padding: 5px 0 15px 0!important;
+  border: none!important
+}
+
+.bill-section-content .global-icons button {
+  float: right;
+}
+
+.bill-section-content .global-icons {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+.receipt .bill-content .section-three .bill-summary {
+  border-bottom: none !important
+}
+
+.other-section {
+  border-top: 1px solid #ccc!important
+}
+
+@media print {
+  body * {
+    visibility: hidden;
   }
-  /* .content.loc-list .card .copy .c-ot {
+  #receipt, #receipt * {
+    visibility: visible;
+  }
+  #receipt {
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+  #receipt button {
+    display: none !important;
+  }
+  #receipt .link {
+    text-decoration: none !important;
+    color: #000 !important;
+  }
+  #receipt .lg-tbl {
+    display: none !important;
+  }
+}
+
+.adjust-delay-heading {
+  font-size: 1.575rem;
+  color: #000;
+  padding-top: 15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+  color: inherit;
+  margin-top: 0;
+  letter-spacing: .2px;
+  text-align: left;
+}
+
+.adjust-delay-para {
+  font-size: 1rem;
+  line-height: 1.75;
+  letter-spacing: .3px;
+  margin-top: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  text-align: left;
+}
+
+.adjust-delay-num {
+  line-height: 1.75;
+  letter-spacing: .3px;
+}
+
+.coupon-text-bill {
+  height: 30px!important
+}
+
+.paytext .cust-btn {
+  margin-left: 10px;
+  height: 25px;
+  line-height: 12px;
+  padding: 5px 10px;
+  text-transform: none;
+  font-size: .75rem;
+}
+
+.consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .details .lt .lt0.payment .paytext span {
+  color: darkorange !important;
+}
+
+.btm-pad {
+  padding-bottom: 5px !important;
+}
+
+.btm-pad-20 {
+  padding-bottom: 20px !important;
+}
+
+@media(max-width:500px) {
+  .cdk-overlay-container .mat-autocomplete-panel .mat-option {
+    line-height: 15px!important;
+  }
+}
+
+.content.loc-list .vw-rpt .item .ttle {
+  color: #999999;
+  display: block;
+  font-weight: 500;
+}
+
+.content.loc-list .vw-rpt .item {
+  font-weight: 600;
+  float: left;
+  margin-bottom: 20px;
+}
+
+/* .content.loc-list .card .copy .c-ot {
     display: flex; */
-    /* font-size: .875rem; */
-    /* margin-bottom: 20px;
+
+/* font-size: .875rem; */
+
+/* margin-bottom: 20px;
 } */
+
 .content.loc-list .vw-rpt {
   /* display: flex; */
   font-size: .875rem;
@@ -721,107 +1165,182 @@
 /* .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .paytm-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .cc-det .form-group mat-form-field, .paysettings-tab .mat-tab-body-wrapper .mat-tab-body .mat-tab-body-content .outermost .taxouter .form-group mat-form-field {
   width: auto !important;
 } */
+
 .bill_btns .mat-button {
   text-transform: none !important;
 }
-.btn-additem {float: right; margin-top:-3px;}
+
+.btn-additem {
+  float: right;
+  margin-top: -3px;
+}
 
 .txt-pay-amount {
-padding: 5px 5px 5px 10px !important;
+  padding: 5px 5px 5px 10px !important;
 }
-.pay-wb .spl {flex-grow:0 !important;float: right !important;}
- 
-.pay-wb {border-bottom: none !important;padding:0px !important;}
- 
-.pay-wb .bt2 {margin-left:0!important}
 
-.pay-wb button {margin-bottom: 5px;}
-.custom-help .helprighticon { padding: 0px 10px 0px 7px !important;
+.pay-wb .spl {
+  flex-grow: 0 !important;
+  float: right !important;
+}
+
+.pay-wb {
+  border-bottom: none !important;
+  padding: 0px !important;
+}
+
+.pay-wb .bt2 {
+  margin-left: 0!important
+}
+
+.pay-wb button {
+  margin-bottom: 5px;
+}
+
+.custom-help .helprighticon {
+  padding: 0px 10px 0px 7px !important;
   font-size: 1.1rem;
-   cursor: pointer;}
+  cursor: pointer;
+}
 
-  .pdetail .wt-tme.notallowed {
-    opacity: .6;
-    font-style: italic;
-  }
+.pdetail .wt-tme.notallowed {
+  opacity: .6;
+  font-style: italic;
+}
+
 .padding-tp-10 {
-  padding-top:10px;
+  padding-top: 10px;
 }
+
 .pad-rt-10 {
-  padding-right:10px !important;
+  padding-right: 10px !important;
 }
+
 .pad-bt-10 {
-  padding-bottom:10px !important;
+  padding-bottom: 10px !important;
 }
+
 .mgn-bt-10 {
-  margin-bottom:10px !important;
+  margin-bottom: 10px !important;
 }
+
 .mgn-bt-5 {
-  margin-right:5px !important;
+  margin-right: 5px !important;
 }
+
 .mgn-up-10 {
-  margin-top:10px !important;
+  margin-top: 10px !important;
 }
+
 .brd-bt {
- border-bottom: 1px solid #ddd !important;
+  border-bottom: 1px solid #ddd !important;
 }
+
 .ot-it div .col-md-6 {
   display: inline !important;
 }
+
 .td-i-info {
   color: black !important;
   float: right !important;
   padding-left: 10px !important;
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
   .coupon-card .table-outer table tbody tr td:first-child {
-  min-width : 150px !important;
+    min-width: 150px !important;
+  }
 }
-}
-.patm_txtgrp .paytm-det .mat-form-field{
+
+.patm_txtgrp .paytm-det .mat-form-field {
   width: auto !important;
 }
-.invalid {border:1px solid red !important; color : red !important;}
 
-.checkin-consumer .mat-dialog-container {width: auto;max-width:450px !important}
-.checkin-provider .mat-dialog-container {max-width:450px !important}
+.invalid {
+  border: 1px solid red !important;
+  color: red !important;
+}
 
+.checkin-consumer .mat-dialog-container {
+  width: auto;
+  max-width: 450px !important
+}
+
+.checkin-provider .mat-dialog-container {
+  max-width: 450px !important
+}
 
 .checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action {
   width: 100%;
-  margin-top:15px;
+  margin-top: 15px;
 }
-.checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action .bt1,
+
+.checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action .bt1, .checkin-provider .mat-dialog-container .search_provider .create_new .cs-btn {
+  margin-left: 0px !important;
+}
+
 .checkin-provider .mat-dialog-container .search_provider .create_new .cs-btn {
-  margin-left:0px !important;
+  margin-top: 10px;
 }
-.checkin-provider .mat-dialog-container .search_provider .create_new .cs-btn {
-margin-top:10px;
+
+.checkin-consumer .mat-dialog-container .coupon-outer .form-group input[type="text"] {
+  height: 35px !important;
 }
-.checkin-consumer .mat-dialog-container .coupon-outer .form-group input[type="text"] {height:35px !important;} */
-.checkin-consumer .coupon-add-msg {font-size:0.75rem !important;color:green; padding: 5px !important;}
-.checkin-consumer .read-more-checkin {font-size:0.60rem !important; color:#00aef2; font-weight: 800}
-.checkin-consumer .read-more-checkin:hover {text-decoration: underline;}
-.checkin-consumer .coupon-add-msg .fa-trash {padding-left:10px;}
-.read-more-contents {padding: 10px !important; font-size: 0.60rem !important;}
-.checkin-consumer .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body,
-.checkin-provider .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body{margin-top:10px;}
-.checkin-consumer .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button,
-.checkin-provider .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button
-{margin-top:5px;}
-.checkin-provider .bt3{display: block;}
-.search-text label{display:none!important;}
+
+*/ .checkin-consumer .coupon-add-msg {
+  font-size: 0.75rem !important;
+  color: green;
+  padding: 5px !important;
+}
+
+.checkin-consumer .read-more-checkin {
+  font-size: 0.60rem !important;
+  color: #00aef2;
+  font-weight: 800
+}
+
+.checkin-consumer .read-more-checkin:hover {
+  text-decoration: underline;
+}
+
+.checkin-consumer .coupon-add-msg .fa-trash {
+  padding-left: 10px;
+}
+
+.read-more-contents {
+  padding: 10px !important;
+  font-size: 0.60rem !important;
+}
+
+.checkin-consumer .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body, .checkin-provider .mat-dialog-content .mainouter .queue-outer .q-list-outer .queue-body {
+  margin-top: 10px;
+}
+
+.checkin-consumer .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button, .checkin-provider .mat-dialog-content .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button {
+  margin-top: 5px;
+}
+
+.checkin-provider .bt3 {
+  display: block;
+}
+
+.search-text label {
+  display: none!important;
+}
+
 .search-text .item-category {
   color: #999999;
   font-size: .60rem;
   /* padding-right: 5px; */
   float: right;
   text-align: right;
-  text-transform:uppercase;
+  text-transform: uppercase;
 }
+
 .adwordbronzerow {
   background: rgba(208, 146, 83, 0.242);
 }
+
 .brozelicensecol {
   background: rgba(208, 146, 83, 0.242);
   font-size: .875rem;
@@ -831,189 +1350,315 @@ margin-top:10px;
   letter-spacing: .3px;
   font-family: 'Montserrat', sans-serif;
 }
-.bcrumb {padding-right:5px !important;}
-.search-text .mat-option {height: auto!important;}
+
+.bcrumb {
+  padding-right: 5px !important;
+}
+
+.search-text .mat-option {
+  height: auto!important;
+}
 
 .lc-box .helprighticon {
-  padding-left: 5px !important; 
+  padding-left: 5px !important;
 }
-.lc-box .helprighticon i{ padding-left: 10px !important;}
 
-@media only screen and (max-width: 480px){
-  .col-12.no-padding-small {padding-left: 0px !important;padding-right: 0px !important;}
+.lc-box .helprighticon i {
+  padding-left: 10px !important;
 }
-.mob-prefix {margin-top : -1px !important;}
+
+@media only screen and (max-width: 480px) {
+  .col-12.no-padding-small {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+}
+
+.mob-prefix {
+  margin-top: -1px !important;
+}
+
 .lic-page .addbt:before {
   top: -2px !important;
   font-size: 1.10em !important;
 }
-.adjust-delay .mat-dialog-container {max-width:450px !important}
-.adjust-delay .mat-dialog-container form .form-group {margin-bottom:0.25em!important;}
-.adjustdelay .form-group .col-form-label {margin-bottom: 0px !important}
-.blue {color:blue !important}
-.red {color:red !important}
-.white {color: white !important}
-.black {color: black !important}
-.clear-filter {margin-top: 2px;margin-right:5px; background: url(../images/icons8-clear-filters-40.png) no-repeat scroll 0 0/20px 20px !important;}
-.fltr .mat-content {display: inline !important}
-.fltr span {margin-left:none!important; float: right!important;}
-.fltr .search_sort_display span {float: left!important;}
 
-.signupmainclass .mat-dialog-content .message-one .p1, .loginmainclass .mat-dialog-content .message-one .p1, .moreoptionsmainclass .mat-dialog-content .message-one .p1, .forgotpasswordmainclass .mat-dialog-content .message-one .p1, .commonpopupmainclass .mat-dialog-content .message-one .p1, .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1, .specialclass .mat-dialog-content .message-one .p1{
+.adjust-delay .mat-dialog-container {
+  max-width: 450px !important
+}
+
+.adjust-delay .mat-dialog-container form .form-group {
+  margin-bottom: 0.25em!important;
+}
+
+.adjustdelay .form-group .col-form-label {
+  margin-bottom: 0px !important
+}
+
+.blue {
+  color: blue !important
+}
+
+.red {
+  color: red !important
+}
+
+.white {
+  color: white !important
+}
+
+.black {
+  color: black !important
+}
+
+.clear-filter {
+  margin-top: 2px;
+  margin-right: 5px;
+  background: url(../images/icons8-clear-filters-40.png) no-repeat scroll 0 0/20px 20px !important;
+}
+
+.fltr .mat-content {
+  display: inline !important
+}
+
+.fltr span {
+  margin-left: none!important;
+  float: right!important;
+}
+
+.fltr .search_sort_display span {
+  float: left!important;
+}
+
+.signupmainclass .mat-dialog-content .message-one .p1, .loginmainclass .mat-dialog-content .message-one .p1, .moreoptionsmainclass .mat-dialog-content .message-one .p1, .forgotpasswordmainclass .mat-dialog-content .message-one .p1, .commonpopupmainclass .mat-dialog-content .message-one .p1, .googlemainmappopup .mat-dialog-content .message-one .p1, .outer-card .mat-dialog-content .message-one .p1, .consumerpopupmainclass .mat-dialog-content .message-one .p1, .specialclass .mat-dialog-content .message-one .p1 {
   padding-bottom: 30px !important;
   color: black !important;
 }
+
 .otp_box {
   margin-top: 20px;
 }
+
 .info-lst {
   padding: 0 0 0 20px !important;
   background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/15px 24px !important;
 }
+
 .package-desc {
   padding: 10px !important;
-  color:green !important;
+  color: green !important;
   font-size: 0.80em !important;
 }
+
 .pass_butt {
   padding: 10px 20px !important;
 }
+
 /*
 Overriding mat input style
 */
-.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container, .loginmainclass,
-.ynw-common-form .mat-dialog-container{
+
+.signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container, .loginmainclass, .ynw-common-form .mat-dialog-container {
   width: 400px !important;
 }
-.smallform .mat-dialog-container{
+
+.smallform .mat-dialog-container {
   width: 500px !important;
 }
- .signup-form .mat-form-field-label, 
- .login-form .mat-form-field-label,
- .ynw-common-form .mat-form-field-label,
- .ynw-common-form-nm .mat-form-field-label {
+
+.signup-form .mat-form-field-label, .login-form .mat-form-field-label, .ynw-common-form .mat-form-field-label, .ynw-common-form-nm .mat-form-field-label {
   width: auto !important;
   margin-bottom: 0px !important;
   background: white !important;
-  margin-left:5px !important;
+  margin-left: 5px !important;
 }
-.signup-form .mat-form-field.mat-focused .mat-form-field-label, 
-.signup-form .mat-form-field.ng-valid .mat-form-field-label,
-.ynw-common-form .mat-form-field.mat-focused .mat-form-field-label, 
-.ynw-common-form .mat-form-field.ng-valid .mat-form-field-label,
-.ynw-common-form-nm .mat-form-field.mat-focused .mat-form-field-label, 
-.ynw-common-form-nm .mat-form-field.ng-valid .mat-form-field-label,
-.login-form .mat-form-field.mat-focused .mat-form-field-label,
-.login-form .mat-form-field.ng-valid .mat-form-field-label  
-{
+
+.signup-form .mat-form-field.mat-focused .mat-form-field-label, .signup-form .mat-form-field.ng-valid .mat-form-field-label, .ynw-common-form .mat-form-field.mat-focused .mat-form-field-label, .ynw-common-form .mat-form-field.ng-valid .mat-form-field-label, .ynw-common-form-nm .mat-form-field.mat-focused .mat-form-field-label, .ynw-common-form-nm .mat-form-field.ng-valid .mat-form-field-label, .login-form .mat-form-field.mat-focused .mat-form-field-label, .login-form .mat-form-field.ng-valid .mat-form-field-label {
   color: #3f51b5 !important;
   z-index: 5;
 }
-.signup-form .mat-form-field-appearance-legacy .mat-form-field-label,
-.ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
-.ynw-common-form-nm .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty,
-.login-form .mat-form-field-appearance-legacy .mat-form-field-label
-{ color :rgb(167, 163, 163) !important;}
-.signup-form .mob-prefx .mat-form-field-label,
-.ynw-common-form .mob-prefx .mat-form-field-label,
-.ynw-common-form-nm .mob-prefx .mat-form-field-label,
-.login-form .mob-prefx .mat-form-field-label
- {
+
+.signup-form .mat-form-field-appearance-legacy .mat-form-field-label, .ynw-common-form .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty, .ynw-common-form-nm .mat-form-field-appearance-legacy .mat-form-field-label.mat-empty, .login-form .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: rgb(167, 163, 163) !important;
+}
+
+.signup-form .mob-prefx .mat-form-field-label, .ynw-common-form .mob-prefx .mat-form-field-label, .ynw-common-form-nm .mob-prefx .mat-form-field-label, .login-form .mob-prefx .mat-form-field-label {
   z-index: 5 !important;
 }
-.signup-form .mob-prefix span,
-.ynw-common-form .mob-prefix span,
-.ynw-common-form-nm .mob-prefix span,
-.login-form .mob-prefix span
-{padding:15px 10px 0px 5px !important; font-size:0.875rem !important}
 
-.signup-form .mat-input-element, 
-.signup-form .mat-select,
-.ynw-common-form .mat-input-element, 
-.ynw-common-form .mat-select,
-.ynw-common-form-nm .mat-input-element, 
-.ynw-common-form-nm .mat-select,
-.login-form .mat-input-element, 
-.login-form .mat-select {
+.signup-form .mob-prefix span, .ynw-common-form .mob-prefix span, .ynw-common-form-nm .mob-prefix span, .login-form .mob-prefix span {
+  padding: 15px 10px 0px 5px !important;
+  font-size: 0.875rem !important
+}
+
+.signup-form .mat-input-element, .signup-form .mat-select, .ynw-common-form .mat-input-element, .ynw-common-form .mat-select, .ynw-common-form-nm .mat-input-element, .ynw-common-form-nm .mat-select, .login-form .mat-input-element, .login-form .mat-select {
   padding: 15px 0px 0px 5px !important;
 }
-.ynw-common-form-nm .mat-form-field-underline {display: none !important}
-.mat-form-field textarea {margin-top:4px !important}
-.ynw-common-form .normalpicker .mat-input-element,
-.ynw-common-form-nm .normalpicker .mat-input-element {padding:10px !important}
-.starttimediv label {margin-bottom: 0px !important}
-.endtimediv label {margin-bottom: 0px !important}
-.signup-form .mat-form-field-label-wrapper,
-.ynw-common-form .mat-form-field-label-wrapper,
 
-.login-form .mat-form-field-label-wrapper
-/* {top:-.175em !important} */
-{top:.1em !important}
-.ynw-common-form-nm .mat-form-field-label-wrapper {
-  top:.3em !important
+.ynw-common-form-nm .mat-form-field-underline {
+  display: none !important
 }
+
+.mat-form-field textarea {
+  margin-top: 4px !important
+}
+
+.ynw-common-form .normalpicker .mat-input-element, .ynw-common-form-nm .normalpicker .mat-input-element {
+  padding: 10px !important
+}
+
+.starttimediv label {
+  margin-bottom: 0px !important
+}
+
+.endtimediv label {
+  margin-bottom: 0px !important
+}
+
+.signup-form .mat-form-field-label-wrapper, .ynw-common-form .mat-form-field-label-wrapper, .login-form .mat-form-field-label-wrapper
+/* {top:-.175em !important} */
+
+  {
+  top: .1em !important
+}
+
+.ynw-common-form-nm .mat-form-field-label-wrapper {
+  top: .3em !important
+}
+
 .ynw-common-form-nm .mat-form-field-appearance-legacy .mat-form-field-wrapper {
   padding-bottom: 0px !important
 }
-.ynw-common-form-nm .mat-form-field {display: block !important}
 
-.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper,
-  {top:-.175em !important}
+.ynw-common-form-nm .mat-form-field {
+  display: block !important
+}
 
- .form-control:focus {
+.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper, {
+  top: -.175em !important
+}
+
+.form-control:focus {
   color: #495057;
   background-color: #fff !important;
   border-color: #00aef2 !important;
-  outline: 0  !important;
-  box-shadow: 0 0 0 0 #fff  !important;
-} 
+  outline: 0 !important;
+  box-shadow: 0 0 0 0 #fff !important;
+}
+
 .input-group-text {
   background: #fff !important;
-  border:none !important;
-  border-bottom: 1px solid #ccc !important;  
+  border: none !important;
+  border-bottom: 1px solid #ccc !important;
 }
-.form-control:focus .input-group-text {border-color: #00aef2 !important;}
+
+.form-control:focus .input-group-text {
+  border-color: #00aef2 !important;
+}
+
 .ksk app-kioskheader .ksk-hd .ksk-company-logo {
   flex-grow: 0!important;
-  order: 2!important;}
+  order: 2!important;
+}
+
 .ksk app-kioskheader .ksk-hd .ksk-ynw-logo {
   flex-grow: 1!important;
-  display: flex!important; }
-  .number-ip-sm {max-width: 80px !important;}
-  .number-ip-sm {max-width: 80px !important;}
-  .otp_scr .number-ip-sm {max-width: 150px !important;}
-  .otp_scr .mat-button{padding: 10px 10px !important}
-  .pwd_cancel_scr {padding: 30px !important}
-  .normal-link {color: #00aef2 !important;
-  font-weight: 500;
-  }
-  .normal-link b {font-size: 0.875rem !important; cursor: pointer !important; text-decoration: underline !important}
-  .ynw-dynamic app-field-error-display .sts-msg.error {background: #fff !important; color: red !important; padding-left: 0px !important;}
-  .dashboard .card.w-dta {margin-top: 0px !important }
-  .dashboard .add-nloc-s {padding: 1px 10px 1px 15px !important}
+  display: flex!important;
+}
 
-  @media only screen and (max-width: 484px) {
-    .is-bx .pt-btm .ico li {padding: 0px !important; width: 40px !important;height: 40px !important}
-    .emltbl .tbl-list li .otr .ctd {padding-bottom: 5px !important; padding-top: 3px !important}
+.number-ip-sm {
+  max-width: 80px !important;
+}
+
+.number-ip-sm {
+  max-width: 80px !important;
+}
+
+.otp_scr .number-ip-sm {
+  max-width: 150px !important;
+}
+
+.otp_scr .mat-button {
+  padding: 10px 10px !important
+}
+
+.pwd_cancel_scr {
+  padding: 30px !important
+}
+
+.normal-link {
+  color: #00aef2 !important;
+  font-weight: 500;
+}
+
+.normal-link b {
+  font-size: 0.875rem !important;
+  cursor: pointer !important;
+  text-decoration: underline !important
+}
+
+.ynw-dynamic app-field-error-display .sts-msg.error {
+  background: #fff !important;
+  color: red !important;
+  padding-left: 0px !important;
+}
+
+.dashboard .card.w-dta {
+  margin-top: 0px !important
+}
+
+.dashboard .add-nloc-s {
+  padding: 1px 10px 1px 15px !important
+}
+
+@media only screen and (max-width: 484px) {
+  .is-bx .pt-btm .ico li {
+    padding: 0px !important;
+    width: 40px !important;
+    height: 40px !important
   }
+  .emltbl .tbl-list li .otr .ctd {
+    padding-bottom: 5px !important;
+    padding-top: 3px !important
+  }
+}
+
 @media only screen and (max-width: 992px) {
-  .b-queue {margin-top: 5px !important;}
+  .b-queue {
+    margin-top: 5px !important;
+  }
 }
+
 @media only screen and (max-width: 512px) {
-  .b-loc {margin-top: 5px !important;}
+  .b-loc {
+    margin-top: 5px !important;
+  }
 }
+
 @media only screen and (max-width: 512px) {
-  .b-service {margin-top: 5px !important;}
+  .b-service {
+    margin-top: 5px !important;
+  }
 }
+
 @media only screen and (max-width: 337px) {
-  .b-delay {margin-top: 5px !important;}
+  .b-delay {
+    margin-top: 5px !important;
+  }
 }
-.pwd_cancel_scr .mat-dialog-actions .bt2 {padding: 5px 10px !important}
-.cancel-btn-color.mat-button {background-color: #ddd !important}
+
+.pwd_cancel_scr .mat-dialog-actions .bt2 {
+  padding: 5px 10px !important
+}
+
+.cancel-btn-color.mat-button {
+  background-color: #ddd !important
+}
+
 .delay-btn {
   display: flex;
   margin-left: 10px;
-  background : transparent;
+  background: transparent;
   /* border: 1px solid rgba(0, 174, 242, .8); */
   -webkit-border-radius: 30px;
   border-radius: 30px;
@@ -1028,9 +1673,19 @@ Overriding mat input style
   -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
 }
-.delay-btn button.bt3{background: transparent !important;border-radius: 30px !important;border:0px !important; 
-  text-transform: none !important; padding: 5px !important}
-.delay-btn button.bt3:hover {background: #00aef2 !important;}
+
+.delay-btn button.bt3 {
+  background: transparent !important;
+  border-radius: 30px !important;
+  border: 0px !important;
+  text-transform: none !important;
+  padding: 5px !important
+}
+
+.delay-btn button.bt3:hover {
+  background: #00aef2 !important;
+}
+
 .delay-btn i {
   padding: 3px 10px 5px 5px;
   color: #222223;
@@ -1043,177 +1698,296 @@ Overriding mat input style
   -webkit-transition: all 300ms;
   transition: all 300ms;
 }
-.mainouter.checkin-page  .service-outer, .mainouter.checkin-page .queue-outer{
+
+.mainouter.checkin-page .service-outer, .mainouter.checkin-page .queue-outer {
   border-bottom: none!important;
 }
-.loginmainclass .mat-dialog-actions .mat-button{
+
+.loginmainclass .mat-dialog-actions .mat-button {
   margin-right: 10px!important;
 }
-.text-link:hover {color: #00aef2 !important;
-  cursor: pointer;}
-.bcrumb {display: block !important; height: auto !important}
-.bcrumb div:first-child {display: flex !important; float: left !important;}
-.bcrumb div.actions {display: flex !important; justify-content: flex-end !important; float: right !important}
-.bcrumb span.bt6 {margin-right:5px !important; }
-.bcrumb span.bt6:last-child {margin-right:0px !important; }
-.bcrumb .b-delay i {padding-left:5px !important; color:#000 !important}
-.bcrumb span.bt6 {border :1px solid #1873f2 !important; float: right !important;}
-.cert{
+
+.text-link:hover {
+  color: #00aef2 !important;
+  cursor: pointer;
+}
+
+.bcrumb {
+  display: block !important;
+  height: auto !important
+}
+
+.bcrumb div:first-child {
+  display: flex !important;
+  float: left !important;
+}
+
+.bcrumb div.actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  float: right !important
+}
+
+.bcrumb span.bt6 {
+  margin-right: 5px !important;
+}
+
+.bcrumb span.bt6:last-child {
+  margin-right: 0px !important;
+}
+
+.bcrumb .b-delay i {
+  padding-left: 5px !important;
+  color: #000 !important
+}
+
+.bcrumb span.bt6 {
+  border: 1px solid #1873f2 !important;
+  float: right !important;
+}
+
+.cert {
   font-size: 0.75rem;
 }
+
 .form-group textarea, .form-check textarea {
   min-height: 70px !important;
   line-height: 1.5;
 }
+
 .dashboard .card.w-dta .dash-list .ctrls {
   padding: 0px !important;
 }
+
 @media only screen and (max-width: 433px) {
   .dashboard .card.w-dta .dash-list .ctrls ul li span {
     padding: 0 9px !important;
     font-size: 0.60rem !important;
   }
 }
-.lic-sml {font-size: 0.5rem !important; cursor: none !important; color: #1873f2 !important}
-.pub-profl.content .col-a .card .pubs.w-dta .ctrl .ct-l {width:70% !important}
+
+.lic-sml {
+  font-size: 0.5rem !important;
+  cursor: none !important;
+  color: #1873f2 !important
+}
+
+.pub-profl.content .col-a .card .pubs.w-dta .ctrl .ct-l {
+  width: 70% !important
+}
+
 .content .col-a .card .pubs.w-dta .ctrl .ct-fl .error {
   color: #f24949;
 }
-.content .col-a .card .pubs.w-dta .ctrl .ct-fl {width: 100%;}
-.payment-details{
-  color: #999999;
-  border-top: 2px solid #f2f2f2; 
+
+.content .col-a .card .pubs.w-dta .ctrl .ct-fl {
+  width: 100%;
 }
-.pay-det-row{
+
+.payment-details {
+  color: #999999;
+  border-top: 2px solid #f2f2f2;
+}
+
+.pay-det-row {
   margin: 10px 0 10px 0;
 }
+
 .alrt button {
   margin-top: 25px !important;
 }
-.side-menu .icon-jal-coupon, .side-menu .icon-first-coup {
-  padding-left:20px !important;
-}
-.picker-form-group input {height: 40px;}
 
-@media only screen and (max-width: 767px){
-.content .c-outer .c-body .srlst .top-sect .tp-r .other-jcs,
-.content .c-outer .c-body .srlst .top-sect .tp-r .first-time-jc {
-    margin-left: 0;}
+.side-menu .icon-jal-coupon, .side-menu .icon-first-coup {
+  padding-left: 20px !important;
 }
-@media (max-width: 991px) and (min-width: 768px){
-.content .c-outer .c-body .srlst .top-sect .tp-r .other-jcs,
-.content .c-outer .c-body .srlst .top-sect .tp-r .first-time-jc {
-    margin-left: 0;}
+
+.picker-form-group input {
+  height: 40px;
 }
+
+@media only screen and (max-width: 767px) {
+  .content .c-outer .c-body .srlst .top-sect .tp-r .other-jcs, .content .c-outer .c-body .srlst .top-sect .tp-r .first-time-jc {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .content .c-outer .c-body .srlst .top-sect .tp-r .other-jcs, .content .c-outer .c-body .srlst .top-sect .tp-r .first-time-jc {
+    margin-left: 0;
+  }
+}
+
 .form-level-settings {
   font-size: .65rem !important;
-  font-family: 'Roboto Slab', sans-serif !important; 
+  font-family: 'Roboto Slab', sans-serif !important;
   color: #999999 !important;
   font-style: italic !important;
   text-align: justify;
-  line-height:2;
+  line-height: 2;
   font-weight: normal !important;
- }
- .learnmore-pointer {
+}
+
+.learnmore-pointer {
   text-decoration: underline !important;
   color: #00aef2 !important;
   cursor: pointer !important;
-  padding-left: 5px !important; 
- }
- .audit .search_paging .container {
+  padding-left: 5px !important;
+}
+
+.audit .search_paging .container {
   /*padding: 15px;*/
-  padding: 0px; }
+  padding: 0px;
+}
+
+.audit .search_paging .container .text-center {
+  display: flex;
+}
+
+@media only screen and (max-width: 767px) {
   .audit .search_paging .container .text-center {
-    display: flex; }
-    @media only screen and (max-width: 767px) {
-      .audit .search_paging .container .text-center {
-        flex-direction: column; } }
-    .audit .search_paging .container .text-center .paginghead-outer {
-      width: 200px; }
-      @media only screen and (max-width: 767px) {
-        .audit .search_paging .container .text-center .paginghead-outer {
-          margin-bottom: 15px; } }
-      .audit .search_paging .container .text-center .paginghead-outer .paging {
-        font-size: .875rem;
-        text-align: left;
-        font-weight: 500; }
-        .audit .search_paging .container .text-center .paginghead-outer .paging .paging-curr,
-        .audit .search_paging .container .text-center .paginghead-outer .paging .paging-max {
-          font-weight: 600;
-          display: inline-block;
-          text-align: center;
-          color: #00aef2;
-          padding: 3px; }
-    .audit .search_paging .container .text-center .pagination {
-      margin: 15px 15px 15px auto;
-      display: flex;
-      flex-wrap: wrap; }
-      .audit .search_paging .container .text-center .pagination li {
-        padding: 3px;
-        font-size: .875rem;
-        font-weight: 500;
-        color: #00aef2;
-        background: #fff;
-        cursor: pointer;
-        margin-right: 10px;
-        min-width: 30px;
-        border: 1px solid #00aef2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        -webkit-border-radius: 30px;
-        border-radius: 30px;
-        background-clip: padding-box;
-        /* stops bg color from leaking outside the border: */
-        margin-bottom: 0px; }
-        .audit .search_paging .container .text-center .pagination li.ng-star-inserted {
-          border-color: #f2f2f2; }
-        .audit .search_paging .container .text-center .pagination li.disabled {
-          background: #dbdbdb;
-          color: #999999;
-          border: none;
-          pointer-events: none; }
-        .audit .search_paging .container .text-center .pagination li.active {
-          background: #00aef2;
-          color: #fff;
-          border-color: #00aef2; }
-        .audit .search_paging .container .text-center .pagination li:last-child {
-          margin-right: 0;
-          padding-left: 10px;
-          padding-right: 10px; }
-        .audit .search_paging .container .text-center .pagination li:first-child {
-          padding-left: 10px;
-          padding-right: 10px; }
-        .audit .search_paging .container .text-center .pagination li:nth-last-child(2) {
-          padding-left: 10px;
-          padding-right: 10px; }
-        .audit .search_paging .container .text-center .pagination li:nth-child(2) {
-          padding-left: 10px;
-          padding-right: 10px; }
-          .content.settings .set-otr .card .copy .hd {margin-bottom: 10px !important}
-          .block-level{display: block !important}
-          .content .col-a .card .adwds.w-dta h2 {margin-bottom: 3px !important}
-          .min100 {min-height: 100px !important}
-          .min90 {min-height: 90px !important}
-          .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.min100 {
-            padding: 10px 30px 0 20px !important
-          }
-          .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.min90 {
-            padding: 0 30px 0 20px !important
-          }
-          .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl h5 {
-            text-transform: none !important;
-            padding: 10px 0 0 0 !important;
-            border-bottom: none !important;
-          }
-          .content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .cop-l .info-lst {
-            width:90% !important;
-          }
-          .paysettings-tab .mat-tab-header {margin-bottom:5px !important}
-            .content.w-manager .card .b-link:hover .form-level-settings {
-              color: #fff !important }
-          .comn-cls .w-dta .copy .right.card .lc33 .lcd.lc3-1 .ttle, .comn-cls .w-dta .copy .left.card .lc22 .lcd.lc2-1 .ttle {
-            text-transform: none !important;
-            font-size: 1.125rem !important;
-          }
-          .audit_outer {border:none !important}
+    flex-direction: column;
+  }
+}
+
+.audit .search_paging .container .text-center .paginghead-outer {
+  width: 200px;
+}
+
+@media only screen and (max-width: 767px) {
+  .audit .search_paging .container .text-center .paginghead-outer {
+    margin-bottom: 15px;
+  }
+}
+
+.audit .search_paging .container .text-center .paginghead-outer .paging {
+  font-size: .875rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+.audit .search_paging .container .text-center .paginghead-outer .paging .paging-curr, .audit .search_paging .container .text-center .paginghead-outer .paging .paging-max {
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+  color: #00aef2;
+  padding: 3px;
+}
+
+.audit .search_paging .container .text-center .pagination {
+  margin: 15px 15px 15px auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.audit .search_paging .container .text-center .pagination li {
+  padding: 3px;
+  font-size: .875rem;
+  font-weight: 500;
+  color: #00aef2;
+  background: #fff;
+  cursor: pointer;
+  margin-right: 10px;
+  min-width: 30px;
+  border: 1px solid #00aef2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  margin-bottom: 0px;
+}
+
+.audit .search_paging .container .text-center .pagination li.ng-star-inserted {
+  border-color: #f2f2f2;
+}
+
+.audit .search_paging .container .text-center .pagination li.disabled {
+  background: #dbdbdb;
+  color: #999999;
+  border: none;
+  pointer-events: none;
+}
+
+.audit .search_paging .container .text-center .pagination li.active {
+  background: #00aef2;
+  color: #fff;
+  border-color: #00aef2;
+}
+
+.audit .search_paging .container .text-center .pagination li:last-child {
+  margin-right: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.audit .search_paging .container .text-center .pagination li:first-child {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.audit .search_paging .container .text-center .pagination li:nth-last-child(2) {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.audit .search_paging .container .text-center .pagination li:nth-child(2) {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.content.settings .set-otr .card .copy .hd {
+  margin-bottom: 10px !important
+}
+
+.block-level {
+  display: block !important
+}
+
+.content .col-a .card .adwds.w-dta h2 {
+  margin-bottom: 3px !important
+}
+
+.min100 {
+  min-height: 100px !important
+}
+
+.min90 {
+  min-height: 90px !important
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.min100 {
+  padding: 10px 30px 0 20px !important
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.min90 {
+  padding: 0 30px 0 20px !important
+}
+
+.content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl h5 {
+  text-transform: none !important;
+  padding: 10px 0 0 0 !important;
+  border-bottom: none !important;
+}
+
+.content .col-a .card.w-dta.active .cd-b .loc-i .loc-panl .copy .cop-l .info-lst {
+  width: 90% !important;
+}
+
+.paysettings-tab .mat-tab-header {
+  margin-bottom: 5px !important
+}
+
+.content.w-manager .card .b-link:hover .form-level-settings {
+  color: #fff !important
+}
+
+.comn-cls .w-dta .copy .right.card .lc33 .lcd.lc3-1 .ttle, .comn-cls .w-dta .copy .left.card .lc22 .lcd.lc2-1 .ttle {
+  text-transform: none !important;
+  font-size: 1.125rem !important;
+}
+
+.audit_outer {
+  border: none !important
+}

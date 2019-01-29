@@ -1780,16 +1780,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkserviceClicked(name, obj) {
-    this.btn_clicked = false;
-    if (this.shared_functions.checkLogin()) {
-      const ctype = this.shared_functions.isBusinessOwner('returntyp');
+    this.btn_clicked = true;
+    // if (this.shared_functions.checkLogin()) {
+    //   const ctype = this.shared_functions.isBusinessOwner('returntyp');
       // if (ctype === 'consumer') {
       this.serviceClicked(name, obj);
       // }
-    } else { // show consumer login
-      const passParam = { callback: 'servicedetail', mname: name, mobj: obj };
-      this.doLogin('consumer', passParam);
-    }
+    // } else { // show consumer login
+    //   const passParam = { callback: 'servicedetail', mname: name, mobj: obj };
+    //   this.doLogin('consumer', passParam);
+    // }
   }
   /* Service Clicked
     * name  Service Name
@@ -1798,7 +1798,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   serviceClicked(name, obj) {
     const s3id = obj.fields.unique_id;
     const busname = obj.fields.title;
-
     // get services details from s3
     let selected_service = null;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
@@ -1818,6 +1817,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               }
               if (selected_service !== null) {
                 this.showServiceDetail(selected_service, busname);
+              } else {
+                this.btn_clicked = false;
               }
             });
         });
