@@ -294,8 +294,8 @@
 																</div>
 																<div class="quantity">{{qnty_cap}}
 																	{{item.quantity}}</div>
-																<div class="price">{{item.price |
-																	currency:'INR':'symbol':'.2-2'}}</div>
+																<div class="price">{{(item.quantity * item.price) |
+																		currency:'INR':'symbol':'.2-2'}}</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
