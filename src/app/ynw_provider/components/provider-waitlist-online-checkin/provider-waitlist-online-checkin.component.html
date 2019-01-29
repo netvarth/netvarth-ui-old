@@ -2,9 +2,8 @@
   <div class="row">
     <div class="lbl col-sm-12 col-md-12 col-lg-12">
       <label>{{wait_time_calc_cap}}</label>
-      
+      <p class="form-level-settings">{{frm_wait_cal_cap}}</p>
     </div>
-    <div><span class="form-level-settings">{{frm_wait_cal_cap}}</span></div>
     <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
       <mat-radio-group [(ngModel)]="form['calculationMode']" ngDefaultControl (change)="onFormChange()">
         <div class="rw">

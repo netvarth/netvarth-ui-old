@@ -1195,7 +1195,7 @@ export const Messages = {
   'ADWORD_ERRMSG': 'Please enter AdWord',
   'ADWORD_MAXCOUNT' : 'Upgrade your License package to Gold or Diamond for free AdWords. You can also purchase AdWords as Add ons',
 
-  //form-level-common
+  // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG' : 'Setup and maintain your public profile here.',
   'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours, specialization, and languages known.',
   'FRM_LEVEL_WAITLIST_MSG' : 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable “Online Check-in” and also book a future date for client’s check-in here.',
@@ -1204,8 +1204,8 @@ export const Messages = {
   'FRM_LEVEL_BILLING_MSG' : 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG' : 'View all the coupons available here.',
   'FRM_LEVEL_MISC_MSG' : 'Other features can be mentioned here.',
-  
-  //form-level-provider-bprofile-search
+
+  // form-level-provider-bprofile-search
   'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profile’s visibility in [customer]’s search result. Unless you enable, the patients won’t be able to view your profile in their search result.',
   'FRM_LEVEL_ADWORDS_MSG' : 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP' : 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual’s name or the business name.',
@@ -1220,14 +1220,14 @@ export const Messages = {
   'FRM_LEVEL_GALLERY_MSG' : 'Add images and catchy captions to boost your [customer]’s check-ins.',
   'FRM_LEVEL_SOCIAL_MSG' : 'To connect with [customer]s on your social media platform, add your social media links here.',
 
-  //form-level-provider-waitlist
+  // form-level-provider-waitlist
   'FRM_LEVEL_WAIT_TIME_CALC_MSG' : 'Choose one of the four wait-time calculation options. This calculated time is the standby time after which your [customer] can avail the services.',
   'FRM_LEVEL_SETT_LOC_MSG' : 'Add the location details of your business presence here. Manage it as and when required.',
   'FRM_LEVEL_SETT_SERV_MSG' : 'Enlist all the services that you provide to the [customer]s. You can always add new services here.',
   'FRM_LEVEL_SETT_WORKING_HR_MSG' : 'Setup and Manage multiple working hours of your business here.',
 
 
-  //form-level-provider-payment-settings
+  // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payment to settle your transactions on the line. Jaldee account can be used for fast and seamless transaction process. A [customer] can also use other payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the “Tax Applicable” toggle switch to apply taxes for your services.',
   // '' : '',

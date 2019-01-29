@@ -216,17 +216,19 @@
                         <div class=" pay-section left card">
                             <div class="lc22">
                                 <div class="lc2-1 lcd custom-help">
-                                    <div class="ttle" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on
-                                        <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div>
-                                        <span class="addbt" (click)="showadd_addons()"></span></div>
-                                </div>
+                                    <div class="ttle block-level" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on
+                                        <!-- <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div> -->
+                                        <span class="addbt" (click)="showadd_addons()"></span>                                        
+                                        <p class="form-level-settings">Add on content here<a class="learnmore-pointer"
+                                            id="customer-help" (click)="learnmore_clicked('addon', $event)">Learn
+                                            More</a></p>
+                                    </div>                                    
+                                </div>                                
                                 <ng-container *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
-
                                     <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
                                         <div class="ttle">{{addon.name}}</div>
                                         <div class="add-details">{{addon.description}}</div>
                                     </div>
-
                                 </ng-container>
                                 <ng-container *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
                                     <div class="lc2-2 lcd">

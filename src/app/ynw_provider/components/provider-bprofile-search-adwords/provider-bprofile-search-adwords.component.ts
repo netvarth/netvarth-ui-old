@@ -21,7 +21,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   adwords_cap = Messages.SEARCH_ADWORDS_CAP;
   sorry_cap = Messages.SEARCH_SORRY_CAP;
   not_have_any_adwords_msg = Messages.SEARCH_NOT_HAVE_ANY_ADWORD_MSG;
-  
+
     @Input() reloadadwordapi;
 
     adword_list: any = [] ;

@@ -24,10 +24,10 @@
                                         <mat-slide-toggle [(ngModel)]="search_status" (change)="handle_searchstatus()"></mat-slide-toggle>
                                     </span>
                                 </li>
-                                <li>
+                                <li class="block-level">
                                     <span class="lnk" (click)="redirecTo('bprofile')">{{profile_cap}}</span>
+                                    <p class="form-level-settings">{{frm_profile_cap}}</p>
                                 </li>
-                                <li class="form-level-settings">{{frm_profile_cap}}</li>
                             </ul>
                         </div>
                     </div>
@@ -134,11 +134,11 @@
                                     <span class="lnk" (click)="redirecTo('discounts')">{{discount_cap}}
                                         ({{discount_count}})</span>
                                 </li>
-                                <li>
+                                <li class="block-level">
                                     <!-- <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}} ({{coupon_count}})</span> -->
                                     <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
+                                    <p class="form-level-settings">{{frm_coupon_cap}}</p>
                                 </li>
-                                <li class="form-level-settings">{{frm_coupon_cap}}</li>
                             </ul>
                         </div>
                     </div>
