@@ -210,7 +210,7 @@
                             <div class="rslts"> {{ (search_data.hits.found>10) ? 'Over': ''}} <strong>{{search_data.hits.found}}</strong>
                                 {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ?
                                 'result': ''}} {{found_cap}}
-                                <!-- for <span>‘Dentists’</span> -->
+                                <!-- for <span>â€˜Dentistsâ€™</span> -->
                             </div>
                         </div>
                         <div class="ct-r ml-auto">
@@ -349,7 +349,7 @@
 
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
-                                                <li *ngFor="let serv of search_result.fields.services" (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv
+                                                <li *ngFor="let serv of search_result.fields.services" (click)="checkserviceClicked(serv,search_result)">{{serv
                                                     | capitalizeFirst}}</li>
                                             </ul>
                                         </div>
@@ -412,7 +412,7 @@
                                 </div>
 
                                 <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
-                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}!!
                                         {{getTerminologyTerm('waitlist', search_result.fields)}} {{not_allowed_cap}}</ng-container>
                                     <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                 </div>
