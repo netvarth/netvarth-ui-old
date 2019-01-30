@@ -27,6 +27,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   breadcrumb_moreoptions: any = [];
+  frm_dicounts_cap = Messages.FRM_LEVEL_DISCOUNTS_MSG;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -143,4 +144,24 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     return this.sharedfunctionObj.print_PricewithCurrency(price);
   }
 
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionObj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+    return moreOptions;
+  }
 }

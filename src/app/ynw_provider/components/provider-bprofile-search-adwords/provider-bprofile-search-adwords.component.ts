@@ -39,13 +39,20 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
     remadwdialogRef;
     adwdialogRef;
+
+    customer_label = '';
+    frm_adword_cap = '';
+
     constructor( private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions) {}
+        private sharedfunctionObj: SharedFunctions){
+          this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+        }
 
     ngOnInit() {
       this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
       this.getTotalAllowedAdwordsCnt();
+      this.frm_adword_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG.replace('[customer]', this.customer_label);
     }
 
     ngOnChanges() {

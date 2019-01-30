@@ -50,6 +50,8 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   license_tooltip = '';
   hide_invoiceperiod = false;
   current_lic;
+  frm_lic_cap = Messages.FRM_LEVEL_PROVIDER_LICE_MSG;
+  frm_addon_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADDON_MSG;
   breadcrumbs = [
     {
       title: 'Settings',

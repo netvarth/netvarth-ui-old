@@ -29,6 +29,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   breadcrumb_moreoptions: any = [];
+  frm_items_cap = Messages.FRM_LEVEL_ITEMS_MSG;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -189,5 +190,25 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionObj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+    return moreOptions;
   }
 }

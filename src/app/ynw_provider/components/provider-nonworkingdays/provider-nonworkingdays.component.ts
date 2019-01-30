@@ -32,6 +32,8 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   breadcrumb_moreoptions: any = [];
+  frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
+
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -154,5 +156,25 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
     } else {
       return true;
     }
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionObj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': mod };
+    return moreOptions;
   }
 }

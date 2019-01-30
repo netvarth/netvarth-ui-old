@@ -9,6 +9,11 @@
                 <div class="row">
                     <div class="copy one">
                         <div class="pay-section card">
+                            <div>
+                                    <p class="form-level-settings">{{frm_lic_cap}}<a class="learnmore-pointer"
+                                        id="customer-help" (click)="learnmore_clicked('license', $event)">Learn
+                                        More</a> </p>
+                            </div>
                             <span class="mbt">
                                 <button mat-icon-button [matMenuTriggerFor]="menu">
                                     <mat-icon>more_vert</mat-icon>
@@ -219,7 +224,7 @@
                                     <div class="ttle block-level" [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">Add-on
                                         <!-- <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div> -->
                                         <span class="addbt" (click)="showadd_addons()"></span>                                        
-                                        <p class="form-level-settings">Add on content here<a class="learnmore-pointer"
+                                        <p class="form-level-settings">{{frm_addon_cap}}<a class="learnmore-pointer"
                                             id="customer-help" (click)="learnmore_clicked('addon', $event)">Learn
                                             More</a></p>
                                     </div>                                    

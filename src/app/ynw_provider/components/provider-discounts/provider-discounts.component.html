@@ -6,13 +6,18 @@
 <section>
     <div class="content comn-cls">
         <div class="container">
+                <div class="card">
+                        <p class="form-level-settings">{{frm_dicounts_cap}}<a class="learnmore-pointer"
+                            id="customer-help" (click)="learnmore_clicked('addon', $event)">Learn
+                            More</a></p>
+                
             <div class="no-dta" *ngIf="discount_list.length ==0 && query_executed == true">
                 <p>{{emptyMsg}}</p>
                 <span class="cs-btn bt3" (click)="addDiscounts()">{{add_disc_cap}}</span>
             </div>
             <div class="w-dta" *ngIf="discount_list.length>0">
                 <div class="row">
-                    <div class="card">
+                    
                         <div class="copy">
                             <div class="table-outer q-tbl">
                                 <table class="table">

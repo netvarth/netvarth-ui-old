@@ -57,6 +57,8 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   addcoupdialogRef;
   editcoupdialogRef;
   confirmremdialogRef;
+  frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
+  frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
@@ -189,5 +191,25 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   }
   formatDateDisplay(dateStr) {
     return this.sharedfunctionObj.formatDateDisplay(dateStr);
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionObj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+    return moreOptions;
   }
 }

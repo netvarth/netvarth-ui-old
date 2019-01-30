@@ -1232,14 +1232,26 @@ export const Messages = {
   // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payment to settle your transactions on the line. Jaldee account can be used for fast and seamless transaction process. A [customer] can also use other payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the “Tax Applicable” toggle switch to apply taxes for your services.',
-  // '' : '',
-  // '' : '',
+  
 
-  // '' : '',
-  // '' : '',
-  // '' : '',
-  // '' : '',
+  // form-level-provider-license and invoice
+  'FRM_LEVEL_PROVIDER_LICE_MSG' : 'Manage the license history, its usage, and payment history and also upgrade your license here.',
+  'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG' : 'To avail the additional features of Jaldee.com, click here.',
+  'FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG' : 'Add relevant keywords to increase your visibility to your [customer].',
+  
+  // form-level-provider-coupons
+  'FRM_LEVEL_JALDEE_COUPONS_MSG' : 'These are provided by Jaldee. View the details of Jaldee coupons here.',
+  'FRM_LEVEL_MY_COUPONS_MSG' : 'Create your coupon and its details here.',
+  
+  
+  // form-level-provider-discounts
+  'FRM_LEVEL_DISCOUNTS_MSG' : 'Create your discounts here.',
 
+  // form-level-provider-items
+  'FRM_LEVEL_ITEMS_MSG' : 'Create new items and related information here.',
+
+  // form-level-provider-miscellaneous
+  'FRM_LEVEL_NON_WORKING_MSG' : 'Unavailability of your services on particular days (holidays), mention here.',
 
 };
 
