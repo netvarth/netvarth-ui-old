@@ -263,7 +263,7 @@ export const projectConstants = {
       name: 'LICENSE',
       displayName: 'License',
       subcat: [
-        { name: 'ADDON', dispName: 'Addon' },
+        { name: 'ADDON', dispName: 'Add-on' },
         { name: 'INVOICE', dispName: 'Invoice' },
         { name: 'LICENSE', dispName: 'License' }
       ]

@@ -12,7 +12,7 @@ export const Messages = {
   'MEMBER_UPDATED': 'Member updated successfully',
   'LICENSE_UPGRADED': 'License successfully upgraded to [package]',
   'LICENSE_TOOLTIP': 'This tooltip can be managed from the messages file',
-  'ADDON_ADDED': 'Addon Package added successfully',
+  'ADDON_ADDED': 'Add-on Package added successfully',
   'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',
 
   // Items
@@ -90,7 +90,7 @@ export const Messages = {
   'ADWORD_CREATED': 'Adword added successfully',
   'ADWORD_DELETE': 'Do you really want to remove the AdWord [adword]?',
   'ADWORD_DELETE_SUCCESS': 'AdWord deleted successfully',
-  'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/addon for more benefits',
+  'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/Add-on for more benefits',
 
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
@@ -197,7 +197,7 @@ export const Messages = {
   'LINCENSE_TOOLTIP': 'View and change your license package',
   'PAYMENT_TOOLTIP': 'View and edit online payment setings and tax settings',
   'BILLPOS_TOOLTIP': 'Add items, discounts, coupons',
-  'ADDON_TOOLTIP': 'Buy available add-ons',
+  'ADDON_TOOLTIP': 'Buy available Add-ons',
   'ADDWORD_TOOLTIP': 'Buy AdWords here',
   'MOREOPTIONS_TOOLTIP': 'More Search Options',
   'CURRENTCHECKINS_TOOLTIP': 'Your check-ins',
@@ -586,10 +586,10 @@ export const Messages = {
   'ACCEPT_PAY_CAP': 'Accept Payment',
 
   // App-ynw_provider-components-add-provider-addons
-  'ADD_ADDON_CAP': 'Add Addon',
-  'ADDONS_CAP': 'Addons *',
+  'ADD_ADDON_CAP': 'Add Add-on',
+  'ADDONS_CAP': 'Add-ons *',
   'SELECT_ONE_CAP': '- Select One -',
-  'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable addons found.',
+  'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable Add-ons found.',
   'DATE_APPLY_CAP' : 'Date Applied',
   'ADD_ON_HISTORY' : 'Add-on History',
 
@@ -857,7 +857,7 @@ export const Messages = {
   'DUE_AMT_CAP': 'Due Amount',
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
-  'NO_ADDON_CAP': 'No addons exists',
+  'NO_ADDON_CAP': 'No Add-ons exists',
   'PAY_BUTTON' : 'Invoices to Pay',
   'DUE_DATE_CAP' : 'Due Date',
   'SUBSC_PACKAGE' : 'Subscription/Package',
