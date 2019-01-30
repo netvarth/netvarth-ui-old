@@ -23,6 +23,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
   set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
   new_loc_cap = Messages.ADD_NEW_LOC_CAP;
+  no_loc_add = Messages.NO_LOC_ADDED;
   loc_list: any = [];
   bProfile: any = [];
   loc_badges: any = [];

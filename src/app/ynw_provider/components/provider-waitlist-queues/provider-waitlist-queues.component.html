@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="card" *ngIf="queue_list.length==0">
-                No Service time-window added
+                {{no_queue_add}}
             </div>
             <div class="row" *ngIf="api_load_complete == 1 && queue_list.length == 0">
                 <div class="card">

@@ -28,6 +28,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   no_service_cap = Messages.NO_SERVICE_CAP;
   new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
   max_capacity_cap = Messages.QUEUE_MAX_CAPACITY_CAP;
+  no_queue_add = Messages.NO_QUEUE_ADDED;
   queue_list: any = [];
   query_executed = false;
   customer_label = '';
