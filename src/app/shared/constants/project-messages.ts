@@ -371,8 +371,8 @@ export const Messages = {
 
   // App-shared-components-provider-details
   'GO_BACK_CAP': 'Go Back',
-  'MORE_CAP': 'More',
-  'LESS_CAP': 'Less',
+  'MORE_CAP': ' More',
+  'LESS_CAP': ' Less',
   'CONTACT_DETAILS_CAP': 'Contact Details',
   'REM_FROM_FAV_CAP': 'Remove From Favourites',
   'YOU_HAVE_CAP': 'You have',
@@ -946,6 +946,8 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-waitlist-locations
   'ADD_NEW_LOC_CAP': 'Add Location',
+  'NO_LOC_ADDED' : 'No location added',
+  'NO_QUEUE_ADDED' : 'No service time-window added',
 
   // App-ynw_provider-components-provider-waitlist-online-checkin
   'CHECKIN_CALCULATE_CAP': 'Waiting Time Calculation',
