@@ -1991,3 +1991,6 @@ Overriding mat input style
 .audit_outer {
   border: none !important
 }
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body {
+  padding-left: 5px !important;
+}
