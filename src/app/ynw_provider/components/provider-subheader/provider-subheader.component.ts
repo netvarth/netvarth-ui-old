@@ -1,15 +1,11 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
 import { AddProviderCustomerComponent } from '../add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from '../search-provider-customer/search-provider-customer.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
-import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 
@@ -19,10 +15,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
   // styleUrls: ['./home.component.scss']
 })
 
-
-
 export class ProviderSubeaderComponent implements OnInit, OnDestroy {
-
   create_cap = Messages.SUB_HEADER_CREATE_CAP;
   dashboard_cap = Messages.DASHBOARD_TITLE;
   help_cap = Messages.SUB_HEADER_HELP;
@@ -68,7 +61,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     }
   }
   searchCustomer(source) {
-
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'checkin-provider'],
@@ -87,9 +79,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   createCustomer(search_data, next_page = null) {
-
     this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'checkin-provider'],
@@ -104,9 +94,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   beforeCheckIn(user_data) {
-
     this.getProviderLocations()
       .then(
         result => {
@@ -116,21 +104,17 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
                 this.createCheckin(user_data);
               },
               error => {
-
               }
             );
         },
         error => {
-
         }
       );
-
   }
   createCheckin(user_data) {
     // console.log(user_data);
     const post_data = {};
     let selected_location = null;
-
     const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider home page
     if (cookie_location_id === '') {
       if (this.locations[0]) {
@@ -138,24 +122,19 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       }
     } else {
       selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-
     }
-
     if (selected_location != null) {
       post_data['location'] = {
         'id': selected_location['id'],
         'name': selected_location['place']
       };
-
     }
-
     const user = JSON.parse(localStorage.getItem('ynw-user'));
     post_data['provider'] = {
       unique_id: this.bprofile.uniqueId,
       account_id: this.bprofile.id,
       name: this.bprofile.businessName
     };
-
     const cdate = new Date();
     const mn = cdate.getMonth() + 1;
     const dy = cdate.getDate();
@@ -172,8 +151,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       day = '' + dy;
     }
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
-
-
     this.ChkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
@@ -192,15 +169,12 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         datechangereq: true
       }
     });
-
     this.ChkindialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.reloadActionSubheader.emit(result);
       }
     });
-
   }
-
   getWaitlistMgr() {
     this.provider_services.getWaitlistMgr()
       .subscribe(
@@ -209,10 +183,8 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getProviderLocations() {
     return new Promise((resolve, reject) => {
-
       this.provider_services.getProviderLocations()
         .subscribe(
           data => {
@@ -223,11 +195,8 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
             reject(error);
           }
         );
-
     });
-
   }
-
   dashboardClicked() {
     this.bprofile = [];
     this.provider_services.getBussinessProfile()
@@ -237,42 +206,35 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
           console.log(this.bprofile);
           this.provider_datastorage.set('bprofile', data);
           if (this.bprofile.status === 'ACTIVE') {
-              this.routerobj.navigate(['/']);
+            this.routerobj.navigate(['/']);
           } else {
             if (this.bprofile.businessName && this.bprofile.businessName.trim() !== '') {
               if (this.bprofile.baseLocation) {
                 if (this.bprofile.baseLocation.place === '') {
-                  this.shared_functions.openSnackBar('Location info missing', { 'panelClass': 'snackbarerror' });
+                  this.shared_functions.openSnackBar(Messages.SET_LOC_MSG, { 'panelClass': 'snackbarerror' });
                 }
               } else {
-                this.shared_functions.openSnackBar('Location info missing', { 'panelClass': 'snackbarerror' });
+                this.shared_functions.openSnackBar(Messages.SET_LOC_MSG, { 'panelClass': 'snackbarerror' });
               }
             } else {
               if (this.bprofile.baseLocation) {
                 if (this.bprofile.baseLocation.place === '') {
-                  this.shared_functions.openSnackBar('Profile & Location info missing', { 'panelClass': 'snackbarerror' });
+                  this.shared_functions.openSnackBar(Messages.SETPROF_LOC_MSG, { 'panelClass': 'snackbarerror' });
                 } else {
-                  this.shared_functions.openSnackBar('profile incomplete', { 'panelClass': 'snackbarerror' });
+                  this.shared_functions.openSnackBar(Messages.SETPROF_MSG, { 'panelClass': 'snackbarerror' });
                 }
               } else {
-                this.shared_functions.openSnackBar('Profile & Location info missing', { 'panelClass': 'snackbarerror' });
+                this.shared_functions.openSnackBar(Messages.SETPROF_LOC_MSG, { 'panelClass': 'snackbarerror' });
               }
             }
           }
         },
         error => {
-
         }
       );
   }
-
-  dashboardErrMsg() {
-      this.shared_functions.openSnackBar('You haven\'t added any Basic Information and Location & Working Hours', { 'panelClass': 'snackbarerror' });
-  }
-
   getBprofile() {
     return new Promise((resolve, reject) => {
-
       this.provider_services.getBussinessProfile()
         .subscribe(
           data => {
@@ -283,12 +245,8 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
             reject(error);
           }
         );
-
     });
-
   }
-
-
   selectLocationFromCookie(cookie_location_id) {
     let selected_location = null;
     for (const location of this.locations) {
@@ -296,22 +254,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         selected_location = location;
       }
     }
-
     return (selected_location !== null) ? selected_location : this.locations[0];
-
   }
-
   learnmore_clicked(mod) {
-    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
-           width: '50%',
-           panelClass: 'commonpopupmainclass',
-           autoFocus: true,
-           data: {
-               moreOptions : this.getMode(mod)
-           }
-         });
-         dialogRef.afterClosed().subscribe(result => {
-         });*/
     const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     this.shared_functions.sendMessage(pdata);
   }
@@ -332,5 +277,4 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     }
     return this.moreOptions;
   }
-
 }

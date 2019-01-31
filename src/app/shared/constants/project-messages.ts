@@ -1254,5 +1254,9 @@ export const Messages = {
   // form-level-provider-miscellaneous
   'FRM_LEVEL_NON_WORKING_MSG' : 'Unavailability of your services on particular days (holidays), mention here.',
 
+  'SETPROF_LOC_MSG': 'Please set profile name and location to make use of Dashboard',
+  'SETPROF_MSG': 'Please set profile name to make use of Dashboard',
+  'SET_LOC_MSG': 'Please set location to make use of Dashboard'
+
 };
 
