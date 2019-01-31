@@ -553,13 +553,19 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
             this.amForm.patchValue({
               loclattitude: result['map_point'].latitude || null,
               loclongitude: result['map_point'].longitude || null,
-              locmapurl: mapurl || null
+              locmapurl: mapurl || null,
             });
           }
           this.amForm.patchValue({
             locaddress: result['address'] || null/*,
           locpincode: result['pincode'] || null*/
           });
+          const addr = result['address'] || null;
+          if (addr) {
+            this.amForm.patchValue({
+              locname: addr.split(',')[0]
+            });
+          }
         }
       }
     });

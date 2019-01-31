@@ -632,6 +632,12 @@ export class ProviderbWizardComponent implements OnInit {
                 this.document.getElementById('locaddress').focus();
               }
             }
+            if (!this.wizard_data_holder['name']) {
+              const addr = result['address'] || null;
+              if (addr) {
+                this.wizard_data_holder['name'] = addr.split(',')[0];
+              }
+            }
           }
         }
       }
