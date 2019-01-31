@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
 import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';

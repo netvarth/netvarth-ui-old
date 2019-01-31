@@ -1,19 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-
-import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
-
-
 
 @Component({
   selector: 'app-provider-waitlist',

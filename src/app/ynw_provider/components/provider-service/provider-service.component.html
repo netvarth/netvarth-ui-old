@@ -1,12 +1,6 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()"
   class="ynw-common-form">
-
-  <h1 class="mat-dialog-title">{{service_cap}}
-    <button #queue mat-dialog-close class="modal_close" tabindex="-1" [disabled]="canceldisabled">
-      <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
-  </h1>
   <mat-dialog-content>
     <ng-container *ngIf="mode=='normal'">
       <div class="form-group">
@@ -21,15 +15,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     })">
         </app-field-error-display>
       </div>
-
       <div class="form-group">
-        <!-- <input matInput type="text" class="form-control" id="description" placeholder="Description"
-    formControlName="description" autocomplete="off"> -->
         <mat-form-field>
           <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
-            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
+            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+            maxlength="500"> </textarea>
         </mat-form-field>
-
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsg]="fed_service.getErrorMessage(amForm,'description',
     {
       'required' : 'Please enter the service description.',
@@ -38,7 +29,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         </app-field-error-display>
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
-
       <div class="form-group">
         <mat-form-field>
           <input matInput type="text" class="form-control number-ip-sm" id="estimated_duration" placeholder="{{est_duration_cap}}"
@@ -51,24 +41,20 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
   })">
         </app-field-error-display>
       </div>
-
       <div class="form-group" *ngIf="!disable_price">
-        <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
         <mat-form-field>
-          <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
-            autocomplete="off">
+          <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="Price *"
+            formControlName="totalAmount" autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
-    {'required' : 'Please enter price',
-    'pattern' : 'Enter a valid price',
-    'maxlength' : 'Only 10 digits are allowed'})">
+          {'required' : 'Please enter price',
+          'pattern' : 'Enter a valid price',
+          'maxlength' : 'Only 10 digits are allowed'})">
         </app-field-error-display>
       </div>
       <div class="form-group inline" *ngIf="!disable_price">
         <label class="col-form-label">{{enable_prepayment_cap}}</label>
-        <mat-slide-toggle class="example-margin" formControlName="isPrePayment" (change)="changePrepayment()">
-
-        </mat-slide-toggle>
+        <mat-slide-toggle class="example-margin" formControlName="isPrePayment" (change)="changePrepayment()"></mat-slide-toggle>
       </div>
       <ng-container *ngIf="!disable_price">
         <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
@@ -88,27 +74,19 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">
         </mat-slide-toggle>
       </div>
-
       <div class="form-group inline">
-
         <label class="col-form-label">{{service_notify_cap}}</label>
         <mat-slide-toggle class="example-margin" formControlName="notification" (change)="changeNotification()">
-
         </mat-slide-toggle>
       </div>
-
-
       <mat-radio-group formControlName="notificationType" *ngIf="amForm.get('notification').value === true">
         <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
         <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
       </mat-radio-group>
-
       <ng-container *ngIf="type == 'add' ">
-
         <div class="form-group">
           <label class="col-form-label">{{gallery_cap}}</label>
         </div>
-
         <div *ngIf="gallery.length > 0">
           <ul class="galul">
             <li *ngFor="let file of gallery;let i = index ">
@@ -121,7 +99,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                   </button>
                   <mat-menu #menu="matMenu">
                     <button type="button" mat-menu-item (click)="confirmDelete(file)">
-                      <!-- <mat-icon>delete</mat-icon> -->
                       <i class="icon-delete"></i>
                       <span>{{delete_btn}}</span>
                     </button>
@@ -131,7 +108,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             </li>
           </ul>
         </div>
-
         <div *ngIf="item_pic.files">
           <ul class="galul">
             <li *ngFor="let file of item_pic.files;let i = index ">
@@ -155,18 +131,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             </li>
           </ul>
         </div>
-
         <div class="upload-doc" (click)="file.click()" *ngIf="!canceldisabled">
           <label class="col-form-label">{{select_image_cap}}</label>
           <span class="select-wrapper ">
             <input type="file" multiple name="image_src" id="image_src" accept="image/*" #file (change)="imageSelect(file,$event)">
           </span>
         </div>
-
       </ng-container>
-
     </ng-container>
-
     <ng-container *ngIf="mode=='afteradd'">
       <div class="message-one">
         <p class="p1">{{normaladd_msg1}}</p>
@@ -174,10 +146,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       </div>
       <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
     </ng-container>
-
-
   </mat-dialog-content>
-
   <mat-dialog-actions>
     <button *ngIf="mode=='normal' && !canceldisabled" type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
     <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid || savedisabled" class="cs-btn bt1">{{button_title}}</button>
@@ -186,11 +155,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       {{tooltip}}
     </span>
   </mat-dialog-actions>
-
   <app-field-error-display [displayError]="(error_list.length > 0) ? true : false" [errorMsg]="error_msg">
   </app-field-error-display>
-
   <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-
   <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
 </form>

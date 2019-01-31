@@ -25,18 +25,17 @@ export class AddProviderSchedulesComponent implements OnInit {
   @Output() cancelScheduleClick = new EventEmitter<any>();
   @Output() addeditScheduleClick = new EventEmitter<any>();
 
-
   edit_btn = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
   add_schedule = Messages.ADD_SCHEDULE_CAP;
-edit_schedule = Messages.EDIT_SCHEDULE_BTN;
-select_days_cap = Messages.SELECT_DAYS_BTN;
-start_time_cap = Messages.START_TIME_CAP;
-end_time_cap = Messages.END_TIME_CAP;
-save_schedule_cap = Messages.SAVE_SCHEDULE_CAP;
-cancel_btn = Messages.CANCEL_BTN;
-update_btn = Messages.UPDATE_BTN;
-    api_error = null;
+  edit_schedule = Messages.EDIT_SCHEDULE_BTN;
+  select_days_cap = Messages.SELECT_DAYS_BTN;
+  start_time_cap = Messages.START_TIME_CAP;
+  end_time_cap = Messages.END_TIME_CAP;
+  save_schedule_cap = Messages.SAVE_SCHEDULE_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  update_btn = Messages.UPDATE_BTN;
+  api_error = null;
   api_success = null;
   weekdays_arr = projectConstants.myweekdaysSchedule;
   dstart_time;
@@ -56,14 +55,14 @@ update_btn = Messages.UPDATE_BTN;
   constructor(
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions
-    ) {
-        // // console.log(data);
-     }
+  ) {
+    // // console.log(data);
+  }
 
   ngOnInit() {
     // console.log('source', this.Isource);
-      this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10)};
-    this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10)};
+    this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+    this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
 
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
@@ -71,11 +70,11 @@ update_btn = Messages.UPDATE_BTN;
     if (this.schedule_arr.length === 0) {
       this.show_schedule_selection = true;
     }
-   // console.log('schedule inside', this.schedule_arr);
+    // console.log('schedule inside', this.schedule_arr);
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-    this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
-   // console.log('schedule', this.schedule_arr);
-   // console.log('dispschedule', this.display_schedule);
+    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    // console.log('schedule', this.schedule_arr);
+    // console.log('dispschedule', this.display_schedule);
   }
 
   handlechecbox(dayindx) {
@@ -87,7 +86,7 @@ update_btn = Messages.UPDATE_BTN;
       this.selday_arr.splice(selindx, 1);
     }
     // // console.log('curarr', this.selday_arr);
-     if (this.selday_arr.length === 7) {
+    if (this.selday_arr.length === 7) {
       this.Selall = true;
     } else {
       this.Selall = false;
@@ -152,7 +151,7 @@ update_btn = Messages.UPDATE_BTN;
     const hold_schedule_edit_indexes = [];
     const hold_schedule_update = [];
     for (const selday of this.selday_arr) {
-     // // console.log('reached here2');
+      // // console.log('reached here2');
       let curindx = '';
       let cindx = 0;
       for (const sch of this.schedule_arr) {
@@ -161,33 +160,33 @@ update_btn = Messages.UPDATE_BTN;
           curindx = this.schedule_arr[cindx]['sTime'].replace(/\s+/, '') + this.schedule_arr[cindx]['eTime'].replace(/\s+/, '');
           if (this.edit_mode && this.edit_index === curindx) {
             bypasscurrentlop = true;
-            hold_schedule_edit_indexes.push({'indx': cindx});
+            hold_schedule_edit_indexes.push({ 'indx': cindx });
           }
           if (!bypasscurrentlop) {
             // // console.log('reached here4');
             const stime = {
-                            hour: parseInt(moment(sch.sTime, ['hh:mm A']).format('HH'), 10),
-                            minute: parseInt(moment(sch.sTime, ['hh:mm A']).format('mm'), 10)
-                          };
+              hour: parseInt(moment(sch.sTime, ['hh:mm A']).format('HH'), 10),
+              minute: parseInt(moment(sch.sTime, ['hh:mm A']).format('mm'), 10)
+            };
             const etime = {
-                            hour: parseInt(moment(sch.eTime, ['hh:mm A']).format('HH'), 10),
-                            minute: parseInt(moment(sch.eTime, ['hh:mm A']).format('mm'), 10)
-                          };
-          // const etime =  moment(sch.eTime, ['h:mm A']).format('HH:mm');
-          // // console.log('obtained', this.dstart_time, stime, etime, this.dend_time);
+              hour: parseInt(moment(sch.eTime, ['hh:mm A']).format('HH'), 10),
+              minute: parseInt(moment(sch.eTime, ['hh:mm A']).format('mm'), 10)
+            };
+            // const etime =  moment(sch.eTime, ['h:mm A']).format('HH:mm');
+            // // console.log('obtained', this.dstart_time, stime, etime, this.dend_time);
             if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(stime))
-                && (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start time within the existing range
-                this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
-                return;
+              && (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start time within the existing range
+              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
+              return;
             }
             if ((this.sharedfunctionObj.getminutesOfDay(this.dend_time) > this.sharedfunctionObj.getminutesOfDay(stime))
-                && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current end time within the existing range
-              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
+              && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current end time within the existing range
+              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
               return;
             }
             if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) < this.sharedfunctionObj.getminutesOfDay(stime))
-                && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) > this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start & end outside existing range
-              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday)) ;
+              && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) > this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start & end outside existing range
+              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
               return;
             }
           }
@@ -196,10 +195,10 @@ update_btn = Messages.UPDATE_BTN;
       }
       const add_schedule = {
         'day': selday,
-        'sTime' : starttime_format,
+        'sTime': starttime_format,
         'eTime': endtime_format
       };
-      if (this.edit_mode && this.edit_index !== '' ) { // case of editing the schedule
+      if (this.edit_mode && this.edit_index !== '') { // case of editing the schedule
         hold_schedule_update.push(add_schedule);
         // console.log('editindex', this.edit_index);
         // this.schedule_arr[this.edit_index] = add_schedule;
@@ -224,27 +223,27 @@ update_btn = Messages.UPDATE_BTN;
     }
 
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-    this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
-   // console.log('schedule', this.schedule_arr);
-   // console.log('dispschedule', this.display_schedule);
+    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    // console.log('schedule', this.schedule_arr);
+    // console.log('dispschedule', this.display_schedule);
     // this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.saveScheduleClick.emit(this.schedule_arr);
     this.showScheduleselection();
   }
-  changetime (src, passtime) {
+  changetime(src, passtime) {
     switch (src) {
       case 'start':
         this.dstart_time = passtime;
-      break;
+        break;
       case 'end':
         this.dend_time = passtime;
-      break;
+        break;
     }
     // // console.log(this.dstart_time, this.dend_time);
   }
 
   deleteSchedule(indx) {
-   // console.log('delindx', indx, this.schedule_arr);
+    // console.log('delindx', indx, this.schedule_arr);
     const holdarr = [];
     this.api_error = this.api_success = '';
     for (let i = 0; i < this.schedule_arr.length; i++) {
@@ -257,22 +256,22 @@ update_btn = Messages.UPDATE_BTN;
     }
     this.schedule_arr = holdarr;
     // console.log('schedul after', this.schedule_arr);
-    this.display_schedule =  this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
     this.saveScheduleClick.emit(this.schedule_arr);
   }
   addScheduleSelection() {
-     // this.Selall = false;
+    // this.Selall = false;
     this.handleselectnone();
     this.addeditScheduleClick.emit('addeditclicked');
     this.showScheduleselection();
   }
   cancelscheduleClicked() {
-   this.handleselectnone();
+    this.handleselectnone();
     this.showScheduleselection();
     this.cancelScheduleClick.emit(this.schedule_arr);
   }
   editwScheduleselection(indx, schedule) {
-  this.handleselectnone();
+    this.handleselectnone();
     this.addeditScheduleClick.emit('addeditclicked');
     this.showScheduleselection(indx, schedule);
   }
@@ -295,14 +294,14 @@ update_btn = Messages.UPDATE_BTN;
           sindx = i;
         }
       }
-        if (this.selday_arr.length === 7) {
+      if (this.selday_arr.length === 7) {
         this.Selall = true;
       } else {
         this.Selall = false;
       }
       // console.log('sel day', this.selday_arr);
-      this.dstart_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'), 10)};
-      this.dend_time =  {hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'), 10)};
+      this.dstart_time = { hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'), 10) };
+      this.dend_time = { hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'), 10) };
 
       this.show_schedule_selection = true;
       if (this.showsavebutton === '1') {
@@ -311,8 +310,8 @@ update_btn = Messages.UPDATE_BTN;
       // // console.log('selday', this.selday_arr);
     } else {
 
-        this.dstart_time =  {hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10)};
-      this.dend_time =  {hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10)};
+      this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+      this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
 
       this.edit_mode = false;
       this.api_error = this.api_success = '';
@@ -331,17 +330,17 @@ update_btn = Messages.UPDATE_BTN;
     }
   }
   check_daychecked(indx) {
-   // if (this.edit_mode === true) {
-      if (this.selday_arr.length > 0) {
-        if (this.selday_arr.indexOf(indx) !== -1) {
-          return true;
-        } else {
-            return false;
-        }
+    // if (this.edit_mode === true) {
+    if (this.selday_arr.length > 0) {
+      if (this.selday_arr.indexOf(indx) !== -1) {
+        return true;
+      } else {
+        return false;
       }
-  //  } else {
-  //    return false;
-  //  }
+    }
+    //  } else {
+    //    return false;
+    //  }
   }
   isbeingEdited(indx) {
     if (indx === this.edit_index) {

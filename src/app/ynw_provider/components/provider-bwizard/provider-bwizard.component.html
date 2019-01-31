@@ -9,19 +9,23 @@
                     <h1>{{congradulations_cap}} {{userdet.userName}}!</h1>
                     <p>{{right_choice_by_signin_up_cap}} <strong>{{jaldee_cap}}</strong></p>
                     <p>{{enable_p_search_cap}}</p>
-                    <p><strong>{{remember_cap}}</strong> {{adjust_sett_cap}} <strong>{{business_pro_cap}}</strong> {{under_set_cap}}</p>
+                    <p><strong>{{remember_cap}}</strong> {{adjust_sett_cap}} <strong>{{business_pro_cap}}</strong>
+                        {{under_set_cap}}</p>
                 </div>
                 <div class="pt-btm">
                     <ul class="ico">
                         <li><span data-icon="l"></span></li>
                         <li><span data-icon="k"></span></li>
+                        <li><span data-icon="k"></span></li>
                         <li><span data-icon="1"></span></li>
                         <li><span data-icon="d"></span></li>
                     </ul>
 
-                    <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i class="icon icon-angle-right"></i>
+                    <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i
+                            class="icon icon-angle-right"></i>
                     </span>
-                    <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself, take me to Settings. <b> Skip</b>
+                    <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself, take me to
+                        Settings. <b> Skip</b>
                     </p>
                     <!-- <ul class="status-pnt">
                         <li></li>
@@ -43,12 +47,15 @@
                         <div class="form-group">
                             <label>{{business_name_cap}}</label>
                             <span class="expl">{{your_cap}} {{customer_label}}{{view_in_pub_search_cap}}</span>
-                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']" name="providername" placeholder="Eg. Seven Star Clinic, Dr. Mani, Bright Hospital" autocomplete="off">
+                            <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']"
+                                name="providername" placeholder="Eg. Seven Star Clinic, Dr. Mani, Bright Hospital"
+                                autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label>{{profile_summary_cap}}</label>
                             <span class="expl">{{your_cap}} {{customer_label}}{{view_in_pub_search_cap}}</span>
-                            <textarea class="form-control" id="" rows="3" placeholder="Enter brief summary (max 400 characters)" maxlength="400" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
+                            <textarea class="form-control" id="" rows="3" placeholder="Enter brief summary (max 400 characters)"
+                                maxlength="400" [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
                         </div>
                     </div>
                     <div class="footer">
@@ -59,136 +66,293 @@
                                     <li></li>
                                     <li></li>
                                     <li></li>
+                                    <li></li>
                                 </ul>
                             </div>
                             <div class="col-6 control">
-                               <button type="button" (click)="showStep(2)" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
-                               <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                                <button type="button" (click)="showStep(2)" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Step 2 -->
+            <div *ngIf="active_step==2" class="is-bx step2 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto wiz-service">
+                <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                <div class="header">
+                    <h1>Service</h1>
+                </div>
+                <div class="content">
+                    <!-- <app-addprovider-wailist-service></app-addprovider-wailist-service> -->
+                    <p class="form-level-settings"></p>
+
+
+                    <ng-container>                        
+                        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+                            onSubmit(amForm.value)"
+                            (keyup)="resetApiErrors()" class="ynw-common-form-nm">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="service_name" placeholder="{{service_name_cap}}"
+                                            formControlName="name" autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
+                                        [errorMsg]="fed_service.getErrorMessage(amForm,'name',
+          {
+            'required' : 'Please enter the service name.',
+            'maxlength' : 'Name can contain only 100 characters'
+          })">
+                                    </app-field-error-display>
+                                </div>
+
+                                <div class="form-group">
+                                    <!-- <input matInput type="text" class="form-control" id="description" placeholder="Description"
+          formControlName="description" autocomplete="off"> -->
+                                    <mat-form-field>
+                                        <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
+                                            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()"
+                                            (blur)="lostDescFocus()" maxlength="500"> </textarea>
+                                    </mat-form-field>
+
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
+                                        [errorMsg]="fed_service.getErrorMessage(amForm,'description',
+          {
+            'required' : 'Please enter the service description.',
+            'maxlength' : 'Description can contain only 500 characters'
+          })">
+                                    </app-field-error-display>
+                                    <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                        characters
+                                        remaining</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control number-ip-sm" id="estimated_duration"
+                                            placeholder="{{est_duration_cap}}" formControlName="serviceDuration"
+                                            autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')"
+                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
+          {'required' : 'Please enter estimated duration.',
+          'pattern' : 'Estimated duration should be an integer value (eg. 1, 10, 15 etc)',
+          'maxlength' : 'Only 10 digits are allowed'
+        })">
+                                    </app-field-error-display>
+                                </div>
+
+                                <div class="form-group" *ngIf="!disable_price">
+                                    <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control number-ip-sm" id="price"
+                                            placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount" autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
+                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
+          {'required' : 'Please enter price',
+          'pattern' : 'Enter a valid price',
+          'maxlength' : 'Only 10 digits are allowed'})">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group inline" *ngIf="!disable_price">
+                                    <label class="col-form-label">{{enable_prepayment_cap}}</label>
+                                    <mat-slide-toggle class="example-margin" formControlName="isPrePayment" (change)="changePrepayment()">
+
+                                    </mat-slide-toggle>
+                                </div>
+                                <ng-container *ngIf="!disable_price">
+                                    <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
+                                        <!-- <label class="col-form-label" for="prepayment_amount">{{prepayment_cap}}(<i class="fa fa-inr"></i>) *</label> -->
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control number-ip-sm" id="prepayment_amount"
+                                                placeholder="{{prepayment_cap}}*" formControlName="minPrePaymentAmount"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
+                                            [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
+            {'required' : 'Please enter prepayment amount',
+            'pattern' : 'Enter a valid amount'})">
+                                        </app-field-error-display>
+                                    </div>
+                                </ng-container>
+                                <div class="form-group inline" *ngIf="!disable_price">
+                                    <label class="col-form-label">{{tax_applicable_cap}}</label>
+                                    <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">
+                                    </mat-slide-toggle>
+                                </div>
+                                <div class="form-group inline">
+                                    <label class="col-form-label">{{service_notify_cap}}</label>
+                                    <mat-slide-toggle class="example-margin" formControlName="notification" (change)="changeNotification()">
+                                    </mat-slide-toggle>
+                                </div>
+                                <mat-radio-group *ngIf="amForm.get('notification').value === true" formControlName="notificationType">
+                                    <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
+                                    <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </form>
+                    </ng-container>
+                    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+                    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display> -->
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-6 status">
+                            <ul class="status-pnt">
+                                <li></li>
+                                <li class="active"></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 control">
+                            <button (click)="showStep(1) " type="button" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
+                            <button (click)="onSubmit(amForm.value)" type="button" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
+                            <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Step 3 -->
+            <div *ngIf="active_step==3" class="is-bx step2 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>{{location_cap}}</h1>
+                    </div>
+                    <div class="content">
+                        <div class="stik">
+                            <ul class="info-lst" *ngIf="multipeLocationAllowed">
+                                <li>{{add_more_loc_in_set_cap}}</li>
+                                <!-- <li>How to get GPS coordinates click <a href="#">Learn More</a></li> -->
+                            </ul>
+                        </div>
+
+                        <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                            <div class="form-group mapselection">
+                                <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>{{choose_loc_cap}}</button>
+                                <span class="expl">{{loc_not_avail_cap}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label>{{gps_coordinates_cap}}</label>
+                                <span class="expl">{{gps_coordinated_needeed_cap}}
+                                    {{customer_label}}{{mob_for_loc_proximity_cap}}</span>
+                                <div class="row">
+                                    <div class="col-6"><input matInput type="text" class="form-control" id="blatId"
+                                            [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
+                                            autocomplete="off" (keyup)="handlekeyup('coord_error')"></div>
+                                    <div class="col-6"><input matInput type="text" class="form-control" id=""
+                                            [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"
+                                            autocomplete="off" (keyup)="handlekeyup('coord_error')"></div>
+                                </div>
+                                <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{address_cap}}</label>
+                                <!-- <span class="expl">{{enter_addr_cap}} {{customer_label}}{{can_find_you_cap}}</span> -->
+                                <span class="expl">Enter your Business address</span>
+                                <textarea class="form-control" placeholder="This is what your {{customer_label}}s see when they search online"
+                                    id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address"
+                                    #locaddress></textarea>
+                            </div>
+                            <!-- <div class="form-group pcde">
+                                    <label>Pincode</label>
+                                    <span class="expl">Your business locationâ€™s pincode</span>
+                                    <input type="text" class="form-control" id="" placeholder="" [(ngModel)]="wizard_data_holder['pincode']" name="pincode">
+                                </div> -->
+                            <div class="form-group">
+                                <label>{{loc_name_cap}} *</label>
+                                <span class="expl">{{disp_name_loc_cap}} {{customer_label}}s.</span>
+                                <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']"
+                                    name="location" placeholder="This is what your {{customer_label}}s see when they search online"
+                                    autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
+                                <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{google_map_url_cap}}</label>
+                                <span class="expl">{{used_find_exact_loc}}</span>
+                                <input matInput type="text" class="form-control nofocus" id="" [(ngModel)]="wizard_data_holder['mapurl']"
+                                    name="mapurl" placeholder="" autocomplete="off" readonly tabindex="-1">
+                                <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-6 status">
+                                <ul class="status-pnt">
+                                    <li></li>
+                                    <li></li>
+                                    <li class="active"></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="col-6 control">
+                                <button type="button" (click)="showStep(2)" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
+                                <button type="button" (click)="showStep(4)" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
 
-             <!-- Step 2 -->
-             <div *ngIf="active_step==2" class="is-bx step2 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
-                    <form action="">
-                        <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-                        <div class="header">
-                            <h1>{{location_cap}}</h1>
-                        </div>
-                        <div class="content">
-                            <div class="stik">
-                                <ul class="info-lst" *ngIf="multipeLocationAllowed">
-                                    <li>{{add_more_loc_in_set_cap}}</li>
-                                    <!-- <li>How to get GPS coordinates click <a href="#">Learn More</a></li> -->
-                                </ul>
-                            </div>
-
-                            <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                <div class="form-group mapselection">
-                                    <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>{{choose_loc_cap}}</button>
-                                    <span class="expl">{{loc_not_avail_cap}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label>{{gps_coordinates_cap}}</label>
-                                    <span class="expl">{{gps_coordinated_needeed_cap}} {{customer_label}}{{mob_for_loc_proximity_cap}}</span>
-                                    <div class="row">
-                                        <div class="col-6"><input matInput type="text" class="form-control" id="blatId" [(ngModel)]="wizard_data_holder['lat']" name="lat"
-                                          placeholder="Latitude" autocomplete="off" (keyup)="handlekeyup('coord_error')"></div>
-                                        <div class="col-6"><input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['lon']" name="lon"
-                                          placeholder="Longitude" autocomplete="off"  (keyup)="handlekeyup('coord_error')"></div>
-                                    </div>
-                                    <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
-                                </div>
-                                <div class="form-group">
-                                    <label>{{address_cap}}</label>
-                                    <!-- <span class="expl">{{enter_addr_cap}} {{customer_label}}{{can_find_you_cap}}</span> -->
-                                    <span class="expl">Enter your Business address</span>
-                                    <textarea class="form-control" placeholder="This is what your {{customer_label}}s see when they search online" id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address" #locaddress></textarea>
-                                </div>
-                                <!-- <div class="form-group pcde">
-                                    <label>Pincode</label>
-                                    <span class="expl">Your business locationâ€™s pincode</span>
-                                    <input type="text" class="form-control" id="" placeholder="" [(ngModel)]="wizard_data_holder['pincode']" name="pincode">
-                                </div> -->
-                                <div class="form-group">
-                                    <label>{{loc_name_cap}} *</label>
-                                    <span class="expl">{{disp_name_loc_cap}} {{customer_label}}s.</span>
-                                    <input matInput type="text" class="form-control" id="" [(ngModel)]="wizard_data_holder['location']" name="location" placeholder="This is what your {{customer_label}}s see when they search online" autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
-                                    <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
-                                </div>
-                                <div class="form-group">
-                                    <label>{{google_map_url_cap}}</label>
-                                    <span class="expl">{{used_find_exact_loc}}</span>
-                                    <input matInput type="text" class="form-control nofocus" id="" [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder="" autocomplete="off" readonly tabindex="-1">
-                                    <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <div class="row">
-                                <div class="col-6 status">
-                                    <ul class="status-pnt">
-                                        <li></li>
-                                        <li class="active"></li>
-                                        <li></li>
-                                        <li></li>
-                                    </ul>
-                                </div>
-                                <div class="col-6 control">
-                                    <button type="button" (click)="showStep(1)" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
-                                    <button type="button" (click)="showStep(3)" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
-                                    <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+            <!-- Step 4 -->
+            <div *ngIf="active_step==4" class="is-bx step3 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                <div class="header">
+                    <h1>{{working_hrs_cap}}</h1>
                 </div>
-
-             <!-- Step 3 -->
-             <div *ngIf="active_step==3" class="is-bx step3 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
-                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-                    <div class="header">
-                        <h1>{{working_hrs_cap}}</h1>
-                    </div>
-                    <div class="content">
-                        <div class="flds">
-                            <div class="form-group" >
-                                <label class="title16" *ngIf="bProfile.baseLocation">{{working_hrs_cap}} ({{bProfile.baseLocation.place}})</label>
-                                <label class="title16" *ngIf="!bProfile.baseLocation">{{working_hrs_cap}}</label>
-                                <span class="expl">{{shows_b_hrs_cap}}</span>
-                                <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
+                <div class="content">
+                    <div class="flds">
+                        <div class="form-group">
+                            <label class="title16" *ngIf="bProfile.baseLocation">{{working_hrs_cap}}
+                                ({{bProfile.baseLocation.place}})</label>
+                            <label class="title16" *ngIf="!bProfile.baseLocation">{{working_hrs_cap}}</label>
+                            <span class="expl">{{shows_b_hrs_cap}}</span>
+                            <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
                                 <li *ngFor="let schedule of display_schedule">
                                     <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
                                 </li>
-                                </ul>
-                                <span class="cs-btn bt3" (click)="changeSchedule_clicked()" *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0) ? 'Change Schedule': 'Add Schedule'}}</span>
-                            </div>
-                            <app-provider-schedule [Isource] = "'wizard'" *ngIf="ischange_schedule_clicked == true" [existingSchedules] = "schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)" (cancelScheduleClick)="handleCancelschedule($event)" (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>
+                            </ul>
+                            <span class="cs-btn bt3" (click)="changeSchedule_clicked()" *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0)
+                                ? 'Change Schedule': 'Add Schedule'}}</span>
+                        </div>
+                        <app-provider-schedule [Isource]="'wizard'" *ngIf="ischange_schedule_clicked == true"
+                            [existingSchedules]="schedule_arr" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"
+                            (cancelScheduleClick)="handleCancelschedule($event)" (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-6 status">
+                            <ul class="status-pnt">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li class="active"></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 control">
+                            <button (click)="showStep(3) " type="button" class="cs-btn bt2" *ngIf="!loading_active && !disablebuttonsInSchedule">{{back_cap}}</button>
+                            <button (click)="showStep(5) " type="button" class="cs-btn bt1" *ngIf="!loading_active && !disablebuttonsInSchedule">{{next_cap}}</button>
+                            <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                         </div>
                     </div>
-                    <div class="footer">
-                        <div class="row">
-                            <div class="col-6 status">
-                                <ul class="status-pnt">
-                                    <li></li>
-                                    <li></li>
-                                    <li class="active"></li>
-                                    <li></li>
-                                </ul>
-                            </div>
-                            <div class="col-6 control">
-                                <button (click)="showStep(2) " type="button" class="cs-btn bt2" *ngIf="!loading_active && !disablebuttonsInSchedule">{{back_cap}}</button>
-                                <button (click)="showStep(4) "type="button" class="cs-btn bt1" *ngIf="!loading_active && !disablebuttonsInSchedule">{{next_cap}}</button>
-                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
-                            </div>
-                        </div>
-                    </div>
+                </div>
             </div>
 
-            <!-- Step 4 -->
-            <div *ngIf="active_step==4" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <!-- Step 5 -->
+            <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
                 <form action="">
                     <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                     <div class="header">
@@ -205,15 +369,17 @@
                             <div class="form-group">
                                 <label class="mb20">{{prof_searchable_viewable_cap}}</label>
                                 <div class="rdo ton" [class.active]="search_status==1">
-                                    <mat-radio-button name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"></mat-radio-button>
+                                    <mat-radio-button name='searchstatus' value="ENABLE" [checked]="search_status==1"
+                                        (change)="handle_searchstatus('ENABLE')"></mat-radio-button>
                                     <!-- <input type="radio" name='searchstatus' value="ENABLE" [checked]="search_status==1" (change)="handle_searchstatus('ENABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('ENABLE')">
                                         {{turnon_pub_search_cap}}
                                         <span>{{your_pro_visible_cap}} {{customer_label}}{{online_at_cap}} <strong>{{jaldee_com_cap}}</strong></span>
                                     </label>
                                 </div>
-                                <div class="rdo toff" [class.active]="search_status==2" >
-                                    <mat-radio-button name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"></mat-radio-button>
+                                <div class="rdo toff" [class.active]="search_status==2">
+                                    <mat-radio-button name='searchstatus' [checked]="search_status==2" value="DISABLE"
+                                        (change)="handle_searchstatus('DISABLE')"></mat-radio-button>
                                     <!-- <input type="radio" name='searchstatus' [checked]="search_status==2" value="DISABLE" (change)="handle_searchstatus('DISABLE')"> -->
                                     <label for="" (click)="handle_searchstatus('DISABLE')">
                                         {{turnoff_publ_search_cap}}
@@ -230,11 +396,12 @@
                                     <li></li>
                                     <li></li>
                                     <li></li>
+                                    <li></li>
                                     <li class="active"></li>
                                 </ul>
                             </div>
                             <div class="col-6 control">
-                                <button type="button" (click)="showStep(3)" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
+                                <button type="button" (click)="showStep(4)" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
                                 <button type="button" (click)="checkClose()" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
                                 <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                             </div>
@@ -243,8 +410,8 @@
                 </form>
             </div>
 
-            <!-- Step 5 -->
-            <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <!-- Step 6 -->
+            <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
                 <form action="">
                     <span (click)="redirecttoProfile()" class="close-btn" data-icon="i"></span>
                     <div class="header">
@@ -254,7 +421,8 @@
                         <div class="flds col-12">
                             <div class="wbox">
                                 <div class="bx-ico"><i data-icon="m"></i></div>
-                                <div class="bx-copy">{{some_info_missing_cap}} <span (click)="redirecttoProfile()">{{settings_cap}}</span> {{complete_your_pro_cap}} <strong>{{pub_search_cap}}</strong></div>
+                                <div class="bx-copy">{{some_info_missing_cap}} <span (click)="redirecttoProfile()">{{settings_cap}}</span>
+                                    {{complete_your_pro_cap}} <strong>{{pub_search_cap}}</strong></div>
                             </div>
                         </div>
                     </div>
@@ -269,7 +437,7 @@
                                 </ul>
                             </div>
                             <div class="col-6 control">
-                                <button type="button" (click)="showStep(4)" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
+                                <button type="button" (click)="showStep(5)" class="cs-btn bt2" *ngIf="!loading_active">{{back_cap}}</button>
                                 <button type="button" (click)="redirecttoProfile()" class="cs-btn bt1" *ngIf="!loading_active">{{next_cap}}</button>
                                 <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                             </div>

@@ -1,15 +1,10 @@
 
 import { interval as observableInterval, Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, Inject, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedServices } from '../../services/shared-services';
-import { NgForm } from '@angular/forms';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
-
-
 import { Messages } from '../../constants/project-messages';
-import { projectConstants } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-otp-form',

@@ -1,17 +1,12 @@
 
-import { interval as observableInterval, Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-
-
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { InboxServices } from '../inbox.service';
-
-
 import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
@@ -21,8 +16,6 @@ import { AddInboxMessagesComponent } from '../../../components/add-inbox-message
   styleUrls: ['./provider-inbox.component.scss']*/
 })
 export class InboxListComponent implements OnInit, OnDestroy {
-
-
   provider_consumer_cap = Messages.PROVIDER_CONSUMER_CAP;
   service_cap = Messages.SERVICE_CAP;
   message_cap = Messages.MESSAGE_CAP;
@@ -31,7 +24,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
   close_cap = Messages.CLOSE_BTN;
   delete_msg_cap = Messages.DELETE_MSG_CAP;
   no_msg_exists_cap = Messages.NO_MSG_EXISTS_CAP;
-
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   selectedMsg = -1;
   user_id;

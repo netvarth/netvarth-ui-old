@@ -1,14 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import { URLSearchParams } from '@angular/http';
 
-// Import RxJs required methods
-
-
-
-import { base_url } from './../constants/urls';
 @Injectable()
 export class ServiceMeta {
     constructor(private http: HttpClient) {}

@@ -1149,6 +1149,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (pasdomain) { // case if domain and subdomain are available
           if (data['refinedFilters']) {
             this.searchrefine_arr = data['refinedFilters'];
+            if (pasdomain && subdom) {
+              this.searchdetailserviceobj.getRefinedSearch(pasdomain, '')
+              .subscribe(refdata => {
+                  const arraytomerge = refdata['refinedFilters'];
+                  this.searchrefine_arr = arraytomerge.concat(this.searchrefine_arr);
+              });
+            }
           }
           if (data['commonFilters']) {
             const mergedarray = this.searchrefine_arr.concat(data['commonFilters']); // merging the refine and common filters

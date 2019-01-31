@@ -68,6 +68,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
+import { ProviderServiceComponent } from './ynw_provider/components/provider-service/provider-service.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { RequestForComponent } from './ynw_provider/components/request-for/reque
     ConsumerRateServicePopupComponent,
     PieChartComponent,
     CouponsComponent,
-    RequestForComponent
+    RequestForComponent,
+    ProviderServiceComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,

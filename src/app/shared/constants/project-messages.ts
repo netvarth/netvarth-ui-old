@@ -483,7 +483,7 @@ export const Messages = {
 
   // App-shared-modules-footer
   'ABOUT_CAP': 'About',
-  'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providersâ€™ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
+  'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providersÃ¢â‚¬â„¢ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
   'ABOUT_JALDEE_TWO': 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.',
   'CONTACT_CAP': 'Contact',
   'NETVARTH_TECH_PVT_LTD': 'Netvarth Technologies Pvt Ltd',
@@ -671,6 +671,7 @@ export const Messages = {
   'GALLERY_CAP': 'Gallery',
   'SELECT_IMAGE_CAP': 'Click here to select the image files',
   'GO_TO_SERVICE_CAP': 'Please click here to go to the service time-window List',
+  'SERVPRICE_CAP': 'Price ',
 
   // App-ynw_provider-components-add-provider-service-gallery
   'SERVICE_GALLERY_CAP': 'Service Gallery',
@@ -1208,9 +1209,9 @@ export const Messages = {
   'FRM_LEVEL_MISC_MSG' : 'Other features can be mentioned here.',
 
   // form-level-provider-bprofile-search
-  'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profile’s visibility in [customer]’s search result. Unless you enable, the patients won’t be able to view your profile in their search result.',
+  'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profileâ€™s visibility in [customer]â€™s search result. Unless you enable, the patients wonâ€™t be able to view your profile in their search result.',
   'FRM_LEVEL_ADWORDS_MSG' : 'Manage relevant keywords to increase visibility to your [customer]s.',
-  'FRM_LEVEL_PROFILE_NAME_CAP' : 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual’s name or the business name.',
+  'FRM_LEVEL_PROFILE_NAME_CAP' : 'Manage profile name and basic information of you or your business here. Profile Name can be either the individualâ€™s name or the business name.',
   'FRM_LEVEL_LOC_MSG' : 'Manage your business Location details here.',
   'FRM_LEVEL_LOC_AMENITIES_MSG' : 'Manage the location benefits that are offered to your [customer]s.',
   'FRM_LEVEL_WORKING_MSG' : 'Details of your business hours are shown here.',
@@ -1219,11 +1220,11 @@ export const Messages = {
   'FRM_LEVEL_LANG_MSG' : 'To widen your [customer] base, add different languages known to you here.',
   'FRM_LEVEL_ADDITIONAL_MSG' : 'Add other details of you or your business so that [customer]s can understand you more.',
   'FRM_LEVEL_VERI_MSG' : 'To upgrade verification level contact Jaldee.',
-  'FRM_LEVEL_GALLERY_MSG' : 'Add images and catchy captions to boost your [customer]’s check-ins.',
+  'FRM_LEVEL_GALLERY_MSG' : 'Add images and catchy captions to boost your [customer]â€™s check-ins.',
   'FRM_LEVEL_SOCIAL_MSG' : 'To connect with [customer]s on your social media platform, add your social media links here.',
 
   // form-level-provider-waitlist
-  'FRM_LEVEL_WAIT_TIME_CALC_MSG' : 'The time is calculated based on the mode of wait time calculation selected, and this time is seen in the [customer] search results.',
+  'FRM_LEVEL_WAIT_TIME_CALC_MSG' : 'Choose one of the four wait-time calculation options. This calculated time is the standby time after which your [customer] can avail the services.',
   'FRM_LEVEL_SETT_LOC_MSG' : 'Add the location details of your business presence here. Manage it as and when required.',
   'FRM_LEVEL_SETT_SERV_MSG' : 'Enlist all the services that you provide to the [customer]s. You can always add new services here.',
   'FRM_LEVEL_SETT_WORKING_HR_MSG' : 'Setup and Manage multiple working hours of your business here.',
@@ -1231,7 +1232,7 @@ export const Messages = {
 
   // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Set up the payment modes(Jaldee/My own account)according to your  license package.',
-  'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the “Tax Applicable” toggle switch to apply taxes for your services.',
+  'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the â€œTax Applicableâ€� toggle switch to apply taxes for your services.',
   
 
   // form-level-provider-license and invoice

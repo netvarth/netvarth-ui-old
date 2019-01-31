@@ -19,11 +19,8 @@
         </div>
         <div class="row m-nav">
             <div class="col-xs-12 col-sm-4 col-md-4 nav01 pl0">
-                <span *ngIf="normal_profile_active==3 || normal_locationinfo_show==3">
-                    <a routerLink="/" [class.active]="activeTab=='dashboard'"><i data-icon="w"></i>
-                        {{dashboard_cap}}</a></span>
-                <span *ngIf="normal_profile_active==2 || normal_locationinfo_show==4">
-                    <a (click)="dashboardErrMsg()" class="pointer-cursor"><i data-icon="w"></i>
+                <span>
+                    <a (click)="dashboardClicked()" [class.active]="activeTab=='dashboard'" class="pointer-cursor"><i data-icon="w"></i>
                         {{dashboard_cap}}</a></span>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers" [class.active]="activeTab=='customers'"><i

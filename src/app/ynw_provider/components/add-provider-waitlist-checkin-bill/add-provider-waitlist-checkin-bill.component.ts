@@ -9,11 +9,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
-import { EventEmitter } from 'protractor';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
-import { MessageService } from '../../services/provider-message.service';
 import { VALID_ELEMENTS } from '@angular/core/src/sanitization/html_sanitizer';
 
 export interface ItemServiceGroup {

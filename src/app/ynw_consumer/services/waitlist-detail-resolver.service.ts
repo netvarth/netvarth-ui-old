@@ -2,7 +2,6 @@
 
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Router, Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
 

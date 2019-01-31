@@ -70,9 +70,43 @@ export class ProviderbWizardComponent implements OnInit {
   settings_cap = Messages.WIZ_SETTINGS_CAP;
   complete_your_pro_cap = Messages.WIZ_COMPL_YOUR_PRO_CAP;
   pub_search_cap = Messages.WIZ_PUB_SEARCH_CAP;
-
+  service_cap = Messages.PRO_SERVICE_CAP;
+  description_cap = Messages.DESCRIPTION_CAP;
+  price_cap = Messages.PRICE_CAP;
+  service_name_cap = Messages.SERVICE_NAME_CAP;
+  est_duration_cap = Messages.EST_DURATION_CAP;
+  enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
+  prepayment_cap = Messages.PREPAYMENT_CAP;
+  tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
+  service_notify_cap = Messages.SERVICE_NOTIFY_CAP;
+  push_message_cap = Messages.PUSH_MESSAGE_CAP;
+  service_email_cap = Messages.SERVICE_EMAIL_CAP;
+  gallery_cap = Messages.GALLERY_CAP;
+  select_image_cap = Messages.SELECT_IMAGE_CAP;
+  go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
+  delete_btn = Messages.DELETE_BTN;
+  cancel_btn = Messages.CANCEL_BTN;
+  service_price_cap = Messages.SERVPRICE_CAP;
+  rupee_symbol = '₹';
   @ViewChild('bnameId') bnameIdref: ElementRef;
+
   amForm: FormGroup;
+  number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
+  number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
+  service;
+  payment_settings: any = [];
+  payment_loading = false;
+  char_count = 0;
+  max_char_count = 500;
+  isfocused = false;
+  taxpercentage = 0;
+  taxDetails: any = [];
+  api_error = null;
+  api_success = null;
+  error_msg = null;
+  disable_price = true;
+
+  base_licence = false;
   businessConfig: any = [];
   userdet: any = [];
   active_step: number;
@@ -105,6 +139,7 @@ export class ProviderbWizardComponent implements OnInit {
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
+    public fed_service: FormMessageDisplayService,
     private dialog: MatDialog,
     private routerobj: Router,
     @Inject(DOCUMENT) public document
@@ -126,13 +161,21 @@ export class ProviderbWizardComponent implements OnInit {
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
     const pdata = { 'ttype': 'updateuserdetails' };
     this.shared_functions.sendMessage(pdata);
-
+    this.getServices();
     this.getgeneralBusinessSchedules(); // method to fetch the default schedule from the ynwconf API respose
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.getUserdetails();
     // this.getBusinessProfile();
     this.getBusinessConfiguration();
+     const package_id = (this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
+     this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
+     this.base_licence = (package_id === 1) ? true : false;
+     if (this.userdet['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
+        this.disable_price = true;
+     } else {
+       this.disable_price = false;
+     }
     this.active_step = 0;
     localStorage.removeItem('new_provider');
   }
@@ -150,7 +193,6 @@ export class ProviderbWizardComponent implements OnInit {
     } else if (changetostep === 4) {
       this.getSearchstatus();
     }
-
     const curstep = this.active_step; // taking the current step number to a local variable
     this.save_setDetails(curstep, changetostep);
     if (changetostep === 1) {
@@ -159,8 +201,10 @@ export class ProviderbWizardComponent implements OnInit {
           this.document.getElementById('bnameId').focus();
         }
       }, 1000);
-    } 
-    else if (changetostep === 2) {
+    } else if (changetostep === 2) {
+      this.createForm();
+      this.setValue(this.service);
+    } else if (changetostep === 3) {
       setTimeout(() => {
         if (this.document.getElementById('blatId')) {
           this.document.getElementById('blatId').focus();
@@ -205,6 +249,11 @@ export class ProviderbWizardComponent implements OnInit {
           );
         break;
       case 2:
+        this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
+        this.loading_active = false;
+
+        break;
+      case 3:
         let latlon_Exists = false;
         const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
         const floatpattern = new RegExp(projectConstants.VALIDATOR_FLOAT);
@@ -406,25 +455,39 @@ export class ProviderbWizardComponent implements OnInit {
         break;
     }
   }
-
+  onSubmit (form_data) {
+    this.resetApiErrors();
+    form_data.bType = 'Waitlist';
+    if (this.disable_price) {
+      form_data['totalAmount'] = 0;
+      form_data['isPrePayment'] = false;
+      form_data['taxable'] = false;
+    } else {
+      form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
+                                      0 : form_data.minPrePaymentAmount;
+      form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+    }
+    form_data.id = this.service.id;
+    this.updateService(form_data);
+  }
   wizardPageShowDecision(curstep, changetostep) {
     // console.log('curpage', curstep);
     let changerequired = false;
     let changeid = -1;
-    if (curstep === 2 && changetostep === 3) { // from location to schedule
+    if (curstep === 3 && changetostep === 4) { // from location to schedule
       // check whether the is sufficient location details to show the schedule
       /*if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '' ) {
         // case if sufficient info is not there to show the schedule page, so navigate user to the no sufficient page
         changerequired = true;
         changeid = 5; // commented since ynw told that schedule page should be shown even if location details are blank
       }*/
-    } else if (curstep === 3 && changetostep === 4) { // from schedule to search
+    } else if (curstep === 4 && changetostep === 5) { // from schedule to search
       if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon === '' || this.wizard_data_holder.location === '' ||
         this.wizard_data_holder.name === '') {
         changerequired = true;
         changeid = 5;
       }
-    } else if (curstep === 5 && changetostep === 4) { // from missing data to search
+    } else if (curstep === 6 && changetostep === 5) { // from missing data to search
       this.loading_active = true;
       if (this.wizard_data_holder.name === '') { // if business name is blank, then take user to step 1
         changerequired = true;
@@ -432,10 +495,10 @@ export class ProviderbWizardComponent implements OnInit {
       } else if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon === '' || this.wizard_data_holder.location === '') {
         // if location basic details are missing, then take user to step 2
         changerequired = true;
-        changeid = 2;
+        changeid = 3;
       } else if (this.schedule_arr.length === 0) { // if schedule details are missing, take user to step 3
         changerequired = true;
-        changeid = 3;
+        changeid = 4;
       }
       this.loading_active = false;
     }
@@ -666,7 +729,7 @@ export class ProviderbWizardComponent implements OnInit {
       show_incomplete = true;
     }
     if (show_incomplete) { // if incomplete data is there then show the incomplete page
-      this.active_step = 5;
+      this.active_step = 6;
     } else { // if sufficient data is there, then show the bprofile
       this.redirecttoProfile();
     }
@@ -730,4 +793,162 @@ export class ProviderbWizardComponent implements OnInit {
         break;
     }
   }
+
+  // Service Section
+  createForm() {
+    if (this.disable_price) {
+      this.amForm = this.fb.group({
+        name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+        description: ['', Validators.compose([Validators.maxLength(500)])],
+        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+        // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
+        // taxable: [false],
+        notification: [false]
+      });
+    } else {
+      this.amForm = this.fb.group({
+        name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+        description: ['', Validators.compose([Validators.maxLength(500)])],
+        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+        isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+        taxable: [false],
+        notification: [false]
+      });
+    }
+  }
+  setDescFocus() {
+    this.isfocused = true;
+    this.char_count = this.max_char_count - this.amForm.get('description').value.length;
+  }
+  lostDescFocus() {
+    this.isfocused = false;
+  }
+  setCharCount(ev) {
+    this.char_count = this.max_char_count - this.amForm.get('description').value.length;
+  }
+  changeNotification() {
+    if (this.amForm.get('notification').value === false) {
+      this.amForm.removeControl('notificationType');
+    } else {
+
+      const value = (this.service['notificationType']) ?
+      this.service['notificationType'] : 'email';
+      this.amForm.addControl('notificationType',
+      new FormControl(value));
+    }
+  }
+  resetApiErrors () {
+    this.api_error = null;
+    this.api_success = null;
+    this.error_msg = null;
+  }
+  getPaymentSettings() {
+    this.payment_loading = true;
+    this.provider_services.getPaymentSettings()
+    .subscribe(
+      data => {
+        this.payment_settings = data;
+        this.payment_loading = false;
+        if (!this.payment_settings.onlinePayment) {
+          this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
+          if (!this.disable_price) {
+            this.amForm.get('isPrePayment').setValue(false);
+            this.changePrepayment();
+          }
+        }
+      },
+      error => {
+        // this.shared_functions.apiErrorAutoHide(this, error);
+        // this.amForm.get('isPrePayment').setValue(false);
+      }
+    );
+  }
+  taxapplicableChange() {
+    // console.log('tax applicable', this.taxpercentage);
+    if (this.taxpercentage <= 0) {
+      // console.log('reached here', this.taxpercentage);
+      this.api_error = this.shared_functions.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+      setTimeout(() => {
+        this.api_error = null;
+      }, projectConstants.TIMEOUT_DELAY_LARGE);
+      this.amForm.get('taxable').setValue(false);
+    } else {
+      this.api_error = null;
+    }
+  }
+  setValue(data) {
+    // console.log(data, data['taxable'] );
+    if (this.disable_price) {
+      this.amForm.setValue({
+        'name': data['name'] || this.amForm.get('name').value,
+        'description': data['description'] || this.amForm.get('description').value,
+        'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
+        /*'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
+        'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
+                                data['minPrePaymentAmount'] !== 0
+                                ) ? true : false,
+        'taxable': data['taxable'] || this.amForm.get('taxable').value,*/
+        'notification': data['notification'] || this.amForm.get('notification').value,
+      });
+    } else {
+      this.amForm.setValue({
+        'name': data['name'] || this.amForm.get('name').value,
+        'description': data['description'] || this.amForm.get('description').value,
+        'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
+        'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
+        'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
+                                data['minPrePaymentAmount'] !== 0
+                                ) ? true : false,
+        'taxable': data['taxable'] || this.amForm.get('taxable').value,
+        'notification': data['notification'] || this.amForm.get('notification').value,
+      });
+    }
+    this.changeNotification();
+    this.changePrepayment();
+  }
+  updateService(post_data) {
+    this.provider_services.updateService(post_data)
+    .subscribe(
+      data => {
+        this.service = post_data;
+        this.showStep(3);
+      },
+      error => {
+        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        this.shared_functions.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' });
+      }
+    );
+  }
+  getServices() {
+    this.provider_services.getServicesList()
+    .subscribe(
+      data => {
+        this.service = data[0];
+      },
+      error => {
+        this.shared_functions.apiErrorAutoHide(this, error);
+      }
+    );
+  }
+  changePrepayment() {
+    if (!this.disable_price) {
+      if (this.amForm.get('isPrePayment').value === false) {
+        this.amForm.removeControl('minPrePaymentAmount');
+      } else {
+        if (this.amForm.get('isPrePayment').value === true) {
+          this.getPaymentSettings();
+        }
+        const value = (this.service['minPrePaymentAmount']) ?
+        this.service['minPrePaymentAmount'] : '';
+
+        this.amForm.addControl('minPrePaymentAmount',
+      new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+      }
+    }
+  }
+
 }

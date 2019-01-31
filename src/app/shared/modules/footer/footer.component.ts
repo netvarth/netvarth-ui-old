@@ -1,8 +1,6 @@
-
-import {interval as observableInterval,  Observable ,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, Inject, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';

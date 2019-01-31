@@ -39,6 +39,8 @@ select_image_cap = Messages.SELECT_IMAGE_CAP;
 go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
 delete_btn = Messages.DELETE_BTN;
 cancel_btn = Messages.CANCEL_BTN;
+service_price_cap = Messages.SERVPRICE_CAP;
+  rupee_symbol = '₹';
   amForm: FormGroup;
   api_error = null;
   api_success = null;

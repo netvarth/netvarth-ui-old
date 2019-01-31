@@ -1,7 +1,6 @@
 import { Component, Input, Output, Inject, OnInit, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
@@ -11,8 +10,6 @@ import { SharedFunctions } from '../../../functions/shared-functions';
 import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
-import { tryParse } from 'selenium-webdriver/http';
-import { stat } from 'fs';
 
 @Component({
   selector: 'app-check-in-inner',

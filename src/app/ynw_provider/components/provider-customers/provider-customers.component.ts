@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { ProviderServices } from '../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { SharedServices } from '../../../shared/services/shared-services';
-
-import * as moment from 'moment';
-
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 

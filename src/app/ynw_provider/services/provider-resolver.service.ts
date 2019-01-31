@@ -1,13 +1,8 @@
-
 import {map, catchError} from 'rxjs/operators';
-
-
-
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Router, Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
-
 import { ProviderServices } from './provider-services.service';
 import { CommonDataStorageService } from '../../shared/services/common-datastorage.service';
 import { SharedFunctions } from '../../shared/functions/shared-functions';

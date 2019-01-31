@@ -1,21 +1,12 @@
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-// import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable, Subscription } from 'rxjs';
-
-
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
-
-
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { AddProviderBprofilePrivacysettingsComponent } from '../provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
@@ -31,13 +22,9 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-import { Local } from 'protractor/built/driverProviders';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
-
-
 
 @Component({
   selector: 'app-provider-bprofile-search',

@@ -1,31 +1,22 @@
 
-import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
+import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
-
 import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-
-// import { ViewChild } from '@angular/core';
-// import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   // styleUrls: ['./home.component.scss']
 })
-
-
 
 export class HeaderComponent implements OnInit, OnDestroy {
 

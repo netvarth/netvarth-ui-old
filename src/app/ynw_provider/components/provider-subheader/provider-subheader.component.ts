@@ -54,7 +54,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
-    this.dashClick();
   }
   ngOnDestroy() {
     // console.log('on destroy');
@@ -68,7 +67,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       this.ChkindialogRef.close();
     }
   }
-
   searchCustomer(source) {
 
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
@@ -230,25 +228,35 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
   }
 
-  dashClick() {
+  dashboardClicked() {
     this.bprofile = [];
     this.provider_services.getBussinessProfile()
       .subscribe(
         data => {
           this.bprofile = data;
+          console.log(this.bprofile);
           this.provider_datastorage.set('bprofile', data);
           if (this.bprofile.status === 'ACTIVE') {
-            this.normal_profile_active = 3;
+              this.routerobj.navigate(['/']);
           } else {
-            this.normal_profile_active = 2;
-          }
-
-          this.normal_locationinfo_show = 2;
-          if (this.bprofile.baseLocation) {
-            if (this.bprofile.baseLocation.place === '') { // case if base location name is blank
-              this.normal_locationinfo_show = 4;
+            if (this.bprofile.businessName && this.bprofile.businessName.trim() !== '') {
+              if (this.bprofile.baseLocation) {
+                if (this.bprofile.baseLocation.place === '') {
+                  this.shared_functions.openSnackBar('Location info missing', { 'panelClass': 'snackbarerror' });
+                }
+              } else {
+                this.shared_functions.openSnackBar('Location info missing', { 'panelClass': 'snackbarerror' });
+              }
             } else {
-              this.normal_locationinfo_show = 3;
+              if (this.bprofile.baseLocation) {
+                if (this.bprofile.baseLocation.place === '') {
+                  this.shared_functions.openSnackBar('Profile & Location info missing', { 'panelClass': 'snackbarerror' });
+                } else {
+                  this.shared_functions.openSnackBar('profile incomplete', { 'panelClass': 'snackbarerror' });
+                }
+              } else {
+                this.shared_functions.openSnackBar('Profile & Location info missing', { 'panelClass': 'snackbarerror' });
+              }
             }
           }
         },

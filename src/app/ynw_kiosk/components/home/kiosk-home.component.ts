@@ -1,16 +1,12 @@
 
-import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
+import {interval as observableInterval,  Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import * as moment from 'moment';
 import { DOCUMENT } from '@angular/common';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
-
 import { KioskServices } from '../../services/kiosk-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';

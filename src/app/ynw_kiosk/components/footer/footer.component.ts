@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
-
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 

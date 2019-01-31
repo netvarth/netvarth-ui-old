@@ -5,21 +5,13 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-
-
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-
-import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-import { Observable, Subscription } from 'rxjs';
-
-
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
@@ -28,12 +20,8 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
-
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { CouponsComponent } from '../coupons/coupons.component';
-
-
-
 
 @Component({
   selector: 'app-provider-detail',

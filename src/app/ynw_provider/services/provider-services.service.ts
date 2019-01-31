@@ -1,18 +1,11 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { projectConstants } from '../../shared/constants/project-constants';
-
 // Import RxJs required methods
-
-
-
 import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
-
 export class ProviderServices {
 
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) { }

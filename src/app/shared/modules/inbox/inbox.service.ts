@@ -1,12 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-
 // Import RxJs required methods
-
-
-
 import { ServiceMeta } from '../../services/service-meta';
 
 @Injectable()
