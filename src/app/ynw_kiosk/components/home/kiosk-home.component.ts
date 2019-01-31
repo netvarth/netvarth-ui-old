@@ -327,11 +327,17 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
 
   searchCustomer() {
     if (!this.numberpattern.test(this.reg_mobile)) {
+      if(!this.reg_mobile){
+        this.shared_functions.openSnackBar('Please enter your mobile number', {'panelClass': 'snackbarerror'});
+      }
+      else{
       this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
       if (this.regmobile.nativeElement) {
         this.regmobile.nativeElement.focus();
       }
+    }
       return false;
+   
     }
     if (!this.phonePattern.test(this.reg_mobile)) {
       this.shared_functions.openSnackBar('Enter a 10 digit mobile number', {'panelClass': 'snackbarerror'});

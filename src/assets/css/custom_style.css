@@ -1994,3 +1994,6 @@ Overriding mat input style
 .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body {
   padding-left: 5px !important;
 }
+.t_c{
+  white-space: nowrap!important;
+}
