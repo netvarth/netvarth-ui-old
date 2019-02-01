@@ -1256,7 +1256,14 @@ export const Messages = {
 
   'SETPROF_LOC_MSG': 'Please set profile name and location to make use of Dashboard',
   'SETPROF_MSG': 'Please set profile name to make use of Dashboard',
-  'SET_LOC_MSG': 'Please set location to make use of Dashboard'
+  'SET_LOC_MSG': 'Please set location to make use of Dashboard',
 
+  //form-level-provider-wizard
+  'FRM_LEVEL_PRO_WIZ_ONE_MSG' : 'The Jaldee team takes pride in your decision of choosing its services.',
+  'FRM_LEVEL_PRO_WIZ_TWO_MSG' : 'Let us quickly set up your basic profile and help you enable the Public Search to get you started!',
+  'FRM_LEVEL_PRO_WIZ_THREE_MSG' : 'We wish you all the very best!',
+  'FRM_LEVEL_PRO_WIZ_FOUR_MSG' : 'Be certain that this initial setup can be viewed, edited and managed, if and when required.',
+  'FRM_LEVEL_PRO_WIZ_FIVE_MSG' : 'Enter your business name here. [customer]s will view this in Public Profile. Complete it by adding a brief introduction about you or your business to help [customer]s know you more.',
+  'FRM_LEVEL_PRO_WIZ_SIX_MSG' : 'Enter the location related details here.',
 };
 

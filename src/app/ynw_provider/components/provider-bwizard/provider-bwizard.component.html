@@ -7,10 +7,10 @@
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="pt-top">
                     <h1>{{congradulations_cap}} {{userdet.userName}}!</h1>
-                    <p>{{right_choice_by_signin_up_cap}} <strong>{{jaldee_cap}}</strong></p>
-                    <p>{{enable_p_search_cap}}</p>
-                    <p><strong>{{remember_cap}}</strong> {{adjust_sett_cap}} <strong>{{business_pro_cap}}</strong>
-                        {{under_set_cap}}</p>
+                    <p>{{frm_wiz_one_cap}}</p>
+                    <p>{{frm_wiz_two_cap}}</p>
+                    <p>{{frm_wiz_three_cap}}</p>
+                    <p>{{frm_wiz_four_cap}}</p>
                 </div>
                 <div class="pt-btm">
                     <ul class="ico">
@@ -45,6 +45,7 @@
                     </div>
                     <div class="content">
                         <div class="form-group">
+                            <P class = "form-level-settings">{{frm_wiz_five_cap}}</P>
                             <label>{{business_name_cap}}</label>
                             <span class="expl">{{your_cap}} {{customer_label}}{{view_in_pub_search_cap}}</span>
                             <input type="text" class="form-control" id="bnameId" maxlength="50" [(ngModel)]="wizard_data_holder['name']"
@@ -237,6 +238,7 @@
 
                         <div class="flds col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                             <div class="form-group mapselection">
+                                <p class = "form-level-settings">{{frm_wiz_six_cap}}</p>
                                 <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i data-icon="j"></i>{{choose_loc_cap}}</button>
                                 <span class="expl">{{loc_not_avail_cap}}</span>
                             </div>
