@@ -820,14 +820,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
-      if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
-        this.filter.check_in_end_date = this.filter.check_in_start_date;
-      }
+      // if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
+      //   this.filter.check_in_end_date = this.filter.check_in_start_date;
+      // }
     } else if (type === 'check_in_end_date') {
       this.filter_date_start_max = this.filter.check_in_end_date;
-      if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
-        this.filter.check_in_start_date = this.filter.check_in_end_date;
-      }
+      // if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
+      //   this.filter.check_in_start_date = this.filter.check_in_end_date;
+      // }
     }
     this.doSearch();
   }

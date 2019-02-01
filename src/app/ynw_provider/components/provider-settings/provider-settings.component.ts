@@ -93,6 +93,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   accountActiveMsg = '';
   billposTooltip = '';
   frm_profile_cap = '';
+  miscellaneous = '';
   
 
   ngOnInit() {
@@ -103,6 +104,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
    // this.accountActiveMsg = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
     this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]',this.customer_label);
+    this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();

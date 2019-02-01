@@ -154,14 +154,14 @@ export class ProviderReimburseReportComponent implements OnInit {
   checkFilterDateMaxMin(type) {
     if (type === 'from_date') {
       this.filter_date_end_min = this.filter.from_date;
-      if (this.filter.to_date < this.filter.from_date) {
-        this.filter.to_date = this.filter.from_date;
-      }
+      // if (this.filter.to_date < this.filter.from_date) {
+      //   this.filter.to_date = this.filter.from_date;
+      // }
     } else if (type === 'to_date') {
       this.filter_date_start_max = this.filter.to_date;
-      if (this.filter.to_date < this.filter.from_date) {
-        this.filter.from_date = this.filter.to_date;
-      }
+      // if (this.filter.to_date < this.filter.from_date) {
+      //   this.filter.from_date = this.filter.to_date;
+      // }
     }
     this.doSearch();
   }

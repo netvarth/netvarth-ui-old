@@ -131,3 +131,6 @@
     margin-left: auto;
     cursor: pointer;
 }
+.ct-r .fltr .search_sort_display .mat-form-field{
+  width: 150px!important;
+}

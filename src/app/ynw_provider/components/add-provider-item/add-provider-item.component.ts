@@ -37,6 +37,7 @@ export class AddProviderItemComponent implements OnInit {
     base64: null
   };
   taxpercentage = 0;
+  price = 0;
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
@@ -57,7 +58,7 @@ export class AddProviderItemComponent implements OnInit {
        // console.log(data);
      }
      taxDetails: any = [];
-     curSelItm = { price: 0 };
+    //  curSelItm = { price: 0 };
   ngOnInit() {
      this.createForm();
      this.getTaxpercentage();
@@ -68,7 +69,7 @@ export class AddProviderItemComponent implements OnInit {
       let numString = number.toString();
       if (numString.length > 6) {
         numString = numString.substr(0, numString.length - 1);
-        this.curSelItm.price = parseInt(numString);
+        this.price = parseInt(numString);
       }
     }
   }

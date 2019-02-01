@@ -25,18 +25,18 @@ export const Messages = {
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
 
   // Bill Discount
-  'DISCOUNT_CREATED': 'Bill Discount created successfully',
-  'DISCOUNT_UPDATED': 'Bill Discount updated successfully',
-  'DISCOUNT_DELETE': 'Do you really want to remove the bill discount "[name]"?',
-  'DISCOUNT_DELETED': 'Bill Discount deleted successfully',
-  'DISCOUNT_LISTEMPTY': 'No Bill Discounts exists',
+  'DISCOUNT_CREATED': 'Discount created successfully',
+  'DISCOUNT_UPDATED': 'Discount updated successfully',
+  'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
+  'DISCOUNT_DELETED': 'Discount deleted successfully',
+  'DISCOUNT_LISTEMPTY': 'No Discounts exists',
 
   // Bill Coupons
-  'COUPON_CREATED': 'Bill Coupon created successfully',
-  'COUPON_UPDATED': 'Bill Coupon updated successfully',
-  'COUPON_DELETE': 'Do you really want to remove the bill coupon "[name]"?',
-  'COUPON_DELETED': 'Bill Coupon deleted successfully',
-  'COUPON_LISTEMPTY': 'No Bill Coupons exists',
+  'COUPON_CREATED': 'Coupon created successfully',
+  'COUPON_UPDATED': 'Coupon updated successfully',
+  'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
+  'COUPON_DELETED': 'Coupon deleted successfully',
+  'COUPON_LISTEMPTY': 'No Coupons exists',
 
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
@@ -381,6 +381,7 @@ export const Messages = {
   'WORKING_HRS_CAP': 'Working Hours',
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
+  'SERVPRICE_CAP': 'Price ',
 
   // App-shared-components-return-payment
   'PAY_DONE_SUCCESS_CAP': 'Your payment has done successfully!',
@@ -606,7 +607,7 @@ export const Messages = {
   'NO_LANG_FOUND_CAP': 'Sorry no languages found.',
 
   // App-ynw_provider-components-add-provider-coupons
-  'BILLING_COUPONS_CAP': 'Billing Coupons -',
+  'BILLING_COUPONS_CAP': 'Coupons',
   'NAME_MAND_CAP': 'Name *',
   'TYPE_MAND_CAP': 'Type *',
   'FIXED_CAP': 'Fixed',
@@ -671,7 +672,6 @@ export const Messages = {
   'GALLERY_CAP': 'Gallery',
   'SELECT_IMAGE_CAP': 'Click here to select the image files',
   'GO_TO_SERVICE_CAP': 'Please click here to go to the service time-window List',
-  'SERVPRICE_CAP': 'Price ',
 
   // App-ynw_provider-components-add-provider-service-gallery
   'SERVICE_GALLERY_CAP': 'Service Gallery',
@@ -704,7 +704,7 @@ export const Messages = {
   'PRO_AVAILABLE_CAP': 'available',
   'NO_SERVICE_CAP': 'No service time-windows available',
   'ACTIONS_CAP': 'Actions',
-  'ITEM_HI_CAP': 'Item -',
+  'ITEM_HI_CAP': 'Item',
   'ITEM_NAME_CAP': 'Item Name',
   'SHORT_DESC_CAP': 'Short Description',
   'DETAIL_DESC_CAP': 'Detailed Description',
@@ -723,7 +723,7 @@ export const Messages = {
   'SEL_DISC_CAP': 'Select Discount',
   'SEL_COUPON_CAP': 'Select Coupon ',
   'DISCOUNTS_COUPONS_CAP': 'Discounts / Coupons',
-  'BILL_DISCOUNT_CAP': 'Bill Discount',
+  'BILL_DISCOUNT_CAP': 'Discount',
   'ADD_BTN': 'Add',
 
   // App-ynw_provider-components-provider-bprofile-search
@@ -834,7 +834,7 @@ export const Messages = {
   'NO_CUSTOMER_CAP': 'You don\'t have any',
 
   // App-ynw_provider-components-provider-discounts
-  'ADD_DISCOUNT_CAP': 'Add Bill Discounts',
+  'ADD_DISCOUNT_CAP': 'Add Discounts',
 
   // App-ynw_provider-components-provider-items
   'ADD_ITEM_CAP': 'Add Item',
@@ -1201,7 +1201,7 @@ export const Messages = {
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG' : 'Setup and maintain your public profile here.',
   'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours, specialization, and languages known.',
-  'FRM_LEVEL_WAITLIST_MSG' : 'Manage your waitlist and enable or disable check-ins for current day or for future.',
+  'FRM_LEVEL_WAITLIST_MSG' : 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable â€œOnline Check-inâ€� and also book a future date for clientâ€™s check-in here.',
   'FRM_LEVEL_LIC_MSG' : 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG' : 'View and edit the payment and tax settings.',
   'FRM_LEVEL_BILLING_MSG' : 'Create items, discounts and coupons here.',
@@ -1231,7 +1231,7 @@ export const Messages = {
 
 
   // form-level-provider-payment-settings
-  'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Set up the payment modes(Jaldee/My own account)according to your  license package.',
+  'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payment to settle your transactions on the line. Jaldee account can be used for fast and seamless transaction process. A [customer] can also use other payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the â€œTax Applicableâ€� toggle switch to apply taxes for your services.',
   
 
@@ -1257,6 +1257,5 @@ export const Messages = {
   'SETPROF_LOC_MSG': 'Please set profile name and location to make use of Dashboard',
   'SETPROF_MSG': 'Please set profile name to make use of Dashboard',
   'SET_LOC_MSG': 'Please set location to make use of Dashboard'
-
 };
 

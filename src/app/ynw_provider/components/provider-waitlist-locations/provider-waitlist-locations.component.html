@@ -1,11 +1,11 @@
 <section>
     <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-    <app-breadcrumb  (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
     <div class="content loc-list">
-        <div class="container">
+        <div class="container" *ngIf="!api_loading">
             <!-- <div class="row">
                 <div class="n-loc n-loc-small" *ngIf="show_addlocationButton">
                     <span class="add-nloc cs-btn bt3" (click)="addLocation()">{{new_loc_cap}}</span>
@@ -20,19 +20,16 @@
                             </button>
                         </span>
                         <span class="bse-lcn-label" *ngIf="loc.baseLocation == true">{{base_loc_cap}}</span>
-
                         <h3 class="pointer-cursor" (click)="goLocationDetail(loc)">
                             {{loc.place | capitalizeFirst}}
                         </h3>
                         <p>{{loc.address | capitalizeFirst}}</p>
-
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="changeProviderLocationStatus(loc)">
                                 <i *ngIf="loc.status=='INACTIVE'" class="icon-enable"></i>
                                 <i *ngIf="loc.status=='ACTIVE'" class="icon-disable"></i>
                                 {{(loc.status=='ACTIVE') ? 'Disable' :' Enable'}}
                             </button>
-
                             <button mat-menu-item (click)="changeProviderBaseLocationStatus(loc)">
                                 <i class="icon-location"></i> {{set_base_loc_cap}}
                             </button>
@@ -40,10 +37,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card" *ngIf="loc_list.length == 0">
+            <div class="card" *ngIf="!api_loading && loc_list.length == 0">
                 {{no_loc_add}}
             </div>
         </div>
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+
     </div>
 </section>
 

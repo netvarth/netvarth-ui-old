@@ -34,7 +34,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
       title: 'Settings'
     },
     {
-      title: 'Bill Discounts',
+      title: 'Discounts',
       url: '/provider/settings/discounts'
     }
   ];

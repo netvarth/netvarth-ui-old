@@ -40,6 +40,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   dialogRef;
   breadcrumb_moreoptions: any = [];
   init_location = true;
+  api_loading = true;
   breadcrumbs_init = [
     {
       title: 'Settings',
@@ -135,6 +136,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.loc_list = data;
+        this.api_loading = false;
         if (this.multipeLocationAllowed) {
           this.show_addlocationButton = true;
         } else {
