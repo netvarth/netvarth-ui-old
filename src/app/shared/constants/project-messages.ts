@@ -1209,9 +1209,9 @@ export const Messages = {
   'FRM_LEVEL_MISC_MSG' : 'Other features can be mentioned here.',
 
   // form-level-provider-bprofile-search
-  'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profileâ€™s visibility in [customer]â€™s search result. Unless you enable, the patients wonâ€™t be able to view your profile in their search result.',
+  'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. Unless you enable, the patients won\'t be able to view your profile in their search result.',
   'FRM_LEVEL_ADWORDS_MSG' : 'Manage relevant keywords to increase visibility to your [customer]s.',
-  'FRM_LEVEL_PROFILE_NAME_CAP' : 'Manage profile name and basic information of you or your business here. Profile Name can be either the individualâ€™s name or the business name.',
+  'FRM_LEVEL_PROFILE_NAME_CAP' : 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
   'FRM_LEVEL_LOC_MSG' : 'Manage your business Location details here.',
   'FRM_LEVEL_LOC_AMENITIES_MSG' : 'Manage the location benefits that are offered to your [customer]s.',
   'FRM_LEVEL_WORKING_MSG' : 'Details of your business hours are shown here.',
@@ -1220,7 +1220,7 @@ export const Messages = {
   'FRM_LEVEL_LANG_MSG' : 'To widen your [customer] base, add different languages known to you here.',
   'FRM_LEVEL_ADDITIONAL_MSG' : 'Add other details of you or your business so that [customer]s can understand you more.',
   'FRM_LEVEL_VERI_MSG' : 'To upgrade verification level contact Jaldee.',
-  'FRM_LEVEL_GALLERY_MSG' : 'Add images and catchy captions to boost your [customer]â€™s check-ins.',
+  'FRM_LEVEL_GALLERY_MSG' : 'Add images and catchy captions to boost your [customer]\'s check-ins.',
   'FRM_LEVEL_SOCIAL_MSG' : 'To connect with [customer]s on your social media platform, add your social media links here.',
 
   // form-level-provider-waitlist

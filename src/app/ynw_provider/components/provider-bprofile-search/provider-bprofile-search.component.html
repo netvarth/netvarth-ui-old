@@ -133,7 +133,7 @@
                                                     <div class="change">
                                                         <span class="change-pic" (click)="logofile.click()">{{change_cap}}
                                                             <br /> {{pic_cap}}</span>
-                                                        <span class="del-pic" (click)="confirmLogoremove(blogo.keyName)">{{delete_pic}}</span>
+                                                        <span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>
                                                     </div>
                                                 </div>
                                                 <!-- <div class='remove-logo' *ngIf="blogo[0] && blogo[0].url" (click)="confirmLogoremove(blogo.keyName)"><span class="icon-delete"></span> Remove Picture</div> -->
