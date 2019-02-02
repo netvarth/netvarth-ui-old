@@ -134,6 +134,13 @@ export class ProviderbWizardComponent implements OnInit {
   multipeLocationAllowed = false;
   disablebuttonsInSchedule = false;
   loc_exist = true;
+  frm_wiz_one_cap = Messages.FRM_LEVEL_PRO_WIZ_ONE_MSG;
+  frm_wiz_two_cap = Messages.FRM_LEVEL_PRO_WIZ_TWO_MSG;
+  frm_wiz_three_cap = Messages.FRM_LEVEL_PRO_WIZ_THREE_MSG;
+  frm_wiz_four_cap = Messages.FRM_LEVEL_PRO_WIZ_FOUR_MSG;
+  frm_wiz_five_cap = '';
+  frm_wiz_six_cap = Messages.FRM_LEVEL_PRO_WIZ_SIX_MSG;
+
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
@@ -178,6 +185,8 @@ export class ProviderbWizardComponent implements OnInit {
      }
     this.active_step = 0;
     localStorage.removeItem('new_provider');
+    this.frm_wiz_five_cap = Messages.FRM_LEVEL_PRO_WIZ_FIVE_MSG.replace('[customer]', this.customer_label);
+
   }
 
   getUserdetails() {
