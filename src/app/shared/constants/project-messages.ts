@@ -1200,8 +1200,8 @@ export const Messages = {
 
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG' : 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours, specialization, and languages known.',
-  'FRM_LEVEL_WAITLIST_MSG' : 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable â€œOnline Check-inâ€� and also book a future date for clientâ€™s check-in here.',
+  'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
+  'FRM_LEVEL_WAITLIST_MSG' : 'Manage your waitlist and enable or disable check-ins for current day or for future.',
   'FRM_LEVEL_LIC_MSG' : 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG' : 'View and edit the payment and tax settings.',
   'FRM_LEVEL_BILLING_MSG' : 'Create items, discounts and coupons here.',
