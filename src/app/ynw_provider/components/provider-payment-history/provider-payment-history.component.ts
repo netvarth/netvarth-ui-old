@@ -30,6 +30,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   payment_history: any = [];
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  isCheckin;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -59,6 +60,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   ngOnInit() {
     this.getPaymentHistoryCount();
     this.getPaymentHistory();
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
   getPaymentHistoryCount() {

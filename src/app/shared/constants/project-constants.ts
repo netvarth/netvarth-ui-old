@@ -355,5 +355,12 @@ export const projectConstants = {
    2 : 'silver',
    3 : 'Gold',
    4 : 'Diamond'
+  },
+  PROFILE_ERROR_STACK: {
+    1: 'Please set profile name and location',
+    2: 'Please set profile name',
+    3: 'Please set location',
+    4: 'No active services found',
+    5: 'No active service time-windows found'
   }
 };

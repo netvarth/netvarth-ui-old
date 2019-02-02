@@ -2,16 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-import { error } from 'util';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -41,6 +37,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   couponStatus: boolean;
   tabid = 0;
+  isCheckin;
   breadcrumb_moreoptions: any = [];
   breadcrumbs = [
     {
@@ -69,7 +66,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
-
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {
@@ -96,7 +93,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         this.jaldeeCoupons = data;
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {
           if (this.jaldeeCoupons[index].couponRules.onlineCheckinRequired === true) {
-            this.coupon_info[index] = "Online checkin required";
+            this.coupon_info[index] = 'Online checkin required';
           }
           // this.coupon_info[index] = "Always enabled "+ this.jaldeeCoupons[index].couponRules.alwaysEnabled;
         }

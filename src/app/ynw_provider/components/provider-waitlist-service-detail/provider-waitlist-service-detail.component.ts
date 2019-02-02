@@ -1,19 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-
-
 import { AddProviderWaitlistServiceComponent } from '../add-provider-waitlist-service/add-provider-waitlist-service.component';
 import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
 import {
@@ -97,6 +89,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
             }
         ]
     };
+    isCheckin;
 
     constructor(
         private provider_services: ProviderServices,
@@ -125,6 +118,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         } else {
             this.goBack();
         }
+        this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
     }
 
     ngOnDestroy() {

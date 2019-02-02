@@ -45,6 +45,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager' };
 
   subscription: Subscription;
+  isCheckin;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -83,8 +84,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
 
         }
       );
-
-
+      this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {

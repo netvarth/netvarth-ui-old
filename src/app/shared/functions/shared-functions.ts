@@ -1228,4 +1228,10 @@ export class SharedFunctions {
     }
     return true;
   }
+  filterJson(jsonArray, key, value) {
+    const newArray = jsonArray.filter(function (el) {
+      return el[key] === value;
+    });
+    return newArray;
+  }
 }

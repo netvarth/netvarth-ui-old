@@ -4,9 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
-
 import { ChangeEmailComponent } from './change-email.component';
-import { ProviderSubeaderComponent } from '../../../ynw_provider/components/provider-subheader/provider-subheader.component';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module';
 

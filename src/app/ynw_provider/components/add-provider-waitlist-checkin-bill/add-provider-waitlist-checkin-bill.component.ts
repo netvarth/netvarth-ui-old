@@ -117,6 +117,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   selectedItemService;
   showPaidlist = false;
   actiontype;
+  isCheckin;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
     'type': 'Services',
@@ -187,6 +188,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getCheckinDetails();
   }
   ngOnInit() {
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';

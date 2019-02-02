@@ -1,5 +1,5 @@
 <section>
-  <app-provider-subheader [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader>
+  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'dashboard'" (reloadActionSubheader)="reloadActionSubheader($event)"></app-provider-subheader>
   <!-- Subheader section -->
   <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>

@@ -8,6 +8,8 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
+import { projectConstants } from '../../../shared/constants/project-constants';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-subheader',
@@ -23,6 +25,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   settings_cap = Messages.SUB_HEADER_SETTINGS;
 
   @Input() activeTab: string;
+  @Input() isCheckin;
   @Output() reloadActionSubheader = new EventEmitter<any>();
   userdet: any = [];
   waitlist_set: any = [];
@@ -34,11 +37,13 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   srchcustdialogRef;
   crtCustdialogRef;
   ChkindialogRef;
+  services: any = [];
 
   constructor(public dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService,
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
+    private provider_shared_functions: ProviderSharedFuctions,
     public routerobj: Router) { }
   normal_profile_active = 1;
   normal_locationinfo_show = 1;
@@ -198,40 +203,69 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     });
   }
   dashboardClicked() {
-    this.bprofile = [];
-    this.provider_services.getBussinessProfile()
-      .subscribe(
-        data => {
-          this.bprofile = data;
-          console.log(this.bprofile);
-          this.provider_datastorage.set('bprofile', data);
-          if (this.bprofile.status === 'ACTIVE') {
-            this.routerobj.navigate(['/']);
-          } else {
-            if (this.bprofile.businessName && this.bprofile.businessName.trim() !== '') {
-              if (this.bprofile.baseLocation) {
-                if (this.bprofile.baseLocation.place === '') {
-                  this.shared_functions.openSnackBar(Messages.SET_LOC_MSG, { 'panelClass': 'snackbarerror' });
-                }
-              } else {
-                this.shared_functions.openSnackBar(Messages.SET_LOC_MSG, { 'panelClass': 'snackbarerror' });
-              }
+    if (this.isCheckinActive()) {
+      this.routerobj.navigate(['/']);
+    }
+  }
+  checkinClicked() {
+    if (this.isCheckinActive()) {
+      this.provider_services.getServicesList()
+        .subscribe(
+          data => {
+            if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
+              this.isCheckin = 4;
+              this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              return false;
             } else {
-              if (this.bprofile.baseLocation) {
-                if (this.bprofile.baseLocation.place === '') {
-                  this.shared_functions.openSnackBar(Messages.SETPROF_LOC_MSG, { 'panelClass': 'snackbarerror' });
-                } else {
-                  this.shared_functions.openSnackBar(Messages.SETPROF_MSG, { 'panelClass': 'snackbarerror' });
-                }
-              } else {
-                this.shared_functions.openSnackBar(Messages.SETPROF_LOC_MSG, { 'panelClass': 'snackbarerror' });
-              }
+              this.provider_services.getProviderQueues()
+                .subscribe(
+                  data1 => {
+                    if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
+                      this.isCheckin = 5;
+                      this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+                      this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+                      return false;
+                    } else {
+                      this.searchCustomer('providerCheckin');
+                      return true;
+                    }
+                  },
+                  error => {
+                  });
             }
+          },
+          error => {
           }
-        },
-        error => {
-        }
-      );
+        );
+    }
+  }
+  isCheckinActive() {
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
+      if (this.isCheckin === 0 || this.isCheckin > 3) {
+        return true;
+      } else {
+        this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+        return false;
+      }
+    } else {
+      this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
+            this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+            if (this.isCheckin === 0) {
+              return true;
+            } else {
+              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              return false;
+            }
+          },
+          error => {
+          }
+        );
+    }
   }
   getBprofile() {
     return new Promise((resolve, reject) => {

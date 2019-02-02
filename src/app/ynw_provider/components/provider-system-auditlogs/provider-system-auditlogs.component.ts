@@ -2,11 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location } from '@angular/common';
-
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
-import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -51,7 +47,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   startpageval;
   totalCnt;
   perPage = projectConstants.PERPAGING_LIMIT;
-  tday = new Date()
+  tday = new Date();
   breadcrumbs = [
     {
       title: Messages.DASHBOARD_TITLE,
@@ -60,7 +56,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     {
       title: 'System Audit Logs'
     }
-  ];;
+  ];
+  isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
@@ -82,6 +79,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdlogSeldate = this.logSeldate;
     this.holdlogSelaction = this.logSelaction;
     this.getAuditListTotalCnt('', '', '', '');
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getAuditListTotalCnt(cat, subcat, action, sdate) {
     this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)

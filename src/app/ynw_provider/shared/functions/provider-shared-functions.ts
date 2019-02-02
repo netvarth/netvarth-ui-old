@@ -42,6 +42,30 @@ export class ProviderSharedFuctions {
         });
   }
 
+  getProfileStatusCode(bprofile) {
+    let statusCode = 0;
+    if (bprofile.businessName && bprofile.businessName.trim() !== '') {
+      if (bprofile.baseLocation) {
+        if (bprofile.baseLocation.place === '') {
+          statusCode = 3;
+        }
+      } else {
+        statusCode = 3;
+      }
+    } else {
+      if (bprofile.baseLocation) {
+        if (bprofile.baseLocation.place === '') {
+          statusCode = 1;
+        } else {
+          statusCode = 2;
+        }
+      } else {
+        statusCode = 1;
+      }
+    }
+    return statusCode;
+  }
+
   //  changecouponStatus(ob, obj) {
   //       let chgstatus = '';
   //       let chstatusmsg = '';

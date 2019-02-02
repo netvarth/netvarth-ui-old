@@ -2,13 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
-
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { AddProviderNonworkingdaysComponent } from '../add-provider-nonworkingdays/add-provider-nonworkingdays.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -33,7 +29,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   breadcrumb_moreoptions: any = [];
   frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
-
+  isCheckin;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
@@ -57,6 +53,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {

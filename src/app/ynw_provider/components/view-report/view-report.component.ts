@@ -50,6 +50,7 @@ export class ViewReportComponent implements OnInit {
   ];
   breadcrumbs = this.breadcrumbs_init;
   invoice_id;
+  isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute, private route: Router,
@@ -61,6 +62,7 @@ export class ViewReportComponent implements OnInit {
         this.invoice_id = params.id;
         this.getjaldeeReport();
       });
+      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
       return JSON.parse(jsonString);

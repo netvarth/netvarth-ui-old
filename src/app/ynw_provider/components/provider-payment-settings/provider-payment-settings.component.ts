@@ -61,8 +61,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     update_tax_cap = Messages.PAY_SET_UPDATE_TAX_CAP;
     mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
 
-
-
     @ViewChild('paymobref') private paymobrefRef: ElementRef;
     @ViewChild('paytmkeyref') private paytmkeyrefRef: ElementRef;
     @ViewChild('paytmidref') private paytmidrefRef: ElementRef;
@@ -106,6 +104,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     customer_label = '';
     payment_set_cap = '';
+    isCheckin;
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
 
     breadcrumbs = [
@@ -143,10 +142,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getProviderProfile();
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings' };
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.name;
-        if (this.activeLicPkg == 'Basic' || this.activeLicPkg == 'Bronze' || this.activeLicPkg == 'Silver') {
+        if (this.activeLicPkg === 'Basic' || this.activeLicPkg === 'Bronze' || this.activeLicPkg === 'Silver') {
             this.disableMyAcc = true;
         }
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
+        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     }
     /**
      * Function to call the Learn More Page

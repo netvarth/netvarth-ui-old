@@ -1,6 +1,6 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     class="ynw-common-form">
-    <h1 class="mat-dialog-title">{{item_hi_cap}}
+    <h1 class="mat-dialog-title">{{item_hi_cap}} {{ data.type | capitalizeFirst }}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -93,8 +93,9 @@
         <div class="form-group">
             <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
             <mat-form-field>
-                <input matInput type="number" min="0" max="100000" (keyup)="isvalid(price)" class="form-control number-ip-sm"
-                    [(ngModel)]="price" formControlName="price" id="price" placeholder="{{price_cap}} *" autocomplete="off">
+                <input matInput type="number" min="0" max="100000" (keyup)="isvalid(curSelItm.price)" class="form-control number-ip-sm"
+                    [(ngModel)]="curSelItm.price" [ngModelOptions]="{standalone: true}" id="price" placeholder="{{price_cap}} *"
+                    autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {

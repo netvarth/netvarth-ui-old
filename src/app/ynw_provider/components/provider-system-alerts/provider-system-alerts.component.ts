@@ -56,6 +56,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         }
     ];
     tday = new Date();
+  isCheckin;
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions,
@@ -72,6 +73,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       this.holdalertSelAck = this.alertSelAck;
       this.holdalertSeldate = this.alertSeldate;
       this.getAlertListTotalCnt(this.alertSelAck, '');
+      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     }
     getAlertListTotalCnt(ackStatus, sdate) {
       if (ackStatus === '') {

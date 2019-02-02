@@ -1,17 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
@@ -55,6 +49,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
     breadcrumbs = this.breadcrumbs_init;
     customer_label = '';
     queuedialogRef;
+    isCheckin;
 
     constructor(
         private provider_services: ProviderServices,
@@ -77,6 +72,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
         } else {
             this.goBack();
         }
+        this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
     }
     ngOnDestroy() {
         if (this.queuedialogRef) {
@@ -122,24 +118,24 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
         this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'queue_detail');
     }
     getProviderQueues() {
-        let activeQueues: any = [];
+        const activeQueues: any = [];
         let queue_list: any = [];
         this.provider_services.getProviderQueues()
-          .subscribe(data => {
-            queue_list = data;
-            for (let ii = 0; ii < queue_list.length; ii++) {
-              let schedule_arr = [];
-              // extracting the schedule intervals
-              if (queue_list[ii].queueSchedule) {
-                schedule_arr = this.shared_Functionsobj.queueSheduleLoop(queue_list[ii].queueSchedule);
-              }
-              let display_schedule = [];
-              display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-              if (queue_list[ii].queueState === 'ENABLED') {
-                activeQueues.push(display_schedule[0]);
-              }
-            }
-            this.provider_shared_functions.setActiveQueues(activeQueues);
-          });
-      }
+            .subscribe(data => {
+                queue_list = data;
+                for (let ii = 0; ii < queue_list.length; ii++) {
+                    let schedule_arr = [];
+                    // extracting the schedule intervals
+                    if (queue_list[ii].queueSchedule) {
+                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(queue_list[ii].queueSchedule);
+                    }
+                    let display_schedule = [];
+                    display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                    if (queue_list[ii].queueState === 'ENABLED') {
+                        activeQueues.push(display_schedule[0]);
+                    }
+                }
+                this.provider_shared_functions.setActiveQueues(activeQueues);
+            });
+    }
 }

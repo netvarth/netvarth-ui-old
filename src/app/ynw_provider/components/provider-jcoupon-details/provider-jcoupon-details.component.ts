@@ -49,6 +49,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   ];
   breadcrumbs = this.breadcrumbs_init;
   jc_code;
+  isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute, private route: Router) { }
@@ -59,6 +60,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
         this.getCouponview();
         this.getJaldeeCouponStatistic();
       });
+      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getCouponview() {
     this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(

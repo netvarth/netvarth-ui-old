@@ -25,6 +25,7 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-bprofile-search',
@@ -247,11 +248,13 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
   frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
   frm_verified_cap = Messages.FRM_LEVEL_VERI_MSG;
+  isCheckin;
 
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
+    private provider_shared_functions: ProviderSharedFuctions,
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private routerobj: Router,
@@ -529,6 +532,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
           // check whether domain fields exists
 
+          const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
+          this.sharedfunctionobj.setitemonLocalStorage('isCheckin', statusCode);
 
         },
         error => {
