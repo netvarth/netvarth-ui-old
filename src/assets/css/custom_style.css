@@ -2024,3 +2024,8 @@ Overriding mat input style
 .display-block{
   display: initial!important;
 }
+
+.profile-des-p {
+  word-break: break-all;
+  padding-right: 25px;
+}
