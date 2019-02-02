@@ -45,6 +45,7 @@ export class AddProviderItemComponent implements OnInit {
   maxCharslong = projectConstants.VALIDATOR_MAX500;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
+
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
@@ -63,16 +64,10 @@ export class AddProviderItemComponent implements OnInit {
      this.getTaxpercentage();
   }
  
-  isvalid(number) {
-    if (number > this.max_num_limit) {
-      let numString = number.toString();
-      if (numString.length > 6) {
-        numString = numString.substr(0, numString.length - 1);
-        this.price = parseInt(numString);
-      }
-    }
+  isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
   }
-  
+
   createForm() {
     if (this.data.type === 'add') {
       this.amForm = this.fb.group({
