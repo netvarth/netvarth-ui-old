@@ -63,6 +63,7 @@
           <div (click)="editLocations(loc)">{{loc.place}}</div>
           <span *ngIf="loc.open24hours==true"><img [src]="getLocationBadgeIcon('24hour')" matTooltip="24 hours" /></span>
           <span *ngIf="loc.parkingType!=''"><img [src]="getLocationBadgeIcon('parkingtype')" matTooltip="Parking Type: {{loc.parkingType}}" /></span>
+          
           <span *ngFor="let k of objectKeys(loc.locationVirtualFields)">
             <img [src]="getLocationBadgeIcon(k)" matTooltip="{{badge_map_arr[k]}}" />
           </span>

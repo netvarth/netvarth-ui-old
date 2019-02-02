@@ -1265,5 +1265,6 @@ export const Messages = {
   'FRM_LEVEL_PRO_WIZ_FOUR_MSG' : 'Be certain that this initial setup can be viewed, edited and managed, if and when required.',
   'FRM_LEVEL_PRO_WIZ_FIVE_MSG' : 'Enter your business name here. [customer]s will view this in Public Profile. Complete it by adding a brief introduction about you or your business to help [customer]s know you more.',
   'FRM_LEVEL_PRO_WIZ_SIX_MSG' : 'Enter the location related details here.',
+
 };
 

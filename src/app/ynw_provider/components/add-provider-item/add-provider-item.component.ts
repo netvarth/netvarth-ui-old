@@ -58,7 +58,6 @@ export class AddProviderItemComponent implements OnInit {
        // console.log(data);
      }
      taxDetails: any = [];
-    //  curSelItm = { price: 0 };
   ngOnInit() {
      this.createForm();
      this.getTaxpercentage();
