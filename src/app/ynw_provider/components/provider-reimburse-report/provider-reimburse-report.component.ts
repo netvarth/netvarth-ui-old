@@ -78,7 +78,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.getCouponReport();
   }
   getJSONfromString(jsonString) {
-      return JSON.parse(jsonString);
+    return JSON.parse(jsonString);
   }
   /**
    * Open Modal for Request for Payment
@@ -300,3 +300,4 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.getCouponReport();
   }
 }
+

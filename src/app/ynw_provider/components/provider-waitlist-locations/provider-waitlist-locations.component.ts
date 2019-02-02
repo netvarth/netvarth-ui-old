@@ -261,3 +261,4 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     });
   }
 }
+

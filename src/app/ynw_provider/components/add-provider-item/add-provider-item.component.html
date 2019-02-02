@@ -94,8 +94,7 @@
             <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
             <mat-form-field>
                 <input matInput type="number" min="0" max="100000" (keyup)="isvalid(price)" class="form-control number-ip-sm"
-                    [(ngModel)]="price" formControlName="price" id="price" placeholder="{{price_cap}} *"
-                    autocomplete="off">
+                    [(ngModel)]="price" formControlName="price" id="price" placeholder="{{price_cap}} *" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {

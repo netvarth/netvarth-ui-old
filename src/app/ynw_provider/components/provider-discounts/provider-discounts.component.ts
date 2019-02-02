@@ -165,3 +165,4 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     return moreOptions;
   }
 }
+

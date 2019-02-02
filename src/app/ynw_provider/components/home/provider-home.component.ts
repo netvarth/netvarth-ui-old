@@ -201,9 +201,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
   ngOnInit() {
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
-  'actions': [{'title' : 'Adjust Delay', 'icon': 'B', 'type': 'adjustdelay', 'icontype': 'adjustdelay_learnmore'}]
-  };
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
+      'actions': [{ 'title': 'Adjust Delay', 'icon': 'B', 'type': 'adjustdelay', 'icontype': 'adjustdelay_learnmore' }]
+    };
     this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
@@ -1208,3 +1209,4 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.shared_functions.sendMessage(pdata);
   }
 }
+

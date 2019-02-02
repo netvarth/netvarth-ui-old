@@ -101,8 +101,8 @@
                                 <li>
                                     <span class="ttle">
                                         {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
-                                            <!-- <span class="acc-msg">({{accountActiveMsg}})</span> -->
-                                        
+                                        <!-- <span class="acc-msg">({{accountActiveMsg}})</span> -->
+
                                     </span>
                                     <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
                                         <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle>
@@ -163,9 +163,6 @@
         </div>
     </div>
 </section>
-
-
-
 
 
 <!-- <h1>Settings</h1>

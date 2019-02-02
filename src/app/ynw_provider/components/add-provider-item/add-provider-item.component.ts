@@ -283,5 +283,5 @@ export class AddProviderItemComponent implements OnInit {
 
     });
   }
-
 }
+

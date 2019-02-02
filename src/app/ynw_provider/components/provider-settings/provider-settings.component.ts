@@ -35,7 +35,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   coupons_cap = Messages.COUPONS_CAP;
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
-  
+
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
   // frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG;
   frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG;
@@ -94,16 +94,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   billposTooltip = '';
   frm_profile_cap = '';
   miscellaneous = '';
-  
+
 
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
     this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
-   // this.accountActiveMsg = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
+    // this.accountActiveMsg = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
-    this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]',this.customer_label);
+    this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]', this.customer_label);
     this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
     this.getLocationCount();
     this.getQueuesCount();
@@ -173,13 +173,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           // console.log('paystatus', data);
           this.payment_status = (data['onlinePayment']) || false;
           this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
-          if(this.payment_settings.isJaldeeAccount){
+          if (this.payment_settings.isJaldeeAccount) {
             this.accountActiveMsg = "You are using Jaldee bank account";
           }
-          else{
+          else {
             this.accountActiveMsg = "You are using your own bank account";
           }
-          
+
         },
         error => {
           const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -420,3 +420,4 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
 }
+
