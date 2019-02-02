@@ -67,6 +67,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   };
   reportsCount;
   requestdialogRef;
+  isCheckin;
   constructor(private dialog: MatDialog, private router: Router,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
@@ -76,9 +77,10 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.resetFilter();
     console.log('I am Here');
     this.getCouponReport();
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
-    return JSON.parse(jsonString);
+      return JSON.parse(jsonString);
   }
   /**
    * Open Modal for Request for Payment
@@ -300,5 +302,3 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.getCouponReport();
   }
 }
-
-

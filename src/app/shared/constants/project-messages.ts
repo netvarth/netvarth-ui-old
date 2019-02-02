@@ -732,7 +732,7 @@ export const Messages = {
   'BPROFILE_DISABLED_CAP': 'disabled',
   'BPROFILE_ONLINE_VISIBLE_CAP': 'for public search online and will not be visible to',
   'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
-  'BPROFILE_SUMMARY_CAP': 'Profile Name and Description',
+  'BPROFILE_SUMMARY_CAP': 'Basic Information',
   'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
   'BPROFILE_CURRENT_STATUS': 'Current Status',
   'BPROFILE_ON_CAP': 'On',
@@ -1010,7 +1010,7 @@ export const Messages = {
   'SEARCH_GALLERY_SELEC_IMG_FILE_CAP' : 'Click here to select the image files',
 
   // App-ynw_provider-components-provider-bprofile-search-primary
-  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Description',
+  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Basic Information',
   'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Description',
 
@@ -1232,19 +1232,17 @@ export const Messages = {
 
   // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payment to settle your transactions on the line. Jaldee account can be used for fast and seamless transaction process. A [customer] can also use other payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
-  'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the â€œTax Applicableâ€� toggle switch to apply taxes for your services.',
-  
+  'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the \"Tax Applicable\" toggle switch to apply taxes for your services.',
 
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG' : 'Manage the license history, its usage, and payment history and also upgrade your license here.',
   'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG' : 'To avail the additional features of Jaldee.com, click here.',
   'FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG' : 'Add relevant keywords to increase your visibility to your [customer].',
-  
+
   // form-level-provider-coupons
   'FRM_LEVEL_JALDEE_COUPONS_MSG' : 'These are provided by Jaldee. View the details of Jaldee coupons here.',
   'FRM_LEVEL_MY_COUPONS_MSG' : 'Create your coupon and its details here.',
-  
-  
+
   // form-level-provider-discounts
   'FRM_LEVEL_DISCOUNTS_MSG' : 'Create your discounts here.',
 

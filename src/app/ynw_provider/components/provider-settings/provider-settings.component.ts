@@ -36,6 +36,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
 
+
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
   // frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG;
   frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG;
@@ -78,6 +79,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   tooltipcls = projectConstants.TOOLTIP_CLS;
   subscription: Subscription;
   customer_label = '';
+  isCheckin;
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
@@ -93,6 +95,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   accountActiveMsg = '';
   billposTooltip = '';
   frm_profile_cap = '';
+
   miscellaneous = '';
 
 
@@ -115,7 +118,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getCoupons();
     this.getitems();
     this.getBusinessConfiguration();
-
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
 
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
@@ -179,7 +182,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           else {
             this.accountActiveMsg = "You are using your own bank account";
           }
-
+          
         },
         error => {
           const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

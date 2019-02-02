@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { AddProviderDiscountsComponent } from '../add-provider-discounts/add-provider-discounts.component';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -42,6 +38,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   accountdialogRef;
   adddiscdialogRef;
   remdiscdialogRef;
+  isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions) {
@@ -51,6 +48,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getDiscounts(); // Call function to get the list of discount lists
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -165,5 +163,3 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     return moreOptions;
   }
 }
-
-

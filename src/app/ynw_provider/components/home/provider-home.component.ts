@@ -1,6 +1,5 @@
 import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter } from '@angular/core';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
@@ -15,9 +14,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { startWith, map, filter, pairwise } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { applySourceSpanToExpressionIfNeeded } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-provider-home',
   templateUrl: './provider-home.component.html',
@@ -153,6 +150,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   makPaydialogRef;
   sendmsgdialogRef;
   screenWidth;
+  isCheckin;
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
@@ -201,11 +199,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
   ngOnInit() {
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
       'actions': [{ 'title': 'Adjust Delay', 'icon': 'B', 'type': 'adjustdelay', 'icontype': 'adjustdelay_learnmore' }]
     };
-    this.router.events
+  this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
       ).subscribe((e: any) => {
@@ -322,12 +321,22 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
+            const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
+            if (statusCode === 0) {
+              console.log(this.services);
+              // console.log(this.shared_functions.filterJson(this.services, 'status', 'ACTIVE'));
+              // if(this.services.length === 0) {
+
+              // }
+            }
+            this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
           }
         },
         error => {
         }
       );
   }
+
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
