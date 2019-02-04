@@ -22,7 +22,7 @@
                                             <span class="ttle">{{est_duration_cap}}</span>
                                             <span class="icon-time"> {{service_data.serviceDuration}} min</span>
                                         </div>
-                                        <div class="item" *ngIf="!disable_price">
+                                        <div class="item" *ngIf="!disable_price && service_data.totalAmount!=0">
                                             <span class="ttle">{{price_cap}}</span>
                                             <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
                                         </div>

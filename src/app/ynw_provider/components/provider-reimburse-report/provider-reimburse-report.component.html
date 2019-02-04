@@ -11,8 +11,17 @@
           <mat-accordion>
             <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
               <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
-                <span *ngIf="open_filter === true" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
-                <span *ngIf="open_filter === false" (click)="toggleFilter()"><i class="icon-filter-one"></i></span>
+
+                  <span>
+                      <i class="icon-filter-one" (click)="toggleFilter()" *ngIf="open_filter === true"></i>
+                      <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="open_filter === false"></i>
+                    </span>
+                    <span class="clear-filter" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip">
+                      </span>
+
+
+             
+
               </mat-expansion-panel-header>
               <div class="check_in_date end_date">
                 <label class="col-form-label" for="displayName">{{date_from_cap}}</label>

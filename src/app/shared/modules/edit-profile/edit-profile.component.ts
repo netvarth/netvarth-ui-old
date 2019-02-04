@@ -72,7 +72,7 @@ export class EditProfileComponent implements OnInit {
       dob: ['', Validators.compose([Validators.required])]*/
       gender: [''],
       dob: [''],
-      email: ['']
+      email: ['',Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
     });
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     const ob = this;

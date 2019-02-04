@@ -2029,3 +2029,7 @@ Overriding mat input style
   word-break: break-all;
   padding-right: 25px;
 }
+
+.mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: auto!important;
+}

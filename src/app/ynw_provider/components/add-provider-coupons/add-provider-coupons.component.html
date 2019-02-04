@@ -34,7 +34,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
         <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
         <mat-form-field>
-        <input matInput type="text" class="form-control valfield" id="discValue" [placeholder]="valueCaption"
+        <input matInput type="number" class="form-control valfield" min="0" (keyup)="isvalid($event,curtype)" id="discValue" [placeholder]="valueCaption"
           formControlName="discValue" autocomplete="off">
         </mat-form-field>
         <!-- <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span> -->

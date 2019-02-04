@@ -30,7 +30,7 @@
               <div class="form-group mobile">
                 <mat-form-field class="example-full-width">
                   <label class="col-form-label">{{mobile_cap}}</label>
-                  <input matInput [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
+                  <input matInput [(ngModel)]="filter.mobile" maxlength="10" #Fmobile (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
                     autocomplete="off">
                 </mat-form-field>
               </div>

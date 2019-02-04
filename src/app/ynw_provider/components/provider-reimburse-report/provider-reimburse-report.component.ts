@@ -68,6 +68,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   reportsCount;
   requestdialogRef;
   isCheckin;
+  filterapplied = false;
   constructor(private dialog: MatDialog, private router: Router,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
@@ -121,6 +122,12 @@ export class ProviderReimburseReportComponent implements OnInit {
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
     };
+  }
+
+  clearFilter() {
+    this.resetFilter();
+    this.filterapplied = false;
+    this.loadApiSwitch('doSearch');
   }
   /**
    * Set Max and Min Value for Date Filter
@@ -228,6 +235,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    */
   doSearch() {
     this.loadApiSwitch('doSearch');
+    this.filterapplied = true;
   }
   /**
    * Perform Rest Call for Getting Reports

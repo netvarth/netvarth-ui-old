@@ -58,6 +58,11 @@ export class AddProviderCouponsComponent implements OnInit {
      this.updateForm();
     }
   }
+
+  isvalid(evt,type) {
+    return this.shared_functions.isValidtype(evt,type);
+  }
+ 
   updateForm() {
     this.amForm.setValue({
       'name': this.data.coupon.name || null,

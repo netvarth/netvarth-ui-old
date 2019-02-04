@@ -141,7 +141,7 @@
               <div class="form-group last_name" *ngIf="time_type == 0">
                 <mat-form-field class="example-full-width">
                   <label class="col-form-label">{{phone_no_cap}}</label>
-                  <input matInput [(ngModel)]="filter.phone_number" (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)"
+                  <input matInput [(ngModel)]="filter.phone_number" maxlength="10" (blur)="doSearch()" #Flname (keyup)="focusInputSp($event)"
                     autocomplete="off">
                 </mat-form-field>
               </div>
