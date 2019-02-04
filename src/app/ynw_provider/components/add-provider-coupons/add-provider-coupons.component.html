@@ -28,14 +28,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       </mat-radio-group>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')" errorMsg="Please enter your coupon type.">
       </app-field-error-display>
-
       <mat-form-field class="example-full-width">
         <!-- <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'" class='rupee'> ₹ &nbsp;</span>  -->
         <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
         <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
         <mat-form-field>
-        <input matInput type="number" class="form-control valfield" min="0" (keyup)="isvalid($event,curtype)" id="discValue" [placeholder]="valueCaption"
-          formControlName="discValue" autocomplete="off">
+          <input matInput type="number" class="form-control valfield" min="0" max={{maxlimit}} (keyup)="isvalid($event)"
+            id="discValue" [placeholder]="valueCaption" formControlName="discValue" autocomplete="off">
         </mat-form-field>
         <!-- <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span> -->
       </mat-form-field>
