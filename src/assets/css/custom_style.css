@@ -972,7 +972,7 @@
 }
 
 sup {
-  color: #fda60d;
+  color: #f53404;
 }
 
 .billpopup .mat-dialog-container {
@@ -2032,4 +2032,22 @@ Overriding mat input style
 
 .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
   width: auto!important;
+}
+.outer .outer1 {
+  margin-bottom: 5px !important;
+}
+.outer .outer2 {
+  margin-bottom: 5px !important;
+}
+.outer .outer3 {
+  margin-bottom: 5px !important;
+}
+.outer .outer4 {
+  margin-bottom: 5px !important;
+}
+.consumerpopupmainclass .mat-dialog-content{
+  margin-top: -15px !important;
+}
+.duration{
+  display: contents;
 }
