@@ -1208,7 +1208,7 @@ export const Messages = {
   'FRM_LEVEL_PAY_MSG' : 'View and edit the payment and tax settings.',
   'FRM_LEVEL_BILLING_MSG' : 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG' : 'View all the coupons available here.',
-  'FRM_LEVEL_MISC_MSG' : 'Other features can be mentioned here.',
+  'FRM_LEVEL_MISC_MSG' : 'Manage your non working days here',
 
   // form-level-provider-bprofile-search
   'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. Unless you enable, the patients won\'t be able to view your profile in their search result.',
@@ -1233,7 +1233,7 @@ export const Messages = {
 
 
   // form-level-provider-payment-settings
-  'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payment to settle your transactions on the line. Jaldee account can be used for fast and seamless transaction process. A [customer] can also use other payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
+  'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking for transaction process',
   'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the \"Tax Applicable\" toggle switch to apply taxes for your services.',
 
   // form-level-provider-license and invoice
