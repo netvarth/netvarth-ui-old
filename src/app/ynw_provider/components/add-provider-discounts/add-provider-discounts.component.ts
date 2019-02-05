@@ -28,6 +28,7 @@ export class AddProviderDiscountsComponent implements OnInit {
   api_success = null;
   parent_id;
   valueCaption = 'Enter value *';
+  maxDiscountValue;
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   curtype = 'Fixed';
@@ -46,6 +47,7 @@ export class AddProviderDiscountsComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.maxDiscountValue = projectConstants.PRICE_MAX_VALUE;
   }
   createForm() {
     this.amForm = this.fb.group({
@@ -67,6 +69,11 @@ export class AddProviderDiscountsComponent implements OnInit {
       'calculationType': this.data.discount.calculationType || null,
     });
     this.curtype = this.data.discount.calculationType || 'Fixed';
+    if (this.curtype === 'Fixed') {
+      this.maxDiscountValue = projectConstants.PRICE_MAX_VALUE;
+    } else {
+      this.maxDiscountValue = projectConstants.PERC_MAX_VALUE;
+    }
   }
   onSubmit(form_data) {
 
@@ -123,6 +130,9 @@ export class AddProviderDiscountsComponent implements OnInit {
         }
       );
   }
+  isvalid(evt) {
+    return this.shared_functions.isValid(evt);
+  }
   editDiscount(post_data) {
     post_data.id = this.data.discount.id;
     this.provider_services.editDiscount(post_data)
@@ -142,9 +152,11 @@ export class AddProviderDiscountsComponent implements OnInit {
     if (typ === 'Fixed') {
       this.curtype = typ;
       this.valueCaption = 'Enter value';
+      this.maxDiscountValue = projectConstants.PRICE_MAX_VALUE;
     } else {
       this.curtype = typ;
       this.valueCaption = 'Enter percentage value';
+      this.maxDiscountValue = projectConstants.PERC_MAX_VALUE;
     }
     // this.inputRef.nativeElement.focus();
   }

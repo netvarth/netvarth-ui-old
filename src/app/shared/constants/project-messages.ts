@@ -96,7 +96,7 @@ export const Messages = {
   'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'SERVICE_ADDED1': 'New service added successfully',
-  'SERVICE_ADDED2': 'Please add this service to the relevant service time-window by editing it.',
+  'SERVICE_ADDED2': 'Please add this service to the relevant working hours by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',
@@ -106,13 +106,13 @@ export const Messages = {
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location amenities saved successfully',
   'WAITLIST_LOCATION_CHG_STATLOCATION': 'Location "[locname]" has been [status] successfully',
   'WAITLIST_LOCATION_CHG_BASELOCATION': 'Base location changed to [locname]',
-  'WAITLIST_QUEUE_CREATED': 'Service Time-Window created successfully',
-  'WAITLIST_QUEUE_UPDATED': 'Service Time-Window updated successfully',
+  'WAITLIST_QUEUE_CREATED': 'Working Hours created successfully',
+  'WAITLIST_QUEUE_UPDATED': 'Working Hours updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'End time should be greater than start time',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
-  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant service time-window by editing it',
+  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant working hours by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
@@ -182,7 +182,7 @@ export const Messages = {
   // Consumer Dashboard
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
-  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 5 minutes to complete your check-in',
+  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 15 minutes to complete your check-in',
 
   // Dynamic Field
   'YEAR_MONTH_VALID': 'Future date not allowed',
@@ -209,7 +209,7 @@ export const Messages = {
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee.com',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
-  'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time-Window',
+  'QUEUENAME_TOOLTIP': 'Click here to edit the Working Hours',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
@@ -303,7 +303,7 @@ export const Messages = {
   'LOCATION_CAP': 'Location',
   'WAITLIST_FOR_CAP': 'Waitlist For:',
   'SERVICE_CAP': 'Service:',
-  'SER_TIME_WINDOW_CAP': 'Service Time-Window:',
+  'SER_TIME_WINDOW_CAP': 'Working Hours:',
   'PAY_STATUS_CAP': 'Payment Status:',
   'NOT_PAID_CAP': 'Not Paid',
   'PARTIALLY_PAID_CAP': 'Partially Paid',
@@ -324,7 +324,7 @@ export const Messages = {
   'SEARCH_CAP': 'Search',
   'OOPS_CAP': 'Oops!!',
   'LOOKS_NOT_REG_CUS_CAP': 'Looks like you\'re not a registered customer.',
-  'FILL_YOUR_DET_CAP': 'Please fll in your details to Register',
+  'FILL_YOUR_DET_CAP': 'Please fill in your details to Register',
   'REGISTER_CAP': 'Register',
   'BACK_TO_SEARCH_CAP': 'Back to Search',
   'HOME_CAP': 'Home',
@@ -450,7 +450,7 @@ export const Messages = {
   'SELECT_SER_CAP': 'Select Service',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
-  'SERV_TIME_WINDOW_CAP': 'Service Time-Window',
+  'SERV_TIME_WINDOW_CAP': 'Working Hours',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
   'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted today.',
@@ -651,7 +651,7 @@ export const Messages = {
   'LOC_PLACEHOLDER' : 'Enter your precise location',
 
   // App-ynw_provider-components-add-provider-waitlist_queue
-  'SERVICE_TIME_WINDOW_CAP': 'Service Time-Window Name *',
+  'SERVICE_TIME_WINDOW_CAP': 'Title for Working Hours *',
   'QUEUE_LOCATION_CAP': 'Location *',
   'QUEUE_SERVICE_CAP': 'Service*',
   'SCHEDULE_CAP': 'Schedule*',
@@ -671,7 +671,7 @@ export const Messages = {
   'SERVICE_EMAIL_CAP': 'Email',
   'GALLERY_CAP': 'Gallery',
   'SELECT_IMAGE_CAP': 'Click here to select the image files',
-  'GO_TO_SERVICE_CAP': 'Please click here to go to the service time-window List',
+  'GO_TO_SERVICE_CAP': 'Please click here to go to the working hours List',
 
   // App-ynw_provider-components-add-provider-service-gallery
   'SERVICE_GALLERY_CAP': 'Service Gallery',
@@ -771,8 +771,8 @@ export const Messages = {
   'BPROFILE_LONGITUDE_CAP': 'Longitude:',
   'BPROFILE_LATIITUDE_CAP': 'Latitude:',
   'BPROFILE_LOCATION_AMENITIES': 'Location Amenities',
-  'BPROFILE_CHANGE_WORKING_HOURS_CAP': 'You can change the working hours by editing the service time-window of this location',
-  'BPROFILE_VIEW_SERVICE_WINDOW_CAP': 'to view the service time-windows',
+  'BPROFILE_CHANGE_WORKING_HOURS_CAP': 'You can change the working hours by editing the working hours of this location',
+  'BPROFILE_VIEW_SERVICE_WINDOW_CAP': 'to view the working hours',
   'BPROFILE_PRIVACY_SETTINGS_CAP': 'Privacy Settings',
   'BPROFILE_ANY_CAP': 'any',
   'BPROFILE_PHONE_CAP': 'Phone',
@@ -948,7 +948,7 @@ export const Messages = {
   // App-ynw_provider-components-provider-waitlist-locations
   'ADD_NEW_LOC_CAP': 'Add Location',
   'NO_LOC_ADDED' : 'No location added',
-  'NO_QUEUE_ADDED' : 'No service time-window added',
+  'NO_QUEUE_ADDED' : 'No working hours added',
 
   // App-ynw_provider-components-provider-waitlist-online-checkin
   'CHECKIN_CALCULATE_CAP': 'Waiting Time Calculation',
@@ -960,7 +960,7 @@ export const Messages = {
   'CHECKIN_FUTURE_CAP': 'Accept Future',
 
   // App-ynw_provider-components-provider-waitlist-queues
-  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Service Time-Window',
+  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Working Hours',
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
   // App-ynw_provider-components-provider-waitlist-service-detail
@@ -1138,7 +1138,7 @@ export const Messages = {
   'CHECK_DET_LOCATION_CAP' : 'Location:',
   'CHECK_DET_WAITLIST_FOR_CAP' : 'Waitlist For:',
   'CHECK_DET_SERVICE_CAP' : 'Service:',
-  'CHECK_DET_QUEUE_CAP' : 'Service Time-Window:',
+  'CHECK_DET_QUEUE_CAP' : 'Working Hours:',
   'CHECK_DET_PAY_STATUS_CAP' : 'Payment Status:',
   'CHECK_DET_NOT_PAID_CAP' : 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP' : 'Partially Paid',
@@ -1159,7 +1159,7 @@ export const Messages = {
   'Q_DET_MAX_CAP_CAP' : 'Maximum Capacity',
   'Q_DET_NO_OF_CAP' : 'No of',
   'Q_DET_SERVED_AT_A_TIME_CAP' : 's served at a time',
-  'Q_DET_SER_TIME_WIND_STATUS_CAP' : 'Service Time-Window Status',
+  'Q_DET_SER_TIME_WIND_STATUS_CAP' : 'Working Hours Status',
   'Q_DET_ENABLED_CAP' : 'Enabled',
   'Q_DET_DISABLED_CAP' : 'Disabled',
   'Q_DET_SCHEDULE_CAP' : 'Schedule',
@@ -1202,7 +1202,8 @@ export const Messages = {
 
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG' : 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
+  // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
+  'FRM_LEVEL_PROFILE_MSG' : 'Update your business profile (such as location, working hours, specialization, languages, etc..) here.',
   'FRM_LEVEL_WAITLIST_MSG' : 'Manage your waitlist and enable or disable check-ins for current day or for future.',
   'FRM_LEVEL_LIC_MSG' : 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG' : 'View and edit the payment and tax settings.',

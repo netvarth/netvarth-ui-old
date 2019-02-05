@@ -52,6 +52,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   businessConfig: any = [];
   multipeLocationAllowed = false;
   multipeLocAllowed = false;
+  capacitylimit = projectConstants.QTY_MAX_VALUE;
+  parallellimit = projectConstants.VALIDATOR_MAX150;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -103,7 +105,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     //   this.amForm.get('qlocation').setValue(this.data.queue.location.id);
     // }
   }
-
+  isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
+  }
   // sets up the form with the values filled in
   updateForm() {
     // console.log(this.data.queue.queueSchedule.timeSlots[0].sTime);
@@ -305,29 +309,34 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         return;
       }
       if (!this.sharedfunctionObj.checkIsInteger(form_data.qcapacity)) {
-        const error = 'Please enter an integer value for capacity';
+        // const error = 'Please enter an integer value for capacity';
+        const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       } else {
         if (form_data.qcapacity === 0) {
-          const error = 'Maximum Capacity should be greater than 0';
+          // const error = 'Maximum Capacity should be greater than 0';
+          const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
           return;
         }
       }
       // Numeric validation
       if (isNaN(form_data.qserveonce)) {
-        const error = 'Please enter a numeric value for Number of ' + this.customer_label + 's served at a time';
+        // const error = 'Please enter a numeric value for Number of ' + this.customer_label + 's served at a time';
+        const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       }
       if (!this.sharedfunctionObj.checkIsInteger(form_data.qserveonce)) {
-        const error = 'Please enter an integer value for Number of ' + this.customer_label + 's served at a time';
+        // const error = 'Please enter an integer value for Number of ' + this.customer_label + 's served at a time';
+        const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
         this.sharedfunctionObj.apiErrorAutoHide(this, error);
         return;
       } else {
         if (form_data.qserveonce === 0) {
-          const error = 'Number of ' + this.customer_label + 's served at a time should be greater than 0';
+          const error = this.customer_label + 's served at a time should be greater than 0';
+          // const error = 'Number of ' + this.customer_label + 's served at a time should be greater than 0';
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
           return;
         }

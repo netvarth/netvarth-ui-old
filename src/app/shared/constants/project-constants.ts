@@ -214,6 +214,7 @@ export const projectConstants = {
   QTY_MAX_VALUE: 100000,
   PRICE_MAX_VALUE: 100000,
   TIME_MAX_VALUE: 3600,
+  PERC_MAX_VALUE: 100,
   WAITLIST_CANCEL_RESON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel' },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
@@ -234,7 +235,7 @@ export const projectConstants = {
       displayName: 'Settings',
       subcat: [
         { name: 'LOCATION', dispName: 'Location' },
-        { name: 'QUEUE', dispName: 'Service Time-Window' },
+        { name: 'QUEUE', dispName: 'Working Hours' },
         { name: 'SERVICE', dispName: 'Service' },
         { name: 'HOLIDAY', dispName: 'Holiday' },
         { name: 'WAITLIST', dispName: 'Waitlist' },
