@@ -34,7 +34,8 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   pay_data = {
     'uuid': null,
     'paymentMode': null,
-    'amount': 0
+    'amount': 0,
+    'accountId': null
   };
   payment_popup = null;
   gateway_redirection = false;
@@ -107,7 +108,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
 
   makePayment() {
     this.resetApiError();
-
+    this.pay_data.accountId = this.checkin.provider.id;
     if (this.pay_data.uuid != null &&
       this.pay_data.paymentMode != null &&
       this.pay_data.amount !== 0) {
