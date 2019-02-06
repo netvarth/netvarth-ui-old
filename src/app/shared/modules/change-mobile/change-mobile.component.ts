@@ -26,7 +26,7 @@ export class ChangeMobileComponent implements OnInit {
   family_members_cap = Messages.FAMILY_MEMBERS;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   changemob_cap = Messages.CHANGE_MOB_CAP;
-
+  dashboard_cap = Messages.DASHBOARD_TITLE;
   spForm: FormGroup;
   api_error = null;
   api_success = null;

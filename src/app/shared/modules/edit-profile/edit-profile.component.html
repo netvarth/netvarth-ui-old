@@ -84,8 +84,8 @@
 
                                     <mat-form-field>
 
-                                        <input matInput type="text" class="form-control" id="email"
-                                            formControlName="email" placeholder="Email(user@xyz.com)" autocomplete="off">
+                                        <input matInput type="text" class="form-control" id="email" formControlName="email"
+                                            placeholder="Email(user@xyz.com)" autocomplete="off">
 
                                     </mat-form-field>
 
@@ -149,7 +149,7 @@
 
                                     <mat-form-field>
 
-                                        <input matInput  [matDatepicker]="picker" placeholder="Date of birth" #inputdob
+                                        <input matInput [matDatepicker]="picker" placeholder="Date of birth" #inputdob
                                             formControlName="dob" [max]="tday" disabled class="nofocus" tabindex="-1">
 
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -240,6 +240,7 @@
                     <div class="right-menu-header">{{related_links_cap}}</div>
 
                     <ul class="related-link">
+                        <li (click)="shared_functions.redirectto('dashboard')" class="icon-dashboard">{{dashboard_cap}}</li>
 
                         <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_password_cap}}</li>
 

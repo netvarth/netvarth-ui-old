@@ -36,7 +36,7 @@ export class EditProfileComponent implements OnInit {
   change_mobile_cap = Messages.CHANGE_MOB_CAP;
   change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
-
+  dashboard_cap = Messages.DASHBOARD_TITLE;
 
   editProfileForm: FormGroup;
   api_error = null;

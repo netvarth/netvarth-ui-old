@@ -36,6 +36,7 @@
         <div class="right-menu">
           <div class="right-menu-header">{{related_links_cap}}</div>
           <ul class="related-link">
+            <li (click)="shared_functions.redirectto('dashboard')" class="icon-dashboard">{{dashboard_cap}}</li>
             <li (click)="shared_functions.redirectto('profile')" class="icon-profile">{{user_profile_cap}}</li>
             <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_password_cap}}</li>
             <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">{{change_mobile_cap}}</li>
