@@ -21,7 +21,7 @@ export class ServiceDetailComponent implements OnInit {
   prepayment_amount = Messages.PREPAYMENT_AMOUNT_CAP;
   description_cap = Messages.DESCRIPTION_CAP;
   close_btn_cap = Messages.CLOSE_BTN;
-  servc_detils=Messages.SERVCE_DETAILS;
+  servc_detils = Messages.SERVCE_DETAILS;
   api_error = null;
   api_success = null;
 

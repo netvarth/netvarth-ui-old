@@ -19,6 +19,7 @@ import { Messages} from '../../../shared/constants/project-messages';
   templateUrl: './members.component.html'
 })
 export class MembersComponent implements OnInit {
+  dashboard_cap = Messages.DASHBOARD_TITLE;
   add_fam_memb_cap = Messages.ADD_FAMILY_MEMBER;
   first_name_cap = Messages.FIRST_NAME_CAP;
   last_name_cap = Messages.LAST_NAME_CAP;

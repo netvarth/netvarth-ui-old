@@ -18,6 +18,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   name_cap = Messages.PRO_NAME_CAP;
   edit_btn = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
+  desc_cap = Messages.DESCRIPTION_CAP;
   add_disc_cap = Messages.ADD_DISCOUNT_CAP;
   discount_list: any = [];
   query_executed = false;
