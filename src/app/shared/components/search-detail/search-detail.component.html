@@ -317,11 +317,11 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) "
+                                    <div *ngIf="search_result.fields.ynw_verified && (search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3 || search_result.fields.ynw_verified_level==4) "
                                         class="ynw-verified">
-                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">{{basic_cap}}</span>
-                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_plus_cap}}</span>
-                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">{{premium_cap}}</span>
+                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_cap}}</span>
+                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==3">{{basic_plus_cap}}</span>
+                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==4">{{premium_cap}}</span>
 
                                     </div>
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"

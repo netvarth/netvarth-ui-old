@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 
 import { ProviderServices } from '../../services/provider-services.service';
-import {projectConstants} from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -26,7 +26,7 @@ export class AddProviderDiscountsComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  parent_id ;
+  parent_id;
   valueCaption = 'Enter value *';
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
@@ -40,23 +40,23 @@ export class AddProviderDiscountsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions
-    ) {
-       // console.log(data);
-     }
+  ) {
+    // console.log(data);
+  }
 
   ngOnInit() {
-     this.createForm();
+    this.createForm();
   }
   createForm() {
     this.amForm = this.fb.group({
-    name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-    description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-    discValue: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxNumbers)])],
-    calculationType: ['Fixed', Validators.compose([Validators.required])]
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+      description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+      discValue: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxNumbers)])],
+      calculationType: ['Fixed', Validators.compose([Validators.required])]
     });
 
     if (this.data.type === 'edit') {
-     this.updateForm();
+      this.updateForm();
     }
   }
   updateForm() {
@@ -68,88 +68,87 @@ export class AddProviderDiscountsComponent implements OnInit {
     });
     this.curtype = this.data.discount.calculationType || 'Fixed';
   }
-  onSubmit (form_data) {
+  onSubmit(form_data) {
 
     this.resetApiErrors();
 
     if (isNaN(form_data.discValue)) {
-          if (form_data.calculationType === 'Percentage') {
-            this.api_error = 'Please enter a numeric discount percentage value';
-          } else {
-            this.api_error = 'Please enter a numeric discount value';
-          }
-          return;
+      if (form_data.calculationType === 'Percentage') {
+        this.api_error = 'Please enter a numeric discount percentage value';
+      } else {
+        this.api_error = 'Please enter a numeric discount value';
+      }
+      return;
+    } else {
+      if (form_data.discValue === 0) {
+        if (form_data.calculationType === 'Percentage') {
+          this.api_error = 'Please enter the discount percentage';
         } else {
-            if (form_data.discValue === 0) {
-              if (form_data.calculationType === 'Percentage') {
-                this.api_error = 'Please enter the discount percentage';
-              } else {
-                this.api_error = 'Please enter the discount value';
-              }
-              return;
-            }
-            if (form_data.calculationType === 'Percentage') {
-               if (form_data.discValue < 0 || form_data.discValue > 100) {
-                this.api_error = 'Discount percentage should be between 0 and 100';
-                return;
-               }
-            }
+          this.api_error = 'Please enter the discount value';
         }
-        const post_data = {
-                          'name': form_data.name,
-                          'description':  form_data.description,
-                          'discValue': form_data.discValue,
-                          'calculationType': form_data.calculationType,
-        };
+        return;
+      }
+      if (form_data.calculationType === 'Percentage') {
+        if (form_data.discValue < 0 || form_data.discValue > 100) {
+          this.api_error = 'Discount percentage should be between 0 and 100';
+          return;
+        }
+      }
+    }
+    const post_data = {
+      'name': form_data.name,
+      'description': form_data.description,
+      'discValue': form_data.discValue,
+      'calculationType': form_data.calculationType
+    };
 
-        if (this.data.type === 'edit') {
-            this.editDiscount(post_data);
-        } else if (this.data.type === 'add') {
-            this.addDiscount(post_data);
-        }
+    if (this.data.type === 'edit') {
+      this.editDiscount(post_data);
+    } else if (this.data.type === 'add') {
+      post_data['discType'] = 'Predefine';
+      this.addDiscount(post_data);
+    }
   }
   addDiscount(post_data) {
-
     this.provider_services.addDiscount(post_data)
-        .subscribe(
-          data => {
-           this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_CREATED');
-           setTimeout(() => {
+      .subscribe(
+        data => {
+          this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_CREATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-           }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        }
+      );
   }
   editDiscount(post_data) {
-    post_data.id =  this.data.discount.id;
+    post_data.id = this.data.discount.id;
     this.provider_services.editDiscount(post_data)
-        .subscribe(
-          data => {
-            this.api_success =  this.shared_functions.getProjectMesssages('DISCOUNT_UPDATED');
-            setTimeout(() => {
+      .subscribe(
+        data => {
+          this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_UPDATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-    );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+        }
+      );
   }
   handleTypechange(typ) {
-      if (typ === 'Fixed') {
-        this.curtype = typ;
-        this.valueCaption = 'Enter value';
-      } else {
-        this.curtype = typ;
-        this.valueCaption = 'Enter percentage value';
-      }
-      // this.inputRef.nativeElement.focus();
+    if (typ === 'Fixed') {
+      this.curtype = typ;
+      this.valueCaption = 'Enter value';
+    } else {
+      this.curtype = typ;
+      this.valueCaption = 'Enter percentage value';
+    }
+    // this.inputRef.nativeElement.focus();
   }
-
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
