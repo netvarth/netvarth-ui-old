@@ -269,10 +269,10 @@
             </div>
         </div>
     </div>
-    <ng-container  *ngIf="step==1 && checkindisablemsg">
+    <ng-container  *ngIf="step==1 && this.checkinLabel">
     <div class="waitlist-action">
-        <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
-        <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
+        <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
+        <div class="disable-msg" >{{checkindisablemsg}}</div>
     </div>
     </ng-container>
     <ng-container *ngIf="step==3 && !showCreateMember">

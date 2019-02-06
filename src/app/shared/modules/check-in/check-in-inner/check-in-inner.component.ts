@@ -596,7 +596,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   isCheckinenable() {
-    // console.log('enable', this.sel_loc, this.sel_ser, this.sel_queue_id , this.sel_checkindate);
+     console.log('enable', this.sel_loc, this.sel_ser, this.sel_queue_id , this.sel_checkindate);
     if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
       return true;
     } else {

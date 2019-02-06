@@ -1258,7 +1258,7 @@ export const Messages = {
   'SETPROF_MSG': 'Please set profile name to make use of Dashboard',
   'SET_LOC_MSG': 'Please set location to make use of Dashboard',
 
-  //form-level-provider-wizard
+  // form-level-provider-wizard
   'FRM_LEVEL_PRO_WIZ_ONE_MSG' : 'The Jaldee team takes pride in your decision of choosing its services.',
   'FRM_LEVEL_PRO_WIZ_TWO_MSG' : 'Let us quickly set up your basic profile and help you enable the Public Search to get you started!',
   'FRM_LEVEL_PRO_WIZ_THREE_MSG' : 'We wish you all the very best!',
