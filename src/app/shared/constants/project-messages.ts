@@ -74,7 +74,7 @@ export const Messages = {
   'BPROFILE_PRIVACY_PHONE_INVALID': 'Please enter a valid mobile phone number',
   'BPROFILE_PRIVACY_PHONE_10DIGITS': 'Mobile number should have 10 digits',
   'BPROFILE_PRIVACY_EMAILLABEL_REQ': 'Email label should not be blank',
-  'BPROFILE_PRIVACY_PHONE_DELETE' : 'Do you really want to remove the Phone no "[DATA]" and its details?',
+  'BPROFILE_PRIVACY_PHONE_DELETE' : 'Do you really want to remove the Mobile no "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_DELETE' : 'Do you really want to remove the Email id "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_INVALID': 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
@@ -237,15 +237,15 @@ export const Messages = {
   // Breadcrumbs
   'LEARN_MORE_CAP': 'Learn More',
 
-  // Reveal Phone No
+  // Reveal Mobile No
   'MANAGE_PRIVACY': 'Manage Privacy',
-  'REVEAL_PHNO': 'Reveal Phone number',
+  'REVEAL_PHNO': 'Reveal Mobile number',
 
   // Family Member
   'FAMILY_MEMBERS': 'Family Members',
   'MEMBER_CAPTION': 'Member',
   'PHONE_DIGIT_VAL_MSG': 'Enter a 10 digit mobile number',
-  'PHONE_NUM_VAL_MSG': 'Phone number should have only numbers',
+  'PHONE_NUM_VAL_MSG': 'Mobile number should have only numbers',
   'LASTNAME_INVAL_MSG': 'Please enter a valid last name',
   'FIRSTNAME_INVAL_MSG': 'Please enter a valid first name',
   'ADD_FAMILY_MEMBER': 'Add Family Member',
@@ -412,7 +412,7 @@ export const Messages = {
   'DURATION_CAP': 'Duration:',
   'PRICE_CAP': 'Price:',
   'PREPAYMENT_AMOUNT_CAP': 'Prepayment Amount:',
-  'DESCRIPTION_CAP': 'Description :',
+  'DESCRIPTION_CAP': 'Description',
 
   // App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
@@ -477,7 +477,7 @@ export const Messages = {
   'NO_PAY_OPT_AVIL_CAP': 'No payment options available.',
 
   // App-shared-modules-edit-profile
-  'EDIT_PHONE_NO_CAP': 'Use "Change Mobile" option to edit the Phone number',
+  'EDIT_PHONE_NO_CAP': 'Use "Change Mobile" option to edit the Mobile number',
   'CHANGE_EMAIL_CAP': 'Use "Update Email" option to edit the Email Id',
   'PHONE_NO_CAP': 'Phone Number',
   'EMAIL_ID_CAP': 'Email Id',

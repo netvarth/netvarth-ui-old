@@ -327,7 +327,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
         this.shared_functions.openSnackBar('Please enter your mobile number', {'panelClass': 'snackbarerror'});
       }
       else{
-      this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
+      this.shared_functions.openSnackBar('Mobile number can have only numbers', {'panelClass': 'snackbarerror'});
       if (this.regmobile.nativeElement) {
         this.regmobile.nativeElement.focus();
       }
@@ -489,7 +489,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
           // alert('ddd');
      // console.log('src', this.numberpattern.test(this.reg_mobile));
       if (!this.numberpattern.test(this.reg_mobile)) {
-        this.shared_functions.openSnackBar('Phone number can have only numbers', {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar('Mobile number can have only numbers', {'panelClass': 'snackbarerror'});
         if (this.regmobile.nativeElement) {
           this.regmobile.nativeElement.focus();
         }
