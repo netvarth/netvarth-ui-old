@@ -412,7 +412,7 @@ export const Messages = {
   'DURATION_CAP': 'Duration:',
   'PRICE_CAP': 'Price:',
   'PREPAYMENT_AMOUNT_CAP': 'Prepayment Amount:',
-  'DESCRIPTION_CAP': 'Description :',
+  'DESCRIPTION_CAP': 'Description',
 
   // App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
