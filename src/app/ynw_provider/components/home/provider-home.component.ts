@@ -899,12 +899,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
     this.edit_location = 1;
   }
-  cancellocationChange() {
-    this.edit_location = 0;
-  }
+  // cancellocationChange() {
+  //   this.edit_location = 0;
+  // }
   onChangeLocationSelect(event) {
     const value = event.value;
     this.changeLocation(this.locations[value] || []);
+    this.edit_location = 0;
   }
   reloadAPIs() {
     this.countApiCall();
