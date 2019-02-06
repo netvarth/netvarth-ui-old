@@ -2051,3 +2051,8 @@ Overriding mat input style
 .duration{
   display: contents;
 }
+.loc_queue {
+  padding: 5px;
+  border-right: 1px solid #cccccc;
+  clear: both;
+}

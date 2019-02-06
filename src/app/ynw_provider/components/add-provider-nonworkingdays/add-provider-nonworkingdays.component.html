@@ -7,14 +7,20 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     </button>
   </h1>
   <mat-dialog-content>
-    <div class="form-group normalpicker">
+    <div class="form-group col-md-4 no-padding">
       <label for="reason" class="col-form-label">{{(data.type === 'edit') ? 'Selected Date' : 'Select Date'}}</label>
-      <div class="pickerouter">
+      <mat-form-field>
+        <input type="text" matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate" [max]="maxDate"
+          autocomplete="off" tabindex="-1" placeholder="DD/MM/YYYY">
+        <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
+        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+      </mat-form-field>
+      <!-- <div class="pickerouter">
         <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
         <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate"
           [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="DD/MM/YYYY">
-      </div>
+      </div> -->
     </div>
     <div class="form-group">
       <mat-form-field>
