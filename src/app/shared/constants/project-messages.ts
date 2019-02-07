@@ -1194,6 +1194,7 @@ export const Messages = {
   'APPLYJC' : 'Apply Jaldee Coupon',
   'CURRENTMOBMSG': 'Your Current Mobile # ',
 
+
   
   // App-shared-components-set-password-form
   'SET_PASSWORD_MSG' : 'Congratulations! You have become a Jaldee partner! Please set your password to continue sign up process.',
