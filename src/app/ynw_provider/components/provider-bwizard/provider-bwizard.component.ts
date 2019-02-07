@@ -136,6 +136,7 @@ export class ProviderbWizardComponent implements OnInit {
   multipeLocationAllowed = false;
   disablebuttonsInSchedule = false;
   loc_exist = true;
+  show_error = false;
   frm_wiz_one_cap = Messages.FRM_LEVEL_PRO_WIZ_ONE_MSG;
   frm_wiz_two_cap = Messages.FRM_LEVEL_PRO_WIZ_TWO_MSG;
   frm_wiz_three_cap = Messages.FRM_LEVEL_PRO_WIZ_THREE_MSG;
@@ -467,6 +468,9 @@ export class ProviderbWizardComponent implements OnInit {
     }
   }
   onSubmit (form_data) {
+  this.showError();
+  if(this.show_error === false)
+  {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
     if (this.disable_price) {
@@ -481,6 +485,31 @@ export class ProviderbWizardComponent implements OnInit {
     form_data.id = this.service.id;
     this.updateService(form_data);
   }
+}
+  showError() {
+   var p = this.document.getElementById('price').value;
+    //alert("value is"+ p);
+  //  const pW = this.document.getElementById('password').value.trim();
+    if (p === '') {
+      this.show_error = true;
+      if (this.document.getElementById('price')) {
+        this.document.getElementById('price').focus();
+        return this.show_error;
+      }
+      
+    }
+    else{
+      this.show_error = false;
+      return this.show_error;
+    }
+    // if (pW === '') {
+    //   if (this.document.getElementById('password')) {
+    //     this.document.getElementById('password').focus();
+    //     return;
+    //   }
+    // }
+  }
+
   wizardPageShowDecision(curstep, changetostep) {
     // console.log('curpage', curstep);
     let changerequired = false;

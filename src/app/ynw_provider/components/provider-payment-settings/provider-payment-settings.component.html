@@ -247,7 +247,7 @@
                                     <label class="caption">Enter 15 digit GST number *</label>
                                     <mat-form-field>
                                         <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()"
-                                            autocomplete="off" tabindex="14">
+                                            autocomplete="off" maxlength="15" tabindex="14">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="showError['gstnumber']['status']"
                                         [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
@@ -256,7 +256,7 @@
                                 <div class="form-group">
                                     <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field>
-                                        <input matInput [(ngModel)]="taxpercentage" (keypress)="resetApi()" class="tax-per"
+                                        <input matInput [(ngModel)]="taxpercentage" (keyup)="isvalid($event)" (keypress)="resetApi()" max="100" class="tax-per"
                                             autocomplete="off" tabindex="15">
                                         <span matSuffix>%</span>
                                     </mat-form-field>

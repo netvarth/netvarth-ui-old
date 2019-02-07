@@ -430,6 +430,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             return this.errorExist;
         }
     }
+
+    isvalid(evt) {
+        return this.shared_functions.isValid(evt);
+      }
     /**
      * function to update tax settings
      */
