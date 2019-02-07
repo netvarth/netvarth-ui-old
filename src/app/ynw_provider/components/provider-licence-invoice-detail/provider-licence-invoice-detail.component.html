@@ -27,6 +27,10 @@
                     <span class="label">Amount to pay</span>
                     <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
                 </div>
+                <div class="ivc" *ngIf="invoice.dueDate">
+                    <span class="label">Due On</span>
+                    <span class="result">{{invoice.dueDate | date: dateFormat}}</span>
+                </div>
             </div>
         </div>
         <div class="" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">

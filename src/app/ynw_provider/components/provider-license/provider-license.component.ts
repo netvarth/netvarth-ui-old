@@ -66,6 +66,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   type = null;
   upgradablepackages = [];
   addonTooltip = '';
+  periodicTooltip = '';
   breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'license' };
   upgradedialogRef;
   addondialogRef;
@@ -91,6 +92,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
+    this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
     this.getLicenseDetails();
     this.getLicenseUsage();
     this.getInvoiceList();
