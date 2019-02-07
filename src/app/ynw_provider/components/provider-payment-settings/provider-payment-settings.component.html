@@ -50,13 +50,13 @@
                                                         <div class='paytm-det row' *ngIf="paytmenabled">
                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                 <div class="form-group">
-                                                                    <label class="caption">Enter 10 digits number</label>
+                                                                    <label class="caption">Enter 10 digits mobile number</label>
                                                                     <mat-form-field>
                                                                         <div class="input-group">
                                                                             <div class="input-group-prepend mob-prefix">
-                                                                                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                                                                <span class="input-group-text"  id="">{{mob_prefix_cap}}</span>
                                                                             </div>
-                                                                            <input class="form-control" matInput #paymobref [(ngModel)]="paytmmobile"
+                                                                            <input class="form-control" maxlength="10" matInput #paymobref [(ngModel)]="paytmmobile"
                                                                             (keypress)="resetApi('paytmmobile')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
                                                                             (blur)="paytmBlur()" tabindex="2">
