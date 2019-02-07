@@ -114,6 +114,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   inboxCntFetched = false;
   inboxUnreadCnt;
   changedate_req = false;
+  
   gender = '';
   bLogo = '';
   orgsocial_list;
@@ -238,6 +239,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'businessProfile': {
             this.businessjson = res;
             // console.log('bprofile', JSON.stringify(this.businessjson));
+            
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {

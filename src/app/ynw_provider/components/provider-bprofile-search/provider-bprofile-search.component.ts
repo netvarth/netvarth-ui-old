@@ -234,7 +234,6 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adworddialogRef;
   delgaldialogRef;
   cacheavoider = '';
-
   frm_public_search_cap = '';
   frm_adword_cap = '';
   frm_loc_amen_cap = '';

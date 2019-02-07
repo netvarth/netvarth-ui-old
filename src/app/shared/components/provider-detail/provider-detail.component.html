@@ -101,7 +101,15 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
+                                <!-- <div>{{businessjson.verifyLevel}}</div> -->
+                                    <!-- <div *ngIf="businessjson.verifyLevel== 'NONE' && (businessjson.verifyLevel== 'BASIC' || businessjson.verifyLevel== 'BASIC PLUS' || businessjson.verifyLevel== 'PREMIUM')"> -->
+
+                                <!-- <div  *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"> -->
+                                        <div>
+                                                <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img height="100" width="85" src="./assets/images/BasicOrg.png"></span>
+                                                <span *ngIf="businessjson.verifyLevel == 'BASIC PLUS'"><img height="100" width="85" src="./assets/images/BasicPlsOrg.png"></span>
+                                                <span *ngIf="businessjson.verifyLevel == 'PREMIUM'"><img height="100" width="85" src="./assets/images/PremiumOrg.png"></span>
+                                            </div>
                                 <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
                                     <span class="icon-male" *ngIf="genderType=='male'" [matTooltip]="maleTooltip"></span>
                                     <span class="icon-female" *ngIf="genderType=='female'" [matTooltip]="femaleTooltip"></span>
