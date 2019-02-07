@@ -17,7 +17,7 @@ onSubmit(loginForm.value)"
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber') && show_error"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',
   {
-    'required' : 'Phone number is required',
+    'required' : 'Mobile number is required',
     'minlength' : 'Enter a 10 digit mobile number',
     'maxlength' : 'Enter a 10 digit mobile number',
     'pattern' : 'Only numbers are allowed'
