@@ -159,6 +159,8 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.frm_wiz_five_cap = Messages.FRM_LEVEL_PRO_WIZ_FIVE_MSG.replace('[customer]', this.customer_label);
+    this.frm_wiz_five_cap = this.frm_wiz_five_cap + Messages.FRM_LEVEL_PRO_WIZ_FIVE1_MSG.replace('[customer]', this.customer_label);
     this.wizard_data_holder = {
       'name': '',
       'summary': '',
@@ -188,7 +190,6 @@ export class ProviderbWizardComponent implements OnInit {
      }
     this.active_step = 0;
     localStorage.removeItem('new_provider');
-    this.frm_wiz_five_cap = Messages.FRM_LEVEL_PRO_WIZ_FIVE_MSG.replace('[customer]', this.customer_label);
 
   }
 

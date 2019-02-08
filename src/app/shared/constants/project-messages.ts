@@ -662,7 +662,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-watlist-service
   'SERVICE_NAME_CAP': 'Service Name *',
-  'EST_DURATION_CAP': 'Estimated Duration (min)*',
+  'EST_DURATION_CAP': 'Estimated Duration (min)',
   'ENABLE_PREPAYMENT_CAP': 'Enable prepayment',
   'PREPAYMENT_CAP': 'Prepayment Amount ',
   'TAX_APPLICABLE_CAP': 'Tax applicable',
@@ -1266,7 +1266,8 @@ export const Messages = {
   'FRM_LEVEL_PRO_WIZ_TWO_MSG' : 'Let us quickly set up your basic profile and help you enable the Public Search to get you started!',
   'FRM_LEVEL_PRO_WIZ_THREE_MSG' : 'We wish you all the very best!',
   'FRM_LEVEL_PRO_WIZ_FOUR_MSG' : 'Be certain that this initial setup can be viewed, edited and managed, if and when required.',
-  'FRM_LEVEL_PRO_WIZ_FIVE_MSG' : 'Enter your business name here. [customer]s will view this in Public Profile. Complete it by adding a brief introduction about you or your business to help [customer]s know you more.',
+  'FRM_LEVEL_PRO_WIZ_FIVE_MSG' : 'Enter your business name here. [customer]s will view this in Public Profile. ',
+  'FRM_LEVEL_PRO_WIZ_FIVE1_MSG' : 'Complete it by adding a brief introduction about you or your business to help [customer]s know you more.',
   'FRM_LEVEL_PRO_WIZ_SIX_MSG' : 'Enter the location related details here.',
 
   'SERVCE_DETAILS': '-Service Details', 
