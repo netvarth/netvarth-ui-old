@@ -256,7 +256,7 @@
                                 <div class="form-group">
                                     <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field>
-                                        <input matInput [(ngModel)]="taxpercentage" (keyup)="isvalid($event)" (keypress)="resetApi()" max="100" class="tax-per"
+                                        <input matInput [(ngModel)]="taxpercentage"  (keypress)="resetApi() && isNumeric($event)" (keyup)="isvalid($event)"  max="100" class="tax-per"
                                             autocomplete="off" tabindex="15">
                                         <span matSuffix>%</span>
                                     </mat-form-field>

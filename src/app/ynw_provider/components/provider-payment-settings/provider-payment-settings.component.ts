@@ -430,7 +430,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             return this.errorExist;
         }
     }
-
+    isNumeric(evt) {
+        return this.shared_functions.isNumeric(evt);
+      }
     isvalid(evt) {
         return this.shared_functions.isValid(evt);
       }

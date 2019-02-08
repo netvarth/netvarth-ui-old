@@ -1214,23 +1214,64 @@ export class SharedFunctions {
     const value = parseInt(evt.target.value);
     // tslint:disable-next-line:radix
     const max = parseInt(evt.target.max);
-    if (evt.which !== 8 && evt.which !== 0 &&
-      ((evt.which < 48 || evt.which > 57) &&
-        (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
-      isNaN(value) || value < 0) {
-      evt.preventDefault();
-      return false;
-    }
+    console.log(value);
+    console.log(max);
     if (value > max) {
       let numString = evt.target.value;
+      evt.preventDefault();
       numString = numString.substr(0, numString.length - 1);
       // tslint:disable-next-line:radix
       evt.target.value = parseInt(numString);
-      evt.preventDefault();
       return false;
     }
     return true;
   }
+  isNumeric(evt) {
+    const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
+    console.log('Keycode : ' + inputKeyCode);
+    if ((inputKeyCode >= 48 && inputKeyCode <= 57) || inputKeyCode === 8 || inputKeyCode === 46) {
+      return true;
+    } else {
+      evt.preventDefault();
+      return false;
+    }
+  }
+
+    // if (inputKeyCode !== 8 && inputKeyCode !== 0 &&
+    //     ((inputKeyCode < 48 || inputKeyCode > 57) &&
+    //        (inputKeyCode < 96 || inputKeyCode > 105) && (inputKeyCode !== 110))) {
+    //         evt.preventDefault();
+    //         return false;
+    //      }
+    // if (inputKeyCode !== null) {
+    //     if (inputKeyCode === 45) {
+    //     }
+    // }
+    // const stringvalue = evt.target.value;
+    // tslint:disable-next-line:radix
+    // const value = parseInt(evt.target.value);
+    // tslint:disable-next-line:radix
+    // const max = parseInt(evt.target.max);
+    // if (evt.which !== 8 && evt.which !== 0 &&
+    //   ((evt.which < 48 || evt.which > 57) &&
+    //     (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+    //   isNaN(value) || value < 0) {
+    // evt.target.value = stringvalue.substring(0, (stringvalue.length - 1));
+    // if (evt.stopPropagation) {
+    //   evt.stopPropagation();
+    //   evt.preventDefault();
+    // } else {
+    //   evt.preventDefault();
+    // }
+
+    // }
+    // if (value > max) {
+    //   // tslint:disable-next-line:radix
+    //   evt.preventDefault();
+    //   return false;
+    // }
+    // return true;
+  // }
 
   filterJson(jsonArray, key, value) {
     const newArray = jsonArray.filter(function (el) {
