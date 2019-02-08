@@ -133,6 +133,9 @@ export class AddProviderDiscountsComponent implements OnInit {
   isvalid(evt) {
     return this.shared_functions.isValid(evt);
   }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
   editDiscount(post_data) {
     post_data.id = this.data.discount.id;
     this.provider_services.editDiscount(post_data)

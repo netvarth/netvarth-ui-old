@@ -332,11 +332,11 @@ export const projectConstants = {
     Done: 'Completed',
     Started: 'Started',
     Arrived: 'Arrived',
-    CheckedIn: 'CheckedIn',
+    CheckedIn: 'Checked-In',
     Cancelled: 'Cancelled'
   },
   CHECK_IN_STATUSES_FILTER: [
-    { displayName: 'CheckedIn', value: 'checkedIn' },
+    { displayName: 'Checked-In', value: 'checkedIn' },
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Completed', value: 'done' },

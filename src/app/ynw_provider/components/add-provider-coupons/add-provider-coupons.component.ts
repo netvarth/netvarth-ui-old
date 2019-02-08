@@ -146,6 +146,9 @@ export class AddProviderCouponsComponent implements OnInit {
   isvalid(evt) {
     return this.shared_functions.isValid(evt);
   }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
 
   resetApiErrors() {
     this.api_error = null;

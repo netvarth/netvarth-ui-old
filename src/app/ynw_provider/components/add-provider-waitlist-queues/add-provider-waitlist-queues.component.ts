@@ -108,6 +108,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
   }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+  }
   // sets up the form with the values filled in
   updateForm() {
     // console.log(this.data.queue.queueSchedule.timeSlots[0].sTime);

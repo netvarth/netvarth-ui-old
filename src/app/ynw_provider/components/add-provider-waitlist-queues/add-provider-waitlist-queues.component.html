@@ -99,8 +99,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput min="0" max="{{capacitylimit}}" type="number" class="form-control number-ip-sm" placeholder="Maximum {{customer_label}}s served *"
-                    formControlName="qcapacity" autocomplete="off" (keyup)="isvalid($event)">
+                <input matInput min="0" max="{{capacitylimit}}" type="text" class="form-control number-ip-sm" placeholder="Maximum {{customer_label}}s served *"
+                    formControlName="qcapacity" autocomplete="off"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
         {
@@ -112,8 +112,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <input matInput min="0" max="{{parallellimit}}" type="number" class="number-ip-sm" placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
-                    formControlName="qserveonce" autocomplete="off" (keyup)="isvalid($event)">
+                <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm" placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
+                    formControlName="qserveonce" autocomplete="off"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
         {

@@ -32,8 +32,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
         <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
         <mat-form-field>
-          <input min="0" max="{{maxDiscountValue}}" matInput type="number" class="form-control valfield" #myfield id="discValue" [placeholder]="valueCaption"
-            formControlName="discValue" autocomplete="off" (keyup)="isvalid($event)">
+          <input min="0" max="{{maxDiscountValue}}" matInput type="text" class="form-control valfield" #myfield id="discValue" [placeholder]="valueCaption"
+            formControlName="discValue" autocomplete="off" (keypress)="isNumeric($event)"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
         </mat-form-field>
       </mat-form-field>
 

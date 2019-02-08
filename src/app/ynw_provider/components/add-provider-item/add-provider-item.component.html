@@ -93,7 +93,7 @@
         <div class="form-group">
             <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
             <mat-form-field>
-                <input matInput type="number" min="0" max="100000" (keyup)="isvalid($event)" 
+            <input matInput type="number" min="0" max="100000"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" 
                 class="form-control number-ip-sm" formControlName="price"
                  id="price" placeholder="{{price_cap}} *" autocomplete="off">
             </mat-form-field>

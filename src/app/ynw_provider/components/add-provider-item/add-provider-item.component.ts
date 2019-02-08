@@ -16,7 +16,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderItemComponent implements OnInit {
 
-  item_hi_cap =Messages.ITEM_HI_CAP;
+  item_hi_cap = Messages.ITEM_HI_CAP;
   item_name_cap = Messages.ITEM_NAME_CAP;
   short_desc_cap = Messages.SHORT_DESC_CAP;
   detailed_dec_cap = Messages.DETAIL_DESC_CAP;
@@ -63,7 +63,9 @@ export class AddProviderItemComponent implements OnInit {
      this.createForm();
      this.getTaxpercentage();
   }
- 
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+  }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
   }
@@ -94,7 +96,7 @@ export class AddProviderItemComponent implements OnInit {
       this.updateForm();
     }
   }
-  
+
   setDescFocus() {
     this.isfocused = true;
     this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
@@ -196,7 +198,7 @@ export class AddProviderItemComponent implements OnInit {
     this.provider_services.addItem(post_data)
         .subscribe(
           data => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');           
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

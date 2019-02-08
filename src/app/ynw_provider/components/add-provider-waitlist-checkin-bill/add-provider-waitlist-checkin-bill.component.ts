@@ -628,7 +628,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           });
     });
   }
-
+isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+  }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
   }
