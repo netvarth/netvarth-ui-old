@@ -1010,7 +1010,7 @@ export const Messages = {
   'SEARCH_GALLERY_SELEC_IMG_FILE_CAP' : 'Click here to select the image files',
 
   // App-ynw_provider-components-provider-bprofile-search-primary
-  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Basic Information',
+  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Descriptoin',
   'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Description',
 
