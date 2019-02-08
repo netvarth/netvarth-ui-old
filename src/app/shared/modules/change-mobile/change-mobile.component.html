@@ -20,7 +20,7 @@
                     <div class="input-group-prepend mob-prefix">
                       <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
-                    <input type="text" matInput class="form-control" id="phonenumber" placeholder="Enter New Mobile #"
+                    <input type="text" (keypress)="isNumeric($event)" matInput class="form-control" id="phonenumber" placeholder="Enter New Mobile #"
                       formControlName="phonenumber" autocomplete="off" ngModel maxlength="10">
                   </div>
                   </mat-form-field>

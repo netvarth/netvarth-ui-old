@@ -25,7 +25,7 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
-                    <input matInput type="text" class="form-control" id="mobile_number" placeholder="{{mob_cap}}"
+                    <input matInput type="text" class="form-control" id="mobile_number" (keypress)="isNumeric($event)" placeholder="{{mob_cap}}"
                         formControlName="mobile_number" autocomplete="off" maxlength=10>
                 </div>
             </mat-form-field>

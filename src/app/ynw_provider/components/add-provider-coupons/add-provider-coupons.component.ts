@@ -51,7 +51,7 @@ export class AddProviderCouponsComponent implements OnInit {
     this.amForm = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       description: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      discValue: ['Fixed', Validators.compose([Validators.required])],
+      discValue: ['', Validators.compose([Validators.required])],
       calculationType: ['Fixed', Validators.compose([Validators.required])]
     });
 

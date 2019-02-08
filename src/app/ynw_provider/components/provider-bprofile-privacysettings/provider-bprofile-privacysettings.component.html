@@ -8,7 +8,7 @@
                                         <div class="input-group-prepend mob-prefix">
                                                 <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                                         </div>
-                                        <input type="text" matInput class="form-control" id="phone1"
+                                        <input type="text" (keypress)="isNumeric($event)" matInput class="form-control" id="phone1"
                                                 placeholder="{{mobile_cap}}" [(ngModel)]="phonenumber"
                                                 [ngModelOptions]="{standalone: true}" autocomplete="off" maxlength="10">
                                 </div>
@@ -27,7 +27,7 @@
                                         <label class="col-form-label">{{phone_no_visible_cap}}</label>
                                         <mat-radio-group [(ngModel)]="phonepermission" [ngModelOptions]="{standalone: true}">
                                                 <mat-radio-button value="all">{{privacypermissiontxt['all']}}</mat-radio-button>
-                                                <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button>
+                                                <!-- <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button> -->
                                                 <mat-radio-button value="self">{{privacypermissiontxt['self']}}</mat-radio-button>
                                         </mat-radio-group>
                                 </div>

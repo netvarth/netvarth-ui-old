@@ -259,4 +259,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     }
     return rettxt;
   }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+  }
 }

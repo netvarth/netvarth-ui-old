@@ -132,4 +132,7 @@ export class SearchProviderCustomerComponent implements OnInit {
       return word;
     }
   }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
 }

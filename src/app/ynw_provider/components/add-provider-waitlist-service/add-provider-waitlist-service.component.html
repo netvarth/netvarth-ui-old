@@ -27,7 +27,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     formControlName="description" autocomplete="off"> -->
         <mat-form-field>
           <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
-            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
+            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+            maxlength="500"> </textarea>
         </mat-form-field>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsg]="fed_service.getErrorMessage(amForm,'description',
@@ -41,8 +42,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
       <div class="form-group">
         <mat-form-field>
-          <input matInput type="text" class="form-control number-ip-sm" id="estimated_duration" placeholder="{{est_duration_cap}}"
-            formControlName="serviceDuration" autocomplete="off">
+          <input matInput type="text" class="form-control number-ip-sm" maxlength="10" (keypress)="isNumeric($event)"
+            id="estimated_duration" placeholder="{{est_duration_cap}}" formControlName="serviceDuration" autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
@@ -55,8 +56,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       <div class="form-group" *ngIf="!disable_price">
         <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
         <mat-form-field>
-          <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
-            autocomplete="off">
+          <input matInput type="text" class="form-control number-ip-sm" id="price" maxlength="10" (keypress)="isNumeric($event)"
+            placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount" autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
     {'required' : 'Please enter price',
@@ -74,8 +75,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
           <!-- <label class="col-form-label" for="prepayment_amount">{{prepayment_cap}}(<i class="fa fa-inr"></i>) *</label> -->
           <mat-form-field>
-            <input matInput type="text" class="form-control number-ip-sm" id="prepayment_amount" placeholder="{{prepayment_cap}}*"
-              formControlName="minPrePaymentAmount" autocomplete="off">
+            <input matInput type="text" (keypress)="isNumeric($event)" maxlength="10" class="form-control number-ip-sm" id="prepayment_amount"
+              placeholder="{{prepayment_cap}}*" formControlName="minPrePaymentAmount" autocomplete="off">
           </mat-form-field>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
       {'required' : 'Please enter prepayment amount',

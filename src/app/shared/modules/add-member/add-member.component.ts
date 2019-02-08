@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 
 // import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../services/shared-services';
-import {Messages} from '../../../shared/constants/project-messages';
-import {projectConstants} from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstants } from '../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../functions/shared-functions';
 
 @Component({
   selector: 'app-consumer-add-member',
@@ -34,7 +35,7 @@ export class AddMemberComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  parent_id ;
+  parent_id;
   tday = new Date();
 
   @Input() calledFrom: any;
@@ -45,18 +46,19 @@ export class AddMemberComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public sharedservice: SharedServices
-    ) {
-       // console.log(data);
-        if (data.type === 'edit') {
-          this.firstname = data.member.userProfile.firstName || '';
-          this.lastname = data.member.userProfile.lastName || '';
-          this.mobile = data.member.userProfile.primaryMobileNo || '';
-          this.gender = data.member.userProfile.gender || '';
-          this.dob = data.member.userProfile.dob || '';
-          this.dobholder = data.member.userProfile.dob || '';
-        }
-     }
+    public sharedservice: SharedServices,
+    public shared_functions: SharedFunctions
+  ) {
+    // console.log(data);
+    if (data.type === 'edit') {
+      this.firstname = data.member.userProfile.firstName || '';
+      this.lastname = data.member.userProfile.lastName || '';
+      this.mobile = data.member.userProfile.primaryMobileNo || '';
+      this.gender = data.member.userProfile.gender || '';
+      this.dob = data.member.userProfile.dob || '';
+      this.dobholder = data.member.userProfile.dob || '';
+    }
+  }
 
   ngOnInit() {
     // console.log('called from', this.calledFrom);
@@ -100,38 +102,38 @@ export class AddMemberComponent implements OnInit {
     }
   }*/
 
- /* editMember(post_data) {
-
-    post_data.user =  this.data.member.user;
-    this.sharedservice.editMember(post_data)
-    .subscribe(
-      data => {
-        this.api_success = Messages.MEMBER_UPDATED;
+  /* editMember(post_data) {
+ 
+     post_data.user =  this.data.member.user;
+     this.sharedservice.editMember(post_data)
+     .subscribe(
+       data => {
+         this.api_success = Messages.MEMBER_UPDATED;
+         setTimeout(() => {
+          this.dialogRef.close();
+         }, projectConstants.TIMEOUT_DELAY);
+       },
+       error => {
+         this.api_error = error.error;
+       }
+     );
+   }
+ 
+   addMember(post_data) {
+ 
+     this.sharedservice.addMembers(post_data)
+     .subscribe(
+       data => {
+        this.api_success = Messages.MEMBER_CREATED;
         setTimeout(() => {
          this.dialogRef.close();
         }, projectConstants.TIMEOUT_DELAY);
-      },
-      error => {
-        this.api_error = error.error;
-      }
-    );
-  }
-
-  addMember(post_data) {
-
-    this.sharedservice.addMembers(post_data)
-    .subscribe(
-      data => {
-       this.api_success = Messages.MEMBER_CREATED;
-       setTimeout(() => {
-        this.dialogRef.close();
-       }, projectConstants.TIMEOUT_DELAY);
-      },
-      error => {
-        this.api_error = error.error;
-      }
-    );
-  }*/
+       },
+       error => {
+         this.api_error = error.error;
+       }
+     );
+   }*/
   valuechange() {
     // console.log('value change', this.firstname, this.lastname, this.mobile, this.gender, this.dobholder);
     const retobj = {
@@ -141,7 +143,7 @@ export class AddMemberComponent implements OnInit {
       'gender': this.gender || '',
       'dob': this.dobholder || ''
     };
-    this. returnDetails.emit(retobj);
+    this.returnDetails.emit(retobj);
   }
   dateChanged(e) {
     if (e) {
@@ -162,8 +164,11 @@ export class AddMemberComponent implements OnInit {
     }
     this.valuechange();
   }
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
   }
 }

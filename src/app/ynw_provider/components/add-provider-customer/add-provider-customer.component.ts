@@ -111,4 +111,7 @@ mob_prefix_cap=Messages.MOB_NO_PREFIX_CAP;
       return word;
     }
   }
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
 }

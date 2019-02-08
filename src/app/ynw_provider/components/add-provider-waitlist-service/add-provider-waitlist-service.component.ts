@@ -503,4 +503,8 @@ this.savedisabled = false;
     this.router.navigate(['/provider/settings/waitlist-manager/queues']);
   }
 
+  isNumeric(evt) {
+    return this.shared_functions.isNumeric(evt);
+  }
+
 }

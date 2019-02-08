@@ -28,7 +28,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 <div class="input-group-prepend mob-prefix">
                     <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                 </div>
-                <input type="text" matInput [(ngModel)]="mobile" (keyup)="valuechange()" class="form-control" id="mobile"
+                <input type="text" matInput [(ngModel)]="mobile" (keypress)="isNumeric($event)" (keyup)="valuechange()" class="form-control" id="mobile"
                     placeholder="Enter 10 digit mobile number" autocomplete="off" maxlength="10">
             </div>
         </mat-form-field>

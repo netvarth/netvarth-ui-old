@@ -16,6 +16,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 })
 export class ProviderCouponsComponent implements OnInit, OnDestroy {
 
+  desc_cap = Messages.DESCRIPTION_CAP;
   name_cap = Messages.PRO_NAME_CAP;
   jCouponCode_Cap = Messages.JCOUPON_CODE;
   edit_btn = Messages.EDIT_BTN;
