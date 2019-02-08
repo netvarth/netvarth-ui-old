@@ -2057,5 +2057,5 @@ Overriding mat input style
   clear: both;
 }
 .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .location .icon-location:before{
-  color: orangered;
+  color: #00aef2;
 }
