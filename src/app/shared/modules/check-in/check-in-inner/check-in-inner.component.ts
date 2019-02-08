@@ -733,7 +733,7 @@ export class CheckInInnerComponent implements OnInit {
           setTimeout(() => {
             // this.dialogRef.close('reloadlist');
             this.returntoParent.emit('reloadlist');
-          }, projectConstants.TIMEOUT_DELAY);
+          }, projectConstants.TIMEOUT_DELAY_600);
         }
       },
         error => {
@@ -744,11 +744,11 @@ export class CheckInInnerComponent implements OnInit {
   addCheckInProvider(post_Data) {
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe(data => {
-        this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_PRO');
+        this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         setTimeout(() => {
           // this.dialogRef.close('reloadlist');
           this.returntoParent.emit('reloadlist');
-        }, projectConstants.TIMEOUT_DELAY);
+        }, projectConstants.TIMEOUT_DELAY_600);
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

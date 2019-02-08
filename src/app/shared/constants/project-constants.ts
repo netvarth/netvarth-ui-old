@@ -52,6 +52,7 @@ export const projectConstants = {
   TIMEOUT_DELAY_LARGE: 4100, // msec
   TIMEOUT_DELAY_LARGE6: 6000, // msec
   TIMEOUT_DELAY_LARGE10: 10000, // msec
+  TIMEOUT_DELAY_600: 600, 
   TOOLBAR_CONFIG: [
     {
       name: 'document',

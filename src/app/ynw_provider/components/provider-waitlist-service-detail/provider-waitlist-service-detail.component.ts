@@ -262,23 +262,27 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         return image ? images.indexOf(image) : -1;
     }
 
-    editService() {
-        if (!this.service_data.id) { return false; }
-        this.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass'],
-            disableClose: true,
-            autoFocus: true,
-            data: {
-                type: 'edit',
-                service: this.service_data
-            }
-        });
-        this.servicedialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') {
-                this.getServiceDetail();
-            }
-        });
+    // editService() {
+    //     if (!this.service_data.id) { return false; }
+    //     this.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
+    //         width: '50%',
+    //         panelClass: ['commonpopupmainclass'],
+    //         disableClose: true,
+    //         autoFocus: true,
+    //         data: {
+    //             type: 'edit',
+    //             service: this.service_data
+    //         }
+    //     });
+    //     this.servicedialogRef.afterClosed().subscribe(result => {
+    //         if (result === 'reloadlist') {
+    //             this.getServiceDetail();
+    //         }
+    //     });
+    // }
+
+    addEditProviderService(type, service = null) {
+        this.provider_shared_functions.addEditServicePopup(this, type, 'service_detail', this.service_data, this.provider_shared_functions.getActiveQueues());
     }
 
     editImageGallery() {

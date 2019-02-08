@@ -86,9 +86,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
   }
 
   changeServiceStatus(service) {
-
     this.provider_shared_functions.changeServiceStatus(this, service);
-
   }
 
   disableService(service, msg) {
@@ -104,7 +102,6 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
           const snackBarRef = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getServices();
         });
-
   }
 
   enableService(service, msg) {
@@ -139,13 +136,12 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
     });
   }
 
-
+  addEditProviderService(type, service = null) {
+    this.provider_shared_functions.addEditServicePopup(this, type, 'service_list', service, this.provider_shared_functions.getActiveQueues());
+  }
 
   goServiceDetail(service) {
     this.router.navigate(['provider', 'settings', 'waitlist-manager',
       'service-detail', service.id]);
   }
-
 }
-
-

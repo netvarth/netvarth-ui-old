@@ -1,59 +1,63 @@
 <section>
-  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- Subheader section -->
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
 <section>
-  <div class="content loc-list">
-      <div class="container">
-          <!-- <div class="row">
+    <div class="content loc-list">
+        <div class="container">
+            <!-- <div class="row">
               <div class="n-loc">
                   <span class="add-serv-btn cs-btn bt3" (click)="addService()">{{add_new_serv_cap}}</span>
               </div>
           </div> -->
 
-          <div class="row" *ngFor="let service of service_list">
-            <div class="card" [class.disabled]="service.status=='INACTIVE'">
-                <div class="copy">
-                    <span class="mbt">
-                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                    </span>
-                    <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
-                    <!-- <span class="lcn-sts-label actv" *ngIf="service.status=='ACTIVE'">Active</span> -->
+            <div class="row" *ngFor="let service of service_list">
+                <div class="card" [class.disabled]="service.status=='INACTIVE'">
+                    <div class="copy">
+                        <span class="mbt">
+                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </span>
+                        <span class="lcn-sts-label inactv" *ngIf="!service.status || service.status=='INACTIVE'"></span>
+                        <!-- <span class="lcn-sts-label actv" *ngIf="service.status=='ACTIVE'">Active</span> -->
 
-                    <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name | capitalizeFirst}}</h3>
-                    <div class="c-ot m0">
-                        <div class="item" *ngIf="!disable_price">
-                            <span class="ttle">{{est_duration_cap}}</span>
-                            <span class="icon-time">{{service.serviceDuration}} {{min_cap}}</span>
+                        <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
+                            capitalizeFirst}}</h3>
+                        <div class="c-ot m0">
+                            <div class="item" *ngIf="!disable_price">
+                                <span class="ttle">{{est_duration_cap}}</span>
+                                <span class="icon-time">{{service.serviceDuration}} {{min_cap}}</span>
+                            </div>
+                            <div class="item" *ngIf="!disable_price && service.totalAmount!=0">
+                                <span class="ttle">{{price_cap}}</span>
+                                <span>{{service.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                            </div>
                         </div>
-                        <div class="item" *ngIf="!disable_price && service.totalAmount!=0">
-                            <span class="ttle">{{price_cap}}</span>
-                            <span>{{service.totalAmount  | currency:'INR':'symbol':'.2-2'}}</span>
-                        </div>
-                    </div>
-                    <mat-menu #appMenu="matMenu">
-                        <button mat-menu-item (click)="changeServiceStatus(service)">
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="addEditProviderService('edit', service)" *ngIf="service.status=='ACTIVE'">
+                                <i class="icon-edit"></i>
+                                Edit
+                            </button>
+                            <button mat-menu-item (click)="changeServiceStatus(service)">
                                 <i *ngIf="service.status=='INACTIVE' || !service.status" class="icon-enable"></i>
                                 <i *ngIf="service.status=='ACTIVE'" class="icon-disable"></i>
-                            {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                        </button>
-                    </mat-menu>
+                                {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                            </button>
+                        </mat-menu>
+                    </div>
                 </div>
             </div>
-          </div>
 
-      </div>
-  </div>
+        </div>
+    </div>
 </section>
 
-<app-field-error-display [displayError]="true" *ngIf="api_error"
-errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success"
-successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
 
 
 <!-- <h1>Services</h1>

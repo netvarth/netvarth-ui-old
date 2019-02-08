@@ -124,7 +124,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
           } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size < 5mb';
+            this.error_msg = 'Please upload images with size less than 5mb';
           }
           // this.error_msg = 'Please upload images with size < 5mb';
         }
@@ -140,7 +140,9 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
     this.item_pic.files.splice(i, 1);
     this.item_pic.base64.splice(i, 1);
     this.item_pic.caption.splice(i, 1);
-
+    this.savedisabled = false;
+    this.img_save_caption = 'Upload';
+    this.error_msg = null;
   }
 
   saveImages() {
