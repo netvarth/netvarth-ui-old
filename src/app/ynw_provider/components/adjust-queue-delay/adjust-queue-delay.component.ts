@@ -29,6 +29,7 @@ export class AdjustQueueDelayComponent implements OnInit {
   time = {hour: 0, minute: 0};
   default_message = '';
   selected_queue = 0;
+  
 
   char_count = 0;
   max_char_count = 500;
@@ -40,6 +41,10 @@ export class AdjustQueueDelayComponent implements OnInit {
   arrived_cnt = 0;
   checkedin_cnt = 0;
   tot_checkin_count = 0;
+
+  customer_label = '';
+  frm_adjust_del_cap = '';
+  
   
 
   constructor(
@@ -51,6 +56,8 @@ export class AdjustQueueDelayComponent implements OnInit {
     private provider_datastorageobj: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions
     ) {
+      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+
      }
 
      ngOnInit() {
@@ -60,6 +67,7 @@ export class AdjustQueueDelayComponent implements OnInit {
       this.queues = this.data.queues;
       this.queue_name = this.data.queue_name;
      this.queue_schedule = this.data.queue_schedule;
+
 
       if (!this.data.queues || !this.data.queue_id) {
         this.closePopup('error');
@@ -90,7 +98,7 @@ export class AdjustQueueDelayComponent implements OnInit {
 
       // this.amForm.get('queue_id').setValue(this.data.queue_id);
       this.selected_queue = this.data.queue_id;
-
+      this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
 
      }
      setDescFocus() {

@@ -1271,6 +1271,11 @@ export const Messages = {
   'FRM_LEVEL_PRO_WIZ_SIX_MSG' : 'Enter the location related details here.',
 
   'SERVCE_DETAILS': '-Service Details', 
+  'FRM_LEVEL_CREATE_CUSTOMER_MSG_ONE' : 'Look up for the [customer] information, ',
+  'FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO' : 'if not found, enter the [customer]s details ',
+  'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE' : 'for creating a [customer] base.',
+  'FRM_LEVEL_ADJ_DELAY_MSG' : 'You can adjust your working hours and notify your [customer]s about the delay caused.',
+
 
 };
 

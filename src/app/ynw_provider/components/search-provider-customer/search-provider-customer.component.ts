@@ -33,6 +33,11 @@ export class SearchProviderCustomerComponent implements OnInit {
   form_data = null;
   blankPattern;
   count = 0;
+
+  frm_create_customer_cap_one = '';
+  frm_create_customer_cap_two = '';
+  frm_create_customer_cap_three = '';
+
   constructor(
     public dialogRef: MatDialogRef<SearchProviderCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,6 +55,9 @@ export class SearchProviderCustomerComponent implements OnInit {
     // console.log('source', this.source);
     this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.createForm();
+    this.frm_create_customer_cap_one = Messages.FRM_LEVEL_CREATE_CUSTOMER_MSG_ONE.replace('[customer]', this.customer_label);
+    this.frm_create_customer_cap_two = Messages.FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO.replace('[customer]', this.customer_label);
+    this.frm_create_customer_cap_three = Messages.FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE.replace('[customer]', this.customer_label);
   }
 
   createForm() {
