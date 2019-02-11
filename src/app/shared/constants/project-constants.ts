@@ -216,10 +216,10 @@ export const projectConstants = {
   PRICE_MAX_VALUE: 100000,
   TIME_MAX_VALUE: 3600,
   PERC_MAX_VALUE: 100,
-  WAITLIST_CANCEL_RESON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel' },
+  WAITLIST_CANCEL_RESON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
-  { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel' },
+  { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel', type: 2 },
   { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' }],
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
