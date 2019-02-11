@@ -23,7 +23,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   api_error = null;
   api_success = null;
   message = [];
-  cancel_reasons = projectConstants.WAITLIST_CANCEL_RESON;
+  cancel_reasons: any = [];
   customer_label = '';
   checkin_label = '';
   default_message;
@@ -51,6 +51,15 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   ngOnInit() {
     // console.log('passed in', this.data);
+    const reasons_list = [];
+    const type = this.sharedfunctionObj.getitemfromLocalStorage('pdtyp');
+    const reasons = projectConstants.WAITLIST_CANCEL_RESON;
+    for (let i = 0; i < reasons.length; i++) {
+      if (type !== reasons[i].type) {
+        reasons_list.push(reasons[i]);
+      }
+    }
+    this.cancel_reasons = reasons_list;
     this.rep_username = this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) + ' ' + this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName);
     this.rep_service = this.titleCaseWord(this.data.waitlist.service.name);
     this.rep_provname = this.titleCaseWord(this.data.waitlist.provider.businessName);

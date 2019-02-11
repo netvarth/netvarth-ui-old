@@ -50,8 +50,8 @@
               {{history_cap}}</span>
           </div>
         </div>
-
-        <div class="qlst" *ngIf="time_type ==1 && queues.length > 1">
+        <!-- <pre>{{queues |json}}</pre> -->
+        <div class="qlst" *ngIf="time_type ==1 && queues.length > 1 && apis_loaded">
           <ul *ngIf="!show_small_device_queue_display">
             <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}" *ngFor="let queue of queues">
               <div class="qname" (click)="selectedQueue(queue)">

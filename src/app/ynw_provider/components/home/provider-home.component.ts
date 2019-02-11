@@ -1,5 +1,5 @@
 import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
@@ -20,7 +20,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
   templateUrl: './provider-home.component.html',
   styleUrls: ['./provider-home.component.scss']
 })
-export class ProviderHomeComponent implements OnInit, OnDestroy {
+export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // pdtyp  --- 0-History, 1-Future, 2-Today
   // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
   // pdq --- selected queue id
@@ -155,6 +155,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
   breadcrumb_moreoptions: any = [];
+  apis_loaded = false;
   breadcrumbs_init = [
     {
       title: Messages.DASHBOARD_TITLE,
@@ -198,13 +199,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
+  ngAfterViewInit(): void {
+    this.apis_loaded = true;
+  }
   ngOnInit() {
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
       'actions': [{ 'title': 'Adjust Delay', 'icon': 'B', 'type': 'adjustdelay', 'icontype': 'adjustdelay_learnmore' }]
     };
-  this.router.events
+    this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
       ).subscribe((e: any) => {
@@ -403,7 +407,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             }
           } else {
             this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-            this.getQueueList();
+            // this.getQueueList();
           }
         },
         error => {
@@ -495,7 +499,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
   getQueueListByDate() {
     this.load_queue = 0;
-    if (!this.selected_queue) {
+    // if (!this.selected_queue) {
       if (this.selected_location.id) {
         this.provider_services.getProviderLocationQueuesByDate(
           this.selected_location.id, this.queue_date)
@@ -538,9 +542,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             }
           );
       }
-    } else {
-      this.selectedQueue(this.selected_queue);
-    }
+    // }
+    // else {
+    //   this.selectedQueue(this.selected_queue);
+    // }
   }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
@@ -809,9 +814,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.setFilterDateMaxMin();
     // this.queues = [];
     // console.log('ttype', this.time_type, this.queues.length);
-    if (this.time_type === 1 && this.queues.length === 0) {
-      this.getQueueListByDate();
-    }
+    // if (this.time_type === 1 && this.queues.length === 0) {
+      // alert('Time Type : ' + this.time_type);
+    // if (this.time_type === 1) {
+    //   this.getQueueListByDate();
+    // }
     this.loadApiSwitch('setTimeType');
   }
   setFilterDateMaxMin() {
