@@ -113,6 +113,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   bProfile = null;
   serviceSector = null;
   public_search = false;
+  error_msg = '';
 
   loc_badges: any = [];
   badge_map_arr: any = [];
@@ -248,6 +249,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
   frm_verified_cap = Messages.FRM_LEVEL_VERI_MSG;
   isCheckin;
+  success_error = null;
+  error_list = [];
 
 
   constructor(private provider_services: ProviderServices,
@@ -265,7 +268,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSpokenLanguages();
-   this.getLicenseDetails();
+    this.getLicenseDetails();
     // this.getLicenseMetadata();
     this.getTotalAllowedAdwordsCnt();
     this.getLocationBadges();
@@ -1161,28 +1164,43 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   // handles the image display on load and on change
   imageSelect(input, ev) {
+    this.success_error = null;
+    this.error_list = [];
     if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      this.item_pic.files = input.files[0];
-      this.selitem_pic = input.files[0];
-
-      const fileobj = input.files[0];
-      reader.onload = (e) => {
-        this.item_pic.base64 = e.target['result'];
-      };
-      reader.readAsDataURL(fileobj);
-    }
-    // Handles the case of uploading the logo from bProfile edit page
-    if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
-      // generating the data to be submitted to change the logo
-      const submit_data: FormData = new FormData();
-      submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-      const propertiesDet = {
-        'caption': 'Logo'
-      };
-      const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-      submit_data.append('properties', blobPropdata);
-      this.uploadLogo(submit_data);
+      for (const file of input.files) {
+        this.success_error = this.sharedfunctionobj.imageValidation(file);
+        if (this.success_error === true) {
+          const reader = new FileReader();
+          this.item_pic.files = input.files[0];
+          this.selitem_pic = input.files[0];
+          const fileobj = input.files[0];
+          reader.onload = (e) => {
+            this.item_pic.base64 = e.target['result'];
+          };
+          reader.readAsDataURL(fileobj);
+          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+            // generating the data to be submitted to change the logo
+            const submit_data: FormData = new FormData();
+            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+            const propertiesDet = {
+              'caption': 'Logo'
+            };
+            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+            submit_data.append('properties', blobPropdata);
+            this.uploadLogo(submit_data);
+          }
+        } else {
+          // console.log(this.success_error);
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 5mb';
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
+          this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+      }
     }
   }
   // display logo
@@ -1332,12 +1350,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       }
     }
   }*/
- getLicenseDetails() {
+  getLicenseDetails() {
     this.provider_services.getLicenseDetails()
       .subscribe(data => {
         this.currentlicense_details = data;
         this.license_details = this.currentlicense_details;
-      //  console.log(this.currentlicense_details);
+        //  console.log(this.currentlicense_details);
       });
   }
   getTotalAllowedAdwordsCnt() {

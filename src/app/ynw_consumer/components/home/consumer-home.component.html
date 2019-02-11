@@ -91,7 +91,7 @@
                                     <!-- <button class="cs-btn bt3" (click)="makeFailedPayment(waitlist)">Make Payment</button>
                                     </span> -->
                                 </div>
-                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show')">
+                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
                                     <span class="paytext"><span>Amount Due : {{waitlist.amountDue |
                                             currency:'INR':'symbol':'.2-2'}} </span><a class="bt3 cust-btn" (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
@@ -99,8 +99,8 @@
                             <div class="rt">
                                 <ul class="controls">
                                     <li *ngIf="waitlist.billViewStatus == 'Show'">
-                                        <span class="view-bill" *ngIf="!(waitlist.amountDue>0)" (click)="viewBill(waitlist)">Receipt</span>
-                                        <span class="view-bill" *ngIf="(waitlist.amountDue>0)" (click)="viewBill(waitlist)">Bill</span>
+                                        <span class="view-bill" *ngIf="!(waitlist.amountDue>0) || (waitlist.waitlistStatus == 'cancelled')" (click)="viewBill(waitlist)">Receipt</span>
+                                        <span class="view-bill" *ngIf="(waitlist.amountDue>0) && (waitlist.waitlistStatus != 'cancelled')" (click)="viewBill(waitlist)">Bill</span>
                                     </li>
                                     <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
                                         <span class="payment">{{make_pay_cap}}</span>
