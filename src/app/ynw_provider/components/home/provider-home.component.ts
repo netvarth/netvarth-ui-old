@@ -484,12 +484,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.time_type === 1) {
             this.getTodayCheckIn();
           }
-          this.getTodayCheckinCount()
-            .then(
-              (result) => {
-                this.today_waitlist_count = result;
-              }
-            );
+          // this.getTodayCheckinCount()
+          //   .then(
+          //     (result) => {
+          //       this.today_waitlist_count = result;
+          //     }
+          //   );
         },
         error => {
         },
@@ -632,12 +632,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
     this.today_waitlist_count = 0;
-    this.getTodayCheckinCount()
-      .then(
-        result => {
-          this.today_waitlist_count = result;
-        }
-      );
+    // this.getTodayCheckinCount()
+    //   .then(
+    //     result => {
+    //       this.today_waitlist_count = result;
+    //     }
+    //   );
   }
   handleQueueSel(mod) {
     // console.log('handleQueueSel', mod, this.sel_queue_indx);
@@ -693,26 +693,26 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
     });
   }
-  getTodayCheckinCount(Mfilter = null) {
-    let no_filter = false;
-    if (!Mfilter) {
-      Mfilter = {
-        'location-eq': this.selected_location.id,
-        'queue-eq': this.selected_queue.id
-      };
-      no_filter = true;
-    }
-    return new Promise((resolve, reject) => {
-      this.provider_services.getwaitlistTodayCount(Mfilter)
-        .subscribe(
-          data => {
-            if (no_filter) { this.today_waitlist_count = data; }
-            resolve(data);
-          },
-          error => {
-          });
-    });
-  }
+  // getTodayCheckinCount(Mfilter = null) {
+  //   let no_filter = false;
+  //   if (!Mfilter) {
+  //     Mfilter = {
+  //       'location-eq': this.selected_location.id,
+  //       'queue-eq': this.selected_queue.id
+  //     };
+  //     no_filter = true;
+  //   }
+  //   return new Promise((resolve, reject) => {
+  //     this.provider_services.getwaitlistTodayCount(Mfilter)
+  //       .subscribe(
+  //         data => {
+  //           if (no_filter) { this.today_waitlist_count = data; }
+  //           resolve(data);
+  //         },
+  //         error => {
+  //         });
+  //   });
+  // }
   getCount(list, status) {
     return list.filter(function (elem) {
       return elem.waitlistStatus === status;
@@ -725,6 +725,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_started_count = this.getCount(list, 'started');
     this.today_completed_count = this.getCount(list, 'done');
     this.today_cancelled_count = this.getCount(list, 'cancelled');
+    this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_count;
   }
   getTodayCheckIn() {
     this.load_waitlist = 0;
@@ -921,7 +922,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   countApiCall() {
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
-    this.getTodayCheckinCount();
+    // this.getTodayCheckinCount();
   }
   changeStatusType(type) {
     this.status_type = type;

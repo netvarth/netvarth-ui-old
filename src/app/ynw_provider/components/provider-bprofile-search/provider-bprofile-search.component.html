@@ -1010,19 +1010,12 @@
                                                 More</a></p>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div class="no-dta" *ngIf="normal_socialmedia_show==1">
-                                    <app-innerloading-spinner spinnerParams="loadingParams"></app-innerloading-spinner>
-                                </div>
                                 <div class="cd-b">
                                      <div>
-                                        <span *ngIf="bProfile.verifyLevel == 'BASIC'"><img height="150" width="125" src="./assets/images/BasicOrg.png"></span>
-                                        <span *ngIf="bProfile.verifyLevel == 'BASIC PLUS'"><img height="150" width="125" src="./assets/images/BasicPlsOrg.png"></span>
-                                        <span *ngIf="bProfile.verifyLevel == 'PREMIUM'"><img height="150" width="125" src="./assets/images/PremiumOrg.png"></span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'"><img height="150" width="125" src="./assets/images/BasicOrg.png"></span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC PLUS'"><img height="150" width="125" src="./assets/images/BasicPlsOrg.png"></span>
+                                        <span *ngIf="bProfile && bProfile.verifyLevel == 'PREMIUM'"><img height="150" width="125" src="./assets/images/PremiumOrg.png"></span>
                                     </div>
-                                    <!-- *ngIf="normal_socialmedia_show==2"
-                                    <ul class="info-lst">
-                                        <li>Your verified level is {{bProfile.verifyLevel}}</li>
-                                    </ul> -->
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>

@@ -168,7 +168,8 @@ export class ProviderbWizardComponent implements OnInit {
       'lon': '',
       'address': '',
       'searchstatus': false,
-      'accountstatus': ''
+      'accountstatus': '',
+      'location': ''
     };
     this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
     const pdata = { 'ttype': 'updateuserdetails' };
@@ -180,14 +181,14 @@ export class ProviderbWizardComponent implements OnInit {
     this.getUserdetails();
     // this.getBusinessProfile();
     this.getBusinessConfiguration();
-     const package_id = (this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
-     this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
-     this.base_licence = (package_id === 1) ? true : false;
-     if (this.userdet['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
-        this.disable_price = true;
-     } else {
-       this.disable_price = false;
-     }
+    const package_id = (this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
+      this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
+    this.base_licence = (package_id === 1) ? true : false;
+    if (this.userdet['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
+      this.disable_price = true;
+    } else {
+      this.disable_price = false;
+    }
     this.active_step = 0;
     localStorage.removeItem('new_provider');
 
@@ -324,12 +325,9 @@ export class ProviderbWizardComponent implements OnInit {
             }
           }
         }
-        if (!latlon_Exists) {
-          const locname_validate = blankpattern.test(this.wizard_data_holder.location);
-          if (!locname_validate) {
+        if (this.wizard_data_holder.location && this.wizard_data_holder.location.trim() !== '' && !latlon_Exists) {
             this.error_Exists = true;
             this.coord_error = 'Both coordinates are required';
-          }
         }
 
         if (this.error_Exists === true) {
@@ -468,10 +466,7 @@ export class ProviderbWizardComponent implements OnInit {
         break;
     }
   }
-  onSubmit (form_data) {
-  this.showError();
-  if(this.show_error === false)
-  {
+  onSubmit(form_data) {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
     if (this.disable_price) {
@@ -480,37 +475,12 @@ export class ProviderbWizardComponent implements OnInit {
       form_data['taxable'] = false;
     } else {
       form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
-                                      0 : form_data.minPrePaymentAmount;
+        0 : form_data.minPrePaymentAmount;
       form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
     }
     form_data.id = this.service.id;
     this.updateService(form_data);
   }
-}
-  showError() {
-   var p = this.document.getElementById('price').value;
-    //alert("value is"+ p);
-  //  const pW = this.document.getElementById('password').value.trim();
-    if (p === '') {
-      this.show_error = true;
-      if (this.document.getElementById('price')) {
-        this.document.getElementById('price').focus();
-        return this.show_error;
-      }
-      
-    }
-    else{
-      this.show_error = false;
-      return this.show_error;
-    }
-    // if (pW === '') {
-    //   if (this.document.getElementById('password')) {
-    //     this.document.getElementById('password').focus();
-    //     return;
-    //   }
-    // }
-  }
-
   wizardPageShowDecision(curstep, changetostep) {
     // console.log('curpage', curstep);
     let changerequired = false;
@@ -673,10 +643,10 @@ export class ProviderbWizardComponent implements OnInit {
                 this.document.getElementById('locaddress').focus();
               }
             }
-            if (!this.wizard_data_holder['name']) {
+            if (!this.wizard_data_holder['location']) {
               const addr = result['address'] || null;
               if (addr) {
-                this.wizard_data_holder['name'] = addr.split(',')[0];
+                this.wizard_data_holder['location'] = addr.split(',')[0];
               }
             }
           }
@@ -883,12 +853,12 @@ export class ProviderbWizardComponent implements OnInit {
     } else {
 
       const value = (this.service['notificationType']) ?
-      this.service['notificationType'] : 'email';
+        this.service['notificationType'] : 'email';
       this.amForm.addControl('notificationType',
-      new FormControl(value));
+        new FormControl(value));
     }
   }
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
     this.error_msg = null;
@@ -896,23 +866,23 @@ export class ProviderbWizardComponent implements OnInit {
   getPaymentSettings() {
     this.payment_loading = true;
     this.provider_services.getPaymentSettings()
-    .subscribe(
-      data => {
-        this.payment_settings = data;
-        this.payment_loading = false;
-        if (!this.payment_settings.onlinePayment) {
-          this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
-          if (!this.disable_price) {
-            this.amForm.get('isPrePayment').setValue(false);
-            this.changePrepayment();
+      .subscribe(
+        data => {
+          this.payment_settings = data;
+          this.payment_loading = false;
+          if (!this.payment_settings.onlinePayment) {
+            this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
+            if (!this.disable_price) {
+              this.amForm.get('isPrePayment').setValue(false);
+              this.changePrepayment();
+            }
           }
+        },
+        error => {
+          // this.shared_functions.apiErrorAutoHide(this, error);
+          // this.amForm.get('isPrePayment').setValue(false);
         }
-      },
-      error => {
-        // this.shared_functions.apiErrorAutoHide(this, error);
-        // this.amForm.get('isPrePayment').setValue(false);
-      }
-    );
+      );
   }
   taxapplicableChange() {
     // console.log('tax applicable', this.taxpercentage);
@@ -948,8 +918,8 @@ export class ProviderbWizardComponent implements OnInit {
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
         'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
         'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
-                                data['minPrePaymentAmount'] !== 0
-                                ) ? true : false,
+          data['minPrePaymentAmount'] !== 0
+        ) ? true : false,
         'taxable': data['taxable'] || this.amForm.get('taxable').value,
         'notification': data['notification'] || this.amForm.get('notification').value,
       });
@@ -959,27 +929,27 @@ export class ProviderbWizardComponent implements OnInit {
   }
   updateService(post_data) {
     this.provider_services.updateService(post_data)
-    .subscribe(
-      data => {
-        this.service = post_data;
-        this.showStep(3);
-      },
-      error => {
-        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-        this.shared_functions.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' });
-      }
-    );
+      .subscribe(
+        data => {
+          this.service = post_data;
+          this.showStep(3);
+        },
+        error => {
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   getServices() {
     this.provider_services.getServicesList()
-    .subscribe(
-      data => {
-        this.service = data[0];
-      },
-      error => {
-        this.shared_functions.apiErrorAutoHide(this, error);
-      }
-    );
+      .subscribe(
+        data => {
+          this.service = data[0];
+        },
+        error => {
+          this.shared_functions.apiErrorAutoHide(this, error);
+        }
+      );
   }
   changePrepayment() {
     if (!this.disable_price) {
@@ -990,10 +960,10 @@ export class ProviderbWizardComponent implements OnInit {
           this.getPaymentSettings();
         }
         const value = (this.service['minPrePaymentAmount']) ?
-        this.service['minPrePaymentAmount'] : '';
+          this.service['minPrePaymentAmount'] : '';
 
         this.amForm.addControl('minPrePaymentAmount',
-      new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+          new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
       }
     }
   }
