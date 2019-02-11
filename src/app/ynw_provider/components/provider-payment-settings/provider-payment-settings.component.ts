@@ -431,11 +431,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     isNumeric(evt) {
+        this.resetApi();
         return this.shared_functions.isNumeric(evt);
-      }
+    }
     isvalid(evt) {
         return this.shared_functions.isValid(evt);
-      }
+    }
     /**
      * function to update tax settings
      */
