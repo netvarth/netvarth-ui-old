@@ -916,7 +916,7 @@ export class ProviderbWizardComponent implements OnInit {
         'name': data['name'] || this.amForm.get('name').value,
         'description': data['description'] || this.amForm.get('description').value,
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
-        'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
+        'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value || '0',
         'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
           data['minPrePaymentAmount'] !== 0
         ) ? true : false,
