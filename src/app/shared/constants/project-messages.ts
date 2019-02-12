@@ -20,7 +20,7 @@ export const Messages = {
   'ITEM_UPDATED': 'Item updated successfully',
   'ITEM_DELETE': 'Do you really want to remove the item "[name]"?',
   'ITEM_ENABLE': 'Do you really want to change the status to "[status]"?',
-  'ITEM_LISTEMPTY': 'No Items exists',
+  'ITEM_LISTEMPTY': 'No Items exist',
   'ITEM_IMGREMOVED': 'Image removed successfully',
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
 
@@ -29,14 +29,14 @@ export const Messages = {
   'DISCOUNT_UPDATED': 'Discount updated successfully',
   'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
   'DISCOUNT_DELETED': 'Discount deleted successfully',
-  'DISCOUNT_LISTEMPTY': 'No Discounts exists',
+  'DISCOUNT_LISTEMPTY': 'No Discounts exist',
 
   // Bill Coupons
   'COUPON_CREATED': 'Coupon created successfully',
   'COUPON_UPDATED': 'Coupon updated successfully',
   'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
   'COUPON_DELETED': 'Coupon deleted successfully',
-  'COUPON_LISTEMPTY': 'No Coupons exists',
+  'COUPON_LISTEMPTY': 'No Coupons exist',
 
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
@@ -86,7 +86,7 @@ export const Messages = {
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
 
   // Adwords
-  'ADWORD_LISTEMPTY': 'No AdWords exists',
+  'ADWORD_LISTEMPTY': 'No AdWords exist',
   'ADWORD_CREATED': 'Adword added successfully',
   'ADWORD_DELETE': 'Do you really want to remove the AdWord [adword]?',
   'ADWORD_DELETE_SUCCESS': 'AdWord deleted successfully',
@@ -528,7 +528,7 @@ export const Messages = {
   'PROVIDER_CONSUMER_CAP': 'Provider / Consumer',
   'REPLY_CAP': 'Reply',
   'DELETE_MSG_CAP': 'Delete Message',
-  'NO_MSG_EXISTS_CAP': 'No Messages exists',
+  'NO_MSG_EXISTS_CAP': 'No Messages exist',
 
   // App-shared-modules-learnmore-adjustdelay
   'ADJUST_DELAY_CAP': 'Adjust Delay',
@@ -858,7 +858,7 @@ export const Messages = {
   'DUE_AMT_CAP': 'Due Amount',
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
-  'NO_ADDON_CAP': 'No Add-ons exists',
+  'NO_ADDON_CAP': 'No Add-ons exist',
   'PAY_BUTTON' : 'Invoices to Pay',
   'DUE_DATE_CAP' : 'Due Date',
   'SUBSC_PACKAGE' : 'Subscription/Package',
@@ -870,7 +870,7 @@ export const Messages = {
   'NO_METRIC_CAP': 'No metric found',
 
   // App-ynw_provider-components-provider-members
-  'FAMILY_MEMEBER': 'No family members exists',
+  'FAMILY_MEMEBER': 'No family members exist',
 
   // App-ynw_provider-components-provider-payment-history
   'NO_TRANSACTION': 'No transactions done yet',
@@ -1175,7 +1175,6 @@ export const Messages = {
   'UP_LIC_PACK_CAP' : 'Select the License you would like to upgrade to :',
   'UP_SELECT_ONE_CAP' : '- Select One -',
   'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry, No upgradable packages found.',
-
   'APPLY_DISCOUNT' : 'Apply Discount',
   'CHANGE_QTY' : 'Change Qty',
   'REMOVE_SERVICE' : 'Remove Service',

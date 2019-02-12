@@ -178,6 +178,10 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           'permission': phone.permission
         });
       }
+      if(this.curid < 0 || this.curid != 0 ){
+        this.extingphone_arr.pop();
+      }
+     
       const post_itemdata = {
         'phoneNumbers': this.phone_json
       };
@@ -220,6 +224,9 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           'instance': email.emailid,
           'permission': email.permission
         });
+      }
+      if(this.curid < 0 || this.curid != 0 ){
+        this.extingemail_arr.pop();
       }
       const post_itemdata = { 'emails': this.email_json };
       // console.log('email json', this.email_json);
