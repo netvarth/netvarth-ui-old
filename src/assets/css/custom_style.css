@@ -1534,7 +1534,7 @@ Overriding mat input style
   display: block !important
 }
 
-.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper, {
+.signup-form .mat-form-field-type-mat-select .mat-form-field-label-wrapper{
   top: -.175em !important
 }
 
@@ -2058,4 +2058,13 @@ Overriding mat input style
 }
 .consumer-dash .card.c-checkins .outer .banner .ngxcarousel .ngxcarousel-inner .ngxcarousel-items .item .header .lt .location .icon-location:before{
   color: #00aef2;
+}
+/* .mat-form-field-ripple{
+ color:  #3f51b5 !important ;
+ font-weight: 500;
+} */
+.max-char-length{
+  color:  #3f51b5 !important ;
+ font-weight: 500 !important ;
+ font-size: .625rem !important ;
 }
