@@ -16,6 +16,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderItemComponent implements OnInit {
 
+  rupee_symbol = '₹';
   item_hi_cap = Messages.ITEM_HI_CAP;
   item_name_cap = Messages.ITEM_NAME_CAP;
   short_desc_cap = Messages.SHORT_DESC_CAP;

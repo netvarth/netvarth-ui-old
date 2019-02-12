@@ -104,7 +104,7 @@ onSubmit()" (keyup)="resetApiErrors()">
 </div>
 <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
   <mat-form-field>
-    <mat-select  placeholder="Choose your {{lic_package_cap}}" formControlName="package_id" #licpkg (selectionChange)="onItemSelect($event)">
+    <mat-select  placeholder="Choose your {{lic_package_cap}}" formControlName="package_id" #licpkg (selectionChange)="clickedPackage(licpkg)">
       <mat-option *ngFor="let package of packages; let i = index" [value]="package.pkgId">
         {{package.displayName}}
       </mat-option>

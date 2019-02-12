@@ -100,6 +100,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   timeFormat = 'h:mm a';
   itemServiceSearch: FormControl = new FormControl();
   services: any = [];
+  all_services: any = [];
   coupons: any = [];
   discounts: any = [];
   itemdiscounts: any = [];
@@ -193,6 +194,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
+    this.getPaymentSettings();
     this.getJaldeeActiveCoupons();
     this.getCoupons()
       .then(
@@ -361,6 +363,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getServicesList()
       .subscribe(
         (data: any) => {
+          this.all_services = data;
           for (const ser of data) {
             if (ser.status === 'ACTIVE') {
               this.services.push(ser);
@@ -498,9 +501,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    */
   getSelectedServiceId(serviceName) {
     let serviceId = 0;
-    for (let i = 0; i < this.services.length; i++) {
-      if (this.services[i].name === serviceName) {
-        serviceId = this.services[i].id;
+    for (let i = 0; i < this.all_services.length; i++) {
+      if (this.all_services[i].name === serviceName) {
+        serviceId = this.all_services[i].id;
         break;
       }
     }
@@ -628,7 +631,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           });
     });
   }
-isNumeric(evt) {
+  isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
   }
   isvalid(evt) {
@@ -918,6 +921,7 @@ isNumeric(evt) {
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
+          console.log(data);
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
