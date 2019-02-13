@@ -374,15 +374,25 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         this.sharedfunctionObj.apiErrorAutoHide(this, Messages.WAITLIST_QUEUE_STIMEERROR);
         return;
       }
+      const curdate = new Date();
+    curdate.setHours(this.dstart_time.hour);
+    curdate.setMinutes(this.dstart_time.minute);
+
+    const enddate = new Date();
+    enddate.setHours(this.dend_time.hour);
+    enddate.setMinutes(this.dend_time.minute);
       // convert start time to 12 hour format
       // const starttime = new Date(today_date + ' ' + this.dstart_time + ':00');
-      const starttime = new Date(today_date + ' ' + this.dstart_time.hour + ':' + this.dstart_time.minute + ':00');
-      const starttime_format = moment(starttime).format('hh:mm A') || null;
+      // //const starttime = new Date(today_date + ' ' + this.dstart_time.hour + ':' + this.dstart_time.minute + ':00');
+      // const starttime_format = moment(starttime).format('hh:mm A') || null;
+      const starttime_format = moment(curdate).format('hh:mm A') || null;
+      //console.log(starttime_format);
 
       // convert end time to 12 hour format
       // const endtime = new Date(today_date + ' ' + this.dend_time + ':00');
-      const endtime = new Date(today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00');
-      const endtime_format = moment(endtime).format('hh:mm A') || null;
+      // const endtime = new Date(today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00');
+      const endtime_format = moment(enddate).format('hh:mm A') || null;
+      //console.log(endtime_format);
 
       // building the schedule json section
       schedulejson = {
