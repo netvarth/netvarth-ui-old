@@ -213,7 +213,7 @@ export const Messages = {
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
-  'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
+  'APPX_WAIT_TIME_CAPTION': 'Approx Waiting Time',
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
