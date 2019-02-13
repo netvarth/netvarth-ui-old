@@ -37,13 +37,13 @@
                 <div class="emailouter" *ngIf="curtype=='email'">
                         <div class="form-group">
                                 <mat-form-field>
-                                <input type="text" matInput class="form-control" id="phone1" placeholder="{{email_id_cap}} *"
+                                <input type="text" matInput class="form-control" id="phone1" placeholder="{{email_id_cap}}(user@xyz.com)*"
                                         [(ngModel)]="emailemailid" [ngModelOptions]="{standalone: true}" autocomplete="off">
                                 </mat-form-field>
                         </div>
                         <div class="form-group">
                                 <mat-form-field>
-                                <input type="text" matInput class="form-control"  placeholder="user@xyz.com (Eg: Office Email, Personal Email, etc)"
+                                <input type="text" matInput class="form-control"  placeholder="{{email_label_cap}}(Eg: Office Email, Personal Email, etc)"
                                         [(ngModel)]="emaillabel" [ngModelOptions]="{standalone: true}" autocomplete="off"
                                         maxlength="50">
                                 </mat-form-field>
