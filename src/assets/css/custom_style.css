@@ -2068,3 +2068,6 @@ Overriding mat input style
  font-weight: 500 !important ;
  font-size: .625rem !important ;
 }
+.content .c-outer .c-body .location .top-sect .tp-l .tp2 .directions{
+  font-weight: normal!important;
+}
