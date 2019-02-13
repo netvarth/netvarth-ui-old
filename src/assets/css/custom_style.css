@@ -2071,3 +2071,14 @@ Overriding mat input style
 .content .c-outer .c-body .location .top-sect .tp-l .tp2 .directions{
   font-weight: normal!important;
 }
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .table-th .th{
+  flex-basis: 50%!important;
+}
+.bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td{
+  flex-basis: 50%!important;
+}
+@media only screen and (max-width: 370px) {
+  .bill-section .bill-section-content .bill-wrapper .section-four .list-outer .listing .wrap .td{
+    padding: 0%!important;
+  }
+}

@@ -60,7 +60,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   payment_logs_cap = Messages.PAY_LOGS_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
-  status_cap = Messages.STATUS_CAP;
+  status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
   save_btn_cap = Messages.SAVE_BTN;

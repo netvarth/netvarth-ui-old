@@ -585,6 +585,7 @@ export const Messages = {
   'SETTLE_BILL_CAP': 'Settle Bill',
   'PRINT_BILL_CAP': 'Print Bill',
   'ACCEPT_PAY_CAP': 'Accept Payment',
+  'PAY_STATUS' : 'Status',
 
   // App-ynw_provider-components-add-provider-addons
   'ADD_ADDON_CAP': 'Add Add-on',

@@ -42,7 +42,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
   payment_logs_cap = Messages.PAY_LOGS_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
-  status_cap = Messages.STATUS_CAP;
+  status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refund_cap = Messages.REFUND_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
