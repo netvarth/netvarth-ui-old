@@ -32,7 +32,7 @@ onSubmit(loginForm.value)"
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
-                errorMsg="Password required.">
+                errorMsg="Password is required">
             </app-field-error-display>
         </div>
     </div>

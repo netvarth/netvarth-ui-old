@@ -13,6 +13,7 @@ import {
     DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-provider-waitlist-service-detail',
@@ -64,6 +65,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
     delgaldialogRef;
     servicedialogRef;
     editgaldialogRef;
+    end_of_service_notify = projectConstants.PROFILE_ERROR_STACK;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,

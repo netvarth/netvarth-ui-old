@@ -1033,7 +1033,7 @@ export const Messages = {
   'WIZ_PROFILE_SUMMARY_CAP' : 'Profile Summary',
   'WIZ_NEXT_CAP' : 'Next',
   'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP' : 'You can update the default created service details here. You can add more services in the Settings -> Services, after you create your profile.',
-  'WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP' : 'The service s1 will be served for all working hours',
+  'WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP' : 'The service [service_name] will be served for all working hours',
   'WIZ_LOCATION_CAP' : 'Location',
   'WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP' : 'You can add more locations in the Settings -> Location, after you create your profile.',
   'WIZ_CHOOSE_YOUR_LOCA_CAP' : 'Choose your location in the MAP',
@@ -1277,6 +1277,6 @@ export const Messages = {
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE' : 'for creating a [customer] base.',
   'FRM_LEVEL_ADJ_DELAY_MSG' : 'You can adjust your working hours and notify your [customer]s about the delay caused.',
 
-
+  'CHECKED_IN_LABEL' : 'Checked-in'
 };
 

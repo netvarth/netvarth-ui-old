@@ -39,10 +39,9 @@
                                                     [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
                                                     'Yes' : 'No'}}</span></span>
                                         </div>
-                                        <div class="item">
+                                        <div class="item" *ngIf="service_data.notificationType">
                                             <span>{{end_service_notify_cap}}:
-                                                <span class="noti-it">{{((service_data.notificationType) ?
-                                                    service_data.notificationType : 'NONE') | capitalizeFirst}}</span></span>
+                                                <span class="noti-it">{{end_of_service_notify[service_data.notificationType]}}</span></span>
                                         </div>
                                     </div>
                                     <div class="btm-ctrl">

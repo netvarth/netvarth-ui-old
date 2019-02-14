@@ -67,7 +67,8 @@ export class ProviderCustomersComponent implements OnInit {
     ];
     this.breadcrumbs = this.breadcrumbs_init;
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    // this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
 
   ngOnInit() {

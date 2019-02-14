@@ -72,14 +72,12 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-
     if (this.checking_email_otpsuccess && this.resendemailotpsuccess) {
       this.email_otp_req = false;
       this.showOTPEmailContainer = false;
       this.showOTPContainer = true;
       this.otp_email = null;
     }
-
   }
   resetCounter(val) {
     this.resetCounterVal = val;
@@ -90,9 +88,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       phone_otp: ['', Validators.compose(
         [Validators.required])]
     });
-
     // this.setMessageType();
-
   }
 
   doOnOtpSubmit(value) {
@@ -112,7 +108,9 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     }
     // delete this.submitdata.userProfile.email;
     this.resendOtp.emit(this.submitdata);
-    this.setMessageType();
+    if (this.type !== 'forgot_password') {
+      this.setMessageType();
+    }
   }
 
   setResendViaEmail() {
@@ -122,21 +120,17 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       otp_email: ['', Validators.compose(
         [Validators.required, Validators.email])]
     });
-
     if (this.submitdata.userProfile && this.submitdata.userProfile.email) {
       this.email_form.get('otp_email').setValue(this.submitdata.userProfile.email);
     }
-
     this.email_otp_req = true;
     this.showOTPEmailContainer = true;
     this.showOTPContainer = false;
   }
 
   resendViaEmail(email_form) {
-
     if (this.type === 'forgot_password') {
       this.resendOtp.emit(email_form.otp_email);
-
     } else if (this.type === 'signup') {
       this.submitdata.userProfile.email = email_form.otp_email;
       this.resendOtp.emit(this.submitdata);

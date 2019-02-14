@@ -43,7 +43,7 @@ export class ProviderbWizardComponent implements OnInit {
   location_cap = Messages.WIZ_LOCATION_CAP;
   add_more_loc_in_set_cap = Messages.WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP;
   add_more_services_in_set_cap = Messages.WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP;
-  add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP;
+  add_more_queue_in_set_cap;
   choose_loc_cap = Messages.WIZ_CHOOSE_YOUR_LOCA_CAP;
   loc_not_avail_cap = Messages.WIZ_LOC_NOT_AVAIL_CAP;
   gps_coordinates_cap = Messages.WIZ_GPS_COORDINATES_CAP;
@@ -326,8 +326,8 @@ export class ProviderbWizardComponent implements OnInit {
           }
         }
         if (this.wizard_data_holder.location && this.wizard_data_holder.location.trim() !== '' && !latlon_Exists) {
-            this.error_Exists = true;
-            this.coord_error = 'Both coordinates are required';
+          this.error_Exists = true;
+          this.coord_error = 'Both coordinates are required';
         }
 
         if (this.error_Exists === true) {
@@ -518,7 +518,6 @@ export class ProviderbWizardComponent implements OnInit {
     } else {
       return changetostep;
     }
-
   }
 
   getBusinessProfile() {
@@ -538,7 +537,6 @@ export class ProviderbWizardComponent implements OnInit {
             }
           }
         }
-
         this.loading_active = false;
       });
   }
@@ -550,7 +548,6 @@ export class ProviderbWizardComponent implements OnInit {
       'summary': obj.businessDesc || '',
       'accountstatus': obj.status || ''
     };
-
     if (obj.baseLocation) {
       this.wizard_data_holder.locid = obj.baseLocation.id || '';
       this.wizard_data_holder.lat = obj.baseLocation.lattitude || '';
@@ -562,7 +559,6 @@ export class ProviderbWizardComponent implements OnInit {
       if (this.wizard_data_holder.mapurl === '' && this.wizard_data_holder.lat.trim() !== '' && this.wizard_data_holder.lon.trim !== '') {
         this.wizard_data_holder.mapurl = projectConstants.MAP_BASE_URL + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + '/@' + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + ',15z';
       }
-
       if (obj.baseLocation.bSchedule.timespec) {
         if (obj.baseLocation.bSchedule.timespec.length > 0) {
           this.schedule_arr = [];
@@ -687,7 +683,6 @@ export class ProviderbWizardComponent implements OnInit {
           this.search_status = 2;
         }
       });
-
   }
 
   handle_searchstatus(status) {
@@ -933,6 +928,8 @@ export class ProviderbWizardComponent implements OnInit {
         data => {
           this.service = post_data;
           this.showStep(3);
+          console.log(this.service);
+          this.add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP.replace('[service_name]', this.service.name);
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
@@ -967,5 +964,4 @@ export class ProviderbWizardComponent implements OnInit {
       }
     }
   }
-
 }

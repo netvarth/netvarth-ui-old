@@ -468,7 +468,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       } else if (mod === 'time') {
         retval = dtsarr[1] + ' ' + dtsarr[2];
       }
-
       return retval;
     } else {
       return;
@@ -699,6 +698,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showAddItemsec = true;
+    this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
     this.itemServiceSearch.setValue(name);
     this.curSelItm.qty = qty;
@@ -725,6 +725,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     setTimeout(() => {
       this.item_service_qty.nativeElement.focus();
     }, 500);
+
     // this.applyAction(action, this.bill_data.uuid, data);
   }
   /**
@@ -956,7 +957,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
   }
 
-
   confirmSettleBill(evt) {
     if (this.amountpay > 0) {
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -994,5 +994,4 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   printMe() {
     window.print();
   }
-
 }

@@ -2095,3 +2095,5 @@ Overriding mat input style
 @media (max-width: 1200px) and (min-width: 991x) {
   .srch-auto-c .mat-option {line-height: 30px !important}
 }
+.content.comn-cls .lbr .card .c-history li.cancelled:before {
+  background: #f24949; }
