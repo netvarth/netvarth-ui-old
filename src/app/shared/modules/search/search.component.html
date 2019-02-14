@@ -5,7 +5,7 @@
       <mat-form-field class="search_location_class">
         <!-- <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="Please type a location" #locrefrence (focus)="locrefrence.select()" (blur)="deselect()"> -->
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name"  matInput [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)">
-        <mat-autocomplete #autoloc="matAutocomplete">
+        <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
           <div *ngIf="locationList">
           <!-- <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (click)="setLocation(loc)"> -->
               <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname" (onSelectionChange)="setLocation(loc)">
@@ -34,7 +34,7 @@
       <mat-form-field class="search_keyword_class">
         <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname" matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <!-- <mat-autocomplete #autoprov="matAutocomplete" (optionSelected)="selectedOption(provbox.value)"> -->
-          <mat-autocomplete #autoprov="matAutocomplete" #autotest> 
+          <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest> 
           <!-- <div *ngIf="keywordgroupList"> -->
             <div>
               <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList" class="search-text">
