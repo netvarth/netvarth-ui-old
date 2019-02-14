@@ -24,6 +24,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   make_payment = Messages.MAKE_PAYMENT_CAP;
   invoice_cap = Messages.INVOICE_CAP;
+  invoice_summry_cap = Messages.INVOICE_SUMMRY_CAP;
   serv_period = Messages.SERV_PERIOD_CAP;
   gateway_cap = Messages.GATEWAY_CAP;
   payment_cap = Messages.PAYMENT_CAP;
@@ -37,6 +38,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   payment_modes: any = [];
   payment_detail: any = [];
   payment_status = null;
+  credt_debtJson: any = null;
+  credt_debtDetls='';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
     amount: 0,
@@ -70,6 +73,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     this.payment_status = this.invoice.licensePaymentStatus || null;
 
     this.invoiceDetail();
+    
     if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
       this.payment_loading = true;
       this.getPaymentModes();
@@ -88,6 +92,10 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.invoice = data;
+          if(this.invoice.creditDebitJson){
+             this.credt_debtJson=JSON.parse(this.invoice.creditDebitJson);
+             this.credt_debtDetls=this.credt_debtJson.creditDebitDetails;
+          }
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

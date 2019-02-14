@@ -5,33 +5,68 @@
     <div class="invoice">
         <div class="outer">
             <div class="ivc">
-                <span class="label">{{serv_period}}</span>
-                <span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date:
-                    dateFormat}}</span>
-            </div>
-
-            <div class="ivc">
-                <span class="label">{{subsc_pack_cap}}</span>
-                <div class="ivc" *ngIf="invoice.licensePkgDetails">
-                    <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}
-                            {{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
-                    <!-- <span class="result">{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span> -->
-                </div>
-
-                <div class="ivc" *ngFor="let addon of invoice.addonDetails">
-                    <span class="label"><span>{{addon.addonName}}</span></span>
-                    <span class="result">{{addon.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                <span class="label">{{serv_period}}<span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date:
+                    dateFormat}}</span></span>
                 </div>
 
                 <div class="ivc" *ngIf="source != 'payment-history'">
+                    <span class="label">Amount to pay<span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
+                </div>
+
+                <div class="ivc" *ngIf="invoice.dueDate">
+                    <span class="label">Due On<span class="result">{{invoice.dueDate | date: dateFormat}}</span></span>
+                </div>
+                <div class="container">            
+                    <table class="table .table-hover">
+                      <thead>
+                        <tr>
+                          <th>Transaction Summary</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="invoice.licensePkgDetails" >
+                          <td>{{invoice.licensePkgDetails.licenseName}}</td>
+                          <td>{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr *ngFor="let addon of invoice.addonDetails">
+                          <td>{{addon.addonName}}</td>
+                          <td>{{addon.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr *ngFor="let crdt_debtJson of credt_debtDetls">
+                          <td>Licence Package {{crdt_debtJson.oldPkg}} to {{crdt_debtJson.newPkg}}  due </td>
+                          <td>{{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+            <!-- <div class="ivc">
+                <span class="label">{{subsc_pack_cap}}</span> -->
+                <!-- <div class="ivc" *ngIf="invoice.licensePkgDetails">
+                    <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}
+                            {{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span></span> -->
+                    <!-- <span class="result">{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span> -->
+                <!-- </div> -->
+
+                <!-- <div class="ivc" *ngFor="let addon of invoice.addonDetails">
+                    <span class="label"><span>{{addon.addonName}}</span></span>
+                    <span class="result">{{addon.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                </div> -->
+
+                <!-- <div class="ivc" *ngIf="source != 'payment-history'">
                     <span class="label">Amount to pay</span>
                     <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
-                </div>
-                <div class="ivc" *ngIf="invoice.dueDate">
+                </div> -->
+                <!-- <div class="ivc" *ngIf="invoice.dueDate">
                     <span class="label">Due On</span>
                     <span class="result">{{invoice.dueDate | date: dateFormat}}</span>
-                </div>
-            </div>
+                </div> -->
+            <!-- </div> -->
         </div>
         <div class="" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
             <!-- <div class="pay-tbl table-outer"> -->
