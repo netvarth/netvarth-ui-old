@@ -269,7 +269,7 @@
                 <mat-form-field>
                   <input matInput [(ngModel)]="filter.check_in_start_date" [matDatepicker]="picker"
                     (dateChange)="checkFilterDateMaxMin('check_in_start_date')" [min]="filter_date_start_min"
-                    [max]="filter_date_start_max" autocomplete="off" placeholder="DD/MM/YYYY">
+                    [max]="filter_date_start_max" autocomplete="off">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -280,7 +280,7 @@
                 <mat-form-field>
                   <input matInput [(ngModel)]="filter.check_in_end_date" [matDatepicker]="picker"
                     (dateChange)="checkFilterDateMaxMin('check_in_end_date')" [min]="filter_date_end_min"
-                    [max]="filter_date_end_max" autocomplete="off" placeholder="DD/MM/YYYY">
+                    [max]="filter_date_end_max" autocomplete="off">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>

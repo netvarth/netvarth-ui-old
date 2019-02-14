@@ -2082,3 +2082,9 @@ Overriding mat input style
     padding: 0%!important;
   }
 }
+.content.loc-list .card .copy .c-ot .loc-style [class^="icon-"]:before, .content.loc-list .card .copy .c-ot .loc-style [class*=" icon-"]:before{
+  margin-top: 4px!important;
+}
+.content.loc-list .card .copy .c-ot .loc-style [class^="icon-"], .content.loc-list .card .copy .c-ot .loc-style [class*=" icon-"]{
+  display: block!important;
+}

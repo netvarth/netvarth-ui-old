@@ -1,6 +1,8 @@
 <section>
-    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
-    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- Subheader section -->
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 
 </section>
 
@@ -25,7 +27,7 @@
                             {{queue.name | capitalizeFirst}}
                         </h3>
                         <div class="c-ot m0">
-                            <div class="item" *ngIf="queue.location">
+                            <div class="loc-style item" *ngIf="queue.location">
                                 <span class="ttle">{{loc_cap}}</span>
                                 <span class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
                             </div>
@@ -40,14 +42,16 @@
                                         <!-- <span class="sch">
                                       Mon - Fri 09:00 AM - 06:00 PM
                                   </span> -->
-                                        <span class="day">{{schedule.dstr}}</span>&nbsp;<span class="time">{{schedule.time}}</span>
+                                        <span class="day">{{schedule.dstr}}</span>&nbsp;<span
+                                            class="time">{{schedule.time}}</span>
                                     </ng-container>
                                 </span>
                             </div>
                         </div>
 
                         <mat-menu #appMenu="matMenu">
-                            <button mat-menu-item (click)="addEditProviderQueue('edit', queue)" *ngIf="queue.queueState=='ENABLED'">
+                            <button mat-menu-item (click)="addEditProviderQueue('edit', queue)"
+                                *ngIf="queue.queueState=='ENABLED'">
                                 <i class="icon-edit"></i>
                                 Edit
                             </button>
@@ -78,7 +82,8 @@
 </section>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>
 
 <!-- <table class="table" *ngIf="queue_list.length !=0">
   <thead>
