@@ -24,8 +24,11 @@
       <div class="card p0 w-dta">
         <div class="head">
           <div class="locn" *ngIf="selected_location">
-            <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span> {{selected_location.place
-              | capitalizeFirst}}</span>
+            <!-- <span class="icon-location"*ngIf="!edit_location"></span><span class="loc-name">  {{selected_location.place
+              | capitalizeFirst}}</span>  -->
+              <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span><span> {{selected_location.place
+                | capitalizeFirst}}</span></span>
+
             <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
             <mat-form-field class="example-full-width" *ngIf="edit_location">
 

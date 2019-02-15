@@ -2108,3 +2108,10 @@ Overriding mat input style
   font-size: 1rem !important;
 
 }
+.loc-name {
+  width: 250px !important; 
+  height: 25px !important;
+}
+.icon-location {
+  float: left;
+}
