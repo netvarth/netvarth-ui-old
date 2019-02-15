@@ -22,8 +22,7 @@
                     <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i
                             class="icon icon-angle-right"></i>
                     </span>
-                    <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself, take me to
-                        Settings. <b> Skip</b>
+                    <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself. <b> Skip</b>
                     </p>
                     <!-- <ul class="status-pnt">
                             <li></li>
@@ -149,7 +148,7 @@
                                     <!-- <mat-form-field> -->
                                         <input  type="text" class="form-control number-ip-sm" id="price"
                                             placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
-                                            autocomplete="off">
+                                            autocomplete="off" >
                                         <!-- </mat-form-field> -->
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
                                         [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',

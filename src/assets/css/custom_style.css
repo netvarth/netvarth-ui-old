@@ -2115,3 +2115,6 @@ Overriding mat input style
 .icon-location {
   float: left;
 }
+.lm-popup .lm-outer {
+  height: 95vh !important;
+}

@@ -696,7 +696,7 @@ export const Messages = {
   'START_DATE_CAP': 'Start Date',
   'END_DATE_CAP': 'End Date',
   'TOKEN_NO_CAP': 'Token No',
-  'PRO_NAME_CAP': 'Name',
+  'PRO_NAME_CAP': 'Profile Name',
   'PRO_SERVICE_CAP': 'Service',
   'PRO_STATUS_CAP': 'Status',
   'NOTE_CAP': 'Note',
@@ -727,6 +727,7 @@ export const Messages = {
   'BILL_DISCOUNT_CAP': 'Discount',
   'ADD_BTN': 'Add',
 
+  
   // App-ynw_provider-components-provider-bprofile-search
   'BPROFILE_PUBLIC_SEARCH_CAP': 'Public Search',
   'BPROFILE_PROFILE_CAP': 'Your profile has been',
@@ -734,7 +735,7 @@ export const Messages = {
   'BPROFILE_ONLINE_VISIBLE_CAP': 'for public search online and will not be visible to',
   'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
   'BPROFILE_SUMMARY_CAP': 'Basic Information',
-  'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
+  'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn on Public Search',
   'BPROFILE_CURRENT_STATUS': 'Current Status',
   'BPROFILE_ON_CAP': 'On',
   'BPROFILE_OFF_CAP': 'Off',
@@ -749,7 +750,7 @@ export const Messages = {
   'BPROFILE_CREATE_ADWORD_CAP': 'AdWord(s), you can create',
   'BPROFILE_MOR_ADOWRDS_CAP': 'AdWord(s). To add more AdWords, go to',
   'BPROFILE_LICENSE_INVOICE_CAP': 'License & Invoice',
-  'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added any',
+  'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added ',
   'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information',
   'BPROFILE_SUCH_AS_CAP': 'such as',
   'BPROFILE_BUSINESS_NAME_CAP': 'Business Name, Profile Summary',
