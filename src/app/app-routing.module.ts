@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {HomeComponent} from './shared/components/home/home.component';
-import {LogoutComponent} from './shared/components/logout/logout.component';
+import { HomeComponent } from './shared/components/home/home.component';
+import { LogoutComponent } from './shared/components/logout/logout.component';
 
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SearchDetailComponent } from './shared/components/search-detail/search-detail.component';
@@ -11,6 +11,7 @@ import { ReturnPaymentComponent } from './shared/components/return-payment/retur
 import { ConsumerWaitlistHistoryComponent } from './shared/components/consumer-waitlist-history/consumer-waitlist-history.component';
 import { TermsStaticComponent } from './shared/modules/terms-static/terms-static.component';
 import { PrivacyStaticComponent } from './shared/modules/privacy-static/privacy-static.component';
+import { LicenseHelpComponent } from './shared/modules/license-help/license-help.component';
 
 const routes: Routes = [
     {
@@ -28,9 +29,13 @@ const routes: Routes = [
         loadChildren: './ynw_kiosk/kiosk.module#KioskModule',
         canActivate: [AuthGuardProvider]
     },
-    { path: '', component: HomeComponent, canActivate: [AuthGuardHome]},
-    { path: 'home',   redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
-    { path: 'logout',   component: LogoutComponent},
+    {
+        path: 'license-help',
+        component: LicenseHelpComponent
+    },
+    { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
+    { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
+    { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
     { path: 'searchdetail', component: SearchDetailComponent },
     { path: 'searchdetail/:id', component: ProviderDetailComponent },

@@ -11,8 +11,8 @@ import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ModalGalleryModule } from 'angular-modal-gallery';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
@@ -28,7 +28,7 @@ import { PrivacyStaticModule } from './shared/modules/privacy-static/privacy-sta
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { ForgotPasswordComponent} from './shared/components/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './shared/components/forgot-password/forgot-password.component';
 import { SignUpComponent } from './shared/components/signup/signup.component';
 // import { OtpFormComponent } from './shared/components/otp-form/otp-form.component';
 import { SetPasswordFormComponent } from './shared/components/set-password-form/set-password-form.component';
@@ -68,6 +68,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
+import { LicenseHelpComponent } from './shared/modules/license-help/license-help.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,7 @@ import { RequestForComponent } from './ynw_provider/components/request-for/reque
     ProviderDetailComponent,
     // ChangePasswordComponent,
     // ChangeMobileComponent,
-   // ChangeEmailComponent,
+    // ChangeEmailComponent,
     ConfirmBoxComponent/*,
     SearchMoreOptionsComponent*/,
     ReturnPaymentComponent,
@@ -95,7 +96,8 @@ import { RequestForComponent } from './ynw_provider/components/request-for/reque
     ConsumerRateServicePopupComponent,
     PieChartComponent,
     CouponsComponent,
-    RequestForComponent
+    RequestForComponent,
+    LicenseHelpComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
@@ -141,19 +143,19 @@ import { RequestForComponent } from './ynw_provider/components/request-for/reque
     AuthGuardLogin,
     ServiceMeta,
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: ExtendHttpInterceptor,
-    multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: ExtendHttpInterceptor,
+      multi: true
     },
     SharedServices,
     SharedFunctions,
     FormMessageDisplayService,
     SearchDetailServices,
     ProviderDetailService,
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

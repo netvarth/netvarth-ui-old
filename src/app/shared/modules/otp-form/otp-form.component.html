@@ -28,11 +28,10 @@
         <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
             Email</ng-container></span>
         <ul class="info-lst">
-          <span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button>
-            <i class="black">Having a problem with your phone. Click &nbsp;</i>{{resend_otp_email}}</span>
+            <span class="black">Having a problem with your phone. Click &nbsp;<span (click)="setResendViaEmail()" *ngIf="type=='signup'" mat-button>{{resend_otp_email}}</span></span>
         </ul>
       </div>
-      <div class="counter-outer" *ngIf="resetCounterVal>0">
+      <div class="counter-outer" style="font-size: 0.90em" *ngIf="resetCounterVal>0">
         {{resend_otp_opt_active_cap}} <span class="counter">{{resetCounterVal}}</span> {{seconds_cap}}
       </div>
     </mat-dialog-actions>

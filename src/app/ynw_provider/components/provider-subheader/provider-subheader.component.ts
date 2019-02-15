@@ -38,7 +38,8 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   crtCustdialogRef;
   ChkindialogRef;
   services: any = [];
-
+  buttonDisabled = false;
+  active_license;
   constructor(public dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService,
     public provider_services: ProviderServices,
@@ -48,10 +49,12 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   normal_profile_active = 1;
   normal_locationinfo_show = 1;
   normal_basicinfo_show = 1;
+  kiosk_active = false;
   ngOnInit() {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
+    this.setLicense();
   }
   ngOnDestroy() {
     // console.log('on destroy');
@@ -65,13 +68,45 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       this.ChkindialogRef.close();
     }
   }
+  setLicense() {
+    const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (cuser && usertype === 'provider') {
+      if (cuser.new_lic) {
+        console.log(cuser);
+        this.active_license = cuser.new_lic;
+        console.log(this.active_license);
+        if (this.active_license === 'Diamond (3999 Rs/month)' || this.active_license === 'Gold (2499 Rs/month)' || this.active_license === 'Gold - FREE Trial 60 days') {
+          this.kiosk_active = true;
+        }
+      } else {
+        this.active_license = cuser.accountLicenseDetails;
+        console.log(this.active_license);
+        if (this.active_license.accountLicense.name === 'Diamond' || this.active_license.accountLicense.name === 'Gold' || this.active_license.accountLicense.name === 'Gold_60Day_Trial') {
+          this.kiosk_active = true;
+        } else {
+          for (let i = 0; i < this.active_license.addons.length; i++) {
+            if (this.active_license.addons[i].name === 'Kiosk') {
+              this.kiosk_active = true;
+            }
+            else {
+              this.kiosk_active = false;
+            }
+          }
+        }
+      }
+    }
+    console.log(this.kiosk_active);
+  }
+
   searchCustomer(source) {
+    this.buttonDisabled = true;
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
-        source: source
+        source: source,
       }
     });
     this.srchcustdialogRef.afterClosed().subscribe(result => {
@@ -82,6 +117,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
         this.createCustomer(result.data, source);
       }
+      this.buttonDisabled = false;
     });
   }
   createCustomer(search_data, next_page = null) {
