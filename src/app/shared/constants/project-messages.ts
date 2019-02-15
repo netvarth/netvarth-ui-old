@@ -390,8 +390,8 @@ export const Messages = {
 
   // App-shared-components-search-details
   'REFINE_SEARCH_CAP': 'Refine Search',
-  'SELECT_DOMAIN_CAP': 'Select Domain',
-  'SELECT_SUBDOMAIN_CAP': 'Select Subdomain',
+  'SELECT_DOMAIN_CAP': 'Select Service Domain',
+  'SELECT_SUBDOMAIN_CAP': 'Select Service specialization or Occupation',
   'SELECT_CAP': '-- Select --',
   'SHOW_MORE_CAP': 'show more',
   'SHOW_LESS_CAP': 'show less',
@@ -424,8 +424,8 @@ export const Messages = {
   'MOBILE_NO_CAP': 'Mobile Number *',
   'F_NAME_CAP': 'First Name *',
   'L_NAME_CAP': 'Last Name *',
-  'SELECT_DMN_CAP': 'Select Domain *',
-  'SELECT_SB_DMN_CAP': 'Select Subdomain *',
+  'SELECT_DMN_CAP': 'Select Service Domain *',
+  'SELECT_SB_DMN_CAP': 'Select Service specialization or Occupation *',
   'LIC_PACKAGE_CAP': 'License Package *',
   'I_AGREE_CAP': 'I Agree',
   'TERMS_CONDITIONS_CAP': 'Terms & Conditions',

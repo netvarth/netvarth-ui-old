@@ -2097,3 +2097,14 @@ Overriding mat input style
 }
 .content.comn-cls .lbr .card .c-history li.cancelled:before {
   background: #f24949; }
+
+.content .c-outer .c-body .srlst .top-sect .tp-l .tp1 .pro-img img {
+  background-color: #f8f8f8 !important;
+}
+.content .col-b .card.w-dta.active .ph-gal-bx .ph-gal li .galbx img {
+  background-color: #f8f8f8 !important;
+}
+.consumerpopupmainclass .mat-dialog-title {
+  font-size: 1rem !important;
+
+}

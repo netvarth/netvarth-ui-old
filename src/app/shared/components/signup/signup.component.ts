@@ -74,7 +74,7 @@ export class SignUpComponent implements OnInit {
     this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
     this.moreParams = this.data.moreParams;
     if (this.data.is_provider === 'true') {
-      this.heading = 'Provider Sign Up';
+      this.heading = 'Jaldee Partner Account Creation';
     } else if (this.data.is_provider === 'false') {
       this.heading = 'Consumer Sign Up';
     }
