@@ -365,6 +365,9 @@ export const projectConstants = {
     4: 'No active services found',
     5: 'No active service time-windows found',
     pushMsg : 'Push message',
-    email : 'Email'
+    email : 'Email',
+    professionalConsulting : 'Eg. Adv.Pranav',
+    healthCare : 'Eg. Seven Star Clinic, Dr. Mani, Bright Hospital',
+    personalCare : 'Eg. Herbal beauty parlour'
   }
 };

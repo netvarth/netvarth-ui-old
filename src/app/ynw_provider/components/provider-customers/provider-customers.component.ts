@@ -142,6 +142,9 @@ export class ProviderCustomersComponent implements OnInit {
     if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
       this.filterapplied = true;
     }
+    else{
+      this.filterapplied = false;
+    }
   }
 
   resetFilter() {

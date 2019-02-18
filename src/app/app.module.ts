@@ -68,7 +68,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
-import { LicenseHelpComponent } from './shared/modules/license-help/license-help.component';
+import { LicenseHelpModule } from './shared/modules/license-help/license-help.module';
 
 @NgModule({
   declarations: [
@@ -96,8 +96,7 @@ import { LicenseHelpComponent } from './shared/modules/license-help/license-help
     ConsumerRateServicePopupComponent,
     PieChartComponent,
     CouponsComponent,
-    RequestForComponent,
-    LicenseHelpComponent
+    RequestForComponent
   ],
   entryComponents: [
     ForgotPasswordComponent,
@@ -134,7 +133,8 @@ import { LicenseHelpComponent } from './shared/modules/license-help/license-help
     Nl2BrPipeModule,
     TermsStaticModule,
     PrivacyStaticModule,
-    ScrollbarModule
+    ScrollbarModule,
+    LicenseHelpModule
   ],
   providers: [
     AuthGuardConsumer,

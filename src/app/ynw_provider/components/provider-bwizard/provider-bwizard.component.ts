@@ -91,6 +91,7 @@ export class ProviderbWizardComponent implements OnInit {
   service_price_cap = Messages.SERVPRICE_CAP;
   rupee_symbol = '₹';
   @ViewChild('bnameId') bnameIdref: ElementRef;
+  tbprof;
 
   amForm: FormGroup;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
@@ -107,6 +108,7 @@ export class ProviderbWizardComponent implements OnInit {
   api_success = null;
   error_msg = null;
   disable_price = true;
+  name_placeholder;
 
   base_licence = false;
   businessConfig: any = [];
@@ -524,14 +526,15 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.setBprofile_to_object(data);
-        const tbprof = data;
+        this.tbprof = data;
+        this.name_placeholder = projectConstants.PROFILE_ERROR_STACK[this.tbprof.serviceSector.domain];
         const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
         // console.log('subsector bprofile', subsectorname);
         this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
         for (let i = 0; i < this.businessConfig.length; i++) {
-          if (this.businessConfig[i].id === tbprof['serviceSector']['id']) {
+          if (this.businessConfig[i].id === this.tbprof['serviceSector']['id']) {
             if (this.businessConfig[i].multipleLocation) {
               this.multipeLocationAllowed = true;
             }

@@ -704,6 +704,7 @@ export const Messages = {
   'ADD_NOTE_CAP': 'Add Note',
   'PRO_AVAILABLE_CAP': 'available',
   'NO_SERVICE_CAP': 'No service time-windows available',
+  'NO_QUEUE_MSG' : 'No working hours set for the selected location',
   'ACTIONS_CAP': 'Actions',
   'ITEM_HI_CAP': 'Item',
   'ITEM_NAME_CAP': 'Item Name',
@@ -711,6 +712,8 @@ export const Messages = {
   'DETAIL_DESC_CAP': 'Detailed Description',
   'PRICES_CAP': 'Price',
   'TAXABLE_CAP': 'Taxable',
+  'NO_HISTORY_MSG' : 'No previous [waitlist]s',
+  'NO_TODAY_CHECKIN_MSG' : 'No [waitlist]s for today',
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
