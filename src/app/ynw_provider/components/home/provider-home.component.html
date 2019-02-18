@@ -26,7 +26,7 @@
           <div class="locn" *ngIf="selected_location">
             <!-- <span class="icon-location"*ngIf="!edit_location"></span><span class="loc-name">  {{selected_location.place
               | capitalizeFirst}}</span>  -->
-              <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span><span> {{selected_location.place
+            <span class="loc-name" *ngIf="!edit_location"><span class="icon-location"></span><span> {{selected_location.place
                 | capitalizeFirst}}</span></span>
 
             <span class="icon-edit" (click)="editLocation()" *ngIf="!edit_location && locations.length > 1"></span>
@@ -487,11 +487,14 @@
             </div>
           </div>
           <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
-            <div class="qlst no-dta" *ngIf="time_type !=2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
-              {{no_cap}} {{checkin_label |capitalizeFirst}}s {{available_cap}}
+            <div class="qlst no-dta" *ngIf="time_type == 1 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+              {{no_today_checkin_msg}}
             </div>
             <div class="qlst no-dta" *ngIf="time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
               {{no_future_checkins}}
+            </div>
+            <div class="qlst no-dta" *ngIf="time_type == 0 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+              {{no_history}}
             </div>
           </ng-container>
         </div>

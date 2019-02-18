@@ -41,7 +41,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   change_status = Messages.CHANGE_STATUS_CAP;
   add_note_cap = Messages.ADD_NOTE_CAP;
   available_cap = Messages.PRO_AVAILABLE_CAP;
-  no_service_cap = Messages.NO_SERVICE_CAP;
+  no_service_cap = Messages.NO_QUEUE_MSG;
   adjust_delay = Messages.ADJUST_DELAY_CAP;
   first_name = Messages.FIRST_NAME_CAP;
   last_name = Messages.LAST_NAME_CAP;
@@ -62,6 +62,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   view_cap = Messages.VIEW_CAP;
   no_cap = Messages.NO_CAP;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  no_history = '';
+  no_today_checkin_msg = '';
   check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
@@ -187,6 +189,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
+    this.no_today_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_TODAY_CHECKIN_MSG);
+    this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
     this.waitlist_status = [
       { name: this.checkedin_upper, value: 'checkedIn' },
       { name: this.cancelled_upper, value: 'cancelled' },
@@ -866,6 +870,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (chkSrc) {
+      console.log(source);
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
         this.resetFilter();
       }
