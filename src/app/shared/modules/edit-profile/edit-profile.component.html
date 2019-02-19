@@ -7,7 +7,7 @@
 
     <div class="content see-pages">
 
-        <div class="container">
+        <div class="container related-links">
 
             <div class="outer-card">
 
@@ -15,8 +15,7 @@
 
                     <form [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
 
-                    onSubmit(editProfileForm.value)"
-                        class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+                    onSubmit(editProfileForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 
                         <div class="innercard">
 
@@ -26,12 +25,13 @@
 
                                     <mat-form-field>
 
-                                        <input matInput type="text" class="form-control" id="first_name" placeholder="First Name"
-                                            formControlName="first_name" autocomplete="off">
+                                        <input matInput type="text" class="form-control" id="first_name"
+                                            placeholder="First Name" formControlName="first_name" autocomplete="off">
 
                                     </mat-form-field>
 
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
 
                                         {
@@ -44,7 +44,8 @@
 
                                     </app-field-error-display>
 
-                                    <app-field-error-display [displayError]="true" *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
+                                    <app-field-error-display [displayError]="true"
+                                        *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
                                         [errorMsg]="fnameerror">
 
                                     </app-field-error-display>
@@ -55,12 +56,13 @@
 
                                     <mat-form-field>
 
-                                        <input matInput type="text" class="form-control" id="last_name" placeholder="Last Name"
-                                            formControlName="last_name" autocomplete="off">
+                                        <input matInput type="text" class="form-control" id="last_name"
+                                            placeholder="Last Name" formControlName="last_name" autocomplete="off">
 
                                     </mat-form-field>
 
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
 
                                         {
@@ -73,7 +75,8 @@
 
                                     </app-field-error-display>
 
-                                    <app-field-error-display [displayError]="true" *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
+                                    <app-field-error-display [displayError]="true"
+                                        *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
                                         [errorMsg]="lnameerror">
 
                                     </app-field-error-display>
@@ -84,12 +87,14 @@
 
                                     <mat-form-field>
 
-                                        <input matInput type="text" class="form-control" id="email" formControlName="email"
-                                            placeholder="Email(user@xyz.com)" autocomplete="off">
+                                        <input matInput type="text" class="form-control" id="email"
+                                            formControlName="email" placeholder="Email(user@xyz.com)"
+                                            autocomplete="off">
 
                                     </mat-form-field>
 
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'email')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'email')"
                                         errorMsg="Please enter a valid email.">
 
                                     </app-field-error-display>
@@ -126,7 +131,8 @@
 
                                     </mat-radio-group>
 
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
                                         errorMsg="Please select the gender.">
 
                                     </app-field-error-display>
@@ -176,7 +182,8 @@
 
                                     <!-- </div> -->
 
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
                                         errorMsg="Please select the date of birth.">
 
                                     </app-field-error-display>
@@ -227,7 +234,8 @@
 
                         </div>
 
-                        <button type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
+                        <button type="submit" mat-button [disabled]="!editProfileForm.valid"
+                            class="cs-btn bt1">{{update_btn}}</button>
 
                     </form>
 
@@ -240,15 +248,19 @@
                     <div class="right-menu-header">{{related_links_cap}}</div>
 
                     <ul class="related-link">
-                        <li (click)="shared_functions.redirectto('dashboard')" class="icon-dashboard">{{dashboard_cap}}</li>
+                        <li (click)="shared_functions.redirectto('dashboard')" class="icon-dashboard">{{dashboard_cap}}
+                        </li>
 
-                        <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_password_cap}}</li>
+                        <li (click)="shared_functions.redirectto('change-password')" class="icon-password">
+                            {{change_password_cap}}</li>
 
-                        <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">{{change_mobile_cap}}</li>
+                        <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
+                            {{change_mobile_cap}}</li>
 
                         <!-- <li (click)="shared_functions.redirectto('change-email')" class="icon-inbox">{{change_email_cap}}</li> -->
 
-                        <li (click)="shared_functions.redirectto('members')" class="icon-members" *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
+                        <li (click)="shared_functions.redirectto('members')" class="icon-members"
+                            *ngIf="curtype=='consumer'">{{family_members_cap}}</li>
 
                     </ul>
 
