@@ -15,7 +15,7 @@
                                 <div class="title" (click)="providerDetail(waitlist.provider)">
                                     <h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}</h3>
                                 </div>
-                                <div class="location" *ngIf="waitlist.queue.location">
+                                <div class="location consumr" *ngIf="waitlist.queue.location">
                                         {{waitlist.queue.location.place || '' | capitalizeFirst}}
                                     <a *ngIf="waitlist.queue.location.googleMapUrl"
                                         [href]="waitlist.queue.location.googleMapUrl" target="_blank"

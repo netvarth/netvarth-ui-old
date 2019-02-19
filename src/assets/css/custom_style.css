@@ -2112,6 +2112,9 @@ Overriding mat input style
   width: 250px !important; 
   height: 25px !important;
 }
+.consumr{
+  width: 250px !important; 
+}
 .dash {
   float: left !important;
 }
