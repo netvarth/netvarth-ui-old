@@ -38,7 +38,7 @@ export class ChangeMobileComponent implements OnInit {
   submit_data = {'phonenumber': null};
   breadcrumbs_init = [
     {
-      title: 'Change Mobile #',
+      title: this.changemob_cap,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
     }
   ];

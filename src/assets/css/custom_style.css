@@ -1575,7 +1575,7 @@ Overriding mat input style
 }
 
 .otp_scr .number-ip-sm {
-  max-width: 150px !important;
+  max-width: 100px !important;
 }
 
 .otp_scr .mat-button {
@@ -2124,3 +2124,8 @@ Overriding mat input style
 .related-links{
   margin-bottom: 30px!important;
 }
+.loginmainclass .mat-dialog-actions .newuser {
+  font-size: 0.75rem !important;
+}
+.otp_box input {float: left !important; margin-right: 10px !important}
+.otp_box button { float : left !important;}

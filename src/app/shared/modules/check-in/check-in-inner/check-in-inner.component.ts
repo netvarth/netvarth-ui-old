@@ -710,8 +710,10 @@ export class CheckInInnerComponent implements OnInit {
               'uuid': retUUID,
               'accountId': this.account_id
             };
+            console.log(payData);
             this.shared_services.consumerPayment(payData)
               .subscribe(pData => {
+                console.log(pData);
                 if (pData['response']) {
                   this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                   this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
