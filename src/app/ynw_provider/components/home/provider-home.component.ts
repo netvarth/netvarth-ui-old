@@ -504,48 +504,48 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   getQueueListByDate() {
     this.load_queue = 0;
     // if (!this.selected_queue) {
-      if (this.selected_location.id) {
-        this.provider_services.getProviderLocationQueuesByDate(
-          this.selected_location.id, this.queue_date)
-          .subscribe(
-            (data: any) => {
-              // this.queues = data;
-              const Cqueues = data;
-              this.queues = [];
-              const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
-              const savedQok = [];
-              let indx = 0;
-              for (const que of Cqueues) {
-                if (que.queueState === 'ENABLED') {
-                  // console.log('que', que);
-                  if (que.id === savedQ) {
-                    savedQok.push(que);
-                  }
-                  que.qindx = indx;
-                  this.queues.push(que);
-                  indx += 1;
+    if (this.selected_location.id) {
+      this.provider_services.getProviderLocationQueuesByDate(
+        this.selected_location.id, this.queue_date)
+        .subscribe(
+          (data: any) => {
+            // this.queues = data;
+            const Cqueues = data;
+            this.queues = [];
+            const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
+            const savedQok = [];
+            let indx = 0;
+            for (const que of Cqueues) {
+              if (que.queueState === 'ENABLED') {
+                // console.log('que', que);
+                if (que.id === savedQ) {
+                  savedQok.push(que);
                 }
+                que.qindx = indx;
+                this.queues.push(que);
+                indx += 1;
               }
-              // console.log('queues', this.queues);
-              if (savedQok.length > 0) {
-                this.selectedQueue(savedQok[0]);
-              } else {
-                if (this.queues[0] && this.selected_queue == null) {
-                  const selectedQindx = this.findCurrentActiveQueue(this.queues);
-                  // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
-                  this.selectedQueue(this.queues[selectedQindx]);
-                }
-              }
-            },
-            error => {
-              this.queues = [];
-              this.load_queue = 1;
-            },
-            () => {
-              this.load_queue = 1;
             }
-          );
-      }
+            // console.log('queues', this.queues);
+            if (savedQok.length > 0) {
+              this.selectedQueue(savedQok[0]);
+            } else {
+              if (this.queues[0] && this.selected_queue == null) {
+                const selectedQindx = this.findCurrentActiveQueue(this.queues);
+                // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
+                this.selectedQueue(this.queues[selectedQindx]);
+              }
+            }
+          },
+          error => {
+            this.queues = [];
+            this.load_queue = 1;
+          },
+          () => {
+            this.load_queue = 1;
+          }
+        );
+    }
     // }
     // else {
     //   this.selectedQueue(this.selected_queue);
@@ -820,7 +820,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.queues = [];
     // console.log('ttype', this.time_type, this.queues.length);
     // if (this.time_type === 1 && this.queues.length === 0) {
-      // alert('Time Type : ' + this.time_type);
+    // alert('Time Type : ' + this.time_type);
     // if (this.time_type === 1) {
     //   this.getQueueListByDate();
     // }
@@ -1035,11 +1035,15 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service ||
-      this.filter.queue || this.filter.waitlist_status || this.filter.payment_status || this.filter.check_in_start_date
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
+      this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date) {
       this.filterapplied = true;
     }
+    else {
+      this.filterapplied = false;
+    }
+    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   resetFilter() {
@@ -1232,5 +1236,4 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.sendMessage(pdata);
   }
 }
-
 
