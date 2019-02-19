@@ -2117,6 +2117,7 @@ Overriding mat input style
 }
 .dash {
   float: left !important;
+  color: #00aef2 !important;
 }
 .lm-popup .lm-outer {
   height: 95vh !important;
