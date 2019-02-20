@@ -714,9 +714,9 @@ export const Messages = {
   'TAXABLE_CAP': 'Taxable',
   'NO_HISTORY_MSG' : 'No previous [waitlist]s',
   'NO_TODAY_CHECKIN_MSG' : 'No new [waitlist]s for this time window',
-  'NO_STRTED_CHECKIN_MSG' :'No started [waitlist]s',
-  'NO_COMPLETED_CHECKIN_MSG' :'No completed [waitlist]s',
-  'NO_CANCELLED_CHECKIN_MSG' : 'No cancelled [waitlist]s',
+  'NO_STRTED_CHECKIN_MSG' :'No \'started\' [waitlist]s',
+  'NO_COMPLETED_CHECKIN_MSG' :'No \'completed\' [waitlist]s',
+  'NO_CANCELLED_CHECKIN_MSG' : 'No \'cancelled\' [waitlist]s',
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
