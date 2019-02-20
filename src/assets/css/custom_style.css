@@ -2133,3 +2133,21 @@ Overriding mat input style
 .dtepicker{
   width: 110px !important;
 }
+@media (max-height: 580px) {
+  .checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action {
+     margin-top: 0px!important; 
+  }
+  .checkin-consumer .mat-dialog-actions {
+    padding-bottom: 5px!important;
+    padding-top: 5px!important;
+  }
+  .checkin-consumer .mat-dialog-content .mainouter .consumer-comment {
+      padding-bottom: 0px!important;
+  }
+  .checkin-consumer .mat-dialog-content .mainouter .servicefor-outer.btborder {
+    padding-bottom: 0px!important; 
+  }
+  .checkin-consumer .mat-dialog-content {
+      padding-bottom: 0px!important;
+  }
+}

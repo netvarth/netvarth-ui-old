@@ -1,14 +1,14 @@
 
-import {of as observableOf,  Observable ,  Subscription } from 'rxjs';
+import { of as observableOf, Observable, Subscription } from 'rxjs';
 
-import {delay} from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { Component, Inject, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
-import {Messages} from '../../../shared/constants/project-messages';
-import {projectConstants} from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstants } from '../../../shared/constants/project-constants';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
@@ -23,23 +23,23 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 export class AddProviderWaitlistServiceComponent implements OnInit {
 
-service_cap = Messages.PRO_SERVICE_CAP;
-description_cap = Messages.DESCRIPTION_CAP;
-price_cap = Messages.PRICE_CAP;
-service_name_cap = Messages.SERVICE_NAME_CAP;
-est_duration_cap = Messages.EST_DURATION_CAP;
-enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
-prepayment_cap = Messages.PREPAYMENT_CAP;
-tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
-service_notify_cap = Messages.SERVICE_NOTIFY_CAP;
-push_message_cap = Messages.PUSH_MESSAGE_CAP;
-service_email_cap = Messages.SERVICE_EMAIL_CAP;
-gallery_cap = Messages.GALLERY_CAP;
-select_image_cap = Messages.SELECT_IMAGE_CAP;
-go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
-delete_btn = Messages.DELETE_BTN;
-cancel_btn = Messages.CANCEL_BTN;
-service_price_cap = Messages.SERVPRICE_CAP;
+  service_cap = Messages.PRO_SERVICE_CAP;
+  description_cap = Messages.DESCRIPTION_CAP;
+  price_cap = Messages.PRICE_CAP;
+  service_name_cap = Messages.SERVICE_NAME_CAP;
+  est_duration_cap = Messages.EST_DURATION_CAP;
+  enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
+  prepayment_cap = Messages.PREPAYMENT_CAP;
+  tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
+  service_notify_cap = Messages.SERVICE_NOTIFY_CAP;
+  push_message_cap = Messages.PUSH_MESSAGE_CAP;
+  service_email_cap = Messages.SERVICE_EMAIL_CAP;
+  gallery_cap = Messages.GALLERY_CAP;
+  select_image_cap = Messages.SELECT_IMAGE_CAP;
+  go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
+  delete_btn = Messages.DELETE_BTN;
+  cancel_btn = Messages.CANCEL_BTN;
+  service_price_cap = Messages.SERVPRICE_CAP;
   rupee_symbol = '₹';
   amForm: FormGroup;
   api_error = null;
@@ -74,7 +74,7 @@ service_price_cap = Messages.SERVPRICE_CAP;
   disable_price = true;
   taxDetails: any = [];
   taxpercentage = 0;
- savedisabled = false;
+  savedisabled = false;
   canceldisabled = false;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
@@ -84,29 +84,29 @@ service_price_cap = Messages.SERVPRICE_CAP;
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     public router: Router
-    ) {}
+  ) { }
 
   ngOnInit() {
 
-     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-     this.type = this.data.type;
-     const package_id = (user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
-     user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
-     this.base_licence = (package_id === 1) ? true : false;
-     if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
-        this.disable_price = true;
-     } else {
-       this.disable_price = false;
-     }
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.type = this.data.type;
+    const package_id = (user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
+      user['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
+    //  this.base_licence = (package_id === 1) ? true : false;
+    if (user['sector'] === 'foodJoints') { // this is to decide whether the price field is to be displayed or not
+      this.disable_price = true;
+    } else {
+      this.disable_price = false;
+    }
 
-     this.getTaxpercentage();
-     this.createForm();
-     if (this.data.type === 'edit') {
+    this.getTaxpercentage();
+    this.createForm();
+    if (this.data.type === 'edit') {
       this.service = this.data.service;
       this.setValue(this.service);
       this.getGalleryImages();
       this.button_title = 'Update';
-     }
+    }
   }
   setDescFocus() {
     this.isfocused = true;
@@ -118,29 +118,29 @@ service_price_cap = Messages.SERVPRICE_CAP;
   setCharCount(ev) {
     this.char_count = this.max_char_count - this.amForm.get('description').value.length;
   }
-  getGalleryImages () {
+  getGalleryImages() {
     const service_id = this.service.id;
     this.provider_services.getServiceGallery(service_id)
-    .subscribe(
-      data => {
-        this.gallery = data;
-        this.loadGalleryImages(this.gallery);
-      },
-      error => {
+      .subscribe(
+        data => {
+          this.gallery = data;
+          this.loadGalleryImages(this.gallery);
+        },
+        error => {
 
-      }
-    );
+        }
+      );
   }
   getTaxpercentage() {
     this.provider_services.getTaxpercentage()
-        .subscribe (data => {
-            this.taxDetails = data;
-            this.taxpercentage = this.taxDetails.taxPercentage;
-            console.log('tax percentage', this.taxpercentage);
-        },
-    error => {
+      .subscribe(data => {
+        this.taxDetails = data;
+        this.taxpercentage = this.taxDetails.taxPercentage;
+        console.log('tax percentage', this.taxpercentage);
+      },
+        error => {
 
-    });
+        });
   }
 
   taxapplicableChange() {
@@ -164,23 +164,23 @@ service_price_cap = Messages.SERVPRICE_CAP;
         description: ['', Validators.compose([Validators.maxLength(500)])],
         // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
-       // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-       // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
-       // taxable: [false],
+        // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+        // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
+        // taxable: [false],
         notification: [false]
-        });
+      });
     } else {
       this.amForm = this.fb.group({
-          name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-          description: ['', Validators.compose([Validators.maxLength(500)])],
-          // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
-          serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
-          totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-          isPrePayment: [{'value': false , 'disabled': this.base_licence }],
-          taxable: [false],
-          notification: [false]
-          });
-      }
+        name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+        description: ['', Validators.compose([Validators.maxLength(500)])],
+        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+        isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+        taxable: [false],
+        notification: [false]
+      });
+    }
   }
 
   setValue(data) {
@@ -204,8 +204,8 @@ service_price_cap = Messages.SERVPRICE_CAP;
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
         'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
         'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
-                                data['minPrePaymentAmount'] !== 0
-                                ) ? true : false,
+          data['minPrePaymentAmount'] !== 0
+        ) ? true : false,
         'taxable': data['taxable'] || this.amForm.get('taxable').value,
         'notification': data['notification'] || this.amForm.get('notification').value,
       });
@@ -214,7 +214,7 @@ service_price_cap = Messages.SERVPRICE_CAP;
     this.changePrepayment();
   }
 
-  onSubmit (form_data) {
+  onSubmit(form_data) {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
     if (this.disable_price) {
@@ -223,11 +223,11 @@ service_price_cap = Messages.SERVPRICE_CAP;
       form_data['taxable'] = false;
     } else {
       form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
-                                      0 : form_data.minPrePaymentAmount;
+        0 : form_data.minPrePaymentAmount;
       form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
     }
     if (this.data.type === 'add') {
-       this.createService(form_data);
+      this.createService(form_data);
     } else if (this.data.type === 'edit') {
       form_data.id = this.service.id;
       this.updateService(form_data);
@@ -240,43 +240,43 @@ service_price_cap = Messages.SERVPRICE_CAP;
     const holdstat = this.button_title;
     this.button_title = 'Please wait ...';
     this.provider_services.createService(post_data)
-    .subscribe(
-      data => {
-       this.savedisabled = false;
-        this.button_title = holdstat;
-        const service_id = data;
-        this.service = [];
-        this.service['id'] = service_id;
-        if (this.item_pic.files.length > 0) {
-          this.saveImages('add');
-        } else {
-          // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
-          this.mode = 'afteradd';
-        }
+      .subscribe(
+        data => {
+          this.savedisabled = false;
+          this.button_title = holdstat;
+          const service_id = data;
+          this.service = [];
+          this.service['id'] = service_id;
+          if (this.item_pic.files.length > 0) {
+            this.saveImages('add');
+          } else {
+            // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
+            this.mode = 'afteradd';
+          }
 
-      },
-      error => {
-        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-         this.savedisabled = false;
-        this.button_title = holdstat;
-      }
-    );
+        },
+        error => {
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.savedisabled = false;
+          this.button_title = holdstat;
+        }
+      );
   }
 
   updateService(post_data) {
     this.provider_services.updateService(post_data)
-    .subscribe(
-      data => {
-        if (this.item_pic.files.length > 0) {
-          this.saveImages('edit');
-        } else {
-          this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+      .subscribe(
+        data => {
+          if (this.item_pic.files.length > 0) {
+            this.saveImages('edit');
+          } else {
+            this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+          }
+        },
+        error => {
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
-      },
-      error => {
-        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-      }
-    );
+      );
   }
 
   changeNotification() {
@@ -285,9 +285,9 @@ service_price_cap = Messages.SERVPRICE_CAP;
     } else {
 
       const value = (this.data.type === 'edit' && this.service['notificationType']) ?
-      this.service['notificationType'] : 'email';
+        this.service['notificationType'] : 'email';
       this.amForm.addControl('notificationType',
-      new FormControl(value));
+        new FormControl(value));
     }
   }
 
@@ -300,54 +300,54 @@ service_price_cap = Messages.SERVPRICE_CAP;
           this.getPaymentSettings();
         }
         const value = (this.data.type === 'edit' && this.service['minPrePaymentAmount']) ?
-        this.service['minPrePaymentAmount'] : '';
+          this.service['minPrePaymentAmount'] : '';
 
         this.amForm.addControl('minPrePaymentAmount',
-      new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+          new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
       }
     }
   }
 
   imageSelect(input, ev) {
 
-      this.success_error = null;
-      this.error_list = [];
+    this.success_error = null;
+    this.error_list = [];
 
-      // console.log(input.files);
-      if (input.files) {
-        for ( const file of input.files) {
-          this.success_error = this.shared_functions.imageValidation(file);
-          if (this.success_error === true) {
-            this.item_pic.files.push(file);
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              this.item_pic.base64.push(e.target['result']);
-            };
-            reader.readAsDataURL(file);
-          } else {
-            console.log(this.success_error);
-            this.error_list.push(this.success_error);
-            if (this.error_list[0].type) {
-              this.error_msg = 'Selected image type not supported';
-            } else if (this.error_list[0].size) {
-              this.error_msg = 'Please upload images with size < 5mb';
-            }
+    // console.log(input.files);
+    if (input.files) {
+      for (const file of input.files) {
+        this.success_error = this.shared_functions.imageValidation(file);
+        if (this.success_error === true) {
+          this.item_pic.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.item_pic.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          console.log(this.success_error);
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size < 5mb';
           }
-
         }
 
       }
+
+    }
   }
 
   saveImages(from) {
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
-    for ( const pic of this.item_pic.files) {
+    for (const pic of this.item_pic.files) {
 
       submit_data.append('files', pic, pic['name']);
       const properties = {
-        'caption' :  this.item_pic.caption[i] || ''
+        'caption': this.item_pic.caption[i] || ''
       };
       propertiesDetob[i] = properties;
       i++;
@@ -365,56 +365,56 @@ service_price_cap = Messages.SERVPRICE_CAP;
   }
 
   uploadApi(submit_data, from) {
- this.savedisabled = true;
+    this.savedisabled = true;
     const holdstat = this.button_title;
     this.button_title = 'Uploading ...';
     this.canceldisabled = true;
     this.provider_services.uploadServiceGallery(this.service.id, submit_data)
-    .subscribe(
-      data => {
-       this.savedisabled = false;
-        this.canceldisabled = false;
-        this.button_title = holdstat;
-        this.getGalleryImages();
-        this.resetVariables();
-        if (from === 'add') {
-          // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
-          this.mode = 'afteradd';
-        } else if (from === 'edit') {
-          this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+      .subscribe(
+        data => {
+          this.savedisabled = false;
+          this.canceldisabled = false;
+          this.button_title = holdstat;
+          this.getGalleryImages();
+          this.resetVariables();
+          if (from === 'add') {
+            // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
+            this.mode = 'afteradd';
+          } else if (from === 'edit') {
+            this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+          }
+        },
+        error => {
+          this.savedisabled = false;
+          this.canceldisabled = false;
+          this.button_title = holdstat;
+          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
-      },
-      error => {
-this.savedisabled = false;
-        this.canceldisabled = false;
-        this.button_title = holdstat;
-        this.api_error =  this.shared_functions.getProjectErrorMesssages(error);
-      }
-    );
+      );
 
   }
 
   loadGalleryImages(all_images) {
 
-        const imagesArray = [];
-          let i = 0;
-          for (const image of all_images) {
+    const imagesArray = [];
+    let i = 0;
+    for (const image of all_images) {
 
-            // const img =  new Image(
-            //               image.url,
-            //               image.thumbUrl, // no thumb
-            //               image.caption, // no description
-            //               null
-            //             );
-            const img = new Image(i, {
-              img: image.url,
-              description: ''
-            });
-            i++;
-            imagesArray.push(img);
-          }
+      // const img =  new Image(
+      //               image.url,
+      //               image.thumbUrl, // no thumb
+      //               image.caption, // no description
+      //               null
+      //             );
+      const img = new Image(i, {
+        img: image.url,
+        description: ''
+      });
+      i++;
+      imagesArray.push(img);
+    }
 
-        this.images = observableOf(imagesArray).pipe(delay(300));
+    this.images = observableOf(imagesArray).pipe(delay(300));
   }
 
   openImageModal(index) {
@@ -433,15 +433,15 @@ this.savedisabled = false;
 
   deleteImage(file) {
     this.provider_services.deleteServiceGalleryImage(this.service.id, file.keyName)
-    .subscribe(
-      data => {
-        this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_IMAGE_DELETED);
-        this.getGalleryImages();
-      },
-      error => {
-        this.shared_functions.apiErrorAutoHide(this, error);
-      }
-    );
+      .subscribe(
+        data => {
+          this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_IMAGE_DELETED);
+          this.getGalleryImages();
+        },
+        error => {
+          this.shared_functions.apiErrorAutoHide(this, error);
+        }
+      );
 
   }
 
@@ -453,7 +453,7 @@ this.savedisabled = false;
 
   }
 
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
     this.error_msg = null;
@@ -474,29 +474,29 @@ this.savedisabled = false;
     this.api_success = message;
     setTimeout(() => {
       this.dialogRef.close('reloadlist');
-      }, projectConstants.TIMEOUT_DELAY);
+    }, projectConstants.TIMEOUT_DELAY);
   }
 
   getPaymentSettings() {
     this.payment_loading = true;
     this.provider_services.getPaymentSettings()
-    .subscribe(
-      data => {
-        this.payment_settings = data;
-        this.payment_loading = false;
-        if (!this.payment_settings.onlinePayment) {
-          this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
-          if (!this.disable_price) {
-            this.amForm.get('isPrePayment').setValue(false);
-            this.changePrepayment();
+      .subscribe(
+        data => {
+          this.payment_settings = data;
+          this.payment_loading = false;
+          if (!this.payment_settings.onlinePayment) {
+            this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
+            if (!this.disable_price) {
+              this.amForm.get('isPrePayment').setValue(false);
+              this.changePrepayment();
+            }
           }
+        },
+        error => {
+          // this.shared_functions.apiErrorAutoHide(this, error);
+          // this.amForm.get('isPrePayment').setValue(false);
         }
-      },
-      error => {
-        // this.shared_functions.apiErrorAutoHide(this, error);
-        // this.amForm.get('isPrePayment').setValue(false);
-      }
-    );
+      );
   }
   gotoManageQueue() {
     this.dialogRef.close('reloadlist');
