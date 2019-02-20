@@ -2130,3 +2130,6 @@ Overriding mat input style
 }
 .otp_box input {float: left !important; margin-right: 10px !important}
 .otp_box button { float : left !important;}
+.dtepicker{
+  width: 110px !important;
+}
