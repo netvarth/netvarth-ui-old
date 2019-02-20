@@ -1003,7 +1003,7 @@ export const Messages = {
   'PRI_PHONE_LABEL_CAP' : 'Phone Label *',
   'PRI_THIS_PHONE_VISIBLE_TO_CAP' : 'This phone number is visible to',
   'PRI_EMAIL_ID_CAP' : 'Email Id *',
-  'PRI_EMAIL_LABEL_CAP' : 'Email Label *',
+  'PRI_EMAIL_LABEL_CAP' : 'Email Label ',
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
