@@ -487,9 +487,20 @@
             </div>
           </div>
           <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
-            <div class="qlst no-dta" *ngIf="time_type == 1 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+            <div class="qlst no-dta" *ngIf="time_type == 1 && load_waitlist ==1 && check_in_filtered_list.length == 0 && status_type =='all'">
               {{no_today_checkin_msg}}
             </div>
+            <div class="qlst no-dta" *ngIf="today_started_count == 0 && status_type =='started'">
+              {{no_started_checkin_msg}}
+            </div>
+            <div class="qlst no-dta" *ngIf="today_completed_count == 0 && status_type =='done'">
+              {{no_completed_checkin_msg}}
+            </div>
+            <div class="qlst no-dta" *ngIf="today_cancelled_count == 0 && status_type =='cancelled'">
+              {{no_cancelled_checkin_msg}}
+            </div>
+             
+             
             <div class="qlst no-dta" *ngIf="time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
               {{no_future_checkins}}
             </div>

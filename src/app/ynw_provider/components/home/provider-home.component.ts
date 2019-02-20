@@ -64,6 +64,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   no_history = '';
   no_today_checkin_msg = '';
+  no_started_checkin_msg= '';
+  no_completed_checkin_msg='';
+  no_cancelled_checkin_msg='';
   check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
@@ -190,6 +193,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
     this.no_today_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_TODAY_CHECKIN_MSG);
+    this.no_started_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
+    this.no_completed_checkin_msg= this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
+    this.no_cancelled_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
     this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
     this.waitlist_status = [
       { name: this.checkedin_upper, value: 'checkedIn' },
