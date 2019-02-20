@@ -351,7 +351,7 @@ export const projectConstants = {
     DISABLED_PROVIDER_LIMIT_REACHED: 'Disabled (Limit Reached)'
   },
   LICENSE_PACKAGES: {
-   5 : 'You can always change licensing, Once the trial period expires, we will automatically put you in to "Basic Free". You will never gets charges unless until you say so.',
+   5 : 'You can change licensing anytime. Once the trial period expires, we will automatically put you in to "Basic Free". You will never get charges unless until you say so.',
    1 : 'Basic Free special offer.',
    7 : 'bronze',
    2 : 'silver',
