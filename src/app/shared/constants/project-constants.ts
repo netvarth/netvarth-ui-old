@@ -52,6 +52,7 @@ export const projectConstants = {
   TIMEOUT_DELAY_LARGE: 4100, // msec
   TIMEOUT_DELAY_LARGE6: 6000, // msec
   TIMEOUT_DELAY_LARGE10: 10000, // msec
+  TIMEOUT_DELAY_600: 600, 
   TOOLBAR_CONFIG: [
     {
       name: 'document',
@@ -210,16 +211,24 @@ export const projectConstants = {
   VALIDATOR_MAX200: 200, // max char count
   VALIDATOR_MAX250: 250, // max char count
   VALIDATOR_MAX500: 500, // max char count
-  WAITLIST_CANCEL_RESON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel' },
+  VALIDATOR_MAX_LAKH: 100,
+  QTY_MAX_VALUE: 100000,
+  PRICE_MAX_VALUE: 100000,
+  TIME_MAX_VALUE: 3600,
+  PERC_MAX_VALUE: 100,
+  WAITLIST_CANCEL_RESON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
-  { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel' },
+  { title: 'Closing Soon', value: 'closingSoon', reasonkey: 'closingSoonCancel', type: 2 },
   { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' }],
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
   DISTANCE_STATE: 100, // in Km
   DISTANCE_CITY: 25, // in Km
   DISTANCE_AREA: 5, // in Km
+  DISTANCE_METRO: 10, // in Km
+  DISTANCE_CAPITAL: 20, // in Km
+
   AUDITLOG_CNT: 10,
   AUDITLOG_FILTER_CATEGORIES: [
     {
@@ -227,7 +236,7 @@ export const projectConstants = {
       displayName: 'Settings',
       subcat: [
         { name: 'LOCATION', dispName: 'Location' },
-        { name: 'QUEUE', dispName: 'Service Time-Window' },
+        { name: 'QUEUE', dispName: 'Working Hours' },
         { name: 'SERVICE', dispName: 'Service' },
         { name: 'HOLIDAY', dispName: 'Holiday' },
         { name: 'WAITLIST', dispName: 'Waitlist' },
@@ -256,7 +265,7 @@ export const projectConstants = {
       name: 'LICENSE',
       displayName: 'License',
       subcat: [
-        { name: 'ADDON', dispName: 'Addon' },
+        { name: 'ADDON', dispName: 'Add-on' },
         { name: 'INVOICE', dispName: 'Invoice' },
         { name: 'LICENSE', dispName: 'License' }
       ]
@@ -274,7 +283,7 @@ export const projectConstants = {
     { name: 'ADD', dispName: 'Add' },
     { name: 'DELETE', dispName: 'Delete' },
     { name: 'EDIT', dispName: 'Edit' },
-    { name: 'COPY', dispName: 'Copy' },
+    // { name: 'COPY', dispName: 'Copy' },
     { name: 'VIEW', dispName: 'View' }
   ],
   ALERT_CNT: 10,
@@ -323,14 +332,14 @@ export const projectConstants = {
     Done: 'Completed',
     Started: 'Started',
     Arrived: 'Arrived',
-    CheckedIn: 'CheckedIn',
+    CheckedIn: 'Checked in',
     Cancelled: 'Cancelled'
   },
   CHECK_IN_STATUSES_FILTER: [
-    { displayName: 'Completed', value: 'done' },
-    { displayName: 'Started', value: 'started' },
+    { displayName: 'Checked in', value: 'checkedIn' },
     { displayName: 'Arrived', value: 'arrived' },
-    { displayName: 'CheckedIn', value: 'checkedIn' },
+    { displayName: 'Started', value: 'started' },
+    { displayName: 'Completed', value: 'done' },
     { displayName: 'Cancelled', value: 'cancelled' }
   ],
   JCOUPON_STATES: {
@@ -342,11 +351,23 @@ export const projectConstants = {
     DISABLED_PROVIDER_LIMIT_REACHED: 'Disabled (Limit Reached)'
   },
   LICENSE_PACKAGES: {
-   5 : 'You can always change licensing, Once the trial period expires, we will automatically put you in to "Basic Free". You will never gets charges unless until you say so.',
+   5 : 'You can change licensing anytime. Once the trial period expires, we will automatically put you in to "Basic Free". You will never get charges unless until you say so.',
    1 : 'Basic Free special offer.',
    7 : 'bronze',
    2 : 'silver',
    3 : 'Gold',
    4 : 'Diamond'
+  },
+  PROFILE_ERROR_STACK: {
+    1: 'Please set profile name and location',
+    2: 'Please set profile name',
+    3: 'Please set location',
+    4: 'No active services found',
+    5: 'No active working hours found',
+    pushMsg : 'Push message',
+    email : 'Email',
+    professionalConsulting : 'Eg. Adv.Pranav',
+    healthCare : 'Eg. Seven Star Clinic, Dr. Mani, Bright Hospital',
+    personalCare : 'Eg. Herbal beauty parlour'
   }
 };

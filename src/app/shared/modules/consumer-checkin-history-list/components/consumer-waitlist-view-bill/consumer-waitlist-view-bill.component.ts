@@ -44,7 +44,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   payment_logs_cap = Messages.PAY_LOGS_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
-  status_cap = Messages.STATUS_CAP;
+  status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
   coupon_notes = projectConstants.COUPON_NOTES;
@@ -73,7 +73,8 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   pay_data = {
     'uuid': null,
     'paymentMode': null,
-    'amount': 0
+    'amount': 0,
+    'accountId': null
   };
   payment_popup = null;
   showPaidlist = false;
@@ -204,6 +205,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.amount = this.bill_data.amountDue;
     this.pay_data.paymentMode = 'DC';
+    this.pay_data.accountId = this.checkin.provider.id;
     this.resetApiError();
     if (this.pay_data.uuid != null &&
       this.pay_data.paymentMode != null &&

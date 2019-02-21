@@ -40,6 +40,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   api_success = null;
   customer_label = '';
   checkin_label = '';
+  frm_wait_cal_cap = '';
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -52,10 +53,26 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
 
     this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
     this.setValue(this.waitlist_manager);
+    this.frm_wait_cal_cap = Messages.FRM_LEVEL_WAIT_TIME_CALC_MSG.replace('[customer]',this.customer_label);
   }
 
+  /**
+   * To prevent typing number greater than 4 digit
+   * @param number typed number
+   */
+  isValid(number) {
+    if (number <= 0) {
+      this.form.trnArndTime = '';
+    } else if (number > 999) {
+      console.log(number.toString());
+      let numString = number.toString();
+      if (numString.length > 3) {
+        numString = numString.substr(0, numString.length - 1);
+        this.form.trnArndTime = numString;
+      }
+    }
+  }
   setValue(value) {
-
     let calcMode = value['calculationMode'] || '';
     const showToken = value['showTokenId'] || false;
     if (calcMode === 'NoCalc' && showToken) {

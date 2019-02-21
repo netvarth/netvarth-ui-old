@@ -1,18 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
-import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
-
 import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable ,  Subscription } from 'rxjs';
-
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-provider-bprofile-search-gallery',
@@ -25,7 +19,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   gallery_cap = Messages.SEARCH_GALLERY_CAP;
   delete_btn_cap = Messages.DELETE_BTN;
   select_img_file_cap = Messages.SEARCH_GALLERY_SELEC_IMG_FILE_CAP;
-  cancel_btn_cap = Messages.CANCEL_BTN
+  cancel_btn_cap = Messages.CANCEL_BTN;
 
   item_pic = {
     files: [],
@@ -130,7 +124,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
           } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size < 5mb';
+            this.error_msg = 'Please upload images with size less than 5mb';
           }
           // this.error_msg = 'Please upload images with size < 5mb';
         }
@@ -146,7 +140,9 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
     this.item_pic.files.splice(i, 1);
     this.item_pic.base64.splice(i, 1);
     this.item_pic.caption.splice(i, 1);
-
+    this.savedisabled = false;
+    this.img_save_caption = 'Upload';
+    this.error_msg = null;
   }
 
   saveImages() {

@@ -1,18 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-import { AddProviderWaitlistQueuesComponent } from '../add-provider-waitlist-queues/add-provider-waitlist-queues.component';
-
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
@@ -28,6 +20,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   no_service_cap = Messages.NO_SERVICE_CAP;
   new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
   max_capacity_cap = Messages.QUEUE_MAX_CAPACITY_CAP;
+  no_queue_add = Messages.NO_QUEUE_ADDED;
+  work_hours = Messages.SERVICE_TIME_CAP;
   queue_list: any = [];
   query_executed = false;
   customer_label = '';
@@ -47,10 +41,11 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       url: '/provider/settings/waitlist-manager'
     },
     {
-      title: 'Service Time-Windows'
+      title: this.work_hours
     }
   ];
   queuedialogRef;
+  isCheckin;
 
   constructor(
     private provider_services: ProviderServices,
@@ -63,8 +58,12 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // calling the method to get the list of locations
     this.getProviderQueues();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue' };
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue',
+      'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }]
+    };
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+    this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -72,7 +71,11 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       this.queuedialogRef.close();
     }
   }
-
+  performActions(action) {
+    // if (action === 'timewindow') {
+    this.addEditProviderQueue('add');
+    // }
+  }
   // get the list of locations added for the current provider
   getProviderQueues() {
     const activeQueues: any = [];

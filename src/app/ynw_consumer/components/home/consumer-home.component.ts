@@ -1,35 +1,25 @@
-
-import { interval as observableInterval, Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
-
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
-import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
-import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
-
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
-import { startWith } from 'rxjs/operators/startWith';
-import { map } from 'rxjs/operators/map';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
-import { appendFile } from 'fs';
-import { count } from 'rxjs/operators';
 import { NgxCarousel } from 'ngx-carousel';
 
 @Component({
@@ -71,7 +61,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   different_date_cap = Messages.DIFFERENT_DATE_CAP;
   you_hav_added_caption = Messages.YOU_HAVENT_ADDED_CAP;
   history_cap = Messages.HISTORY_CAP;
-
+  server_date;
 
   waitlists;
   fav_providers: any = [];
@@ -138,6 +128,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselOne: NgxCarousel;
 
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    if (!this.server_date) {
+      this.setSystemDate();
+    }
     this.carouselOne = {
       grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
       slide: 3,
@@ -208,7 +202,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       this.remfavdialogRef.close();
     }
   }
-
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+    .subscribe (
+      res => {
+        this.server_date = res;
+        this.shared_functions.setitemonLocalStorage('sysdate', res);
+      });
+  }
   getWaitlist() {
 
     this.loadcomplete.waitlist = false;
@@ -223,7 +224,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.waitlists = data;
           // console.log('waitlist', this.waitlists);
-          const today = new Date();
+          const today = new Date(this.server_date);
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
@@ -272,7 +273,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.time = waitlist.serviceTime;
 
       const waitlist_date = new Date(waitlist.date);
-      const today = new Date();
+      const today = new Date(this.server_date);
       today.setHours(0, 0, 0, 0);
       waitlist_date.setHours(0, 0, 0, 0);
       if (today.valueOf() < waitlist_date.valueOf()) {
@@ -419,7 +420,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         if (waitlisttime_arr === '"Account doesn\'t exist"') {
           waitlisttime_arr = [];
         }
-        const today = new Date();
+        const today = new Date(this.server_date);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
         const yyyy = today.getFullYear();
@@ -439,7 +440,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let locindx;
         const check_dtoday = new Date(dtoday);
-        let cdate = new Date();
+        let cdate;
         for (let i = 0; i < waitlisttime_arr.length; i++) {
           locindx = provids_locid[i].locindx;
           // console.log('locindx', locindx);
@@ -927,7 +928,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               const payData = {
                 'amount': prepayamt,
                 'paymentMode': 'DC',
-                'uuid': waitlist.ynwUuid
+                'uuid': waitlist.ynwUuid,
+                'account_id' : waitlist.provider.id
               };
               this.shared_services.consumerPayment(payData)
                 .subscribe(pData => {

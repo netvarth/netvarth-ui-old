@@ -1,5 +1,5 @@
 <section>
-  <app-provider-subheader [activeTab]="'customers'"></app-provider-subheader> <!-- Subheader section -->
+  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'customers'"></app-provider-subheader> <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section class="dashboard">
@@ -30,7 +30,7 @@
               <div class="form-group mobile">
                 <mat-form-field class="example-full-width">
                   <label class="col-form-label">{{mobile_cap}}</label>
-                  <input matInput [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
+                  <input matInput [(ngModel)]="filter.mobile" maxlength="10" #Fmobile (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
                     autocomplete="off">
                 </mat-form-field>
               </div>

@@ -14,7 +14,7 @@
       <mat-select #license_selpackage formControlName="license_selpackage" *ngIf="upgradablepackages"
       (selectionChange)="licensepackage_Select(license_selpackage.value)" placeholder="{{lic_package_cap}}">
         <mat-option *ngFor="let package of upgradablepackages"
-        [value]="package.pkgId">
+        [value]="package">
           {{package.displayName}}
         </mat-option>
       </mat-select>

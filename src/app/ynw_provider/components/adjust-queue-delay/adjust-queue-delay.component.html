@@ -7,23 +7,28 @@ onSubmit(amForm.value)" class="ynw-common-form">
   </h1>
   <mat-dialog-content>
     <div class="adjustdelay">
-      <div class="form-group" *ngIf="queues.length>1">
-        <mat-form-field>
+      <!-- <div class="form-group" *ngIf="queues.length>1"> -->
+        <p class="form-level-settings">{{frm_adjust_del_cap}}</p>
+          <div class="form-group">
+           <span class="no-padding mgn-bt-10 mgn-up-10">{{queue_name}} [{{queue_schedule}}]</span> 
+        <!-- <mat-form-field>
           <mat-select placeholder="{{service_window_cap}}" [(ngModel)]="selected_queue" [ngModelOptions]="{standalone: true}"
             #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">
             <mat-option *ngFor="let queue of queues" [value]="queue.id">
               {{queue.name}}
+              
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
-      <div class="brd-bt no-padding pad-bt-10 mgn-bt-10 mgn-up-10">
+      
+      <div class="brd-bt no-padding mgn-bt-10 mgn-up-10">
         <div class="row ">
           <div class="col-md-6 col-6">
-            <h6>Checkins # {{checkedin_cnt}}</h6>
+            <p>Total Checkins # {{tot_checkin_count}}</p>
           </div>
           <div class="col-md-6 col-6">
-            <h6>Arrived # {{arrived_cnt}}</h6>
+            <p>Arrived # {{arrived_cnt}}</p>
           </div>
         </div>
       </div>
@@ -39,11 +44,12 @@ onSubmit(amForm.value)" class="ynw-common-form">
         <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
           <label class="col-form-label">{{messgae_cap}}</label>
           <textarea class="form-control" placeholder="Message" formControlName="message" autocomplete="off"
-            [placeholder]="placeholder">
+            [placeholder]="placeholder" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500">
 
             </textarea>
         </ng-container>
       </div>
+      <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>

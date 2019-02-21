@@ -9,11 +9,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
-import { EventEmitter } from 'protractor';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { ActivatedRoute } from '@angular/router';
-import { ProviderWaitlistCheckInPaymentComponent } from '../provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
-import { MessageService } from '../../services/provider-message.service';
+import { VALID_ELEMENTS } from '@angular/core/src/sanitization/html_sanitizer';
 
 export interface ItemServiceGroup {
   type: string;
@@ -53,7 +51,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   tax_cap = Messages.TAX_CAP;
   amount_paid_cap = Messages.AMNT_PAID_CAP;
   amount_to_pay_cap = Messages.AMNT_TO_PAY_CAP;
-  nettotal_cap =  Messages.NETTOTAL;
+  nettotal_cap = Messages.NETTOTAL;
   apply_cap = Messages.APPLY_CAP;
   value_cap = Messages.VALUE_CAP;
   back_to_bill_cap = Messages.BACK_TO_BILL_CAP;
@@ -62,7 +60,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   payment_logs_cap = Messages.PAY_LOGS_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   refundable_cap = Messages.REFUNDABLE_CAP;
-  status_cap = Messages.STATUS_CAP;
+  status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
   save_btn_cap = Messages.SAVE_BTN;
@@ -86,6 +84,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applycoupon_cap = Messages.APPLYCOUPON;
   notesfor_cap = Messages.NOTESFOR;
   privatenote_cap = Messages.PROVIDER_NOTE_CAP;
+  price_limit = projectConstants.PRICE_MAX_VALUE;
+  qty_limit = projectConstants.QTY_MAX_VALUE;
   @ViewChild('itemservicesearch') item_service_search;
   @ViewChild('itemserviceqty') item_service_qty;
   amForm: FormGroup;
@@ -100,6 +100,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   timeFormat = 'h:mm a';
   itemServiceSearch: FormControl = new FormControl();
   services: any = [];
+  all_services: any = [];
   coupons: any = [];
   discounts: any = [];
   itemdiscounts: any = [];
@@ -117,6 +118,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   selectedItemService;
   showPaidlist = false;
   actiontype;
+  isCheckin;
   ItemServiceGroupOptions: Observable<ItemServiceGroup[]>;
   itemServicesGroup: ItemServiceGroup[] = [{
     'type': 'Services',
@@ -156,6 +158,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   uuid;
   jCouponsList: any = [];
   makPaydialogRef;
+  qty = '';
   breadcrumbs = [
     {
       title: Messages.DASHBOARD_TITLE,
@@ -186,10 +189,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getCheckinDetails();
   }
   ngOnInit() {
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
+    this.getPaymentSettings();
     this.getJaldeeActiveCoupons();
     this.getCoupons()
       .then(
@@ -217,6 +222,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.bill_load_complete = 0;
         });
   }
+
   getJaldeeActiveCoupons() {
     this.jCouponsList = [];
     let couponList: any = [];
@@ -357,6 +363,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getServicesList()
       .subscribe(
         (data: any) => {
+          this.all_services = data;
           for (const ser of data) {
             if (ser.status === 'ACTIVE') {
               this.services.push(ser);
@@ -407,16 +414,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.getProviderItems()
       .subscribe(
         (data: any) => {
-          this.items = data;
-          const items = this.items.map((ob) => ob.displayName);
-          this.itemServicesGroup[1]['values'] = items;
+          for (const ser of data) {
+            if (ser.status === 'ACTIVE') {
+              this.items.push(ser);
+            }
+          }
+          const itemslist = this.items.map((ob) => ob.displayName);
+          this.itemServicesGroup[1]['values'] = itemslist;
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-
         }
       );
   }
+
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
@@ -457,7 +468,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       } else if (mod === 'time') {
         retval = dtsarr[1] + ' ' + dtsarr[2];
       }
-
       return retval;
     } else {
       return;
@@ -490,9 +500,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    */
   getSelectedServiceId(serviceName) {
     let serviceId = 0;
-    for (let i = 0; i < this.services.length; i++) {
-      if (this.services[i].name === serviceName) {
-        serviceId = this.services[i].id;
+    for (let i = 0; i < this.all_services.length; i++) {
+      if (this.all_services[i].name === serviceName) {
+        serviceId = this.all_services[i].id;
         break;
       }
     }
@@ -609,7 +619,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.getPrePaymentDetails();
           console.log(this.bill_data);
           this.hideWorkBench();
-          this.actiontype  = null;
+          this.actiontype = null;
           this.curSelItm.typ = 'Services';
           this.curSelItm.qty = 1;
           resolve();
@@ -619,6 +629,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             reject(error);
           });
     });
+  }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+  }
+  isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
   }
   /**
    * Add/Adjust Service/Item to the Bill
@@ -642,6 +658,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (this.curSelItm.qty === 0) {
         action = 'removeService';
       }
+
     } else if (type === 'Items') {
       data['itemId'] = itemId;
       data['quantity'] = this.curSelItm.qty;
@@ -681,6 +698,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showAddItemsec = true;
+    this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
     this.itemServiceSearch.setValue(name);
     this.curSelItm.qty = qty;
@@ -707,6 +725,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     setTimeout(() => {
       this.item_service_qty.nativeElement.focus();
     }, 500);
+
     // this.applyAction(action, this.bill_data.uuid, data);
   }
   /**
@@ -903,6 +922,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
+          console.log(data);
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
@@ -917,14 +937,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  checkAmount(evt) {
-    if (evt.which !== 8 && evt.which !== 0 &&
-      ((evt.which < 48 || evt.which > 57) &&
-        (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
-      isNaN(this.amountpay) || this.amountpay < 0) {
-      evt.preventDefault();
-    }
-  }
+  // checkAmount(evt) {
+  //   if (evt.which !== 8 && evt.which !== 0 &&
+  //     ((evt.which < 48 || evt.which > 57) &&
+  //       (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+  //     isNaN(this.amountpay) || this.amountpay < 0) {
+  //     evt.preventDefault();
+  //   }
+  // }
   settleBill() {
     this.provider_services.settleWaitlistBill(this.uuid)
       .subscribe(
@@ -936,7 +956,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-
 
   confirmSettleBill(evt) {
     if (this.amountpay > 0) {
@@ -975,5 +994,4 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   printMe() {
     window.print();
   }
-
 }

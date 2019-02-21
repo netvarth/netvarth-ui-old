@@ -1,12 +1,6 @@
 import { Component, Input, Output, OnInit, Injectable, EventEmitter, OnChanges } from '@angular/core';
-// import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
 import * as _ from 'underscore';
-
 import { PagerService } from '../pager/pager.service';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import {Messages} from '../../constants/project-messages';
 
 @Component({
@@ -16,10 +10,8 @@ import {Messages} from '../../constants/project-messages';
 })
 
 export class PagerComponent implements OnInit, OnChanges {
-
     previous_cap = Messages.PREVIOUS_CAP;
     next_cap = Messages.NEXT_CAP;
-    
     constructor(private pagerService: PagerService) { }
 
     // array of all items to be paged

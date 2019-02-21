@@ -1,16 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 // Import RxJs required methods
 
-
-
-
 @Injectable()
-
 export class FormMessageDisplayService {
-
 
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;

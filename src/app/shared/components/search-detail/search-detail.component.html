@@ -317,11 +317,11 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3) "
+                                    <div *ngIf="search_result.fields.ynw_verified && (search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3 || search_result.fields.ynw_verified_level==4) "
                                         class="ynw-verified">
-                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">{{basic_cap}}</span>
-                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_plus_cap}}</span>
-                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">{{premium_cap}}</span>
+                                        <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_cap}}</span>
+                                        <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==3">{{basic_plus_cap}}</span>
+                                        <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==4">{{premium_cap}}</span>
 
                                     </div>
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
@@ -346,7 +346,6 @@
                                                 </li>
                                             </ul>
                                         </div>
-
                                         <div class="services" *ngIf="search_result.fields.services">
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.services" (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv
@@ -362,18 +361,22 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==1 || search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3)"
-                                    class="ynw-verified">
+                                <div *ngIf="search_result.fields.ynw_verified==1 && (search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3 || search_result.fields.ynw_verified_level==4)">
                                     <!-- <mat-chip-list>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==1">Basic</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==2">Basic Plus</mat-chip>
                                         <mat-chip selected *ngIf="search_result.fields.ynw_verified_level==3">Premium</mat-chip>
                                     </mat-chip-list> -->
-                                    <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">{{basic_cap}}</span>
+                                    <span *ngIf="search_result.fields.ynw_verified_level==2"><img src="./assets/images/basic.png"></span>
+                                    <span *ngIf="search_result.fields.ynw_verified_level==3"><img src="./assets/images/basicpls.png"></span>
+                                    <span *ngIf="search_result.fields.ynw_verified_level==4"><img src="./assets/images/premium.png"></span>
+                                    
+                                    <!-- <span class="level basic" *ngIf="search_result.fields.ynw_verified_level==1">{{basic_cap}}</span>
                                     <span class="level basicplus" *ngIf="search_result.fields.ynw_verified_level==2">{{basic_plus_cap}}</span>
-                                    <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">{{premium_cap}}</span>
+                                    <span class="level premium" *ngIf="search_result.fields.ynw_verified_level==3">{{premium_cap}}</span> -->
 
                                 </div>
+                                
                                 <ul class="badges" *ngIf="search_result.fields.parking_location1==1 || search_result.fields.always_open1==1 || search_result.fields.traumacentre_location1==1 || search_result.fields.physiciansemergencyservices_location1==1 || search_result.fields.dentistemergencyservices_location1==1 || search_result.fields.altemergencyservices_location1 || search_result.fields.firstaid_location1==1">
                                     <li *ngIf="search_result.fields.parking_type_location1 && search_result.fields.parking_type_location1 !='none'"
                                         [matTooltip]="'Parking Type: ' + search_result.fields.parking_type_location1"><span
@@ -391,9 +394,9 @@
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>
-                                <span class="first-time-jc" *ngIf="search_result.fields.coupon_enabled==1 && isfirstCheckinOffer"
+                                <span class="first-time-jc" *ngIf="(stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
                                     (click)="!btn_clicked && openCoupons(search_result,true)"><i class="fa fa-tag red"></i> FirstTimeSignup Coupon</span>
-                                <span class="other-jcs" *ngIf="search_result.fields.coupon_enabled==1" (click)="!btn_clicked && openCoupons(search_result)"><i class="fa fa-tag blue"></i> Jaldee
+                                <span class="other-jcs" *ngIf="(stringToInt(search_result.fields.coupon_enabled))!=0" (click)="!btn_clicked && openCoupons(search_result)"><i class="fa fa-tag blue"></i> Jaldee
                                     Coupons</span>
                                 <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.fields.claimable!=1"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_message_cap}}</span>
@@ -412,7 +415,7 @@
                                 </div>
 
                                 <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
-                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}!!
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}
                                         {{getTerminologyTerm('waitlist', search_result.fields)}} {{not_allowed_cap}}</ng-container>
                                     <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                 </div>

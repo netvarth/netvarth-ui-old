@@ -16,7 +16,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 export class AddProviderItemComponent implements OnInit {
 
-  item_hi_cap =Messages.ITEM_HI_CAP;
+  rupee_symbol = '₹';
+  item_hi_cap = Messages.ITEM_HI_CAP;
   item_name_cap = Messages.ITEM_NAME_CAP;
   short_desc_cap = Messages.SHORT_DESC_CAP;
   detailed_dec_cap = Messages.DETAIL_DESC_CAP;
@@ -24,23 +25,28 @@ export class AddProviderItemComponent implements OnInit {
   taxable_cap = Messages.TAXABLE_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-
   amForm: FormGroup;
   api_error = null;
   api_success = null;
   parent_id ;
   selitem_pic = '';
+  char_count = 0;
+  max_char_count = 500;
+  isfocused = false;
   item_pic = {
     files: [],
     base64: null
   };
   taxpercentage = 0;
+  price = 0;
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxCharslong = projectConstants.VALIDATOR_MAX500;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
+  max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
+
   @ViewChild('caption') private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
@@ -58,6 +64,13 @@ export class AddProviderItemComponent implements OnInit {
      this.createForm();
      this.getTaxpercentage();
   }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+  }
+  isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
+  }
+
   createForm() {
     if (this.data.type === 'add') {
       this.amForm = this.fb.group({
@@ -83,6 +96,17 @@ export class AddProviderItemComponent implements OnInit {
     if (this.data.type === 'edit') {
       this.updateForm();
     }
+  }
+
+  setDescFocus() {
+    this.isfocused = true;
+    this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
+  }
+  lostDescFocus() {
+    this.isfocused = false;
+  }
+  setCharCount(ev) {
+    this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
   }
   updateForm() {
     // let taxable = '0';
@@ -139,7 +163,7 @@ export class AddProviderItemComponent implements OnInit {
                                 'displayName': form_data.displayName,
                                 'shortDesc': form_data.shortDesc,
                                 'displayDesc': form_data.displayDesc,
-                                'taxable': taxable,
+                                'taxable': form_data.taxable,
                                 'price': form_data.price
         };
 
@@ -163,7 +187,7 @@ export class AddProviderItemComponent implements OnInit {
             'displayName': form_data.displayName,
             'shortDesc': form_data.shortDesc,
             'displayDesc': form_data.displayDesc,
-            'taxable': taxable,
+            'taxable': form_data.taxable,
             'price': form_data.price
           };
           this.editItem(post_itemdata);
@@ -171,6 +195,7 @@ export class AddProviderItemComponent implements OnInit {
   }
 
   addItem(post_data) {
+    this.resetApiErrors();
     this.provider_services.addItem(post_data)
         .subscribe(
           data => {
@@ -184,9 +209,10 @@ export class AddProviderItemComponent implements OnInit {
           }
     );
   }
-  editItem(post_data) {
-    post_data.itemId =  this.data.item.itemId;
-    this.provider_services.editItem(post_data)
+  editItem(post_itemdata) {
+    this.resetApiErrors();
+    post_itemdata.itemId =  this.data.item.itemId;
+    this.provider_services.editItem(post_itemdata)
         .subscribe(
           data => {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
@@ -231,6 +257,7 @@ export class AddProviderItemComponent implements OnInit {
 
   handleTaxablechange() {
     // this.holdtaxable = !this.holdtaxable;
+    this.resetApiErrors();
       if (this.taxpercentage <= 0) {
         this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
         setTimeout(() => {
@@ -253,5 +280,5 @@ export class AddProviderItemComponent implements OnInit {
 
     });
   }
-
 }
+

@@ -1,5 +1,5 @@
 <section>
-    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
@@ -10,6 +10,8 @@
                 <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid"
                     (selectedIndexChange)="selectedIndexChange($event)">
                     <mat-tab label="Online Payment Settings">
+                            <span class="form-level-settings">{{payment_set_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('payment-settings', $event)">Learn More</a></span>
+
                         <mat-radio-group class="" [(ngModel)]="optJaldeeAccount">
                             <div class="lbr mt-3  col-sm-12 col-md-12 col-lg-12">
                                 <div class="rw">
@@ -19,8 +21,8 @@
                                     </div>
                                 </div>
                                 <div class="rw">
-                                    <div class="form-group" [ngClass]="{'disabledradio' :activeLicPkg<3}">
-                                        <mat-radio-button [disabled]="activeLicPkg<3" [value]="'disable'"></mat-radio-button>
+                                    <div class="form-group" [ngClass]="{'disabledradio' :disableMyAcc}">
+                                        <mat-radio-button [disabled]="disableMyAcc" [value]="'disable'"></mat-radio-button>
                                         <label for="">{{my_own_account_cap}}</label>
                                         <div *ngIf="optJaldeeAccount!='enable'">
                                             <div class="outermost">
@@ -48,13 +50,13 @@
                                                         <div class='paytm-det row' *ngIf="paytmenabled">
                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                 <div class="form-group">
-                                                                    <label class="caption">Mobile #</label>
+                                                                    <label class="caption">Enter 10 digits mobile number</label>
                                                                     <mat-form-field>
                                                                         <div class="input-group">
                                                                             <div class="input-group-prepend mob-prefix">
-                                                                                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                                                                <span class="input-group-text"  id="">{{mob_prefix_cap}}</span>
                                                                             </div>
-                                                                            <input class="form-control" matInput #paymobref [(ngModel)]="paytmmobile"
+                                                                            <input class="form-control" maxlength="10" matInput #paymobref [(ngModel)]="paytmmobile"
                                                                             (keypress)="resetApi('paytmmobile')"
                                                                             autocomplete="off" [disabled]="!ineditMode"
                                                                             (blur)="paytmBlur()" tabindex="2">
@@ -236,14 +238,16 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Tax Settings">
+                            <span class="form-level-settings">{{tax_st_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('tax-settings', $event)">Learn More</a></span>
+
                         <div class="outermost">
                             <div class="taxouter">
 
                                 <div class="form-group gstval">
-                                    <label class="caption">{{gst_no_cap}}</label>
+                                    <label class="caption">Enter 15 digit GST number *</label>
                                     <mat-form-field>
                                         <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()"
-                                            autocomplete="off" tabindex="14">
+                                            autocomplete="off" maxlength="15" tabindex="14">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="showError['gstnumber']['status']"
                                         [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
@@ -252,7 +256,7 @@
                                 <div class="form-group">
                                     <label class="caption">{{tax_percentage_cap}}</label>
                                     <mat-form-field>
-                                        <input matInput [(ngModel)]="taxpercentage" (keypress)="resetApi()" class="tax-per"
+                                        <input matInput [(ngModel)]="taxpercentage" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  max="100" class="tax-per"
                                             autocomplete="off" tabindex="15">
                                         <span matSuffix>%</span>
                                     </mat-form-field>

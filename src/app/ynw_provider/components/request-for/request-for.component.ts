@@ -22,7 +22,7 @@ export class RequestForComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) { this.invoiceId = data.id; }
 
   onClick(data) {
-    if (data == 1) {
+    if (data === 1) {
       this.api_error = null;
       this.provider_servicesobj.requestforPaymentJC(this.invoiceId).subscribe(
         () => {
@@ -33,8 +33,7 @@ export class RequestForComponent {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-    }
-    else {
+    } else {
       this.dialogRef.close();
     }
   }

@@ -2,6 +2,7 @@
   <div class="row">
     <div class="lbl col-sm-12 col-md-12 col-lg-12">
       <label>{{wait_time_calc_cap}}</label>
+      <p class="form-level-settings">{{frm_wait_cal_cap}}</p>
     </div>
     <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
       <mat-radio-group [(ngModel)]="form['calculationMode']" ngDefaultControl (change)="onFormChange()">
@@ -15,7 +16,7 @@
           <div class="form-group">
             <mat-radio-button value="Fixed"></mat-radio-button>
             <label for="">{{fixed_cap}}</label>
-            <input type="number" min="0" class="form-control" [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'">
+            <input type="number" min="0" (keyup)="isValid(form['trnArndTime'])" class="form-control" [(ngModel)]="form['trnArndTime']" ngDefaultControl *ngIf="form['calculationMode'] == 'Fixed'">
             <span class='mins' *ngIf="form['calculationMode'] == 'Fixed'"> {{mins_cap}}</span>
           </div>
         </div>

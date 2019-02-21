@@ -124,11 +124,15 @@
 }
 
 .first-time-jc, .other-jcs {
-  position: relative;
-  text-align: right;
-  color: #00aef2;
-  display: table;
-  margin-bottom: 10px;
-  margin-left: auto;
-  cursor: pointer;
+    text-align: right;
+    color: #00aef2;
+    display: table;
+    margin-bottom: 10px;
+    margin-left: auto;
+    cursor: pointer;
 }
+.ct-r .fltr .search_sort_display .mat-form-field{
+  width: 150px!important;
+}
+
+

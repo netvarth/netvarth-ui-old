@@ -16,8 +16,9 @@ onSubmit(loginForm.value)"
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber') && show_error"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',
+                
   {
-    'required' : 'Phone number is required',
+    'required' : 'Mobile number is required',
     'minlength' : 'Enter a 10 digit mobile number',
     'maxlength' : 'Enter a 10 digit mobile number',
     'pattern' : 'Only numbers are allowed'
@@ -31,7 +32,7 @@ onSubmit(loginForm.value)"
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
-                errorMsg="Password required.">
+                errorMsg="Password is required">
             </app-field-error-display>
         </div>
     </div>
@@ -42,7 +43,7 @@ onSubmit(loginForm.value)"
         </button>
 
         <div class="forgotpass" (click)="doForgotPassword()">Forgot Password?</div>
-        <div class="newuser" (click)="handleSignup()">New User? <span>Signup here</span></div>
+        <div class="newuser" (click)="handleSignup()">Want to become a Jaldee Partner? <span>Signup here</span></div>
     </div>
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 

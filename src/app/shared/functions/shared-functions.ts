@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
 import { SharedServices } from '../services/shared-services';
 import { projectConstants } from '../constants/project-constants';
@@ -94,7 +93,7 @@ export class SharedFunctions {
   consumerLogin(post_data, moreParams?) {
 
     post_data.mUniqueId = localStorage.getItem('mUniqueId');
-    // console.log('Key:' + localStorage.getItem('mUniqueId'));
+    console.log('Key:' + localStorage.getItem('mUniqueId'));
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ConsumerLogin(post_data)
@@ -356,6 +355,12 @@ export class SharedFunctions {
       case 'area':
         distance = projectConstants.DISTANCE_AREA;
         break;
+      case 'metro':
+        distance = projectConstants.DISTANCE_METRO;
+        break;
+      case 'capital':
+        distance = projectConstants.DISTANCE_CAPITAL;
+        break;
       default:
         distance = projectConstants.DISTANCE_AREA;
         break;
@@ -422,7 +427,7 @@ export class SharedFunctions {
         for (const labelarr of searchlabels_arr.sectorLevelLabels) {
           for (const subsecarr of labelarr.subSectorLevelLabels) {
             // retdet.concat(subsecarr.specializationLabels);
-            const result = subsecarr.specializationLabels.map(function(el) {
+            const result = subsecarr.specializationLabels.map(function (el) {
               const o = Object.assign({}, el);
               o.type = 'special';
               return o;
@@ -437,9 +442,9 @@ export class SharedFunctions {
           if (labelarr.name === params['domain']) {
             // retdet = labelarr.sectorLabels;
             for (const subsecarr of labelarr.subSectorLevelLabels) {
-              retdet.push({'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain'});
+              retdet.push({ 'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain' });
               // retdet.concat(subsecarr.specializationLabels);
-              const result = subsecarr.specializationLabels.map(function(el) {
+              const result = subsecarr.specializationLabels.map(function (el) {
                 const o = Object.assign({}, el);
                 o.type = 'special';
                 return o;
@@ -532,7 +537,7 @@ export class SharedFunctions {
   confirmSearchChangeStatus(ob, stat) {
     let msg = '';
     if (stat) {
-      msg = 'If you "Disable" public search, Your profile will not be visible online at Jaldee.com.';
+      msg = 'If you "Turn off" public search, Your profile will not be visible online at Jaldee.com.';
       // msg = '"Disable" the Public Search? You are offline. Your profile will not be visible online at Jaldee.com. Turn ON public search to accept online check ins';
     } else {
       msg = '"Turn On" the Public Search?';
@@ -857,6 +862,9 @@ export class SharedFunctions {
         break;
       case 'members':
         this.router.navigate([usertype, 'members']);
+        break;
+      case 'dashboard':
+        this.router.navigate([usertype]);
         break;
     }
   }
@@ -1200,5 +1208,75 @@ export class SharedFunctions {
     const pubDate = new Date(dateStr);
     const obtshowdate = this.addZero(pubDate.getDate()) + '/' + this.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
     return obtshowdate;
+  }
+  isValid(evt) {
+    // tslint:disable-next-line:radix
+    const value = parseInt(evt.target.value);
+    // tslint:disable-next-line:radix
+    const max = parseInt(evt.target.max);
+    console.log(value);
+    console.log(max);
+    if (value > max) {
+      let numString = evt.target.value;
+      evt.preventDefault();
+      numString = numString.substr(0, numString.length - 1);
+      // tslint:disable-next-line:radix
+      evt.target.value = parseInt(numString);
+      return false;
+    }
+    return true;
+  }
+  isNumeric(evt) {
+    const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
+    console.log('Keycode : ' + inputKeyCode);
+    if ((inputKeyCode >= 48 && inputKeyCode <= 57) || inputKeyCode === 8 || inputKeyCode === 46) {
+      return true;
+    } else {
+      evt.preventDefault();
+      return false;
+    }
+  }
+
+    // if (inputKeyCode !== 8 && inputKeyCode !== 0 &&
+    //     ((inputKeyCode < 48 || inputKeyCode > 57) &&
+    //        (inputKeyCode < 96 || inputKeyCode > 105) && (inputKeyCode !== 110))) {
+    //         evt.preventDefault();
+    //         return false;
+    //      }
+    // if (inputKeyCode !== null) {
+    //     if (inputKeyCode === 45) {
+    //     }
+    // }
+    // const stringvalue = evt.target.value;
+    // tslint:disable-next-line:radix
+    // const value = parseInt(evt.target.value);
+    // tslint:disable-next-line:radix
+    // const max = parseInt(evt.target.max);
+    // if (evt.which !== 8 && evt.which !== 0 &&
+    //   ((evt.which < 48 || evt.which > 57) &&
+    //     (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
+    //   isNaN(value) || value < 0) {
+    // evt.target.value = stringvalue.substring(0, (stringvalue.length - 1));
+    // if (evt.stopPropagation) {
+    //   evt.stopPropagation();
+    //   evt.preventDefault();
+    // } else {
+    //   evt.preventDefault();
+    // }
+
+    // }
+    // if (value > max) {
+    //   // tslint:disable-next-line:radix
+    //   evt.preventDefault();
+    //   return false;
+    // }
+    // return true;
+  // }
+
+  filterJson(jsonArray, key, value) {
+    const newArray = jsonArray.filter(function (el) {
+      return el[key] === value;
+    });
+    return newArray;
   }
 }

@@ -1,7 +1,6 @@
 import { Component, Input, Output, Inject, OnInit, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
@@ -11,8 +10,6 @@ import { SharedFunctions } from '../../../functions/shared-functions';
 import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
-import { tryParse } from 'selenium-webdriver/http';
-import { stat } from 'fs';
 
 @Component({
   selector: 'app-check-in-inner',
@@ -135,6 +132,7 @@ export class CheckInInnerComponent implements OnInit {
   isfirstCheckinOffer;
   showCouponWB: boolean;
   couponvalid = true;
+  server_date;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -149,6 +147,7 @@ export class CheckInInnerComponent implements OnInit {
   ) {
   }
   ngOnInit() {
+    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -175,9 +174,8 @@ export class CheckInInnerComponent implements OnInit {
     this.gets3curl();
     this.getFamilyMembers();
     this.consumerNote = '';
-    this.today = new Date();
+    this.today = new Date(this.server_date);
     this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
-
     const dd = this.today.getDate();
     const mm = this.today.getMonth() + 1; // January is 0!
     const yyyy = this.today.getFullYear();
@@ -242,6 +240,7 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_loc = this.data.moreparams.location.id;
       this.sel_checkindate = this.data.moreparams.sel_date;
       this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      console.log(this.sel_checkindate + ':' + this.minDate);
     }
     if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
       // console.log('check in source', this.page_source, this.data.datechangereq, this.sel_checkindate);
@@ -599,7 +598,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   isCheckinenable() {
-    // console.log('enable', this.sel_loc, this.sel_ser, this.sel_queue_id , this.sel_checkindate);
+     console.log('enable', this.sel_loc, this.sel_ser, this.sel_queue_id , this.sel_checkindate);
     if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
       return true;
     } else {
@@ -713,8 +712,10 @@ export class CheckInInnerComponent implements OnInit {
               'uuid': retUUID,
               'accountId': this.account_id
             };
+            console.log(payData);
             this.shared_services.consumerPayment(payData)
               .subscribe(pData => {
+                console.log(pData);
                 if (pData['response']) {
                   this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
                   this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
@@ -736,7 +737,7 @@ export class CheckInInnerComponent implements OnInit {
           setTimeout(() => {
             // this.dialogRef.close('reloadlist');
             this.returntoParent.emit('reloadlist');
-          }, projectConstants.TIMEOUT_DELAY);
+          }, projectConstants.TIMEOUT_DELAY_600);
         }
       },
         error => {
@@ -751,7 +752,7 @@ export class CheckInInnerComponent implements OnInit {
         setTimeout(() => {
           // this.dialogRef.close('reloadlist');
           this.returntoParent.emit('reloadlist');
-        }, projectConstants.TIMEOUT_DELAY);
+        }, projectConstants.TIMEOUT_DELAY_600);
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

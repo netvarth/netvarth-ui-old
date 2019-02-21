@@ -1,6 +1,5 @@
 import { interval as observableInterval, Subscription, SubscriptionLike as ISubscription, Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
+import { Component, OnInit, OnDestroy, HostListener, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
@@ -15,14 +14,13 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { startWith, map, filter, pairwise } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { projectConstants } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-home',
   templateUrl: './provider-home.component.html',
   styleUrls: ['./provider-home.component.scss']
 })
-export class ProviderHomeComponent implements OnInit, OnDestroy {
+export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // pdtyp  --- 0-History, 1-Future, 2-Today
   // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
   // pdq --- selected queue id
@@ -43,7 +41,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   change_status = Messages.CHANGE_STATUS_CAP;
   add_note_cap = Messages.ADD_NOTE_CAP;
   available_cap = Messages.PRO_AVAILABLE_CAP;
-  no_service_cap = Messages.NO_SERVICE_CAP;
+  no_service_cap = Messages.NO_QUEUE_MSG;
   adjust_delay = Messages.ADJUST_DELAY_CAP;
   first_name = Messages.FIRST_NAME_CAP;
   last_name = Messages.LAST_NAME_CAP;
@@ -64,6 +62,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   view_cap = Messages.VIEW_CAP;
   no_cap = Messages.NO_CAP;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  no_history = '';
+  no_today_checkin_msg = '';
+  no_started_checkin_msg = '';
+  no_completed_checkin_msg = '';
+  no_cancelled_checkin_msg = '';
   check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
@@ -152,10 +155,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   makPaydialogRef;
   sendmsgdialogRef;
   screenWidth;
+  isCheckin;
   small_device_display = false;
   show_small_device_queue_display = false;
   returnedFromCheckDetails = false;
   breadcrumb_moreoptions: any = [];
+  apis_loaded = false;
   breadcrumbs_init = [
     {
       title: Messages.DASHBOARD_TITLE,
@@ -163,6 +168,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
+  server_date;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private common_datastorage: CommonDataStorageService,
@@ -187,6 +193,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
+    this.no_today_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_TODAY_CHECKIN_MSG);
+    this.no_started_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
+    this.no_completed_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
+    this.no_cancelled_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
+    this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
     this.waitlist_status = [
       { name: this.checkedin_upper, value: 'checkedIn' },
       { name: this.cancelled_upper, value: 'cancelled' },
@@ -199,8 +210,19 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
+  ngAfterViewInit(): void {
+    this.apis_loaded = true;
+  }
   ngOnInit() {
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay'  };
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    if (!this.server_date) {
+      this.setSystemDate();
+    }
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    this.breadcrumb_moreoptions = {
+      'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
+      'actions': [{ 'title': 'Adjust Delay', 'icon': 'B', 'type': 'adjustdelay', 'icontype': 'adjustdelay_learnmore' }]
+    };
     this.router.events
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
@@ -252,6 +274,21 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
+  }
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
+  }
+  performActions(action) {
+    if (action === 'adjustdelay') {
+      this.showAdjustDelay();
+    } else if (action === 'adjustdelay_learnmore') {
+      this.learnmore_clicked(action.split('_')[0]);
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -311,12 +348,22 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
+            const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
+            if (statusCode === 0) {
+              console.log(this.services);
+              // console.log(this.shared_functions.filterJson(this.services, 'status', 'ACTIVE'));
+              // if(this.services.length === 0) {
+
+              // }
+            }
+            this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
           }
         },
         error => {
         }
       );
   }
+
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -383,7 +430,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
             }
           } else {
             this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-            this.getQueueList();
+            // this.getQueueList();
           }
         },
         error => {
@@ -460,12 +507,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
           if (this.time_type === 1) {
             this.getTodayCheckIn();
           }
-          this.getTodayCheckinCount()
-            .then(
-              (result) => {
-                this.today_waitlist_count = result;
-              }
-            );
+          // this.getTodayCheckinCount()
+          //   .then(
+          //     (result) => {
+          //       this.today_waitlist_count = result;
+          //     }
+          //   );
         },
         error => {
         },
@@ -475,52 +522,53 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   }
   getQueueListByDate() {
     this.load_queue = 0;
-    if (!this.selected_queue) {
-      if (this.selected_location.id) {
-        this.provider_services.getProviderLocationQueuesByDate(
-          this.selected_location.id, this.queue_date)
-          .subscribe(
-            (data: any) => {
-              // this.queues = data;
-              const Cqueues = data;
-              this.queues = [];
-              const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
-              const savedQok = [];
-              let indx = 0;
-              for (const que of Cqueues) {
-                if (que.queueState === 'ENABLED') {
-                  // console.log('que', que);
-                  if (que.id === savedQ) {
-                    savedQok.push(que);
-                  }
-                  que.qindx = indx;
-                  this.queues.push(que);
-                  indx += 1;
+    // if (!this.selected_queue) {
+    if (this.selected_location.id) {
+      this.provider_services.getProviderLocationQueuesByDate(
+        this.selected_location.id, this.queue_date)
+        .subscribe(
+          (data: any) => {
+            // this.queues = data;
+            const Cqueues = data;
+            this.queues = [];
+            const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
+            const savedQok = [];
+            let indx = 0;
+            for (const que of Cqueues) {
+              if (que.queueState === 'ENABLED') {
+                // console.log('que', que);
+                if (que.id === savedQ) {
+                  savedQok.push(que);
                 }
+                que.qindx = indx;
+                this.queues.push(que);
+                indx += 1;
               }
-              // console.log('queues', this.queues);
-              if (savedQok.length > 0) {
-                this.selectedQueue(savedQok[0]);
-              } else {
-                if (this.queues[0] && this.selected_queue == null) {
-                  const selectedQindx = this.findCurrentActiveQueue(this.queues);
-                  // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
-                  this.selectedQueue(this.queues[selectedQindx]);
-                }
-              }
-            },
-            error => {
-              this.queues = [];
-              this.load_queue = 1;
-            },
-            () => {
-              this.load_queue = 1;
             }
-          );
-      }
-    } else {
-      this.selectedQueue(this.selected_queue);
+            // console.log('queues', this.queues);
+            if (savedQok.length > 0) {
+              this.selectedQueue(savedQok[0]);
+            } else {
+              if (this.queues[0] && this.selected_queue == null) {
+                const selectedQindx = this.findCurrentActiveQueue(this.queues);
+                // console.log('first Q', this.queues[selectedQindx], 'selected Q index', selectedQindx);
+                this.selectedQueue(this.queues[selectedQindx]);
+              }
+            }
+          },
+          error => {
+            this.queues = [];
+            this.load_queue = 1;
+          },
+          () => {
+            this.load_queue = 1;
+          }
+        );
     }
+    // }
+    // else {
+    //   this.selectedQueue(this.selected_queue);
+    // }
   }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
@@ -579,12 +627,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.future_waitlist_count = 0;
     this.check_in_list = this.check_in_filtered_list = [];
     this.getQueueList();
-    /*this.getTodayCheckinCount()
+    this.getTodayCheckinCount()
     .then(
       (result) => {
         this.today_waitlist_count = result;
       }
-    );*/
+    );
     this.getFutureCheckinCount()
       .then(
         (result) => {
@@ -607,12 +655,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
     this.today_waitlist_count = 0;
-    this.getTodayCheckinCount()
-      .then(
-        result => {
-          this.today_waitlist_count = result;
-        }
-      );
+    // this.getTodayCheckinCount()
+    //   .then(
+    //     result => {
+    //       this.today_waitlist_count = result;
+    //     }
+    //   );
   }
   handleQueueSel(mod) {
     // console.log('handleQueueSel', mod, this.sel_queue_indx);
@@ -673,7 +721,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     if (!Mfilter) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        'queue-eq': this.selected_queue.id
+        'queue-eq': this.shared_functions.getitemfromLocalStorage('pdq'),
+        'waitlistStatus-neq': 'prepaymentPending'
       };
       no_filter = true;
     }
@@ -700,6 +749,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.today_started_count = this.getCount(list, 'started');
     this.today_completed_count = this.getCount(list, 'done');
     this.today_cancelled_count = this.getCount(list, 'cancelled');
+    this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_count;
   }
   getTodayCheckIn() {
     this.load_waitlist = 0;
@@ -789,9 +839,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.setFilterDateMaxMin();
     // this.queues = [];
     // console.log('ttype', this.time_type, this.queues.length);
-    if (this.time_type === 1 && this.queues.length === 0) {
-      this.getQueueListByDate();
-    }
+    // if (this.time_type === 1 && this.queues.length === 0) {
+    // alert('Time Type : ' + this.time_type);
+    // if (this.time_type === 1) {
+    //   this.getQueueListByDate();
+    // }
     this.loadApiSwitch('setTimeType');
   }
   setFilterDateMaxMin() {
@@ -810,14 +862,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
-      if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
-        this.filter.check_in_end_date = this.filter.check_in_start_date;
-      }
+      // if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
+      //   this.filter.check_in_end_date = this.filter.check_in_start_date;
+      // }
     } else if (type === 'check_in_end_date') {
       this.filter_date_start_max = this.filter.check_in_end_date;
-      if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
-        this.filter.check_in_start_date = this.filter.check_in_end_date;
-      }
+      // if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
+      //   this.filter.check_in_start_date = this.filter.check_in_end_date;
+      // }
     }
     this.doSearch();
   }
@@ -838,6 +890,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       }
     }
     if (chkSrc) {
+      console.log(source);
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
         this.resetFilter();
       }
@@ -859,10 +912,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
       data: {
         queues: this.queues,
         queue_id: this.selected_queue.id,
+        queue_name: this.selected_queue.name,
+        queue_schedule: this.selected_queue.queueSchedule.timeSlots[0].sTime + '-' + this.selected_queue.queueSchedule.timeSlots[0].eTime,
         checkedin_count: this.today_checkedin_count,
         arrived_count: this.today_arrived_count
       }
     });
+    // console.log("Selected queue:",this.selected_queue),
     this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
       }
@@ -876,12 +932,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     });
     this.edit_location = 1;
   }
-  cancellocationChange() {
-    this.edit_location = 0;
-  }
+  // cancellocationChange() {
+  //   this.edit_location = 0;
+  // }
   onChangeLocationSelect(event) {
     const value = event.value;
     this.changeLocation(this.locations[value] || []);
+    this.edit_location = 0;
   }
   reloadAPIs() {
     this.countApiCall();
@@ -998,11 +1055,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     return api_filter;
   }
   doSearch() {
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service ||
-      this.filter.queue || this.filter.waitlist_status || this.filter.payment_status || this.filter.check_in_start_date
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
+      this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date) {
       this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
     }
+    console.log(this.filterapplied);
     this.loadApiSwitch('doSearch');
   }
   resetFilter() {
@@ -1195,3 +1255,4 @@ export class ProviderHomeComponent implements OnInit, OnDestroy {
     this.shared_functions.sendMessage(pdata);
   }
 }
+

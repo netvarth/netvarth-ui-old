@@ -34,6 +34,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
   existing_schedule_cap = Messages.EXISTING_SCHEDULE_CAP;
+  loc_placeholder = Messages.LOC_PLACEHOLDER;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -552,13 +553,19 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
             this.amForm.patchValue({
               loclattitude: result['map_point'].latitude || null,
               loclongitude: result['map_point'].longitude || null,
-              locmapurl: mapurl || null
+              locmapurl: mapurl || null,
             });
           }
           this.amForm.patchValue({
             locaddress: result['address'] || null/*,
           locpincode: result['pincode'] || null*/
           });
+          const addr = result['address'] || null;
+          if (addr) {
+            this.amForm.patchValue({
+              locname: addr.split(',')[0]
+            });
+          }
         }
       }
     });

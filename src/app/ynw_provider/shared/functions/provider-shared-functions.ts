@@ -7,6 +7,7 @@ import { AddProviderWaitlistQueuesComponent } from '../../components/add-provide
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
+import { AddProviderWaitlistServiceComponent } from '../../components/add-provider-waitlist-service/add-provider-waitlist-service.component';
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
@@ -42,6 +43,30 @@ export class ProviderSharedFuctions {
         });
   }
 
+  getProfileStatusCode(bprofile) {
+    let statusCode = 0;
+    if (bprofile.businessName && bprofile.businessName.trim() !== '') {
+      if (bprofile.baseLocation) {
+        if (bprofile.baseLocation.place === '') {
+          statusCode = 3;
+        }
+      } else {
+        statusCode = 3;
+      }
+    } else {
+      if (bprofile.baseLocation) {
+        if (bprofile.baseLocation.place === '') {
+          statusCode = 1;
+        } else {
+          statusCode = 2;
+        }
+      } else {
+        statusCode = 1;
+      }
+    }
+    return statusCode;
+  }
+
   //  changecouponStatus(ob, obj) {
   //       let chgstatus = '';
   //       let chstatusmsg = '';
@@ -54,26 +79,32 @@ export class ProviderSharedFuctions {
   //       }
   //      this.jaldeecoupon_list = ob.provider_services.changecouponStatus(obj.id, chgstatus);
   //      }
-  addEditQueuePopup(ob, type, source, obj = null, schedules = null) {
-
-    ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
+  addEditServicePopup(ob, type, source, obj = null, services = null) {
+    ob.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass'],
       disableClose: true,
       autoFocus: true,
       data: {
-        queue: obj,
+        service: obj,
         source: source,
         type: type,
-        schedules: schedules
+        services: services
       },
     });
-
-    ob.queuedialogRef.afterClosed().subscribe(result => {
+    ob.servicedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-        this.queueReloadApi(ob, source);
+        this.serviceReloadApi(ob, source);
       }
     });
+  }
+
+  serviceReloadApi(ob, source = 'service_list') {
+    if (source === 'service_list') {
+      ob.getServices();
+    } else if (source === 'service_detail') {
+      ob.getServiceDetail();
+    }
   }
 
   changeProviderLocationStatusMessage(obj) {
@@ -91,9 +122,7 @@ export class ProviderSharedFuctions {
       let msg = this.shared_functions.getProjectMesssages('WAITLIST_LOCATION_CHG_STATLOCATION').replace('[locname]', obj.place);
       msg = msg.replace('[status]', chstatusmsg);
       resolve({ msg: msg, chgstatus: chgstatus });
-
     });
-
   }
 
   // openSnackBar(message: string, params: any = []) {
@@ -113,31 +142,44 @@ export class ProviderSharedFuctions {
     }
   }
 
-
   changeServiceStatus(ob, service) {
-
     let chstatusmsg = '';
     if (service.status === 'ACTIVE') {
       chstatusmsg = 'disabled';
     } else {
       chstatusmsg = 'enabled';
     }
-
     let msg = this.shared_functions.getProjectMesssages('WAITLIST_SERVICE_CHG_STAT').replace('[sername]', service.name);
     msg = msg.replace('[status]', chstatusmsg);
-
     if (service.status === 'ACTIVE') {
       ob.disableService(service, msg);
     } else {
       ob.enableService(service, msg);
     }
+  }
 
+  addEditQueuePopup(ob, type, source, obj = null, schedules = null) {
+    ob.queuedialogRef = this.dialog.open(AddProviderWaitlistQueuesComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        queue: obj,
+        source: source,
+        type: type,
+        schedules: schedules
+      },
+    });
+    ob.queuedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.queueReloadApi(ob, source);
+      }
+    });
   }
 
   changeWaitlistStatus(ob, waitlist, action) {
-
     if (action === 'CANCEL') {
-
       const dialogRef = this.dialog.open(ProviderWaitlistCheckInCancelPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass'],
@@ -146,7 +188,6 @@ export class ProviderSharedFuctions {
           waitlist: waitlist
         }
       });
-
       dialogRef.afterClosed().subscribe(result => {
         if (result && result.cancelReason) {
           ob.changeWaitlistStatusApi(waitlist, action, result);
@@ -158,22 +199,18 @@ export class ProviderSharedFuctions {
     }
   }
   changeWaitlistStatusApi(ob, waitlist, action, post_data = {}) {
-
     return new Promise((resolve, reject) => {
-
       ob.provider_services.changeProviderWaitlistStatus(waitlist.ynwUuid, action, post_data)
         .subscribe(
           data => {
-
             resolve('changeWaitlistStatusApi');
-
             let status_msg = '';
             switch (action) {
               case 'REPORT': status_msg = '[arrived]'; break;
               case 'STARTED': status_msg = '[started]'; break;
               case 'CANCEL': status_msg = '[cancelled]'; break;
               case 'CHECK_IN': status_msg = '[waitlisted]'; break;
-              case 'DONE': status_msg = '[done]'; break;
+              case 'DONE': status_msg = 'completed'; break;
             }
             const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
             this.shared_functions.openSnackBar(msg);
@@ -183,11 +220,7 @@ export class ProviderSharedFuctions {
             reject();
           }
         );
-
     });
-
-
-
   }
 
   addConsumerInboxMessage(waitlist, Cthis?) {
@@ -228,5 +261,4 @@ export class ProviderSharedFuctions {
   getActiveQueues() {
     return this.activeQueues;
   }
-
 }

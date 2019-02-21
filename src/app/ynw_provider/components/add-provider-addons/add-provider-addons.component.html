@@ -18,7 +18,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         </mat-select>
       </mat-form-field>
 
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'addons_selpackage')" errorMsg="Please select the addon.">
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'addons_selpackage')" errorMsg="Please select the Add-on.">
       </app-field-error-display>
     </div>
     <div class="addon-desc" *ngIf="obtainedaddons && upgradableaddons.length!=0 && selected_addondesc">

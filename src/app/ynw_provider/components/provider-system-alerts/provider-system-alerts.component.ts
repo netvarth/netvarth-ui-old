@@ -39,6 +39,9 @@ export class ProviderSystemAlertComponent implements OnInit {
     holdalertSelAck = '';
     holdalertSeldate = '';
 
+    filterapplied ;
+    
+
     alertStatus = 1;
     startpageval;
     totalCnt;
@@ -53,6 +56,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         }
     ];
     tday = new Date();
+  isCheckin;
     constructor( private provider_servicesobj: ProviderServices,
       private router: Router, private dialog: MatDialog,
       private sharedfunctionObj: SharedFunctions,
@@ -69,6 +73,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       this.holdalertSelAck = this.alertSelAck;
       this.holdalertSeldate = this.alertSeldate;
       this.getAlertListTotalCnt(this.alertSelAck, '');
+      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     }
     getAlertListTotalCnt(ackStatus, sdate) {
       if (ackStatus === '') {
@@ -111,6 +116,19 @@ export class ProviderSystemAlertComponent implements OnInit {
         });
     }
 
+    clearFilter() {
+      this.resetFilter();
+      
+      this.do_search(false);
+      this.filterapplied = false;
+    
+    }
+    resetFilter(){
+      this.alertSeldate = '';   
+      this.alertSelAck = 'false';
+      this.holdalertSeldate = null;  
+    }
+
     goback() {
       this.locationobj.back();
     }
@@ -142,6 +160,8 @@ export class ProviderSystemAlertComponent implements OnInit {
         } else {
           this.getAlertList(this.holdalertSelAck || '', seldate);
         }
+        this.filterapplied = true;
+
       // }
     }
     handle_pageclick(pg) {

@@ -71,7 +71,8 @@ export class QuestionService {
   }
 
   createTextField(que, type = 'text') {
-   // console.log('que', que);
+  // console.log('que', que);
+  // console.log('type', type);
     const obj = this.defaultObj(que);
     obj['type'] = type;
     if (type === 'text') {

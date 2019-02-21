@@ -1,19 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-
-
 import { AddProviderWaitlistServiceComponent } from '../add-provider-waitlist-service/add-provider-waitlist-service.component';
 import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
 import {
@@ -21,6 +13,7 @@ import {
     DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-provider-waitlist-service-detail',
@@ -72,6 +65,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
     delgaldialogRef;
     servicedialogRef;
     editgaldialogRef;
+    end_of_service_notify = projectConstants.PROFILE_ERROR_STACK;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -97,6 +91,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
             }
         ]
     };
+    isCheckin;
 
     constructor(
         private provider_services: ProviderServices,
@@ -125,6 +120,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         } else {
             this.goBack();
         }
+        this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
     }
 
     ngOnDestroy() {
@@ -268,23 +264,27 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         return image ? images.indexOf(image) : -1;
     }
 
-    editService() {
-        if (!this.service_data.id) { return false; }
-        this.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass'],
-            disableClose: true,
-            autoFocus: true,
-            data: {
-                type: 'edit',
-                service: this.service_data
-            }
-        });
-        this.servicedialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') {
-                this.getServiceDetail();
-            }
-        });
+    // editService() {
+    //     if (!this.service_data.id) { return false; }
+    //     this.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
+    //         width: '50%',
+    //         panelClass: ['commonpopupmainclass'],
+    //         disableClose: true,
+    //         autoFocus: true,
+    //         data: {
+    //             type: 'edit',
+    //             service: this.service_data
+    //         }
+    //     });
+    //     this.servicedialogRef.afterClosed().subscribe(result => {
+    //         if (result === 'reloadlist') {
+    //             this.getServiceDetail();
+    //         }
+    //     });
+    // }
+
+    addEditProviderService(type, service = null) {
+        this.provider_shared_functions.addEditServicePopup(this, type, 'service_detail', this.service_data, this.provider_shared_functions.getActiveQueues());
     }
 
     editImageGallery() {

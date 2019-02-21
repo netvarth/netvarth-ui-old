@@ -12,6 +12,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
   styleUrls: ['./view-report.component.css']
 })
 export class ViewReportComponent implements OnInit {
+  grant_total_cap = Messages.GRANT_TOTAL;
   report_id_cap = Messages.REPORT_ID_CAP;
   coupon_use_cap = Messages.COUP_USE_CAP;
   j_acc_cap = Messages.J_ACC_CAP;
@@ -49,6 +50,7 @@ export class ViewReportComponent implements OnInit {
   ];
   breadcrumbs = this.breadcrumbs_init;
   invoice_id;
+  isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute, private route: Router,
@@ -60,6 +62,7 @@ export class ViewReportComponent implements OnInit {
         this.invoice_id = params.id;
         this.getjaldeeReport();
       });
+      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
       return JSON.parse(jsonString);

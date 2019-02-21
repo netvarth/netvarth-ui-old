@@ -1,14 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
@@ -23,6 +20,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
   set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
   new_loc_cap = Messages.ADD_NEW_LOC_CAP;
+  no_loc_add = Messages.NO_LOC_ADDED;
   loc_list: any = [];
   bProfile: any = [];
   loc_badges: any = [];
@@ -38,6 +36,8 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   businessConfig: any = [];
   dialogRef;
   breadcrumb_moreoptions: any = [];
+  init_location = true;
+  api_loading = true;
   breadcrumbs_init = [
     {
       title: 'Settings',
@@ -49,6 +49,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
+  isCheckin;
   constructor(
     private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -66,7 +67,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-loc' };
+    this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.dialogRef) {
@@ -84,6 +85,11 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
 
         });
   }
+  performActions(action) {
+    if (action === 'addlocation') {
+      this.addLocation();
+    }
+  }
   getBussinessProfile() {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
@@ -94,7 +100,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             if (this.businessConfig[i].multipleLocation) {
               this.multipeLocationAllowed = true;
             }
-            if (this.multipeLocationAllowed == true) {
+            if (this.multipeLocationAllowed === true) {
               const breadcrumbs = [];
               this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -104,7 +110,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
               });
               this.breadcrumbs = breadcrumbs;
             }
-            if (this.multipeLocationAllowed == false) {
+            if (this.multipeLocationAllowed === false) {
               const breadcrumbs = [];
               this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -129,6 +135,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.loc_list = data;
+        this.api_loading = false;
         if (this.multipeLocationAllowed) {
           this.show_addlocationButton = true;
         } else {
@@ -136,7 +143,17 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             this.show_addlocationButton = true;
           }
         }
-
+        if (this.init_location) {
+          const actions = [];
+          if (this.show_addlocationButton) {
+            actions.push({ 'title': this.new_loc_cap, 'type': 'addlocation' });
+          }
+          this.breadcrumb_moreoptions = {
+            'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'locations', 'classname': 'b-loc',
+            'actions': actions
+          };
+          this.init_location = false;
+        }
         this.query_executed = true;
       });
   }
@@ -243,3 +260,5 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     });
   }
 }
+
+

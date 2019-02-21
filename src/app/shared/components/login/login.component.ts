@@ -130,6 +130,8 @@ export class LoginComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
         console.log(JSON.stringify(post_data));
+        console.log('Key:' + localStorage.getItem('mUniqueId'));
+        post_data.mUniqueId = localStorage.getItem('mUniqueId');
         this.shared_functions.consumerLogin(post_data, this.moreParams)
           .then(
             success => { this.dialogRef.close('success'); },

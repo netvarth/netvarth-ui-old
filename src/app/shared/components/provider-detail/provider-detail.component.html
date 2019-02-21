@@ -101,7 +101,15 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <div class="ynw-verified" *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"></div>
+                                <!-- <div>{{businessjson.verifyLevel}}</div> -->
+                                    <!-- <div *ngIf="businessjson.verifyLevel== 'NONE' && (businessjson.verifyLevel== 'BASIC' || businessjson.verifyLevel== 'BASIC PLUS' || businessjson.verifyLevel== 'PREMIUM')"> -->
+
+                                <!-- <div  *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"> -->
+                                        <div>
+                                                <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img height="100" width="85" src="./assets/images/BasicOrg.png"></span>
+                                                <span *ngIf="businessjson.verifyLevel == 'BASIC PLUS'"><img height="100" width="85" src="./assets/images/BasicPlsOrg.png"></span>
+                                                <span *ngIf="businessjson.verifyLevel == 'PREMIUM'"><img height="100" width="85" src="./assets/images/PremiumOrg.png"></span>
+                                            </div>
                                 <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
                                     <span class="icon-male" *ngIf="genderType=='male'" [matTooltip]="maleTooltip"></span>
                                     <span class="icon-female" *ngIf="genderType=='female'" [matTooltip]="femaleTooltip"></span>
@@ -109,9 +117,9 @@
                                 <!-- <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType"></div> -->
                                 <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
-                                    <li *ngIf="isfirstCheckinOffer"><span class="pointer-cursor" (click)="openCoupons('first')">FirstTimeSignup
+                                    <li *ngIf="isfirstCheckinOffer"><i class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor" (click)="openCoupons('first')">FirstTimeSignup
                                             Coupon</span></li>
-                                    <li><span class="pointer-cursor" (click)="openCoupons()">Jaldee Coupons</span></li>
+                                    <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor" (click)="openCoupons()">Jaldee Coupons</span></li>
                                     <li><span class="icon-history" (click)="redirectMe('history')">History</span></li>
                                     <li><span class="fav icon-favourite" *ngIf="!isInFav" (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li><span class="icon-favourite-filled" *ngIf="isInFav" (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
@@ -121,7 +129,7 @@
 
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
-                                    <a [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i
+                                    <a rel="noopener" [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i
                                             [class]="getSocialdet(soc.resource, 'iconClass')" [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
                                 </div>
                             </div>
@@ -178,7 +186,7 @@
                                             <span class="count">{{loc.checkins.length}}
                                                 {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
                                         <h3>{{loc.place | capitalizeFirst}}</h3>
-                                        <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
+                                        <a rel="noopener" class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
                                         <div class="clr">
                                             <div class="schedule" *ngIf="loc.display_schedule.length > 0">
                                                 <span class="sub-title">{{workig_hrs_cap}}</span>
@@ -225,7 +233,7 @@
                             <div class="bottom-sect pdetail">
                                 <div class="bt-l" *ngIf="!settingsjson['onlineCheckIns']">
                                     <div class="wt-tme notallowed padding-tp-10">
-                                        {{sorry_cap}}!!
+                                        {{sorry_cap}}
                                         {{getTerminologyTerm('waitlist')}} {{not_allowed_cap}}
                                     </div>
                                 </div>

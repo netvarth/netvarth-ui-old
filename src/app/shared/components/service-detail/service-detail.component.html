@@ -1,67 +1,66 @@
-<h1 class="mat-dialog-title">{{data.bname| capitalizeFirst}}
+<h1 class="mat-dialog-title">{{data.bname | capitalizeFirst}} <span>{{servc_detils}}</span>
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
-    </h1>
-    
-    <mat-dialog-content>
-   
-    <div class="servicedet_outer" *ngIf="service.name !==''">
-        <div class="img-outer" *ngIf="image_list_popup && image_list_popup.length>0">
-
-                <div class="pro-img">
-                        <ng-container *ngIf="this.service.servicegallery.length > 0">
-                              <ng-container>
-                                  <img [src]="this.service.servicegallery[0].thumbUrl" alt=""  (click)="openImageModalRow(image_list_popup[0])">
-                              </ng-container>
-                          </ng-container>
-                </div>
-                <ul class="gal" *ngIf="service.servicegallery.length > 1">
-                    <li>
-                        <div class="galbx">
-                            <div class="overlay" (click)="openImageModalRow(image_list_popup[1])">+ {{service.servicegallery.length - 1 }}</div>
-                            <img [src]="service.servicegallery[1].thumbUrl" alt="">
-                        </div>
-                    </li>
-                </ul>
-                <ks-modal-gallery  [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-                [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)" 
-                (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
-        </div>
-        <div class="outer">
-            <div class="outer1">
-                <div class="name">
-                    <span class="caption">{{service_cap}}</span><span class="dispvalue">{{data.serdet.name | capitalizeFirst}}</span>
-                </div>
-                <div class="duration">
-                    <span class="caption">{{duration_cap}}</span><span class="dispvalue">{{data.serdet.serviceDuration}} Mins</span>
-                </div>
-            </div>
-            <div class="outer2">
-                <div class="price">
-                    <span class="caption">{{price_cap}}</span><span class="dispvalue">{{data.serdet.totalAmount | currency:'INR':'symbol':'.2-2'}} </span> <span class="taxable" *ngIf="this.data.serdet.taxable">(Tax Applicable)</span>
-                </div>
-            </div>
-            <div class="outer3" *ngIf="data.serdet.isPrePayment">
-                <div class="prepayment">
-                    <span class="caption">{{prepayment_amount}}</span><span class="dispvalue">{{data.serdet.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}} </span>
-                </div>
-            </div>
-            <div class="outer4" *ngIf="data.serdet.description">
-                    <div class="description">
-                        <span class="caption">{{description_cap}}</span><span class="dispvalue">{{data.serdet.description}} </span>
+</h1>
+<mat-dialog-content> 
+  <div class="servicedet_outer" *ngIf="service.name !==''">
+        <div class="img-outer" *ngIf="!image_list_popup || image_list_popup.length==0">
+           <div class="galbx"   *ngIf="!service.servicegallery" >
+                <img src="../../assets/images/img-null.svg" alt=""  style="width:80px;height:80px;background-color: gainsboro">
+           </div>
+      </div>
+    <div class="img-outer" *ngIf="image_list_popup && image_list_popup.length>0">
+                  <ul class="gal" *ngIf="service.servicegallery.length >0">
+                <li>
+                    <div class="galbx">
+                        <div class="overlay" (click)="openImageModalRow(image_list_popup[1])">+ {{service.servicegallery.length - 1 }}</div>
+                        <img [src]="service.servicegallery[0].thumbUrl" alt="">
                     </div>
+                </li>
+            </ul>
+            <ks-modal-gallery  [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook($event)" 
+            (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+     </div>
+   
+    <div class="outer">
+        <div class="outer1">
+            <div class="name">
+              <span class="dispvalue">{{data.serdet.name | capitalizeFirst}}  ({{data.serdet.totalAmount | currency:'INR':'symbol':'.2-2'}})</span><span *ngIf="this.data.serdet.taxable" ><sup>Tax</sup></span>
+            </div>
+            
+        </div>
+        <div class="outer2">
+            <div class="duration">
+              <span>Estimated service duration is {{data.serdet.serviceDuration}} mins <span *ngIf="data.serdet.isPrePayment" >and you have to pay {{data.serdet.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}} inadvace</span> </span>
             </div>
         </div>
-    </div> 
-    </mat-dialog-content>
+        
+        <!-- <div class="outer3" *ngIf="data.serdet.isPrePayment">
+            <div class="prepayment">
+                <span >{{prepayment_amount}}</span><span >{{data.serdet.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}} </span>
+            </div>
+        </div> -->
+        <!-- <div class="outer4" *ngIf="data.serdet.description">
+                <div class="description">
+                    <span class="caption">{{description_cap}}</span><span class="dispvalue">{{data.serdet.description}} </span>
+                </div>
+        </div> -->
+    </div>
+</div> 
+<div class="outer4" *ngIf="data.serdet.description">
+  <div class="description">
+      <span class="dispvalue">{{data.serdet.description}} </span>
+  </div>
+</div>
+       
+ </mat-dialog-content>
 
-    <mat-dialog-actions>
+<!-- <mat-dialog-actions>
     <button  type="button" mat-dialog-close class="cs-btn bt2">{{close_btn_cap}}</button>
-    </mat-dialog-actions>
+    </mat-dialog-actions> -->
 
-    <app-field-error-display [displayError]="true" *ngIf="api_error"
-    errorMsg="{{api_error}}"></app-field-error-display>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-    <app-form-success-display [displayMsg]="true" *ngIf="api_success"
-    successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

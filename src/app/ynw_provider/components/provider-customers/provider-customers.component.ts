@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { ProviderServices } from '../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { SharedServices } from '../../../shared/services/shared-services';
-
-import * as moment from 'moment';
-
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
@@ -57,6 +48,7 @@ export class ProviderCustomersComponent implements OnInit {
     totalCnt: 0,
     perPage: this.filter.page_count
   };
+  isCheckin;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   loadComplete = false;
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -75,12 +67,14 @@ export class ProviderCustomersComponent implements OnInit {
     ];
     this.breadcrumbs = this.breadcrumbs_init;
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    // this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
 
   ngOnInit() {
     this.getCustomersList(true);
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
   }
 
   getCustomersList(from_oninit = false) {
@@ -147,6 +141,9 @@ export class ProviderCustomersComponent implements OnInit {
     this.getCustomersList();
     if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
       this.filterapplied = true;
+    }
+    else{
+      this.filterapplied = false;
     }
   }
 

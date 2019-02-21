@@ -154,7 +154,7 @@
                                     </mat-form-field>
                                   </p> -->
                         <!-- <div>Coupon Codes</div>  -->
-                        <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 no-padding">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                             <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showCouponWB">
                                 <app-field-error-display [displayError]="true" *ngIf="api_cp_error" errorMsg="{{api_cp_error}}"></app-field-error-display>
                                 <div class="input-group">
@@ -170,7 +170,7 @@
                                 <div class="coupon-outer">
                                     <div class="row" *ngFor="let coupon of couponsList let i=index">
                                         <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
-                                            {{coupon.couponCode}} Added. <span (click)="toggleterms(i)" class="pointer-cursor read-more-checkin">Read
+                                            {{coupon.couponCode}} Added. <span *ngIf="coupon.instructions" (click)="toggleterms(i)" class="pointer-cursor read-more-checkin">Read
                                                 T & C </span> <i class="fa fa-trash" (click)="removeJCoupon(i)"></i>
                                         </div>
                                         <div class="col-md-12 no-padding read-more-contents" *ngIf="coupon.showme">
@@ -269,11 +269,12 @@
             </div>
         </div>
     </div>
-    <div class="waitlist-action" *ngIf="step==1">
-        <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" *ngIf="isCheckinenable()" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
-        <div class="disable-msg" *ngIf="!isCheckinenable() && checkindisablemsg !=''">{{checkindisablemsg}}</div>
+    <ng-container  *ngIf="step==1 && this.checkinLabel">
+    <div class="waitlist-action">
+        <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()">{{showCheckinButtonCaption()}}</button>
+        <div class="disable-msg" >{{checkindisablemsg}}</div>
     </div>
-
+    </ng-container>
     <ng-container *ngIf="step==3 && !showCreateMember">
         <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">{{back_to_cap}} {{checkinLabel}}</button>
     </ng-container>

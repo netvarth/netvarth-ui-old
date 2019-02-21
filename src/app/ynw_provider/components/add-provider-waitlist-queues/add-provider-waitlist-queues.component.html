@@ -12,32 +12,32 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <mat-form-field>
-                    <input matInput placeholder="Service Time-Window Name *" formControlName="qname" autocomplete="off"
+                    <input matInput placeholder="{{service_time_window_name}}" formControlName="qname" autocomplete="off"
                         ngModel maxlength="20">
                 </mat-form-field>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
         {
-          'required' : 'Please enter the service time-window name',
+          'required' : 'Please enter title for working hours',
           'maxlength' : 'Name can contain only 100 characters'
         })">
             </app-field-error-display>
         </div>
 
         <div class="form-group" *ngIf="data.source !== 'location_detail'">
-            <div *ngIf="multipeLocationAllowed">
-                <mat-form-field>
-                    <mat-select placeholder="Location" formControlName="qlocation">
+            <div>
+                <mat-form-field *ngIf="loc_list.length > 1">
+                    <mat-select placeholder="Location *" formControlName="qlocation">
                         <mat-option *ngFor="let loc of loc_list" [value]="loc.id">
                             {{ loc.place | capitalizeFirst }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
-            <div *ngIf="!multipeLocationAllowed">
-                <label>{{location_cap}}</label>
-                <div *ngFor="let loc of loc_list">
-                    {{ loc.place | capitalizeFirst }}
+                <div *ngIf="loc_list.length ===1">
+                    <label>{{location_cap}}</label>
+                    <div *ngFor="let loc of loc_list">
+                        {{ loc.place | capitalizeFirst }}
+                    </div>
                 </div>
             </div>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qlocation')" errorMsg="Please enter the location">
@@ -99,8 +99,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control number-ip-sm" placeholder="Maximum {{customer_label}}s served *"
-                    formControlName="qcapacity" autocomplete="off">
+                <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text" class="form-control number-ip-sm" placeholder="Maximum {{customer_label}}s served *"
+                    formControlName="qcapacity" autocomplete="off"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
         {
@@ -112,8 +112,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field class="example-full-width">
-                <input matInput type="text" class="number-ip-sm" placeholder="{{customer_label | capitalizeFirst}}s served at a time"
-                    formControlName="qserveonce" autocomplete="off">
+                <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm" placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
+                    formControlName="qserveonce" autocomplete="off"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
         {

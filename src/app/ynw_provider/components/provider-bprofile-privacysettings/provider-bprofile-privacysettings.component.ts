@@ -178,6 +178,10 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           'permission': phone.permission
         });
       }
+      if(this.curid < 0 || this.curid != 0 ){
+        this.extingphone_arr.pop();
+      }
+     
       const post_itemdata = {
         'phoneNumbers': this.phone_json
       };
@@ -221,6 +225,9 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           'permission': email.permission
         });
       }
+      if(this.curid < 0 || this.curid != 0 ){
+        this.extingemail_arr.pop();
+      }
       const post_itemdata = { 'emails': this.email_json };
       // console.log('email json', this.email_json);
       this.UpdatePrimaryFields(post_itemdata);
@@ -258,5 +265,8 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
       rettxt = this.privacypermissiontxt[txt];
     }
     return rettxt;
+  }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
   }
 }

@@ -12,17 +12,18 @@
           <div class="outer">
             <h6><b>{{coupon.couponName}}</b></h6>
             <span> {{coupon.couponDescription}}</span>
-            <div> Coupon Code: <span class="code">{{coupon.jaldeeCouponCode}}</span> <span class="help">Apply this coupon code while Check-in</span>
+            <div> Coupon Code: <span class="code">{{coupon.jaldeeCouponCode}} </span> <span class="help">Apply this
+                coupon code while Check-in</span>
             </div>
             <div class="outer4">
-              <div class="name">
+              <div class="coupon_validity">
                 <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
                   {{formatDateDisplay(coupon.endDate)}}</span>
               </div>
               <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
                 <ng-container>
                   <div class="lc3-2 lcd">
-                    <div class="cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C</div>
+                    <div class="t_c cs-btn bt10" (click)="toggle_adwordshowmore(i)">T & C</div>
                   </div>
                 </ng-container>
               </div>

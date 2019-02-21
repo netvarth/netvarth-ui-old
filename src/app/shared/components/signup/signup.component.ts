@@ -74,7 +74,7 @@ export class SignUpComponent implements OnInit {
     this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
     this.moreParams = this.data.moreParams;
     if (this.data.is_provider === 'true') {
-      this.heading = 'Provider Sign Up';
+      this.heading = 'Jaldee Partner Account Creation';
     } else if (this.data.is_provider === 'false') {
       this.heading = 'Consumer Sign Up';
     }
@@ -273,10 +273,9 @@ export class SignUpComponent implements OnInit {
     this.signupForm.setValue({selectedSubDomains: this.subDomainList[0]['id']});*/
   }
 
-  onItemSelect(item) {
-    this.license_description = this.license_packages[item.value];
+  onItemSelect(item: any) {
+    // this.license_description = this.license_packages[item.value];
     // console.log(this.signupForm.get('selectedSubDomains').value);
-
   }
 
   onSubmit() {
@@ -515,9 +514,10 @@ export class SignUpComponent implements OnInit {
     }
 
   }
-  clickedPackage(e) {
+  clickedPackage(item) {
     // console.log('here', e);
-    this.selectedpackage = e;
+    // this.selectedpackage = e;
+    this.license_description = this.license_packages[item.value];
   }
   isSelectedClass(id) {
     if (id === this.signupForm.get('package_id').value) {
@@ -563,7 +563,7 @@ export class SignUpComponent implements OnInit {
     this.step = 3;
   }
   onCancelPass() {
-    if ( this.step === 3) {
+    if (this.step === 3) {
       this.step = 4;
       this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
     }

@@ -6,7 +6,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <div class="form-group">
         <mat-form-field>
             <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
-                placeholder="First Name" autocomplete="off">
+                placeholder="{{first_name_cap}}" autocomplete="off">
         </mat-form-field>
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
     errorMsg="Please enter the first name.">
@@ -16,7 +16,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <div class="form-group">
         <mat-form-field>
             <input type="text" matInput [(ngModel)]="lastname" (keyup)="valuechange()" class="form-control" id="last_name"
-                placeholder="Last Name" autocomplete="off">
+                placeholder="{{last_name_cap}}" autocomplete="off">
         </mat-form-field>
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
     errorMsg="Please enter the last name.">
@@ -28,8 +28,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 <div class="input-group-prepend mob-prefix">
                     <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                 </div>
-                <input type="text" matInput [(ngModel)]="mobile" (keyup)="valuechange()" class="form-control" id="mobile"
-                    placeholder="Mobile Number" autocomplete="off" maxlength="10">
+                <input type="text" matInput [(ngModel)]="mobile" (keypress)="isNumeric($event)" (keyup)="valuechange()" class="form-control" id="mobile"
+                    placeholder="Enter 10 digit mobile number" autocomplete="off" maxlength="10">
             </div>
         </mat-form-field>
     </div>
@@ -53,15 +53,21 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
 =======
     </div>
-    <div class="form-group normalpicker" *ngIf="calledFrom !='checkin'">
-        <label class="col-form-label" for="dob">{{dob_cap}} </label>
+    <div class="form-group col-md-3 no-padding" *ngIf="calledFrom !='checkin'">
+        <!-- <label class="col-form-label" for="dob">{{dob_cap}} </label> -->
         <!-- <input type="text" [(ngModel)] = "dob" (keyup)="valuechange()" class="form-control" id="mobile" placeholder="Mobile Number"> -->
-        <div class="pickerouter">
+        <!-- <div class="pickerouter">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker (selectedChanged)="dateChanged($event)" [disabled]="false"></mat-datepicker>
             <input class="form-control nofocus" type="text" matInput [matDatepicker]="picker" [max]="tday" disabled
                 [(ngModel)]="dob" tabindex="-1">
-        </div>
+        </div> -->
+        <mat-form-field>
+            <input matInput (dateChange)="dateChanged($event.value)" [matDatepicker]="picker" placeholder="DD/MM/YYYY" #inputdob
+                [max]="tday" disabled class="form-control" type="text" [(ngModel)]="dob" tabindex="-1">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker  [disabled]="false"></mat-datepicker>
+        </mat-form-field>
         <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile')"
 >>>>>>> refs/remotes/origin/jaldee-nv
     errorMsg="Please enter the mobile number.">

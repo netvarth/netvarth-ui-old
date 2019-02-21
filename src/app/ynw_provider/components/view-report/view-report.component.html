@@ -1,5 +1,5 @@
 <section>
-  <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader>
+  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -43,7 +43,7 @@
                     <span>{{viewreport.subTotalJaldeeCoupons}}</span>
                   </div>
                   <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
-                    <span class="ttle">Grant Total</span>
+                    <span class="ttle">{{grant_total_cap}}</span>
                     <span>{{viewreport.grantTotal}}</span>
                   </div>
                   <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">

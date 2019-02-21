@@ -37,11 +37,9 @@
     </ul>  
     <button (click)="addScheduleSelection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'" class="cs-btn bt3"> {{add_schedule}}</button>
     <!-- <button (click)="cancel_schedule_button_clicked()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE' && show_cancelbutton" class="cs-btn bt7"> Cancel</button> -->
-    
     <!-- <div *ngIf="show_savebutton"><button type="button" class="cs-btn bt3" (click)="save_schedule_button_clicked()">Save Schedule Changes</button></div> -->
-
     <div class="schedulesub_outer" *ngIf="show_schedule_selection">
-        <div class="sch_sel_head" *ngIf="edit_mode"> {{edit_btn}}{{edit_heading}}</div>
+        <div class="sch_sel_head" *ngIf="edit_mode">{{edit_heading}}</div>
         <div class="sch_sel_head" *ngIf="!edit_mode"> {{add_schedule}}</div>
         <!-- <div class="schselectall" *ngIf="Isource=='wizard'"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
         <!-- <div class="schselectall"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
@@ -52,8 +50,7 @@
         <section class="chk-section">
             <div *ngFor="let day of weekdays_arr; let i = index" class='chk-margin'>
             <mat-checkbox *ngIf="day" [checked]="check_daychecked(i)" (change)=handlechecbox(i)>{{day}}</mat-checkbox>
-            </div>
-            
+            </div>           
         </section>
        <div class="startendtime">
         <div class="starttimediv">
@@ -67,20 +64,13 @@
        </div>
        <div class="savecancel">
            <button type="button" (click)="cancelscheduleClicked()" class="cs-btn bt7">{{cancel_btn}}</button>
-
-           <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3"><ng-container *ngIf="!edit_mode">{{save_schedule_cap}}</ng-container><ng-container *ngIf="edit_mode">{{update_btn}}</ng-container></button>
-           
-           
+           <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3"><ng-container *ngIf="!edit_mode">{{save_schedule_cap}}</ng-container><ng-container *ngIf="edit_mode">{{update_btn}}</ng-container></button>       
        </div>
-
        <app-field-error-display [displayError]="true" *ngIf="api_error"
-       errorMsg="{{api_error}}"></app-field-error-display>
-       
+       errorMsg="{{api_error}}"></app-field-error-display> 
        <app-form-success-display [displayMsg]="true" *ngIf="api_success"
        successMsg="{{api_success}}"></app-form-success-display>
-       
     </div>
-
 </div>
 
 

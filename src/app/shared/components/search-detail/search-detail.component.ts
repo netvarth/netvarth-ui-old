@@ -156,6 +156,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   coupondialogRef;
   isfirstCheckinOffer = false;
   btn_clicked = false;
+  server_date;
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -167,6 +168,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
     this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
     this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
@@ -195,7 +197,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // setTimeout(() => {
     //   window.scrollTo(0, scrolltop);
     //  }, 3200);
-
+  }
+  stringToInt(stringVal) {
+    return parseInt(stringVal, 0);
   }
   ngOnDestroy() {
     if (this.checkindialogRef) {
@@ -739,9 +743,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       q_str = q_str + ' title:\'' + ptitle + '\'';
       // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     } else if (this.kwtyp === 'kwphrase') {
-      let phrase = this.kw.replace('/', '');
-      phrase = phrase.replace(/'/g, '\\\'');
-      phrasestr = ' (phrase \'' + phrase + '\') ';
+      // let phrase = this.kw.replace('/', '');
+      phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' +  ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
+       ' specialization_displayname:\'' + this.kw + '\''
+      + ' title:\'' + this.kw + '\'' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\''  + ' adwords:\'' + this.kw + '\')';
+      // phrase = phrase.replace(/'/g, '\\\'');
+      // phrasestr = ' (phrase \'' + phrase + '\') ';
       // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
@@ -788,7 +795,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       if (this.latitude || this.domain || this.labelq || time_qstr || phrasestr) {
         // if location or domain is selected, then the criteria should include following syntax
         // q_str = '(and ' + time_qstr + q_str + this.refined_querystr + ')';
-        q_str = '(and ' + phrasestr + time_qstr + q_str + ')';
+        q_str = '(and ' + q_str + time_qstr + phrasestr + ')';
       }
     }
     // Creating criteria to be passed via get
@@ -951,7 +958,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const today = new Date();
+          const today = new Date(this.server_date);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
@@ -971,7 +978,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const ctoday = cday + '/' + cmon + '/' + yyyy;
           let srchindx;
           const check_dtoday = new Date(dtoday);
-          let cdate = new Date();
+          let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             srchindx = provids[i].searchindx;
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];
@@ -1144,6 +1151,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         if (pasdomain) { // case if domain and subdomain are available
           if (data['refinedFilters']) {
             this.searchrefine_arr = data['refinedFilters'];
+            if (pasdomain && subdom) {
+              this.searchdetailserviceobj.getRefinedSearch(pasdomain, '')
+              .subscribe(refdata => {
+                  const arraytomerge = refdata['refinedFilters'];
+                  this.searchrefine_arr = arraytomerge.concat(this.searchrefine_arr);
+              });
+            }
           }
           if (data['commonFilters']) {
             const mergedarray = this.searchrefine_arr.concat(data['commonFilters']); // merging the refine and common filters
@@ -1776,15 +1790,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   checkserviceClicked(name, obj) {
     this.btn_clicked = true;
-    if (this.shared_functions.checkLogin()) {
-      const ctype = this.shared_functions.isBusinessOwner('returntyp');
+    // if (this.shared_functions.checkLogin()) {
+    //   const ctype = this.shared_functions.isBusinessOwner('returntyp');
       // if (ctype === 'consumer') {
       this.serviceClicked(name, obj);
       // }
-    } else { // show consumer login
-      const passParam = { callback: 'servicedetail', mname: name, mobj: obj };
-      this.doLogin('consumer', passParam);
-    }
+    // } else { // show consumer login
+    //   const passParam = { callback: 'servicedetail', mname: name, mobj: obj };
+    //   this.doLogin('consumer', passParam);
+    // }
   }
   /* Service Clicked
     * name  Service Name
@@ -1793,7 +1807,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   serviceClicked(name, obj) {
     const s3id = obj.fields.unique_id;
     const busname = obj.fields.title;
-
     // get services details from s3
     let selected_service = null;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
@@ -1813,6 +1826,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               }
               if (selected_service !== null) {
                 this.showServiceDetail(selected_service, busname);
+              } else {
+                this.btn_clicked = false;
               }
             });
         });

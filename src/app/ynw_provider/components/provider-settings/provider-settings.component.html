@@ -1,5 +1,5 @@
 <section>
-    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -15,6 +15,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_profile_cap}}</li>
                                 <li>
                                     <span class="ttle">
                                         {{public_search_cap}} <span class="sts" [class.active]="search_status">{{search_statusstr}}</span>
@@ -23,8 +24,9 @@
                                         <mat-slide-toggle [(ngModel)]="search_status" (change)="handle_searchstatus()"></mat-slide-toggle>
                                     </span>
                                 </li>
-                                <li>
+                                <li class="block-level">
                                     <span class="lnk" (click)="redirecTo('bprofile')">{{profile_cap}}</span>
+                                    <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
                                 </li>
                             </ul>
                         </div>
@@ -38,6 +40,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_waitlist_cap}}</li>
                                 <li>
                                     <span class="ttle">
                                         {{accept_online_cap}} {{checkin_label |capitalizeFirst}} <span class="sts"
@@ -52,7 +55,7 @@
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('locations')">{{locName}}
-                                      <span *ngIf="multipeLocationAllowed == true">  ({{location_count}})</span></span>
+                                        <span *ngIf="multipeLocationAllowed == true"> ({{location_count}})</span></span>
                                 </li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('services')">{{services_cap}}
@@ -74,6 +77,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_license_cap}}</li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('license')">{{license_cap}} &amp;
                                         {{invoice_cap}}</span>
@@ -93,11 +97,14 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_pay_cap}}</li>
                                 <li>
                                     <span class="ttle">
                                         {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
+                                        <!-- <span class="acc-msg">({{accountActiveMsg}})</span> -->
+
                                     </span>
-                                    <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="jaldeeBankTooltip">
+                                    <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
                                         <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                     </span>
                                 </li>
@@ -119,6 +126,7 @@
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_bill_cap}}</li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('items')">{{items_cap}} ({{item_count}})</span>
                                 </li>
@@ -126,9 +134,10 @@
                                     <span class="lnk" (click)="redirecTo('discounts')">{{discount_cap}}
                                         ({{discount_count}})</span>
                                 </li>
-                                <li>
+                                <li class="block-level">
                                     <!-- <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}} ({{coupon_count}})</span> -->
                                     <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
+                                    <!-- <p class="form-level-settings">{{frm_coupon_cap}}</p> -->
                                 </li>
                             </ul>
                         </div>
@@ -138,10 +147,11 @@
                 <div class="card set06 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2>{{miscellaneous_cap}}</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
+                                <li class="form-level-settings">{{frm_mis_cap}}</li>
                                 <li>
                                     <span class="lnk" (click)="redirecTo('nonworking')">{{non_work_cap}}</span>
                                 </li>
@@ -153,9 +163,6 @@
         </div>
     </div>
 </section>
-
-
-
 
 
 <!-- <h1>Settings</h1>
@@ -171,3 +178,4 @@ Waitlist
 </mat-slide-toggle>
 
 <button [routerLink]="['/provider/settings/license']">License</button> -->
+

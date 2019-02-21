@@ -19,6 +19,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   adword_cap = Messages.ADWORD_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap =Messages.SAVE_BTN;
+  adword_errmsg = Messages.ADWORD_ERRMSG;
 
   amForm: FormGroup;
   api_error = null;

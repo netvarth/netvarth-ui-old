@@ -15,6 +15,10 @@ import { from } from 'rxjs';
   styleUrls: ['./provider-reimburse-report.component.css']
 })
 export class ProviderReimburseReportComponent implements OnInit {
+  no_reports_msg = Messages.NO_REPORTS_MSG;
+  date_from_cap = Messages.DATE_FROM_CAP;
+  date_to_cap = Messages.DATE_TO_CAP;
+  coupon_amt_cap = Messages.REPORT_COUPON_AMT_CAP;
   status_cap = Messages.PRO_STATUS_CAP;
   all_cap = Messages.ALL_CAP;
   reimburse_report_cap = Messages.REIMBUSE_REPORT_CAP;
@@ -63,6 +67,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   };
   reportsCount;
   requestdialogRef;
+  isCheckin;
+  filterapplied = false;
   constructor(private dialog: MatDialog, private router: Router,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
@@ -72,6 +78,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.resetFilter();
     console.log('I am Here');
     this.getCouponReport();
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
       return JSON.parse(jsonString);
@@ -116,6 +123,12 @@ export class ProviderReimburseReportComponent implements OnInit {
       page: 1
     };
   }
+
+  clearFilter() {
+    this.resetFilter();
+    this.filterapplied = false;
+    this.loadApiSwitch('doSearch');
+  }
   /**
    * Set Max and Min Value for Date Filter
    */
@@ -150,14 +163,14 @@ export class ProviderReimburseReportComponent implements OnInit {
   checkFilterDateMaxMin(type) {
     if (type === 'from_date') {
       this.filter_date_end_min = this.filter.from_date;
-      if (this.filter.to_date < this.filter.from_date) {
-        this.filter.to_date = this.filter.from_date;
-      }
+      // if (this.filter.to_date < this.filter.from_date) {
+      //   this.filter.to_date = this.filter.from_date;
+      // }
     } else if (type === 'to_date') {
       this.filter_date_start_max = this.filter.to_date;
-      if (this.filter.to_date < this.filter.from_date) {
-        this.filter.from_date = this.filter.to_date;
-      }
+      // if (this.filter.to_date < this.filter.from_date) {
+      //   this.filter.from_date = this.filter.to_date;
+      // }
     }
     this.doSearch();
   }
@@ -222,6 +235,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    */
   doSearch() {
     this.loadApiSwitch('doSearch');
+    this.filterapplied = true;
   }
   /**
    * Perform Rest Call for Getting Reports

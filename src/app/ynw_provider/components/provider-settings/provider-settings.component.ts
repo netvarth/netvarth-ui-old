@@ -1,15 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
@@ -40,6 +35,17 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   coupons_cap = Messages.COUPONS_CAP;
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
+
+
+  frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
+  // frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG;
+  frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG;
+  frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
+  frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
+  frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
+  frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
+  frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
+
   waitlist_status = false;
   waitlist_statusstr = 'Off';
   search_status = false;
@@ -72,27 +78,36 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   checkin_label = '';
   tooltipcls = projectConstants.TOOLTIP_CLS;
   subscription: Subscription;
+  customer_label = '';
+  isCheckin;
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
     private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
   licenseTooltip = '';
   paymentTooltip = '';
-  jaldeeBankTooltip = '';
+  accountActiveMsg = '';
   billposTooltip = '';
+  frm_profile_cap = '';
+
+  miscellaneous = '';
+
 
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
     this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
-   // this.jaldeeBankTooltip = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
+    // this.accountActiveMsg = this.shared_functions.getProjectMesssages('JALDEEBANK_TOOLTIP');
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
+    this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]', this.customer_label);
+    this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();
@@ -103,7 +118,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getCoupons();
     this.getitems();
     this.getBusinessConfiguration();
-
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
 
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
@@ -161,11 +176,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           // console.log('paystatus', data);
           this.payment_status = (data['onlinePayment']) || false;
           this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
-          if(this.payment_settings.isJaldeeAccount){
-            this.jaldeeBankTooltip = "You are using Jaldee bank account";
+          if (this.payment_settings.isJaldeeAccount) {
+            this.accountActiveMsg = "You are using Jaldee bank account";
           }
-          else{
-            this.jaldeeBankTooltip = "You are using your own bank account";
+          else {
+            this.accountActiveMsg = "You are using your own bank account";
           }
           
         },
@@ -408,3 +423,5 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
 }
+
+

@@ -23,7 +23,7 @@ export class ChangeEmailComponent implements OnInit {
   change_password_cap = Messages.CHANGE_PASSWORD_CAP;
   change_mobile_cap = Messages.CHANGE_MOB_CAP;
   family_members_cap = Messages.FAMILY_MEMBERS;
-
+  dashboard_cap = Messages.DASHBOARD_TITLE;
   spForm: FormGroup;
   api_error = null;
   api_success = null;

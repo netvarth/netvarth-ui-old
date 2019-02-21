@@ -10,33 +10,33 @@ export const Messages = {
   'PHONE_VERIFIED': 'Your phone number has been verified',
   'MEMBER_CREATED': 'Member added successfully',
   'MEMBER_UPDATED': 'Member updated successfully',
-  'LICENSE_UPGRADED': 'License Package upgraded successfully',
+  'LICENSE_UPGRADED': 'License successfully upgraded to [package]',
   'LICENSE_TOOLTIP': 'This tooltip can be managed from the messages file',
-  'ADDON_ADDED': 'Addon Package added successfully',
-  'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',
+  'ADDON_ADDED': 'Add-on Package added successfully',
+  'TESTACC_LOGIN_NA': 'Test user cannot view/Check-In real providers account details',
 
   // Items
   'ITEM_CREATED': 'Item added successfully',
   'ITEM_UPDATED': 'Item updated successfully',
   'ITEM_DELETE': 'Do you really want to remove the item "[name]"?',
   'ITEM_ENABLE': 'Do you really want to change the status to "[status]"?',
-  'ITEM_LISTEMPTY': 'No Items exists',
+  'ITEM_LISTEMPTY': 'No Items exist',
   'ITEM_IMGREMOVED': 'Image removed successfully',
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
 
   // Bill Discount
-  'DISCOUNT_CREATED': 'Bill Discount created successfully',
-  'DISCOUNT_UPDATED': 'Bill Discount updated successfully',
-  'DISCOUNT_DELETE': 'Do you really want to remove the bill discount "[name]"?',
-  'DISCOUNT_DELETED': 'Bill Discount deleted successfully',
-  'DISCOUNT_LISTEMPTY': 'No Bill Discounts exists',
+  'DISCOUNT_CREATED': 'Discount created successfully',
+  'DISCOUNT_UPDATED': 'Discount updated successfully',
+  'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
+  'DISCOUNT_DELETED': 'Discount deleted successfully',
+  'DISCOUNT_LISTEMPTY': 'No Discounts exist',
 
   // Bill Coupons
-  'COUPON_CREATED': 'Bill Coupon created successfully',
-  'COUPON_UPDATED': 'Bill Coupon updated successfully',
-  'COUPON_DELETE': 'Do you really want to remove the bill coupon "[name]"?',
-  'COUPON_DELETED': 'Bill Coupon deleted successfully',
-  'COUPON_LISTEMPTY': 'No Bill Coupons exists',
+  'COUPON_CREATED': 'Coupon created successfully',
+  'COUPON_UPDATED': 'Coupon updated successfully',
+  'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
+  'COUPON_DELETED': 'Coupon deleted successfully',
+  'COUPON_LISTEMPTY': 'No Coupons exist',
 
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
@@ -74,7 +74,7 @@ export const Messages = {
   'BPROFILE_PRIVACY_PHONE_INVALID': 'Please enter a valid mobile phone number',
   'BPROFILE_PRIVACY_PHONE_10DIGITS': 'Mobile number should have 10 digits',
   'BPROFILE_PRIVACY_EMAILLABEL_REQ': 'Email label should not be blank',
-  'BPROFILE_PRIVACY_PHONE_DELETE' : 'Do you really want to remove the Phone no "[DATA]" and its details?',
+  'BPROFILE_PRIVACY_PHONE_DELETE' : 'Do you really want to remove the Mobile no "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_DELETE' : 'Do you really want to remove the Email id "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_INVALID': 'Please enter a valid email id',
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
@@ -86,17 +86,17 @@ export const Messages = {
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
 
   // Adwords
-  'ADWORD_LISTEMPTY': 'No adwords exists',
+  'ADWORD_LISTEMPTY': 'No AdWords exist',
   'ADWORD_CREATED': 'Adword added successfully',
-  'ADWORD_DELETE': 'Do you really want to remove the Adword [adword]?',
-  'ADWORD_DELETE_SUCCESS': 'Adword deleted successfully',
-  'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/addon for more benefits',
+  'ADWORD_DELETE': 'Do you really want to remove the AdWord [adword]?',
+  'ADWORD_DELETE_SUCCESS': 'AdWord deleted successfully',
+  'ADWORD_EXCEED_LIMIT': 'You are not allowed to do operation because it exceeds limit. You can upgrade license package/Add-on for more benefits',
 
   // WaitlistManager
   'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'SERVICE_ADDED1': 'New service added successfully',
-  'SERVICE_ADDED2': 'Please add this service to the relevant service time-window by editing it.',
+  'SERVICE_ADDED2': 'Please add this service to the relevant working hours by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Payment settings needs to be completed before enabling the Pre-Payment option',
@@ -106,13 +106,13 @@ export const Messages = {
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location amenities saved successfully',
   'WAITLIST_LOCATION_CHG_STATLOCATION': 'Location "[locname]" has been [status] successfully',
   'WAITLIST_LOCATION_CHG_BASELOCATION': 'Base location changed to [locname]',
-  'WAITLIST_QUEUE_CREATED': 'Service Time-Window created successfully',
-  'WAITLIST_QUEUE_UPDATED': 'Service Time-Window updated successfully',
+  'WAITLIST_QUEUE_CREATED': 'Working Hours created successfully',
+  'WAITLIST_QUEUE_UPDATED': 'Working Hours updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'End time should be greater than start time',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
-  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant service time-window by editing it',
+  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant working hours by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
@@ -121,7 +121,7 @@ export const Messages = {
   'ADD_DELAY': 'Delay has been notified to your [customer]',
   'ADD_DELAY_TIME_ERROR': 'Please specify the delay',
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
-  'WAITLIST_STATUS_CHANGE': 'Waitlist status changed to [status]',
+  'WAITLIST_STATUS_CHANGE': '[waitlist] status changed to [status]',
   'PROVIDER_NOTE_ADD': 'Note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message has been successfully sent',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message has been successfully sent',
@@ -182,7 +182,7 @@ export const Messages = {
   // Consumer Dashboard
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
-  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 5 minutes to complete your check-in',
+  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 15 minutes to complete your check-in',
 
   // Dynamic Field
   'YEAR_MONTH_VALID': 'Future date not allowed',
@@ -197,8 +197,8 @@ export const Messages = {
   'LINCENSE_TOOLTIP': 'View and change your license package',
   'PAYMENT_TOOLTIP': 'View and edit online payment setings and tax settings',
   'BILLPOS_TOOLTIP': 'Add items, discounts, coupons',
-  'ADDON_TOOLTIP': 'Buy available add-ons',
-  'ADDWORD_TOOLTIP': 'Buy adwords here',
+  'ADDON_TOOLTIP': 'Buy available Add-ons',
+  'ADDWORD_TOOLTIP': 'Buy AdWords here',
   'MOREOPTIONS_TOOLTIP': 'More Search Options',
   'CURRENTCHECKINS_TOOLTIP': 'Your check-ins',
   'FAVORITE_TOOLTIP': 'Your favourite providers',
@@ -209,11 +209,11 @@ export const Messages = {
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee.com',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
-  'QUEUENAME_TOOLTIP': 'Click here to edit the Service Time-Window',
+  'QUEUENAME_TOOLTIP': 'Click here to edit the Working Hours',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with adjust delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',
-  'APPX_WAIT_TIME_CAPTION': 'Appox Waiting Time',
+  'APPX_WAIT_TIME_CAPTION': 'Approx Waiting Time',
   'ESTIMATED_TIME_SMALL_CAPTION': 'Est Wait Time',
   'CHECKIN_TIME_CAPTION': 'Est Service Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
@@ -237,15 +237,15 @@ export const Messages = {
   // Breadcrumbs
   'LEARN_MORE_CAP': 'Learn More',
 
-  // Reveal Phone No
+  // Reveal Mobile No
   'MANAGE_PRIVACY': 'Manage Privacy',
-  'REVEAL_PHNO': 'Reveal Phone number',
+  'REVEAL_PHNO': 'Reveal Mobile number',
 
   // Family Member
   'FAMILY_MEMBERS': 'Family Members',
   'MEMBER_CAPTION': 'Member',
   'PHONE_DIGIT_VAL_MSG': 'Enter a 10 digit mobile number',
-  'PHONE_NUM_VAL_MSG': 'Phone number should have only numbers',
+  'PHONE_NUM_VAL_MSG': 'Mobile number should have only numbers',
   'LASTNAME_INVAL_MSG': 'Please enter a valid last name',
   'FIRSTNAME_INVAL_MSG': 'Please enter a valid first name',
   'ADD_FAMILY_MEMBER': 'Add Family Member',
@@ -301,9 +301,9 @@ export const Messages = {
   'BUSS_NAME_CAP': 'Bussiness Name:',
   'DATE_CAP': 'Date:',
   'LOCATION_CAP': 'Location',
-  'WAITLIST_FOR_CAP': 'Waitlist For:',
+  'WAITLIST_FOR_CAP': 'Check-In For:',
   'SERVICE_CAP': 'Service:',
-  'SER_TIME_WINDOW_CAP': 'Service Time-Window:',
+  'SER_TIME_WINDOW_CAP': 'Working Hours:',
   'PAY_STATUS_CAP': 'Payment Status:',
   'NOT_PAID_CAP': 'Not Paid',
   'PARTIALLY_PAID_CAP': 'Partially Paid',
@@ -324,7 +324,7 @@ export const Messages = {
   'SEARCH_CAP': 'Search',
   'OOPS_CAP': 'Oops!!',
   'LOOKS_NOT_REG_CUS_CAP': 'Looks like you\'re not a registered customer.',
-  'FILL_YOUR_DET_CAP': 'Please fll in your details to Register',
+  'FILL_YOUR_DET_CAP': 'Please fill in your details to Register',
   'REGISTER_CAP': 'Register',
   'BACK_TO_SEARCH_CAP': 'Back to Search',
   'HOME_CAP': 'Home',
@@ -371,8 +371,8 @@ export const Messages = {
 
   // App-shared-components-provider-details
   'GO_BACK_CAP': 'Go Back',
-  'MORE_CAP': 'More',
-  'LESS_CAP': 'Less',
+  'MORE_CAP': ' More',
+  'LESS_CAP': ' Less',
   'CONTACT_DETAILS_CAP': 'Contact Details',
   'REM_FROM_FAV_CAP': 'Remove From Favourites',
   'YOU_HAVE_CAP': 'You have',
@@ -381,6 +381,7 @@ export const Messages = {
   'WORKING_HRS_CAP': 'Working Hours',
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
+  'SERVPRICE_CAP': 'Price ',
 
   // App-shared-components-return-payment
   'PAY_DONE_SUCCESS_CAP': 'Your payment has done successfully!',
@@ -389,29 +390,29 @@ export const Messages = {
 
   // App-shared-components-search-details
   'REFINE_SEARCH_CAP': 'Refine Search',
-  'SELECT_DOMAIN_CAP': 'Select Domain',
-  'SELECT_SUBDOMAIN_CAP': 'Select Subdomain',
+  'SELECT_DOMAIN_CAP': 'Select Service Domain',
+  'SELECT_SUBDOMAIN_CAP': 'Select Service specialization or Occupation',
   'SELECT_CAP': '-- Select --',
   'SHOW_MORE_CAP': 'show more',
   'SHOW_LESS_CAP': 'show less',
   'OTHER_FILTERS_CAP': 'Other Filters',
   'FOUND_CAP': 'found',
-  'NONE_CAP': 'None',
+  'NONE_CAP': 'Sort By',
   'DISTANCE_CAP': 'Distance',
   'JALDEE_VERIFIED_CAP': 'Jaldee Verified',
   'BASIC_CAP': 'Basic',
   'BASIC_PLUS_CAP': 'Basic Plus',
   'PREMIUM_CAP': 'Premium',
   'CLAIM_BUSINESS_CAP': 'Claim my Business',
-  'SORRY_CAP': 'Sorry',
-  'NOT_ALLOWED_CAP': 'not allowed',
+  'SORRY_CAP': 'Sorry !! Online ',
+  'NOT_ALLOWED_CAP': ' is currently not allowed',
   'NO_YNW_RES_FOUND_CAP': 'No YNW results found',
 
   // App-shared-components-search-service-detail
   'DURATION_CAP': 'Duration:',
   'PRICE_CAP': 'Price:',
   'PREPAYMENT_AMOUNT_CAP': 'Prepayment Amount:',
-  'DESCRIPTION_CAP': 'Description :',
+  'DESCRIPTION_CAP': 'Description',
 
   // App-shared-components-set-password-form
   'NEW_PASSWORD_CAP': 'New Password *',
@@ -423,8 +424,8 @@ export const Messages = {
   'MOBILE_NO_CAP': 'Mobile Number *',
   'F_NAME_CAP': 'First Name *',
   'L_NAME_CAP': 'Last Name *',
-  'SELECT_DMN_CAP': 'Select Domain *',
-  'SELECT_SB_DMN_CAP': 'Select Subdomain *',
+  'SELECT_DMN_CAP': 'Select Service Domain *',
+  'SELECT_SB_DMN_CAP': 'Select Service specialization or Occupation *',
   'LIC_PACKAGE_CAP': 'License Package *',
   'I_AGREE_CAP': 'I Agree',
   'TERMS_CONDITIONS_CAP': 'Terms & Conditions',
@@ -449,7 +450,7 @@ export const Messages = {
   'SELECT_SER_CAP': 'Select Service',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
-  'SERV_TIME_WINDOW_CAP': 'Service Time-Window',
+  'SERV_TIME_WINDOW_CAP': 'Working Hours',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
   'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted today.',
@@ -476,14 +477,14 @@ export const Messages = {
   'NO_PAY_OPT_AVIL_CAP': 'No payment options available.',
 
   // App-shared-modules-edit-profile
-  'EDIT_PHONE_NO_CAP': 'Use "Change Mobile" option to edit the Phone number',
+  'EDIT_PHONE_NO_CAP': 'Use "Change Mobile" option to edit the Mobile number',
   'CHANGE_EMAIL_CAP': 'Use "Update Email" option to edit the Email Id',
   'PHONE_NO_CAP': 'Phone Number',
   'EMAIL_ID_CAP': 'Email Id',
 
   // App-shared-modules-footer
   'ABOUT_CAP': 'About',
-  'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providersâ€™ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
+  'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providersÃ¢â‚¬â„¢ day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
   'ABOUT_JALDEE_TWO': 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.',
   'CONTACT_CAP': 'Contact',
   'NETVARTH_TECH_PVT_LTD': 'Netvarth Technologies Pvt Ltd',
@@ -527,7 +528,7 @@ export const Messages = {
   'PROVIDER_CONSUMER_CAP': 'Provider / Consumer',
   'REPLY_CAP': 'Reply',
   'DELETE_MSG_CAP': 'Delete Message',
-  'NO_MSG_EXISTS_CAP': 'No Messages exists',
+  'NO_MSG_EXISTS_CAP': 'No Messages exist',
 
   // App-shared-modules-learnmore-adjustdelay
   'ADJUST_DELAY_CAP': 'Adjust Delay',
@@ -584,16 +585,19 @@ export const Messages = {
   'SETTLE_BILL_CAP': 'Settle Bill',
   'PRINT_BILL_CAP': 'Print Bill',
   'ACCEPT_PAY_CAP': 'Accept Payment',
+  'PAY_STATUS' : 'Status',
 
   // App-ynw_provider-components-add-provider-addons
-  'ADD_ADDON_CAP': 'Add Addon',
-  'ADDONS_CAP': 'Addons *',
+  'ADD_ADDON_CAP': 'Add Add-on',
+  'ADDONS_CAP': 'Add-ons *',
   'SELECT_ONE_CAP': '- Select One -',
-  'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable addons found.',
+  'NO_UPGRADE_ADDONS_FOUND_CAP': 'Sorry no upgradable Add-ons found.',
+  'DATE_APPLY_CAP' : 'Date Applied',
+  'ADD_ON_HISTORY' : 'Add-on History',
 
   // App-ynw_provider-components-add-provider-bprofile-search-adwords
-  'ADD_ADWORD_CAP': 'Add Adword',
-  'ADWORD_CAP': 'Adword',
+  'ADD_ADWORD_CAP': 'Add AdWord',
+  'ADWORD_CAP': 'AdWord',
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
@@ -604,7 +608,7 @@ export const Messages = {
   'NO_LANG_FOUND_CAP': 'Sorry no languages found.',
 
   // App-ynw_provider-components-add-provider-coupons
-  'BILLING_COUPONS_CAP': 'Billing Coupons -',
+  'BILLING_COUPONS_CAP': 'Coupons',
   'NAME_MAND_CAP': 'Name *',
   'TYPE_MAND_CAP': 'Type *',
   'FIXED_CAP': 'Fixed',
@@ -631,6 +635,7 @@ export const Messages = {
   // App-ynw_provider-components-add-provider-note
   'ADD_PROVIDER_NOTE_CAP': 'Add Private Note',
   'PROVIDER_NOTE_CAP': 'Private Note',
+  'NOTE_PLACEHOLDER' : 'Type notes for your reference only',
 
   // App-ynw_provider-components-add-provider-location
   'AMENITIES_CAP': 'Amenities',
@@ -644,9 +649,10 @@ export const Messages = {
   'SCHEULDE_CAP': 'Business Schedules',
   'OPEN_CAP': '24 hours Open',
   'PARKING_TYPE_CAP': 'Select Parking Type',
+  'LOC_PLACEHOLDER' : 'Enter your precise location',
 
   // App-ynw_provider-components-add-provider-waitlist_queue
-  'SERVICE_TIME_WINDOW_CAP': 'Service Time-Window Name *',
+  'SERVICE_TIME_WINDOW_CAP': 'Title for Working Hours *',
   'QUEUE_LOCATION_CAP': 'Location *',
   'QUEUE_SERVICE_CAP': 'Service*',
   'SCHEDULE_CAP': 'Schedule*',
@@ -657,7 +663,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-watlist-service
   'SERVICE_NAME_CAP': 'Service Name *',
-  'EST_DURATION_CAP': 'Estimated Duration (min)*',
+  'EST_DURATION_CAP': 'Estimated Duration (min)',
   'ENABLE_PREPAYMENT_CAP': 'Enable prepayment',
   'PREPAYMENT_CAP': 'Prepayment Amount ',
   'TAX_APPLICABLE_CAP': 'Tax applicable',
@@ -666,7 +672,7 @@ export const Messages = {
   'SERVICE_EMAIL_CAP': 'Email',
   'GALLERY_CAP': 'Gallery',
   'SELECT_IMAGE_CAP': 'Click here to select the image files',
-  'GO_TO_SERVICE_CAP': 'Please click here to go to the service time-window List',
+  'GO_TO_SERVICE_CAP': 'Please click here to go to the working hours List',
 
   // App-ynw_provider-components-add-provider-service-gallery
   'SERVICE_GALLERY_CAP': 'Service Gallery',
@@ -683,14 +689,14 @@ export const Messages = {
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
-  'SERVICE_TIME_CAP': 'Service Time-Windows',
+  'SERVICE_TIME_CAP': 'Working Hours',
   'SERVICES_CAP': 'Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
   'PAYMENT_STATUS_CAP': 'Payment Status',
   'START_DATE_CAP': 'Start Date',
   'END_DATE_CAP': 'End Date',
   'TOKEN_NO_CAP': 'Token No',
-  'PRO_NAME_CAP': 'Name',
+  'PRO_NAME_CAP': 'Profile Name',
   'PRO_SERVICE_CAP': 'Service',
   'PRO_STATUS_CAP': 'Status',
   'NOTE_CAP': 'Note',
@@ -698,13 +704,19 @@ export const Messages = {
   'ADD_NOTE_CAP': 'Add Note',
   'PRO_AVAILABLE_CAP': 'available',
   'NO_SERVICE_CAP': 'No service time-windows available',
+  'NO_QUEUE_MSG' : 'No working hours set for the selected location',
   'ACTIONS_CAP': 'Actions',
-  'ITEM_HI_CAP': 'Item -',
+  'ITEM_HI_CAP': 'Item',
   'ITEM_NAME_CAP': 'Item Name',
   'SHORT_DESC_CAP': 'Short Description',
   'DETAIL_DESC_CAP': 'Detailed Description',
   'PRICES_CAP': 'Price',
   'TAXABLE_CAP': 'Taxable',
+  'NO_HISTORY_MSG' : 'No previous [waitlist]s',
+  'NO_TODAY_CHECKIN_MSG' : 'No new [waitlist]s for this time window',
+  'NO_STRTED_CHECKIN_MSG' :'No \'started\' [waitlist]s',
+  'NO_COMPLETED_CHECKIN_MSG' :'No \'completed\' [waitlist]s',
+  'NO_CANCELLED_CHECKIN_MSG' : 'No \'cancelled\' [waitlist]s',
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
@@ -718,17 +730,18 @@ export const Messages = {
   'SEL_DISC_CAP': 'Select Discount',
   'SEL_COUPON_CAP': 'Select Coupon ',
   'DISCOUNTS_COUPONS_CAP': 'Discounts / Coupons',
-  'BILL_DISCOUNT_CAP': 'Bill Discount',
+  'BILL_DISCOUNT_CAP': 'Discount',
   'ADD_BTN': 'Add',
 
+  
   // App-ynw_provider-components-provider-bprofile-search
   'BPROFILE_PUBLIC_SEARCH_CAP': 'Public Search',
   'BPROFILE_PROFILE_CAP': 'Your profile has been',
   'BPROFILE_DISABLED_CAP': 'disabled',
   'BPROFILE_ONLINE_VISIBLE_CAP': 'for public search online and will not be visible to',
   'BPROFILE_SET_UP_CAP': 'We recommend you to set up the',
-  'BPROFILE_SUMMARY_CAP': 'Profile Name and Description',
-  'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn ON the Public Search',
+  'BPROFILE_SUMMARY_CAP': 'Basic Information',
+  'BPROFILE_ON_pUBLIC_SEARCH': 'section to turn on Public Search',
   'BPROFILE_CURRENT_STATUS': 'Current Status',
   'BPROFILE_ON_CAP': 'On',
   'BPROFILE_OFF_CAP': 'Off',
@@ -737,14 +750,14 @@ export const Messages = {
   'BPROFILE_OFFLINE_CAP': 'You are offline. Turn ON public search to make your profile visible to',
   'BPROFILE_TURN_OFF': 'Turn Off',
   'BPROFILE_TURN_ON': 'Turn On',
-  'BPROFILE_ADWORDS_CAP': 'Adwords',
-  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any adwords. Would you like to buy adwords?',
-  'BPROFILE_BUY_ADWORD_BTN': 'Buy Adwords',
-  'BPROFILE_CREATE_ADWORD_CAP': 'adword(s), you can create',
-  'BPROFILE_MOR_ADOWRDS_CAP': 'adword(s). To add more adwords, go to',
+  'BPROFILE_ADWORDS_CAP': 'AdWords',
+  'BPROFILE_BUY_ADWORDS_CAP': 'Currently you did not have any AdWords. Would you like to buy AdWords?',
+  'BPROFILE_BUY_ADWORD_BTN': 'Buy AdWords',
+  'BPROFILE_CREATE_ADWORD_CAP': 'AdWord(s), you can create',
+  'BPROFILE_MOR_ADOWRDS_CAP': 'AdWord(s). To add more AdWords, go to',
   'BPROFILE_LICENSE_INVOICE_CAP': 'License & Invoice',
-  'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added any',
-  'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information*',
+  'BPROFILE_HAVE_NOT_ADD_CAP': 'You haven\'t added ',
+  'BPROFILE_BASIC_INFORMATION_CAP': 'Basic Information',
   'BPROFILE_SUCH_AS_CAP': 'such as',
   'BPROFILE_BUSINESS_NAME_CAP': 'Business Name, Profile Summary',
   'PROFILE_PICTURE_CAP': 'Profile Picture',
@@ -766,8 +779,8 @@ export const Messages = {
   'BPROFILE_LONGITUDE_CAP': 'Longitude:',
   'BPROFILE_LATIITUDE_CAP': 'Latitude:',
   'BPROFILE_LOCATION_AMENITIES': 'Location Amenities',
-  'BPROFILE_CHANGE_WORKING_HOURS_CAP': 'You can change the working hours by editing the service time-window of this location',
-  'BPROFILE_VIEW_SERVICE_WINDOW_CAP': 'to view the service time-windows',
+  'BPROFILE_CHANGE_WORKING_HOURS_CAP': 'You can change the working hours by editing the working hours of this location',
+  'BPROFILE_VIEW_SERVICE_WINDOW_CAP': 'to view the working hours',
   'BPROFILE_PRIVACY_SETTINGS_CAP': 'Privacy Settings',
   'BPROFILE_ANY_CAP': 'any',
   'BPROFILE_PHONE_CAP': 'Phone',
@@ -829,7 +842,7 @@ export const Messages = {
   'NO_CUSTOMER_CAP': 'You don\'t have any',
 
   // App-ynw_provider-components-provider-discounts
-  'ADD_DISCOUNT_CAP': 'Add Bill Discounts',
+  'ADD_DISCOUNT_CAP': 'Add Discounts',
 
   // App-ynw_provider-components-provider-items
   'ADD_ITEM_CAP': 'Add Item',
@@ -837,7 +850,8 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
-  'SERV_PERIOD_CAP': 'Service Period',
+  'INVOICE_SUMMRY_CAP': 'Invoice Summary',
+  'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',
   'PAYMENT_CAP': 'Payment',
   'ID_CAP': 'Id',
@@ -853,7 +867,10 @@ export const Messages = {
   'DUE_AMT_CAP': 'Due Amount',
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
-  'NO_ADDON_CAP': 'No addons exists',
+  'NO_ADDON_CAP': 'No Add-ons exist',
+  'PAY_BUTTON' : 'Invoices to Pay',
+  'DUE_DATE_CAP' : 'Due Date',
+  'SUBSC_PACKAGE' : 'Subscription/Package',
 
   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
@@ -862,10 +879,11 @@ export const Messages = {
   'NO_METRIC_CAP': 'No metric found',
 
   // App-ynw_provider-components-provider-members
-  'FAMILY_MEMEBER': 'No family members exists',
+  'FAMILY_MEMEBER': 'No family members exist',
 
   // App-ynw_provider-components-provider-payment-history
   'NO_TRANSACTION': 'No transactions done yet',
+  'BILLIN_CAP' : 'Billing',
 
   // App-ynw_provider-components-provider-profile
   'PROFILE_CAP': 'Profile',
@@ -883,7 +901,7 @@ export const Messages = {
   'PLEASE_WAIT': 'Please wait',
 
   // App-ynw_provider-components-provider-reimburse-report
-  'REIMBUSE_REPORT_CAP': 'Reimbursement Report',
+  'REIMBUSE_REPORT_CAP': 'Reimbursement Reports',
   'REPORT_ID_CAP': 'Report Id',
   'TIME_PERIOD_CAP': 'Time Period',
   'COUP_USE_CAP': 'Coupons Used',
@@ -892,6 +910,10 @@ export const Messages = {
   'REQ_PAYMENT_CAP': 'Request for payment',
   'SCCESS_MSG' : 'Requested Successfully',
   'ERROR_MSG' : 'Failed',
+  'NO_REPORTS_MSG' : 'No reports',
+  'GRANT_TOTAL' : 'Grant Total',
+  'DATE_FROM_CAP' : 'Date From',
+  'DATE_TO_CAP' : 'Date To',
 
   // App-ynw_provider-components-provider-settings
   'WAITLIST_MANAGE_CAP': 'Waitlist Manager',
@@ -934,6 +956,8 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-waitlist-locations
   'ADD_NEW_LOC_CAP': 'Add Location',
+  'NO_LOC_ADDED' : 'No location added',
+  'NO_QUEUE_ADDED' : 'No working hours added',
 
   // App-ynw_provider-components-provider-waitlist-online-checkin
   'CHECKIN_CALCULATE_CAP': 'Waiting Time Calculation',
@@ -945,7 +969,7 @@ export const Messages = {
   'CHECKIN_FUTURE_CAP': 'Accept Future',
 
   // App-ynw_provider-components-provider-waitlist-queues
-  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Service Time-Window',
+  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Working Hours',
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
   // App-ynw_provider-components-provider-waitlist-service-detail
@@ -982,20 +1006,20 @@ export const Messages = {
   'PRI_PHONE_LABEL_CAP' : 'Phone Label *',
   'PRI_THIS_PHONE_VISIBLE_TO_CAP' : 'This phone number is visible to',
   'PRI_EMAIL_ID_CAP' : 'Email Id *',
-  'PRI_EMAIL_LABEL_CAP' : 'Email Label *',
+  'PRI_EMAIL_LABEL_CAP' : 'Email Label ',
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP' : 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
-  'SEARCH_ADWORDS_CAP' : 'Adwords',
+  'SEARCH_ADWORDS_CAP' : 'AdWords',
   'SEARCH_SORRY_CAP' : 'Sorry!',
-  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you do not have any adwords. Please upgrade your Licence Package/Add-On',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG' : 'Currently you do not have any AdWords. Please upgrade your Licence Package/Add-On',
 
   // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP' : 'Gallery',
   'SEARCH_GALLERY_SELEC_IMG_FILE_CAP' : 'Click here to select the image files',
 
   // App-ynw_provider-components-provider-bprofile-search-primary
-  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Description',
+  'SEARCH_PRI_PROF_NAME_SUMMARY_CAP' : 'Profile Name and Descriptoin',
   'SEARCH_PRI_BUISINESS_NAME_CAP' : 'Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP' : 'Description',
 
@@ -1015,6 +1039,8 @@ export const Messages = {
   'WIZ_VIEW_IN_PUBLIC_SEARCH_CAP' : 's will view this in Jaldee Online',
   'WIZ_PROFILE_SUMMARY_CAP' : 'Profile Summary',
   'WIZ_NEXT_CAP' : 'Next',
+  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP' : 'You can update the default created service details here. You can add more services in the Settings -> Services, after you create your profile.',
+  'WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP' : 'The service [service_name] will be served for all working hours',
   'WIZ_LOCATION_CAP' : 'Location',
   'WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP' : 'You can add more locations in the Settings -> Location, after you create your profile.',
   'WIZ_CHOOSE_YOUR_LOCA_CAP' : 'Choose your location in the MAP',
@@ -1108,7 +1134,6 @@ export const Messages = {
   'WAITLIST_ACCEPT_ONLINE_CAP' : 'Accept Online',
   'WAITLIST_LOCATIONS_CAP' : 'Locations',
   'WAITLIST_SERVICES_CAP' : 'Services',
-  'WAITLIST_SER_TIME_WINDOWS_CAP' : 'Service Time-Windows',
 
   // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP' : 'Note',
@@ -1119,9 +1144,9 @@ export const Messages = {
   'CHECK_DET_NAME_CAP' : 'Name:',
   'CHECK_DET_DATE_CAP' : 'Date:',
   'CHECK_DET_LOCATION_CAP' : 'Location:',
-  'CHECK_DET_WAITLIST_FOR_CAP' : 'Waitlist For:',
+  'CHECK_DET_WAITLIST_FOR_CAP' : 'Check-In For:',
   'CHECK_DET_SERVICE_CAP' : 'Service:',
-  'CHECK_DET_QUEUE_CAP' : 'Service Time-Window:',
+  'CHECK_DET_QUEUE_CAP' : 'Working Hours:',
   'CHECK_DET_PAY_STATUS_CAP' : 'Payment Status:',
   'CHECK_DET_NOT_PAID_CAP' : 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP' : 'Partially Paid',
@@ -1142,7 +1167,7 @@ export const Messages = {
   'Q_DET_MAX_CAP_CAP' : 'Maximum Capacity',
   'Q_DET_NO_OF_CAP' : 'No of',
   'Q_DET_SERVED_AT_A_TIME_CAP' : 's served at a time',
-  'Q_DET_SER_TIME_WIND_STATUS_CAP' : 'Service Time-Window Status',
+  'Q_DET_SER_TIME_WIND_STATUS_CAP' : 'Working Hours Status',
   'Q_DET_ENABLED_CAP' : 'Enabled',
   'Q_DET_DISABLED_CAP' : 'Disabled',
   'Q_DET_SCHEDULE_CAP' : 'Schedule',
@@ -1158,7 +1183,6 @@ export const Messages = {
   'UP_LIC_PACK_CAP' : 'Select the License you would like to upgrade to :',
   'UP_SELECT_ONE_CAP' : '- Select One -',
   'UP_NO_UPGRADE_PACK_FOUND' : 'Sorry, No upgradable packages found.',
-
   'APPLY_DISCOUNT' : 'Apply Discount',
   'CHANGE_QTY' : 'Change Qty',
   'REMOVE_SERVICE' : 'Remove Service',
@@ -1177,8 +1201,88 @@ export const Messages = {
   'APPLYJC' : 'Apply Jaldee Coupon',
   'CURRENTMOBMSG': 'Your Current Mobile # ',
 
+
+  
   // App-shared-components-set-password-form
-  'SET_PASSWORD_MSG' : 'Congratulations! You have become Jaldee partner! For your security, set the password.',
-  'PASSWORD_ERR_MSG' : 'You haven\'t set your password. Next time you want to go through forgot password',
+  'SET_PASSWORD_MSG' : 'Congratulations! You have become a Jaldee partner! Please set your password to continue sign up process.',
+  'PASSWORD_ERR_MSG' : 'You haven\'t set your password. Next time you have to go through forgot password',
+  'ADWORD_ERRMSG': 'Please enter AdWord',
+  'ADWORD_MAXCOUNT' : 'Upgrade your License package to Gold or Diamond for free AdWords. You can also purchase AdWords as Add ons',
+
+  // form-level-common
+  'FRM_LEVEL_PROFILE_SEARCH_MSG' : 'Setup and maintain your public profile here.',
+  // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
+  'FRM_LEVEL_PROFILE_MSG' : 'Update your business profile (such as location, working hours, specialization, languages, etc..) here.',
+  'FRM_LEVEL_WAITLIST_MSG' : 'Manage your waitlist and enable or disable check-ins for current day or for future.',
+  'FRM_LEVEL_LIC_MSG' : 'Manage and upgrade your license package.',
+  'FRM_LEVEL_PAY_MSG' : 'View and edit the payment and tax settings.',
+  'FRM_LEVEL_BILLING_MSG' : 'Create items, discounts and coupons here.',
+  'FRM_LEVEL_COUPON_MSG' : 'View all the coupons available here.',
+  'FRM_LEVEL_MISC_MSG' : 'Manage your non working days here',
+
+  // form-level-provider-bprofile-search
+  'FRM_LEVEL_PUBLIC_SEARCH_MSG' : 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. Unless you enable, the patients won\'t be able to view your profile in their search result.',
+  'FRM_LEVEL_ADWORDS_MSG' : 'Manage relevant keywords to increase visibility to your [customer]s.',
+  'FRM_LEVEL_PROFILE_NAME_CAP' : 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
+  'FRM_LEVEL_LOC_MSG' : 'Manage your business Location details here.',
+  'FRM_LEVEL_LOC_AMENITIES_MSG' : 'Manage the location benefits that are offered to your [customer]s.',
+  'FRM_LEVEL_WORKING_MSG' : 'Details of your business hours are shown here.',
+  'FRM_LEVEL_PRIVACY_MSG' : 'Manage your contact related information here. Option to keep your information restricted is available.',
+  'FRM_LEVEL_SPEC_MSG' : 'Mention your specializations here.',
+  'FRM_LEVEL_LANG_MSG' : 'To widen your [customer] base, add different languages known to you here.',
+  'FRM_LEVEL_ADDITIONAL_MSG' : 'Add other details of you or your business so that [customer]s can understand you more.',
+  'FRM_LEVEL_VERI_MSG' : 'To upgrade verification level contact Jaldee.',
+  'FRM_LEVEL_GALLERY_MSG' : 'Add images and catchy captions to boost your [customer]\'s check-ins.',
+  'FRM_LEVEL_SOCIAL_MSG' : 'To connect with [customer]s on your social media platform, add your social media links here.',
+
+  // form-level-provider-waitlist
+  'FRM_LEVEL_WAIT_TIME_CALC_MSG' : 'Choose one of the four wait-time calculation options. This calculated time is the standby time after which your [customer] can avail the services.',
+  'FRM_LEVEL_SETT_LOC_MSG' : 'Add the location details of your business presence here. Manage it as and when required.',
+  'FRM_LEVEL_SETT_SERV_MSG' : 'Enlist all the services that you provide to the [customer]s. You can always add new services here.',
+  'FRM_LEVEL_SETT_WORKING_HR_MSG' : 'Setup and Manage multiple working hours of your business here.',
+
+
+  // form-level-provider-payment-settings
+  'FRM_LEVEL_PAYMENT_SETTINGS_MSG' : 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking for transaction process',
+  'FRM_LEVEL_TAX_SETTINGS_MSG' : 'Set up your tax requirements here. Enable the \"Tax Applicable\" toggle switch to apply taxes for your services.',
+
+  // form-level-provider-license and invoice
+  'FRM_LEVEL_PROVIDER_LICE_MSG' : 'Manage the license history, its usage, and payment history and also upgrade your license here.',
+  'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG' : 'To avail the additional features of Jaldee.com, click here.',
+  'FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG' : 'Add relevant keywords to increase your visibility to your [customer].',
+
+  // form-level-provider-coupons
+  'FRM_LEVEL_JALDEE_COUPONS_MSG' : 'These are provided by Jaldee. View the details of Jaldee coupons here.',
+  'FRM_LEVEL_MY_COUPONS_MSG' : 'Create your coupon and its details here.',
+
+  // form-level-provider-discounts
+  'FRM_LEVEL_DISCOUNTS_MSG' : 'Create your discounts here.',
+
+  // form-level-provider-items
+  'FRM_LEVEL_ITEMS_MSG' : 'Create new items and related information here.',
+
+  // form-level-provider-miscellaneous
+  'FRM_LEVEL_NON_WORKING_MSG' : 'Unavailability of your services on particular days (holidays), mention here.',
+
+  'SETPROF_LOC_MSG': 'Please set profile name and location to make use of Dashboard',
+  'SETPROF_MSG': 'Please set profile name to make use of Dashboard',
+  'SET_LOC_MSG': 'Please set location to make use of Dashboard',
+
+  // form-level-provider-wizard
+  'FRM_LEVEL_PRO_WIZ_ONE_MSG' : 'The Jaldee team takes pride in your decision of choosing its services.',
+  'FRM_LEVEL_PRO_WIZ_TWO_MSG' : 'Let us quickly set up your basic profile and help you enable the Public Search to get you started!',
+  'FRM_LEVEL_PRO_WIZ_THREE_MSG' : 'We wish you all the very best!',
+  'FRM_LEVEL_PRO_WIZ_FOUR_MSG' : 'Be certain that this initial setup can be viewed, edited and managed, if and when required.',
+  'FRM_LEVEL_PRO_WIZ_FIVE_MSG' : 'Enter your business name here. [customer]s will view this in Public Profile. ',
+  'FRM_LEVEL_PRO_WIZ_FIVE1_MSG' : 'Complete it by adding a brief introduction about you or your business to help [customer]s know you more.',
+  'FRM_LEVEL_PRO_WIZ_SIX_MSG' : 'Enter the location related details here.',
+
+  'SERVCE_DETAILS': '-Service Details', 
+  'FRM_LEVEL_CREATE_CUSTOMER_MSG_ONE' : 'Look up for the [customer] information, ',
+  'FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO' : 'if not found, enter the [customer]s details ',
+  'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE' : 'for creating a [customer] base.',
+  'FRM_LEVEL_ADJ_DELAY_MSG' : 'You can adjust your working hours and notify your [customer]s about the delay caused.',
+
+  'CHECKED_IN_LABEL' : 'Checked in'
 };
 

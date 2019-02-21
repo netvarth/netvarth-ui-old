@@ -1,5 +1,5 @@
 <section>
-    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
@@ -14,15 +14,17 @@
                                 <table class="table" *ngIf="payment_history.length != 0">
                                     <thead>
                                         <tr>
-                                            <th class="th1">{{date_cap}}</th>
-                                            <th class="th2">{{amount_cap}}</th>
-                                            <th class="th3">{{period_cap}}</th>
+                                            <th></th>
+                                            <th class="th1">{{payment_cap}} {{date_cap}}</th>
+                                            <th class="th2">{{paid_cap}} {{amount_cap}}</th>
+                                            <th class="th3">{{billing_cap}} {{period_cap}}</th>
                                             <th class="th4">{{invoice_cap}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let invoice of payment_history">
-                                            <td class="td1" data-title="Date">{{invoice.createdDate | date: dateFormat
+                                                <td><i *ngIf="invoice.isPeriodic" class="fa fa-calendar" aria-hidden="true"></i></td>
+                                            <td class="td1" data-title="Date">{{invoice.paymentDate | date: dateFormat
                                                 }}</td>
                                             <td class="td2" data-title="Amount">
                                                 <strong>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</strong>

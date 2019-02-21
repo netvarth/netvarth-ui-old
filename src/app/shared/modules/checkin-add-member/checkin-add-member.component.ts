@@ -21,7 +21,7 @@ export class CheckinAddMemberComponent implements OnInit {
   lastname = '';
   mobile = '';
   gender = '';
-  dob = ';';
+  dob = '';
   dobholder = '';
   amForm: FormGroup;
   api_error = null;

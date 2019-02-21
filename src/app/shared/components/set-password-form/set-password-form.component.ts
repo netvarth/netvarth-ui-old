@@ -21,8 +21,9 @@ export class SetPasswordFormComponent implements OnInit {
   password_valid_cap = Messages.PASSWORD_VALID_CAP;
   re_enter_password_cap = Messages.RE_ENTER_PASSWORD_CAP;
   submit_cap = Messages.SUBMIT_CAP;
-  set_password_msg = Messages.SET_PASSWORD_MSG;
+  set_password_msg = '';
   passworddialogRef;
+  isValidConfirm_pw = false;
 
   spForm;
   @Input() type;
@@ -41,6 +42,9 @@ export class SetPasswordFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    if (this.type !== 'forgot_password') {
+      this.set_password_msg = Messages.SET_PASSWORD_MSG;
+    }
   }
 
   createForm() {
@@ -71,11 +75,20 @@ export class SetPasswordFormComponent implements OnInit {
   }
 
   keyPressed(ev) {
-    if (ev.keyCode === 13 ) {
+    if (ev.keyCode === 13) {
+      this.isValidConfirm_pw = this.fed_service.isFieldValid(this.spForm, 'confirm_password');
+      console.log(this.spForm.valid);
       if (this.spForm.valid) {
         this.doOnPasswordSubmit(this.spForm.value);
       }
+    } else {
+      this.resetError(ev);
     }
   }
 
+  resetError(ev) {
+    if (ev.keyCode) {
+      this.isValidConfirm_pw = false;
+    }
+  }
 }

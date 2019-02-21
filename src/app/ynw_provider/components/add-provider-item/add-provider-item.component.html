@@ -1,6 +1,6 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     class="ynw-common-form">
-    <h1 class="mat-dialog-title">{{item_hi_cap}} {{ data.type | capitalizeFirst }}
+    <h1 class="mat-dialog-title">{{item_hi_cap}}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
@@ -67,7 +67,6 @@
                 <input matInput type="text" class="form-control" id="shortDesc" placeholder="{{short_desc_cap}} *"
                     formControlName="shortDesc" autocomplete="off">
             </mat-form-field>
-            <!-- <textarea class="form-control" id="shortDesc" placeholder="Short Description" formControlName="shortDesc"></textarea> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDesc',
     {
       'required' : 'Please enter the short description',
@@ -77,9 +76,10 @@
         </div>
 
         <div class="form-group">
-            <!-- <label class="col-form-label" for="displayDesc">{{detailed_dec_cap}} *</label> -->
             <mat-form-field>
-                <textarea matInput class="form-control" id="shortDesc" placeholder="Detailed Description *" formControlName="displayDesc"></textarea>
+                <textarea matInput class="form-control" id="shortDesc" placeholder="{{detailed_dec_cap}} *"
+                    formControlName="displayDesc" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                    maxlength="500"></textarea>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
@@ -87,18 +87,20 @@
       'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
     })">
             </app-field-error-display>
+            <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
         </div>
 
         <div class="form-group">
             <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
             <mat-form-field>
-                <input matInput type="text" class="form-control number-ip-sm" id="price" placeholder="Price" formControlName="price"
-                    autocomplete="off">
+            <input matInput type="text" min="0" max="100000"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" 
+                class="form-control number-ip-sm" formControlName="price"
+                 id="price" placeholder="{{price_cap}} ({{rupee_symbol}}) *" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {
-      'required' : 'Please enter valid price.',
-      'pattern' : 'Please enter the price',
+      'required' : 'Please enter the price.',
+      'pattern' : 'Please enter valid price',
       'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
     })">
             </app-field-error-display>
@@ -116,7 +118,6 @@
     <mat-dialog-actions>
         <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
         <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid">{{save_btn_cap}}</button>
-
     </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

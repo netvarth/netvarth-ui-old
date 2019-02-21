@@ -70,6 +70,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     });
   }
   onSubmit (form_data) {
+
+    console.log(form_data);
     this.resetApiErrors();
     // today
     const curday = new Date();
@@ -87,6 +89,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     // convert date to required format
     const date =  new Date(startdate);
     const date_format = moment(date).format('YYYY-MM-DD');
+    //console.log(date_format);
+    //console.log(moment(today_date));
     // console.log('date', today_date, date_format, 'compare', moment(today_date).isSame(date_format));
     // console.log('date1', form_data.endtime, form_data.starttime );
     // if (today_date === date_format) {
@@ -102,6 +106,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     }
     const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
     const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
+    //console.log(Start_time);
+    //console.log(End_time);
 
     // const dif = ( moment(form_data.endtime).format('hh:mm A') - moment(form_data.starttime).format('hh:mm A'));
      // console.log('stime', Start_time, 'etime', End_time, 'compare', (End_time <= Start_time));
@@ -123,15 +129,25 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
 /*    const starttime = new Date(date_format + ' ' + form_data.starttime + ':00');
     const starttime_format =  moment(starttime).format('hh:mm A') || null; // moment(starttime).format('LT'); */
 
-    const starttime = new Date(date_format + ' ' + form_data.starttime.hour + ':' + form_data.starttime.minute + ':00');
-    const starttime_format =  moment(starttime).format('hh:mm A') || null; // moment(starttime).format('LT');
+    const curdate = new Date();
+    curdate.setHours(form_data.starttime.hour);
+    curdate.setMinutes(form_data.starttime.minute);
 
+    const enddate = new Date();
+    enddate.setHours(form_data.endtime.hour);
+    enddate.setMinutes(form_data.endtime.minute);
+
+    //const starttime = new Date(date_format + ' ' + form_data.starttime.hour + ':' + form_data.starttime.minute + ':00');
+    const starttime_format =  moment(curdate).format('hh:mm A') || null; // moment(starttime).format('LT');
+    //console.log(starttime_format);
         // convert end time to 12 hour format
     /*const endtime = new Date(date_format + ' ' + form_data.endtime + ':00');
     const endtime_format =  moment(endtime).format('hh:mm A') || null; // moment(endtime).format('LT');*/
 
-    const endtime = new Date(date_format + ' ' +  form_data.endtime.hour + ':' + form_data.endtime.minute + ':00');
-    const endtime_format =  moment(endtime).format('hh:mm A') || null; // moment(endtime).format('LT');
+    // const endtime = new Date(date_format + ' ' +  form_data.endtime.hour + ':' + form_data.endtime.minute + ':00');
+    const endtime_format =  moment(enddate).format('hh:mm A') || null; // moment(endtime).format('LT');
+    //console.log(endtime_format);
+
 
         const post_data = {
             'nonWorkingHours': {

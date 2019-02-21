@@ -1,19 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-
-import { Observable, Subscription, SubscriptionLike as ISubscription } from 'rxjs';
+import { Subscription, SubscriptionLike as ISubscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
-
-
 
 @Component({
   selector: 'app-provider-waitlist',
@@ -25,7 +17,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   accept_online_cap = Messages.WAITLIST_ACCEPT_ONLINE_CAP;
   locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
   services_cap = Messages.WAITLIST_SERVICES_CAP;
-  ser_time_windows_cap = Messages.WAITLIST_SER_TIME_WINDOWS_CAP;
+  ser_time_windows_cap = Messages.SERVICE_TIME_CAP;
 
   bProfile = null;
   online_checkin = false;
@@ -39,6 +31,8 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   checkin_label = '';
   prevcheckstatus;
   loc_list: any = [];
+
+  customer_label = '';
   breadcrumbs = [
     {
       title: 'Settings',
@@ -51,6 +45,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager' };
 
   subscription: Subscription;
+  isCheckin;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -58,7 +53,13 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
+
+  
+  frm_set_ser_cap = '';
+  frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
+  frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
 
   ngOnInit() {
     this.getBusinessProfile();
@@ -67,6 +68,9 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.getQueuesCount();
     this.getServiceCount();
     this.getBusinessConfiguration();
+
+    
+    this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]',this.customer_label);
 
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
@@ -80,8 +84,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
 
         }
       );
-
-
+      this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -229,5 +232,25 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         error => {
 
         });
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.shared_functions.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': mod };
+    return moreOptions;
   }
 }

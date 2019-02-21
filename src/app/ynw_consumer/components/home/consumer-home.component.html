@@ -4,7 +4,8 @@
         <!-- <h1>Consumer <span>Dashboard</span></h1> -->
         <div class="card c-checkins">
             <h2><span [matTooltipClass]="tooltipcls" [matTooltip]="currentcheckinsTooltip">Active Check-Ins
-                    <ng-container *ngIf="waitlists && waitlists.length>0">({{waitlists.length}})</ng-container></span></h2>
+                    <ng-container *ngIf="waitlists && waitlists.length>0">({{waitlists.length}})</ng-container></span>
+            </h2>
             <div class="outer">
                 <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
                     <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists">
@@ -14,10 +15,12 @@
                                 <div class="title" (click)="providerDetail(waitlist.provider)">
                                     <h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}</h3>
                                 </div>
-                                <div class="location" *ngIf="waitlist.queue.location">
-                                    <a *ngIf="waitlist.queue.location.googleMapUrl" [href]="waitlist.queue.location.googleMapUrl"
-                                        target="_blank" class="icon-location" matTooltip="Click to navigate">
-                                        {{waitlist.queue.location.place || '' | capitalizeFirst}}</a>
+                                <div class="location consumr" *ngIf="waitlist.queue.location">
+                                        {{waitlist.queue.location.place || '' | capitalizeFirst}}
+                                    <a *ngIf="waitlist.queue.location.googleMapUrl" rel="noopener"
+                                        [href]="waitlist.queue.location.googleMapUrl" target="_blank"
+                                        class="icon-location" matTooltip="Click to navigate">
+                                        </a>
                                 </div>
                                 <div class="status-outer">
                                     <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
@@ -36,7 +39,8 @@
                                     <span class="icon-favourite-filled"></span>
                                 </div>
                                 <div class="favourite" *ngIf="!checkIfFav(waitlist.provider.id)">
-                                    <span class="icon-favourite" matTooltip="Add to Favourite" (click)="addFavProvider(waitlist.provider.id)"></span>
+                                    <span class="icon-favourite" matTooltip="Add to Favourite"
+                                        (click)="addFavProvider(waitlist.provider.id)"></span>
                                 </div>
                                 <!-- <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
                                         {{status_cancelled_cap}}
@@ -57,9 +61,11 @@
                                         {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
                                     </span>
                                 </div>
-                                <ng-container *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
+                                <ng-container
+                                    *ngIf="waitlist.calculationMode != 'NoCalc' && waitlist.estimated_time && (waitlist.waitlistStatus == 'checkedIn'  ||
                                         waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus == 'cancelled')">
-                                    <div class="lt0" *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
+                                    <div class="lt0"
+                                        *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
                                         {{waitlist.estimated_caption}} <span class="time now">
                                             {{waitlist.estimated_time}}</span>
                                     </div>
@@ -67,7 +73,8 @@
                                         {{waitlist.estimated_caption}} <span class="time now">
                                             <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date
                                                 | date: dateFormatSp }}</span>
-                                            <span *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}},
+                                            <span
+                                                *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}},
                                             </span>
                                             {{waitlist.estimated_time}}</span>
                                     </div>
@@ -91,18 +98,28 @@
                                     <!-- <button class="cs-btn bt3" (click)="makeFailedPayment(waitlist)">Make Payment</button>
                                     </span> -->
                                 </div>
-                                <div class="lt0 payment" *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show')">
+                                <div class="lt0 payment"
+                                    *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
                                     <span class="paytext"><span>Amount Due : {{waitlist.amountDue |
-                                            currency:'INR':'symbol':'.2-2'}} </span><a class="bt3 cust-btn" (click)="viewBill(waitlist)">Pay</a></span>
+                                            currency:'INR':'symbol':'.2-2'}} </span><a class="bt3 cust-btn"
+                                            (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
                             </div>
                             <div class="rt">
                                 <ul class="controls">
                                     <li *ngIf="waitlist.billViewStatus == 'Show'">
-                                        <span class="view-bill" *ngIf="!(waitlist.amountDue>0)" (click)="viewBill(waitlist)">Receipt</span>
-                                        <span class="view-bill" *ngIf="(waitlist.amountDue>0)" (click)="viewBill(waitlist)">Bill</span>
+                                        <span class="view-bill"
+                                            *ngIf="!(waitlist.amountDue>0) && waitlist.waitlistStatus != 'cancelled'"
+                                            (click)="viewBill(waitlist)">Receipt</span>
+                                        <span class="view-bill"
+                                            *ngIf="waitlist.waitlistStatus === 'cancelled' && waitlist.paymentStatus !== 'NotPaid'"
+                                            (click)="viewBill(waitlist)">Receipt</span>
+                                        <span class="view-bill"
+                                            *ngIf="waitlist.amountDue>0 && waitlist.waitlistStatus != 'cancelled'"
+                                            (click)="viewBill(waitlist)">Bill</span>
                                     </li>
-                                    <li (click)="makeFailedPayment(waitlist)" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
+                                    <li (click)="makeFailedPayment(waitlist)"
+                                        *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
                                         <span class="payment">{{make_pay_cap}}</span>
                                     </li>
                                     <li (click)="addWaitlistMessage(waitlist)">
@@ -110,11 +127,14 @@
                                     </li>
                                     <!-- <li *ngIf="!checkIfFav(waitlist.provider.id)">
                                         <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">{{add_to_fav}}</span></li> -->
-                                    <li *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
-                                        <span class="cancel" (click)="doCancelWaitlist(waitlist)">{{cancel_checkin_cap}}</span>
+                                    <li
+                                        *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
+                                        <span class="cancel"
+                                            (click)="doCancelWaitlist(waitlist)">{{cancel_checkin_cap}}</span>
                                     </li>
                                     <li *ngIf="waitlist.waitlistStatus == 'done'">
-                                        <span class="rate-service" [class.rated]="isRated(waitlist)" (click)="rateService(waitlist)">{{rate_visit}}</span>
+                                        <span class="rate-service" [class.rated]="isRated(waitlist)"
+                                            (click)="rateService(waitlist)">{{rate_visit}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -139,15 +159,19 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="outer">
-                        <div class="list" [class.active]="open_fav_div == i" *ngFor="let provider of fav_providers; index as i">
+                        <div class="list" [class.active]="open_fav_div == i"
+                            *ngFor="let provider of fav_providers; index as i">
                             <div class="header">
                                 <div class="lt" (click)="toogleDetail(provider, i)">
                                     <h3 class="pointer-cursor">
-                                        {{provider.businessName | capitalizeFirst}}</h3>
+                                        <a
+                                            (click)="providerDetail(provider)">{{provider.businessName | capitalizeFirst}}</a>
+                                    </h3>
                                 </div>
                                 <div class="rt">
                                     <ul class="controls">
-                                        <li (click)="addCommonMessage(provider)"><span class="message">{{send_msg_cap}}</span></li>
+                                        <li (click)="addCommonMessage(provider)"><span
+                                                class="message">{{send_msg_cap}}</span></li>
                                         <li>
                                             <button mat-icon-button [matMenuTriggerFor]="appMenu">
                                                 <mat-icon>more_vert</mat-icon>
@@ -179,19 +203,24 @@
                                   && provider.settings.calculationMode!='NoCalc'">
                                                 <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                                 <span class="time-data">{{loc['estimatedtime_det']['time']}}
-                                                    <span class="icon-question" [matTooltip]="waitlistestimatetimetooltip"></span></span>
+                                                    <span class="icon-question"
+                                                        [matTooltip]="waitlistestimatetimetooltip"></span></span>
                                             </div>
                                             <div class="wt-msg" *ngIf="loc['estimatedtime_det']['message']">
                                                 {{loc['estimatedtime_det']['message']}}</div>
                                         </div>
                                     </div>
                                     <div class="bt-r" *ngIf="loc['estimatedtime_det']">
-                                        <span class="cs-btn chk-btn" (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')"
+                                        <span class="cs-btn chk-btn"
+                                            (click)="goCheckin(provider, loc, loc['estimatedtime_det']['cdate'], false, 'fav_provider')"
                                             *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(provider)">{{checkin_cap}}</span>
-                                        <span class="cs-btn chk-btn disabled" *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(provider)">{{checkin_cap}}</span>
-                                        <span class="cs-btn bt10" *ngIf="showcheckInButton(provider) && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']"
+                                        <span class="cs-btn chk-btn disabled"
+                                            *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(provider)">{{checkin_cap}}</span>
+                                        <span class="cs-btn bt10"
+                                            *ngIf="showcheckInButton(provider) && provider.settings && provider.settings.futureDateWaitlist && loc['estimatedtime_det']['cdate']"
                                             (click)="goCheckin(provider, loc,  loc['estimatedtime_det']['cdate'], true, 'fav_provider')">
-                                            {{do_you_want_to_cap}} <span>{{checkin_cap}}</span> {{for_cap}} <span>{{different_date_cap}}</span>
+                                            {{do_you_want_to_cap}} <span>{{checkin_cap}}</span> {{for_cap}}
+                                            <span>{{different_date_cap}}</span>
                                         </span>
                                     </div>
                                 </div>

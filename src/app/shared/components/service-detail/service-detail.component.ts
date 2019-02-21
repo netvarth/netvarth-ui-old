@@ -1,14 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
 import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-import { Observable ,  Subscription } from 'rxjs';
-
-
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
@@ -27,7 +21,7 @@ export class ServiceDetailComponent implements OnInit {
   prepayment_amount = Messages.PREPAYMENT_AMOUNT_CAP;
   description_cap = Messages.DESCRIPTION_CAP;
   close_btn_cap = Messages.CLOSE_BTN;
-
+  servc_detils = Messages.SERVCE_DETAILS;
   api_error = null;
   api_success = null;
 

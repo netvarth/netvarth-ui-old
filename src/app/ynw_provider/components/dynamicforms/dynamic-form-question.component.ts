@@ -40,7 +40,14 @@ export class DynamicFormQuestionComponent implements OnInit {
     // }
   }
   get isValid() { return this.form.controls[this.question.key].valid; }
-
+  isNumberField(evt) {
+    // console.log('in number field validation');
+    // console.log(evt.target);
+    if (evt.target.type === 'number') {
+      return this.shared_functions.isValid(evt);
+    }
+    return true;
+  }
   checkGridValue() {
     if (this.question['columns'].length === 1) {
        const check_value = this.question['columns'][0].map((e) => {

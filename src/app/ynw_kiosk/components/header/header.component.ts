@@ -1,16 +1,8 @@
 import { Component, OnInit, Inject, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription, SubscriptionLike as ISubscription ,  Observable } from 'rxjs';
-
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-import { projectConstants } from '../../../shared/constants/project-constants';
-
-import { ViewChild } from '@angular/core';
-
 @Component({
     selector: 'app-kioskheader',
     templateUrl: './header.component.html'

@@ -20,18 +20,20 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
         </span>
     </div> -->
             <div class="form-group">
+                    <p class="form-level-settings" *ngIf="source=='createCustomer'">{{frm_create_customer_cap_one}}{{frm_create_customer_cap_two}}{{frm_create_customer_cap_three}}</p>
                 <mat-form-field>
+
                 <div class="input-group">
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
-                    <input matInput type="text" class="form-control" id="mobile_number" placeholder="Mobile Number"
+                    <input matInput type="text" class="form-control" id="mobile_number" (keypress)="isNumeric($event)" placeholder="{{mob_cap}}"
                         formControlName="mobile_number" autocomplete="off" maxlength=10>
                 </div>
             </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
-            'required' : 'Phone number is required',
+            'required' : 'Mobile number is required',
             'minlength' : 'Enter a 10 digit mobile number',
             'maxlength' : 'Enter a 10 digit mobile number',
             'pattern' : 'Only numbers are allowed'
@@ -55,17 +57,17 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors()">
 
             <div class="form-group">
                     <mat-form-field>
-                <input matInput type="text" class="form-control" id="first_last_name" placeholder="First Name / Last Name"
+                <input matInput type="text" class="form-control" id="first_last_name" placeholder="Enter atleast first 3 letters of First / Last Name *"
                     formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')" errorMsg="Please enter First Name / Last Name.">
                 </app-field-error-display>
                 </mat-form-field>
             </div>
-
+           
         </mat-dialog-content>
         <mat-dialog-actions>
             <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
-            <button mat-button [disabled]="!amForm.valid" class="cs-btn bt1">
+            <button mat-button [disabled]="!amForm.valid || create_new" class="cs-btn bt1">
                 <ng-container *ngIf="source=='createCustomer'">{{create_cap}}</ng-container>
                 <ng-container *ngIf="source=='providerCheckin'">{{checkin_label}}</ng-container>
             </button>

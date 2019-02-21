@@ -1,22 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { Location } from '@angular/common';
-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import * as moment from 'moment';
-import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -79,6 +73,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   minCaption = Messages.EST_WAIT_TIME_CAPTION;
   sendmsgdialogRef;
   notedialogRef;
+  isCheckin;
 
   constructor(
     private provider_services: ProviderServices,
@@ -112,7 +107,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     } else {
       this.goBack();
     }
-
+    this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {

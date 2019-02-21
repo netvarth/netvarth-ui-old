@@ -24,9 +24,13 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   period_cap = Messages.PERIOD_CAP;
   invoice_cap = Messages.INVOICE_CAP;
   no_transaction = Messages.NO_TRANSACTION;
+  payment_cap = Messages.PAYMENT_CAP;
+  paid_cap = Messages.CHECK_DET_PAID_CAP;
+  billing_cap = Messages.BILLIN_CAP;
   payment_history: any = [];
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  isCheckin;
   breadcrumbs = [
     {
       title: 'Settings',
@@ -56,6 +60,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   ngOnInit() {
     this.getPaymentHistoryCount();
     this.getPaymentHistory();
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
   getPaymentHistoryCount() {
@@ -97,7 +102,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
         invoice: invoice,
         source: 'payment-history'
       },
-      panelClass: ['commonpopupmainclass', 'width-100'],
+      panelClass: ['commonpopupmainclass', 'smallform'],
       disableClose: true
     });
 

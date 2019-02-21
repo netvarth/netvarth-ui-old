@@ -8,25 +8,28 @@
     <div class="form-group">
       <label class="col-form-label" for="displayName">{{select_reason_cap}}*</label>
       <mat-chip-list>
-        <mat-chip *ngFor="let cancel_reason of cancel_reasons" color="{{(cancel_reason.value === amForm.get('reason').value) ? 'primary' : ''}}"
-          selected="{{(cancel_reason.value === amForm.get('reason').value) ? true : false}}" (click)="selectReason(cancel_reason)">
+        <mat-chip *ngFor="let cancel_reason of cancel_reasons"
+          color="{{(cancel_reason.value === amForm.get('reason').value) ? 'primary' : ''}}"
+          selected="{{(cancel_reason.value === amForm.get('reason').value) ? true : false}}"
+          (click)="selectReason(cancel_reason)">
           {{cancel_reason.title}}
         </mat-chip>
       </mat-chip-list>
     </div>
-
+    <div class="form-group" *ngIf="amForm.get('reason').value">
+      <mat-form-field>
+        <textarea style="height:80px" matInput class="form-control" id="message" placeholder="Message"
+          formControlName="message">
+        </textarea>
+      </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+        errorMsg="Please enter a message.">
+      </app-field-error-display>
+    </div>
     <div class="form-group ">
       <mat-checkbox formControlName="send_message">{{send_message_cap}} {{rep_username}}</mat-checkbox>
     </div>
 
-    <div class="form-group" *ngIf="amForm.get('send_message').value">
-      <mat-form-field>
-        <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message">
-      </textarea>
-      </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a message.">
-      </app-field-error-display>
-    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_cap}}</button>

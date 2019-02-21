@@ -2,16 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-import { error } from 'util';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -20,11 +16,12 @@ import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProviderCouponsComponent implements OnInit, OnDestroy {
 
+  desc_cap = Messages.DESCRIPTION_CAP;
   name_cap = Messages.PRO_NAME_CAP;
   jCouponCode_Cap = Messages.JCOUPON_CODE;
   edit_btn = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
-  reports_cap = Messages.REPORTS_CAP;
+  reports_cap = Messages.REIMBUSE_REPORT_CAP;
   valid_from_cap = Messages.VALID_FROM_CAP;
   valid_to_cap = Messages.VALID_TO_CAP;
   consumers_apply_cap = Messages.CONSUM_APPLY_CAP;
@@ -41,6 +38,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   couponStatus: boolean;
   tabid = 0;
+  isCheckin;
   breadcrumb_moreoptions: any = [];
   breadcrumbs = [
     {
@@ -51,12 +49,14 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       title: 'Coupons'
     }
   ];
-  coupon_info: any = [];;
+  coupon_info: any = [];
   jaldee_reimburse;
   always_enable;
   addcoupdialogRef;
   editcoupdialogRef;
   confirmremdialogRef;
+  frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
+  frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
@@ -67,7 +67,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
-
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {
@@ -93,7 +93,10 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         console.log(data);
         this.jaldeeCoupons = data;
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {
-          this.coupon_info[index] = "Always enabled "+ this.jaldeeCoupons[index].couponRules.alwaysEnabled +" "+ this.jaldeeCoupons[index].couponState;
+          if (this.jaldeeCoupons[index].couponRules.onlineCheckinRequired === true) {
+            this.coupon_info[index] = 'Online checkin required';
+          }
+          // this.coupon_info[index] = "Always enabled "+ this.jaldeeCoupons[index].couponRules.alwaysEnabled;
         }
         this.query_executed = true;
       });
@@ -186,5 +189,25 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   }
   formatDateDisplay(dateStr) {
     return this.sharedfunctionObj.formatDateDisplay(dateStr);
+  }
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionObj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+    return moreOptions;
   }
 }

@@ -1,21 +1,12 @@
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-// import { Image, Action, ImageModalEvent, Description } from 'angular-modal-gallery';
-import { Observable, Subscription } from 'rxjs';
-
-
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
 } from 'angular-modal-gallery';
-
-
-import { HeaderComponent } from '../../../shared/modules/header/header.component';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { AddProviderBprofilePrivacysettingsComponent } from '../provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
@@ -31,13 +22,10 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
-import { Local } from 'protractor/built/driverProviders';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
-
-
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-bprofile-search',
@@ -119,11 +107,13 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   no_social_media = Messages.NO_SOCIAL_MEDIA;
   name_cap = Messages.PRO_NAME_CAP;
   description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+  adword_maxcount = Messages.ADWORD_MAXCOUNT;
 
   checked = false;
   bProfile = null;
   serviceSector = null;
   public_search = false;
+  error_msg = '';
 
   loc_badges: any = [];
   badge_map_arr: any = [];
@@ -156,7 +146,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adword_list: any = [];
   license_metadata: any = [];
   adwordsmaxcount = 0;
-  license_details:any = [];
+  license_details: any = [];
   adwords_maxremaining = 0;
   adwords_remaining = 0;
   adwordshow_list: any = [];
@@ -245,9 +235,28 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   adworddialogRef;
   delgaldialogRef;
   cacheavoider = '';
+  frm_public_search_cap = '';
+  frm_adword_cap = '';
+  frm_loc_amen_cap = '';
+  frm_lang_cap = '';
+  frm_additional_cap = '';
+  frm_gallery_cap = '';
+  frm_social_cap = '';
+  frm_profile_name_cap = Messages.FRM_LEVEL_PROFILE_NAME_CAP;
+  frm_loc_cap = Messages.FRM_LEVEL_LOC_MSG;
+  frm_working_hr_cap = Messages.FRM_LEVEL_WORKING_MSG;
+  frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
+  frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
+  frm_verified_cap = Messages.FRM_LEVEL_VERI_MSG;
+  isCheckin;
+  success_error = null;
+  error_list = [];
+
+
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
+    private provider_shared_functions: ProviderSharedFuctions,
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private routerobj: Router,
@@ -259,7 +268,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSpokenLanguages();
-   this.getLicenseDetails();
+    this.getLicenseDetails();
     // this.getLicenseMetadata();
     this.getTotalAllowedAdwordsCnt();
     this.getLocationBadges();
@@ -274,6 +283,15 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.getGalleryImages();
     this.getProviderLocations();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'bprofile' };
+
+    this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
+    this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
+    this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
+    this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
+    this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
+    this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
+
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -516,6 +534,8 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
 
           // check whether domain fields exists
 
+          const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
+          this.sharedfunctionobj.setitemonLocalStorage('isCheckin', statusCode);
 
         },
         error => {
@@ -1144,28 +1164,43 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   // handles the image display on load and on change
   imageSelect(input, ev) {
+    this.success_error = null;
+    this.error_list = [];
     if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      this.item_pic.files = input.files[0];
-      this.selitem_pic = input.files[0];
-
-      const fileobj = input.files[0];
-      reader.onload = (e) => {
-        this.item_pic.base64 = e.target['result'];
-      };
-      reader.readAsDataURL(fileobj);
-    }
-    // Handles the case of uploading the logo from bProfile edit page
-    if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
-      // generating the data to be submitted to change the logo
-      const submit_data: FormData = new FormData();
-      submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-      const propertiesDet = {
-        'caption': 'Logo'
-      };
-      const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-      submit_data.append('properties', blobPropdata);
-      this.uploadLogo(submit_data);
+      for (const file of input.files) {
+        this.success_error = this.sharedfunctionobj.imageValidation(file);
+        if (this.success_error === true) {
+          const reader = new FileReader();
+          this.item_pic.files = input.files[0];
+          this.selitem_pic = input.files[0];
+          const fileobj = input.files[0];
+          reader.onload = (e) => {
+            this.item_pic.base64 = e.target['result'];
+          };
+          reader.readAsDataURL(fileobj);
+          if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+            // generating the data to be submitted to change the logo
+            const submit_data: FormData = new FormData();
+            submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+            const propertiesDet = {
+              'caption': 'Logo'
+            };
+            const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+            submit_data.append('properties', blobPropdata);
+            this.uploadLogo(submit_data);
+          }
+        } else {
+          // console.log(this.success_error);
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 5mb';
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
+          this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+      }
     }
   }
   // display logo
@@ -1315,12 +1350,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       }
     }
   }*/
- getLicenseDetails() {
+  getLicenseDetails() {
     this.provider_services.getLicenseDetails()
       .subscribe(data => {
         this.currentlicense_details = data;
         this.license_details = this.currentlicense_details;
-      //  console.log(this.currentlicense_details);
+        //  console.log(this.currentlicense_details);
       });
   }
   getTotalAllowedAdwordsCnt() {
@@ -1685,8 +1720,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       }
     } else if (txt === 'all') {
       rettxt = 'Public';
-    }
-    else {
+    } else {
       rettxt = 'Private';
     }
     return rettxt;

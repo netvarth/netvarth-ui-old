@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
 import { ProviderServices } from '../../services/provider-services.service';
-import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-
 import { AddProviderDiscountsComponent } from '../add-provider-discounts/add-provider-discounts.component';
 import { Messages } from '../../../shared/constants/project-messages';
 
@@ -22,18 +18,20 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   name_cap = Messages.PRO_NAME_CAP;
   edit_btn = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
+  desc_cap = Messages.DESCRIPTION_CAP;
   add_disc_cap = Messages.ADD_DISCOUNT_CAP;
   discount_list: any = [];
   query_executed = false;
   emptyMsg = '';
   breadcrumb_moreoptions: any = [];
+  frm_dicounts_cap = Messages.FRM_LEVEL_DISCOUNTS_MSG;
   breadcrumbs_init = [
     {
       url: '/provider/settings',
       title: 'Settings'
     },
     {
-      title: 'Bill Discounts',
+      title: 'Discounts',
       url: '/provider/settings/discounts'
     }
   ];
@@ -41,6 +39,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   accountdialogRef;
   adddiscdialogRef;
   remdiscdialogRef;
+  isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions) {
@@ -50,6 +49,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getDiscounts(); // Call function to get the list of discount lists
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -143,4 +143,24 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     return this.sharedfunctionObj.print_PricewithCurrency(price);
   }
 
+  learnmore_clicked(mod, e) {
+    /* const dialogRef = this.dialog.open(LearnmoreComponent, {
+           width: '50%',
+           panelClass: 'commonpopupmainclass',
+           autoFocus: true,
+           data: {
+               moreOptions : this.getMode(mod)
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+         });*/
+    e.stopPropagation();
+    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.sharedfunctionObj.sendMessage(pdata);
+  }
+  getMode(mod) {
+    let moreOptions = {};
+    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+    return moreOptions;
+  }
 }

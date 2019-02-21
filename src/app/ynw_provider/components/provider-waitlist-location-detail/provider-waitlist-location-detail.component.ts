@@ -59,6 +59,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
     api_error = null;
     editlocdialogRef;
     queuedialogRef;
+    isCheckin;
     constructor(
         private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
@@ -81,6 +82,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         } else {
             this.goBack();
         }
+        this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
     }
     ngOnDestroy() {
         if (this.editlocdialogRef) {

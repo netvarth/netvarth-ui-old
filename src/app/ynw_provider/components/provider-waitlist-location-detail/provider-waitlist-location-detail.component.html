@@ -1,5 +1,5 @@
 <section>
-    <app-provider-subheader [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -84,7 +84,7 @@
                     expanded="{{(queues.length == 0) ? false : true}}">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="lc-title">
-                            <h5>{{serv_window_cap}}s <span class="count">{{queues.length}}</span><span class="addbt"
+                            <h5>{{serv_window_cap}} <span class="count">{{queues.length}}</span><span class="addbt"
                                     (click)="addEditProviderQueue('add')" *ngIf="queues.length == 0"></span></h5>
 
                         </mat-panel-title>
@@ -102,8 +102,8 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let queue of queues">
-                                    <td data-title="Service Time-Window" class="pointer-cursor" (click)="goQueueDetail(queue)"
-                                        [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to edit service time-window'">
+                                    <td data-title="Working Hours" class="pointer-cursor" (click)="goQueueDetail(queue)"
+                                        [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to view working hours'">
                                         {{queue.name | capitalizeFirst}}</td>
                                     <td data-title="Shedule">
                                         <div class="schtd">
@@ -122,11 +122,11 @@
                                     </td>
                                     <td>
                                         <span class="mbt">
-                                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
-                                            <mat-menu #menu="matMenu">
-                                                <button type="button" (click)="addEditProviderQueue('edit',queue)" mat-menu-item>
+                                            <mat-menu #appMenu="matMenu">
+                                                <button type="button" (click)="addEditProviderQueue('edit',queue)" *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
                                                 <i class="icon-edit"></i>
                                                 <span>Edit</span>
                                                 </button>
@@ -138,11 +138,16 @@
                                                 </button>
                                             </mat-menu>
                                         </span>
-                                        <!-- <span class="mbt-mobile-show">
+                                        <span class="mbt-mobile-show">
+                                                <button class="editcls" type="button" *ngIf="queue.queueState=='ENABLED'" (click)="addEditProviderQueue('edit',queue)">Edit</button>
+                                                <!-- <button class="enableicon" type="button" (click)="addEditProviderQueue('edit',queue)" *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
+                                                        <i class="icon-edit"></i>
+                                                        <span>Edit</span>
+                                                        </button> -->
                                             <button [class.enableicon]="queue.queueState=='DISABLED'"
                                                 [class.disableicon]="queue.queueState=='ENABLED'" type="button" (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED')
                                                 ? 'Disable' :' Enable'}}</button>
-                                        </span> -->
+                                        </span>
                                     </td>
                                 </tr>
                             </tbody>

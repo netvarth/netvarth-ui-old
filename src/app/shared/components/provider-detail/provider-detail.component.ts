@@ -5,21 +5,13 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-
-
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-
-import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-import { Observable, Subscription } from 'rxjs';
-
-
 import {
   AccessibilityConfig, Action, AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Description, DescriptionStrategy,
   DotsConfig, GridLayout, Image, ImageModalEvent, LineLayout, PlainGalleryConfig, PlainGalleryStrategy, PreviewConfig
@@ -28,12 +20,8 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
-
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { CouponsComponent } from '../coupons/coupons.component';
-
-
-
 
 @Component({
   selector: 'app-provider-detail',
@@ -126,6 +114,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   inboxCntFetched = false;
   inboxUnreadCnt;
   changedate_req = false;
+  
   gender = '';
   bLogo = '';
   orgsocial_list;
@@ -167,6 +156,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   servicedialogRef;
   s3CouponList: any = [];
   isfirstCheckinOffer;
+  server_date;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -180,6 +170,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
       if (activeUser) {
         this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -250,6 +241,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'businessProfile': {
             this.businessjson = res;
             // console.log('bprofile', JSON.stringify(this.businessjson));
+
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
@@ -638,7 +630,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   getDateDisplay(dt) {
     let str = '';
-    const today = new Date();
+    const today = new Date(this.server_date);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
@@ -854,7 +846,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const today = new Date();
+          const today = new Date(this.server_date);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
@@ -874,7 +866,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           const ctoday = cday + '/' + cmon + '/' + yyyy;
           let locindx;
           const check_dtoday = new Date(dtoday);
-          let cdate = new Date();
+          let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
             // console.log('locindx', locindx);
@@ -987,10 +979,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   handlepanelClose() {
-    this.virtualsectionHeader = 'Click here to View More Details';
+    this.virtualsectionHeader = 'Click here to view more details';
   }
   handlepanelOpen() {
-    this.virtualsectionHeader = 'Click here to View Less Details';
+    this.virtualsectionHeader = 'Click here to hide details';
   }
   converNewlinetoBr(value: any): any {
     return value.replace(/(?:\r\n|\r|\n)/g, '<br />');
