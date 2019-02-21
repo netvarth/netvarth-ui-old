@@ -64,9 +64,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   no_history = '';
   no_today_checkin_msg = '';
-  no_started_checkin_msg= '';
-  no_completed_checkin_msg='';
-  no_cancelled_checkin_msg='';
+  no_started_checkin_msg = '';
+  no_completed_checkin_msg = '';
+  no_cancelled_checkin_msg = '';
   check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
   locations: any = [];
   queues: any = [];
@@ -195,7 +195,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
     this.no_today_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_TODAY_CHECKIN_MSG);
     this.no_started_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
-    this.no_completed_checkin_msg= this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
+    this.no_completed_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
     this.no_cancelled_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
     this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
     this.waitlist_status = [
@@ -277,11 +277,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setSystemDate() {
     this.shared_services.getSystemDate()
-    .subscribe (
-      res => {
-        this.server_date = res;
-        this.shared_functions.setitemonLocalStorage('sysdate', res);
-      });
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
   }
   performActions(action) {
     if (action === 'adjustdelay') {
@@ -627,12 +627,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.future_waitlist_count = 0;
     this.check_in_list = this.check_in_filtered_list = [];
     this.getQueueList();
-    /*this.getTodayCheckinCount()
+    this.getTodayCheckinCount()
     .then(
       (result) => {
         this.today_waitlist_count = result;
       }
-    );*/
+    );
     this.getFutureCheckinCount()
       .then(
         (result) => {
@@ -716,26 +716,27 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
     });
   }
-  // getTodayCheckinCount(Mfilter = null) {
-  //   let no_filter = false;
-  //   if (!Mfilter) {
-  //     Mfilter = {
-  //       'location-eq': this.selected_location.id,
-  //       'queue-eq': this.selected_queue.id
-  //     };
-  //     no_filter = true;
-  //   }
-  //   return new Promise((resolve, reject) => {
-  //     this.provider_services.getwaitlistTodayCount(Mfilter)
-  //       .subscribe(
-  //         data => {
-  //           if (no_filter) { this.today_waitlist_count = data; }
-  //           resolve(data);
-  //         },
-  //         error => {
-  //         });
-  //   });
-  // }
+  getTodayCheckinCount(Mfilter = null) {
+    let no_filter = false;
+    if (!Mfilter) {
+      Mfilter = {
+        'location-eq': this.selected_location.id,
+        'queue-eq': this.shared_functions.getitemfromLocalStorage('pdq'),
+        'waitlistStatus-neq': 'prepaymentPending'
+      };
+      no_filter = true;
+    }
+    return new Promise((resolve, reject) => {
+      this.provider_services.getwaitlistTodayCount(Mfilter)
+        .subscribe(
+          data => {
+            if (no_filter) { this.today_waitlist_count = data; }
+            resolve(data);
+          },
+          error => {
+          });
+    });
+  }
   getCount(list, status) {
     return list.filter(function (elem) {
       return elem.waitlistStatus === status;
@@ -946,7 +947,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   countApiCall() {
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
-    // this.getTodayCheckinCount();
+    this.getTodayCheckinCount();
   }
   changeStatusType(type) {
     this.status_type = type;
@@ -1058,8 +1059,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date) {
       this.filterapplied = true;
-    }
-    else {
+    } else {
       this.filterapplied = false;
     }
     console.log(this.filterapplied);
