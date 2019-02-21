@@ -9,7 +9,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
   <mat-dialog-content>
     <div class="form-group col-md-4 no-padding">
       <!-- <label for="reason" class="col-form-label">{{(data.type === 'edit') ? 'Selected Date' : 'Select Date'}}</label> -->
-      <mat-form-field>
+      <mat-form-field class="selctDte">
         <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'add'" formControlName="selectdate" [min]="minDate" [max]="maxDate"
           autocomplete="off" tabindex="-1" placeholder="Select Date (DD/MM/YYYY)">
           <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'edit'" formControlName="selectdate" [min]="minDate" [max]="maxDate"
@@ -17,6 +17,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
       </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')" errorMsg="Please enter valid date">
+      </app-field-error-display>
       <!-- <div class="pickerouter">
         <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>

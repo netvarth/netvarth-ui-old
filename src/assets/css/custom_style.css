@@ -2133,6 +2133,9 @@ Overriding mat input style
 .dtepicker{
   width: 110px !important;
 }
+.selctDte .mat-form-field-wrapper .mat-form-field-flex{
+  width: 220px !important;
+}
 @media (max-height: 580px) {
   .checkin-consumer .mat-dialog-container .mat-dialog-actions .waitlist-action {
      margin-top: 0px!important; 
