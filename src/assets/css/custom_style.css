@@ -2151,3 +2151,16 @@ Overriding mat input style
       padding-bottom: 0px!important;
   }
 }
+.change-mob-style .mat-form-field {
+  display: flex !important;
+}
+@media (max-width: 991px) and (min-width: 300px){
+  .content.see-pages .outer-card .card .change-mob-style .text-width {
+    width: 0% !important;
+  }
+}
+@media (max-width: 575px){
+  .change-mob-style .mat-form-field-label{
+    margin-top: 5px!important;
+  }
+}
