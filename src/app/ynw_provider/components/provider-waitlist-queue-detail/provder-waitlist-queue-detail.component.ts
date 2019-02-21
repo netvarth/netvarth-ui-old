@@ -24,6 +24,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
     enabled_cap = Messages.Q_DET_ENABLED_CAP;
     disabled_cap = Messages.Q_DET_DISABLED_CAP;
     schedule_cap = Messages.Q_DET_SCHEDULE_CAP;
+    work_hours = Messages.SERVICE_TIME_CAP;
 
     queue_id = null;
     queue_data;
@@ -42,7 +43,7 @@ export class ProviderWaitlistQueueDetailComponent implements OnInit, OnDestroy {
             url: '/provider/settings/waitlist-manager'
         },
         {
-            title: 'Service Time-Windows',
+            title: this.work_hours,
             url: '/provider/settings/waitlist-manager/queues'
         }
     ];

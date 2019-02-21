@@ -17,7 +17,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   accept_online_cap = Messages.WAITLIST_ACCEPT_ONLINE_CAP;
   locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
   services_cap = Messages.WAITLIST_SERVICES_CAP;
-  ser_time_windows_cap = Messages.WAITLIST_SER_TIME_WINDOWS_CAP;
+  ser_time_windows_cap = Messages.SERVICE_TIME_CAP;
 
   bProfile = null;
   online_checkin = false;

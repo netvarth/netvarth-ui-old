@@ -689,7 +689,7 @@ export const Messages = {
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
-  'SERVICE_TIME_CAP': 'Service Time-Windows',
+  'SERVICE_TIME_CAP': 'Working Hours',
   'SERVICES_CAP': 'Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
   'PAYMENT_STATUS_CAP': 'Payment Status',
@@ -1134,7 +1134,6 @@ export const Messages = {
   'WAITLIST_ACCEPT_ONLINE_CAP' : 'Accept Online',
   'WAITLIST_LOCATIONS_CAP' : 'Locations',
   'WAITLIST_SERVICES_CAP' : 'Services',
-  'WAITLIST_SER_TIME_WINDOWS_CAP' : 'Service Time-Windows',
 
   // App-ynw_provider-components-provider-waitlist-checkin-consumer-note
   'CONS_NOTE_NOTE_CAP' : 'Note',

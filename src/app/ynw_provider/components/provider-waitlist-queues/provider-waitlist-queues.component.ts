@@ -21,6 +21,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   new_serv_cap = Messages.QUEUE_NEW_SERVICE_WIND_CAP;
   max_capacity_cap = Messages.QUEUE_MAX_CAPACITY_CAP;
   no_queue_add = Messages.NO_QUEUE_ADDED;
+  work_hours = Messages.SERVICE_TIME_CAP;
   queue_list: any = [];
   query_executed = false;
   customer_label = '';
@@ -40,7 +41,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       url: '/provider/settings/waitlist-manager'
     },
     {
-      title: 'Service Time-Windows'
+      title: this.work_hours
     }
   ];
   queuedialogRef;

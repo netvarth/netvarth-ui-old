@@ -363,7 +363,7 @@ export const projectConstants = {
     2: 'Please set profile name',
     3: 'Please set location',
     4: 'No active services found',
-    5: 'No active service time-windows found',
+    5: 'No active working hours found',
     pushMsg : 'Push message',
     email : 'Email',
     professionalConsulting : 'Eg. Adv.Pranav',
