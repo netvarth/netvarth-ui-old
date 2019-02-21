@@ -13,7 +13,7 @@ export const Messages = {
   'LICENSE_UPGRADED': 'License successfully upgraded to [package]',
   'LICENSE_TOOLTIP': 'This tooltip can be managed from the messages file',
   'ADDON_ADDED': 'Add-on Package added successfully',
-  'TESTACC_LOGIN_NA': 'Test user cannot view/checkin real providers account details',
+  'TESTACC_LOGIN_NA': 'Test user cannot view/Check-In real providers account details',
 
   // Items
   'ITEM_CREATED': 'Item added successfully',
@@ -1284,6 +1284,6 @@ export const Messages = {
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE' : 'for creating a [customer] base.',
   'FRM_LEVEL_ADJ_DELAY_MSG' : 'You can adjust your working hours and notify your [customer]s about the delay caused.',
 
-  'CHECKED_IN_LABEL' : 'Checked-in'
+  'CHECKED_IN_LABEL' : 'Checked in'
 };
 
