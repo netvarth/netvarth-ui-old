@@ -627,12 +627,12 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.future_waitlist_count = 0;
     this.check_in_list = this.check_in_filtered_list = [];
     this.getQueueList();
-    this.getTodayCheckinCount()
-    .then(
-      (result) => {
-        this.today_waitlist_count = result;
-      }
-    );
+    // this.getTodayCheckinCount()
+    // .then(
+    //   (result) => {
+    //     this.today_waitlist_count = result;
+    //   }
+    // );
     this.getFutureCheckinCount()
       .then(
         (result) => {
@@ -721,8 +721,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        'queue-eq': this.shared_functions.getitemfromLocalStorage('pdq'),
-        'waitlistStatus-neq': 'prepaymentPending'
+        'queue-eq': this.shared_functions.getitemfromLocalStorage('pdq')
+        // 'waitlistStatus-neq': 'prepaymentPending'
       };
       no_filter = true;
     }
@@ -947,7 +947,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   countApiCall() {
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
-    this.getTodayCheckinCount();
+    // this.getTodayCheckinCount();
   }
   changeStatusType(type) {
     this.status_type = type;
