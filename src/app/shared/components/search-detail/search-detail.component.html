@@ -431,6 +431,21 @@
                                     {{for_cap}} <span>{{different_date}}</span></span>
                             </div>
                         </div>
+                        <!-- Appointment Section Starts-->
+                        <div class="bottom-sect" *ngIf="search_result.fields['estimatedtime_det']">
+                            <div class="bt-l">
+
+                                <div class="wt-tme notallowed" *ngIf="!(waitlisttime_arr.length && search_result.fields.services?.length>0) || search_result.fields['estimatedtime_det']['queue_available']==0 || (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==0) || (!search_result.fields.hasOwnProperty('online_checkins'))">
+                                    <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">{{sorry_cap}}
+                                        {{getTerminologyTerm('waitlist', search_result.fields)}} {{not_allowed_cap}}</ng-container>
+                                    <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">{{search_result.fields['estimatedtime_det']['message']}}</ng-container>
+                                </div>
+                            </div>
+                            <div class="bt-r" *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields.services?.length>0 && search_result.fields['estimatedtime_det']['queue_available']==1 && (search_result.fields.hasOwnProperty('online_checkins') && search_result.fields.online_checkins==1)">
+                                <span class="cs-btn chk-btn" (click)="appointmentClicked(search_result, false)" *ngIf="search_result.fields['estimatedtime_det']['isFuture']==2">Take Appointment</span>
+                            </div>
+                        </div>
+                         <!-- Appointment Section Ends-->
                     </div>
                     <div class="search_paging">
                         <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()" (pagerclick)="handle_pageclick($event)"

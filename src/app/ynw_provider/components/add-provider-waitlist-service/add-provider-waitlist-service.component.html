@@ -65,6 +65,57 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     'maxlength' : 'Only 10 digits are allowed'})">
         </app-field-error-display>
       </div>
+
+      <div class="form-group inline">
+        <label class="col-form-label">Service Mode</label>
+      </div>
+
+      <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
+        <mat-radio-group formControlName="service_mode">
+          <div class="rw">
+            <div class="form-group">
+              <mat-radio-button value="queue">
+                <label>Queue Based</label>
+              </mat-radio-button>
+            </div>
+          </div>
+          <div class="rw">
+            <div class="form-group">
+              <mat-radio-button value="req_appt">
+                <label>Request for Appointment</label>
+              </mat-radio-button>
+              <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
+              <mat-radio-group *ngIf="amForm.get('service_mode').value=='req_appt'" formControlName="req_mode">
+                  <div class="rw">
+                      <mat-radio-button value="onsite">
+                        <label>On Site</label>
+                      </mat-radio-button>
+                  </div>
+                  <div class="rw">
+                      <mat-radio-button value="offsite">
+                        <label>Off Site</label>
+                      </mat-radio-button>
+                  </div>
+                  <div class="form-group" *ngIf="amForm.get('req_mode').value=='offsite'">
+                  <mat-form-field >
+                      <input matInput type="text" class="form-control" placeholder="within kilometer radius from base location"
+                        formControlName="name" autocomplete="off">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-group" *ngIf="amForm.get('req_mode').value=='offsite'">
+                    <mat-form-field >
+                      <textarea matInput class="form-control" placeholder="Serving areas" formControlName="description">
+                        </textarea>
+                        </mat-form-field>
+                      </div>
+                </mat-radio-group>
+                </div>
+            </div>
+          </div>
+        </mat-radio-group>
+      </div>
+
+
       <div class="form-group inline" *ngIf="!disable_price">
         <label class="col-form-label">{{enable_prepayment_cap}}</label>
         <mat-slide-toggle class="example-margin" formControlName="isPrePayment" (change)="changePrepayment()">

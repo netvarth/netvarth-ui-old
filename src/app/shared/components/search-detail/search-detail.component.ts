@@ -5,27 +5,21 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { LoginComponent } from '../../components/login/login.component';
 import { SignUpComponent } from '../../components/signup/signup.component';
-
 import { SearchFields } from '../../modules/search/searchfields';
 import { Messages } from '../../../shared/constants/project-messages';
-
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { AppointmentComponent } from '../../modules/appointment/appointment.component';
 
 @Component({
   selector: 'app-search-detail',
@@ -1547,6 +1541,17 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.claimdialogRef.afterClosed().subscribe(result => {
     });
   }
+  appointmentClicked(obj, chdatereq) {
+    this.current_provider = obj;
+    this.changedate_req = chdatereq;
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (usertype === 'consumer') {
+      this.showAppointment('consumer');
+    } else if (usertype === '') {
+      const passParam = { callback: '', current_provider: obj };
+      this.doLogin('consumer', passParam);
+    }
+  }
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
     this.changedate_req = chdatereq;
@@ -1626,6 +1631,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
       }
+    });
+  }
+  showAppointment(origin?) {
+    this.checkindialogRef = this.dialog.open(AppointmentComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: this.checkProvider(origin),
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
+        srchprovider: this.current_provider,
+        datechangereq: this.changedate_req
+      }
+    });
+        this.checkindialogRef.afterClosed().subscribe(result => {
     });
   }
   showCheckin(origin?) {

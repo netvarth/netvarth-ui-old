@@ -26,12 +26,12 @@
             <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_enable_cap}}</label>
           </div>
         </div>
-        <div class="rw">
+        <!-- <div class="rw">
           <div class="form-group">
             <mat-radio-button value="NoCalc_WithoutToken"></mat-radio-button>
             <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_disable_cap}}</label>
           </div>
-        </div>
+        </div> -->
       </mat-radio-group>
     </div>
   </div>
@@ -59,6 +59,62 @@
                     </div>
                   </div>
               </div> -->
+              <div class="row">
+                <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                  <label>Accept Request For Appointment
+                    <mat-slide-toggle class="example-margin" (change)="enableRequest()">
+                    </mat-slide-toggle>
+                  </label>
+                </div>
+              </div>
+              <div class="lbl col-sm-12 col-md-12 col-lg-12" *ngIf="ischecked">
+              <label>Preffered time windows consumers can choose</label>
+              <mat-form-field><input matInput type="text" class="form-control number-ip-sm"></mat-form-field>
+              </div>
+              <div class="lbl col-sm-12 col-md-12 col-lg-12" *ngIf="ischecked">
+                  <label>Select the range of time windows</label>
+              </div>
+                <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12" *ngIf="ischecked">
+                  <mat-radio-group>
+                    <div class="rw">
+                      <div class="form-group">
+                        <mat-radio-button>
+                         <label>No of days from requested on</label>
+                         <span><input type="number" min="0" class="form-control"></span>
+                        </mat-radio-button>
+                      </div>
+                    </div>
+                    <div class="rw">
+                      <div class="form-group">
+                          <mat-radio-button>
+                              <label>No of hours from requested time</label>
+                              <span><input type="number" min="0" class="form-control"></span>
+                          </mat-radio-button>
+                      </div>
+                    </div>
+                  </mat-radio-group>
+                </div>
+                <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12" *ngIf="ischecked">
+                    <mat-radio-group>
+                      <div class="rw">
+                        <div class="form-group">
+                          <mat-radio-button>
+                           <label>No of days from requested on</label>
+                           <span><input type="number" min="0" class="form-control"></span>
+                          </mat-radio-button>
+                        </div>
+                      </div>
+                      <div class="rw">
+                        <div class="form-group">
+                            <mat-radio-button>
+                                <label>No of hours from requested time</label>
+                                <span><input type="number" min="0" class="form-control"></span>
+                            </mat-radio-button>
+                        </div>
+                      </div>
+                    </mat-radio-group>
+                  </div>
+          
 </div>
 <button type="button" mat-button (click)="cancelChange()" [style.visibility]="formChange == 1 ? 'visible' : 'hidden'"
   class="cs-btn bt2">{{cancel_btn}}</button>

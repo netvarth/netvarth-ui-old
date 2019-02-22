@@ -76,6 +76,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   taxpercentage = 0;
   savedisabled = false;
   canceldisabled = false;
+
+  req_mode = 'onsite'; // onsite or offsite
+
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -167,7 +170,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
         // taxable: [false],
-        notification: [false]
+        notification: [false],
+        service_mode: ['queue'],
+        req_mode : ['onsite']
       });
     } else {
       this.amForm = this.fb.group({
@@ -178,7 +183,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
         taxable: [false],
-        notification: [false]
+        notification: [false],
+        service_mode: ['queue'],
+        req_mode : ['onsite']
       });
     }
   }

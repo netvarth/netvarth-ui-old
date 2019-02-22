@@ -41,6 +41,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   customer_label = '';
   checkin_label = '';
   frm_wait_cal_cap = '';
+  ischecked = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -53,7 +54,11 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
 
     this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
     this.setValue(this.waitlist_manager);
-    this.frm_wait_cal_cap = Messages.FRM_LEVEL_WAIT_TIME_CALC_MSG.replace('[customer]',this.customer_label);
+    this.frm_wait_cal_cap = Messages.FRM_LEVEL_WAIT_TIME_CALC_MSG.replace('[customer]', this.customer_label);
+  }
+
+  enableRequest() {
+    this.ischecked = true;
   }
 
   /**
@@ -101,10 +106,10 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     } else if (calcMode === 'NoCalc_WithoutToken') {
       calcMode = 'NoCalc';
       showToken = false;
-      } else if (calcMode === 'Fixed') {
+    } else if (calcMode === 'Fixed') {
       const turntime = this.form.trnArndTime || 0;
       if (turntime <= 0) {
-        this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, {'panelClass': 'snackbarerror'});
+        this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
         return;
       }
     }

@@ -69,6 +69,9 @@ import { PieChartComponent } from './shared/charts/pie-chart/pie-chart.component
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { LicenseHelpModule } from './shared/modules/license-help/license-help.module';
+import { AppointmentComponent } from './shared/modules/appointment/appointment.component';
+import { AppointmentInnerComponent } from './shared/modules/appointment/appointment-inner/appointment-inner.component';
+import { AppointmentModule } from './shared/modules/appointment/appointment.module';
 
 @NgModule({
   declarations: [
@@ -127,6 +130,7 @@ import { LicenseHelpModule } from './shared/modules/license-help/license-help.mo
     RatingStarModule,
     HeaderModule,
     CheckInModule,
+    AppointmentModule,
     ChartsModule,
     ModalGalleryModule.forRoot(),
     ConsumerCheckinHistoryListModule,
