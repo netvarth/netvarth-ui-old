@@ -13299,7 +13299,7 @@ footer.dashb {
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.service, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.seq {
             font-weight: 500; }
           .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name {
-            /* color: #00aef2; */
+            color: #00aef2;
             font-weight: 600; }
             .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.name:before {
               color: #222223; }

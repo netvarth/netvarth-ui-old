@@ -2167,3 +2167,6 @@ Overriding mat input style
     margin-top: 5px!important;
   }
 }
+.dashboard .card.w-dta.customers .dash-list .d-tbl .table tbody tr td.name {
+  color: #000 !important;
+}
