@@ -138,7 +138,6 @@ export class AdjustQueueDelayComponent implements OnInit {
       );
   }
   getTimeinMin() {
-    alert(this.time.hour);
     const time_min = (this.time.hour * 60) + this.time.minute;
     return (typeof (time_min) === 'number') ? time_min : 0;
   }

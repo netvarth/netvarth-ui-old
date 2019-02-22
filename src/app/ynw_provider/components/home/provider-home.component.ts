@@ -504,6 +504,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.queues = this.all_queues;
           }
           this.selected_queue = this.all_queues[selqid];
+          this.getTodayCheckinCount();
           if (this.time_type === 1) {
             this.getTodayCheckIn();
           }
@@ -717,14 +718,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getTodayCheckinCount(Mfilter = null) {
+    const queueid = this.shared_functions.getitemfromLocalStorage('pdq');
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {
         'location-eq': this.selected_location.id,
-        'queue-eq': this.shared_functions.getitemfromLocalStorage('pdq')
-        // 'waitlistStatus-neq': 'prepaymentPending'
+        'waitlistStatus-neq': 'prepaymentPending',
+        'queue-eq': queueid
       };
       no_filter = true;
+      console.log(Mfilter);
     }
     return new Promise((resolve, reject) => {
       this.provider_services.getwaitlistTodayCount(Mfilter)
