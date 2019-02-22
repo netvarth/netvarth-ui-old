@@ -90,6 +90,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   apprxwaitingCaption = Messages.APPX_WAIT_TIME_CAPTION;
   subscription: Subscription;
+  server_date;
 
   constructor(private kiosk_services: KioskServices,
     private shared_services: SharedServices,
@@ -100,6 +101,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.getWaitlistManager();
     this.blankPattern = projectConstants.VALIDATOR_BLANK;
     this.phonePattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
@@ -229,7 +231,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const today = new Date();
+          const today = new Date(this.server_date);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
@@ -248,7 +250,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
           const dtoday = yyyy + '-' + cmon + '-' + cday;
           const ctoday = cday + '/' + cmon + '/' + yyyy;
           const check_dtoday = new Date(dtoday);
-          let cdate = new Date();
+          let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.next_avail_queue['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];

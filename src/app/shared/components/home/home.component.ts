@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
       ) {}
 
     ngOnInit() {
+      this.setSystemDate();
       // calling the method to get the list of domains
       this.getDomainList();
 
@@ -110,7 +111,13 @@ export class HomeComponent implements OnInit {
       this.sector_info['autoMobile'] = { 'simg': 'assets/images/icon-big-automobile.svg',
       'caption1': '', 'caption2': '', 'special': this.special_info['autoMobile']};
     }
-
+    setSystemDate() {
+      this.shared_service.getSystemDate()
+      .subscribe (
+        res => {
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
+    }
     getDomainList() {
       const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
       let run_api = true;

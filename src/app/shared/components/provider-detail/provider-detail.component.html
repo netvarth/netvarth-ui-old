@@ -129,7 +129,7 @@
 
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
-                                    <a [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i
+                                    <a rel="noopener" [href]="soc.value" target="_blank" *ngFor="let soc of socialMedialist"><i
                                             [class]="getSocialdet(soc.resource, 'iconClass')" [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                                             <span class="count">{{loc.checkins.length}}
                                                 {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
                                         <h3>{{loc.place | capitalizeFirst}}</h3>
-                                        <a class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
+                                        <a rel="noopener" class="directions" [href]="loc.googleMapUrl" target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
                                         <div class="clr">
                                             <div class="schedule" *ngIf="loc.display_schedule.length > 0">
                                                 <span class="sub-title">{{workig_hrs_cap}}</span>

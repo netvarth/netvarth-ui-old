@@ -119,7 +119,7 @@ onSubmit()" (keyup)="resetApiErrors()">
       <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'package_id')"
         errorMsg="Select one license package">
       </app-field-error-display>
-      <span class="package-desc"><a routerLink="/license-help" target="_blank">Help me to choose the right license
+      <span class="package-desc"><a rel="noopener" routerLink="/license-help" target="_blank">Help me to choose the right license
           package</a></span>
       <!-- <div class="package-desc">
         {{license_description}}
@@ -128,7 +128,7 @@ onSubmit()" (keyup)="resetApiErrors()">
     <div class="form-group agree">
       <mat-checkbox class="terms-margin" formControlName="terms_condition" [value]=true></mat-checkbox> <span
         class="terms-link">{{i_agree_cap}}
-        <a [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
+        <a rel="noopener" [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
     </div>
   </div>
   <div class="mat-dialog-actions" *ngIf="step==1">

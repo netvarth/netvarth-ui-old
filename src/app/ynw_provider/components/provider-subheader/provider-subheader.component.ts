@@ -40,6 +40,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   services: any = [];
   buttonDisabled = false;
   active_license;
+  server_date;
   constructor(public dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService,
     public provider_services: ProviderServices,
@@ -51,6 +52,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   normal_basicinfo_show = 1;
   kiosk_active = false;
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     // this.getWaitlistMgr(); // hide becuause it called on every page change
@@ -88,8 +90,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.active_license.addons.length; i++) {
             if (this.active_license.addons[i].name === 'Kiosk') {
               this.kiosk_active = true;
-            }
-            else {
+            } else {
               this.kiosk_active = false;
             }
           }
@@ -176,7 +177,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       account_id: this.bprofile.id,
       name: this.bprofile.businessName
     };
-    const cdate = new Date();
+    const cdate = new Date(this.server_date);
     const mn = cdate.getMonth() + 1;
     const dy = cdate.getDate();
     let mon = '';

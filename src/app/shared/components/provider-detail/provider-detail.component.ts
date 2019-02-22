@@ -156,6 +156,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   servicedialogRef;
   s3CouponList: any = [];
   isfirstCheckinOffer;
+  server_date;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -169,6 +170,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
       if (activeUser) {
         this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -239,7 +241,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'businessProfile': {
             this.businessjson = res;
             // console.log('bprofile', JSON.stringify(this.businessjson));
-            
+
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
@@ -628,7 +630,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   getDateDisplay(dt) {
     let str = '';
-    const today = new Date();
+    const today = new Date(this.server_date);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
@@ -844,7 +846,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const today = new Date();
+          const today = new Date(this.server_date);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
@@ -864,7 +866,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           const ctoday = cday + '/' + cmon + '/' + yyyy;
           let locindx;
           const check_dtoday = new Date(dtoday);
-          let cdate = new Date();
+          let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
             // console.log('locindx', locindx);

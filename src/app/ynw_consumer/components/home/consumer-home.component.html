@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="location consumr" *ngIf="waitlist.queue.location">
                                         {{waitlist.queue.location.place || '' | capitalizeFirst}}
-                                    <a *ngIf="waitlist.queue.location.googleMapUrl"
+                                    <a *ngIf="waitlist.queue.location.googleMapUrl" rel="noopener"
                                         [href]="waitlist.queue.location.googleMapUrl" target="_blank"
                                         class="icon-location" matTooltip="Click to navigate">
                                         </a>

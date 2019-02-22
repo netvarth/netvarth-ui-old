@@ -20,6 +20,5 @@ export class AppComponent {
     localStorage.setItem('isBusinessOwner', 'true');
     localStorage.setItem('ynw-user', response);
     localStorage.setItem('ynw-credentials', userdata);
-
   }
 }

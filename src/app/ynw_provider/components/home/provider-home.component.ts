@@ -168,6 +168,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
+  server_date;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private common_datastorage: CommonDataStorageService,
@@ -213,6 +214,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.apis_loaded = true;
   }
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    if (!this.server_date) {
+      this.setSystemDate();
+    }
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay',
@@ -269,6 +274,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
+  }
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+    .subscribe (
+      res => {
+        this.server_date = res;
+        this.shared_functions.setitemonLocalStorage('sysdate', res);
+      });
   }
   performActions(action) {
     if (action === 'adjustdelay') {

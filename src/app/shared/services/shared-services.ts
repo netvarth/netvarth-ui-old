@@ -6,6 +6,9 @@ import { ServiceMeta } from './service-meta';
 export class SharedServices {
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
   }
+  getSystemDate() {
+    return this.servicemeta.httpGet('provider/server/date');
+  }
   ConsumerLogin(body) {
     return this.servicemeta.httpPost('consumer/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401

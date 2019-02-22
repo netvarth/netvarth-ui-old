@@ -156,6 +156,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   coupondialogRef;
   isfirstCheckinOffer = false;
   btn_clicked = false;
+  server_date;
   constructor(private routerobj: Router,
     private location: Location,
     private activaterouterobj: ActivatedRoute,
@@ -167,6 +168,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
     this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
     this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
@@ -956,7 +958,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const today = new Date();
+          const today = new Date(this.server_date);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
@@ -976,7 +978,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const ctoday = cday + '/' + cmon + '/' + yyyy;
           let srchindx;
           const check_dtoday = new Date(dtoday);
-          let cdate = new Date();
+          let cdate;
           for (let i = 0; i < this.waitlisttime_arr.length; i++) {
             srchindx = provids[i].searchindx;
             this.search_data.hits.hit[srchindx].fields['waitingtime_res'] = this.waitlisttime_arr[i];

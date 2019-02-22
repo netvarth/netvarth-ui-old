@@ -61,7 +61,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   different_date_cap = Messages.DIFFERENT_DATE_CAP;
   you_hav_added_caption = Messages.YOU_HAVENT_ADDED_CAP;
   history_cap = Messages.HISTORY_CAP;
-
+  server_date;
 
   waitlists;
   fav_providers: any = [];
@@ -128,6 +128,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselOne: NgxCarousel;
 
   ngOnInit() {
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    if (!this.server_date) {
+      this.setSystemDate();
+    }
     this.carouselOne = {
       grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
       slide: 3,
@@ -198,7 +202,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       this.remfavdialogRef.close();
     }
   }
-
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+    .subscribe (
+      res => {
+        this.server_date = res;
+        this.shared_functions.setitemonLocalStorage('sysdate', res);
+      });
+  }
   getWaitlist() {
 
     this.loadcomplete.waitlist = false;
@@ -213,7 +224,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.waitlists = data;
           // console.log('waitlist', this.waitlists);
-          const today = new Date();
+          const today = new Date(this.server_date);
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
@@ -262,7 +273,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.time = waitlist.serviceTime;
 
       const waitlist_date = new Date(waitlist.date);
-      const today = new Date();
+      const today = new Date(this.server_date);
       today.setHours(0, 0, 0, 0);
       waitlist_date.setHours(0, 0, 0, 0);
       if (today.valueOf() < waitlist_date.valueOf()) {
@@ -409,7 +420,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         if (waitlisttime_arr === '"Account doesn\'t exist"') {
           waitlisttime_arr = [];
         }
-        const today = new Date();
+        const today = new Date(this.server_date);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
         const yyyy = today.getFullYear();
@@ -429,7 +440,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         const ctoday = cday + '/' + cmon + '/' + yyyy;
         let locindx;
         const check_dtoday = new Date(dtoday);
-        let cdate = new Date();
+        let cdate;
         for (let i = 0; i < waitlisttime_arr.length; i++) {
           locindx = provids_locid[i].locindx;
           // console.log('locindx', locindx);
