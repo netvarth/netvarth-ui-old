@@ -1,0 +1,22 @@
+<h1 class="mat-dialog-title">{{specializations_cap}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
+<mat-dialog-content *ngIf="!api_loading">
+    <div class="specializationouter" *ngIf="specialization_arr.length > 0" >
+        <div *ngFor = "let spec of specialization_arr">
+            <mat-checkbox (change)="specializationSel(spec.name)" [checked]="checkspecializationExists(spec.name)">{{spec.displayName}}</mat-checkbox>
+        </div>
+    </div>
+    <div class="languagesouter" *ngIf="specialization_arr.length == 0 && query_done" >
+        {{no_speci_found_cap}}
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="!api_loading"> 
+    <button  type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
+    <button (click)="saveSpecializations()" type="button" mat-button class="cs-btn bt1" [disabled]="specialization_arr.length==0 || disableButton">{{save_btn_cap}}</button>
+</mat-dialog-actions > 
+
+<app-field-error-display [displayError]="true" *ngIf="api_error"
+   errorMsg="{{api_error}}"></app-field-error-display>
+   
+<app-form-success-display [displayMsg]="true" *ngIf="api_success"
+successMsg="{{api_success}}"></app-form-success-display>

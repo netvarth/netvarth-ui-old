@@ -1,0 +1,1711 @@
+{
+	"searchLabelsVersion": "1.0",
+	"cloudSearchVersion": "1.0",
+	"cloudSearchUrl": "https://bpc7tlo2vd.execute-api.ap-southeast-1.amazonaws.com/cloud/search",
+	"globalSearchLabels": [{
+			"name": "physiciansSurgeons",
+			"displayname": "Doctors",
+			"query": "?q=(and [loc_details] sector:'healthCare' sub_sector:'physiciansSurgeons')&q.parser=structured&return=_all_fields"
+		}, {
+			"name": "dentists",
+			"displayname": "Dentists",
+			"query": "?q=(and [loc_details] sector:'healthCare' sub_sector:'dentists')&q.parser=structured&return=_all_fields"
+		}, {
+			"name": "alternateMedicinePractitioners",
+			"displayname": "Alternative Medicine Practitioners",
+			"query": "?q=(and [loc_details] sector:'healthCare' sub_sector:'alternateMedicinePractitioners')&q.parser=structured&return=_all_fields"
+		}, {
+			"name": "beautyCare",
+			"displayname": "Beauty Care / Spa / Hair Salon",
+			"query": "?q=(and [loc_details] sector:'personalCare'  sub_sector:'beautyCare')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "personalFitness",
+			"displayname": "Fitness Trainer / Gym",
+			"query": "?q=(and [loc_details] sector:'personalCare' sub_sector:'personalFitness')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "massageCenters",
+			"displayname": "Massage Centers",
+			"query": "?q=(and [loc_details] sector:'personalCare' sub_sector:'massageCenters')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "lawyers",
+			"displayname": "Lawyers",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'lawyers')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "charteredAccountants",
+			"displayname": "Chartered Accountants",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'charteredAccountants')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "taxConsultants",
+			"displayname": "Tax Consultants",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'taxConsultants')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "civilArchitects",
+			"displayname": "Civil Architects",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'civilArchitects')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "finacialAdviser",
+			"displayname": "Finacial Advisor",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'finacialAdviser')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "stockbroker",
+			"displayname": "Stockbroker",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'stockbroker')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "auditor",
+			"displayname": "Auditor",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'auditor')&q.parser=structured&return=_all_fields"
+		},
+		{
+			"name": "geologist",
+			"displayname": "Geologist",
+			"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'geologist')&q.parser=structured&return=_all_fields"
+		}
+	],
+	"sectorLevelLabels": [{
+			"name": "healthCare",
+			"subSectorLevelLabels": [{
+					"name": "physiciansSurgeons",
+					"displayname": "Doctors",
+					"query": "?q=(and [loc_details] sector:'healthCare' sub_sector:'physiciansSurgeons')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "Allergists",
+							"displayname": "Allergists",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Allergists')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Anaesthesiology",
+							"displayname": "Anaesthesiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Anaesthesiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Andrology",
+							"displayname": "Andrology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Andrology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Audiology",
+							"displayname": "Audiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Audiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "BariatricSurgery",
+							"displayname": "Bariatric Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'BariatricSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "BonemarrowTransplant",
+							"displayname": "Bonemarrow Transplant",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'BonemarrowTransplant')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "BreastSurgery",
+							"displayname": "Breast Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'BreastSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "CardiacLungTransplantSurgery",
+							"displayname": "Cardiac & Lung Transplant Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'CardiacLungTransplantSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Cardiology",
+							"displayname": "Cardiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Cardiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "CardiothoracicSurgery",
+							"displayname": "Cardiothoracic Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'CardiothoracicSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "ClinicalImmunology",
+							"displayname": "Clinical Immunology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'ClinicalImmunology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "CosmeticSurgery",
+							"displayname": "Cosmetic Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'CosmeticSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "CriticalCareMedicine",
+							"displayname": "Critical Care Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'CriticalCareMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Cytology",
+							"displayname": "Cytology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Cytology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Dermatology",
+							"displayname": "Dermatology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Dermatology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Diabetology",
+							"displayname": "Diabetology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Diabetology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "DiabeticsClinicalNutrition",
+							"displayname": "Diabetics & Clinical Nutrition",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'DiabeticsClinicalNutrition')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "EmergencyServicesAndTraumaCare",
+							"displayname": "Emergency services and Trauma care",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'EmergencyServicesAndTraumaCare')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "EndocrineSurgery",
+							"displayname": "Endocrine Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'EndocrineSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Endocrinology",
+							"displayname": "Endocrinology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Endocrinology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Epidemiologist",
+							"displayname": "Epidemiologist",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Epidemiologist')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "ENT",
+							"displayname": "ENT",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'ENT')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "ENTNeckSurgery",
+							"displayname": "ENT & Neck Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'ENTNeckSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "FamilyMedicine",
+							"displayname": "Family Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'FamilyMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "FoetalInterventionRadiology",
+							"displayname": "Foetal Intervention Radiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'FoetalInterventionRadiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "FoetalMedicine",
+							"displayname": "Foetal Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'FoetalMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Gastroenterology",
+							"displayname": "Gastroenterology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Gastroenterology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "GastrointestinalOncology",
+							"displayname": "Gastrointestinal Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'GastrointestinalOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "GeneralMedicineInternal Medicine",
+							"displayname": "General Medicine / Internal Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'GeneralMedicineInternal Medicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "GeneralSurgery",
+							"displayname": "General Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'GeneralSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Geriatrics",
+							"displayname": "Geriatrics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Geriatrics')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "GynaeOncology",
+							"displayname": "Gynae Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'GynaeOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "GynaecologyObstetrics",
+							"displayname": "Gynaecology & Obstetrics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'GynaecologyObstetrics')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "HaematoOncology",
+							"displayname": "Haemato Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'HaematoOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Haematology",
+							"displayname": "Haematology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Haematology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "HeadNeckOncology",
+							"displayname": "Head & Neck Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'HeadNeckOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "HepatoPancreaticoBiliary(HPB)Surgery",
+							"displayname": "Hepato Pancreatico Biliary (HPB) Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'HepatoPancreaticoBiliary(HPB)Surgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Hepatology",
+							"displayname": "Hepatology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Hepatology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Immunology",
+							"displayname": "Immunology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Immunology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "HomeHealthCare",
+							"displayname": "Home Health Care",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'HomeHealthCare')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "InfectiousDiseaseMedicine",
+							"displayname": "Infectious Disease Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'InfectiousDiseaseMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "InfertilityMedicine",
+							"displayname": "Infertility Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'InfertilityMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "InterventionalRadiology",
+							"displayname": "Interventional Radiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'InterventionalRadiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "InterventionalCardiology",
+							"displayname": "Interventional Cardiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'InterventionalCardiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "JointReplacementSurgery",
+							"displayname": "Joint Replacement Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'JointReplacementSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "LaboratoryMedicine",
+							"displayname": "Laboratory Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'LaboratoryMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "LaparoscopicSurgery",
+							"displayname": "Laparoscopic Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'LaparoscopicSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "LiverTransplantSurgery",
+							"displayname": "Liver Transplant Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'LiverTransplantSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "MaxilloFacialSurgery",
+							"displayname": "Maxillofacial Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'MaxilloFacialSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "MedicalGenetics",
+							"displayname": "Medical Genetics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'MedicalGenetics')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "MedicalOncology",
+							"displayname": "Medical Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'MedicalOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Microbiology",
+							"displayname": "Microbiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Microbiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "MinimalInvasiveSurgery",
+							"displayname": "Minimal Invasive Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'MinimalInvasiveSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Miscellaneous",
+							"displayname": "Miscellaneous",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Miscellaneous')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "MultiOrganTransplantSurgery",
+							"displayname": "Multi Organ Transplant Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'MultiOrganTransplantSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Neonatology",
+							"displayname": "Neonatology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Neonatology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Nephrology",
+							"displayname": "Nephrology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Nephrology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "NeuroOncology",
+							"displayname": "Neuro Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'NeuroOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Neurology",
+							"displayname": "Neurology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Neurology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Neurosurgery",
+							"displayname": "Neurosurgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Neurosurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "NuclearMedicine",
+							"displayname": "Nuclear Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'NuclearMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Nursing",
+							"displayname": "Nursing",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Nursing')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Ophthalmology",
+							"displayname": "Ophthalmology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Ophthalmology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Orthopaedics",
+							"displayname": "Orthopaedics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Orthopaedics')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricCardiacSurgery",
+							"displayname": "Paediatric Cardiac Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricCardiacSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricCardiology",
+							"displayname": "Paediatric Cardiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricCardiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricGastroSurgery",
+							"displayname": "Paediatric Gastro Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricGastroSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricGastroenterology",
+							"displayname": "Paediatric Gastroenterology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricGastroenterology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricNephrology",
+							"displayname": "Paediatric Nephrology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricNephrology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricNeurology",
+							"displayname": "Paediatric Neurology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricNeurology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricOncology",
+							"displayname": "Paediatric Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PaediatricSurgery",
+							"displayname": "Paediatric Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PaediatricSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Paediatrics",
+							"displayname": "Paediatrics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Paediatrics')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Paedodontics",
+							"displayname": "Paedodontics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Paedodontics')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PainMedicine",
+							"displayname": "Pain Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PainMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Pathology",
+							"displayname": "Pathology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Pathology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Pharmacology",
+							"displayname": "Pharmacology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Pharmacology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Physiotherapy",
+							"displayname": "Physiotherapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Physiotherapy')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PlasticReconstructiveSurgery",
+							"displayname": "Plastic & Reconstructive Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PlasticReconstructiveSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Podiatry",
+							"displayname": "Podiatry",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Podiatry')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Psychology",
+							"displayname": "Psychology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Psychology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "PulmonologyRespiratoryMedicine",
+							"displayname": "Pulmonology / Respiratory Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PulmonologyRespiratoryMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "RadiationOncologyRadiotherapy",
+							"displayname": "Radiation Oncology / Radiotherapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'RadiationOncologyRadiotherapy')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Radiology",
+							"displayname": "Radiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Radiology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "RehabilitativeMedicine",
+							"displayname": "Rehabilitative Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'RehabilitativeMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "RenalTransplantSurgery",
+							"displayname": "Renal Transplant Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'RenalTransplantSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Rheumatology",
+							"displayname": "Rheumatology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Rheumatology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "RoboticSurgery",
+							"displayname": "Robotic Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'RoboticSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "SleepMedicine",
+							"displayname": "Sleep Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'SleepMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "SpeechTherapy",
+							"displayname": "Speech Therapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'SpeechTherapy')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "SpineSurgery",
+							"displayname": "Spine Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'SpineSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "SportsMedicine",
+							"displayname": "Sports Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'SportsMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "SurgicalGastroenterology",
+							"displayname": "Surgical Gastroenterology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'SurgicalGastroenterology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "SurgicalOncology",
+							"displayname": "Surgical Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'SurgicalOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "ThoracicSurgery",
+							"displayname": "Thoracic Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'ThoracicSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "TransfusionMedicine",
+							"displayname": "Transfusion Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'TransfusionMedicine')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "UroOncology",
+							"displayname": "Uro Oncology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'UroOncology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Urology",
+							"displayname": "Urology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Urology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "VascularSurgery",
+							"displayname": "Vascular Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'VascularSurgery')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						},
+						{
+							"name": "Virology",
+							"displayname": "Virology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Virology')&q.parser=structured&return=_all_fields",
+							"group": "physiciansSurgeons"
+						}
+					]
+				},
+				{
+					"name": "dentists",
+					"displayname": "Dentists",
+					"query": "?q=(and [loc_details] sector:'healthCare' sub_sector:'dentists')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "dentalPublicHealth",
+							"displayname": "Dental Public Health",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'dentalPublicHealth')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "endodontics",
+							"displayname": "Endodontics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'endodontics')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						}, {
+							"name": "implantologist",
+							"displayname": "Implantologist",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'implantologist')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "OralMaxillofacialPathology",
+							"displayname": "Oral & Maxillofacial Pathology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'OralMaxillofacialPathology')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "OralMaxillofacialRadiology",
+							"displayname": "Oral & Maxillofacial Radiology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'OralMaxillofacialRadiology')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "OralMaxillofacialSurgery",
+							"displayname": "Oral & Maxillofacial Surgery",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'OralMaxillofacialSurgery')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "OrthodonticsDentofacialOrthopedics",
+							"displayname": "Orthodontics & Dentofacial Orthopedics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'OrthodonticsDentofacialOrthopedics')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "PediatricDentistry",
+							"displayname": "Pediatric Dentistry",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'PediatricDentistry')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "periodontics",
+							"displayname": "Periodontics",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'periodontics')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						},
+						{
+							"name": "prosthodontist",
+							"displayname": "Prosthodontist",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'prosthodontist')&q.parser=structured&return=_all_fields",
+							"group": "dentists"
+						}
+					]
+				},
+				{
+					"name": "alternateMedicinePractitioners",
+					"displayname": "Alternative Medicine Practitioners",
+					"query": "?q=(and [loc_details] sector:'healthCare' sub_sector:'alternateMedicinePractitioners')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "acupressure",
+							"displayname": "Acupressure",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'acupressure')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "Acupuncture",
+							"displayname": "Acupuncture",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Acupuncture')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "Aromatherapy",
+							"displayname": "Aromatherapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'Aromatherapy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "AyurvedicMedicine",
+							"displayname": "Ayurvedic Medicine",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'AyurvedicMedicine')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "balneotherapy",
+							"displayname": "Balneo therapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'balneotherapy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "biofeedback",
+							"displayname": "Biofeedback",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'biofeedback')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "chiropractic",
+							"displayname": "Chiropractic",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'chiropractic')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "homeopathy",
+							"displayname": "Homeopathy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'homeopathy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "massageTherapy",
+							"displayname": "Massage Therapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'massageTherapy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "naturopathy",
+							"displayname": "Naturopathy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'naturopathy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "palliativeCare",
+							"displayname": "Palliative Care",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'palliativeCare')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "reflexology",
+							"displayname": "Reflexology",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'reflexology')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "reiki",
+							"displayname": "Reiki",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'reiki')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "siddha",
+							"displayname": "Siddha",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'siddha')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "thermoAuricularTherapy",
+							"displayname": "Thermo Auricular Therapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'thermoAuricularTherapy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "unani",
+							"displayname": "Unani",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'unani')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						},
+						{
+							"name": "yogaTherapy",
+							"displayname": "Yoga Therapy",
+							"query": "?q=(and [loc_details] sector:'healthCare' specialization:'yogaTherapy')&q.parser=structured&return=_all_fields",
+							"group": "alternateMedicinePractitioners"
+						}
+					]
+				}
+
+			]
+		},
+		{
+			"name": "personalCare",
+			"subSectorLevelLabels": [{
+					"name": "beautyCare",
+					"displayname": "Beauty Care / Spa / Hair Salon",
+					"query": "?q=(and [loc_details] sector:'personalCare'  sub_sector:'beautyCare')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "acupressureTherappy",
+							"displayname": "Acupressure Therapy",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'acupressureTherappy')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "BeautyCareForMen",
+							"displayname": "Beauty Care For Men",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'BeautyCareForMen')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "BeautyCareForWomen",
+							"displayname": "Beauty Care For Women",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'BeautyCareForWomen')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "EarCandling",
+							"displayname": "Ear Candling",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'EarCandling')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "EarPiercing",
+							"displayname": "Ear Piercing",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'EarPiercing')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "GalvanicTherapy",
+							"displayname": "Galvanic Therapy",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'GalvanicTherapy')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "HairSalonForKids",
+							"displayname": "Hair Salon For Kids",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'HairSalonForKids')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "HairSalonForMen",
+							"displayname": "Hair Salon For Men",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'HairSalonForMen')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "HairSalonForWomen",
+							"displayname": "Hair Salon For Women",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'HairSalonForWomen')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "HennaArt",
+							"displayname": "Henna Art",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'HennaArt')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "MoroccanBath",
+							"displayname": "Moroccan Bath",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'MoroccanBath')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "NailArt",
+							"displayname": "Nail Art",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'NailArt')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "SpaBodyTherapy",
+							"displayname": "Spa / Body Therapy",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'SpaBodyTherapy')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "Tattoos",
+							"displayname": "Tattoos",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'Tattoos')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "TummyReducingTherapy",
+							"displayname": "Tummy Reducing Therapy",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'TummyReducingTherapy')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "UnisexBeautyCare",
+							"displayname": "Unisex Beauty Care",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'UnisexBeautyCare')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						},
+						{
+							"name": "WeddingPackages",
+							"displayname": "Wedding Packages",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'WeddingPackages')&q.parser=structured&return=_all_fields",
+							"group": "beautyCare"
+						}
+					]
+				},
+				{
+					"name": "personalFitness",
+					"displayname": "Fitness Trainer / Gym",
+					"query": "?q=(and [loc_details] sector:'personalCare' sub_sector:'personalFitness')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "generalTraining",
+							"displayname": "General Training",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'generalTraining')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "strengthTraining",
+							"displayname": "Strength Training",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'strengthTraining')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "personalTraining",
+							"displayname": "Personal Training",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'personalTraining')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "cardioWorkout",
+							"displayname": "Cardio Workout",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'cardioWorkout')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "hardCoreBodyBuilding",
+							"displayname": "Hard Core Body Building",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'hardCoreBodyBuilding')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "physiotherapy",
+							"displayname": "Physiotherapy",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'physiotherapy')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "DietCounselling",
+							"displayname": "Diet Counselling",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'DietCounselling')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "Aerobics",
+							"displayname": "Aerobics",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'Aerobics')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						},
+						{
+							"name": "zumba",
+							"displayname": "Zumba",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'zumba')&q.parser=structured&return=_all_fields",
+							"group": "personalFitness"
+						}
+					]
+				},
+				{
+					"name": "massageCenters",
+					"displayname": "Massage Centers",
+					"query": "?q=(and [loc_details] sector:'personalCare' sub_sector:'massageCenters')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "Ayurvedic",
+							"displayname": "Ayurvedic",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'Ayurvedic')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "asianMmassageTherapy",
+							"displayname": "Asian Massage Therapy",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'asianMmassageTherapy')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "myoFascialRelease",
+							"displayname": "MyoFascial Release",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'myoFascialRelease')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "neuromuscularTechnique",
+							"displayname": "Neuromuscular Technique",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'neuromuscularTechnique')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "SoftTissueRlease",
+							"displayname": "Soft Tissue Release",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'SoftTissueRlease')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "lymphaticMassage",
+							"displayname": "Lymphatic Massage",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'lymphaticMassage')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "visceralManipulation",
+							"displayname": "Visceral Manipulation",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'visceralManipulation')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "PregnancyMassage",
+							"displayname": "Pregnancy Massage",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'PregnancyMassage')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "deepTissueMassage",
+							"displayname": "Deep Tissue Massage",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'deepTissueMassage')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						},
+						{
+							"name": "relaxationMassage",
+							"displayname": "Relaxation Massage",
+							"query": "?q=(and [loc_details] sector:'personalCare' specialization:'relaxationMassage')&q.parser=structured&return=_all_fields",
+							"group": "massageCenters"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "professionalConsulting",
+			"subSectorLevelLabels": [{
+					"name": "lawyers",
+					"displayname": "Lawyers",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'lawyers')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "BankruptcyLawyer",
+							"displayname": "Bankruptcy Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'BankruptcyLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "CivilLitigationLawyer",
+							"displayname": "Civil Litigation Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CivilLitigationLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "ConsumerLawyer",
+							"displayname": "Consumer Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ConsumerLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "CorporateLawyer",
+							"displayname": "Corporate Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CorporateLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "CourtsSmallclaimsMediation",
+							"displayname": "Courts/Small claims/Mediation",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CourtsSmallclaimsMediation')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "CriminalDefenselawyer",
+							"displayname": "Criminal Defense lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CriminalDefenselawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "DivorceLawyer",
+							"displayname": "Divorce Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'DivorceLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "DigitalMediaInternetLawyer",
+							"displayname": "Digital Media and Internet Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'DigitalMediaInternetLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "EmploymentLabourLawyer",
+							"displayname": "Employment and Labour Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'EmploymentLabourLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "EntertainmentLawyer",
+							"displayname": "Entertainment Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'EntertainmentLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "EstatePlanningLawyer",
+							"displayname": "Estate planning Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'EstatePlanningLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						}, {
+							"name": "FamilyLawyer",
+							"displayname": "Family Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'FamilyLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "FinancialandIDTheftLawyer",
+							"displayname": "Financial and ID Theft Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'FinancialandIDTheftLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "generalPractice",
+							"displayname": "General Practice",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'generalPractice')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "IntellectualPropertyLawyer",
+							"displayname": "Intellectual Property Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'IntellectualPropertyLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "ImmgrationLawyer",
+							"displayname": "Immgration Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ImmgrationLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "LandlordTenantMatters",
+							"displayname": "Landlord/Tenant matters",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'LandlordTenantMatters')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "LegalMalpracticeProfessionalResponsibilityLawyer",
+							"displayname": "Legal Malpractice or Professional Responsibility Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'LegalMalpracticeProfessionalResponsibilityLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "MarriageLawyer",
+							"displayname": "Marriage Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'MarriageLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "MergersAcquisitionsLawyer",
+							"displayname": "Mergers and Acquisitions Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'MergersAcquisitionsLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "PersonalInjuryLawyer",
+							"displayname": "Personal injury Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'PersonalInjuryLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "PostDivorceMatters",
+							"displayname": "Post Divorce Matters",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'PostDivorceMatters')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "RealEstatelawyer",
+							"displayname": "Real Estate / Home Ownership Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'RealEstatelawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "ResponsibilityLawyer",
+							"displayname": "Responsibility Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ResponsibilityLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "taxissues",
+							"displayname": "Tax Issues",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'taxissues')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "trafficLawyer",
+							"displayname": "Traffic Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'trafficLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						},
+						{
+							"name": "WillTrustsAndEstatePlanningLawyer",
+							"displayname": "Will/Trusts and Estate Planning Lawyer",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'WillTrustsAndEstatePlanningLawyer')&q.parser=structured&return=_all_fields",
+							"group": "lawyers"
+						}
+					]
+				},
+				{
+					"name": "charteredAccountants",
+					"displayname": "Chartered Accountants",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'charteredAccountants')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "Adviceonbusinessstructures",
+							"displayname": "Advice on business structures",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Adviceonbusinessstructures')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "CompanyFormationCompliance",
+							"displayname": "Company Formation & Compliance",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CompanyFormationCompliance')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "DebtandEquityFinancing",
+							"displayname": "Debt and Equity Financing",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'DebtandEquityFinancing')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "generalConsultingCA",
+							"displayname": "General Consulting",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'generalConsultingCA')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "FEMA",
+							"displayname": "Handling FEMA(Foreign Exchange Management Act)",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'FEMA')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "LLP",
+							"displayname": "LLP(Limited Liability Partnership)",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'LLP')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "Managementconsultancyforbusinessdevelopment",
+							"displayname": "Management consultancy",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Managementconsultancyforbusinessdevelopment')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "ProjectFinance",
+							"displayname": "Project Finance",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ProjectFinance')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "StructuringCommercialtransactions",
+							"displayname": "Structuring Commercial transactions",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'StructuringCommercialtransactions')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						},
+						{
+							"name": "Adviceonbusinessstructures",
+							"displayname": "Advice on business structures",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Adviceonbusinessstructures')&q.parser=structured&return=_all_fields",
+							"group": "charteredAccountants"
+						}
+					]
+				},
+				{
+					"name": "taxConsultants",
+					"displayname": "Tax Consultants",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'taxConsultants')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "CentralExciseTax",
+							"displayname": "Central Excise Tax",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CentralExciseTax')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "generalConsultantTax",
+							"displayname": "General Consultant",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'generalConsultantTax')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "giftTax",
+							"displayname": "Gift Tax",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'giftTax')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "GST",
+							"displayname": "GST",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'GST')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "IncomeTax",
+							"displayname": "Income Tax",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'IncomeTax')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "SalesTaxVAT",
+							"displayname": "Sales Tax/ VAT",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'SalesTaxVAT')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "ServiceTax",
+							"displayname": "Service Tax",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ServiceTax')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						},
+						{
+							"name": "wealthTax",
+							"displayname": "Wealth Tax",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'wealthTax')&q.parser=structured&return=_all_fields",
+							"group": "taxConsultants"
+						}
+					]
+				},
+				{
+					"name": "civilArchitects",
+					"displayname": "Civil Architects",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'civilArchitects')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "2d3dDesign",
+							"displayname": "2D/3D Design",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'2d3dDesign')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "colourConsultation",
+							"displayname": "Colour Consultation",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'colourConsultation')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "CommercialArchitect",
+							"displayname": "Commercial Architect",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CommercialArchitect')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "costEffective",
+							"displayname": "Cost effective",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'costEffective')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "Decor",
+							"displayname": "Decor",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Decor')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "designConsultation",
+							"displayname": "Design Consultation",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'designConsultation')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "designExecution",
+							"displayname": "Design Execution",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'designExecution')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "ResidentialArchitect",
+							"displayname": "Residential Architect",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ResidentialArchitect')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "ElevationDesign",
+							"displayname": "Elevation Design",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ElevationDesign')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "Executionsupervision",
+							"displayname": "Execution supervision",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Executionsupervision')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "Falseceiling",
+							"displayname": "False ceiling",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Falseceiling')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "Flooring",
+							"displayname": "Flooring",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Flooring')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "floorplanlayouts",
+							"displayname": "Floor plan layouts",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'floorplanlayouts')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "interior",
+							"displayname": "Interior",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'interior')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "InteriorDesign",
+							"displayname": "Interior Design",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'InteriorDesign')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "lightingselection",
+							"displayname": "Lighting Selection",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'lightingselection')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "siteInspection",
+							"displayname": "Site Inspection",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'siteInspection')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "spacePlanning",
+							"displayname": "Space Planning",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'spacePlanning')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						},
+						{
+							"name": "residentialArchitecture",
+							"displayname": "Residential Architecture",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'residentialArchitecture')&q.parser=structured&return=_all_fields",
+							"group": "civilArchitects"
+						}
+					]
+				},
+				{
+					"name": "finacialAdviser",
+					"displayname": "Finacial Advisor",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'finacialAdviser')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "Accounting",
+							"displayname": "Accounting",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Accounting')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "AssetProtection",
+							"displayname": "Asset Protection",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'AssetProtection')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "CashManagement",
+							"displayname": "Cash Management",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CashManagement')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "CharitableGiving",
+							"displayname": "Charitable Giving",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CharitableGiving')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "DebtCounselling",
+							"displayname": "Debt Counselling",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'DebtCounselling')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "InvestmentPlanning",
+							"displayname": "Investment Planning",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'InvestmentPlanning')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "RetirementPlanning",
+							"displayname": "Retirement Planning",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'RetirementPlanning')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "RiskManagement",
+							"displayname": "Risk Management",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'RiskManagement')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "TaxPlanning",
+							"displayname": "Tax Planning",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'TaxPlanning')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						},
+						{
+							"name": "WealthManagement",
+							"displayname": "Wealth Management",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'WealthManagement')&q.parser=structured&return=_all_fields",
+							"group": "finacialAdviser"
+						}
+					]
+				},
+				{
+					"name": "stockbroker",
+					"displayname": "Stockbroker",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'stockbroker')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "Equity",
+							"displayname": "Equity",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Equity')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						},
+						{
+							"name": "Commodity",
+							"displayname": "Commodity",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Commodity')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						},
+						{
+							"name": "MutualFunds",
+							"displayname": "Mutual Funds",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'MutualFunds')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						},
+						{
+							"name": "Trading",
+							"displayname": "Trading",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Trading')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						},
+						{
+							"name": "CallNTrade",
+							"displayname": "Call N Trade",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'CallNTrade')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						},
+						{
+							"name": "ResearchAndAdvice",
+							"displayname": "Research And Advice",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ResearchAndAdvice')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						},
+						{
+							"name": "RelationshipManagement",
+							"displayname": "Relationship Management",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'RelationshipManagement')&q.parser=structured&return=_all_fields",
+							"group": "stockbroker"
+						}
+					]
+				},
+				{
+					"name": "auditor",
+					"displayname": "Auditor",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'auditor')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "InternalAuditing",
+							"displayname": "Internal Auditing",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'InternalAuditing')&q.parser=structured&return=_all_fields",
+							"group": "auditor"
+						},
+						{
+							"name": "ExternalAuditing",
+							"displayname": "External Auditing",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'ExternalAuditing')&q.parser=structured&return=_all_fields",
+							"group": "auditor"
+						}
+					]
+				},
+				{
+					"name": "geologist",
+					"displayname": "Geologist",
+					"query": "?q=(and [loc_details] sector:'professionalConsulting' sub_sector:'geologist')&q.parser=structured&return=_all_fields",
+					"specializationLabels": [{
+							"name": "Geochemistry",
+							"displayname": "Geochemistry",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Geochemistry')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Geophysics",
+							"displayname": "Geophysics",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Geophysics')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Hydrogeology",
+							"displayname": "Hydrogeology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Hydrogeology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Hydrology",
+							"displayname": "Hydrology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Hydrology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Oceanography",
+							"displayname": "Oceanography",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Oceanography')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Paleoclimatology",
+							"displayname": "Paleoclimatology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Paleoclimatology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Paleontology",
+							"displayname": "Paleontology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Paleontology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Paleooceanography",
+							"displayname": "Paleooceanography",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Paleooceanography')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Seismology",
+							"displayname": "Seismology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Seismology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "StructuralGeology",
+							"displayname": "Structural Geology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'StructuralGeology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						},
+						{
+							"name": "Volcanology",
+							"displayname": "Volcanology",
+							"query": "?q=(and [loc_details] sector:'professionalConsulting' specialization:'Volcanology')&q.parser=structured&return=_all_fields",
+							"group": "geologist"
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,146 @@
+<section>
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+        <app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="content comn-cls dashboard audit"  *ngIf="!api_loading">
+        <div class="container">
+            <div class="row">
+                <div class="card p0 w-dta">
+                    <!-- <div class="logfil-outer">
+                        <div class="formgroup-outer">
+                            <div class="form-group">
+                                <label class="col-form-label">{{category_cap}}</label>
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="logSelcat" name="catg" (selectionChange)="selectCategory()">
+                                        <mat-option value=""> {{select_cap}}</mat-option>
+                                        <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
+                                            {{ cat.displayName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">{{sub_category_cap}}</label>
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="logSelsubcat">
+                                        <mat-option value=""> {{select_cap}}</mat-option>
+                                        <mat-option *ngFor="let scat of logSubcategories" [value]="scat.name">
+                                            {{ scat.dispName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">{{action_cap}}</label>
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="logSelaction">
+                                        <mat-option value=""> {{select_cap}}</mat-option>
+                                        <mat-option *ngFor="let act of logActions" [value]="act.name">
+                                            {{ act.dispName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="reason" class="col-form-label">{{select_date_cap}}</label>
+                                
+                                <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" autocomplete="off" [max]="tday">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                                      </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="actions-div">
+                            <button type="button" class="cs-btn bt1 mat-button" (click)="do_search(false)">{{search_cap}}</button>
+                        </div>
+                    </div> -->
+                    <div class="table-responsive dash-list">
+                        <table class="table">
+                            <thead>
+                                <tr class="tble-filtr-tr">
+                                    <th>{{date_time_cap}}</th>
+                                    <th>{{subject_cap}}</th>
+                                    <th class="desc">{{text_cap}}</th>
+                                    <th>{{user_name_cap}}</th>
+                                    <th class="filter-fx-col">
+                                        <table class="fltr-tbl">
+                                            <tr>
+                                                <td class="cl-fltr" *ngIf="filterapplied === true"  (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                                                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
+                                                    <img src="../../../../assets/images/icons8-clear-filters-40.png"/>
+                                                </td>
+                                                <td> 
+                                                    <span>
+                                                        <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                                        <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
+                                                <div class="form-group col-md-2">
+                                                    <label for="reason"
+                                                        class="col-form-label">{{select_date_cap}}</label>
+                                                    <mat-form-field>
+                                                        <input matInput [matDatepicker]="picker"
+                                                            (dateChange)="do_search(false)" name="audit-datepicker"
+                                                            [(ngModel)]="logSeldate" [value]="logSeldate" type="text"
+                                                            autocomplete="off" [max]="tday"[min]="minday">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <ng-container *ngIf="auditStatus==1">
+                                    <tr>
+                                        <td class="spinner" colspan="5">
+                                            <app-common-innerloading-spinner spinnerParams="loadingParams">
+                                            </app-common-innerloading-spinner>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="auditStatus==2">
+                                    <tr>
+                                        <td class="nodatafound" colspan="5">{{no_logs_cap}}</td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="auditStatus==3">
+                                    <tr *ngFor="let log of auditlog_details; let i=index">
+                                        <td data-title="Date" class="td1">{{log.date | date:dateFormat}}
+                                            {{log.time}}</td>
+                                        <td data-title="Subject" class="td3">{{log.subject}}</td>
+                                        <td data-title="Text" class="td2 desc">{{log.text}}</td>
+                                        <td data-title="User Name" class="td4">{{log.userName}}</td>
+                                        <td class="filter-fx-col"></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <div class="search_paging" *ngIf="auditlog_details.length>0">
+                            <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()"
+                                (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,27 @@
+<form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+    (keyup)="resetApiErrors()">
+    <h1 class="mat-dialog-title">{{title}}
+        <button #queue mat-dialog-close class="modal_close">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+    </h1>
+    <mat-dialog-content>
+        <div class="form-group" *ngIf="!api_loading">
+            <mat-form-field>
+                <textarea matInput class="form-control" id="message" placeholder="{{message_label}} *" formControlName="message"
+                    maxlength="1000">
+            </textarea>
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a message.">
+            </app-field-error-display>
+        </div>
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
+        <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{send_btn_cap}}</button>
+    </mat-dialog-actions>
+    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+</form>

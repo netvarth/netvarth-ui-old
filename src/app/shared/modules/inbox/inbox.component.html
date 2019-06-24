@@ -1,0 +1,64 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy">
+                            <ul class="inbox-table" *ngIf="messages.length>0">
+                                    <li class="tth">
+                                        <div class="outer">
+                                            <div class="th th1">Date</div>
+                                            <div class="th th2">Service</div>
+                                            <div class="th th3">Name</div>
+                                            <div class="th th4">Message</div>
+                                        </div>
+                                    </li>
+                                   
+                                    <li class="ttd" [class.active]="selectedMsg==i" *ngFor="let message of messages; let i = index">
+                                        <div class="outer" (click)="showMsg(i)">
+                                            <div class="td td1">
+                                                <div class="label">Date</div>
+                                                <div class="result">{{message.timeStamp | date: dateFormat}}</div>
+                                            </div>
+                                            <div class="td td2">
+                                                <div class="label">Service</div>
+                                                <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
+                                            </div>
+                                            <div class="td td3">
+                                                <div class="label">Name</div>
+                                                <div class="result">{{message.owner.userName}}</div>
+                                            </div>
+                                            <div class="td td4">
+                                                <div class="label">Message</div>
+                                                <div class="result">{{ (message.msg.length>120)? (message.msg | slice:0:120)+'..':(message.msg) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="details" [class.show]="selectedMsg==i">
+                                            <div class="result">
+                                                {{message.msg}}
+                                            </div>
+                                            <div class="action">
+                                                <span class="icon-reply" (click)="replyMessage(message)" *ngIf="userDet.id != message.owner.id">
+                                                    Reply
+                                                </span>
+                                                <span class="icon-close" (click)="closeMsg()">
+                                                    Close
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="actions">
+                                            <span class="icon-delete"> Delete Message</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                               <div class="no-msg" *ngIf="messages.length==0">No messages found</div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>    
+</section>

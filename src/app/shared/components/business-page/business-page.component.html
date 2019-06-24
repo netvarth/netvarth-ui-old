@@ -1,0 +1,269 @@
+<app-header [headerTitle]="'Header'" (searchclick)="handlesearchClick()" [passedDomain]="domain" [passedkwdet]="kwdet">
+</app-header>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="c-outer">
+                <div class="c-body prov-detail-outer">
+                    <div class="srlst details">
+                        <div class="top-sect">
+                            <div class="tp-l">
+                                <div class="tp1">
+                                    <div class="pro-img">
+                                        <ng-container *ngIf="galleryjson.length > 0">
+                                            <ng-container>
+                                                <img [src]="galleryjson[0].thumbUrl" alt=""
+                                                    (click)="openImageModalRow(image_list_popup[0])">
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <ul class="gal" *ngIf="galleryjson.length > 1">
+                                        <li>
+                                            <div class="galbx">
+                                                <div class="overlay" (click)="openImageModalRow(image_list_popup[1])">+
+                                                    {{galleryjson.length - 1 }}</div>
+                                                <img [src]="galleryjson[1].thumbUrl" alt="">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="rating-stars">
+                                        <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
+                                            src="./assets/images/star.svg" /><img class="ratingstar"
+                                            *ngIf="ratingenabledHalf" src="./assets/images/star-half.svg" /><img
+                                            class="ratingstar" *ngFor="let enable of ratingdisabledArr"
+                                            src="./assets/images/star-disabled.svg" />
+                                    </div>
+                                </div>
+                                <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
+                                    [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                    [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                    (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                    (buttonAfterHook)="onButtonAfterHook($event)"></ks-modal-gallery>
+                                <div class="tp2" *ngIf="businessjson">
+                                    <h3>{{businessjson.businessName | capitalizeFirst}}</h3>
+                                    <span class="category" *ngIf="businessjson.serviceSector?.displayName">{{businessjson.serviceSector.displayName
+                                        | capitalizeFirst}} ({{businessjson.serviceSubSector.displayName |
+                                        capitalizeFirst}})</span>
+
+                                    <div class="clr">
+                                        <div class="pro-desc">
+                                            <span *ngIf="bNameStart!=''"
+                                                [innerHTML]="bNameStart | nl2br | capitalizeFirst"></span><span
+                                                *ngIf="bNameEnd!='' && showmoreDesc"
+                                                [innerHTML]="bNameEnd | nl2br | capitalizeFirst"></span>
+                                            <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''"
+                                                (click)="showDesc()">{{more_cap}}</span>
+                                            <span class="more" *ngIf="showmoreDesc"
+                                                (click)="showDesc()">{{less_cap}}</span>
+                                        </div>
+                                        <div class="services" *ngIf="specializationslist.length > 0">
+                                            <div class="otr-elements">
+                                                <span *ngIf="specializationslist.length > 0">
+                                                    <span class="categoryspec"
+                                                        *ngFor="let spec of specializationslist; let i = index"><span
+                                                            *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="emails-phones-outer"
+                                            *ngIf="( emaillist.length > 0 || phonelist.length > 0)">
+                                            <span class="email-phone-title" (click)="handleEmailPhonediv()">
+                                                <ng-container>{{contact_details_cap}}</ng-container> <i
+                                                    [class]="(showEmailPhonediv)? 'icon-disable' : 'icon-enable'"></i>
+                                            </span>
+                                            <ng-container *ngIf="showEmailPhonediv">
+                                                <div class="phone-outer" *ngIf="phonelist.length > 0">
+                                                    <div class="phones" *ngFor="let phone of phonelist">
+                                                        <span class="caption">{{phone.label | capitalizeFirst }}</span>
+                                                        <span class="cvalue">{{phone.instance}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="email-outer" *ngIf="emaillist.length > 0">
+                                                    <div class="emails" *ngFor="let email of emaillist">
+                                                        <span class="caption">{{email.label | capitalizeFirst}}</span>
+                                                        <span class="cvalue">{{email.instance}}</span>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tp-r">
+                                <div>
+                                    <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img height="100" width="85"
+                                            src="./assets/images/BasicOrg.png"></span>
+                                    <span *ngIf="businessjson.verifyLevel == 'BASIC PLUS'"><img height="100" width="85"
+                                            src="./assets/images/BasicPlsOrg.png"></span>
+                                    <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img height="100" width="85"
+                                            src="./assets/images/PremiumOrg.png"></span>
+                                </div>
+                                <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
+                                    <span class="icon-male" *ngIf="genderType=='male'"
+                                        [matTooltip]="maleTooltip"></span>
+                                    <span class="icon-female" *ngIf="genderType=='female'"
+                                        [matTooltip]="femaleTooltip"></span>
+                                </div>
+                                <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
+                                    <li *ngIf="isfirstCheckinOffer"><i class="fa fa-tag red"></i><span
+                                            class="icon-first-coup pointer-cursor"
+                                            (click)="openCoupons('first')">First Time Sign up Coupon</span></li>
+                                    <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor"
+                                            (click)="openCoupons()">Jaldee Coupons</span></li>
+                                    <li *ngIf="isLoggedIn"><span class="icon-history" (click)="redirectMe('history')">History</span></li>
+                                    <li *ngIf="isLoggedIn"><span class="fav icon-favourite" *ngIf="!isInFav"
+                                            (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
+                                    <li *ngIf="isLoggedIn"><span class="icon-favourite-filled" *ngIf="isInFav"
+                                            (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
+                                    <li *ngIf="isLoggedIn"><span class="icon-message" (click)="communicateHandler()"
+                                            *ngIf="provider_bussiness_id">{{send_msg_cap}}</span></li>
+                                </ul>
+                                <div class="socialmedia" *ngIf="socialMedialist.length>0">
+                                    <a rel="noopener" [href]="soc.value" target="_blank"
+                                        *ngFor="let soc of socialMedialist"><i
+                                            [class]="getSocialdet(soc.resource, 'iconClass')"
+                                            [matTooltip]="getSocialdet(soc.resource, 'displayName')"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container>
+                            <div class="middle-sect" *ngIf="showVirtualfieldsSection">
+                                <div class="tp-l">
+                                    <div class="tp1">
+                                        <mat-accordion>
+                                            <mat-expansion-panel (closed)="handlepanelClose()"
+                                                (opened)="handlepanelOpen()">
+                                                <mat-expansion-panel-header expandedHeight="40px"
+                                                    collapsedHeight="40px">
+                                                    <mat-panel-title>
+                                                        {{virtualsectionHeader}}
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="question-main-outer">
+                                                    <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
+                                                        <div class="question-outer" *ngIf="vfield.value">
+                                                            <ng-container>
+                                                                <div class="question-header">
+                                                                    <strong>{{vfield.displayName}}</strong></div>
+                                                                <div class="question-value1"
+                                                                    *ngIf="vfield.type!= 'object'"
+                                                                    [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
+                                                                </div>
+                                                                <div class="question-valuearr"
+                                                                    *ngIf="vfield.type== 'object'">
+                                                                    <ng-container *ngFor="let vals of vfield.value">
+                                                                        <div class="vfield-row" *ngIf="vals.length">
+                                                                            <span *ngFor="let field of vals"
+                                                                                class="morevalspan">
+                                                                                {{field}}
+                                                                            </span>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </ng-container>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <ng-container *ngIf="locationjson.length > 0">
+                        <div class="location" *ngFor="let loc of locationjson">
+                            <div class="top-sect">
+                                <div class="tp-l">
+                                    <div class="tp2">
+                                        <span class="ch-title" *ngIf="loc.checkins.length>0"
+                                            (click)="showExistingCheckin(loc)">{{you_have_cap}}
+                                            <span class="count">{{loc.checkins.length}}
+                                                {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
+                                        <h3>{{loc.place | capitalizeFirst}}</h3>
+                                        <a rel="noopener" class="directions" [href]="loc.googleMapUrl" target="_blank"
+                                            *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
+                                        <div class="clr">
+                                            <div class="schedule" *ngIf="loc.display_schedule.length > 0">
+                                                <span class="sub-title">{{workig_hrs_cap}}</span>
+                                                <ul>
+                                                    <li *ngFor="let schedule of loc.display_schedule">
+                                                        <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
+                                                            class="time">{{schedule.time}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="services" *ngIf="loc.services.length > 0">
+                                                <span class="sub-title">{{services_offered}}</span>
+                                                <ul>
+                                                    <li *ngFor="let serv of loc.services"
+                                                        (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
+                                                        | capitalizeFirst}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tp-r">
+                                    <ul class="badges">
+                                        <li *ngIf="loc.parkingType!=='' && loc.parkingType != undefined && loc.parkingType != 'none'"
+                                            [matTooltip]="'Parking Type: ' + loc.parkingType"><span
+                                                class="icon-parking"></span></li>
+                                        <li *ngIf="loc.open24hours==true"><span class="icon-open-time"
+                                                [matTooltip]="'24 Hours Open'"></span></li>
+
+                                        <li *ngIf="loc?.locationVirtualFields?.traumacentre=='true'"
+                                            [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span></li>
+                                        <li *ngIf="loc?.locationVirtualFields?.docambulance=='true'"
+                                            [matTooltip]="'Ambulance Services'"><span class="icon-ambulance"></span>
+                                        </li>
+                                        <li [matTooltip]="'Emergency Services'"
+                                            *ngIf="loc?.locationVirtualFields?.physiciansemergencyservices=='true' || loc?.locationVirtualFields?.dentistemergencyservices=='true' || loc?.locationVirtualFields?.altemergencyservices=='true'">
+                                            <span class="icon-emergency"></span></li>
+                                        <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
+                                            [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bottom-sect pdetail">
+                                <div class="bt-l" *ngIf="!settingsjson['onlineCheckIns']">
+                                    <div class="wt-tme notallowed padding-tp-10">
+                                        {{sorry_cap}}
+                                        {{getTerminologyTerm('waitlist')}} {{not_allowed_cap}}
+                                    </div>
+                                </div>
+                                <div class="bt-l" *ngIf="settingsjson['onlineCheckIns']">
+                                    <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
+                                        <div class="o-now" *ngIf="loc.opennow">{{open_now_cap}}</div>
+                                        <div class="timing"
+                                            *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                            <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
+                                            <span class="time-data">{{loc['estimatedtime_det']['time']}} <span
+                                                    class="icon-question"
+                                                    [matTooltip]="waitlistestimatetimetooltip"></span></span>
+                                        </div>
+                                        <div class="wt-msg" *ngIf="loc['estimatedtime_det']['message']">
+                                            {{loc['estimatedtime_det']['message']}}</div>
+                                    </div>
+
+                                </div>
+                                <div class="bt-r" *ngIf="loc['estimatedtime_det'] && settingsjson['onlineCheckIns']">
+                                    <span class="cs-btn chk-btn"
+                                        (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                        *ngIf="loc['estimatedtime_det']['isFuture']==2 && loc['estimatedtime_det']['queue_available']==1 && showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
+                                    <span class="cs-btn chk-btn disabled"
+                                        *ngIf="loc['estimatedtime_det']['isFuture']==1 || loc['estimatedtime_det']['queue_available']==0 || !showcheckInButton(loc.services.length)">{{getTerminologyTerm('waitlist')}}</span>
+                                    <span class="cs-btn bt10"
+                                        *ngIf="showcheckInButton(loc.services.length) && loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
+                                        (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                        <span>{{getTerminologyTerm('waitlist')}}</span> {{for_cap}}
+                                        <span>{{different_date_cap}}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer></app-footer>

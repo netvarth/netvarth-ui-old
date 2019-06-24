@@ -1,0 +1,170 @@
+<section>
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content comn-cls">
+        <div class="container no-padding">
+            <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid">
+                <mat-tab label="Jaldee coupons">
+                    <p class="form-level-settings">{{frm_jaldee_coupons_cap}}<a class="learnmore-pointer"
+                            id="customer-help" (click)="learnmore_clicked('coupon', $event)">Learn
+                            More</a></p>
+                    <div class="no-dta" *ngIf="jaldeeCoupons.length == 0">
+                        <p>No Jaldee coupons exists</p>
+                    </div>
+
+                    <div class="w-dta" *ngIf="jaldeeCoupons.length>0">
+                        <div class="row">
+                            <div class="n-loc col-md-12 col-sm-12 col-xs-12 reportbtn">
+                                <span class="cs-btn bt3 " (click)="reports()">{{reports_cap}}</span>
+                            </div>
+                            <div class="card coupon-card">
+                                <div class="copy">
+                                    <div class="table-outer q-itm">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{jCouponCode_Cap}}</th>
+                                                    <th>{{name_cap}}</th>
+                                                    <th>{{valid_from_cap}}</th>
+                                                    <th>{{valid_to_cap}}</th>
+                                                    <th>{{status_cap}}</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let jCoupon of jaldeeCoupons let i=index">
+                                                    <td data-title="Coupon Code" class="pointer-cursor filtr_space">
+                                                        <span (click)="couponView(jCoupon.jaldeeCouponCode)"
+                                                            [matTooltipClass]="tooltipcls"
+                                                            [matTooltip]="coupon_info[i]">
+                                                            {{jCoupon.jaldeeCouponCode}}</span> <span class="td-i-info">
+                                                            <!-- <i class="" data-icon="B" id="customer-help"
+                                                                [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info[i]"></i> -->
+                                                        </span>
+                                                    </td>
+                                                    <td data-title="Name">{{jCoupon.couponName}}</td>
+                                                    <td data-title="Valid From">
+                                                        {{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
+                                                    <td data-title="Valid To">
+                                                        {{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
+                                                    <td data-title="Status" class="status"
+                                                        [ngClass]="{'green-text' :jCoupon.couponState=='ENABLED','red-text' :jCoupon.couponState=='EXPIRED','blue-text' :jCoupon.couponState=='NEW'}">
+                                                        {{jcoupon_states[jCoupon.couponState]}}
+                                                    </td>
+                                                    <td class="action">
+                                                        <span class="mbt"
+                                                            *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE' && jCoupon.couponState!='DISABLED_PROVIDER_LIMIT_REACHED'">
+                                                            <button type="button" mat-icon-button
+                                                                [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                            <mat-menu #menu="matMenu">
+                                                                <button type="button"
+                                                                    (click)="changecouponStatus(jCoupon)" mat-menu-item>
+                                                                    <i *ngIf="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'"
+                                                                        class="icon-enable"></i>
+                                                                    <i *ngIf="jCoupon.couponState=='ENABLED'"
+                                                                        class="icon-disable"></i>
+                                                                    <span> {{(jCoupon.couponState=='DISABLED' ||
+                                                                        jCoupon.couponState=='NEW') ?
+                                                                        'Enable':' Disable'}}</span>
+                                                                </button>
+                                                            </mat-menu>
+                                                        </span>
+                                                        <span class="mbt-mobile-show"
+                                                            *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE' && jCoupon.couponState!='DISABLED_PROVIDER_LIMIT_REACHED'">
+                                                            <button class="coupon_status pointer-cursor"
+                                                                [class.enableicon]="jCoupon.couponState=='DISABLED' || jCoupon.couponState=='NEW'"
+                                                                [class.disableicon]="jCoupon.couponState=='ENABLED'"
+                                                                type="button" (click)="changecouponStatus(jCoupon)">{{(jCoupon.couponState=='DISABLED'
+                                                                || jCoupon.couponState=='NEW') ? 'Enable':'
+                                                                Disable'}}</button>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="My Coupons">
+                    <p class="form-level-settings">{{frm_mycoupons_cap}}<a class="learnmore-pointer" id="customer-help"
+                            (click)="learnmore_clicked('addon', $event)">Learn
+                            More</a></p>
+                    <div class="no-dta" *ngIf="coupon_list.length ==0 && query_executed == true && !errorExist">
+                        <p>{{emptyMsg}}</p>
+                        <span class="cs-btn bt3" (click)="addCoupons()">{{add_coupon_btn}}</span>
+                    </div>
+                    <div class="no-dta" *ngIf="errorExist">
+                        <p>{{upgrade_license}}</p>
+                    </div>
+                    <div class="w-dta" *ngIf="coupon_list.length>0">
+                        <div class="row">
+                            <div class="card">
+                                <div class="copy">
+                                    <div class="table-outer q-tbl">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{name_cap}}</th>
+                                                    <th>{{value_cap}}</th>
+                                                    <th>{{desc_cap}}</th>
+                                                    <th><span class="addbt" (click)="addCoupons()"></span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let coupon of coupon_list">
+                                                    <td data-title="Name" class="pointer-cursor" class="td1">
+                                                        {{coupon.name}}</td>
+                                                    <td data-title="Value" class="pointer-cursor" clas="td2">{{(coupon.calculationType=='Percentage')?
+                                                        coupon.amount+'%': formatPrice(coupon.amount)}}</td>
+                                                    <td data-title="Description" class="td1">{{coupon.description}}</td>
+                                                    <td class="action">
+                                                        <span class="mbt">
+                                                            <button type="button" mat-icon-button
+                                                                [matMenuTriggerFor]="menu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                            <mat-menu #menu="matMenu">
+                                                                <button type="button" (click)="editCoupons(coupon)"
+                                                                    mat-menu-item>
+                                                                    <i class="icon-edit"></i>
+                                                                    {{edit_btn}}
+                                                                </button>
+                                                                <button type="button" (click)="doRemoveCoupons(coupon)"
+                                                                    mat-menu-item>
+                                                                    <i class="icon-delete"></i>
+                                                                    {{delete_btn}}
+                                                                </button>
+                                                            </mat-menu>
+                                                        </span>
+                                                        <span class="mbt-mobile-show">
+                                                            <button class="editcls" type="button"
+                                                                (click)="editCoupons(coupon)">{{edit_btn}}</button>
+                                                            <button class="deletecls" type="button"
+                                                                (click)="doRemoveCoupons(coupon)">{{delete_btn}}</button>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <span class="addbt d-block d-md-none" (click)="addCoupons()"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</section>
+

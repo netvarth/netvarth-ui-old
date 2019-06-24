@@ -1,0 +1,236 @@
+<div class="container">
+  <div class="row">
+    <div class="c-outer" style="margin: 0px">
+      <div class="c-body">
+        <div *ngIf="searchResults">
+          <div class="srlst provider-det" *ngFor="let search_result of searchResults">
+            <div class="top-sect">
+              <div class="tp-l pro">
+                <div class="tp1">
+                  <div class="pro-img" (click)="providerDetClicked(search_result)">
+                    <img *ngIf="search_result.logo" [src]="search_result.logo" alt="">
+                  </div>
+                  <ul class="gal" *ngIf="search_result.gallery_thumb_nails">
+                    <li>
+                      <div class="galbx">
+                        <div class="overlay" (click)="providerDetClicked(search_result)">
+                          +{{(search_result.gallery_thumb_nails.length)}}</div>
+                        <img [src]="search_result.gallery_thumb_nails[0]" alt="" style="width:50px;height:auto;">
+                      </div>
+                    </li>
+                  </ul>
+
+                  <div class="rating-stars">
+                    <ng-container *ngIf="search_result.rating>0">
+                      <ng-container *ngIf="search_result.rating==.5">
+                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
+                          src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==1">
+                        <img class="ratingstar" src="./assets/images/star.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
+                          src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==1.5">
+                        <img class="ratingstar" src="./assets/images/star.svg" />
+                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3]"
+                          src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+                      <ng-container *ngIf="search_result.rating==2">
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3]"
+                          src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==2.5">
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==3">
+                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==3.5">
+                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==4">
+                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==4.5">
+                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                      </ng-container>
+
+                      <ng-container *ngIf="search_result.rating==5">
+                        <ng-container *ngFor="let number of [1,2,3,4,5]">
+                          <img class="ratingstar" src="./assets/images/star.svg" />
+                        </ng-container>
+                      </ng-container>
+
+                    </ng-container>
+                    <ng-container *ngIf="search_result.rating==0">
+                      <ng-container *ngFor="let number of [1,2,3,4,5]">
+                        <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                      </ng-container>
+                    </ng-container>
+
+                  </div>
+                </div>
+                <div class="tp2">
+                  <div
+                    *ngIf="search_result.ynw_verified && (search_result.ynw_verified_level==2 || search_result.ynw_verified_level==3 || search_result.ynw_verified_level==4) "
+                    class="ynw-verified">
+                    <span class="level basic" *ngIf="search_result.ynw_verified_level==2">{{basic_cap}}</span>
+                    <span class="level basicplus" *ngIf="search_result.ynw_verified_level==3">{{basic_plus_cap}}</span>
+                    <span class="level premium" *ngIf="search_result.ynw_verified_level==4">{{premium_cap}}</span>
+
+                  </div>
+                  <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="bNameTooltip">
+                    {{search_result.title | capitalizeFirst}}
+                    <span class="cert" *ngIf="search_result.qualification">,
+                      {{search_result.qualification}}</span>
+                  </h3>
+
+                  <span *ngIf="search_result.place1">{{search_result.place1 | capitalizeFirst }}
+                    <span class="consumr-loc-icon"><a *ngIf="search_result.location1" rel="noopener"
+                        [href]="'https://www.google.com/maps/place/'+search_result.location1+'/@'+search_result.location1+',15z'"
+                        target="_blank" class="icon-location" matTooltip="Click to navigate">
+                      </a></span>
+                  </span>
+
+                  <div class="clr">
+                    <div class="otr-elements">
+                      <span *ngIf="search_result.specialization_displayname"><span class="categoryspec"
+                          *ngFor="let spec of search_result.specialization_displayname; let i = index"><span *ngIf="i>0"
+                            class="spacer"></span>{{spec}}</span></span>
+                    </div>
+                    <div class="schedule" *ngIf="search_result.display_schedule">
+                      <ul>
+                        <li *ngFor="let schedule of search_result.display_schedule">
+                          <div class="day">{{schedule.dstr}}&nbsp;:</div>
+                          <div class="time">{{schedule.time}}</div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="services" *ngIf="search_result.services">
+                      <ul>
+                        <li *ngFor="let serv of search_result.services"
+                          (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv
+                                | capitalizeFirst}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tp-r">
+                <ul class="badges"
+                  *ngIf="search_result.parking_location1==1 || search_result.always_open1==1 || search_result.traumacentre_location1==1 || search_result.physiciansemergencyservices_location1==1 || search_result.dentistemergencyservices_location1==1 || search_result.altemergencyservices_location1 || search_result.firstaid_location1==1">
+                  <li *ngIf="search_result.parking_type_location1 && search_result.parking_type_location1 !='none'"
+                    [matTooltip]="'Parking Type: ' + search_result.parking_type_location1">
+                    <span class="icon-parking"></span></li>
+                  <li *ngIf="search_result.always_open_location1==1" [matTooltip]="'24 Hours Open'"><span
+                      class="icon-open-time"></span></li>
+                  <li *ngIf="search_result.traumacentre_location1==1" [matTooltip]="'Trauma Centre'"><span
+                      class="icon-trauma"></span></li>
+                  <li [matTooltip]="'Emergency Services'"
+                    *ngIf="search_result.physiciansemergencyservices_location1==1 || search_result.dentistemergencyservices_location1==1 || search_result.altemergencyservices_location1">
+                    <span class="icon-emergency"></span></li>
+                  <li *ngIf="search_result.firstaid_location1==1" [matTooltip]="'First Aid'">
+                    <span class="icon-first-aid"></span></li>
+                  <li *ngIf="search_result.docambulance_location1==1" [matTooltip]="'Ambulance Service'">
+                    <span class="icon-ambulance"></span></li>
+                  <li class="img pic_align" *ngIf="search_result.ynw_verified_level==2" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="'Jaldee verified-basic'"><img src="./assets/images/basic.png"></li>
+                  <li class="img pic_align" *ngIf="search_result.ynw_verified_level==3" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="'Jaldee verified-basic plus'"><img src="./assets/images/basicpls.png"></li>
+                  <li class="img pic_align" *ngIf="search_result.ynw_verified_level==4" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="'Jaldee verified-advanced'"><img src="./assets/images/premium.png"></li>
+                </ul>
+                <span class="jc_Coupon first-time-jc"
+                  *ngIf="search_result.claimable!=1 && (stringToInt(search_result.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
+                  (click)="!btn_clicked && openCoupons(search_result,true)"><i class="fa fa-tag red"></i>
+                  {{first_time_coupon}}</span>
+                <span class="jc_Coupon other-jcs"
+                  *ngIf="search_result.claimable!=1 && (stringToInt(search_result.coupon_enabled))!=0"
+                  (click)="!btn_clicked && openCoupons(search_result)"><i class="fa fa-tag blue"></i>
+                  {{jaldee_coupon}}</span>
+                <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.claimable!=1"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_messages}}</span>
+                <span class="claim-business" (click)="claimBusiness(search_result)"
+                  *ngIf="search_result.claimable==1">{{claim_my_business_cap}}</span>
+              </div>
+
+            </div>
+            <div class="bottom-sect" *ngIf="search_result['estimatedtime_det']">
+              <div class="bt-l">
+                <div class="wt-tme"
+                  *ngIf="search_result.hasOwnProperty('online_checkins') && search_result.online_checkins==1 && search_result['estimatedtime_det']['isCheckinAllowed']">
+                  <div class="o-now" *ngIf="search_result['opennow']">{{open_now_cap}}
+                  </div>
+                  <div class="timing" *ngIf="search_result['estimatedtime_det']['calculationMode']!='NoCalc'">
+                    <span class="est-time">{{search_result['estimatedtime_det']['caption']}}</span>
+                    <span class="time-data">{{search_result['estimatedtime_det']['time']}}
+                    </span>
+                  </div>
+                  <div
+                    *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc' && search_result['estimatedtime_det']['personAhead']">
+                    <b>{{search_result['estimatedtime_det']['personAhead']}} </b><span class="people-ahead"
+                      *ngIf="search_result['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
+                    <span class="people-ahead"
+                      *ngIf="search_result['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
+                  </div>
+                  <div
+                    *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result['estimatedtime_det']['personAhead']">
+                    <div class="time-data">
+                      {{search_result['estimatedtime_det']['personAhead']}}
+                      {{people_ahead}} </div>{{get_token_cap}}
+                  </div>
+                </div>
+                <div class="wt-tme notallowed" *ngIf="!search_result['estimatedtime_det']['isCheckinAllowed']">
+                  <ng-container *ngIf="!search_result['estimatedtime_det']['message']">
+                    {{sorry_cap}}
+                    {{getTerminologyTerm('waitlist', search_result)}} {{not_allowed_cap}}
+                  </ng-container>
+                  <ng-container *ngIf="search_result['estimatedtime_det']['message']">
+                    {{search_result['estimatedtime_det']['message']}}</ng-container>
+                </div>
+              </div>
+              <div class="bt-r"
+                *ngIf="search_result['estimatedtime_det'] && (search_result.hasOwnProperty('online_checkins') && search_result.online_checkins==1)">
+                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)"
+                  *ngIf="search_result['estimatedtime_det']['calculationMode']!='NoCalc' && search_result['estimatedtime_det']['isCheckinAllowed']">{{getTerminologyTerm('waitlist',
+                                    search_result)}}</span>
+                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)"
+                  *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc' && search_result['estimatedtime_det']['isCheckinAllowed']">{{get_token_btn}}</span>
+                <span class="cs-btn chk-btn disabled"
+                  *ngIf="search_result['estimatedtime_det']['calculationMode']!='NoCalc' && !search_result['estimatedtime_det']['isCheckinAllowed']">{{getTerminologyTerm('waitlist',
+                                    search_result)}}</span>
+                <span class="cs-btn chk-btn disabled"
+                  *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result['estimatedtime_det']['isCheckinAllowed']">{{get_token_btn}}</span>
+                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)"
+                  *ngIf="search_result.hasOwnProperty('future_checkins') && search_result.future_checkins==1 && search_result['estimatedtime_det']['isCheckinAllowed']">{{do_you_want_to_cap}}
+                  <span
+                    *ngIf="search_result['estimatedtime_det']['calculationMode']=='NoCalc'">{{get_token_btn}}</span><span
+                    *ngIf="search_result['estimatedtime_det']['calculationMode']!='NoCalc'">{{getTerminologyTerm('waitlist', search_result)}}</span>
+                  {{for_cap}} <span>{{different_date}}</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

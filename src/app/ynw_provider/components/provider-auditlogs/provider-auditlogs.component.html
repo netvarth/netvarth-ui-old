@@ -1,0 +1,33 @@
+
+<h1 class="mat-dialog-title">{{lic_history_cap}}
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+  <mat-dialog-content>
+      <div>
+          <div class="audit_outer">
+            <app-innerloading-spinner *ngIf="!load_complete"></app-innerloading-spinner>
+              <div class=""  *ngIf="auditlog_details.length>0">
+                  <table width="100%" class="table">
+                      <tr>
+                          <th>{{name_cap}}</th>
+                          <th>{{applied_on_cap}}</th>
+                          <th>{{expiry_date_cap}}</th>
+                          <th>{{status_cap}}</th>
+                      </tr>
+                      <tr *ngFor="let auditlog of auditlog_details">
+                          <td>{{auditlog.displayName}}</td>
+                          <td>{{auditlog.dateApplied | date: dateFormat }}</td>
+                          <td>{{auditlog.expiryDate | date: dateFormat }}</td>
+                          <td>{{auditlog.status}}</td>
+                      </tr>
+                  </table>
+              </div>
+              <div class="" *ngIf="load_complete && auditlog_details.length==0">
+                  {{no_logs_founf_cap}}
+              </div>
+          </div>
+        </div>
+  </mat-dialog-content>
+

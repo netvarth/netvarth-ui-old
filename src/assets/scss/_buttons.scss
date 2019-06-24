@@ -1,0 +1,539 @@
+.cs-btn {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+    outline: 0;
+    padding: 10px 40px;
+    font-size: inherit;
+    line-height: 1.4;
+    -moz-user-select: none;
+    z-index: 2;
+    /* user-select: none; */
+    
+    &:hover {
+        text-decoration: none;
+    }
+    
+    &.backbtn {
+        background: $cc-ash !important;
+        color: $cc-gray !important;
+        border: none !important;
+        
+        &:hover {
+            background: darken($cc-ash, 10%) !important;
+        }
+    }
+    
+    @include respond-to(ynw-575) {
+        &.confirmbtn {
+            margin-bottom: 0px;
+        }
+        &.savemember, &.backbtn, &.backtocheckin {
+            padding: 5px 10px !important;
+            height: auto !important;
+            margin-bottom: 0px !important;
+        }
+    }
+}
+
+.anim1 {
+    @include transition(all 300ms);
+    outline: none;
+    overflow: hidden;
+    
+    &:hover, &:active {
+        &:before {
+            opacity: 1;
+            transform: scale(5);
+        }
+    }
+    
+    &:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        width: 30px;
+        height: 30px;
+        border-radius:100%;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom:0;
+        right:0;
+        opacity: 0;
+        transform: scale(0);
+        @include transition(all 300ms);
+    }  
+    
+}
+
+.anim2 {
+    @include transition(all 300ms);
+}
+
+.bt1, .bt2, .bt3, .bt4, .bt5, .bt6, .bt7, .bt8 {
+    background: $linkblue;
+    @include border-radius(3px);
+    height: 40px;
+    @include font-medium;
+    text-transform: uppercase;
+    color: $white;
+    font-size: .875rem;
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: inherit;
+    @include transition(all 300ms);
+    
+    @include respond-to(ynw-767) {
+        padding: 5px 10px;
+        height: auto;
+    }
+    
+    &.off {
+        border: 1px solid $cc-red;
+        color: $cc-red;
+        
+        &:hover {
+            border: 1px solid $cc-red;
+            background: $cc-red;
+            color: $white;
+        }
+    }
+    
+    &.on {
+        border: 1px solid $green;
+        color: $green;
+        
+        &:hover {
+            border: 1px solid $green;
+            background: $green;
+            color: $white;
+        }
+    }
+    
+    &.reddelete {
+        background: $cc-red;
+        
+        &:hover {
+            background: darken($cc-red, 30%);
+        }
+    }
+    
+    &.disabled {
+        background: $cc-ash !important;
+        pointer-events: none;
+        color: $cc-mediumgray !important;
+        border: transparent;
+    }
+    
+    &:hover {
+        background: $hover-blue;
+    }
+    
+}
+
+.bt2 {
+    background: $cc-ash;
+    color: $cc-gray;
+    
+    &:hover {
+        background: darken($cc-ash, 10%);
+    }
+    
+    &.cancel {
+        padding: 5px 15px !important;
+        margin-left: 0px !important;
+        margin-right: 10px !important;
+        height: auto;
+        @include transition(all 300ms);
+        
+        @include respond-to(ynw-575) {margin-bottom: 5px;}
+    }
+}
+
+.bt3 {
+    height: auto;
+    background: transparent;
+    border: 1px solid $linkblue;
+    padding: 5px 15px;
+    color: $linkblue;
+    font-size: .75rem;
+    font-weight: 600;
+    
+    i {
+        margin-right: 5px;
+        font-size: 1rem;
+        margin-top: 2px;
+        vertical-align: middle;
+    }
+    
+    &:hover {
+        color: $white;
+        border-color: $linkblue;
+        background: $linkblue;
+    }
+}
+
+.bt4, .bt5, .bt6 {
+    height: 30px;
+    min-width: 100px;
+    background: $white;
+    color: $cc-gray;
+    text-transform: none;
+    padding: 0px 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+        background: $linkblue;
+        color: $white;
+        
+        i {
+            color: inherit;
+        }
+    }
+    
+    i {
+        margin-right: 5px;
+        font-size: .875rem;
+        height: 14px;
+    }
+}
+
+.bt5 {
+    background: $cc-darkgray;
+    color: $white;
+}
+.bt6 {
+    background: transparent;
+    border: 1px solid $cc-gray;
+    
+    &:hover {
+        background: $cc-navyblue;
+        border-color: transparent;
+    }
+}
+
+.bt7 {
+    height: 30px;
+    background: transparent;
+    border: 1px solid $cc-mediumgray;
+    padding: 6px 15px;
+    color: $cc-gray;
+    font-size: .75rem;
+    font-weight: 600;
+    
+    i {
+        margin-right: 5px;
+        font-size: 1rem;
+        margin-top: 2px;
+        vertical-align: middle;
+    }
+    
+    &:hover {
+        color: $white;
+        border-color: $cc-mediumgray;
+        background: $cc-mediumgray;
+    }
+}
+
+.bt8 {
+    border: none;
+    background: transparent;
+    color: $linkblue;
+    @include anchor-border;
+    padding: 0;
+    height: auto;
+    font-weight: 600;
+    font-size: .75rem;
+    
+    &:hover {
+        color: $linkblue;
+        background: transparent;
+    }
+}
+
+.bt10 {
+    color: $linkblue;
+    font-size: .75rem;
+    padding: 0;
+    white-space: pre-wrap;
+    text-align: left;
+    line-height: 1.8;
+    
+    span {
+        font-weight: 600;
+    }
+}
+
+.chk-btn {
+    @include border-radius(50px);
+    @include left-gradient(#00aef2,#1873f2);
+    height: 50px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    @include transition(all 300ms);
+    outline: none;
+    overflow: hidden;
+    
+    &.cancel {
+        background: #5f5f5f;
+    }
+    
+    &:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        width: 30px;
+        height: 30px;
+        border-radius:100%;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom:0;
+        right:0;
+        opacity: 0;
+        transform: scale(0);
+        @include transition(all 300ms);
+        background-color: rgba(255,255,255,.3);
+    }
+    
+    &:hover, &:active {
+        &:before {
+            opacity: 1;
+            transform: scale(9);
+            
+            @include respond-to(ynw-575) {
+                transform: scale(20);
+            }
+        }
+    }  
+
+    &.disabled {
+        background: $cc-ash;
+        pointer-events: none;
+        color: $cc-mediumgray;
+    }
+}
+
+.editbt {
+    position: relative;
+    cursor: pointer;
+    @include border-radius(50%);
+    @include transition(all 300ms);
+    color: $linkblue;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    
+    &:before {
+        @include font-custom;
+        content: "\78";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    &:hover {
+        background: $cc-ash;
+        color: $linkblue;
+    }
+    
+}
+
+.mbt {
+    position: relative;
+    cursor: pointer;
+    
+    &:before {
+        @include font-custom;
+        content: "\6e";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.addbt {
+    position: relative;
+    cursor: pointer;
+    color: $linkblue;
+    
+    &:before {
+        @include font-custom;
+        content: "\45";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.mat-button {
+    box-shadow: none;
+    background: $linkblue !important;
+    outline: none !important;
+    color: $white !important;
+    font-size: .875rem !important;
+    @include font-regular;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center !important;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer !important;
+    border: none !important;
+    white-space: nowrap !important;
+    padding: 10px 40px;
+    line-height: inherit !important;
+    -moz-user-select: none;
+    z-index: 2;
+    text-transform: uppercase;
+    @include border-radius(3px !important);
+    @include transition(all 300ms);
+    
+    @include respond-to(ynw-767) {
+        padding: 5px 10px;
+        height: auto;
+    }
+    
+    &:hover {
+        background: $hover-blue !important;
+    }
+    
+    &.confirmbtn {
+        background: $hover-blue !important;
+        font-weight: 600;
+    }
+    
+    /*&.backbtn {
+        margin-left: 0px !important;
+        margin-right: 10px;
+        border: 2px solid $linkblue !important;
+        background: $white !important;
+        color: $linkblue !important;
+        line-height: 16px !important;
+        
+        &:hover {
+            background: $linkblue !important;
+            color: $white !important;
+        }
+    }*/
+    &.billcancel {
+        background: $cc-ash !important;
+        color: $cc-gray !important;
+    }
+    &.update, &.settle, &.accept, &.makepayment, &.print, &.email, &.save, &.billcancel {
+        padding: 5px 15px !important;
+        margin-left: 0px !important;
+        margin-right: 10px !important;
+        height: auto;
+        @include transition(all 300ms);
+        
+        @include respond-to(ynw-575) {margin-bottom: 5px;}
+    }
+    &.update, &.print {
+        background: $cc-warning !important;
+    }
+    &.accept {
+        background: $green !important;
+        margin-right: 0;
+        margin-left: 10px;
+    }
+    &.makepayment {
+        background: $green !important;
+    }
+}
+
+
+.mat-button:disabled {
+    background: black !important;
+    opacity: .3;
+    cursor: default !important;
+}
+
+.closebtn {
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    color: $linkblack;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include transition(all 300ms);
+    @include border-radius(30px);
+
+    &:before {
+        @include font-custom;
+        content: "\69";
+        position: absolute;
+        left: 0;
+        font-size: .775rem;
+        font-weight: 700;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    &:hover {
+        color: $linkblue;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

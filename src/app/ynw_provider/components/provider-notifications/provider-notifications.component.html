@@ -1,0 +1,174 @@
+<section>
+  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+  <div class="content comn-cls lic-page">
+      <div class="container">
+          <div class="w-dta">
+              <div class="card">
+            <div class="row">
+
+                  <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
+                     
+                        
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel-header >
+                                        <mat-panel-title >    
+                         
+                            Online checkins
+                          
+                                        </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="rw">
+                          <div class="form-group">
+                              
+                              <div >
+                                  <i class="fa fa-square-o" *ngIf="SelchkinNotify" (click)="selectChekinNotify()">
+                                      Notify me whenever new checkin</i>
+                                  <i class="fa fa-check-square-o" *ngIf="!SelchkinNotify" (click)="unselectChekinNotify()">
+                                      Notify me whenever new checkin</i>
+                              </div>
+                            </div>
+                          <!-- <div class="form-group"> -->
+                            <section class="leftselectAll" *ngIf="!SelchkinNotify">
+                              <ul class ="notifications">
+                                <li>
+                          <mat-checkbox [(ngModel)] = "sms">Send sms</mat-checkbox>
+
+                          <div class="form-group" *ngIf="sms">
+
+
+                                <div class="input-group mb-3 phadd">
+                                        <input type="text" class="form-control" placeholder="Phonenumber" [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10">
+                                        <div class="input-group-append ">
+                                          <button class="btn bt3 btn-default" (click)="addChkinPh()" type="button">Add</button>
+                                        </div>
+                                      </div>
+                              <!-- <span >
+                            <input type="text" placeholder="Phonenumber" [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10"class="form-control phoneField">
+                            
+                                <button class="btn bt3 btn-default phadd" (click)="addChkinPh()" type="button">Add</button>
+                            </span> -->
+                            <div *ngFor="let phne of ph_arr">
+                                 <span>{{phne}} <i class="pointer-cursor icon-delete"
+                                        (click)="removeChkinPh()"></i></span>
+                            </div>
+
+                        </div>
+                      </li>
+                          <li>
+                          <mat-checkbox [(ngModel)] = "email">Send email</mat-checkbox>
+                          <div class="form-group" *ngIf="email">
+
+                                <div class="input-group mb-3 emadd">
+                                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
+                                        <div class="input-group-append ">
+                                          <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Add</button>
+                                        </div>
+                                      </div>
+
+                              <!-- <span >
+                            <input type="text" placeholder="Email" [(ngModel)]="notifyemail" class="form-control emailField">
+                            
+                                <button class="btn bt3 btn-default emadd" (click)="addChkinemil()" type="button">Add</button>
+                            </span> -->
+                            <div *ngFor="let emil of em_arr">
+                                <span>{{emil}} <i class="pointer-cursor icon-delete"
+                                       (click)="removeChkinEmail()"></i></span>
+                           </div>
+
+
+                        </div>
+                        </li>
+                        <li>
+                          <mat-checkbox [(ngModel)] = "push"  > Push notifications</mat-checkbox>
+                        </li>
+                        </ul>
+                        </section>
+                        </div>
+                                
+
+
+                                <div class="rw">
+                                    
+                                      <div class="form-group">
+                                          
+                                          <div >
+                                              <i class="fa fa-square-o" *ngIf="SelchkincnclNotify" (click)="selectChekinCanclNotify()">
+                                                  Notify me whenever checkin got cancel</i>
+                                              <i class="fa fa-check-square-o" *ngIf="!SelchkincnclNotify" (click)="unselectChekinCanclNotify()">
+                                                  Notify me whenever new checkin got cancel</i>
+                                          </div>
+                                        </div>
+            
+                                        <section class="leftselectAll" *ngIf="!SelchkincnclNotify">
+                                            <ul class ="notifications">
+                                              <li>
+                                        <mat-checkbox [(ngModel)] = "cancelsms">Send sms</mat-checkbox>
+              
+                                        <div class="form-group" *ngIf="cancelsms">
+
+                                                <div class="input-group mb-3 phadd">
+                                                        <input type="text" class="form-control" placeholder="Phonenumber" [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10">
+                                                        <div class="input-group-append ">
+                                                          <button class="btn bt3 btn-default" (click)="addCanclph()" type="button">Add</button>
+                                                        </div>
+                                                      </div>
+
+                                            <!-- <span >
+                                          <input type="text" placeholder="Phonenumber" [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10"class="form-control phoneField">
+                                          
+                                              <button class="btn bt3 btn-default phadd" (click)="addCanclph()" type="button">Add</button>
+                                          </span> -->
+                                          <div *ngFor="let phne1 of ph1_arr">
+                                            <span>{{phne1}} <i class="pointer-cursor icon-delete"
+                                                   (click)="removecanclChkinPh()"></i></span>
+                                       </div>
+              
+                                      </div>
+                                    </li>
+                                        <li>
+                                        <mat-checkbox [(ngModel)] = "cancelemail">Send email</mat-checkbox>
+                                        <div class="form-group" *ngIf="cancelemail">
+                                                <div class="input-group mb-3 emadd">
+                                                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
+                                                        <div class="input-group-append ">
+                                                          <button class="btn bt3 btn-default" (click)="addCanclemil()" type="button">Add</button>
+                                                        </div>
+                                                      </div>
+
+                                            <!-- <span >
+                                          <input type="text" placeholder="Email" [(ngModel)]="notifycanclemail" class="form-control emailField">
+                                          
+                                              <button class="btn bt3 btn-default emadd" (click)="addCanclemil()" type="button">Add</button>
+                                          </span> -->
+                                          <div *ngFor="let emil1 of em1_arr">
+                                            <span>{{emil1}} <i class="pointer-cursor icon-delete"
+                                                   (click)="removeCanclChkinEmil()"></i></span>
+                                       </div>
+                                      </div>
+                                      </li>
+                                      <li>
+                                        <mat-checkbox [(ngModel)] = "cancelpush"> Push notifications</mat-checkbox>
+                                      </li>
+                                      </ul>
+                                      </section>
+                                      <button (click)="saveNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
+                                    </div> 
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                      <!-- </div> -->
+                      <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+                      <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+                     
+                    </div>
+
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </section> 

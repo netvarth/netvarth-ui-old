@@ -1,0 +1,15 @@
+<app-healthcare-billing [target]="target" *ngIf="curtype=='healthCare'"></app-healthcare-billing>
+
+<app-personalcare-billing [target]="target" *ngIf="curtype=='personalCare'"></app-personalcare-billing>
+
+<app-professional-billing [target]="target" *ngIf="curtype=='professionalConsulting'"></app-professional-billing>
+
+<app-finance-billing [target]="target" *ngIf="curtype=='finance'"></app-finance-billing>
+
+<app-foodjoint-billing [target]="target" *ngIf="curtype=='foodJoints'"></app-foodjoint-billing>
+
+<app-vastu-billing [target]="target" *ngIf="curtype=='vastuAstrology'"></app-vastu-billing>
+
+<app-veterinary-billing [target]="target" *ngIf="curtype=='veterinaryPetcare'"></app-veterinary-billing>
+
+<app-religious-billing [target]="target" *ngIf="curtype=='religiousPriests'"></app-religious-billing>

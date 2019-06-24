@@ -1,0 +1,15 @@
+<app-healthcare-downpanel-options [target]="target" *ngIf="curtype=='healthCare'"></app-healthcare-downpanel-options>
+
+<app-personalcare-downpanel-options [target]="target" *ngIf="curtype=='personalCare'"></app-personalcare-downpanel-options >
+
+<app-professional-downpanel-options [target]="target" *ngIf="curtype=='professionalConsulting'"></app-professional-downpanel-options>
+
+<app-finance-downpanel-options [target]="target" *ngIf="curtype=='finance'"></app-finance-downpanel-options >
+
+<app-foodjoint-downpanel-options [target]="target" *ngIf="curtype=='foodJoints'"></app-foodjoint-downpanel-options>
+
+<app-vastu-downpanel-options [target]="target" *ngIf="curtype=='vastuAstrology'"></app-vastu-downpanel-options>
+
+<app-veterinary-downpanel-options [target]="target" *ngIf="curtype=='veterinaryPetcare'"></app-veterinary-downpanel-options>
+
+<app-religious-downpanel-options [target]="target" *ngIf="curtype=='religiousPriests'"></app-religious-downpanel-options>

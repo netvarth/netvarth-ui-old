@@ -1,0 +1,121 @@
+<h1>{{profile_cap}}</h1>
+<mat-horizontal-stepper (selectionChange)="stepChange(stepper)" #stepper>
+
+  <!-- <mat-step-header  class="mat-horizontal-stepper-header"
+    (click)="step.select()"
+    (keydown)="_onKeydown($event)"
+    [tabIndex]="_focusIndex === i ? 0 : -1"
+    [id]="_getStepLabelId(i)"
+    [attr.aria-controls]="_getStepContentId(i)"
+    [attr.aria-selected]="selectedIndex == i"
+    [index]="i"
+    [icon]="_getIndicatorType(i)"
+    [label]="step.stepLabel || step.label"
+    [selected]="selectedIndex === i"
+    [active]="step.completed || selectedIndex === i || !linear"
+    [optional]="step.optional">
+</mat-step-header> -->
+
+  <mat-step [stepControl]="firstFormGroup" [label]="'Basic Profile'">
+    <form [formGroup]="firstFormGroup">
+      <div>
+        <label>{{profile_pic_cap}}</label>
+        <div><img *ngIf="this.profile_pic.base64" [src]="this.profile_pic.base64" style="height:150px"></div>
+        <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif" class="file" #file (change)="imageUpload(file)">
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label" for="business_name">{{bus_name_cap}} *</label>
+        <input matInput type="text" class="form-control" id="business_name" placeholder="Business Name" formControlName="business_name"
+          autocomplete="off">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'business_name')" errorMsg="Please enter your business name.">
+        </app-field-error-display>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label" for="short_name">{{short_name_cap}}</label>
+        <input matInput type="text" class="form-control" id="short_name" placeholder="Short Name" formControlName="short_name"
+          autocomplete="off">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'short_name')" errorMsg="Please enter your short name.">
+        </app-field-error-display>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label" for="mobile">{{mobile_cap}} *</label>
+        <input matInput type="text" class="form-control" id="mobile" placeholder="Mobile" formControlName="mobile"
+          autocomplete="off">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'mobile')" errorMsg="Please enter your mobile number.">
+        </app-field-error-display>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label" for="email">{{email_cap}} *</label>
+        <input matInput type="text" class="form-control" id="email" placeholder="Email" formControlName="email"
+          autocomplete="off">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(firstFormGroup,'email')" errorMsg="Please enter a valid email.">
+        </app-field-error-display>
+      </div>
+      <div class="form-group" *ngIf="ckeditorLoaded">
+        <label class="col-form-label" for="business_desc">{{description_cap}}</label>
+        <ckeditor #ckeditor formControlName="business_desc" [readonly]="false" debounce="500" [config]="{'toolbar': toolbar}">
+        </ckeditor>
+      </div>
+
+      <div>
+        <button mat-button matStepperNext>{{next_cap}}</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>{{loc_schedule_info}}</ng-template>
+
+      <div class="form-group">
+        <label class="col-form-label" for="place">{{place_cap}} *</label>
+        <input matInput type="text" class="form-control" id="place" placeholder="Business Location" formControlName="place"
+          [matAutocomplete]="auto" (keyup)="getLocation($event)" (blur)="checkLocation()">
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+          <mat-option *ngFor="let location of location_data" [value]="location">
+            <span>{{ location.name }}</span>
+          </mat-option>
+        </mat-autocomplete>
+
+        <app-field-error-display [displayError]="fed_service.isFieldValid(secondFormGroup,'place')" errorMsg="Please enter business location.">
+        </app-field-error-display>
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="address">{{address_cap}}</label>
+        <input matInput type="text" class="form-control" id="address" placeholder="Address" formControlName="address"
+          autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="pincode">{{pin_code_cap}}</label>
+        <input matInput type="text" class="form-control" id="pincode" placeholder="Pincode" formControlName="pincode"
+          autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="col-form-label" for="coordinates">{{coordinates_cap}} *</label>
+        <input matInput type="text" class="form-control" id="coordinates" placeholder="Coordinates" formControlName="coordinates"
+          autocomplete="off">
+        <app-field-error-display [displayError]="fed_service.isFieldValid(secondFormGroup,'coordinates')" errorMsg="Please enter business location.">
+        </app-field-error-display>
+      </div>
+
+      <div>
+        <button mat-button matStepperPrevious>{{back_cap}}</button>
+        <button mat-button matStepperNext>{{next_cap}}</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>{{Done}}</ng-template>
+    {{now_done_cap}}
+    <div>
+      <button mat-button matStepperPrevious>{{back_cap}}</button>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>

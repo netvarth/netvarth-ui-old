@@ -1,0 +1,18 @@
+    <h1 class="mat-dialog-title"> {{title}} <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+
+
+    <app-dynamic-form (retonFormSubmit)="onDomainFormSubmit($event)" [questions]="domain_questions" *ngIf="que_type=='domain_questions' && domain_questions.length > 0">
+
+    </app-dynamic-form>
+
+    <!-- <div >{{this.bProfile['serviceSubSector']['displayName']}}</div>
+
+    <br/> -->
+
+    <app-dynamic-form (retonFormSubmit)="onSubDomainFormSubmit($event)"  [questions]="subdomain_questions" *ngIf="que_type=='subdomain_questions' && subdomain_questions.length > 0">
+
+    </app-dynamic-form>
+
+    <app-field-error-display [displayError]="true" *ngIf="api_error"
+    errorMsg="{{api_error}}"></app-field-error-display>
+

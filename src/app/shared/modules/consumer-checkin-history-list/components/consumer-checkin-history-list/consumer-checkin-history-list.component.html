@@ -1,0 +1,49 @@
+<div class="table-outer history-tbl" *ngIf="history && history.length > 0">
+    <table class="table" *ngIf="history && history.length > 0">
+        <thead>
+            <tr>
+                <th class="th1">{{service_provider_cap}}</th>
+                <th class="th6">{{service_cap}}</th>
+                <th class="th2">{{location_cap}}</th>
+                <!-- <th class="th3">Date/Time</th> -->
+                <th class="th3">{{date_cap}}</th>
+                <th class="th4">{{status_cap}}</th>
+                <th class="th5"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let his_wait of history">
+                <td data-title="Service Provider" class="td1" (click)="providerDetail(his_wait.provider)">
+                    <span class="name">{{his_wait.provider.businessName || '' | capitalizeFirst}}</span></td>
+                <td data-title="Service" class="td6">{{his_wait.service.name || '' | capitalizeFirst}}</td>
+                <td data-title="Location" class="td2">{{his_wait.queue.location.place || '' | capitalizeFirst}}</td>
+                <td data-title="Date/Time" class="td3"> {{his_wait.date | date: dateFormat }}</td>
+                <td data-title="Status" class="td4">
+                  <span class="{{his_wait.waitlistStatus}}">{{getStatusLabel(his_wait.waitlistStatus)}}</span>
+                </td>
+                <td data-title="" class="td5">
+                    <ul class="controls">
+                        <li><span class="message" (click)="addWaitlistMessage(his_wait)">{{send_message_cap}}</span></li>
+                        <!-- <li><span class="view-bill" 
+                          *ngIf="his_wait.waitlistStatus == 'done'" (click)="getWaitlistBill(his_wait)">Bill</span>
+                        </li> -->
+                         <li *ngIf="his_wait.billStatus"><span class="view-bill" 
+                             (click)="getWaitlistBill(his_wait)">Bill</span>
+                          </li>
+                        <li *ngIf="his_wait.waitlistStatus == 'done'"><span class="rate-service" [class.rated] = "isRated(his_wait)"
+                           (click)="rateService(his_wait)">Rate Your Visit</span>
+                          <!-- <span class="rate-no-service" *ngIf="his_wait.waitlistStatus !== 'done'"></span> -->
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="search_paging" *ngIf="pagination.totalCnt >= pagination.perPage">
+      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+      *ngIf="pagination.totalCnt != 0" [curpage]="pagination.startpageval"></app-pager>
+    </div>
+</div>
+<div *ngIf="loadcomplete.history && history && history.length == 0" class="noprevhist">
+<p>{{no_prev_checkins_avail_cap}}</p>
+</div>

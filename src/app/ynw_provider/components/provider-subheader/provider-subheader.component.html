@@ -1,0 +1,118 @@
+<!-- <div style="background: white">
+    <div class="blink container">
+        <div class="row">
+            <p *ngIf="active_license=='Platinum - FREE Trial 60 days'" style="color: red; width: 100%; text-align: right;">
+                Your 'Platinum - Free trial 60 days' license package will expire in 60 days.
+                <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here </b></span>to Upgrade License.
+            </p>
+            <p style="width: 100%; text-align: right;"
+                *ngIf="active_license!='Platinum - FREE Trial 60 days' && active_license!='Diamond (3999 Rs/month)'">
+                Your
+                current license is
+                <i style="color:red">{{active_license}}</i> Upgrade license now for more features.
+            </p>
+            <p style="width: 100%; text-align: right;" *ngIf="active_license=='Diamond (3999 Rs/month)'">Your current license is
+                <i style="color:red">{{active_license}}</i>.
+            </p>
+        </div>
+    </div>
+</div> -->
+<div class="tp-pnl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 no-padding">
+                <div class="tc1 col-xs-12 ml-auto locn" *ngIf="locations.length != 0">
+                    <span class="loc-name" *ngIf="locations.length == 1">
+                        <span *ngIf="selected_location">{{selected_location.place | capitalizeFirst}}</span><span
+                            class="icon-location dash"></span>
+                    </span>
+                    <div class="lgmem">
+                        <span class="lgin">
+                            <span class="loc-name" mat-icon-button [matMenuTriggerFor]="menu"
+                                *ngIf="locations.length > 1">
+                                <span class="selct-loctin pointer-cursor" *ngIf="selected_location"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="choose_location">
+                                    <strong>{{selected_location.place | capitalizeFirst}}</strong></span><span
+                                    class="icon-location dash link"></span>
+                            </span>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item *ngFor="let location of locations;let i = index" [(value)]="i"
+                                    (click)="onChangeLocationSelect(i)">
+                                    <strong> {{ location.place | capitalizeFirst }}</strong>
+                                </button>
+                            </mat-menu>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 no-padding">
+                <div class="top-mnu">
+                    <!-- <div class="container">
+                                <div class="tc1 col-xs-12 ml-auto locn">
+                                    <span class="loc-name" *ngIf="locations.length == 1">
+                                        <span>{{selected_location.place | capitalizeFirst}}</span><span
+                                            class="icon-location dash"></span>
+                                    </span>
+                                    <div class="lgmem">
+                                        <span class="lgin">
+                                            <span class="loc-name" mat-icon-button [matMenuTriggerFor]="menu"
+                                                *ngIf="locations.length > 1">
+                                                <span class="selct-loctin pointer-cursor">
+                                                    <strong>{{selected_location.place | capitalizeFirst}}</strong></span><span
+                                                    class="icon-location dash"></span>
+                                            </span>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item *ngFor="let location of locations;let i = index" [(value)]="i"
+                                                    (click)="onChangeLocationSelect(i)">
+                                                    <strong> {{ location.place | capitalizeFirst }}</strong>
+                                                </button>
+                                            </mat-menu>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div> -->
+                    <!-- <span class="top-help-icon"><button class="cs-btn bt4" (click)="btnAvailableClicked()"><i
+                                data-icon="s"></i>
+                            <span> I am Available</span>
+                        </button></span> -->
+
+                    <span class="top-help-icon"><button class="cs-btn bt4" [disabled]="buttonDisabled"
+                            (click)="checkinClicked()"><i data-icon="s"></i>
+                            <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)"> {{checkin_label |capitalizeFirst}}</span>
+                            <span *ngIf="calculationmode=='NoCalc' && showToken"> Get Token</span>
+                        </button><i data-icon="B" id="checkin-help" (click)="learnmore_clicked('checkin')"></i></span>
+
+                    <span class="top-help-icon"><button class="cs-btn bt4" (click)="searchCustomer('createCustomer')"><i
+                                data-icon="u"></i> {{create_cap}} {{customer_label | capitalizeFirst}}</button><i
+                            data-icon="B" id="customer-help" (click)="learnmore_clicked('customer')"></i></span>
+                    <!-- <span class="top-help-icon" *ngIf="kiosk_active"><a routerLink="/kiosk" target="_blank">
+                                    <div class="cs-btn bt4"><i data-icon="A"></i> {{kiosk_cap}}</div>
+                                </a><i data-icon="B" id="kiosk-help" (click)="learnmore_clicked('kiosk')"></i></span>  -->
+                    <span class="top-help-icon" *ngIf="kiosk_active"><a routerLink="/kiosk">
+                            <div class="cs-btn bt4"><i data-icon="A"></i> Kiosk</div>
+                        </a><i data-icon="B" id="kiosk-help" (click)="learnmore_clicked('kiosk')"></i></span>
+                    <span class="top-help-icon"><button class="cs-btn bt4" (click)="learnmore_clicked('help')"><i
+                                data-icon="u"></i> {{help_cap}}</button></span>
+
+                    <!-- <span class="top-help-button"><button class="cs-btn bt5" (click)="learnmore_clicked('help')"><i
+                                        data-icon="B"></i> {{help_cap}}</button></span> -->
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row m-nav">
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01 pl0">
+                <span>
+                    <a (click)="dashboardClicked()" [class.active]="activeTab=='dashboard'" class="pointer-cursor"><i
+                            data-icon="w"></i>
+                        {{dashboard_cap}}</a></span>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01"><a routerLink="/provider/customers"
+                    [class.active]="activeTab=='customers'"><i data-icon="c"></i>
+                    {{customer_label | capitalizeFirst}}s</a></div>
+            <div class="col-xs-12 col-sm-4 col-md-4 nav01 pr0"><a routerLink="/provider/settings"
+                    [class.active]="activeTab=='settings'"><i data-icon="D"></i> {{settings_cap}}</a></div>
+        </div>
+    </div>
+</div>

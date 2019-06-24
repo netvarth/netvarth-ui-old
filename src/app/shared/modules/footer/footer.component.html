@@ -1,0 +1,292 @@
+<div class="overlay" [class.show]="showbottompopup" (click)="closebottompopup()"></div>
+<footer class="bg-light-gray2 hcode-main-footer" style="background:#000" [class.dashb]="ctype=='provider'"
+    [class.consumer]="ctype!='provider'" [class.show]="showbottompopup">
+
+    <section class="" *ngIf="ctype!='provider' && (includedFrom == 'home' || includedFrom == 'phome')" >
+        <div class="container footer-middle hcode-footer-middle" style="padding-top:0px;">
+            <div class="row no-margin-bottom">
+                <div class="col-md-8 col-sm-12 sm-text-center sm-margin-bottom-four hcode-footer-menu">
+                    <ul id="menu-footer-menu" class="list-inline footer-link text-uppercase">
+                        <img alt="Jaldee" style="width:70px;" src="assets/images/home/logo-icon.png" class="logo" />
+                        <li id="menu-item-851"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-851"><a
+                                style="color:#fff;" [routerLink]="['/home/aboutus']" target="_blank">{{about_us}}</a></li>
+                        <li id="menu-item-852"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-852"><a
+                                style="color:#fff;" [routerLink]="['/home/contact']" target="_blank">{{contact_us}}</a></li>
+                        <li id="menu-item-853"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-853"><a  *ngIf="includedFrom =='phome'"
+                                style="color:#fff;" rel="noopener" [routerLink]="['terms']"
+                                target="_blank">{{legal_cap}}</a>
+                                <a  *ngIf="includedFrom !='phome'"
+                                style="color:#fff;" rel="noopener" [routerLink]="['/terms']"
+                                target="_blank">{{legal_cap}}</a>
+                            </li>
+                        <!-- <li id="menu-item-854"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-854"><a
+                                style="color:#fff;" rel="noopener" [routerLink]="['/privacy']"
+                                target="_blank">{{privacy_policy_cap}}</a></li> -->
+                        <!-- <li id="menu-item-855"
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-855"><a
+                                style="color:#fff;"[routerLink]="['/faq']" target="_blank">{{faq_cap}}</a></li> -->
+                        <!-- <li id="menu-item-856"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-856"><a
+                                    style="color:#fff;"[routerLink]="['/pricing']" target="_blank">{{pricing_cap}}</a></li>         -->
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-12 footer-social text-right sm-text-center">
+                    <div id="text-14" class="custom-widget widget_text">
+                        <div class="textwidget" style="padding: 22px;">
+                            <a style="color:#fff;" href="https://www.facebook.com/Jaldee-1176319332515659/" target="_blank"
+                                class="black-text-link">
+                                <i style="color:#3b5998;" class="fa fa-facebook-f"></i>
+                            </a>
+                            <a style="color:#fff;" href="https://twitter.com/jaldee6" target="_blank" class="black-text-link">
+                                <i style="color:#00acee;" class="fa fa-twitter"></i>
+                            </a>
+                            <a style="color:#fff;" href="https://youtu.be/T7YIpUp43Io" target="_blank"
+                                class="black-text-link">
+                                <i style="color:#c4302b;" class="fa fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="wide-separator-line bg-mid-gray no-margin-lr margin-three no-margin-bottom"></div>
+                <div class="hcode-footer-copyright vertical-align-middle display-inline-block"
+                    style="width:100%;text-align:center;margin-top:20px;">
+                    <div class="textwidget">&copy; {{copyright_cap}} {{curyear}} {{jaldee_cap}}</div>
+                </div>
+                <!-- <a class="scrollToTop scrolltotop-position-right" href="javascript:void(0);"><i class="fa fa-angle-up"></i></a> -->
+            </div>
+        </div>
+       
+    </section>
+
+
+    <!-- <div class="container-fluid bg-dark-gray footer-bottom hcode-footer-bottom" style="display:none;">
+                   <div class="container">
+                      <div class="row margin-three">
+                         <div class="col-md-9 col-sm-9 col-xs-12 copyright text-left letter-spacing-1 xs-text-center xs-margin-bottom-one light-gray-text2">
+                            <div class="hcode-footer-copyright vertical-align-middle display-inline-block">
+                               <div class="textwidget">© 2019 Jaldee is proudly powered by <a href="#" target="_blank" class="light-gray-text2">SciWiz Technologies Pvt.Ltd.</a></div>
+                            </div>
+                         </div>
+                         <div class="col-md-3 col-sm-3 col-xs-12 footer-logo text-right xs-text-center"><a href="#"><img width="210" height="39" src="assets/images/home/Jaldee_logo_Final-02.svg" class="attachment-full size-full" alt="" /></a></div>
+                      </div>
+                   </div>
+                </div> -->
+    
+    <!-- <section class="sect1" *ngIf="ctype!='provider' && includedFrom == 'home'">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="lgo-btm">
+                        <a href="#">
+                            <img src="assets/images/bottom-logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row ft-cpy">
+                <div class="col-5 col-sm-12 col-md-5 col-lg-5">
+                    <h4>{{about_cap}}</h4>
+                    <p>{{about_jaldee_one}}
+                    </p>
+                    <p>{{about_jaldee_two}}</p>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <h4>{{contact_cap}}</h4>
+                    <p>{{netvarth_tech_pvt_ltd}}<br>
+                        {{addr_one}}<br>
+                        {{addr_two}}<br>
+                        {{addr_three}}<br>
+                        {{addr_four}}<br>
+                        <p>
+                            {{support_email}}<br />
+                            {{support_phone}}
+                        </p>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    <ul class="sbi-bt">
+                        <li>
+                            <a rel="noopener" href="https://www.facebook.com/youneverwait" target="_blank"><span class="smi-a"><i
+                                        class="fa fa-facebook fb"></i></span></a>
+                        </li>
+                        <li>
+                            <a rel="noopener" href="https://twitter.com/youneverwait" target="_blank"><span class="smi-b"><i class="fa fa-twitter tw"></i></span></a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="smi-c"><i class="fa fa-youtube-play ytb"></i></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sect2" *ngIf="ctype!='provider' && includedFrom == 'home'">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="lnks">
+                        <li><a rel="noopener" [routerLink]="['/terms']" target="_blank">{{terms_cap}} &amp; {{conditions_cap}}</a></li>
+                        <li><a rel="noopener" [routerLink]="['/privacy']" target="_blank">{{}}</a></li>
+                        <li><a href="#">{{pricing_cap}}</a></li>
+                        <li><a href="#">{{about_us_cap}}</a></li>
+                        <li><a href="#">{{contact_us_cap}}</a></li>
+                    </ul>
+                    <p>&copy; {{copyright_cap}} {{curyear}} {{jaldee_cap}}</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+
+    <div class="stp-box" *ngIf="ctype=='provider'">
+        <div class="stp-header">
+            <div class="container">
+                <div class="row">
+                    <div class="outer">
+                        <div class="left">
+                            <h1>{{bottomdivHeader}}</h1>
+                        </div>
+                        <div class="right">
+                            <ul class="stp-action">
+                                <li><span class="icon-minimize" (click)="closebottompopup()"></span></li>
+                                <li><span class="icon-maximize" (click)="handleMaximize()"
+                                        [matTooltipClass]="tooltipcls" [matTooltip]="maximizeTooltip"></span></li>
+                                <li><span class="icon-close" (click)="closebottompopup()"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Audit Log-->
+
+        <div class="audit " *ngIf="showAuditDiv">
+            <div class="container">
+                <div class="row">
+                    <!-- <div class="table-outer stp-tbl"> -->
+                        <span class="loading" *ngIf="auditStatus==1">
+                            <app-common-innerloading-spinner spinnerParams="loadingParams">
+                            </app-common-innerloading-spinner>
+                        </span>
+                        <div class="table-responsive ">
+                        <table class="table" *ngIf="auditStatus==3">
+                            <thead>
+                                <tr>
+                                    <th>{{date_time_cap}}</th>
+                                    <th>{{subject_cap}}</th>
+                                    <th>{{text_cap}}</th>
+                                    <th>{{user_name_cap}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let log of auditlog; let i=index">
+                                    <td data-title="Date" class="td1">{{log.date | date:dateFormat}} {{log.time}}</td>
+                                    <td data-title="Subject" class="td3">{{log.subject}}</td>
+                                    <td data-title="Text" class="td2">{{log.text}}</td>
+                                    <td data-title="User Name" class="td4">{{log.userName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        <span class="no-info" *ngIf="auditStatus==2">{{no_audit_log_cap}}</span>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- // Audit Log-->
+
+        <!--Alerts-->
+        <div class="alerts tray" *ngIf="showAlertDiv">
+            <div class="container">
+                <div class="row">
+                    <!-- <div class="table-outer stp-tbl"> -->
+                        <span class="loading" *ngIf="alertStatus==1">
+                            <app-common-innerloading-spinner spinnerParams="loadingParams">
+                            </app-common-innerloading-spinner>
+                        </span>
+                        <div class="table-responsive stp-tbl">
+                        <table class="table" *ngIf="alertStatus==3">
+                            <tbody>
+                                <tr [class.info]="alert.severity.name=='Info'"
+                                    [class.warning]="alert.severity.name=='Warning'"
+                                    [class.high]="alert.severity.name=='High'"
+                                    [class.error]="alert.severity.name=='Critical'" *ngFor="let alert of alerts">
+                                    <td class="td1"><span class="span1">{{alert.text}}</span></td><td><span
+                                            class="span2 fa fa-thumbs-o-up pointr" [matTooltip]="'Acknowledge'"
+                                            *ngIf="alert.ackStatus==false && alert.ackRequired==true"
+                                            (click)="alertAcknowlege(alert)"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                        <!-- <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
+                                  (click)="handleMaximize()"> View All</span> -->
+                        <span *ngIf="alert_count > alertsCnt" class="alert-view-all" (click)="handleMaximize()"> View
+                            All</span>
+                        <span class="no-info" *ngIf="alertStatus==2">{{no_alerts_cap}}</span>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- // Alerts-->
+
+        <!--Online Chekin-->
+        <div class="o-checkin" *ngIf="showCheckinDiv">
+            <div class="table-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="copy">
+                            <div class="pubs" *ngIf="checkinStatus==1">
+                                <app-common-innerloading-spinner spinnerParams="loadingParams">
+                                </app-common-innerloading-spinner>
+                            </div>
+                            <div class="notfound" *ngIf="checkinStatus==2">
+                                Sorry! settings not found
+                            </div>
+                            <div class="checkin-bx" *ngIf="checkinStatus==3">
+                                <span class="ttle">
+                                    Accept Online Check-in
+                                    <span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)?
+                                        'On': 'Off'}}</span>
+                                </span>
+                                <span class="ctrl">
+                                    <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns"
+                                        (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- // Online Checkin-->
+    </div>
+
+    <section class="sect3" *ngIf="ctype=='provider' && show_prov_bottomicons">
+        <div class="container">
+            <div class="row">
+                <div class="copy-text">&copy; {{copyright_cap}} {{curyear}} {{jaldee_cap}}</div>
+                <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
+                    <ul class="list" *ngIf="show_prov_bottomicons">
+                        <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit"
+                                matTooltip="Audit Log"></span></li>
+                        <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count"
+                                *ngIf="alert_count>0">{{alert_count}}</span><span class="icon-bell"
+                                matTooltip="Alerts"></span></li>
+                        <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin"
+                                matTooltip="Enable / Disable Check-in"></span></li>
+                        <li [class.active]="selOpt=='License'" (click)="showLicense()"><span class="icon-license"
+                                matTooltip="License Details"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer>

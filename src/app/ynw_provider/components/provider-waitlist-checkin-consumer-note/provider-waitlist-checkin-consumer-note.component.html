@@ -1,0 +1,12 @@
+<h1 class="mat-dialog-title">{{consumer_label |capitalizeFirst}} {{note_cap}}
+  <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content>
+  <div class="result" [innerHTML]="checkin.consumerNote | nl2br | capitalizeFirst">
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn_cap}}</button>
+</mat-dialog-actions>

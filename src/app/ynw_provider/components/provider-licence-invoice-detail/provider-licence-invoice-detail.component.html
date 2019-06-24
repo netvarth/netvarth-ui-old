@@ -1,0 +1,210 @@
+<h1 class="mat-dialog-title"><span *ngIf="source !== 'payment-history'"> {{invoice_cap}}</span>
+    <span *ngIf="source === 'payment-history'"> Payment details</span>
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<mat-dialog-content *ngIf="loading">
+    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="!loading">
+    <div class="invoice">
+        <div class="outer">
+            <div class="ivc">
+                <span class="label">{{serv_period}}<span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date:
+                    dateFormat}}</span></span>
+            </div>
+
+            <div class="ivc" *ngIf="source != 'payment-history'">
+                <span class="label">Amount to pay<span
+                        class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
+            </div>
+
+            <div class="ivc" *ngIf="invoice.dueDate">
+                <span class="label">Due On<span class="result">{{invoice.dueDate | date: dateFormat}}</span></span>
+            </div>
+            <div class="container">
+                <table class="table .table-hover">
+                    <thead>
+                        <tr>
+                            <th>Transaction Summary</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="invoice.licensePkgDetails">
+                            <td>{{invoice.licensePkgDetails.licenseName}}</td>
+                            <td>{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr *ngFor="let addon of invoice.addonDetails">
+                            <td>{{addon.addonName}}</td>
+                            <td>{{addon.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                        <tr *ngIf="invoice.creditDebitJson">
+                            <td><b>License Adjustments</b></td>
+                            <td></td>
+                        </tr>
+                        <tr *ngFor="let crdt_debtJson of credt_debtDetls">
+                            <!-- <td>{{crdt_debtJson.oldPkg}} to {{crdt_debtJson.newPkg}}</td>
+                          <td>{{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}</td> -->
+                            <td>{{crdt_debtJson.publicNote}}</td>
+                            <td *ngIf="crdt_debtJson.type =='debit'">
+                                {{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}(Dr)</td>
+                            <td *ngIf="crdt_debtJson.type =='credit'">
+                                {{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}(Cr)</td>
+                        </tr>
+
+                        <tr class="invoice-discount" *ngFor="let discount of discounts">
+                            <td class="name" style="text-align: right">{{discount.name}} <span
+                                    *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
+                            </td>
+                            <td class="price">(-){{discount.discountedAmt| currency: 'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="invoiceTotal"><b>Total</b></td>
+                            <td>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- <div class="ivc">
+                <span class="label">{{subsc_pack_cap}}</span> -->
+            <!-- <div class="ivc" *ngIf="invoice.licensePkgDetails">
+                    <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}
+                            {{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span></span> -->
+            <!-- <span class="result">{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span> -->
+            <!-- </div> -->
+
+            <!-- <div class="ivc" *ngFor="let addon of invoice.addonDetails">
+                    <span class="label"><span>{{addon.addonName}}</span></span>
+                    <span class="result">{{addon.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                </div> -->
+
+            <!-- <div class="ivc" *ngIf="source != 'payment-history'">
+                    <span class="label">Amount to pay</span>
+                    <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                </div> -->
+            <!-- <div class="ivc" *ngIf="invoice.dueDate">
+                    <span class="label">Due On</span>
+                    <span class="result">{{invoice.dueDate | date: dateFormat}}</span>
+                </div> -->
+            <!-- </div> -->
+        </div>
+        <div class="" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
+            <!-- <div class="pay-tbl table-outer"> -->
+            <!-- <table class="table"> -->
+            <!-- <thead>
+                        <tr>
+                            <th>{{gateway_cap}}</th>
+                            <th>{{payment_cap}} {{mode_cap}}</th>
+                            <th>{{amount_cap}}</th>
+                            <th>{{payment_cap}} {{date_cap}}</th>
+                            <th>{{payment_cap}} {{id_cap}}</th>
+                            <th>{{payment_cap}} {{ref_id_cap}}</th>
+                            <th>{{status_cap}}</th>
+                        </tr>
+                    </thead> -->
+            <!-- <tbody>
+                        <tr *ngFor=" let payment of payment_detail.slice().reverse()">
+                            <td data-title="Payment Gateway">{{payment.paymentGateway}}</td>
+                            <td data-title="Payment Mode"> {{payment.paymentMode}}
+                            </td>
+                            <td data-title="Amount">
+                                {{payment.amount | currency:'INR':'symbol':'.2-2'}}
+                            </td>
+                            <td data-title="Payment Date">
+                                {{payment.paymentOn | date: dateFormat}}
+                            </td>
+                            <td data-title="Payment Id">
+                                {{payment.paymentId}}
+                            </td>
+                            <td data-title="Payment Ref Id">
+                                {{payment.paymentRefId}}
+                            </td>
+                            <td data-title="Status">
+                                {{payment.status || 'FAILED'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+
+            <!-- <div class="colum">
+                        <div class="lc44">
+                            <div class="lc4-1">
+                                <div class="lt">
+                                    <div>
+                                        <span class="amount">Due Amount : <strong>{{currentlicense_details.dueAmount
+                                                | currency:'INR':'symbol':'.2-2'}}</strong>
+                                        </span>
+                                        <span class="cs-btn bt3" (click)="showUnpaidInvoice()" *ngIf="invoices.length != 0">{{pay_button}}</span>
+                                    </div>
+                                    <span class="amount" *ngIf="invoices.length != 0">{{due_date_cap}} : <strong>{{currentlicense_details.nextPaymentOn
+                                            | date: dateFormat }}</strong>
+                                    </span>
+                                </div>
+                              
+                            </div> -->
+            <div class="payment-details" *ngFor=" let payment of payment_detail.slice().reverse()">
+                <div class="ivc">
+                    <div class="pay-det-row">
+                        <span class="label">{{gateway_cap}} : <span class="result">
+                                <b>{{payment.paymentGateway}}</b></span></span>
+                    </div>
+                    <div class="pay-det-row">
+                        <span class="label">{{payment_cap}} {{mode_cap}} :
+                            <span class="result"> <b>{{payment.paymentMode}}</b></span></span>
+                    </div>
+                    <div class="pay-det-row">
+                        <span class="label">{{amount_cap}} :
+                            <span class="result">
+                                <b>{{payment.amount | currency:'INR':'symbol':'.2-2'}}</b></span></span>
+                    </div>
+                    <div class="pay-det-row">
+                        <span class="label">{{payment_cap}} {{date_cap}} :
+                            <span class="result"><b> {{payment.paymentOn | date: dateFormat}}</b></span></span>
+                    </div>
+                    <div class="pay-det-row">
+                        <span class="label">{{payment_cap}} {{id_cap}} :
+                            <span class="result"><b> {{payment.paymentId}}</b></span></span>
+                    </div>
+                    <div class="pay-det-row">
+                        <span class="label">{{payment_cap}} {{ref_id_cap}} :
+                            <span class="result"> <b>{{payment.paymentRefId}}</b></span></span>
+                    </div>
+                    <div class="pay-det-row">
+                        <span class="label">{{status_cap}} :
+                            <span class="result"><b> {{payment.status || 'FAILED'}}</b></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <!-- Commented as per request from Manikandan -->
+    <!-- <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'"> 
+          <h4>Payment Options</h4>
+          <div>
+            <mat-radio-group [(ngModel)]="pay_data.paymentMode">
+              <mat-radio-button [value]="opt.name"
+              *ngFor="let opt of payment_modes">{{opt.Displayname}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+      </div> -->
+
+
+    <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
+
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="payMentShow == 1 && !loading">
+    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disablebutton">{{cancel_btn}}</button>
+    <button type="button" mat-button class="cs-btn bt1" [disabled]="!pay_data.amount || pay_data.amount == 0 ||
+    !pay_data.uuid || !pay_data.paymentMode || payment_loading || disablebutton" (click)="makePayment()"
+        *ngIf="source != 'payment-history'">{{make_payment}}</button>
+</mat-dialog-actions>
+
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

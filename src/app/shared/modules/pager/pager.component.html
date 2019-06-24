@@ -1,0 +1,27 @@
+<div>
+    <div class="container">
+        <div class="text-center">
+            <!-- pager -->
+            <!-- <div class="paginghead-outer" *ngIf="pager.pages && pager.pages.length">
+                <div class="paging"><span class="paging-page">Page</span><span class="paging-curr">{{pager.currentPage}}</span><span class="paging-of">of</span><span class="paging-max">{{pager.totalPages}}</span></div>
+            </div> -->
+            <ul *ngIf="pager.pages && pager.pages.length && pager.totalPages > 1" class="pagination">
+                <!-- <li [class.disabled]="pager.currentPage === 1" (click)="onpagerclick(1)">
+                    <span >First</span>
+                </li> -->
+                <li [class.disabled]="pager.currentPage === 1" (click)="onpagerclick(pager.currentPage - 1)">
+                    <span>{{previous_cap}}</span>
+                </li>
+                <!-- <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page" (click)="onpagerclick(page)">
+                    <span >{{page}}</span>
+                </li> -->
+                <li [class.disabled]="pager.currentPage === pager.totalPages" (click)="onpagerclick(pager.currentPage + 1)">
+                    <span >{{next_cap}}</span>
+                </li>
+                <!-- <li [class.disabled]="pager.currentPage === pager.totalPages" (click)="onpagerclick(pager.totalPages)">
+                    <span >Last</span>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+</div>

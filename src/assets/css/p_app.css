@@ -1,0 +1,42 @@
+.lgo img {width: 100px !important}
+.parent-cont {
+  background: url(../images/mobile/mobile.jpg) !important;
+  background-repeat : no-repeat !important;
+  background-size: cover !important;
+}
+.home-cnt {
+  height: 100vh !important;
+}
+#container{
+  height: 100% !important;
+}
+html, body {
+  height: 100% !important;
+}
+.sp-login-cap { padding-top:0px !important; padding-bottom: 0px !important}
+.sp-login-cap h2, .login-form .mat-dialog-actions .centeralign {text-align: center !important}
+.login-form { padding: 10px !important}
+.login-form .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element,
+ .login-form .input-group-text {
+  background-color: transparent !important
+}
+.resendouter .info-lst .black {font-size: 0.75rem !important}
+.login-form .mat-form-field-label {
+  background-color: #FBFBFB !important
+}
+
+.login-form .mat-button.login-btn {
+  margin-top:10px !important;
+  padding: 8px 40px !important;
+  height: auto !important;
+}
+.login-form .forgotpass, .login-form .newuser { padding-top: 10px !important; width: 100% !important;}
+.ynw-common-form-nm .login-ph .mat-form-field-label-wrapper,
+.ynw-common-form-nm .forgot-ph .mat-form-field-label-wrapper {top: .6em !important;} 
+.login-form .mat-dialog-actions .centeralign{width: 100% !important}
+.login-form .mat-dialog-actions .centeralign .pass_butt.cancel-btn-color {margin-right: 10px !important}
+.login-form .sts-msg.error{color: red !important; font-size: 0.75rem !important; padding-top: 15px !important}
+.login-form .sts-msg.success{color: green !important; font-size: 0.75rem !important;padding-top: 15px !important}
+.centeralign {text-align: center !important}
+h2 { font-size: 1.5rem !important}
+.login-form .form-group {margin-bottom: 0.5rem !important}

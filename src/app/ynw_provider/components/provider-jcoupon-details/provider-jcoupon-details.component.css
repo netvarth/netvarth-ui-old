@@ -1,0 +1,19 @@
+.rules-cap{
+    border-bottom: 1px solid #ccc;
+    padding-top:15px;
+}
+.rules-cap h5 {
+    font-weight: 500px;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+}
+
+.red-text{
+    color: red;
+}
+
+.blue-text{
+    color: blue;
+}

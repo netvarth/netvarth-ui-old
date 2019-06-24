@@ -1,0 +1,22 @@
+<section>
+    <div class="content loc-list">
+        <div class="container">
+            <div class="row">
+                <div class="card p0">
+                <div class="nolist" *ngIf="waitlist && waitlist.length==0">{{no_checkins_exists}}</div>
+
+                <div class="table-outer q-tbl">
+                    <table class="table">
+                        <tbody>
+                            <tr *ngFor="let list of waitlist">
+                                <td>{{list.service.name}} for <ng-container><span class="service-availer" *ngFor="let waitfor of list.waitlistingFor; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}</span></ng-container>, <span *ngIf="list.waitlistStatus=='cancelled'" [class]="getStatus(list,'class')">{{getStatus(list,'caption')}}</span><span *ngIf="list.waitlistStatus!='cancelled'" [class]="getStatus(list,'class')">{{getStatus(list,'caption')}}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

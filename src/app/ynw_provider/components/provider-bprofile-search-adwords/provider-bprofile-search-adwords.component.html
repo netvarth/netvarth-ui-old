@@ -1,0 +1,59 @@
+<div class="lc33">
+    <div class="lc3-1 lcd custom-help">
+        <!-- <div class="lc2-1 lcd custom-help"> -->
+        <div class="ttle block-level">
+            <span [matTooltipClass]="tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}}
+                <span class="addbt" (click)="addAdwords()" *ngIf="adwordsmaxcount > 0"></span>
+            </span>
+            <!-- <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('addon', $event)"></i></div> -->
+            <p class="form-level-settings">{{frm_adword_cap}}<a class="learnmore-pointer" id="customer-help"
+                    (click)="learnmore_clicked('adwords', $event)">Learn
+                    More</a> </p>
+        </div>
+        <!-- </div>  -->
+        <!-- <div class="ttle block-level" [matTooltipClass] = "tooltipcls" [matTooltip]="addwordTooltip">{{adwords_cap}}  -->
+        <!-- <div class="helprighticon"><i data-icon="B" id="customer-help" (click)="learnmore_clicked('adwords', $event)"></i></div> -->
+        <!-- <span class="addbt" (click)="addAdwords()" *ngIf="adwordsmaxcount > 0"></span>
+          <p class="form-level-settings">Adword content here</p>
+        </div> -->
+    </div>
+    <ng-container *ngIf="adwordsmaxcount != 0">
+        <div *ngFor="let adword of showadword_list; let i = index">
+            <div class="lc3-2 lcd">
+                <div class="ttle">{{adword.name}}</div>
+                <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+            </div>
+        </div>
+        <!--         <div *ngFor="let adword of adword_list; let i = index">
+            <ng-container *ngIf="i<5">
+                <div class="lc3-2 lcd">
+                <div class="ttle">{{adword.name}}</div>
+                <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+                </div>
+            </ng-container>
+            <ng-container></ng-container>
+            <ng-container *ngIf="i>=5">
+                <div class="lc3-2 lcd">
+                <div ckass="adwordshowmore" *ngIf="!adwordshowmore && i == 5" (click)="toggle_adwordshowmore()"><strong>Show more</strong></div>
+                <ng-container *ngIf="adwordshowmore">
+                    <div class="ttle">{{adword.name}}</div>
+                    <div class="ctrl"><span class="icon-delete" (click)="doRemoveAdwords(adword)"></span></div>
+                </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <div ckass="adwordshowless" *ngIf="adwordshowmore" (click)="toggle_adwordshowmore()"><strong>Show less</strong></div> -->
+        <div class="search_paging" *ngIf="adwordsmaxcount > 0 && adword_list.length >0 && query_executed == true">
+            <app-pager [total_pages]="pass_totalpages()" [pagesize]="pass_pagesize()"
+                (pagerclick)="handle_pageclick($event)" [curpage]="startpageval"></app-pager>
+        </div>
+        <div class="lc3-2 lcd" *ngIf="adwordsmaxcount > 0 && adword_list.length ==0 && query_executed == true">
+            <div class="ttle">{{emptyMsg}}</div>
+        </div>
+    </ng-container>
+    <div class="lc3-2 lcd" *ngIf="adwordsmaxcount == 0 && query_executed == true">
+        <div class="ttle">
+            <p><strong>{{sorry_cap}}</strong> {{not_have_any_adwords_msg}} </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<section>
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content comn-cls">
+        <div class="container">
+
+            <div class="w-dta">
+                <div class="row">
+                    <div class="card">
+                        <div class="copy">
+                            <div class="itm-d">
+                                <!-- <div class="itm-l">
+                                    <div class="itm-prdct">
+                                    <img [src]="itemimg" *ngIf="image_exists && itemimg!=''">
+                                    <div class="noimage" *ngIf="!image_exists"></div>
+                                    
+                                    </div>
+                                    <div class="ctrls">
+                                        <span class="cs-btn bt3" *ngIf="!image_exists" (click)="editImage(item_list, 'add')">Add Image</span>
+                                        <span class="cs-btn bt3" *ngIf="image_exists" (click)="editImage(item_list, 'change')">Change Image</span>
+                                        <span class="cs-btn bt7" (click)="doremoveImage()" *ngIf="image_exists">Remove Image</span>
+                                    </div>
+                                </div> -->
+                                <div class="itm-r">
+                                    <span class="editbt" (click)="editItem()" *ngIf="item_list.status=='ACTIVE'">
+
+                                    </span>
+                                    <h3>{{item_detail_cap}}</h3>
+                                    <div class="dtls">
+                                        <span class="label">{{item_name_cap}}</span>
+                                        <span class="ttle">
+                                            {{item_list.displayName}}
+                                        </span>
+                                    </div>
+                                    <div class="dtls">
+                                        <span class="label">{{short_desc_cap}}</span>
+                                        <span class="ttle">
+                                            {{item_list.shortDesc}}
+                                        </span>
+                                    </div>
+                                    <div class="dtls">
+                                        <span class="label">{{detail_desc_cap}}</span>
+                                        <span class="ttle">
+                                            {{item_list.displayDesc}}
+                                        </span>
+                                    </div>
+                                    <div class="dtls">
+                                        <span class="label">{{price_cap}}</span>
+                                        <span class="ttle">
+                                            {{item_list.price | currency:'INR':'symbol':'.2-2'}}
+                                        </span>
+                                    </div>
+                                    <div class="dtls">
+                                        <span class="label">{{taxable_cap}}</span>
+                                        <span class="ttle">
+                                            {{(item_list.taxable===true)?'Yes':'No'}}
+                                        </span>
+                                    </div>
+                                    <div class="dtls">
+                                        <span class="label">{{status_cap}}</span>
+                                        <span class="ttle" [ngClass]="{'green-text' : item_list.status=='ACTIVE'}">{{item_status[item_list.status]}}
+                                           
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <div>
+   <app-header [headerTitle] = "'Items'"></app-header>
+<div *ngIf="item_list">
+    <div class="image_container">
+        <div><img [src]="showimg()"></div>
+        <div>
+                <form [formGroup]="amForm"  novalidate (ngSubmit)="onSubmit(amForm.value)">
+                    <div *ngIf="img_msg">{{img_msg}}</div>
+                        <div class="form-group">
+                            <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)" formControlName="file">
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'file')" errorMsg="Please select the file to upload.">
+                           </app-field-error-display>
+                        </div>
+                        <input type="text" #caption formControlName="caption"/>
+                        <button  type="submit" mat-button [disabled]="!amForm.valid">Upload</button>
+                </form>
+                <div *ngIf="image_exists">{{image_exists}}
+                    <button (click)="doremoveImage()" mat-button>Remove Image</button>
+                </div>
+            </div>
+            <app-field-error-display [displayError]="true" *ngIf="api_error"
+            errorMsg="{{api_error}}"></app-field-error-display>
+
+            <app-form-success-display [displayMsg]="true" *ngIf="api_success"
+            successMsg="{{api_success}}"></app-form-success-display>
+    </div>
+    <hr>
+    <div class="details_container">
+        <div (click)="editItem()">Click to Edit Details</div>
+        <div><strong>Details</strong></div>
+        <div>Name: {{item_list.displayName}}</div>
+        <div>Short Desc: {{item_list.shortDesc}}</div>
+        <div>Detailed Desc: {{item_list.displayDesc}}</div>
+        <div>Taxable: {{item_list.taxable}}</div>
+        <div>Status: {{item_list.status}}</div> 
+    </div>
+</div>
+</div> -->

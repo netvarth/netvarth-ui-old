@@ -1,0 +1,700 @@
+<app-header [headerTitle]="" [includedfrom]="'phome'" id="pro_home"></app-header>
+<section class="phome">
+  <section class="banner">
+    <div class="container">
+      <div class="d-md-flex">
+        <div class="col-md-7">
+          <div class="banner-txt banner-left">
+            <h3 class="main-title"><span>Why Jaldee for Service Providers ?</span></h3>
+            <!-- <p class="sub-txt">Become a Jaldee Partner / Business Owner to Grow Your Service with the help of
+              techonology.</p> -->
+            <!-- <p class="sub-txt"><span class="sub-txt-title">Jaldee Grow</span> Offers</p> -->
+            <ul>
+              <li>Online presence</li>
+              <li>Increase brand awareness</li>
+              <li>Fill up open slots quickly</li>
+              <li>Turn spare capacity into revenue</li>
+              <li>Online queue management</li>
+              <li>Online token system</li>
+              <li>Online appointment system</li>
+              <li>Attract more using Jaldee coupons</li>
+              <li>Reduce no show ups using Jalee pre-pay</li>
+            </ul>
+            <!-- <a href="about.html" class="btn button-style mt-md-5 mt-4">Read More</a> -->
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="banner-right">
+            <div class="sign-sec">
+              <h3 class="section-title no-padding no-margin black-text"
+                style="text-align:center;padding-top:30px !important;">Already
+                a Jaldee Partner?</h3>
+              <div class="signin">
+                <a (click)="doLogin('provider')" class="button-style" name="">Sign In</a>
+              </div>
+              <h3 class="section-title no-padding no-margin black-text"
+                style="text-align:center;padding-top:30px !important; padding-bottom: 10px !important">Become
+                a Jaldee Partner</h3>
+              <div style="align-items: center;display: flex;justify-content: center;">
+                <a (click)="doSignup('provider')" class="button-style" name="">Sign Up</a>
+              </div>
+              <div class="clearfix text-center" style="padding-top:0px !important;padding-bottom: 0px !important">
+                <img src="assets/images/special offers.svg" alt="" />
+                <!-- <p>Will Get <b>Platinum</b> free trial for 60 Days</p> -->
+              </div>
+              <!-- <div class="lg-opt ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom =='phome'">
+                <img src="assets/images/Specail offers-01.png" alt="" />
+            </div>     -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="features py-5">
+    <div class="container py-xl-5 py-lg-3 ">
+      <h3 class="tittle text-center font-weight-bold">Jaldee Features</h3>
+      <div class="row about-bottom-w3l text-center mt-4">
+        <div class="col-md-6 mt-sm-5">
+          <table class="feature_tbl" align="center">
+            <tr>
+              <td></td>
+              <td (click)="setActiveFeature('jaldee_online')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_online'}" 
+                  src="assets/images/home/jaldee_online.svg" alt="" class="img-fluid Avatar jd_online_ic"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align: right !important" (click)="setActiveFeature('jaldee_token')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_token'}"
+                  src="assets/images/home/jaldee_token.svg" alt="" class="img-fluid Avatar jd_token_ic"></td>
+              <td></td>
+              <td style="text-align: left !important" (click)="setActiveFeature('jaldee_checkin')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_checkin'}"
+                  src="assets/images/home/jaldee_checkin.svg" alt="" class="img-fluid Avatar jd_checkin_ic"></td>
+            </tr>
+            <tr>
+              <td style="text-align: left !important" (click)="setActiveFeature('jaldee_appointment')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_appointment'}"
+                  src="assets/images/home/jaldee_appointment.svg" alt="" class="img-fluid Avatar jd_appt_ic"></td>
+              <td></td>
+              <td style="text-align: right !important" (click)="setActiveFeature('jaldee_comm')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_comm'}" src="assets/images/home/jaldee_comm.svg" alt=""
+                  class="img-fluid Avatar jd_comm_ic"></td>
+            </tr>
+            <tr>
+              <td style="text-align: left !important" (click)="setActiveFeature('jaldee_pos')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_pos'}"
+                  src="assets/images/home/jaldee_pos.svg" alt="" class="img-fluid Avatar jd_pos_ic"></td>
+              <td></td>
+              <td style="text-align: center !important" (click)="setActiveFeature('jaldee_pay')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_pay'}" src="assets/images/home/jaldee_pay.svg" alt=""
+                  class="img-fluid Avatar jd_pay_ic"></td>
+            </tr>
+            <tr>
+              <td style="text-align: right !important" (click)="setActiveFeature('jaldee_coupon')"><img
+                  [ngClass]="{'active': activeFeature=='jaldee_coupon'}" src="assets/images/home/jaldee_coupons.svg"
+                  alt="" class="img-fluid Avatar jd_coupon_ic"></td>
+                  <td style="text-align: right  !important" (click)="setActiveFeature('jaldee_kiosk')"><img [ngClass]="{'active': activeFeature=='jaldee_kiosk'}"
+                    src="assets/images/home/jaldee_kiosk.svg" alt=""
+                    class="img-fluid Avatar jd_kiosk_ic">
+                </td>
+              <td></td>
+             
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_online'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_online.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Create your business profile</li>
+                <li>Increase brand awareness</li>
+                <li>Create image gallery</li>
+                <li>GPS and Google map integration</li>
+                <li>Corporate site integration</li>
+                <li>Jaldee Keywords search</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_token'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_token.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Enable online token system</li>
+                <li>Your customer can get token online</li>
+                <li>Setup Jaldee Alerts</li>
+                <li>Dynamic schedule</li>
+                <li>Enable prepayment for tokens</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_checkin'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_checkin.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Online queue management</li>
+                <li>Live queue dashboard</li>
+                <li>Machine learning technology (ML) to predict queue wait time</li>
+                <li>Enable prepayments</li>
+                <li>Fill up open slots and spare capacity quickly</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_appointment'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_appointment.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Enable online appointment to get appointment requests</li>
+                <li>Your customers can request for appointments online</li>
+                <li>You can choose whether to accept or reject the request</li>
+                <li>Dynamic schedule</li>
+                <li>Technology</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_coupon'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_coupons.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Sell more services</li>
+                <li>Enable Jaldee coupons and offer attractive discounts</li>
+                <li>Jaldee reimburses the discounted amount</li>
+                <li>Attract more customers</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_comm'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_comm.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Easy and secure communication with customers</li>
+                <li>Send and receive messages from your customers</li>
+                <li>Reach out to your customers quickly</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_pos'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_pos.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>No need of a separate PoS system</li>
+                <li>Create bills</li>
+                <li>Add items, discounts, coupons etc...</li>
+                <li>Apply discounts</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_pay'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_pay.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Enable jaldee online payments and receive payments online</li>
+                <li>Collect advance payments</li>
+                <li>Accomodate more</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item features-grid" *ngIf="activeFeature=='jaldee_kiosk'">
+            <div class="features-grid-main">
+              <div><img src="assets/images/home/jaldee_kiosk.svg" alt="" class="img-fluid"></div>
+              <ul>
+                <li>Use kiosk facility and reduce the operational cost</li>
+                <li>Customer can check-in by their own</li>
+                <li>Mark as arrived</li>
+                <li>Create new Jaldee account</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="domain-info">
+    <div class="container py-xl-5 py-lg-3 p-domain-info">
+      <owl-carousel [options]="carouselDomain" [carouselClasses]="['owl-theme', 'sliding']">
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Healthcare</h6>
+            <ul>
+              <li>Let more Patients find you - Jaldee <b>integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords.</li>
+              <li>Publish your open slots and <b>spare capacity</b> online instantly</li>
+              <li>Let more and more patients fill up your open slots and spare capacity dynamically</li>
+              <li>Enable Jaldee Check-in. Let your patients <b>check-in online</b> and avoid waiting in queues</li>
+              <li>Eliminate no-show ups by enabling ‘<b>Prepayment</b> Required’ using Jaldee pay</li>
+              <li>Patient one click <b>self pay system</b></li>
+              <li>Get more <b>online enquiries</b>, so increase your patient base</li>
+              <li>Attract new patients by honouring varieties of <b>Jaldee Coupons</b></li>
+              <li>Setup <b>Jaldee Kiosk</b> to reduce administrative costs and bring patient convenience</li>
+              <li><b>Corporate website</b> integration</li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/HealthCare.jpg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Personal Care</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more customers find you - Jaldee <b>integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords</li>
+              <li>Publish your open slots and <b>spare capacity</b> online instantly</li>
+              <li>Let more and more customers fill up your open slots and spare capacity dynamically</li>
+              <li>Enable Jaldee Check-in. Let your customers <b>check-in online</b> and avoid waiting in queues</li>
+              <li>Eliminate no-show ups by enabling ‘<b>Prepayment</b> Required’ using Jaldee pay</li>
+              <li>Customer one click <b>self pay system</b></li>
+              <li>Get more <b>online enquiries,</b> so increase your customer base</li>
+              <li>Attract new customers by honouring varieties of <b>Jaldee coupons</b></li>
+              <li>Setup <b>Jaldee Kiosk</b> to reduce administrative costs and bring customer convenience</li>
+              <li>Integrated PoS and electronic receipts </li>
+              <li><b>Corporate website</b> integration</li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems </li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/personal-care.jpg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Professional Consulting</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more clients find you - Jaldee <b>integrates with google maps, mobile GPS,</b> search by
+                specializations and keywords</li>
+              <li>Publish your open slots and <b>spare capacity</b> online instantly</li>
+              <li>Let more and more clients fill up your open slots and spare capacity dynamically</li>
+              <li>Enable Jaldee Check-in. Let your clients <b>check-in online</b> and avoid waiting in queues</li>
+              <li>Eliminate no-show ups by enabling ‘<b>Prepayment</b> Required’ using Jaldee pay </li>
+              <li>Client one click <b>self pay system</b></li>
+              <li>Get more <b>online enquiries</b>, so increase your client base</li>
+              <li>Attract new clients by honouring varieties of <b>Jaldee coupons</b></li>
+              <li>Setup <b>Jaldee Kiosk</b> to reduce administrative costs and bring client convenience </li>
+              <li>Integrated PoS and electronic receipts</li>
+              <li><b>Corporate website</b> integration</li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems </li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/Proffesional.jpg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Food & Beverages</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more customers find you - Jaldee <b>integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords</li>
+              <li>Enable Jaldee order. Let your customers order online and avoid waiting in queues</li>
+              <li>Eliminate no-show up by setting up prepayments using Jaldee Pay</li>
+              <li>Get more online enquiries, so increase your client base</li>
+              <li>Attract new customers by honouring varieties of Jaldee coupon</li>
+              <li><b>Corporate website</b> integration</li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/foodand beverages-01.svg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Vastu / Astrologer</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more clients find you - Jaldee <b>integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords</li>
+              <li>Publish your open slots and <b>spare capacity</b> online instantly</li>
+              <li>Let more and more clients fill up your open slots and spare capacity dynamically</li>
+              <li>Enable Jaldee Check-in. Let your clients <b>check-in online</b> and avoid waiting in queues</li>
+              <li>Eliminate no-show ups by enabling ‘<b>Prepayment</b> Required’ using Jaldee pay </li>
+              <li>Client one click self pay system</li>
+              <li>Get more online enquiries, so increase your client base</li>
+              <li>Attract new clients by honouring varieties of <b>Jaldee coupons</b></li>
+              <li><b>Corporate website</b> integration</li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/vasthu-01.svg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Religious / Priest</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more devotees find you - <b>Jaldee integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords</li>
+              <li>Publish your open slots and <b>spare capacity</b> online instantly</li>
+              <li>Let more and more devotees fill up your open slots and spare capacity dynamically</li>
+              <li>Enable Jaldee Check-in. Let devotees <b>check-in online</b> and avoid waiting in queues</li>
+              <li>Eliminate no-show ups by enabling ‘<b>Prepayment</b> Required’ using Jaldee pay</li>
+              <li><b>Corporate website</b> integration</li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/religoues presets-01.svg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Finance / Loan / Insurance</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more customers find you - Jaldee <b>integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords</li>
+              <li>Enable Jaldee Check-in. Let your customers <b>request for your appointments</b> online and avoid
+                waiting</li>
+              <li>Get more <b>online enquiries</b>, so increase your customer base using Jaldee Comm</li>
+              <li>Setup <b>Jaldee Kiosk</b> to reduce administrative costs and bring customer convenience</li>
+              <li><b>Corporate website</b> integration </li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/bank-01.svg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+        <div class="item row">
+          <div class="col-lg-7">
+            <h6>Veterinary / Pet Care</h6>
+            <ul class="domain-info-list mt-4">
+              <li>Let more pet owners find you - <b>integrates with google maps, mobile GPS</b>, search by
+                specializations and keywords</li>
+              <li>Enable Jaldee Check-in. Let pet owners <b>check-in online</b> and avoid waiting in queues</li>
+              <li>Eliminate no-show ups by enabling ‘<b>Prepayment</b> Required’ using Jaldee pay</li>
+              <li>Get more <b>online enquiries</b>, so increase the number of pet owners</li>
+              <li>Attract new pet owners by honouring varieties of <b>Jaldee coupons</b></li>
+              <li><b>Corporate website</b> integration </li>
+              <li><b>Programmatic cloud APIs</b> to integrate with your own IT systems</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 text-right">
+            <img src="assets/images/home/pet-01.svg" alt="" class="img-fluid mt-5">
+          </div>
+        </div>
+      </owl-carousel>
+      <div class="owl-theme">
+        <div class="owl-controls">
+          <div class="custom-nav owl-nav"></div>
+        </div>
+      </div>
+      <div> <a (click)="doSignup('provider')" style="margin-bottom: 10px" class="btn button-style button-style-2 mt-sm-5 mt-4">Sign Up Now</a></div>
+    </div>
+  </section>
+  <section class="features py-5">
+    <div class="container py-xl-5 py-lg-3">
+      <h3 class="tittle text-center font-weight-bold">Jaldee Offerings</h3>
+      <div class="row pt-lg-4">
+        <div class="col-lg-4 text-center">
+          <div class="card quality">
+            <div class="card-body">
+              <div class="offer-icon functional">
+                <span class="fa fa-sliders"></span>
+              </div>
+              <h5 class="card-title mt-4 mb-3">Functionality</h5>
+              <h6 class="card-title mt-4 mb-3">Drive more customers to you</h6>
+              <p class="card-text">Your customers can find you online and view your services anytime, get token or check
+                in for your services from anywhere or request for an appointment easily</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4  text-center my-lg-0 my-3">
+          <div class="card quality">
+            <div class="card-body">
+              <div class="offer-icon afford">
+                <span class="fa fa-usd"></span>
+              </div>
+              <h5 class="card-title mt-4 mb-3">Affordability</h5>
+              <h6 class="card-title mt-4 mb-3">Get More, Pay Less </h6>
+              <p class="card-text">
+                <li>Low flat monthly fees</li>
+                <li>Guaranteed business value - Don’t pay until you see the value BYOD - no upfront big investments on
+                  hardware</li>
+
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4  text-center">
+          <div class="card quality">
+            <div class="card-body">
+              <div class="offer-icon avail">
+                <span class="fa fa-lightbulb-o"></span>
+              </div>
+              <h5 class="card-title mt-4 mb-3">Availability</h5>
+              <h6 class="card-title mt-4 mb-3">24/7 availability </h6>
+              <p class="card-text">100% cloud application. You can use it anywhere anytime Android and iOS apps for
+                consumers and providers</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4  text-center">
+          <div class="card quality">
+            <div class="card-body">
+              <div class="offer-icon support">
+                <span class="fa fa-handshake-o"></span>
+              </div>
+              <h5 class="card-title mt-4 mb-3">Supportability</h5>
+              <h6 class="card-title mt-4 mb-3">Same day responses</h6>
+              <p class="card-text">Jaldee support email, chat, call, Jaldee forums and jaldee sales rep meetings</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4  text-center">
+          <div class="card quality">
+            <div class="card-body">
+              <div class="offer-icon secure">
+                <span class="fa fa-lock"></span>
+              </div>
+              <h5 class="card-title mt-4 mb-3">Security</h5>
+              <h6 class="card-title mt-4 mb-3">Privacy, security and audit logs</h6>
+              <p class="card-text">
+                <li>SSL connection</li>
+                <li>Encryption</li>
+                <li>AAA</li>
+                <li>Data privacy</li>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="pricing-phome">
+    <div class="container text-center">
+      <h3 class="tittle font-weight-bold">Jaldee Pricing</h3>
+      <div class="row" *ngIf="activePrice == ''">
+        <!-- <div class="scroll"> -->
+        <div class="jd-pricing">
+          <table align="center">
+            <tr>
+              <th class="th1 headcol lic_metric">Licensable metrics</th>
+              <td class="th2 long head_bg">FREE</td>
+              <td class="long head_bg">Silver</td>
+              <td class="th3 long head_bg">Gold</td>
+              <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
+              <td class="th5 long head_bg">Ruby</td>
+              <td class="th6 long head_bg">Diamond</td>
+            </tr>
+            <tr>
+              <th class="th3 headcol">Price(Rs/Month)</th>
+              <td class="th2 light-col long">FREE</td>
+              <td class="brozelicensecol long">499 Rs</td>
+              <td class="th3 light-col long">1499 Rs</td>
+              <td class="th4 brozelicensecol long">2999 Rs</td>
+              <td class="th5 light-col long">5999 Rs</td>
+              <td class="th6 brozelicensecol long">7999 Rs</td>
+            </tr>
+            <tr>
+              <th class="td1  headcol">Jaldee Business Listing</th>
+              <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <th class="td1  headcol">Public searches <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'[Business name, domain, subdomain, specializations,
+                keywords etc..]'"></i></th>
+              <td class="td2 light-col long">Unlimited</td>
+              <td class="brozelicensecol long">Unlimited</td>
+              <td class="td3 light-col long">Unlimited</td>
+              <td class="td4 brozelicensecol long">Unlimited</td>
+              <td class="td5 light-col long">Unlimited</td>
+              <td class="td6 brozelicensecol long">Unlimited</td>
+            </tr>
+            <tr>
+              <th class="td1  headcol">Business profile detailed views</th>
+              <td class="td2 light-col long">20 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'30 per month'"></i></td>
+              <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'300 per month'"></i></td>
+              <td class="td3 light-col long">50 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'1000 per month'"></i></td>
+              <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
+              <td class="td5 light-col long">300 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'5000 per month'"></i></td>
+              <td class="td6 brozelicensecol long">Unlimited</td>
+            </tr>
+            <tr>
+              <th class="td1  headcol">Number of Transactions <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
+                appointment-
+                both online and walk-ins together)'"></i></th>
+              <td class="td2 light-col long">20 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'30 per month'"></i></td>
+              <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'300 per month'"></i></td>
+              <td class="td3 light-col long">50 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'500 per month, Unlimited for 2019'"></i></td>
+              <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month, Unlimited for 2019'"></i></td>
+              <td class="td5 light-col long">250 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'2500 per month, Unlimited for 2019'"></i></td>
+              <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
+            </tr>
+            <tr>
+              <th class="td1  headcol">Jaldee coupons</th>
+              <td class="td2 light-col long">Only sign up coupons</td>
+              <td class="brozelicensecol long">Only sign up coupons</td>
+              <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
+              <td class="td4 brozelicensecol long">Sign up coupons + 2 <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
+              <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
+              <td class="td6 brozelicensecol long">Sign up coupons + 5 <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
+            </tr>
+            <tr>
+              <th class="td1  headcol">Customised coupons</th>
+              <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td5 light-col long">1 per month</td>
+              <td class="td6 brozelicensecol long">2 per month</td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Jaldee POS</th>
+              <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Jaldee pay / Billing</th>
+              <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Custom URL</th>
+              <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Storage (image upload)</th>
+              <td class="td2 light-col long">10 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(eg.10 images - 1mb)'"></i></td>
+              <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(eg.20 images - 1mb)'"></i></td>
+              <td class="td3 light-col long">40 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(eg.40 images - 1mb)'"></i></td>
+              <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(eg.100 images - 1mb)'"></i></td>
+              <td class="td5 light-col long">250 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(eg.250 images - 1mb)'"></i></td>
+              <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(eg.1000 images - 1mb)'"></i></td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Jaldee Keywords</th>
+              <td class="td2 light-col long">0</td>
+              <td class="brozelicensecol long">0</td>
+              <td class="td3 light-col long">2</td>
+              <td class="td4 brozelicensecol long">5</td>
+              <td class="td5 light-col long">10</td>
+              <td class="td6 brozelicensecol long">25</td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Kiosk</th>
+              <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
+              <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Number of users</th>
+              <td class="td2 light-col long">1</td>
+              <td class="brozelicensecol long">1</td>
+              <td class="td3 light-col long">1</td>
+              <td class="td4 brozelicensecol long">upto 5</td>
+              <td class="td5 light-col long">upto 20</td>
+              <td class="td6 brozelicensecol long">upto 100</td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(pay only 99 Rs for the
+                current
+                billing month if all below three are true<br> 1) In last 90 days no transactions made<br> 2) In
+                last
+                90 days none viewed business profile details<br> 3) In last 90 days Not once found in searches)'"></i>
+              </th>
+              <td class="td2 light-col long">NA</td>
+              <td class="brozelicensecol long">NA</td>
+              <td class="td3 light-col long">Yes</td>
+              <td class="td4 brozelicensecol long">Yes</td>
+              <td class="td5 light-col long">Yes</td>
+              <td class="td6 brozelicensecol long">Yes</td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
+              <td class="td2 light-col long">Option not available</td>
+              <td class="brozelicensecol long">3 Rs</td>
+              <td class="td3 light-col long">3 Rs</td>
+              <td class="td4 brozelicensecol long">2 Rs</td>
+              <td class="td5 light-col long">1.5 Rs</td>
+              <td class="td6 brozelicensecol long">1 Rs</td>
+            </tr>
+            <tr>
+              <th class="td1 headcol">Jaldee verification</th>
+              <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+              <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+              <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+              <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <section class="contact">
+    <div class="container py-xl-5 py-lg-3">
+      <div class="subscribe mx-auto">
+        <h2 class="tittle text-center font-weight-bold">Do you want to contact our sales rep ? </h2>
+        <div class="icon-effect-w3">
+          <span class="fa fa-envelope"></span>
+        </div>
+        <p class="sub-tittle text-center mt-3  mb-4">support@jaldee.com</p>
+        <div class="icon-effect-w3">
+          <span class="fa fa-phone"></span>
+        </div>
+        <p class="sub-tittle text-center mt-3 mb-4">0487-2325650</p>
+      </div>
+    </div>
+  </section> -->
+</section>
+<app-footer [includedfrom]="'phome'"></app-footer>

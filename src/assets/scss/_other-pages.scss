@@ -1,0 +1,444 @@
+/***** Common Pages #### */
+
+.content {
+    
+    .static-outer {
+        .static-mainheader {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .p-subouter {
+            margin-bottom: 1.2rem;
+            
+            p {
+                margin-bottom: 1.2rem;
+            }
+            
+            div, p, ul li, ol li {
+                font-size: 1rem;
+                letter-spacing: .3px;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: lighten($linkblack, 20%);
+            }
+            
+            ul {           
+                padding-left: 20px;
+
+                li {
+                    margin-bottom: 1.125em;
+                    list-style: none;
+                    position: relative;
+                    padding-left: 1.25em;
+
+                    &:before {
+                        font-family: "custom-ynw";
+                        font-style: normal;
+                        font-weight: normal;
+                        font-variant: normal;
+                        text-transform: none;
+                        content: "\67";
+                        position: absolute;
+                        left: 3px;
+                        font-size: .55rem;
+                        top: 4px;
+                    }
+
+                }
+
+            }
+        }
+    }
+    
+    &.see-pages {
+        
+        .outer-card {
+            display: flex;
+            width: 100% !important;
+            
+            @include respond-to(ynw-575) {
+                flex-direction: column;
+            }
+
+            .card {
+                width: 60%;
+                
+                @include respond-to(ynw-575) {
+                    margin-bottom: 30px;
+                    width: 100%;
+                }
+                
+                .form-group {
+                    .col-form-label {
+                        padding: 0;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .form-control {
+                        width: 50%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%;
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%;
+                        }
+                    }
+                    
+                    .pickerouter {
+                        display: flex;
+
+                        input[type="text"] {
+                            width: 120px;
+                            padding: .375rem .75rem;
+                        }
+
+                        .mat-datepicker-toggle {
+                            @include border-radius(50px);
+                            background: $linkblue;
+                            margin-right: 15px;
+
+                            .mat-icon-button {
+                                height: 38px;
+                                line-height: 38px;
+                                
+                                svg {
+                                    color: $white;
+                                }
+                            }
+                        }
+                    }
+                    
+                    .mat-radio-group {
+                        .mat-radio-button {
+                            @include font-regular;
+                            margin-right: 10px;
+                        }
+                    }
+                    
+                    .verified {
+                        position: relative;
+                        margin-top: 10px;
+                        padding-left: 20px;
+                        
+                        &:before {
+                            content: "\24";
+                            position: absolute;
+                            @include font-custom;
+                            left: 0;
+                            top: 0;
+                            color: $green;
+                            font-size: 1rem;
+                        }
+                        
+                    }
+                    
+                    app-field-error-display {
+                        .sts-msg {
+                            &.error {
+                                padding:5px;
+                                background: transparent;
+                                color: $cc-red;
+                                font-size: .625rem;
+                                font-weight: 500;
+                                text-align: left;
+                            }
+                            &.success {
+                                padding:5px;
+                                background: transparent;
+                                color: $green;
+                                font-size: .625rem;
+                                font-weight: 500;
+                                text-align: left;
+                            }
+                        }
+                    }
+                    
+                }
+                
+                .innercard {
+                    display: flex;
+                    
+                    @include respond-to(ynw-767) {
+                        flex-direction: column;
+                    }
+                    @include respond-to(ynw-768-991) {
+                        flex-direction: column;
+                    }
+                    
+                    .form-group {
+                        .form-control {
+                            width: 100%;
+                        }    
+                    }
+                    
+                    .leftcard, .cardright {
+                        width: 50%;
+                        
+                        @include respond-to(ynw-767) {
+                            width: 100%
+                        }
+                        @include respond-to(ynw-768-991) {
+                            width: 100%
+                        }
+                    }
+                    .cardright {
+                        .grayouter {
+                            padding-left: 40px;
+                            
+                            @include respond-to(ynw-767) {
+                                padding-left: 0;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                padding-left: 0;
+                            }
+                            
+                            .info-lst {
+                                padding: 0px 0 0 20px;
+                                background: url(../images/icon-bulb.svg) no-repeat scroll 0 0/16px 16px;
+                                margin-top: 5px;
+                                
+                                li {
+                                    color: $cc-mediumgray;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                .d-tbl {
+                    .addbt {
+                        margin-top: 0px;
+                        font-weight: 500;
+                    }
+                    
+                    .table {
+                        margin-bottom: 0;
+                        
+                        tbody {
+                            tr {
+                                td {
+                                    &.mre {
+                                        text-align: center;
+                                        
+                                        .mbt {
+                                            top: -10px;
+                                            
+                                            @include respond-to(ynw-767){
+                                                display: none;
+                                            }
+                                            
+                                            &:before {
+                                                display: none;
+                                            }
+                                        }
+                                        .mbt-mobile-show {
+                                                width: 100%;
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                display: none;
+                                                
+                                                @include respond-to(ynw-767){
+                                                    display: block;
+                                                    text-align: right;
+                                                }
+
+                                                .editcls, .deletecls {
+                                                    position: relative;
+                                                    border: none;
+                                                    background: transparent;
+                                                    padding-left: 20px;
+                                                    font-weight: 500;
+                                                    margin-right: 15px;
+                                                    cursor: pointer;
+
+                                                    &:before {
+                                                        @include font-custom;
+                                                        content: "\78";
+                                                        position: absolute;
+                                                        left: 0;
+                                                        font-size: .875rem;
+                                                    }
+                                                }
+
+                                                .deletecls {
+                                                    margin-right: 0;
+
+                                                    &:before {
+                                                        content: "\4b";
+                                                    }
+                                                }
+
+                                                @include respond-to(ynw-768-991) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-992-1199) {
+                                                    display: none;
+                                                }
+                                                @include respond-to(ynw-1200) {
+                                                    display: none;
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                .example-container {                    
+                    .mat-dialog-content {
+                        padding: 0;
+                        overflow: visible;
+                        
+                        .mat-input-element {
+                            width: 50%;
+
+                            @include respond-to(ynw-767) {
+                                width: 100%;
+                            }
+                            @include respond-to(ynw-768-991) {
+                                width: 100%;
+                            }
+                        }
+                    }
+                    .mat-dialog-actions {
+                        box-shadow: none;
+                        padding: 0;
+                        margin-top: 20px;
+                        display: flex;
+                        align-items: center;
+                        
+                        button {
+                            margin-right: 15px;
+                        }
+                        
+                        .resendouter {
+                            margin-top: 0;
+                        }
+                        .counter-outer {
+                            font-size: .875rem;
+                            
+                            .counter {
+                                font-size: 1rem;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                    
+                    &.otpouter {
+                        .mat-dialog-actions{
+                            flex-direction: column;
+                            align-items: flex-start;
+                            
+                            button {
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+                }
+
+                app-form-success-display {
+                    .sts-msg {
+                        &.success {
+                            margin-top: 15px;
+                        }
+                    }
+                }
+                
+                &.members-card {
+                    width: 75%;
+                }
+            }
+            
+            .right-menu {
+                flex-grow: 1;
+                margin-left: 40px;
+                
+                @include respond-to(ynw-575) {
+                    margin-left: 0;
+                }
+                
+                .right-menu-header {
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+                
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    
+                    li {
+                        list-style: none;
+                        font-size: .875rem;
+                        color: $linkblue;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        display: table;
+                        padding-left: 30px;
+                        position: relative;
+                        
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            top: 3px;
+                        }
+                    }
+                }
+            }
+            
+            .mat-dialog-actions {
+
+                &:last-child {
+                    margin: 0;
+                    padding: 20px 0;
+                }
+            }
+        }
+    }
+    &.comn-cls {
+        .copy {
+            .no-msg {
+                padding: 20px;
+                font-size: .875rem;
+                color: $cc-mediumgray;
+                text-align: center;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

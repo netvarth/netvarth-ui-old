@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+
+.search_autocompletehighlight {
+    font-weight: bold;
+  }
+ .mat-optgroup-label {
+   background-color: #000;
+   color: #FFF !important;
+   font-weight: bold;
+ }
+ .width-100 {
+   width: 100%;
+ }
+
+ #pac-input{
+    margin: 10px 14px;
+    height: 30px;
+ }
+
+ .pac-container{
+    z-index: 9999!important;
+
+    position: fixed!important;
+  }
+
+  .pointer-cursor {
+    cursor: pointer;
+  }
+
+ /* location detail page */
+ .cst-acc .mat-expansion-panel-header {
+    padding-left: 0px;
+  }
+
+  .cst-acc .mat-expansion-panel-body
+  {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .cst-acc .mat-expansion-panel-content {
+    font-family: inherit;
+  }
+    /* location detail page */
+
+  /* image upload */
+
+  .select-wrapper {
+    background: url(assets/images/add_image_icon.svg) no-repeat;
+    background-size: cover;
+    display: block;
+    position: relative;
+    width: 33px;
+    height: 26px;
+  }
+  #image_src {
+    width: 26px;
+    height: 26px;
+    margin-right: 100px;
+    opacity: 0;
+    cursor: pointer;
+    filter: alpha(opacity=0); /* IE 5-7 */
+  }
+
+  /* image upload */
+
+  .commonpopupmainclass.width-100 {
+    width: 100% ;
+  }

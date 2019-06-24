@@ -1,0 +1,3782 @@
+// #### Popup Styles
+.cdk-overlay-container {
+    .cdk-overlay-dark-backdrop {
+        background: rgba(0, 0, 0, .6);
+    }
+    .mat-dialog-container {
+        @include box-shadow(0, 0, 10px, rgba(0, 0, 0, .1));
+        @include border-radius(5px);
+        padding: 0;
+        overflow: hidden;
+
+        form {
+
+            .form-header {
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+
+            .form-group {
+                margin-bottom: 1.25em;
+            }
+        }
+        .mat-select-content {
+            background: red !important;
+            .mat-option {
+                padding: 0 10px;
+                @include font-regular;
+                font-size: .875rem;
+                font-weight: 500;
+            }
+        }
+        .search_provider {
+            .create_new {
+                padding: 20px;
+                font-weight: 500;
+                color: $cc-red;
+                padding-top: 0;
+                
+                .cs-btn {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+
+    .mat-select-panel {
+        box-shadow: none !important;
+        @include font-regular;
+        font-size: .875rem;
+        font-weight: 500;
+        border: 1px solid #e6e6e6;
+        /*max-height: 100%;*/
+        .mat-selected {
+            background: $linkblue !important;
+            color: $white !important;
+            
+            .mat-option-text {
+                .fb, .tw, .lkd, .ytb, .gpl, .pntr {
+                    color: $white;
+                }
+            }
+        }
+
+        .mat-option-text {
+            @include font-regular;
+            font-weight: 500;
+            
+            .fb, .tw, .lkd, .ytb, .gpl, .pntr {
+                font-size: 1.25rem;
+                vertical-align: text-bottom;
+            }
+            .fb{
+                color: #627aac;
+            }
+            .tw{
+                color: #5eb0fb;
+            }
+            .lkd{
+                color: #02a2c2;
+            }
+            .ytb{
+                color: #ef452f;
+            }
+            .gpl{
+                color: #ef452f;
+            }
+            .pntr{
+                color: #ef452f;
+            }
+        }
+    }
+
+    .mat-autocomplete-panel {
+        box-shadow: none !important;
+        border: 1px solid #e6e6e6;
+        max-height: 482px;
+
+        .mat-option {
+            @include font-regular;
+            font-size: .875rem;
+            font-weight: 500;
+            padding: 0 10px;
+        }
+
+        .mat-optgroup {
+            .mat-optgroup-label {
+                background: $linkblue;
+                color: $white;
+                @include font-regular;
+                font-size: .875rem;
+                font-weight: 600 !important;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+// #### Customized Popups
+.signupmainclass,
+.loginmainclass,
+.moreoptionsmainclass,
+.forgotpasswordmainclass,
+.commonpopupmainclass,
+.googlemainmappopup, .outer-card, .consumerpopupmainclass, .specialclass {
+    width: 600px !important;
+
+    div,
+    label,
+    input {
+        @include font-regular;
+        font-size: .875rem;
+        font-weight: 500;
+        
+        .mat-slide-toggle-content {
+            @include font-regular;
+            font-weight: 500;
+        }
+    }
+    
+    // Popup header section
+    .mat-dialog-title {
+        margin: 0;
+        padding: 15px 20px;
+        @include font-medium;
+        font-size: 1.25rem;
+        font-weight: 600;
+        @include left-gradient(#1873f2, #00aef2);
+        color: $white;
+        position: relative;
+
+        .modal_close {
+            position: absolute;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: $white;
+            right: 0px;
+            top: 50%;
+            margin-top: -30px;
+            z-index: 121;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i {
+                display: flex;
+
+                &:before {
+                    @include font-custom;
+                    content: "\69";
+                    font-size: 1rem !important;
+                    width: 20px;
+                    height: 20px;
+                    font-weight: 600;
+                }
+            }
+        }
+        
+        @include respond-to(ynw-575) {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            
+            .modal_close {
+                margin-top: -24px;
+                height: 51px;
+                
+                i {
+                    margin-top: 4px;
+                }
+            }
+        }
+    }
+    
+    // Popup body section
+    .mat-dialog-content {
+        margin: 0;
+        padding: 20px;
+        overflow: auto;
+
+        .form-group {            
+            
+            // Messages shown under input fields
+            .sts-msg {
+                font-weight: 500;
+                font-size: .625rem;
+                padding: 5px;
+                background: transparent;
+                text-align: left;
+
+                &.error {
+                    color: $cc-red;
+                }
+            }
+            
+            // Dropdown Select Box Styles
+            .mat-form-field {
+                width: 100%;
+
+                .mat-form-field-wrapper, .mat-form-field-wrapper {
+                    padding: 0;
+                    margin: 0;
+                    
+                    .mat-form-field-prefix {
+                        align-self: center;
+                        
+                        .rupee {
+                            font-size: 1.5rem;
+                        }
+                    }
+
+                    .mat-form-field-infix, .mat-form-field-infix {
+                        margin: 0;
+                        padding: 0;
+                        border: none;
+
+                        .mat-form-field-label {
+                            display: none;
+                        }
+
+                        .mat-select {
+                            padding: 10px;
+                            height: 40px;
+                            background: $cc-inputbg;
+                            border: 1px solid $cc-formborder;
+                            
+                            &:focus {
+                                @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                border: 1px solid $linkblue;
+                                background: $white;
+                            }
+                        }
+                        
+                        .valfield {
+                            width: 100px;
+                        }
+                    }
+
+                    .mat-form-field-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                        display: none;
+                    }
+                }
+            }
+            
+            .expl {
+                color: $cc-mediumgray;
+                font-size: .75rem;
+                margin-top: 5px;
+                display: inline-block;
+            }
+            
+            .example-section {
+                mat-checkbox {
+                    label {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            
+            .schselectall {
+                i {
+                    padding: 5px 0;
+                    @include font-medium;
+                    margin-bottom: 5px;
+                    color: $linkblue;
+                    cursor: pointer;
+                    
+                    &:before {
+                        font-family: 'fontAwesome';
+                    }
+                }
+            }
+            
+            .service-section, .schedule-section {
+                display: flex;
+                flex-wrap: wrap;
+                
+                .mat-checkbox {
+                    margin: 0 20px 0 0;
+                    
+                    .mat-checkbox-inner-container {
+                        margin-top: 3px;
+                    }
+                    .mat-checkbox-label {
+                        white-space: pre-wrap;
+                    }
+                }
+            }
+            
+            // Start and End Time Styles
+            .startendtime {
+                margin-bottom: 20px;
+                display: flex;
+                flex-wrap: wrap;
+
+                .starttimediv, .endtimediv {
+                    flex-grow: 1;
+
+                    fieldset {
+                        .form-control {
+                            @include border-radius(0);
+                            background: $white;
+                            @include font-regular;
+                            font-size: 0.875rem;
+                            color: $cc-darkgray;
+                            text-overflow: ellipsis;
+
+                            &:focus {
+                                @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                border: 1px solid $linkblue;
+                                background: $white;
+                            }
+                        }
+                        .ngb-tp-hour,
+                        .ngb-tp-minute {
+                            input[type="text"] {
+                                background: $cc-inputbg;
+                                border: 1px solid $cc-formborder;
+                                height: 35px;
+                                
+                                &:focus {
+                                    @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                    border: 1px solid $linkblue;
+                                    background: $white;
+                                }
+                            }
+                            .btn-link {
+                                display: flex;
+
+                                &:first-child {
+                                    .chevron {
+                                        width: 16px;
+                                        height: 16px;
+
+                                        &:before {
+                                            border: none;
+                                            content: "\66";
+                                            @include font-custom;
+                                            color: $linkblue;
+                                            display: flex;
+                                            transform: rotate(0);
+                                            font-size: 1rem;
+                                            font-weight: 700;
+                                            align-items: center;
+                                        }
+                                    }
+                                }
+                                &:last-child {
+                                    .chevron.bottom {
+                                        width: 16px;
+                                        height: 16px;
+
+                                        &:before {
+                                            border: none;
+                                            content: "\72";
+                                            @include font-custom;
+                                            color: $linkblue;
+                                            display: flex;
+                                            transform: rotate(0);
+                                            font-size: 1rem;
+                                            font-weight: 700;
+                                        }
+                                    }
+                                }
+                                &:hover,
+                                &:focus,
+                                &:active {
+                                    text-decoration: none;
+                                }
+                            }
+                        }
+                        .ngb-tp-meridian {
+                            .btn-outline-primary {
+                                border-color: $linkblue;
+                                color: $linkblue;
+                                font-weight: 600;
+                                font-size: .875rem;
+
+                                &:hover {
+                                    background: $linkblue;
+                                    color: $white;
+                                }
+                                &:focus {
+                                    outline: none;
+                                    box-shadow: none;
+                                }
+                            }
+                        }
+                        &:first-child {
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+
+
+            }
+            
+            &.inline {
+                display: flex;
+                align-items: center;
+
+                .mat-slide-toggle {
+                    margin-left: 15px;
+                }
+            }
+            &.bold {
+                label {
+                    font-weight: 600;
+                }
+            }
+            
+            &.mobilecont {
+                .phoneprefix {
+                    width: 10%;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: $cc-formborder;
+                    float: left;
+                }
+                input[type="text"] {width: 90%;}
+            }
+            
+            &.agree {
+                .mat-checkbox  {
+                    label {
+                        margin-bottom: 0;
+                    }
+                }
+                .terms-link {
+                    height: 20px;
+                    display: inline-block;
+                    margin-left: 5px;
+                    font-size: .75rem;
+                }
+            }
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+            
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+        }
+
+        .mat-form-field {
+            width: 100%;
+
+            .mat-form-field-wrapper, .mat-form-field-wrapper {
+                padding: 0;
+                margin: 0;
+
+                .error-msg {
+                    color: $cc-red;
+                }
+
+                .mat-form-field-infix, .mat-form-field-infix {
+                    margin: 0;
+                    padding: 0;
+                    border: none;
+
+                    .mat-form-field-label {
+                        display: none;
+                    }
+
+                    .mat-input-element {
+                        padding: 10px;
+                        background: $cc-inputbg;
+                        border: 1px solid $cc-formborder;
+                        height: 40px;
+                        
+                        &.nofocus {
+                            pointer-events: none;
+                            cursor: default;
+                            background: $cc-body;
+                        }
+
+                        &:focus {
+                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                            border: 1px solid $linkblue;
+                            background: $white;
+                        }
+                    }
+                    .mat-select {
+                        padding: 10px;
+                        height: 40px;
+                        background: $cc-inputbg;
+                        border: 1px solid $cc-formborder;
+
+                        &:focus {
+                            @include box-shadow(0, 0, 1px, $linkblue, inset);
+                            border: 1px solid $linkblue;
+                            background: $white;
+                        }
+                        
+                        .mat-select-trigger {
+                            margin-top: 2px;
+                            
+                            .mat-select-arrow {
+                                color: $cc-black;
+                                border: none;
+                                position: relative;
+                                width: 10px;
+                                height: 10px;
+                                font-size: .65rem;
+                                font-weight: 700;
+                                display: flex;
+                                align-items: center;
+                                margin: 0;
+
+                                &:after {
+                                    @include font-custom;
+                                    content: "\72";
+                                    position: absolute;
+                                    right: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .mat-form-field-underline, .mat-form-field-underline, .mat-form-field-subscript-wrapper {
+                    display: none;
+                }
+            }
+        }
+
+        .form-group-packages {
+            .col-form-label {
+                font-weight: 600;
+            }
+            .mat-radio-group {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+
+                .mat-radio-button {
+                    margin-right: 0;
+                    padding: 10px;
+
+                    .mat-radio-label {
+                        border: none;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+        
+        .itemtopouter {
+            margin-bottom: 1.25em;
+            display: flex;
+            
+            .galul {
+                margin-right: 15px;
+                li {
+                    width: auto;
+                    
+                    .galimg_outer {
+                        padding: 0;
+                    }
+                }
+            }
+            
+            .upload-doc {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                
+                label {
+                    margin-bottom: 0px;
+                    cursor: pointer;
+                }
+                .select-wrapper  {
+                    width: auto;
+                    height: auto;
+                    margin: 0 0 0 15px;
+                    
+                    &:before {
+                        height: 20px;
+                    }
+                }
+                &.imageexist {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    
+                    label {
+                        margin-bottom: 20px;
+                    }
+                    
+                    .select-wrapper  {
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+            }
+            
+            > div {
+                width: 40%;
+            }
+        }
+
+        .custom-select {
+            background-color: $cc-formbg;
+            border-radius: 0;
+            border: 0;
+            box-shadow: none;
+
+            option {
+                padding: 10px;
+            }
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+
+            label {
+                cursor: pointer;
+            }
+        }
+
+        .custom-control {
+            padding-left: 0;
+        }
+        
+        .mat-radio-group {
+            .mat-radio-button {
+                margin-right: 20px;
+            }  
+        }
+        
+        // Service Details
+        .servicedet_outer {
+            display: flex;
+            margin-bottom: 0px;
+            
+            .img-outer {
+                margin-right: 15px;
+                
+                .pro-img {
+                    width: 80px;
+                    height: 80px;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                    
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .gal {
+                    margin: 0;
+                    padding: 0;
+                    width: 80px;
+                    
+                    li {
+                        list-style: none;
+                        margin-bottom: 10px;
+                        
+                        .galbx {
+                            position: relative;
+                            width: 80px;
+                            height: 80px;
+                            cursor: pointer;
+                            
+                            .overlay {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                background: rgba(0, 0, 0, 0.5);
+                                color: $white;
+                                font-weight: 600;
+                                visibility: visible;
+                                opacity: 1;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1.125rem;
+                            }
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                position: absolute;
+                            }
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+            
+            .outer {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                
+                .outer1, .outer2, .outer3, .outer4 {
+                    width: 100%;
+                    display: flex;
+                    margin-bottom: 15px;
+                    
+                    .name, .duration, .price, .prepayment, .description {
+                        width: 50%;
+                        
+                        .caption {
+                            display: block;
+                            color: $cc-mediumgray;
+                        }
+                        .dispvalue {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
+                    .price, .prepayment, .description {
+                        width: 100%;
+                    }
+                }
+                .outer4 {
+                    margin-bottom: 0;
+                }
+            }
+            &.ng-star-inserted {
+                margin-bottom: 0px;
+            }
+        }
+        
+        // C-Checkins table
+        .c-checkin {
+            .d-tbl {
+                .table {
+                    margin-bottom: 0;
+                    
+                    tbody {
+                        tr {
+                            .chk-service {
+                                .schedulediv {
+                                    @include respond-to(ynw-767) {
+                                       width: 55%; 
+                                    }
+                                }
+                            }
+                            .chk-cancel {
+                                .icon-delete {
+                                    cursor: pointer;
+                                    @include transition(all 300ms);
+                                    
+                                    &:hover {
+                                        color: $cc-red;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Date Picker
+        .pickerouter {
+            display: flex;
+            /*height: 26px;
+            width: 26px;*/
+            
+            input[type="text"] {
+                width: 100px;
+            }
+            
+            .mat-datepicker-toggle {
+                margin-right: 15px;
+                
+                button {
+                    height: 38px;
+                    background: $linkblue;
+                    
+                    svg {
+                        fill: $white;
+                    }
+                }
+            }
+        }
+        
+        .audit_outer {
+            border: 1px solid $cc-ash;
+
+            .table {
+                margin-bottom: 0;
+            }
+            
+            @include respond-to(ynw-575) {
+                overflow-x: scroll;
+            }
+        }
+
+        > .ng-star-inserted {
+            margin-bottom: 20px;
+            
+            .refine_subheader {
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+        }
+        
+        // Bill Popup
+        .group-outer {
+            .bill-basic {
+                border: 1px solid $cc-body;
+                display: flex;
+                flex-wrap: wrap;
+
+                .btl {
+                    flex-grow: 1;
+                    padding: 10px;
+                    border: 1px solid $cc-body;
+
+                    .label {
+                        color: $cc-mediumgray;
+                        display: block;
+                    }
+                    .label-valu {
+                        font-weight: 600;
+                    }
+                }
+            }
+            .search {
+                width: 280px;
+
+                .mat-form-field {
+                    .mat-form-field-wrapper {
+                        .mat-form-field-infix {
+                            .col-form-label {
+                                padding: 0px;
+                                margin-bottom: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            .bill-tbl {
+                padding: 0;
+                
+                .paymentlogs {
+                    margin-bottom: 5px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    color: $linkblue;
+                }
+                
+                .table {
+                    tbody {
+                        tr {
+                            td {
+                                input[type="number"] {
+                                    width: 55px;
+                                    padding: 2px 2px 2px 8px;
+                                    border: 1px solid $linkblue;
+                                }
+                                
+                                .form-group {
+                                    margin-bottom: 0;
+                                    
+                                    .mat-form-field {
+                                        width: 100px;
+
+                                        .mat-form-field-wrapper {
+                                            padding: 0;
+                                            margin: 0;
+
+                                            .mat-form-field-infix {
+                                                margin: 0;
+                                                padding: 0;
+                                                border: none;
+
+                                                .mat-form-field-label {
+                                                    display: none;
+                                                }
+
+                                                .mat-select {
+                                                    padding: 10px;
+                                                    height: 30px;
+                                                    background: $cc-formbg;
+                                                    
+                                                    .mat-select-trigger {
+                                                        top: -4px;
+                                                        font-size: .75rem;
+                                                        
+                                                        .mat-select-value {
+                                                            font-size: .75rem;
+                                                        }
+                                                        
+                                                        .mat-select-arrow {
+                                                            top: 1px;
+                                                            
+                                                            &:after {
+                                                               font-size: .5rem; 
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                }
+                                            }
+
+                                            .mat-form-field-underline {
+                                                display: none;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                &.delete {
+                                    button {
+                                        position: relative;
+                                        border: none;
+                                        background: transparent;
+                                        font-size: .75rem;
+                                        padding: 3px;
+                                        padding-left: 20px;
+                                        cursor: pointer;
+                                        @include transition(all 300ms);
+                                        width: 40px;
+                                        overflow: hidden;
+                                        text-indent: 25px;
+                                        
+                                        &:before {
+                                            @include font-custom;
+                                            content: "\4b";
+                                            position: absolute;
+                                            font-size: 1rem;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            left: 0;
+                                            width: 16px;
+                                            height: 16px;
+                                        }
+                                        
+                                        &:hover {
+                                            color: $cc-red;
+                                        }
+                                    }
+                                }
+                                
+                                &:nth-of-type(3) {
+                                    input[type="number"] {
+                                        width: 100px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                .bill-discount, .bill-coupon {
+                    text-align: right;
+                    margin-bottom: 0;
+                    margin-top: 5px;
+                    
+                    .total {
+                        .label, .label-valu {
+                            font-size: .75rem;
+                            color: $cc-gray;
+                            font-weight: 600;
+                        }
+                    }
+                }
+                .bill-coupon {
+                    margin-bottom: 15px;
+                }
+            }
+            .log-tbl {
+                padding: 15px 0 1rem;
+                /*border-bottom: 1px dashed $cc-ash;*/
+                
+                p {
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+                
+                .table {
+                    margin-bottom: 0;
+                    
+                    thead {
+                        tr {
+                            th {
+                                &:first-child {
+                                   width: 20%; 
+                                }
+                            }
+                        }
+                    }
+                    tbody {
+                        tr {
+                            background: $white;
+                            
+                            td {
+                                .mat-button {
+                                    &.update {
+                                        float: right;
+                                        margin-right: 0 !important;
+                                        background: $white !important;
+                                        border: 1px solid $linkblue !important;
+                                        color: $linkblue !important;
+                                        font-size: .75rem !important;
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                            
+                            &.refundtr {
+                                td {
+                                    min-height: 30px;
+                                    border-top: none;
+                                    color: $cc-mediumgray;
+                                    padding: .45em .75em;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .bill-total {
+                display: flex;
+                margin-bottom: 0;
+                
+                @include respond-to(ynw-767) {
+                    flex-direction: column;
+                }
+                
+                .total, .discount, .coupon, .topay {
+                    color: $cc-gray;
+                    font-size: .75rem;
+                    /*padding: 10px;*/
+                    
+                    .col-form-label {
+                        margin-bottom: 5px;
+                        padding: 0;
+                        font-size: .875rem;
+                        font-weight: 500;
+                    }
+                    
+                    .label {
+                        font-size: .875rem;
+                        display: block;
+                    }
+                    .label-valu {
+                        font-weight: 600;
+                        text-align: left;
+                    }
+                }
+                .discount, .coupon {
+                    width: 200px;
+                    
+                    .mat-form-field {
+
+                        .mat-form-field-wrapper {
+                            padding: 0;
+                            margin: 0;
+
+                            .mat-form-field-infix {
+                                margin: 0;
+                                padding: 0;
+                                border: none;
+
+                                .mat-form-field-label {
+                                    display: none;
+                                }
+                                
+                                .col-form-label {
+                                    font-size: .75rem;
+                                }
+
+                                .mat-select {
+                                    padding: 10px;
+                                    height: 30px;
+                                    background: $cc-formbg;
+
+                                    .mat-select-trigger {
+                                        top: -4px;
+                                        font-size: .75rem;
+
+                                        .mat-select-value {
+                                            font-size: .75rem;
+                                        }
+
+                                        .mat-select-arrow {
+                                            top: 1px;
+
+                                            &:after {
+                                               font-size: .5rem; 
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            .mat-form-field-underline {
+                                display: none;
+                            }
+                        }
+                    }
+                    
+                    &.form-group {
+                        margin-bottom: 0;
+                    }
+                }
+                .total {
+                    color: $linkblack;
+                    font-size: .875rem;
+                    padding: 0;
+                    width: 100%;
+                    text-align: right;
+                    
+                    .label {
+                        display: inline-block;
+                        font-weight: 600;
+                    }
+                    .label-valu {
+                        margin-left: 5px;
+                    }
+                }
+                .topay {
+                    margin-bottom: 0;
+                    flex-grow: 1;
+                    text-align: right;
+                    
+                    .label {
+                        font-weight: 600;
+                        color: $linkblack;
+                    }
+                    .label-valu {
+                        color: $green;
+                        font-weight: 600;
+                        font-size: 1.25rem;
+                    }
+                }
+                .discount {
+                    margin-right: 20px;
+                }
+                
+                .pay-tbl {
+                    padding: 0;
+                    width: 100%;
+                    
+                    .table {
+                        margin-bottom: 0;
+                        border: none;
+                        width: 300px;
+                        margin-left: auto;
+                        
+                        tbody {
+                            tr {
+                                @include respond-to(ynw-767) {
+                                    padding: 0;
+                                    display: flex;
+                                }
+                                th, td {
+                                    @include respond-to(ynw-767) {
+                                        display: inline-block;
+                                        min-height: auto;
+                                        
+                                        &:before {
+                                            display: none;
+                                        }
+                                    }
+                                }
+                                th {
+                                    border: none;
+                                    text-align: right;
+                                    font-size: .875rem;
+                                    padding: 8px;
+                                    font-weight: 600;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        width: 60%;
+                                    }
+                                }
+                                td {
+                                    text-align: left;
+                                    border: none;
+                                    font-weight: 600;
+                                    padding: 8px;
+                                    
+                                    @include respond-to(ynw-767) {
+                                        width: 40%;
+                                    }
+                                }
+                                
+                                &:nth-of-type(odd) {
+                                    background: $white;
+                                }
+                                
+                                &.discount, &.coupon, &.prepaid {
+                                    @include respond-to(ynw-767) {
+                                        text-align: right;
+                                        width: 100%;
+                                    }
+                                    th, td {
+                                        font-size: .75rem;
+                                        color: $cc-gray;
+                                    }
+                                }
+                                &.topay {
+                                    th, td {
+                                        font-size: 1rem;
+                                        font-weight: 600;
+                                        color: $linkblack;
+                                    }
+                                    td {
+                                        color: $green;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Accept Payment
+        .full-outer {
+            .btl {
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                margin-bottom: 1rem;
+                
+                .label, .label-valu {
+                    display: block;
+                    color: $cc-mediumgray;
+                    margin-bottom: 0;
+                }
+                .label {margin-bottom: 5px;}
+                .label-valu {
+                    font-weight: 600;
+                    color: $linkblack;
+                }
+            }
+            
+            .topay {
+                margin-bottom: 1rem;
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                
+                .label {
+                    display: block;
+                    color: $cc-mediumgray;
+                }
+                .label-valu {
+                    font-weight: 600;
+                }
+            }
+            
+            .form-group {
+                .col-form-label {
+                    padding: 0;
+                    margin-bottom: 5px;
+                }
+                .form-control {
+                    width: 150px;
+                }
+            }
+            .payment-options {
+                .label {
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                
+                .mat-radio-group {
+                    .mat-radio-button {
+                        margin-left: 0;
+                        margin-right: 20px;
+                        
+                        @include respond-to(ynw-400) {
+                            margin-bottom: 10px;
+                        }
+                        
+                        .mat-radio-label {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        // Rate Popup
+        .ratingdiv {
+            .form-group {
+                .col-form-label {
+                    padding: 0;
+                    margin-bottom: 5px;
+                }
+                fieldset {
+                    float: none;
+                    width: 134px;
+                    
+                    label {
+                        margin-bottom: 0;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        
+        // Service Added Success Message
+        .message-one {
+            .p1 {
+                font-size: 1rem;
+                color: $green;
+                font-weight: 600;
+                margin-bottom: 0px;
+            }
+            .p2 {
+                color: $cc-gray;
+            }
+        }
+        .message-two {
+            height: auto;
+            background: transparent;
+            border: 1px solid $linkblue;
+            padding: 6px 15px;
+            color: $linkblue;
+            font-size: .75rem;
+            font-weight: 600;
+            cursor: pointer;
+            @include border-radius(3px);
+            @include transition(all 300ms);
+            margin-bottom: 0;
+            display: inline-flex;
+            
+            &:hover {
+                color: $white;
+                border-color: $linkblue;
+                background: $linkblue;
+            }
+        }
+        
+    }
+    
+    // Popup footer section
+    .mat-dialog-actions {
+        /*border-top: 1px solid $cc-ash;*/
+        margin-bottom: 0;
+        @include box-shadow(0, 0, 30px, rgba(0,0,0,0.1));
+        position: relative;
+        display: flex;
+        z-index: 99;
+        
+        .bt1 {
+            margin-left: 10px;
+        }
+        
+        .resendouter {
+            /*margin-top: 15px;*/
+            
+            span {
+                display: table;
+                margin-bottom: 8px;
+                color: $linkblue;
+                font-size: .75rem;
+                cursor: pointer;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+        .waitlist-button-outer {
+            display: flex;
+            width: 100%;
+            
+            @include respond-to(ynw-575) {
+                flex-direction: column;
+            }
+            
+            .showDetOuter {
+                flex-grow: 1;
+                padding-right: 10px;
+                
+                @include respond-to(ynw-575) {
+                    margin-bottom: 10px;
+                }
+
+                .showDetService {
+                    margin-bottom: 3px;
+                    font-size: .875rem;
+                    
+                    @include respond-to(ynw-575) {
+                        font-size: .75rem;
+                    }
+                    
+                    .selsername {
+                        font-weight: 600;
+                        color: $hover-blue;
+                        margin-left: 5px;
+                    }
+                }
+                .queue-waitingdiv {
+                    .queue-head {
+                        margin-bottom: 0;
+                        font-size: .875rem;
+                        
+                        @include respond-to(ynw-575) {
+                            font-size: .75rem;
+                        }
+                        @include respond-to(ynw-400) {
+                            .checkin-footer-date {
+                                display: block;
+                            }
+                        }
+
+                        .queue-avail-date {
+                            color: $hover-blue;
+                            font-weight: 600;
+                            margin-left: 5px;
+                        }
+                    }
+                }
+            }
+            .waitlist-action {
+                align-self: flex-end;
+                
+                @include respond-to(ynw-575){
+                    align-self: flex-start;
+                    width: 100%;
+                }
+                
+                .confirmbtn {
+                    margin-right: 0;
+                    margin-left: 0;
+                    margin-bottom: 0;
+                    width: 100%;
+                }
+            }
+        }
+        
+        &:last-child {
+            margin: 0;
+            padding: 20px;
+        }
+    }
+    
+    .otpouter {
+        .mat-dialog-actions{
+            display: block;
+            
+            button {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    app-field-error-display {
+        .sts-msg {
+            &.error {
+                padding: 10px 15px;
+                background: $cc-red;
+                color: $white;
+                font-size: .75rem;
+                font-weight: 500;
+                text-align: center;
+            }
+            &.success {
+                padding: 10px 15px;
+                background: $green;
+                color: $white;
+                font-size: .75rem;
+                font-weight: 500;
+                text-align: center;
+            }
+        }
+    }
+    app-form-success-display {
+        .sts-msg {
+            &.success {
+                padding: 10px 15px;
+                background: $green;
+                color: $white;
+                font-size: .75rem;
+                font-weight: 500;
+                text-align: center;
+            }
+        }
+    }
+    
+    .otpbottom {
+        .mat-dialog-content {
+            padding-top: 0;
+            
+            .form-group {
+                margin-bottom: 0;
+            }
+        }
+    }
+    
+    &.width-100 {
+        width: 100% !important;
+    }
+    
+    @include respond-to(ynw-575) {
+        max-width: 92vw !important;
+    }
+}
+
+// #### Login Popup
+.loginmainclass {    
+    .mat-dialog-actions {
+        display: block;
+        padding: 20px;
+        padding-top: 0px !important;
+
+        .mat-button {
+            margin: 0 auto 15px auto;
+        }
+
+        .forgotpass,
+        .newuser {
+            color: $linkblue;
+            margin-bottom: 10px;
+            font-size: .75rem;
+            cursor: pointer;
+            font-weight: 500;
+            display: table;
+        }
+        .newuser {
+            color: $cc-black;
+            margin-bottom: 0;
+            cursor: default;
+            font-weight: 600;
+            font-size: .875rem;
+            
+            span {
+                color: $linkblue;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+// #### SignUp Popup
+.signupmainclass {
+    
+    .mat-dialog-content {
+        .mat-radio-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .mat-radio-button {
+                flex: 0;
+                margin-right: 20px;
+
+                label {
+                    margin: 0;
+                    padding: 15px;
+                    border: 2px solid $cc-mediumgray;
+                    @include border-radius(5px);
+                    
+                    .mat-radio-label-content {
+                        color: $cc-gray;
+                    }
+                }
+
+                &.mat-radio-checked {
+                    label {
+                        border-color: $linkblue;
+                    }
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+                
+                &.activepackcls {
+                    .mat-radio-label {
+                        .mat-radio-label-content {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    .mat-dialog-actions {
+        padding-top: 0 !important;
+    }
+}
+
+// #### Google Map Popup
+.googlemainmappopup {
+    .mat-dialog-title {
+        @include font-regular;
+        font-size: 1.25rem;
+        font-weight: 500 !important;
+        padding-right: 40px;
+
+        span {
+            font-size: .875rem;
+            display: block;
+            line-height: 1.2;
+        }
+    }
+    .mat-dialog-content {
+        padding: 0;
+
+        .obtained-address-outer {
+            padding: 20px;
+            width: 100%;
+            margin: 0;
+
+            .title {
+                font-weight: 600;
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+        
+        #pac-input {
+            @include border-radius(5px);
+            background: $white;
+            border: 1px solid transparent;
+            @include font-regular;
+            font-size: 0.875rem;
+            color: $cc-darkgray;
+            text-overflow: ellipsis;
+            height: 44px;
+            padding: 10px;
+            border: 1px solid $linkblue;
+            @include box-shadow(0, 0, 30px, rgba(0,0,0,0.3));
+            width: 80%;
+            position: absolute;
+            
+            @include respond-to(ynw-575){
+                top: 40px !important;
+            }
+
+            &:focus {
+                background: $white;
+                outline: none;
+            }
+        }
+        
+        .mat-accordion {
+            .mat-expansion-panel {
+                .mat-expansion-panel-header {
+                    @include font-medium;
+                }
+                .mat-expansion-panel-content {
+                    .mat-expansion-panel-body {
+                        .googleaddresstable {
+                            .googlecheckboxtd {
+                                display: block;
+                                padding-top: 5px;
+                            }
+                            .googleaddresstd {
+                                padding-bottom: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .mat-dialog-actions {
+        text-align: center;
+        
+        .mat-button {
+            text-transform: none;
+            margin: 0 auto;
+        }
+    }
+}
+
+// #### Common Popups
+.commonpopupmainclass {
+    .mat-dialog-content {
+        .schedule_outer {
+            font-size: .875rem;
+            font-weight: 500;
+
+            .whrs {
+                margin-bottom: 20px;
+                padding-left: 0;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    @include transition(all 300ms);
+                    padding-left: 15px;
+                    height: 40px;
+
+                    .day {
+                        @include font-bold;
+                        color: $cc-black;
+                        display: inline-block;
+                        font-style: normal;
+                        font-size: .875rem;
+                        flex-grow: 1;
+                        margin: 0;
+                    }
+                    .time {
+                        font-weight: 500;
+                        font-style: normal;
+                        color: $cc-black;
+                        font-size: .875rem;
+                        margin: 0;
+                        flex-grow: 1;
+                    }
+                    .mat-icon-button {
+                        outline: none;
+                        color: $linkblue;
+                    }
+
+                    &:hover {
+                        background: $cc-lightgray;
+                    }
+                }
+            }
+            .bt3 {
+                margin-bottom: 0;
+            }
+
+            .bt7 {
+                margin-left: 5px;
+            }
+
+            .schedulesub_outer {
+                background: $cc-lightgray;
+                padding: 20px;
+
+                .sch_sel_head {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                }
+                .schselectall {
+                    i {
+                        padding: 5px 0;
+                        @include font-medium;
+                        margin-bottom: 5px;
+                        color: $linkblue;
+                        cursor: pointer;
+
+                        &:before {
+                            font-family: 'fontAwesome';
+                        }
+                    }
+                }
+                .chk-section {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-bottom: 20px;
+                    height: auto;
+
+                    .chk-margin {
+                        margin-right: 20px;
+                        margin-left: 0px;
+                        margin-bottom: 10px;
+
+                        &:nth-child(1) {
+                            display: none;
+                        }
+                        /*&:last-child {
+                            margin: 0;
+                        }*/
+
+                        .mat-checkbox-layout {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+                .startendtime {
+                    margin-bottom: 20px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    
+                    .starttimediv, .endtimediv {
+                        flex-grow: 1;
+                        
+                        fieldset {
+                            .form-control {
+                                @include border-radius(0);
+                                background: $white;
+                                @include font-regular;
+                                font-size: 0.875rem;
+                                color: $cc-darkgray;
+                                text-overflow: ellipsis;
+
+                                &:focus {
+                                    @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                    border: 1px solid $linkblue;
+                                    background: $white;
+                                }
+                            }
+                            .ngb-tp-hour,
+                            .ngb-tp-minute {
+                                .btn-link {
+                                    display: flex;
+
+                                    &:first-child {
+                                        .chevron {
+                                            width: 16px;
+                                            height: 16px;
+
+                                            &:before {
+                                                border: none;
+                                                content: "\66";
+                                                @include font-custom;
+                                                color: $linkblue;
+                                                display: flex;
+                                                transform: rotate(0);
+                                                font-size: 1rem;
+                                                font-weight: 700;
+                                                align-items: center;
+                                            }
+                                        }
+                                    }
+                                    &:last-child {
+                                        .chevron.bottom {
+                                            width: 16px;
+                                            height: 16px;
+
+                                            &:before {
+                                                border: none;
+                                                content: "\72";
+                                                @include font-custom;
+                                                color: $linkblue;
+                                                display: flex;
+                                                transform: rotate(0);
+                                                font-size: 1rem;
+                                                font-weight: 700;
+                                            }
+                                        }
+                                    }
+                                    &:hover,
+                                    &:focus,
+                                    &:active {
+                                        text-decoration: none;
+                                    }
+                                }
+                            }
+                            .ngb-tp-meridian {
+                                .btn-outline-primary {
+                                    border-color: $linkblue;
+                                    color: $linkblue;
+                                    font-weight: 600;
+                                    font-size: .875rem;
+
+                                    &:hover {
+                                        background: $linkblue;
+                                        color: $white;
+                                    }
+                                    &:focus {
+                                        outline: none;
+                                        box-shadow: none;
+                                    }
+                                }
+                            }
+                            &:first-child {
+                                margin-bottom: 15px;
+                            }
+                        }
+                    }
+                    
+                    
+                }
+                .savecancel {
+                    .bt7 {
+                        margin-left: 0;
+                        margin-right: 10px;
+                    }
+                }
+                .sts-msg {
+                    margin-top: 15px;
+                }
+            }
+        }
+        .upload-doc {
+            border: 2px dashed $cc-mediumgray;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            @include transition(all 300ms);
+
+            label {
+                font-size: 1rem;
+                color: $cc-black;
+                padding: 0;
+                margin-bottom: 10px;
+            }
+
+            .select-wrapper {
+                margin: 0 auto;
+                background: transparent;
+                position: relative;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                
+                #image_src {
+                    display: none;
+                }
+
+                &:before {
+                    @include font-custom;
+                    content: "\4d";
+                    position: absolute;
+                    display: flex;
+                    width: 30px;
+                    height: 30px;
+                    align-items: center;
+                    font-size: 1.875rem;
+                    cursor: pointer;
+                }
+            }
+
+            &:hover {
+                background: $cc-lightgray;
+            }
+        }
+        .galul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-flow: wrap;
+
+            li {
+                list-style: none;
+                width: 33.3333%;
+                
+                @include respond-to(ynw-575) {
+                    width: 50%;
+                }
+
+                .galimg_outer {
+                    position: relative;
+                    padding: 5px;
+
+                    .gal_img {
+                        img {
+                            width: 100%;
+                            height: 130px;
+                            
+                            @include respond-to(ynw-575) {
+                                height: 100px;
+                            }
+                        }
+                    }
+                    .gal_caption {
+                        input {
+                            width: 100%;
+                            color: $cc-black;
+                            padding: 5px;
+                            text-overflow: ellipsis;
+                            height: 30px;
+                            border: none;
+                            background: $cc-body;
+                            
+                            &::-moz-placeholder {
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
+                            }
+                            &:-ms-input-placeholder{
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
+                            }
+                            &:-moz-placeholder {
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
+                            }
+                            &::-webkit-input-placeholder {
+                                color: $cc-mediumgray;
+                                font-size: .75rem;
+                                font-style: italic;
+                            }
+
+                            &:focus {
+                                @include box-shadow(0, 0, 1px, $linkblue, inset);
+                                border: 1px solid $linkblue;
+                                background: $white;
+                                outline: none;
+                            }
+                        }
+                    }
+                    .gal_action {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        z-index: 5;
+
+                        button {
+                            top: 10px;
+                            right: 10px;
+                            background: rgba(0, 0, 0, .5);
+                            color: $white;
+                            width: 30px;
+                            height: 30px;
+                            line-height: 30px;
+                        }
+                    }
+                }
+            }
+        }
+        .sm_keydiv {
+            label {
+                padding: 0;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+
+                i {
+                    font-size: 1.875rem;
+                    margin-right: 10px;
+
+                    &.fb {
+                        color: $fb;
+                    }
+                    &.tw {
+                        color: $tw;
+                    }
+                    &.lkd {
+                        color: $lkd;
+                    }
+                    &.ytb {
+                        color: $ytb;
+                    }
+                    &.gpl {
+                        color: $ytb;
+                    }
+                    &.pntr {
+                        color: $ytb;
+                    }
+                }
+            }
+        }
+        .mat-chip-list {
+            .mat-chip-list-wrapper {
+                .mat-chip {
+                    margin-left: 0;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+
+    .mat-dialog-actions {
+        padding: 20px;
+        
+        .service-tooltip {
+            @include font-script;
+            font-size: .875rem;
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            color: $black;
+            
+            i {
+                width: 22px;
+                height: 22px;
+                font-size: .875rem;
+                @include border-radius(50px);
+                background: #ffc107;
+                color: $black;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    &.locationoutermainclass {
+        .mat-dialog-content {
+            .form-group {
+                &.mapselection {
+                    .bt3 {
+                        min-height: 30px;
+                        height: auto;
+                        white-space: pre-wrap;
+                        display: flex;
+                        align-items: center;
+                        padding: 3px 10px;
+                    }
+                    span {
+                        display: block;
+                        margin-top: 10px;
+                        font-size: .75rem;
+                        font-style: italic;
+                        color: $cc-mediumgray;
+                    }
+                }
+            }
+        }
+    }
+    &.privacyoutermainclass {
+        .mat-dialog-content {
+            .phoneouter,
+            .emailouter {
+                .form-group {
+                    &:nth-child(3) {
+                        .mat-radio-group {
+                            .mat-radio-button {
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.confirmationmainclass {
+        .mat-dialog-title {
+            background: transparent;
+            color: $cc-black;
+        }
+        .mat-dialog-content {
+            p {
+                margin: 0;
+                font-size: 1rem;
+                text-align: center;
+            }
+        }
+        .mat-dialog-actions {
+            display: flex;
+            justify-content: center;
+            border: none;
+            padding-top: 0;
+            
+            &.paddingtop {
+                padding-top: 20px;
+            }
+        }
+    }
+}
+
+// #### Consumer Popup 
+.consumerpopupmainclass {
+    width: 700px !important;
+    
+    .mat-dialog-title {
+        margin: 0;
+        padding: 20px 20px 10px;
+        @include font-medium;
+        font-size: 1.25rem;
+        font-weight: 600;
+        background: transparent;
+        color: $linkblack;
+        position: relative;
+        z-index: 5;
+
+        .modal_close {
+            position: absolute;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: $white;
+            right: 20px;
+            top: 50%;
+            margin-top: -10px;
+            z-index: 121;
+            width: 24px;
+            height: 24px;
+            @include transition(all 300ms);
+            @include border-radius(30px);
+            background: rgba(0,0,0,.07);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                display: flex;
+
+                &:before {
+                    @include font-custom;
+                    content: "\69";
+                    font-size: .75rem !important;
+                    width: 20px;
+                    height: 20px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            
+            &:hover {
+                background: $white;
+                color: $linkblue;
+            }
+        }
+        &:after {
+            position: absolute;
+            content: "";
+            background: url(../images/c-popup-bg.svg) no-repeat scroll bottom right/cover;
+            height: 83px;
+            top: -10px;
+            right: -10px;
+            left: -10px;
+            width: auto;
+            z-index: -1;
+            pointer-events: none;
+            
+            @include respond-to(ynw-767) {
+                width: 750px;
+                left: auto;
+                right: -10px;
+            }
+        }
+    }
+    .mat-dialog-content {
+        margin: 0;
+        padding: 20px;
+        overflow: auto;
+        position: relative;
+        z-index: 6;
+        
+        .mainouter {
+            .main-head, .date-outer, .service-outer, .queue-outer, .prepay-outer {
+                margin-bottom: 15px;
+                color: $cc-gray;
+                font-size: 1rem;
+                
+                .prov_name, .loc_name, .selected-date, .prepaymin-cls {
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+                .prov_name {
+                    font-weight: 700;
+                }
+                .loc_name {
+                    font-size: .875rem;
+                }
+            }
+            .date-outer {
+                font-size: .875rem;
+                border-bottom: 1px dashed $cc-ash;
+                padding-bottom: 15px;
+                display: flex;
+                align-items: center;
+                
+                @include respond-to(ynw-575){
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                
+                .date-head {
+                    @include respond-to(ynw-575){
+                        margin-bottom: 5px;
+                    }
+                }
+                
+                .date-body {
+                    display: flex;
+                    
+                    .selected-date {
+                        display: flex;
+                        align-items: center;
+                        margin-left: 10px;
+                        
+                        @include respond-to(ynw-575){
+                            margin-left: 0;
+                        }
+
+                        .icon-add, .icon-minus {
+                            display: inline-block;
+                            vertical-align: bottom;
+                            font-size: 1.2rem;
+                            color: $linkblue;
+                            cursor: pointer;
+
+                            &:before {
+                                width: 20px;
+                                height: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            &.disable {
+                                pointer-events: none;
+                                color: $cc-mediumgray;
+                            }
+                        }
+                        .icon-add {
+                            margin-left: 10px;
+                        }
+                        .icon-minus {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+                
+                .form-group {
+                    margin-bottom: 0;
+                    
+                    &.dt {
+                        width: 30px;
+                        margin-left: 15px;
+                        
+                        .pickerouter {
+                            input[type="text"] {
+                                height: 30px;
+                                visibility: hidden;
+                            }
+
+                            .mat-datepicker-toggle {
+                                margin-right: 5px;
+
+                                button {
+                                    width: 26px;
+                                    height: 26px;
+                                    line-height: 26px;
+
+                                    svg {
+                                        width: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    &.party-size {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        
+                        .col-form-label {
+                            width: 130px;
+                            padding: 0;
+                            font-weight: 500;
+                        }
+                        
+                        .partysize-input {
+                            width: 48px;
+                            margin-right: 5px;
+                        }
+                        
+                        .error {
+                            padding: 5px;
+                            color: $cc-red;
+                            font-size:.75rem;
+                        }
+                    }
+                }
+                
+                .future-text {
+                    display: table;
+                    cursor: pointer;
+                    color: $linkblue;
+                    text-decoration: underline;
+                    font-weight: 500;
+                    font-size: .75rem;
+                }
+                .future-date-outer {
+                    margin-top: 5px;
+                    
+                    .form-group {
+                        margin-bottom: 0px;
+                        display: flex;
+                        
+                        .col-form-label {
+                            font-weight: 500;
+                            margin-right: 10px;
+                            align-self: center;
+                        }
+                        
+                        .pickerouter {
+                            .mat-datepicker-toggle {
+                                margin-right: 0;
+                            }
+                            .form-control {
+                                background: $white;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .service-outer, .queue-outer {
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px dashed $cc-ash;
+                
+                .service-head, .queue-head {
+                    font-size: .875rem;
+                    margin-bottom: 5px;
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+                
+                .mat-chip-list {
+                    .mat-chip-list-wrapper {
+                        margin-bottom: 5px;
+                        
+                        .mat-chip.mat-chip-selected.mat-primary {
+                            font-weight: 600;
+                            background: $green;
+                            color: $white;
+                            border: none;
+                            border: 1px solid $green;
+                        }
+                        
+                        .mat-chip {
+                            padding: 5px 10px;
+                            margin-right: 5px;
+                            margin-left: 0;
+                            margin-bottom: 5px;
+                            cursor: pointer;
+                            background: $white;
+                            border: 1px solid $cc-mediumgray;
+                            display: inline-block;
+                            
+                            .qname {
+                                display: inline-block;
+                            }
+                            .qtime {
+                                display: inline-block;
+                            }
+                            
+                            &:focus {
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+                
+                .service-details {
+                    .service-dur-pr {
+                        display: flex;
+                        
+                        @include respond-to(ynw-575) {
+                            flex-direction: column;
+                        }
+                        
+                        .service-duration {
+                            width: 200px;
+                            
+                            .min-cls {
+                                font-weight: 600;
+                                color: $linkblack;
+                            }
+                        }
+                        .service-price {
+                            flex-grow: 1;
+                            
+                            @include respond-to(ynw-575) {
+                                margin-top: 10px;
+                            }
+
+                            .price {
+                                font-weight: 600;
+                                color: $linkblack;
+                            }
+                            .taxable {
+                                font-size: .75rem;
+                            }
+                        }
+                    }
+                    .service-desc {
+                        margin-top: 5px;
+                    }
+                }
+                
+                .selected-ser, .selected-que {
+                    margin-bottom: 5px;
+                    
+                    .selected-ser-name {
+                        font-weight: 600;
+                        color: $linkblack;
+                    }
+                }
+                
+                .queue-waitingdiv {
+                    .queue-head {
+                        font-weight: 500;
+                        color: $cc-gray;
+                        
+                        .queue-avail-date {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
+                }
+                
+                .no-queue-available, .no-service-available {
+                    font-size: .875rem;
+                    color: $cc-red;
+                }
+                
+                .showDetOuter {
+                    .showDetService {
+                        margin-bottom: 10px;
+                        
+                        .selsername {
+                            font-weight: 600;
+                            color: $linkblack;
+                        }
+                    }
+                    .queue-waitingdiv {
+                        .queue-head {
+                            margin-bottom: 0;
+                            
+                            .queue-avail-date {
+                                color: $green;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .queue-outer {
+                margin-bottom: 0;
+                padding: 0;
+                border: none;
+                
+                .q-list-outer {
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 15px;
+                    margin-bottom: 15px;
+                    border-bottom: 1px dashed $cc-ash;
+                    
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+                    
+                    .queue-head {
+                        font-size: .875rem;
+                        margin-bottom: 0px;
+                        margin-right: 10px;
+                        color: $cc-gray;
+                        font-weight: 500;
+                        
+                        @include respond-to(ynw-575){
+                            margin-bottom: 5px;
+                        }
+                    }
+                    
+                    .queue-body {
+                        display: flex;
+                        align-items: center;
+                        
+                        .sel-queue {
+                            color: $linkblack;
+                            font-weight: 600;
+                        }
+
+                        .leftarrow, .rightarrow {                        
+                            i {
+                                display: flex;
+                                width: 20px;
+                                height: 20px;
+                                align-items: center;
+                                justify-content: center;
+                                border: 1px solid $linkblue;
+                                @include border-radius(50px);
+                                color: $linkblue;
+                                cursor: pointer;
+
+                                &.disable {
+                                    pointer-events: none;
+                                    color: $cc-mediumgray;
+                                    border-color: $cc-mediumgray;
+                                    cursor: default;
+                                }
+                            }
+                        }
+                        .leftarrow {
+                            margin-right: 10px;
+                        }
+                        .rightarrow {
+                            margin-left: 10px;
+                        }
+                    }
+                    
+                    
+                }
+                
+                .mat-chip-list {
+                    .mat-chip-list-wrapper {
+                        .mat-chip {
+                            border-color: $cc-body;
+                            background: $cc-body;
+                        }
+                    }
+                }
+                
+                .no-queue-available {
+                    padding-bottom: 15px;
+                    color: $cc-red;
+                }
+            }
+            
+            .servicefor-outer {
+                margin-bottom: 15px;
+                
+                .title {
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                
+                .availer-ul {
+                    margin: 0px;
+                    padding: 0;
+                    
+                    li {
+                        list-style: none;
+                        position: relative;
+                        margin-bottom: 15px;
+                        
+                        .changemember {
+                            margin-left: 15px;
+                        }
+                        
+                        &:before {
+                            position: absolute;
+                            content: "\67";
+                            @include font-custom;
+                            left: -14px;
+                            top: 4px;
+                            font-size: .50rem;
+                            display: none;
+                        }
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        
+                        @include respond-to(ynw-400) {
+                            display: flex;
+                            
+                            .changemember {
+                                margin-left: auto;
+                                font-size: .75rem;
+                            }
+                        }
+                    }
+                }
+                
+                .service-availer {
+                    color: $linkblack;
+                    font-weight: 600;
+                }
+                .change-button {
+                    cursor: pointer;
+                    display: table;
+                    color: $linkblue;
+                    font-size: .75rem;
+                    text-decoration: underline;
+                }
+                .editbt {
+                    margin-left: 3px;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                
+                &.btborder {
+                    border-bottom: 1px dashed $cc-ash;
+                    padding-bottom: 15px;
+                }
+            }
+            
+            .revealdiv {
+                margin-top: 15px;
+                
+                .form-group {
+                    margin-bottom: 0;
+                    
+                    .mat-checkbox {
+                        .mat-checkbox-layout {
+                            .mat-checkbox-label {
+                                white-space: pre-wrap;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .consumer-comment {
+                padding-bottom: 15px;
+                
+                .form-group {
+                    margin-bottom: 0px;
+                    
+                    .col-form-label {
+                        font-weight: 500;
+                        color: $cc-gray;
+                        display: table;
+                        padding: 0;
+                        
+                        .icon-add, .icon-minus {
+                            display: inline-block;
+                            vertical-align: bottom;
+                            font-size: 1.2rem;
+                            color: $linkblue;
+                            cursor: pointer;
+
+                            &:before {
+                                width: 24px;
+                                height: 24px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                    
+                    textarea {
+                        margin-top: 5px;
+                    }
+                }
+            }
+            
+            .prepay-outer {
+                margin-bottom: 0;
+                margin-top: 15px;
+                /*padding-top: 15px;
+                border-top: 1px dashed $cc-ash;*/
+                
+                .prepay-dur-pr {
+                    padding: 15px;
+                    border: 1px solid $cc-ash;
+                    @include box-shadow(0px, 0px, 20px, rgba(0,0,0,.08));
+                    @include border-radius(10px);
+                    /*@include top-to-bottom(#f8f8f8, #fff);*/
+                    
+                    .prepay-amt {
+                        margin-bottom: 15px;
+                        font-size: .875rem;
+                        font-weight: 600;
+                        color: $linkblack;
+
+                        .prepaymin-cls {
+                            font-weight: 700;
+                            color: $green;
+                            font-size: 1rem;
+                        }
+                    }
+                    .prepay-gateway-outer {
+                        padding-top: 15px;
+                        border-top: 1px solid $cc-ash;
+                        
+                        .prepay-head {
+                            margin-bottom: 5px;
+                            color: $linkblack;
+                            font-weight: 600;
+                        }
+
+                        .mat-radio-group {
+                            .mat-radio-button {
+                                color: $linkblack;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .member-outer {
+                .member-head {
+                    margin-bottom: 15px;
+                }
+                .member-list {
+                    .member-ul {
+                        margin: 0 0 20px 20px;
+                        padding: 0;
+                        
+                        li {
+                            list-style: none;
+                        }
+                    }
+                    .member-add {
+                        margin-left: 20px;
+                        margin-bottom: 20px;
+                        cursor: pointer;
+                        display: table;
+                        font-size: .75rem;
+                        font-weight: 500;
+                    }
+                }
+            }
+            
+            .addmember-outer {
+                padding: 20px;
+                @include box-shadow(0, 0, 30px, rgba(0,0,0,.1));
+                
+                .outer {
+                    display: flex;
+                    
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                    }
+                    
+                    .form-group {
+                        flex-grow: 1;
+                        
+                        &:first-child {
+                            margin-right: 15px;
+                            
+                            @include respond-to(ynw-575) {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .addMemberHeader {
+                font-size: 1rem;
+                font-weight: 600;
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .mat-dialog-actions {
+        padding: 20px;
+        @include respond-to(ynw-767) {
+            .mat-button .backbtn, .bt2 {
+                padding: 10px 15px;
+            }
+        }
+        @include respond-to(ynw-575) {
+            button {
+                margin-bottom: 5px;
+                padding: 5px 10px !important;
+            }
+        }
+    } 
+}
+
+// #### Special Popup for gallerry issue in Chrome.
+.specialclass {
+    .mat-dialog-container {
+        overflow: auto;
+        display: table;
+        
+        .mat-dialog-title {
+            &:after {
+                top: -1px;
+                right: 0px;
+                left: 0px;
+                
+                @include respond-to(ynw-767) {
+                    width: auto;
+                    left: 0px;
+                    right: -3px;
+                }
+            }
+        }
+    }
+}
+
+// #### Adjust Delay Popup
+.adjustdelay {
+    .form-group {
+        
+        .col-form-label {
+            margin-bottom: 5px;
+            padding: 0;
+        }
+        
+        fieldset {
+            .ngb-tp-hour,
+            .ngb-tp-minute {
+                input[type="text"] {
+                    background: $cc-inputbg;
+
+                    &:focus {
+                        @include box-shadow(0, 0, 1px, $linkblue, inset);
+                        border: 1px solid $linkblue;
+                        background: $white;
+                    }
+                }
+                .btn-link {
+                    display: flex;
+
+                    &:first-child {
+                        .chevron {
+                            width: 16px;
+                            height: 16px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            &:before {
+                                border: none;
+                                content: "\66";
+                                @include font-custom;
+                                color: $linkblue;
+                                display: flex;
+                                transform: rotate(0);
+                                font-size: .75rem;
+                                font-weight: 700;
+                                align-items: center;
+                                width: 16px;
+                                height: 16px;
+                            }
+                        }
+                    }
+                    &:last-child {
+                        .chevron.bottom {
+                            width: 16px;
+                            height: 16px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            &:before {
+                                border: none;
+                                content: "\72";
+                                @include font-custom;
+                                color: $linkblue;
+                                display: flex;
+                                transform: rotate(0);
+                                font-size: .75rem;
+                                font-weight: 700;
+                                width: 16px;
+                                height: 16px;
+                            }
+                        }
+                    }
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        text-decoration: none;
+                    }
+                }
+            }
+            .ngb-tp-meridian {
+                .btn-outline-primary {
+                    border-color: $linkblue;
+                    color: $linkblue;
+                    font-weight: 600;
+                    font-size: .875rem;
+
+                    &:hover {
+                        background: $linkblue;
+                        color: $white;
+                    }
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
+            }
+            &:first-child {
+                margin-bottom: 15px;
+            }
+        }
+        
+        &.inline {            
+            .col-form-label {
+                margin-right: 15px;
+            }
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// #### Bill Popup
+.billpopup {    
+    .mat-dialog-content {
+        padding: 0px;
+        
+        .bill-wrapper {
+            background: $white;
+            width: 100%;
+            margin: 0 auto;
+
+            .section-one, .section-two, .section-three, .section-four {
+                padding: 20px;
+                border-bottom: 1px solid $cc-ash;
+            }
+
+            .section-one {
+                h3 {
+                    font-size: 1rem;
+                    margin-bottom: 15px;
+                    text-align: center;
+                }
+
+                .details {
+                    display: flex;
+                    flex-wrap: wrap;
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    .columns {
+                        flex-basis: 50%;
+
+                        .title {
+                            font-weight: 600;
+                            position: relative;
+                            margin-right: 10px;
+
+                            &:after {
+                                position: absolute;
+                                content: ":";
+                                right: -5px;
+
+                            }
+                        }
+
+                        &:nth-child(1), &:nth-child(2) {
+                            margin-bottom: 10px;
+                        }
+                    }
+
+                    @include respond-to(ynw-500){
+                        flex-direction: column;
+
+                        .columns {
+                            margin-bottom: 10px;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .section-two {
+
+                .add-button {
+                    .bt3 {
+                        text-transform: none;
+                        letter-spacing: .2px;
+                    }
+                }
+                .edit-row {
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    &.service {
+                        display: flex;
+
+                        .spl {
+                            display: flex;
+                            flex-grow: 1;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            .item {                                
+                                &.selectbox {
+                                    flex-grow: 1;
+                                    
+                                    .mat-form-field {
+                                        .mat-form-field-wrapper {
+                                            .mat-form-field-flex {
+                                                .mat-form-field-infix {
+                                                    width: auto;
+                                                    
+                                                    .mat-input-element{
+                                                        height: 30px;
+                                                        width: 100%;
+                                                        padding: 5px 10px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                &.qty {
+                                    display: flex;
+                                    align-items: center;
+                                    margin-left: 15px;
+                                    
+                                    .label {
+                                        font-weight: 600;
+                                        margin-right: 10px;
+                                    }
+                                    
+                                    .number {
+                                        .mat-form-field {
+                                            .mat-form-field-wrapper {
+                                                .mat-form-field-flex {
+                                                    .mat-form-field-infix {
+                                                        width: auto;
+                                                        
+                                                        .mat-input-element{
+                                                            height: 30px;
+                                                            width: 80px;
+                                                            padding: 5px 5px 5px 10px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .spr {
+                            margin-left: 15px;
+                            
+                            .cs-btn {
+                                height: 30px;
+                                line-height: 12px;
+                                padding: 6px 10px;
+                                text-transform: none;
+                                float: left;
+                                font-size: .75rem;
+
+                                &.bt2 {
+                                    margin-left: 10px;
+                                }
+                            }
+                        }
+
+                        @include respond-to(ynw-400) {
+                            flex-direction: column;
+
+                            .spl {
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+                    
+                    @include respond-to(ynw-575) {
+                        flex-direction: column;
+                        
+                        &.service{
+                            .spr {
+                                margin-left: 0;
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .section-three {
+                border: none;
+                
+                .bill-breakup {
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    .list {
+                        position: relative;
+                        border-bottom: 1px solid $cc-ash;
+                        margin-bottom: 15px;
+                        padding-bottom: 15px;
+
+                        .list-content {                    
+                            .c-row {
+                                display: flex;
+                                padding: 5px 0;
+                                margin-right: 50px;
+                                text-align: right;
+
+                                &.one {
+                                    display: flex;
+
+                                    .name {
+                                        font-weight: 600;
+                                        flex-basis: 60%;
+                                        padding-right: 15px;
+                                        position: relative;
+                                        
+                                        .tax {
+                                            font-size: .60rem;
+                                            font-weight: 600;
+                                            position: absolute;
+                                            top: -2px;
+                                            right: -4px;
+                                            color: $cc-warning;
+                                        }
+                                    }
+                                    .quantity {
+                                        flex-basis: 20%;
+                                    }
+                                    .price {
+                                        flex-basis: 20%;
+                                    }
+                                }
+                                &.two {
+                                    display: block;
+                                    margin-right: 0;
+                                    padding: 0;
+
+                                    .edit-row {
+                                        padding: 10px 0;
+
+                                        &.discoup {
+                                            display: flex;
+
+                                            .spl {
+                                                display: flex;
+                                                flex-grow: 1;
+                                                margin-right: 20px;
+                                                justify-content: flex-end;
+
+                                                .item {
+                                                    flex-basis: 48%;
+                                                    
+                                                    .mat-form-field {
+                                                        .mat-form-field-wrapper {
+                                                            .mat-form-field-flex {
+                                                                .mat-form-field-infix {
+                                                                    width: auto;
+
+                                                                    .mat-select{
+                                                                        height: 30px;
+                                                                        width: 100%;
+                                                                        padding: 5px 10px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    &.selectbox2 {
+                                                        margin-left: 20px;
+                                                    }
+                                                }
+                                                
+                                                @include respond-to(ynw-768) {
+                                                    margin-right: 0;
+                                                }
+                                            }
+                                            .spr {
+                                                .cs-btn {
+                                                    height: 30px;
+                                                    line-height: 12px;
+                                                    padding: 6px 10px;
+                                                    text-transform: none;
+                                                    float: left;
+                                                    font-size: .75rem;
+
+                                                    &.bt2 {
+                                                        margin-left: 10px;
+                                                    }
+                                                }
+                                            }
+
+                                            @include respond-to(ynw-500) {
+                                                flex-direction: column;
+
+                                                .spl {
+                                                    margin-right: 0;
+                                                    flex-direction: column;
+                                        
+                                                    .selectbox1 {
+                                                        margin-bottom: 10px;
+                                                    }
+                                                    .item {
+                                                        &.selectbox2 {
+                                                            margin-left: 0;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                            @include respond-to(ynw-575) {
+                                                flex-direction: column;
+                                                
+                                                &.discoup {
+                                                    .spr {
+                                                        margin-top: 5px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .discount-row, .coupon-row {
+                                        margin-right: 50px;
+                                        display: flex;
+                                        padding: 5px 0;
+                                        color: $cc-mediumgray;
+
+                                        .name {
+                                            flex-grow: 1;
+                                            flex-basis: 60%;
+                                            padding-right: 15px;
+                                        }
+                                        .price {
+                                            flex-basis: 40%;
+                                        }
+                                    }
+                                }
+                                &.three {
+                                    padding: 0;
+
+                                    .name {
+                                        flex-basis: 60%;
+                                        font-weight: 600;
+                                        padding: 5px 0;
+                                        padding-right: 15px;
+                                    }
+                                    .price {
+                                        flex-basis: 40%;
+                                        padding: 5px 0;
+                                        border-top: dashed 1px $cc-ash;
+                                    }
+                                }
+
+                                @include respond-to(ynw-500) {
+                                    margin-right: 40px;
+                                    
+                                    &.one {
+                                        .price {
+                                            flex-basis: 30%;
+                                        }
+                                    }
+                                    &.two {
+                                        .discount-row, .coupon-row {
+                                            margin-right: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .more {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            
+                            .mat-icon-button {
+                                height: 30px;
+                                width: 30px;
+                                line-height: 30px;
+                            }
+                        }
+                    }
+                }
+
+                .amount-table {
+                    position: relative;
+
+                    .amt-content {
+                        font-size: 1rem;
+                        font-weight: 500;
+                        width: 100%;
+
+                        .amt{
+                            text-align: right;
+                            margin-right: 50px;
+                            padding: 5px 0;
+
+                            .name {
+                                width: 73%;
+                                text-align: right;
+                            }
+                            .price {
+                                vertical-align: text-top;
+                                width: 27%;
+                                text-align: right;
+                                padding: 0 50px 0 15px;
+                            }
+
+                            &.gross {
+                                .name {
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                    
+                                    .bill-discount {
+                                        color: $linkblue;
+                                        font-size: .875rem;
+                                        display: block;
+
+                                        span {
+                                            text-decoration: underline;
+                                            cursor: pointer;
+                                        }
+
+                                    }
+                                }
+                                .price {
+                                    font-weight: 600;
+                                    font-size: 1rem;
+                                }
+                            }
+                            &.discount, &.coupon {
+                                .name, .price {
+                                    color: $cc-mediumgray;
+                                    font-size: .875rem;
+                                    font-weight: 600;
+                                }
+                            }
+                            &.tax {
+                                .name, .price {
+                                    font-size: .875rem;
+                                    font-weight: 600;
+                                    
+                                    span {
+                                        display: block;
+
+                                        &.txn {
+                                            font-weight: 500;
+                                            font-size: .69rem;
+                                        }
+                                    }
+                                }
+                            }
+                            &.paid {
+                                .name, .price {
+                                    font-weight: 600;
+                                    font-size: .875rem;
+                                    
+                                    .link {
+                                        color: $linkblue;
+                                        text-decoration: underline;
+                                        cursor: pointer;
+                                    }
+                                }
+                            }
+                            &.total {
+                                .name, .price {
+                                    font-size: 1.1rem;
+                                    font-weight: 700;
+                                }
+                            }
+                            
+                            @include respond-to(ynw-500) {
+                                margin-right: 40px;
+                                
+                                .price {
+                                    flex-basis: 30%;
+                                }
+                            }
+                            @include respond-to(ynw-400) {
+                                .price {
+                                    flex-basis: 40%;
+                                }
+                            }
+                        }
+                        .edit-row {
+                            padding: 10px 0;
+
+                            &.discoup {
+                                display: flex;
+
+                                .spl {
+                                    display: flex;
+                                    flex-grow: 1;
+                                    margin-right: 20px;
+                                    justify-content: flex-end;
+
+                                    .item {
+                                        flex-basis: 48%;
+
+                                        .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
+                                            height: 30px;
+                                            width: 100%;
+                                            padding: 5px 10px;
+                                        }
+                                        
+                                        &.selectbox2 {
+                                            margin-left: 20px;
+                                        }
+                                    }
+                                }
+                                .spr {
+                                    .cs-btn {
+                                        height: 30px;
+                                        line-height: 12px;
+                                        padding: 6px 10px;
+                                        text-transform: none;
+                                        float: left;
+                                        font-size: .75rem;
+
+                                        &.bt2 {
+                                            margin-left: 10px;
+                                        }
+                                    }
+                                }
+
+                                @include respond-to(ynw-500) {
+                                    flex-direction: column;
+
+                                    .spl {
+                                        margin-right: 0;
+                                        margin-bottom: 10px;
+                                        flex-direction: column;
+                                        
+                                        .selectbox1 {
+                                            margin-bottom: 10px;
+                                        }
+                                        .item {
+                                            &.selectbox2 {
+                                                margin-left: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .bill-discount-btn {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        display: none;
+
+                        .cs-btn {
+                            text-transform: none;
+                            padding-left: 5px;
+                            padding-right: 5px;
+
+                            &.active {
+                                background: $linkblue;
+                                color: $white;
+                            }
+                        }
+
+                        @include respond-to(ynw-500) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .section-four {
+                border-bottom: none;
+
+                .heading {
+                    .back {
+                        font-size:.75rem;
+                        color: $linkblue;
+                        display: table;
+                        font-weight: 600;
+                        position: relative;
+                        padding-left: 20px;
+                        margin-bottom: 20px;
+                        cursor: pointer;
+
+                        &:before {
+                            @include font-custom;
+                            content: "\2e";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                        }
+                    }
+                    h4 {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .list-outer {
+                    border: 1px solid $cc-ash;
+                    font-size: .875rem;
+                    font-weight: 500;
+
+                    .table-th {
+                        display: flex;
+                        border-bottom: 1px solid $cc-ash;
+                        background: $cc-ash;
+
+                        .th {
+                            flex-basis: 33.3333%;
+                            padding:10px;
+                            font-weight: 600;
+                            text-align: center;
+                            border-right: 1px solid $white;
+
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+                    }
+
+                    .listing {
+                        border-bottom: 1px solid $cc-ash;
+
+                        .wrap {
+                            display: flex;
+                            align-items: center;
+
+                            .td {
+                                flex-basis: 33.3333%;
+                                padding:10px;
+                                text-align: center;
+                                position: relative;
+
+                                &.one {
+                                    .date {
+                                        display: block;
+                                        font-weight: 600;
+                                    }
+                                    .time {
+                                        display: block;
+                                    }
+                                }
+                                &.two {
+                                    .amt {
+                                        display: block;
+                                        font-weight: 600;
+                                    }
+                                    .others {
+                                        font-size: .75rem;
+                                        .status, .mode {
+                                            display: block;
+
+                                            .title {
+                                                position: relative;
+                                                margin-right: 5px;
+
+                                                &:after {
+                                                    position: absolute;
+                                                    content: ":";
+                                                    right:-5px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                &.three {
+                                    .amt {
+                                        display: block;
+                                        font-weight: 600;
+                                        margin-bottom: 3px;
+                                    }
+                                    .cs-btn {
+                                        height: 24px;
+                                        line-height: 12px;
+                                        padding: 6px 10px;
+                                        text-transform: none;
+                                        font-size: .75rem;
+                                    }
+                                }
+
+                                &:after {
+                                    border-right: 1px solid $cc-ash;
+                                    height: 30px;
+                                    width: 1px;
+                                    position: absolute;
+                                    content: "";
+                                    right: 0;
+                                    top: 50%;
+                                    margin-top: -15px;
+                                }
+
+                                &:last-child {
+                                    &:after {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        .refunds-table {
+                            margin: 10px;
+                            border: 1px solid $cc-ash;
+
+                            .table-th {
+                                text-align: center;
+                                padding: 5px;
+                                background: transparent;
+
+                                h5 {
+                                    font-size: .875rem;
+                                    margin: 0 auto;
+                                }
+                            }
+                            .table-th1 {
+                                display: flex;
+                                border-bottom: 1px solid $cc-ash;
+
+                                .th {
+                                    flex-basis: 33.3333%;;
+                                    padding: 5px;
+                                    text-align: center;
+                                    border-right: 1px solid $cc-ash;
+                                    font-weight: 600;
+
+                                    &:last-child {
+                                        border: none;
+                                    }
+                                }
+                            }
+                            .tbody {
+                                display: flex;
+
+                                .td {
+                                    flex-basis: 33.3333%;;
+                                    padding: 5px;
+                                    text-align: center;
+                                    border-right: 1px solid $cc-ash;
+                                    font-size: .75rem;
+
+                                    &:last-child {
+                                        border: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        &:last-child {
+                            border: none;
+                        }
+                    }
+                }
+            }
+            
+            &.viewbill {
+                .section-three {
+                    .bill-breakup {
+                        .list {
+                            .list-content {
+                                .c-row {
+                                    margin-right: 50px;
+                                    
+                                    .discount-row, .coupon-row {
+                                        margin-right: 0px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .amount-table {
+                        .amt-content {
+                            .amt {
+                                margin-right: 50px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @include respond-to(ynw-767) {
+        width: 100% !important;
+        max-width: 94vw !important;
+    }
+}
+
+.signupmainclass,
+.loginmainclass {
+    width: 480px !important;
+    
+    .mat-dialog-actions {
+        border: none !important;
+        box-shadow: none !important
+    }
+}

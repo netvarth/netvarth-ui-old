@@ -1,0 +1,7 @@
+.disabledradio {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.paysettings-tab  .actiondiv {padding-left:0px!important;}
+.outermost {margin-top:15px;}

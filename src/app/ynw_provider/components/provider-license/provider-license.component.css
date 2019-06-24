@@ -1,0 +1,29 @@
+.history_link {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.table_class {
+    width:100%;
+    border:1px solid #000;
+}
+.table_td_class {
+    width:50%;
+    border:1px solid #000;
+}
+
+.addon_td1 {
+    width:25%;
+    font-weight: bold;
+}
+.addon_td2 {
+    width:50%;
+    font-weight: bold;
+}
+.addon_td3 {
+    width:15%;
+    font-weight: bold;
+}
+.addon_td4 {
+    width:10%;
+    font-weight: bold;
+}
