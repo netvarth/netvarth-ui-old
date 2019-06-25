@@ -136,6 +136,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   }
 
   makePayment() {
+    this.disablebutton = true;
 
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
@@ -148,7 +149,6 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
             if (data['response']) {
               this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
               this.api_success = this.shared_functions.getProjectMesssages('PAYMENT_REDIRECT');
-              this.disablebutton = true;
               setTimeout(() => {
                 this.document.getElementById('payuform').submit();
               }, 2000);

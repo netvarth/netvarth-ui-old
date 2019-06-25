@@ -104,6 +104,7 @@ export class AdjustQueueDelayComponent implements OnInit {
       );
   }
   onSubmit(form_data) {
+    this.disableButton = true;
     const time = this.getTimeinMin();
     // if (time !== 0) {
     const post_data = {
@@ -122,7 +123,6 @@ export class AdjustQueueDelayComponent implements OnInit {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
             this.closePopup('reloadlist');
           }
-          this.disableButton = true;
         },
         error => {
           this.sharedfunctionObj.apiErrorAutoHide(this, error);

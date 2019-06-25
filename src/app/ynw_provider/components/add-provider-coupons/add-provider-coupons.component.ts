@@ -104,12 +104,12 @@ export class AddProviderCouponsComponent implements OnInit {
     }
   }
   addCoupon(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addCoupon(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('COUPON_CREATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
@@ -121,13 +121,13 @@ export class AddProviderCouponsComponent implements OnInit {
       );
   }
   editCoupon(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     post_data.id = this.data.coupon.id;
     this.provider_services.editCoupon(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('COUPON_UPDATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

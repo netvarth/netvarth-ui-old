@@ -51,11 +51,11 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   }
 
   addAdword(post_data) {
+    this.disableButton = true;
     this.provider_services.addAdwords(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('ADWORD_CREATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

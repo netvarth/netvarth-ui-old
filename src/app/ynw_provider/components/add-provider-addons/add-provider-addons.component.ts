@@ -64,13 +64,13 @@ export class AddproviderAddonComponent implements OnInit {
     });
   }
   onSubmit() {
+    this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
     if (this.selected_addon) {
       this.provider_services.addAddonPackage(this.selected_addon)
         .subscribe(() => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('ADDON_ADDED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

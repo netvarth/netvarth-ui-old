@@ -72,6 +72,7 @@ export class AddProviderCustomerComponent implements OnInit {
 
 
   onSubmit(form_data) {
+    this.disableButton = true;
 
     const post_data = {
       'userProfile': {
@@ -89,7 +90,6 @@ export class AddProviderCustomerComponent implements OnInit {
       .subscribe(
         data => {
           this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-          this.disableButton = true;
           const user_data = { 'id': data, 'userProfile': post_data.userProfile };
           setTimeout(() => {
             this.dialogRef.close({ message: 'reloadlist', data: user_data });

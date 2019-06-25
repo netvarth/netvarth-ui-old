@@ -453,12 +453,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   // Created new provider queue
   addProviderQueue(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addProviderQueue(post_data)
       .subscribe(
         () => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_CREATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
@@ -473,13 +473,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   // update a queue
   editProviderQueue(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     post_data.id = this.data.queue.id;
     this.provider_services.editProviderQueue(post_data)
       .subscribe(
         () => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('WAITLIST_QUEUE_UPDATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

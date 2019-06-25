@@ -59,6 +59,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     });
   }
   onSubmit(form_data) {
+    this.disableButton = true;
     const post_data = form_data.message.trim() || '';
     if (post_data === '') {
       this.api_error = 'Please enter your note';
@@ -73,7 +74,6 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
       .subscribe(
         () => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

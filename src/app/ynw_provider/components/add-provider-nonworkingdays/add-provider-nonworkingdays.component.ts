@@ -153,12 +153,12 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     }
   }
   addHoliday(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addHoliday(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('HOLIDAY_CREATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
@@ -170,13 +170,13 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
       );
   }
   editHoliday(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     post_data.id = this.data.holiday.id;
     this.provider_services.editHoliday(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('HOLIDAY_UPDATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

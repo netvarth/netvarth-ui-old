@@ -67,6 +67,7 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
   }
 
   saveSpecializations() {
+    this.disableButton = true;
     this.resetApiErrors();
     const postdata = {
       'specialization': this.selspecialization_arr
@@ -74,7 +75,6 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
     this.provider_services.updatePrimaryFields(postdata)
       .subscribe(data => {
         this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SPECIALIZATION_SAVED');
-        this.disableButton = true;
         setTimeout(() => {
           this.dialogRef.close({ 'mod': 'reloadlist', 'data': data });
         }, projectConstants.TIMEOUT_DELAY);

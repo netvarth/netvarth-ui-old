@@ -61,6 +61,7 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
     }
   }
   saveLanguages() {
+    this.disableButton = true;
     this.resetApiErrors();
     const postdata = {
       'languagesSpoken': this.sellanguage_arr
@@ -68,7 +69,6 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
     this.provider_services.updatePrimaryFields(postdata)
       .subscribe(data => {
         this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_LANGUAGE_SAVED');
-        this.disableButton = true;
         setTimeout(() => {
           this.dialogRef.close({ 'mod': 'reloadlist', 'data': data });
         }, projectConstants.TIMEOUT_DELAY);

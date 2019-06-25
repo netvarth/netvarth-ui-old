@@ -193,13 +193,13 @@ export class AddProviderItemComponent implements OnInit {
   }
 
   addItem(post_data) {
+    this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
     this.provider_services.addItem(post_data)
         .subscribe(
           () => {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
-            this.disableButton = true;
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
@@ -211,6 +211,7 @@ export class AddProviderItemComponent implements OnInit {
     );
   }
   editItem(post_itemdata) {
+    this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
     post_itemdata.itemId =  this.data.item.itemId;
@@ -218,7 +219,6 @@ export class AddProviderItemComponent implements OnInit {
         .subscribe(
           () => {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
-            this.disableButton = true;
             setTimeout(() => {
             this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

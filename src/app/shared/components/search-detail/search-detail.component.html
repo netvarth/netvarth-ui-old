@@ -116,7 +116,8 @@
                                                         <!-- <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)"> -->
                                                         <input matInput autocomplete="off"
                                                             [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
-                                                            (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
+                                                            (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)"
+                                                            (blur)="handleTextrefinefieldBlur($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)">
                                                     </mat-form-field>
                                                     <span class="glyphicon glyphicon-search"></span>
                                                 </div>
@@ -265,7 +266,7 @@
                                 <strong>{{search_data.hits.found}}</strong>
                                 {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ?
                                 'result': ''}} {{found_cap}}
-                                <!-- for <span>â€˜Dentistsâ€™</span> -->
+                                <!-- for <span>Ã¢â‚¬ËœDentistsÃ¢â‚¬â„¢</span> -->
                             </div>
                         </div>
                         <div class="ct-r ml-auto">

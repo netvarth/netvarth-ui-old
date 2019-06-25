@@ -233,11 +233,11 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   }
   // updating the phone number and email ids
   UpdatePrimaryFields(pdata) {
+    this.disableButton = true;
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         data => {
           this.api_success = Messages.BPROFILE_PRIVACY_SAVED;
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close({ data: data, message: 'reloadlist' });
           }, projectConstants.TIMEOUT_DELAY);

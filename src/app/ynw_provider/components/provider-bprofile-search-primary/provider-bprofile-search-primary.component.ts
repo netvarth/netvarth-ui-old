@@ -121,11 +121,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
 
   // updating the primary field from the bprofile edit page
   UpdatePrimaryFields(pdata) {
+    this.disableButton = true;
     this.provider_servicesobj.updatePrimaryFields(pdata)
       .subscribe(
         () => {
           this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

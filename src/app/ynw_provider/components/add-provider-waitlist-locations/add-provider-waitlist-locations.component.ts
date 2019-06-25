@@ -255,7 +255,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
 
   // this method is used to save the location details, if the save is being done from the bprofile page
   savelocation_fromWaitlistmanager(form_data) {
-
+    this.disableButton = true;
     let post_itemdata2;
     if (this.schedule_alreadyexists_for_location === false) {
       // Check whether atleast one schedule is added
@@ -336,7 +336,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
             } else {
               this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
             }
-            this.disableButton = true;
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
@@ -364,7 +363,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   }
   // this method is used to save the location details, if the save is being done from the bprofile page
   savelocation_fromBprofile(form_data) {
-
+    this.disableButton = true;
     let post_itemdata2;
     if (this.schedule_alreadyexists_for_location === false) {
       // Check whether atleast one schedule is added
@@ -449,7 +448,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           } else {
             this.api_success = (this.data.type === 'add') ? this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED') : this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
           }
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

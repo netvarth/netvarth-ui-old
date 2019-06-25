@@ -1046,7 +1046,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
-              // if (this.waitlisttime_arr[i]['isCheckinAllowed']) {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
               if (this.waitlisttime_arr[i]['branchSpCount']) {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['branchSpCount'] = this.waitlisttime_arr[i]['branchSpCount'];
@@ -1056,9 +1055,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               } else if (this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['branchSpCount'] > 1) {
                 this.provider_label = this.getTerminologyTerm('provider', this.search_data.hits.hit[i].fields) + 's';
               }
-              // } else {
-              //   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isCheckinAllowed'] = this.isCheckinEnabled;
-              // }
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
               this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
@@ -1389,7 +1385,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             if (subst_det['retcnt'] > 1) {
               this.refined_querystr += ' (or ' + subst_det['retstr'] + ')';
             } else {
-              this.refined_querystr += ' ' + subst_det['retstr'] + '';
+              if (field === 'coupon_enabled') {
+                this.refined_querystr += '(not' + subst_det['retstr'] + ')';
+              } else {
+                this.refined_querystr += ' ' + subst_det['retstr'] + '';
+              }
             }
           }
         }
@@ -1478,7 +1478,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           time_qstr = projectConstants.myweekdays[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + '] ';
           retstr += ' ' + time_qstr;
         } else {
-          retstr += ' ' + fieldname + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
+          if (fieldname === 'coupon_enabled') {
+            retstr += ' ' + fieldname + ':' + '\'' + 0 + '\'';
+          } else {
+            retstr += ' ' + fieldname + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
+          }
+          console.log(retstr);
         }
       }
       // retstr += ' ' + fieldname + '_cust:' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
@@ -1516,20 +1521,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  /* handleleftdomainchange(domain) {
-     // setting the domain in the selected_domain holder variable
-     if (domain === 'All') {
-       domain = '';
-     }
-     this.selected_leftsubdomain = '';
-     this.domain = domain;
-     this.searchfields.domain = this.domain;
-     this.showopnow = 1;
-     this.change_url_on_criteria_change();
-     this.subdomainlist_data = '';
-     this.getlistofSubdomains();
-     // this.loadkeywordAPIreponsetoArray();
-   }*/
+  handleTextrefinefieldBlur(ev, fieldname, fieldvalue, fieldtype, bypassbuildquery?) {
+    this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
+    fieldvalue = fieldvalue.replace(/;/g, '');
+    fieldvalue = fieldvalue.replace(/\//g, '');
+    this.handleTextrefineblur(fieldname, fieldvalue, fieldtype, bypassbuildquery);
+  }
+
   getlistofSubdomains(curdomain, src?) {
     // const curdomain = this.refined_domain;
     this.subdomainlist_data = [];
@@ -1798,11 +1796,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   isOnlineCheckinEnabled(obj) {
     if (obj) {
       if (obj.fields.hasOwnProperty('online_checkins')) {
-        // if (obj.fields.online_checkins === 1) {
-        //  return true;
-        // } else {
         return false;
-        // }
       } else {
         return false;
       }
@@ -1815,7 +1809,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     if (terminologies !== null) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
-      // const terminologies = this.common_datastorage.get('terminologies');
       if (terminologies) {
         return this.shared_functions.firstToUpper((terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term));
       } else {
@@ -1827,15 +1820,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   checkserviceClicked(name, obj) {
     this.btn_clicked = true;
-    // if (this.shared_functions.checkLogin()) {
-    //   const ctype = this.shared_functions.isBusinessOwner('returntyp');
-    // if (ctype === 'consumer') {
     this.serviceClicked(name, obj);
-    // }
-    // } else { // show consumer login
-    //   const passParam = { callback: 'servicedetail', mname: name, mobj: obj };
-    //   this.doLogin('consumer', passParam);
-    // }
   }
   /* Service Clicked
     * name  Service Name

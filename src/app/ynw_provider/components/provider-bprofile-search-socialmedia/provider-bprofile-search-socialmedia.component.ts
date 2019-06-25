@@ -63,6 +63,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
     this.prepare_sociallist();
   }
   saveSocialmedia() {
+    this.disableButton = true;
     const post_data: any = [];
     for (let i = 0; i < this.social_arr.length; i++) {
       if (this.social_arr[i].Socurl !== '') {
@@ -77,7 +78,6 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);

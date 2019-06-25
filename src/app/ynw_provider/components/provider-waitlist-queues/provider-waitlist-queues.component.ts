@@ -107,6 +107,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   sqTomorrowCount: any = [];
   todayQcountCaption: any = [];
   futureQcountCaption: any = [];
+  onlineCheckInval: any = [];
+  futureWaitlistval: any = [];
 
   constructor(
     private provider_services: ProviderServices,
@@ -276,12 +278,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     if (this.services_selected.length === this.services_list.length) {
       this.isAllServicesSelected = true;
     }
-    // this.qstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
-    // this.qend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
     this.loc_name = q.location.place;
     this.location = q.location;
-    // this.qstartamOrPm = (this.qstart_time.hour >= 12) ? 'PM' : 'AM';
-    // this.qendamOrPm = (this.qend_time.hour >= 12) ? 'PM' : 'AM';
   }
   getQs() {
     return new Promise((resolve, reject) => {
@@ -433,7 +431,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
     // tslint:disable-next-line:radix
     this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
-    // this.amOrPm = (this.start_hour >= 12) ? 'PM' : 'AM';
     this.now = moment(new Date(todaydt), ['hh:mm A']).add(2, 'hours').format('hh:mm A');
     if (!this.qAvailability.availableNow) {
       this.fromDateCaption = 'Now';
@@ -611,7 +608,9 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    * @param qObj queue object
    * @param event field checked status
    */
-  changeQSameDayOnlineStatus(qObj) {
+  changeQSameDayOnlineStatus(qObj, index) {
+    console.log(this.onlineCheckInval);
+    console.log(index);
     let chstatusmsg = '';
 
     if (qObj.onlineCheckIn) {
@@ -621,19 +620,22 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     this.provider_services.changeSamedayCheckinStatus(qObj.id, !qObj.onlineCheckIn)
       .subscribe(() => {
+
         this.shared_Functionsobj.openSnackBar('Same day Checkin ' + chstatusmsg + ' successfully');
         this.initializeQs();
       },
         error => {
+          this.onlineCheckInval[index] = false;
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
+    console.log(this.onlineCheckInval);
   }
   /**
    * Method to change future checkin status
    * @param qObj queue Object
    * @param event field checked status
    */
-  changeQFutureStatus(qObj) {
+  changeQFutureStatus(qObj, index) {
     let chstatusmsg = '';
 
     if (qObj.futureWaitlist) {
@@ -647,6 +649,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
         this.initializeQs();
       },
         error => {
+          this.futureWaitlistval[index] = false;
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }

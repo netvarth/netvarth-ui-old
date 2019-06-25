@@ -59,6 +59,7 @@ export class AddMembersHolderComponent implements OnInit {
     this.addmemberobj.dob = obj.dob || '';
   }
   handleSaveMember() {
+    this.disableButton = true;
     this.resetApi();
     let derror = '';
     const namepattern = new RegExp(projectConstants.VALIDATOR_CHARONLY);
@@ -116,7 +117,6 @@ export class AddMembersHolderComponent implements OnInit {
         this.shared_services.addMembers(post_data)
           .subscribe(() => {
             this.api_success = Messages.MEMBER_CREATED;
-            this.disableButton = true;
             // this.getFamilyMembers();
             setTimeout(() => {
               this.dialogRef.close('reloadlist');

@@ -222,6 +222,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   createService(post_data) {
+    this.disablebutton = true;
     this.savedisabled = true;
     this.api_loading = true;
     const holdstat = this.button_title;
@@ -229,7 +230,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.provider_services.createService(post_data)
       .subscribe(
         data => {
-          this.disablebutton = true;
           this.savedisabled = false;
           this.button_title = holdstat;
           const service_id = data;
@@ -253,10 +253,10 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   updateService(post_data) {
+    this.disablebutton = true;
     this.provider_services.updateService(post_data)
       .subscribe(
         () => {
-          this.disablebutton = true;
           if (this.item_pic.files.length > 0) {
             this.saveImages('edit');
           } else {

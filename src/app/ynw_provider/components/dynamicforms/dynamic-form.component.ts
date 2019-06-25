@@ -50,6 +50,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.disableButton = true;
     this.api_error = null;
     // this.payLoad = JSON.stringify(this.form.value);
     const mon_year_key = this.findYearMonthField();
@@ -58,13 +59,11 @@ export class DynamicFormComponent implements OnInit {
       if (month_year_valid) {
         this.api_error = null;
         this.retonFormSubmit.emit(this.form.value);
-        this.disableButton = true;
       } else {
         this.shared_functions.apiErrorAutoHide(this, Messages.YEAR_MONTH_VALID);
       }
     } else {
       this.retonFormSubmit.emit(this.form.value);
-      this.disableButton = true;
     }
     //
   }

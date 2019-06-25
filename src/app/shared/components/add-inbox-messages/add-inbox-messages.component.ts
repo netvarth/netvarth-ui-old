@@ -152,6 +152,7 @@ else {
   }
 
   providerToConsumerWaitlistNote(post_data) {
+    this.disableButton = true;
 
     if (this.uuid !== null) {
 
@@ -160,7 +161,6 @@ else {
         .subscribe(
           () => {
             this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            this.disableButton = true;
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);

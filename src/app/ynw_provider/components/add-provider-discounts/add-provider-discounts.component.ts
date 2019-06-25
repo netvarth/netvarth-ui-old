@@ -119,12 +119,12 @@ export class AddProviderDiscountsComponent implements OnInit {
     }
   }
   addDiscount(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addDiscount(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_CREATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
@@ -142,13 +142,13 @@ export class AddProviderDiscountsComponent implements OnInit {
     return this.shared_functions.isNumeric(evt);
   }
   editDiscount(post_data) {
+    this.disableButton = true;
     this.api_loading = true;
     post_data.id = this.data.discount.id;
     this.provider_services.editDiscount(post_data)
       .subscribe(
         () => {
           this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_UPDATED');
-          this.disableButton = true;
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
