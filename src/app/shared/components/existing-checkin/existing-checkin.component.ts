@@ -35,6 +35,7 @@ export class ExistingCheckinComponent implements OnInit {
   terminologiesjson: any = null;
   changeOccured = false;
   checkinLabel;
+  cancelledlabel;
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   tokenenabled = false;
 
@@ -54,7 +55,8 @@ export class ExistingCheckinComponent implements OnInit {
     this.getExistingCheckinsByLocation(this.data.locdet.id);
     this.terminologiesjson = this.data.terminologies;
     this.provider_datastorage.set('terminologies', this.terminologiesjson);
-    this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.sharedfunctionObj.getTerminologyTerm('waitlist'));
+    this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['waitlist']);
+    this.cancelledlabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['cancelled']);
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(this.changeOccured);
     });
@@ -146,7 +148,10 @@ export class ExistingCheckinComponent implements OnInit {
           if (data === 'reloadlist') {
             this.changeOccured = true;
             // this.api_success = Messages.CHECKIN_CANCELLED;
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED');
+            this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', this.checkinLabel);
+            this.api_success =  this.api_success.replace('[cancelled]', this.cancelledlabel);
+           ;
+            // this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', obj.place);;
             this.getExistingCheckinsByLocation(this.data.locdet.id);
           }
         },
@@ -156,3 +161,4 @@ export class ExistingCheckinComponent implements OnInit {
       );
   }
 }
+
