@@ -3792,3 +3792,10 @@ i.notavail {color:grey !important}
   font-size: .75rem !important;
   font-weight: 600 !important;
 }
+.baseloc{
+  text-align: center;
+  }
+  .baseloc i{
+  font-size: 1.5625rem;
+  color: #fda60d;
+  }

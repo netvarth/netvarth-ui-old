@@ -30,7 +30,7 @@ export class ProviderNotificationsComponent implements OnInit {
   // pushNotification = false;
   sms = false;
   email = false;
-  push = false;
+  cheknpush = false;
   cancelsms = false;
   cancelemail = false;
   cancelpush = false;
@@ -108,7 +108,7 @@ export class ProviderNotificationsComponent implements OnInit {
     }
 
   }
-  addCanclph() {
+  addCheknCanclph() {
     this.resetApiErrors();
     if (this.notifycanclphonenumber !== '') {
       const curphone1 = this.notifycanclphonenumber;
@@ -131,7 +131,7 @@ export class ProviderNotificationsComponent implements OnInit {
 
   }
 
-  addCanclemil() {
+  addCheknCanclemil() {
     this.resetApiErrors();
     if (this.notifycanclemail !== '') {
       const curemail1 = this.notifycanclemail;
@@ -157,7 +157,7 @@ export class ProviderNotificationsComponent implements OnInit {
       'type': 'create checkin',
       'sms': this.ph_arr,
       'email': this.em_arr,
-      'pushnotifications': this.push
+      'pushnotifications': this.cheknpush
     });
 
     this.savecancelNotification_json.push({
@@ -166,7 +166,8 @@ export class ProviderNotificationsComponent implements OnInit {
       'email': this.em1_arr,
       'pushnotifications': this.cancelpush
     });
-
+alert(JSON.stringify(this.savechekinNotification_json))
+alert(JSON.stringify(this.savecancelNotification_json))
     this.saveNotification.push(this.savechekinNotification_json);
     this.saveNotification.push(this.savecancelNotification_json);
     this.saveNotification = [];

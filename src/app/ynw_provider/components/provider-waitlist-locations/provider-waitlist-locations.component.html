@@ -19,6 +19,15 @@
                             </button>
                         </span>
                         <span class="bse-lcn-label" *ngIf="loc.baseLocation == true">{{base_loc_cap}}</span>
+                        <div class="warning baseloc" *ngIf="(loc.place && loc.address) === '' ">
+                            <i data-icon="m"></i>
+                            <p><span><strong>{{base_loc_det_cap}}.</strong></span></p>
+                            <p><span>{{please_use_cap}} <strong>{{edit_cap}} {{location_cap}}</strong>
+                            {{btn_to_compl_cap}}.</span></p>
+                            <span class="cs-btn bt3" (click)="goLocationDetail(loc)">{{edit_cap}}
+                            {{location_cap}}</span>
+                            <p class="smlft"><small>* {{need_loc_cap}} &amp; {{work_to_turn_search}}</small></p>
+                            </div>
                         <h3 class="pointer-cursor" (click)="goLocationDetail(loc)">
                             {{loc.place | capitalizeFirst}}
                         </h3>

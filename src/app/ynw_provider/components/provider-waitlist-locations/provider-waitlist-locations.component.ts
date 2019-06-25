@@ -15,10 +15,17 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
-  base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
-  set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
-  new_loc_cap = Messages.ADD_NEW_LOC_CAP;
-  no_loc_add = Messages.NO_LOC_ADDED;
+base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
+set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
+new_loc_cap = Messages.ADD_NEW_LOC_CAP;
+no_loc_add = Messages.NO_LOC_ADDED;
+base_loc_det_cap = Messages.BPROFILE_BASE_LOCATION;
+please_use_cap = Messages.BPROFILE_PLEASE_CAP;
+edit_cap = Messages.EDIT_BTN;
+location_cap = Messages.LOCATION_CAP;
+btn_to_compl_cap = Messages.BPROFILE_BUTTON_COMPLETE_CAP;
+need_loc_cap = Messages.BPROFILE_NEED_LOCATION_CAP;
+work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   loc_list: any = [];
   bProfile: any = [];
   loc_badges: any = [];
