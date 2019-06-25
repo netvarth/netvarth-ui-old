@@ -166,8 +166,8 @@ export class ProviderNotificationsComponent implements OnInit {
       'email': this.em1_arr,
       'pushnotifications': this.cancelpush
     });
-alert(JSON.stringify(this.savechekinNotification_json))
-alert(JSON.stringify(this.savecancelNotification_json))
+// alert(JSON.stringify(this.savechekinNotification_json))
+// alert(JSON.stringify(this.savecancelNotification_json))
     this.saveNotification.push(this.savechekinNotification_json);
     this.saveNotification.push(this.savecancelNotification_json);
     this.saveNotification = [];
