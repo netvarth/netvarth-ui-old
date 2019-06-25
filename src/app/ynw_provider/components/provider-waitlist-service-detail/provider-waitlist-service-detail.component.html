@@ -90,7 +90,7 @@
                                                         </mat-menu>
                                                     </span>
                                                     <div class="img-h" (click)="openImageModalRow(file)">
-                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                        <div class="overlay-y"></div><img [src]="file.modal.img" alt=""
                                                             *ngIf="file.modal.img" />
                                                     </div>
                                                 </div>
@@ -102,11 +102,11 @@
                                                     *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
                                                 <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img
                                                         *ngIf="image_list_popup[2].modal.img"
-                                                        [src]="image_list_popup[2].modal.img" /></div>
+                                                        [src]="image_list_popup[2].modal.img" alt=""/></div>
                                                 <div class="img-h" (click)="openImageModalRow(image_list_popup[2])"
                                                     *ngIf="(image_list_popup.length-3)==0"><img
                                                         *ngIf="image_list_popup[2].modal.img"
-                                                        [src]="image_list_popup[2].modal.img" /></div>
+                                                        [src]="image_list_popup[2].modal.img" alt=""/></div>
                                             </div>
                                         </li>
                                     </ul>

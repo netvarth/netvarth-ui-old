@@ -30,7 +30,7 @@
     <ul class="galul">
       <li *ngFor="let file of item_pic.files;let i = index ">
         <div class="galimg_outer">
-          <div class="gal_img"><img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]"></div>
+          <div class="gal_img"><img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]" alt="Item"></div>
           <div class="gal_caption"><input type="text" [(ngModel)]="item_pic.caption[i]" placeholder="Caption"
               maxlength="100"></div>
           <div class="gal_action">

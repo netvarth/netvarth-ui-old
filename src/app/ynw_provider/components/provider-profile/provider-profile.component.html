@@ -20,7 +20,7 @@
     <form [formGroup]="firstFormGroup">
       <div>
         <label>{{profile_pic_cap}}</label>
-        <div><img *ngIf="this.profile_pic.base64" [src]="this.profile_pic.base64" style="height:150px"></div>
+        <div><img *ngIf="this.profile_pic.base64" [src]="this.profile_pic.base64" style="height:150px" alt=""></div>
         <input type="file" accept=".png, .jpg, .jpeg, .bmp, .gif, .tif" class="file" #file (change)="imageUpload(file)">
       </div>
 

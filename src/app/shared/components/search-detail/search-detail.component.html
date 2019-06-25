@@ -308,67 +308,67 @@
                                         <!-- {{search_result.fields.rating}}  -->
                                         <ng-container *ngIf="search_result.fields.rating>0">
                                             <ng-container *ngIf="search_result.fields.rating==.5">
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==1">
-                                                <img class="ratingstar" src="./assets/images/star.svg" />
+                                                <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==1.5">
-                                                <img class="ratingstar" src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
+                                                <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
                                             <ng-container *ngIf="search_result.fields.rating==2">
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star.svg" />
+                                                    src="./assets/images/star.svg" alt=""/>
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==2.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
+                                                    src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==3">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star.svg" />
+                                                    src="./assets/images/star.svg" alt=""/>
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==3.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==4">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                                                    src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==4.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star.svg" />
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" />
+                                                    src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==5">
                                                 <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                    <img class="ratingstar" src="./assets/images/star.svg" />
+                                                    <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
                                                 </ng-container>
                                             </ng-container>
 
@@ -376,7 +376,7 @@
                                         </ng-container>
                                         <ng-container *ngIf="search_result.fields.rating==0">
                                             <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
                                             </ng-container>
                                         </ng-container>
 
@@ -493,13 +493,13 @@
                                         [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==2"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic'"><img
-                                            src="./assets/images/basic.png"></li>
+                                            src="./assets/images/basic.png" alt="Basic"></li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==3"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic plus'"><img
-                                            src="./assets/images/basicpls.png"></li>
+                                            src="./assets/images/basicpls.png" alt="Basic Plus"></li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==4"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-advanced'"><img
-                                            src="./assets/images/premium.png"></li>
+                                            src="./assets/images/premium.png" alt="Advanced"></li>
                                     <!-- <li><span class="icon-ambulance"></span></li>
                                     <li><span class="icon-payment"></span></li> -->
                                 </ul>

@@ -23,66 +23,66 @@
                   <div class="rating-stars">
                     <ng-container *ngIf="search_result.rating>0">
                       <ng-container *ngIf="search_result.rating==.5">
-                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                         <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                          src="./assets/images/star-disabled.svg" />
+                          src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==1">
-                        <img class="ratingstar" src="./assets/images/star.svg" />
+                        <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
                         <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                          src="./assets/images/star-disabled.svg" />
+                          src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==1.5">
-                        <img class="ratingstar" src="./assets/images/star.svg" />
-                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
+                        <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                         <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                          src="./assets/images/star-disabled.svg" />
+                          src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
                       <ng-container *ngIf="search_result.rating==2">
-                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" alt=""/>
                         <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                          src="./assets/images/star-disabled.svg" />
+                          src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==2.5">
-                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" />
-                        <img class="ratingstar" src="./assets/images/star-half.svg" />
-                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star.svg" alt=""/>
+                        <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==3">
-                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" />
-                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" alt=""/>
+                        <img class="ratingstar" *ngFor="let number of [1,2]" src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==3.5">
-                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" />
-                        <img class="ratingstar" src="./assets/images/star-half.svg" />
-                        <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3]" src="./assets/images/star.svg" alt=""/>
+                        <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                        <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==4">
-                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" />
-                        <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" alt=""/>
+                        <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==4.5">
-                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" />
-                        <img class="ratingstar" src="./assets/images/star-half.svg" />
+                        <img class="ratingstar" *ngFor="let number of [1,2,3,4]" src="./assets/images/star.svg" alt=""/>
+                        <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
                       </ng-container>
 
                       <ng-container *ngIf="search_result.rating==5">
                         <ng-container *ngFor="let number of [1,2,3,4,5]">
-                          <img class="ratingstar" src="./assets/images/star.svg" />
+                          <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
                         </ng-container>
                       </ng-container>
 
                     </ng-container>
                     <ng-container *ngIf="search_result.rating==0">
                       <ng-container *ngFor="let number of [1,2,3,4,5]">
-                        <img class="ratingstar" src="./assets/images/star-disabled.svg" />
+                        <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
                       </ng-container>
                     </ng-container>
 
@@ -154,11 +154,11 @@
                   <li *ngIf="search_result.docambulance_location1==1" [matTooltip]="'Ambulance Service'">
                     <span class="icon-ambulance"></span></li>
                   <li class="img pic_align" *ngIf="search_result.ynw_verified_level==2" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="'Jaldee verified-basic'"><img src="./assets/images/basic.png"></li>
+                    [matTooltip]="'Jaldee verified-basic'"><img src="./assets/images/basic.png" alt="Basic"></li>
                   <li class="img pic_align" *ngIf="search_result.ynw_verified_level==3" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="'Jaldee verified-basic plus'"><img src="./assets/images/basicpls.png"></li>
+                    [matTooltip]="'Jaldee verified-basic plus'"><img src="./assets/images/basicpls.png" alt="Basic Plus"></li>
                   <li class="img pic_align" *ngIf="search_result.ynw_verified_level==4" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="'Jaldee verified-advanced'"><img src="./assets/images/premium.png"></li>
+                    [matTooltip]="'Jaldee verified-advanced'"><img src="./assets/images/premium.png" alt="Advanced"></li>
                 </ul>
                 <span class="jc_Coupon first-time-jc"
                   *ngIf="search_result.claimable!=1 && (stringToInt(search_result.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"

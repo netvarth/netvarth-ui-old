@@ -18,7 +18,7 @@
                                             <ng-container *ngIf="galleryjson.length > 0">
                                                 <ng-container>
                                                     <img [src]="galleryjson[0].thumbUrl" alt=""
-                                                        (click)="openImageModalRow(image_list_popup[0])">
+                                                        (click)="openImageModalRow(image_list_popup[0])" alt="">
                                                 </ng-container>
                                             </ng-container>
                                         </div>
@@ -34,10 +34,9 @@
                                         </ul>
                                         <div class="rating-stars">
                                             <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
-                                                src="./assets/images/star.svg" /><img class="ratingstar"
-                                                *ngIf="ratingenabledHalf" src="./assets/images/star-half.svg" /><img
-                                                class="ratingstar" *ngFor="let enable of ratingdisabledArr"
-                                                src="./assets/images/star-disabled.svg" />
+                                                src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" *ngIf="ratingenabledHalf" src="./assets/images/star-half.svg" alt=""/>
+                                                <img class="ratingstar" *ngFor="let enable of ratingdisabledArr" src="./assets/images/star-disabled.svg" alt=""/>
                                         </div>
                                     </div>
                                     <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
@@ -120,11 +119,11 @@
                                 </div>
                                 <div>
                                     <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img class="img_sizenew"
-                                            src="./assets/images/BasicOrg.png"></span>
+                                            src="./assets/images/BasicOrg.png" alt="Basic"></span>
                                     <span *ngIf="businessjson.verifyLevel == 'BASIC PLUS'"><img class="img_sizenew"
-                                            src="./assets/images/BasicPlsOrg.png"></span>
+                                            src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
                                     <span *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img class="img_sizenew"
-                                            src="./assets/images/PremiumOrg.png"></span>
+                                            src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                                 </div>
                             </div>
                             <div class="tp-r">

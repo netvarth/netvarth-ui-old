@@ -39,7 +39,7 @@
                 <a (click)="doSignup('provider')" class="button-style" name="">Sign Up</a>
               </div>
               <div class="clearfix text-center" style="padding-top:0px !important;padding-bottom: 0px !important">
-                <img src="assets/images/special offers.svg" alt="" />
+                <img src="assets/images/special offers.svg" alt="Special Offer" />
                 <!-- <p>Will Get <b>Platinum</b> free trial for 60 Days</p> -->
               </div>
               <!-- <div class="lg-opt ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom =='phome'">
@@ -61,42 +61,42 @@
               <td></td>
               <td (click)="setActiveFeature('jaldee_online')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_online'}" 
-                  src="assets/images/home/jaldee_online.svg" alt="" class="img-fluid Avatar jd_online_ic"></td>
+                  src="assets/images/home/jaldee_online.svg" alt="Jaldee Online" class="img-fluid Avatar jd_online_ic"></td>
               <td></td>
             </tr>
             <tr>
               <td style="text-align: right !important" (click)="setActiveFeature('jaldee_token')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_token'}"
-                  src="assets/images/home/jaldee_token.svg" alt="" class="img-fluid Avatar jd_token_ic"></td>
+                  src="assets/images/home/jaldee_token.svg" alt="Jaldee Token" class="img-fluid Avatar jd_token_ic"></td>
               <td></td>
               <td style="text-align: left !important" (click)="setActiveFeature('jaldee_checkin')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_checkin'}"
-                  src="assets/images/home/jaldee_checkin.svg" alt="" class="img-fluid Avatar jd_checkin_ic"></td>
+                  src="assets/images/home/jaldee_checkin.svg" alt="Jaldee Checkin" class="img-fluid Avatar jd_checkin_ic"></td>
             </tr>
             <tr>
               <td style="text-align: left !important" (click)="setActiveFeature('jaldee_appointment')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_appointment'}"
-                  src="assets/images/home/jaldee_appointment.svg" alt="" class="img-fluid Avatar jd_appt_ic"></td>
+                  src="assets/images/home/jaldee_appointment.svg" alt="Jaldee Appointment" class="img-fluid Avatar jd_appt_ic"></td>
               <td></td>
               <td style="text-align: right !important" (click)="setActiveFeature('jaldee_comm')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_comm'}" src="assets/images/home/jaldee_comm.svg" alt=""
+                  [ngClass]="{'active': activeFeature=='jaldee_comm'}" src="assets/images/home/jaldee_comm.svg" alt="Jaldee Comm"
                   class="img-fluid Avatar jd_comm_ic"></td>
             </tr>
             <tr>
               <td style="text-align: left !important" (click)="setActiveFeature('jaldee_pos')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_pos'}"
-                  src="assets/images/home/jaldee_pos.svg" alt="" class="img-fluid Avatar jd_pos_ic"></td>
+                  src="assets/images/home/jaldee_pos.svg" alt="Jaldee Pos" class="img-fluid Avatar jd_pos_ic"></td>
               <td></td>
               <td style="text-align: center !important" (click)="setActiveFeature('jaldee_pay')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_pay'}" src="assets/images/home/jaldee_pay.svg" alt=""
+                  [ngClass]="{'active': activeFeature=='jaldee_pay'}" src="assets/images/home/jaldee_pay.svg" alt="Jaldee Pay"
                   class="img-fluid Avatar jd_pay_ic"></td>
             </tr>
             <tr>
               <td style="text-align: right !important" (click)="setActiveFeature('jaldee_coupon')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_coupon'}" src="assets/images/home/jaldee_coupons.svg"
-                  alt="" class="img-fluid Avatar jd_coupon_ic"></td>
+                  alt="Jaldee Coupon" class="img-fluid Avatar jd_coupon_ic"></td>
                   <td style="text-align: right  !important" (click)="setActiveFeature('jaldee_kiosk')"><img [ngClass]="{'active': activeFeature=='jaldee_kiosk'}"
-                    src="assets/images/home/jaldee_kiosk.svg" alt=""
+                    src="assets/images/home/jaldee_kiosk.svg" alt="Jaldee Kiosk"
                     class="img-fluid Avatar jd_kiosk_ic">
                 </td>
               <td></td>
@@ -107,7 +107,7 @@
         <div class="col-md-6">
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_online'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_online.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_online.svg" alt="Jaldee Online" class="img-fluid"></div>
               <ul>
                 <li>Create your business profile</li>
                 <li>Increase brand awareness</li>
@@ -120,7 +120,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_token'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_token.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_token.svg" alt="Jaldee Token" class="img-fluid"></div>
               <ul>
                 <li>Enable online token system</li>
                 <li>Your customer can get token online</li>
@@ -132,7 +132,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_checkin'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_checkin.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_checkin.svg" alt="Jaldee Checkin" class="img-fluid"></div>
               <ul>
                 <li>Online queue management</li>
                 <li>Live queue dashboard</li>
@@ -144,7 +144,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_appointment'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_appointment.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_appointment.svg" alt="Jaldee Appointment" class="img-fluid"></div>
               <ul>
                 <li>Enable online appointment to get appointment requests</li>
                 <li>Your customers can request for appointments online</li>
@@ -156,7 +156,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_coupon'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_coupons.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_coupons.svg" alt="Jaldee Coupon" class="img-fluid"></div>
               <ul>
                 <li>Sell more services</li>
                 <li>Enable Jaldee coupons and offer attractive discounts</li>
@@ -167,7 +167,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_comm'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_comm.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_comm.svg" alt="Jaldee Comm" class="img-fluid"></div>
               <ul>
                 <li>Easy and secure communication with customers</li>
                 <li>Send and receive messages from your customers</li>
@@ -177,7 +177,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_pos'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_pos.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_pos.svg" alt="Jaldee Pos" class="img-fluid"></div>
               <ul>
                 <li>No need of a separate PoS system</li>
                 <li>Create bills</li>
@@ -188,7 +188,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_pay'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_pay.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_pay.svg" alt="Jaldee Pay" class="img-fluid"></div>
               <ul>
                 <li>Enable jaldee online payments and receive payments online</li>
                 <li>Collect advance payments</li>
@@ -198,7 +198,7 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_kiosk'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_kiosk.svg" alt="" class="img-fluid"></div>
+              <div><img src="assets/images/home/jaldee_kiosk.svg" alt="Jaldee Kiosk" class="img-fluid"></div>
               <ul>
                 <li>Use kiosk facility and reduce the operational cost</li>
                 <li>Customer can check-in by their own</li>
@@ -233,7 +233,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/HealthCare.jpg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/HealthCare.jpg" alt="HealthCare" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -256,7 +256,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/personal-care.jpg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/personal-care.jpg" alt="Personal Care" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -279,7 +279,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/Proffesional.jpg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/Proffesional.jpg" alt="Proffesional" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -297,7 +297,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/foodand beverages-01.svg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/foodand beverages-01.svg" alt="Food and beverages" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -318,7 +318,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/vasthu-01.svg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/vasthu-01.svg" alt="Vastu" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -336,7 +336,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/religoues presets-01.svg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/religoues presets-01.svg" alt="Religious / Priest" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -354,7 +354,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/bank-01.svg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/bank-01.svg" alt="Finance" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -372,7 +372,7 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/pet-01.svg" alt="" class="img-fluid mt-5">
+            <img src="assets/images/home/pet-01.svg" alt="Veterinary" class="img-fluid mt-5">
           </div>
         </div>
       </owl-carousel>

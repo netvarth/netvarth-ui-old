@@ -140,7 +140,7 @@
                                             <div class="bi-l" *ngIf="blogo">
                                                 <!-- <div [ngClass]="(profimg_exists)?'pro-pic yes':'pro-pic'"> -->
                                                 <div class="pro-pic" [class.yes]="profimg_exists">
-                                                    <div class="pro-pic-img"><img [src]="showimg()"
+                                                    <div class="pro-pic-img"><img [src]="showimg()" alt=""
                                                             *ngIf="blogo[0] && blogo[0].url"></div>
                                                     <input #logofile type="file" accept="image/*" style="display:none;"
                                                         (change)="imageSelect(logofile,$event)">
@@ -1113,11 +1113,11 @@
                                     <span
                                         *ngIf="bProfile && bProfile.verifyLevel =='NONE'">{{verified_level_change}}</span>
                                     <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'"><img height="80"
-                                            width="70" src="./assets/images/BasicOrg.png"></span>
+                                            width="70" src="./assets/images/BasicOrg.png" alt="Basic"></span>
                                     <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'"><img height="80"
-                                            width="70" src="./assets/images/BasicPlsOrg.png"></span>
+                                            width="70" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"></span>
                                     <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'"><img height="80"
-                                            width="70" src="./assets/images/PremiumOrg.png"></span></div>
+                                            width="70" src="./assets/images/PremiumOrg.png" alt="Advanced"></span></div>
                                 <div class="cd-b veifyLevel">
                                     <span
                                         *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'">{{verified_level_basic}}</span>
@@ -1175,7 +1175,7 @@
                                                     </div>
                                                     <div class="img-h" (click)="openImageModalRow(file)">
                                                         <div class="overlay-y"></div><img *ngIf="file.modal.img"
-                                                            [src]="file.modal.img" />
+                                                            [src]="file.modal.img" alt=""/>
                                                     </div>
                                                 </div>
                                             </li>
@@ -1185,7 +1185,7 @@
                                                 <span class="mre"
                                                     (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-3)}}</span>
                                                 <div class="img-h"><img *ngIf="image_list_popup[3].modal.img"
-                                                        [src]="image_list_popup[3].modal.img" /></div>
+                                                        [src]="image_list_popup[3].modal.img" alt=""/></div>
                                             </div>
                                         </li>
                                     </ul>
