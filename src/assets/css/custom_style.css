@@ -3799,3 +3799,11 @@ i.notavail {color:grey !important}
   font-size: 1.5625rem;
   color: #fda60d;
   }
+  .editbutton{
+    color: #00aef2 !important;
+    border: 1px solid #00aef2 !important;
+    border-radius: 30px !important;
+    background: transparent !important;
+    margin-right: 5px !important;
+    font-weight: 500 !important;
+    }
