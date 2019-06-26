@@ -16,6 +16,7 @@ import { ProviderProfileComponent } from './components/provider-profile/provider
 import { ProviderTourComponent } from './components/provider-tour/provider-tour.component';
 import { ProviderMembersComponent } from './components/provider-members/provider-members.component';
 import { ConfirmBoxComponent } from './shared/component/confirm-box/confirm-box.component';
+import { ConfirmPaymentBoxComponent } from './shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { NotificationListBoxComponent } from './shared/component/notification-list-box/notification-list-box.component';
 import { AddProviderMemberComponent } from './components/add-provider-member/add-provider-member.component';
 import { AdjustQueueDelayComponent } from './components/adjust-queue-delay/adjust-queue-delay.component';
@@ -88,6 +89,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderMembersComponent,
     AddProviderMemberComponent,
     ConfirmBoxComponent,
+    ConfirmPaymentBoxComponent,
     NotificationListBoxComponent,
     AdjustQueueDelayComponent,
     ProviderbWizardComponent,
@@ -112,9 +114,10 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderBprofileSearchDynamicComponent,
     VirtualFieldsComponent
   ],
-  exports: [ConfirmBoxComponent],
+  exports: [ConfirmBoxComponent,ConfirmPaymentBoxComponent],
   entryComponents: [
     ConfirmBoxComponent,
+    ConfirmPaymentBoxComponent,
     NotificationListBoxComponent,
     AddProviderMemberComponent,
     AdjustQueueDelayComponent,
