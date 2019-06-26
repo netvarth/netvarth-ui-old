@@ -9,6 +9,7 @@ import {  map } from 'rxjs/operators/map';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { ConfirmPaymentBoxComponent } from '../../shared/component/confirm-paymentbox/confirm-paymentbox.component';
@@ -195,6 +196,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
+    private provider_shared_functions: ProviderSharedFuctions,
     public sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
@@ -987,13 +989,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       data: {
         'message': 'Proceed with payment ?',
         'heading': 'Confirm',
-        'type': 'yes/no'
+        'type': 'yes/no',
+        'status': this.checkin.waitlistStatus
       }
     });
     canceldialogRef.afterClosed().subscribe(result => {
       status = result;
       if (status === 1) {
         this.makePayment(mode, amount);
+      }
+      if (status === 2) {
+        this.makePayment(mode, amount,status);
       }
     });
 
@@ -1007,7 +1013,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   hidePayWorkBench() {
     this.showPayWorkBench = false;
   }
-  makePayment(mode, amount) {
+  makePayment(mode, amount,status?) {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.acceptPaymentBy = mode;
     this.pay_data.amount = amount;
@@ -1017,6 +1023,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
+            if(status === 2){
+              this.getCheckinDetails();
+              this.provider_shared_functions.changeWaitlistStatus(this, this.checkin, 'DONE');
+            }
             this.hidePayWorkBench();
             this.getWaitlistBill();
             this.getPrePaymentDetails();
@@ -1028,6 +1038,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
+  changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
+      .then(
+        result => {
+         // this.loadApiSwitch(result);
+        }
+      );
+  }
+  
   // checkAmount(evt) {
   //   if (evt.which !== 8 && evt.which !== 0 &&
   //     ((evt.which < 48 || evt.which > 57) &&
