@@ -102,13 +102,18 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   sqShowTodayCount: any = [];
   sqShowActiveQFutureCount: any = [];
   sqShowActiveQTodayCount: any = [];
-  sqTodayCount: any = [];
-  sqFutureCount: any = [];
-  sqTomorrowCount: any = [];
+  TodayCheckinsCount: any = [];
+  FutureCheckinsCount: any = [];
+  TomorrowCheckinsCount: any = [];
+  sqTodayCheckinsCount: any = [];
+  sqFutureCheckinsCount: any = [];
+  sqTomorrowCheckinsCount: any = [];
   todayQcountCaption: any = [];
   futureQcountCaption: any = [];
   onlineCheckInval: any = [];
   futureWaitlistval: any = [];
+  todayQLoading: any = [];
+  scheduleLoading: any = [];
 
   constructor(
     private provider_services: ProviderServices,
@@ -750,10 +755,10 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   }
 
   viewDashboard(queueObj, index, que) {
-    this.getTodayCheckinCount(queueObj, index);
+    this.getTodayCheckinCount(queueObj, index, que);
     if (!queueObj.instantQueue) {
-      this.getfutureCheckinCount(queueObj, index);
-      this.getTomorrowCheckinCount(queueObj, index);
+      this.getfutureCheckinCount(queueObj, index, que);
+      this.getTomorrowCheckinCount(queueObj, index, que);
       if (que === 'scheduleQ') {
         if (!this.sqShowFutureCount[index]) {
           this.sqShowFutureCount[index] = true;
@@ -791,7 +796,12 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     }
   }
 
-  getfutureCheckinCount(queue, index) {
+  getfutureCheckinCount(queue, index, origin) {
+    if (origin === 'scheduleQ') {
+      this.scheduleLoading[index] = true;
+    } else {
+      this.todayQLoading[index] = true;
+    }
     let no_filter = false;
     let Mfilter = null;
     const queueid = queue.id;
@@ -808,7 +818,13 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
           data => {
             resolve(data);
             if (no_filter) {
-              this.sqFutureCount[index] = data;
+              if (origin === 'scheduleQ') {
+                this.sqFutureCheckinsCount[index] = data;
+                this.scheduleLoading[index] = false;
+              } else {
+                this.FutureCheckinsCount[index] = data;
+                this.todayQLoading[index] = false;
+              }
             }
           },
           () => {
@@ -816,7 +832,12 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     });
   }
 
-  getTodayCheckinCount(queue, index) {
+  getTodayCheckinCount(queue, index, origin) {
+    if (origin === 'scheduleQ') {
+      this.scheduleLoading[index] = true;
+    } else {
+      this.todayQLoading[index] = true;
+    }
     let Mfilter = null;
     const queueid = queue.id;
     let no_filter = false;
@@ -833,7 +854,13 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             if (no_filter) {
-              this.sqTodayCount[index] = data;
+              if (origin === 'scheduleQ') {
+                this.sqTodayCheckinsCount[index] = data;
+                this.scheduleLoading[index] = false;
+              } else {
+                this.TodayCheckinsCount[index] = data;
+                this.todayQLoading[index] = false;
+              }
             }
             resolve(data);
           },
@@ -842,7 +869,12 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     });
   }
 
-  getTomorrowCheckinCount(queue, index) {
+  getTomorrowCheckinCount(queue, index, origin) {
+    if (origin === 'scheduleQ') {
+      this.scheduleLoading[index] = true;
+    } else {
+      this.todayQLoading[index] = true;
+    }
     const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
     const today = new Date(server_date.split(' ')[0]);
     const dd = today.getDate() + 1;
@@ -872,7 +904,13 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             if (no_filter) {
-              this.sqTomorrowCount[index] = data;
+              if (origin === 'scheduleQ') {
+                this.sqTomorrowCheckinsCount[index] = data;
+                this.scheduleLoading[index] = false;
+              } else {
+                this.TomorrowCheckinsCount[index] = data;
+                this.todayQLoading[index] = false;
+              }
             }
             resolve(data);
           },

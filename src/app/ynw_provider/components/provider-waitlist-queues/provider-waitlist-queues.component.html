@@ -276,21 +276,26 @@
                                                                         *ngIf="sqShowActiveQTodayCount[i] || sqShowActiveQFutureCount[i]">
                                                                         <h5>Check-ins</h5>
                                                                         <div class="c-ot m0">
+                                                                                <div class="container"
+                                                                                        *ngIf="todayQLoading[i]">
+                                                                                        <app-common-innerloading-spinner>
+                                                                                        </app-common-innerloading-spinner>
+                                                                                </div>
                                                                                 <div class="item"
-                                                                                        *ngIf="sqShowActiveQTodayCount[i]">
+                                                                                        *ngIf="sqShowActiveQTodayCount[i] && !todayQLoading[i]">
                                                                                         <span class="ttle">Today</span>
-                                                                                        <span>{{sqTodayCount[i]}}</span>
+                                                                                        <span>{{TodayCheckinsCount[i]}}</span>
                                                                                 </div>
                                                                                 <div class="item"
-                                                                                        *ngIf="sqShowActiveQFutureCount[i]">
+                                                                                        *ngIf="sqShowActiveQFutureCount[i] && !todayQLoading[i]">
                                                                                         <span class="ttle">Future</span>
-                                                                                        <span>{{sqFutureCount[i]}}</span>
+                                                                                        <span>{{FutureCheckinsCount[i]}}</span>
                                                                                 </div>
                                                                                 <div class="item"
-                                                                                        *ngIf="sqShowActiveQFutureCount[i]">
+                                                                                        *ngIf="sqShowActiveQFutureCount[i] && !todayQLoading[i]">
                                                                                         <span
                                                                                                 class="ttle">Tomorrow</span>
-                                                                                        <span>{{sqTomorrowCount[i]}}</span>
+                                                                                        <span>{{TomorrowCheckinsCount[i]}}</span>
                                                                                 </div>
                                                                         </div>
                                                                 </div>
@@ -409,22 +414,26 @@
                                                                         *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
                                                                         <h5>Check-ins</h5>
                                                                         <div class="c-ot m0">
-
+                                                                                <div class="container"
+                                                                                        *ngIf="scheduleLoading[i]">
+                                                                                        <app-common-innerloading-spinner>
+                                                                                        </app-common-innerloading-spinner>
+                                                                                </div>
                                                                                 <div class="item"
-                                                                                        *ngIf="sqShowTodayCount[i]">
+                                                                                        *ngIf="sqShowTodayCount[i] && !scheduleLoading[i]">
                                                                                         <span class="ttle">Today</span>
-                                                                                        <span>{{sqTodayCount[i]}}</span>
+                                                                                        <span>{{sqTodayCheckinsCount[i]}}</span>
                                                                                 </div>
                                                                                 <div class="item"
-                                                                                        *ngIf="sqShowFutureCount[i]">
+                                                                                        *ngIf="sqShowFutureCount[i] && !scheduleLoading[i]">
                                                                                         <span class="ttle">Future</span>
-                                                                                        <span>{{sqFutureCount[i]}}</span>
+                                                                                        <span>{{sqFutureCheckinsCount[i]}}</span>
                                                                                 </div>
                                                                                 <div class="item"
-                                                                                        *ngIf="sqShowFutureCount[i]">
+                                                                                        *ngIf="sqShowFutureCount[i] && !scheduleLoading[i]">
                                                                                         <span
                                                                                                 class="ttle">Tomorrow</span>
-                                                                                        <span>{{sqTomorrowCount[i]}}</span>
+                                                                                        <span>{{sqTomorrowCheckinsCount[i]}}</span>
                                                                                 </div>
                                                                         </div>
                                                                 </div>
