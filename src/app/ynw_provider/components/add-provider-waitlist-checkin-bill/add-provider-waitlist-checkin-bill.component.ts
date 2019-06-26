@@ -11,6 +11,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
+import { ConfirmPaymentBoxComponent } from '../../shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ActivatedRoute } from '@angular/router';
 
 export interface ItemServiceGroup {
@@ -978,7 +979,26 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   //   });
   // }
   initPayment(mode, amount) {
-    this.makePayment(mode, amount);
+    let status = 0;
+    const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Proceed with payment ?',
+        'heading': 'Confirm',
+        'type': 'yes/no'
+      }
+    });
+    canceldialogRef.afterClosed().subscribe(result => {
+      status = result;
+      if (status === 1) {
+        this.makePayment(mode, amount);
+      }
+    });
+
+  
+    
   }
   showPayment() {
     this.amountpay = this.bill_data.amountDue;
