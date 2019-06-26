@@ -207,7 +207,7 @@
                                                     (click)="toggleterms(i)"
                                                     class="pointer-cursor read-more-checkin">Read
                                                     T & C </span> <i class="pointer-cursor icon-delete"
-                                                    (click)="removeJCoupon(i)"></i></div>
+                                                    (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls" [matTooltip]="'Remove Coupon'"></i></div>
                                         </div>
                                         <div class="col-md-12 no-padding read-more-contents" *ngIf="coupon.showme">
                                             {{coupon.instructions}}
@@ -217,12 +217,7 @@
                             </div>
                         </div>
 
-                        <!-- <input type="text" placeholder="Enter your Coupon code" [(ngModel)]="selected_coupons"> -->
-                        <!-- <div style = "padding-top: 8px">
-                            
-                            <span class="cs-btn bt8" (click)="applyCoupons(selected_coupons)">{{apply_cap}}</span>                           
-                            <span class="coupon_cancel" *ngIf="couponsList.length>0" (click)="removeCoupons()">CANCEL</span>
-                        </div> -->
+
 
                     </div>
                 </div>
