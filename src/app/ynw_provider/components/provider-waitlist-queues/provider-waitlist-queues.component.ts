@@ -511,7 +511,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
     let sTime = instantQ.dstart_time;
-    if (isNaN(instantQ.dstart_time)) {
+    if (isNaN(instantQ.dstart_time.hour)) {
       const curtime = {};
       const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
       const today1 = moment(today).format();
