@@ -110,8 +110,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   sqTomorrowCheckinsCount: any = [];
   todayQcountCaption: any = [];
   futureQcountCaption: any = [];
-  onlineCheckInval: any = [];
-  futureWaitlistval: any = [];
   todayQLoading: any = [];
   scheduleLoading: any = [];
 
@@ -614,10 +612,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    * @param event field checked status
    */
   changeQSameDayOnlineStatus(qObj, index) {
-    console.log(this.onlineCheckInval);
-    console.log(index);
     let chstatusmsg = '';
-
     if (qObj.onlineCheckIn) {
       chstatusmsg = 'disabled';
     } else {
@@ -625,15 +620,13 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     this.provider_services.changeSamedayCheckinStatus(qObj.id, !qObj.onlineCheckIn)
       .subscribe(() => {
-
         this.shared_Functionsobj.openSnackBar('Same day Checkin ' + chstatusmsg + ' successfully');
         this.initializeQs();
       },
         error => {
-          this.onlineCheckInval[index] = false;
+          this.initializeQs();
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
-    console.log(this.onlineCheckInval);
   }
   /**
    * Method to change future checkin status
@@ -642,7 +635,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    */
   changeQFutureStatus(qObj, index) {
     let chstatusmsg = '';
-
     if (qObj.futureWaitlist) {
       chstatusmsg = 'disabled';
     } else {
@@ -654,7 +646,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
         this.initializeQs();
       },
         error => {
-          this.futureWaitlistval[index] = false;
+          this.initializeQs();
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
