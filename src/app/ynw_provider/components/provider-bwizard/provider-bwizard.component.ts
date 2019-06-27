@@ -494,6 +494,10 @@ export class ProviderbWizardComponent implements OnInit {
         this.active_step = 5;
         this.loading_active = false;
         break;
+        case 7:
+          this.active_step = 6;
+          this.loading_active = false;
+          break;
     }
   }
   onSubmit(form_data) {
