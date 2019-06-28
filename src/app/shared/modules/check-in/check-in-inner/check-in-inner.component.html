@@ -15,7 +15,7 @@
             <div class="service-outer" *ngIf="filterDepart">
                 <ng-container *ngIf="step==1">
                     <mat-form-field *ngIf="deptLength > 0">
-                        <mat-select placeholder="Select Department" [ngModel]="selected_dept" #deptsel
+                        <mat-select placeholder="{{select_deptment_cap}}" [ngModel]="selected_dept" #deptsel
                             (selectionChange)="handleDeptSelction(deptsel.value)">
                             <mat-option value="None">None</mat-option>
                                 <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">

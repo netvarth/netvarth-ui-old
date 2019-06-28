@@ -462,6 +462,7 @@ export const Messages = {
 
   // App-shared-modules-checkin-checkin-inner
   'SELECT_SER_CAP': 'Select Service',
+  'SELECT_DEPT_CAP': 'Select Department',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
   'SERV_TIME_WINDOW_CAP': 'Working Hours',

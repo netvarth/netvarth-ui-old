@@ -17,6 +17,7 @@ import * as moment from 'moment';
 export class CheckInInnerComponent implements OnInit {
 
   select_service_cap = Messages.SELECT_SER_CAP;
+  select_deptment_cap = Messages.SELECT_DEPT_CAP;
   no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
   add_change_member = Messages.ADD_CHANGE_MEMBER;
   date_cap = Messages.DATE_CAP;
@@ -1196,6 +1197,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   handleDeptSelction(obj) {
+    this.selected_dept=obj;
     if (obj === 'None') {
       this.servicesjson = this.serviceslist;
     } else {
