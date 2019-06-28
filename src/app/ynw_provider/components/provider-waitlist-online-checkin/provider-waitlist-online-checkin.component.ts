@@ -25,7 +25,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   form = {
     'calculationMode': '',
     'trnArndTime': '',
-    'sendNotification': false,
+    'providerNotification': false,
     'filterByDept': false,
     'futureDateWaitlist': false/*,
     'showTokenId': false*/
@@ -79,7 +79,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     // this.form.calculationMode = value['calculationMode'] || '';
     this.form.calculationMode = calcMode || '';
     this.form.trnArndTime = value['trnArndTime'] || null;
-    this.form.sendNotification = value['sendNotification'] || false;
+    this.form.providerNotification = value['providerNotification'] || false;
     this.form.futureDateWaitlist = value['futureDateWaitlist'] || false;
     this.form.filterByDept = value['filterByDept'] || false;
     // this.form.showTokenId = value['showTokenId'] || false;
@@ -109,7 +109,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     const postData = {
       calculationMode: calcMode,
       trnArndTime: this.form.trnArndTime || null,
-      sendNotification: this.form.sendNotification,
+      providerNotification: this.form.providerNotification,
       futureDateWaitlist: this.form.futureDateWaitlist,
       filterByDept: this.form.filterByDept,
       showTokenId: showToken,
