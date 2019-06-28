@@ -79,6 +79,7 @@ export class AddproviderAddonComponent implements OnInit {
             // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
             this.api_loading = false;
+            this.disableButton = false;
           }
         );
     }

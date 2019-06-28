@@ -207,6 +207,7 @@ export class AddProviderItemComponent implements OnInit {
           error => {
             this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
             this.api_loading = false;
+            this.disableButton = false;
           }
     );
   }
@@ -226,6 +227,7 @@ export class AddProviderItemComponent implements OnInit {
           error => {
             this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
             this.api_loading = false;
+            this.disableButton = false;
           }
     );
   }

@@ -167,6 +167,7 @@ else {
           },
           error => {
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.disableButton = false;
           }
         );
     }

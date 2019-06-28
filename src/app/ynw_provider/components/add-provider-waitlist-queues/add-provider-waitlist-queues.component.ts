@@ -467,6 +467,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           // this.api_error = error.error;
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
           this.api_loading = false;
+          this.disableButton = false;
         }
       );
   }
@@ -488,6 +489,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           // this.api_error = error.error;
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
           this.api_loading = false;
+          this.disableButton = false;
         }
       );
   }

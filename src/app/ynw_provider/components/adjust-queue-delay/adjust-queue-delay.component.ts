@@ -126,6 +126,7 @@ export class AdjustQueueDelayComponent implements OnInit {
         },
         error => {
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.disableButton = false;
         }
       );
     // } else {

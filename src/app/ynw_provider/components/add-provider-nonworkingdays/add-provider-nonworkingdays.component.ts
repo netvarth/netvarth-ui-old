@@ -166,6 +166,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
         error => {
           this.shared_functions.apiErrorAutoHide(this, error);
           this.api_loading = false;
+          this.disableButton = false;
         }
       );
   }
@@ -184,6 +185,7 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
         error => {
           this.shared_functions.apiErrorAutoHide(this, error);
           this.api_loading = false;
+          this.disableButton = false;
         }
       );
   }

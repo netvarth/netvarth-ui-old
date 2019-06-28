@@ -342,6 +342,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           },
           error => {
             this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+            this.disableButton = false;
           }
         );
     } else {
@@ -357,6 +358,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           error => {
             this.api_success = '';
             this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+            this.disableButton = false;
           }
         );
     }

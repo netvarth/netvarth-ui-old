@@ -80,6 +80,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         },
         error => {
           this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.disableButton = false;
         }
       );
   }

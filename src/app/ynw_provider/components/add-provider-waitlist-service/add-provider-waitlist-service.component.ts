@@ -248,6 +248,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           this.savedisabled = false;
           this.api_loading = false;
           this.button_title = holdstat;
+          this.disablebutton = false;
         }
       );
   }
@@ -266,6 +267,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           this.api_loading = false;
+          this.disablebutton = false;
         }
       );
   }

@@ -244,6 +244,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
         },
         error => {
           this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.disableButton = false;
         }
       );
   }

@@ -124,6 +124,7 @@ export class AddMembersHolderComponent implements OnInit {
           },
             error => {
               this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+              this.disableButton = false;
             });
       } else if (this.data.type === 'edit') {
         post_data['user'] = this.data.member.user;
@@ -137,12 +138,14 @@ export class AddMembersHolderComponent implements OnInit {
             },
             error => {
               this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+              this.disableButton = false;
             }
           );
       }
 
     } else {
       this.api_error = derror;
+      this.disableButton = false;
     }
   }
   resetApi() {

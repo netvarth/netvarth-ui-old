@@ -62,6 +62,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
         },
         error => {
           this.shared_functions.apiErrorAutoHide(this, error);
+          this.disableButton = false;
         }
       );
   }

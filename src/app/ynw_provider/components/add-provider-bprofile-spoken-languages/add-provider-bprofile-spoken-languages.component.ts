@@ -75,6 +75,7 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
       },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.disableButton = false;
         }
       );
   }

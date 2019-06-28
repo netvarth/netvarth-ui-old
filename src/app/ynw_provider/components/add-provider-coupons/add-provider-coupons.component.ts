@@ -117,6 +117,7 @@ export class AddProviderCouponsComponent implements OnInit {
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           this.api_loading = false;
+          this.disableButton = false;
         }
       );
   }
@@ -135,6 +136,7 @@ export class AddProviderCouponsComponent implements OnInit {
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           this.api_loading = false;
+          this.disableButton = false;
         }
       );
   }
