@@ -404,38 +404,53 @@ export class SharedFunctions {
     switch (labeltype) {
       case 'global':
         // retdet = searchlabels_arr.searchLabels[0].globalSearchLabels;
-        retdet = searchlabels_arr.globalSearchLabels;
-        // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
-        for (const labelarr of searchlabels_arr.sectorLevelLabels) {
-          for (const subsecarr of labelarr.subSectorLevelLabels) {
-            // retdet.concat(subsecarr.specializationLabels);
-            const result = subsecarr.specializationLabels.map(function (el) {
-              const o = Object.assign({}, el);
-              o.type = 'special';
-              return o;
-            });
-            retdet.push.apply(retdet, result);
-          }
-        }
+        // retdet = searchlabels_arr.globalSearchLabels;
+        // // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
+        // for (const labelarr of searchlabels_arr.sectorLevelLabels) {
+        //   for (const subsecarr of labelarr.subSectorLevelLabels) {
+        //     // retdet.concat(subsecarr.specializationLabels);
+        //     const result = subsecarr.specializationLabels.map(function (el) {
+        //       const o = Object.assign({}, el);
+        //       o.type = 'special';
+        //       return o;
+        //     });
+        //     retdet.push.apply(retdet, result);
+        //   }
+        // }
+        // break;
+        retdet = searchlabels_arr.all.labels;
         break;
       case 'domain':
         // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
-        for (const labelarr of searchlabels_arr.sectorLevelLabels) {
-          if (labelarr.name === params['domain']) {
-            // retdet = labelarr.sectorLabels;
-            for (const subsecarr of labelarr.subSectorLevelLabels) {
-              retdet.push({ 'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain' });
-              // retdet.concat(subsecarr.specializationLabels);
-              const result = subsecarr.specializationLabels.map(function (el) {
-                const o = Object.assign({}, el);
-                o.type = 'special';
-                return o;
-              });
-              retdet.push.apply(retdet, result);
+        // for (const labelarr of searchlabels_arr.sectorLevelLabels) {
+        //   if (labelarr.name === params['domain']) {
+        //     // retdet = labelarr.sectorLabels;
+        //     for (const subsecarr of labelarr.subSectorLevelLabels) {
+        //       retdet.push({ 'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain' });
+        //       // retdet.concat(subsecarr.specializationLabels);
+        //       const result = subsecarr.specializationLabels.map(function (el) {
+        //         const o = Object.assign({}, el);
+        //         o.type = 'special';
+        //         return o;
+        //       });
+        //       retdet.push.apply(retdet, result);
+        //     }
+        //   }
+        // }
+        Object.keys(searchlabels_arr).forEach(keys => {
+          const dom = params['domain'];
+          if (keys === dom) {
+            for (const labelarr of searchlabels_arr[dom].labels) {
+              retdet.push(labelarr);
             }
           }
-        }
+        });
         break;
+    }
+    if (!this.getitemfromLocalStorage('popularSearch')) {
+      this.setitemonLocalStorage('popularSearch', retdet);
+      const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
+      this.sendMessage(pdata);
     }
     return retdet;
   }

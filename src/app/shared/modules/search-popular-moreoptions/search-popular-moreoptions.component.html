@@ -2,17 +2,12 @@
 <div mat-dialog-content>
   <ng-container>
     <div class="more-box">
-       <!-- <div *ngFor="let dom of jsonlist | keyvalue"> -->
-          <!-- <p class="pop-search">
-           <span> <b>{{dom.key}} : </b></span>
-            <a class="pointer-cursor" *ngFor="let domain of jsonlist[dom.key]"
-              (click)="popularClicked(domain)">{{domain.autoname}}</a>
-          </p> -->
-        <!-- </div> -->
-          <p class="pop-search">
-             <a class="pointer-cursor" *ngFor="let domain of jsonlist"
-               (click)="popularClicked(domain)">{{domain.displayname}}</a>
-           </p>
+      <p class="pop-search">
+        <a class="pointer-cursor" *ngFor="let domain of jsonlist" (click)="popularClicked(domain)">
+          <span *ngIf="domain.displayName">{{domain.displayName}}</span>
+          <span *ngIf="domain.autoname">{{domain.autoname}}</span>
+        </a>
+      </p>
     </div>
   </ng-container>
 </div>

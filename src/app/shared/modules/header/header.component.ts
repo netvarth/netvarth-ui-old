@@ -116,6 +116,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   screenHeight;
   hideMenu = false;
   qAvailability;
+  jsonlist: any = [];
+  popSearches: any = [];
+  public popular_searches: any = [];
+  carouselOne;
+  paginationLimit = 6;
+  startPage = 0;
+  showmorepopularoptions = false;
+  showMorepopularOptionsOverlay = false;
+  origin = 'header';
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -168,7 +177,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
         case 'instant_q':
           this.qAvailability = message.qAvailability;
           break;
+        case 'popularList':
+          this.jsonlist = message.target;
+          this.popular_search(this.jsonlist.label);
+          break;
+        case 'popularSearchList':
+          this.jsonlist = message.target;
+          this.popular_search(this.jsonlist);
+          break;
       }
+
       /*if (message.ttype === 'updateuserdetails') {
         this.getUserdetails();
         this.handleHeaderclassbasedonURL();
@@ -183,6 +201,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
@@ -206,9 +225,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }
     if (this.ctype === 'provider') {
-    this.isAvailableNow();
-    this.getLicenseDetails();
+      this.isAvailableNow();
+      this.getLicenseDetails();
     }
+    if (this.jsonlist && this.ctype != 'provider') {
+      this.popular_search(this.jsonlist);
+    }
+    this.carouselOne = {
+      dots: false,
+      nav: true,
+      navText: [
+        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+      ],
+      navContainer: '.p-popular-info .custom-nav',
+      autoplay: false,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
+      autoWidth: true
+    };
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
@@ -468,13 +504,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
           'password': password
         };
         this.shared_functions.providerLogin(post_data)
-        .then(
-          res => {
-          },
-          error =>{
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
+          .then(
+            res => {
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
         this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
       }
       );
@@ -525,7 +561,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const config: ScrollToConfigOptions = {
       target: destination
     };
-    
+
     this._scrollToService.scrollTo(config);
   }
 
@@ -552,5 +588,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-}
 
+  popularClicked(kw) {
+    this.showmorepopularoptions = false;
+    this.popular_searches = kw;
+    const pdata = { 'ttype': 'popular', 'target': this.popular_searches };
+    this.shared_functions.sendMessage(pdata);
+  }
+
+  popular_search(jsonlist) {
+    this.popSearches = [];
+    if (jsonlist.length === 0) {
+      this.popSearches = this.shared_functions.getitemfromLocalStorage('popularSearch');
+    } else {
+      this.popSearches = jsonlist;
+    }
+  }
+
+  showMoreItems() {
+    if (this.showmorepopularoptions) {
+      this.showmorepopularoptions = false;
+      this.showMorepopularOptionsOverlay = false;
+    } else {
+      this.showmorepopularoptions = true;
+      this.showMorepopularOptionsOverlay = true;
+    }
+  }
+
+  closeMorepopularoptions() {
+    this.showmorepopularoptions = false;
+    this.showMorepopularOptionsOverlay = false;
+  }
+}

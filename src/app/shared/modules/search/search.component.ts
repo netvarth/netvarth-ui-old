@@ -12,6 +12,7 @@ import * as locationjson from '../../../../assets/json/locations.json';
 import * as metrojson from '../../../../assets/json/metros_capital.json';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { projectConstants } from '../../constants/project-constants';
+import { Subscription } from 'rxjs';
 export class Locscls {
   constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
@@ -97,9 +98,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   keywordholder: Keywordscls;
   showmoreoptionsSec = false;
   holdsrchlocname = '';
-  paginationLimit = 6;
-  startPage = 0;
-  searchlabels;
   @ViewChild('locrefrence') private locRef: ElementRef;
   @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
   moreoptionsTooltip = '';
@@ -107,6 +105,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   showmorepopularoptions = false;
   showMorepopularOptionsOverlay = false;
   jsonlist;
+  subscriptions: Subscription;
+  popularSearchList: any = [];
+  paginationLimit = 6;
+  startPage = 0;
 
   constructor(
     private shared_service: SharedServices,
@@ -119,23 +121,33 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.myControl_loc.valueChanges.subscribe(val => {
       this.filterLocation(val);
     });
+
+    this.subscriptions = this.shared_functions.getMessage().subscribe(message => {
+      switch (message.ttype) {
+        case 'popular':
+          this.setKeyword(message.target);
+          break;
+      }
+    });
   }
+
   ngOnInit() {
     this.selected_domain = 'All';
     if (this.passedDomain) {
       this.selected_domain = this.passedDomain;
     }
     this.getAllsearchlabels();
-    // const searchlabel = this.shared_functions.getitemfromLocalStorage('srchLabels');
-    // this.jsonlist = searchlabel.globalSearchLabels;
+    const searchlabel = this.shared_functions.getitemfromLocalStorage('srchLabels');
+    if (searchlabel) {
+      this.jsonlist = searchlabel.all.labels;
+    }
     this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
         this.curlabel.typ = 'label';
         this.curlabel.query = this.passedkwdet.kwdomain;
       }
-    }
-   
+    };
     if (this.domainlistpassed.length > 0) {
       this.domainlist_data = this.domainlistpassed;
     } else {
@@ -349,22 +361,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.holdisplaylist['special'] = [];
       for (const label of this.show_searchlabellist) {
         let holdkeyword;
-        // const holdkeyword = label.displayname.toLowerCase();
-        if (label.displayname && label.displayname !== '') {
-          holdkeyword = label.displayname.toLowerCase();
+        if (label.displayName && label.displayName !== '') {
+          holdkeyword = label.displayName.toLowerCase();
           if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
             const lbl = label.query.split('&');
-            if (label.type === 'special') {
-              // const labelspec = {autoname: label.displayname , name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
-              // this.holdisplaylist['label'].push(labelspec);
-             
-              const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
-            
-              this.holdisplaylist['special'].push(labelspec);
-            } else {
-              const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
-              this.holdisplaylist['label'].push(labelspec);
-            }
+            const labelspec = { autoname: label.displayName, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+            this.holdisplaylist['label'].push(labelspec);
           }
         }
       }
@@ -379,18 +381,22 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         const grouplabelsobj = { displayname: 'Suggested Searches', name: 'label' };
         keywordgroup_val.push(grouplabelsobj);
       }
-      if (this.holdisplaylist['special'].length > 0) {
-        const grouplabelsobj = { displayname: 'Specialization', name: 'special' };
-        keywordgroup_val.push(grouplabelsobj);
-      }
     }
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
     this.displaykeywordList = this.holdisplaylist;
+    if (this.kw_autoname === '') {
+      this.popularSearchList = this.holdisplaylist;
+      const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
+      this.shared_functions.sendMessage(pdata);
+      if (this.popularSearchList) {
+        this.shared_functions.setitemonLocalStorage('popularSearch', this.popularSearchList.label);
+      }
+    }
   }
   // this method decides how the items are shown in the autosuggestion list
   highlightSelText(curtext, classname, mod?) {
-    let criteria = ''; 
+    let criteria = '';
     switch (mod) {
       case 'keyword':
         criteria = this.keyssearchcriteria;
@@ -491,14 +497,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchlabels_data = srchlabels || [];
       this.searchdataserviceobj.set(this.searchlabels_data);
       this.handledomainchange(this.selected_domain, 1);
-      this.jsonlist = this.searchlabels_data.globalSearchLabels;
+      this.jsonlist = this.searchlabels_data.all.labels;
     } else {
       this.shared_service.getAllSearchlabels()
         .subscribe(
           res => {
             this.shared_functions.setitemonLocalStorage('srchLabels', res);
             this.searchlabels_data = res || [];
-            this.jsonlist = this.searchlabels_data.globalSearchLabels;
+            this.jsonlist = this.searchlabels_data.all.labels;
             this.searchdataserviceobj.set(this.searchlabels_data);
             this.handledomainchange(this.selected_domain, 1);
           }
@@ -792,7 +798,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       // domain = '';
     }
     this.selected_domain = domain;
-    
+
     if (avoidclear === 1) {
     } else {
       this.kw_autoname = '';

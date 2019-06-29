@@ -10,6 +10,8 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 
 import { HeaderComponent } from './header.component';
 import { LearnmoreModule } from '../learnmore/learnmore.module';
+import { OwlModule } from 'ngx-owl-carousel';
+import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
 
 @NgModule({
     imports: [
@@ -18,7 +20,9 @@ import { LearnmoreModule } from '../learnmore/learnmore.module';
         RouterModule,
         MaterialModule,
         SearchModule,
-        LearnmoreModule
+        LearnmoreModule,
+        OwlModule,
+        SearchPopularMoreoptionsModule
        // MatMenuModule,
       //  MatIconModule
     ],

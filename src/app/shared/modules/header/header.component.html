@@ -22,8 +22,10 @@
                 <!-- <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">{{are_you_ser_pro}} <span
                         [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                         (click)="doLogin('provider')">{{click_here_cap}}</span></div> -->
-                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="provsignTooltip" (click)="providerLinkClicked()">{{click_here_cap}}</button>
+                <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
+                        style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
+                        (click)="providerLinkClicked()">{{click_here_cap}}</button>
                     <!-- <div
                         class="clickhere-cont"><button class="jn" [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                             (click)="providerLinkClicked()">Go</button>
@@ -33,7 +35,7 @@
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
                 <div class="bnps" *ngIf="headercls=='dashb' || headercls=='itl-steps'">
                     <div class="pro-pic" *ngIf="blogo!='' && headercls!='itl-steps'">
-                        <img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt=""/>
+                        <img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" />
                     </div>
                     <div class="mn-title" *ngIf="headercls=='dashb'">
                         <span class="title-bn">{{bname | capitalizeFirst}}</span>
@@ -136,7 +138,7 @@
                                             class="fa fa-circle avail"></i><i
                                             *ngIf="qAvailability && !qAvailability.availableNow"
                                             class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}</span>
-                                            <span (click)="btnAvailableClicked()" class="membership"
+                                    <span (click)="btnAvailableClicked()" class="membership"
                                         *ngIf="headercls!='itl-steps' && isprovider">
                                         <div class="col-md-12 no-padding">
                                             <h6 class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
@@ -156,7 +158,7 @@
                             </div>
                             <div class="sect2">
                                 <div class="pro-pic" *ngIf="blogo!=''">
-                                    <img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt=""/>
+                                    <img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" />
                                 </div>
                                 <div class="mn-title">
                                     <span class="title-bn">{{bname | capitalizeFirst}}</span>
@@ -191,7 +193,8 @@
     <div class="container no-padding">
         <div class="row">
             <div class="tp-1">
-                <div class="tp-l lgo"><a routerLink="/"><img style="height: 60px" src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a></div>
+                <div class="tp-l lgo"><a routerLink="/"><img style="height: 60px" src="assets/images/jaldee-logo.png"
+                            alt="Jaldee logo"></a></div>
                 <div class="tp-r">
                     <div class="tc1 ml-auto">
                         <div class="topsignouter">
@@ -266,13 +269,16 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="provsignTooltip" (click)="providerLinkClicked()">{{click_here_cap}}</button>
-                    </div>
+                        <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
+                                style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
+                                (click)="providerLinkClicked()">{{click_here_cap}}</button>
+                        </div>
                     </div>
                     <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'"
                         [passedRefine]="passedRefine" (searchclick)="handlesearchClick($event)"
                         [passedDomain]="passedDomain" [passedkwdet]="passedkwdet"></app-search>
+
                     <!-- <div class="tp-srch">
                         <div class="sa-lc flex-shrink-0">
                         </div>
@@ -291,6 +297,49 @@
                             <a href="#" class="icon icon-filter"></a>
                         </div>
                     </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="sa-ps">
+            <div class="topstyle col-md-12">
+                <div class="row" *ngIf="popSearches">
+                    <p class="popular-searches"> <b style="padding-right: 10px; line-height:40px">Popular Searches:
+                        </b>
+                        <a class="pointer-cursor" *ngFor="let kw of popSearches | slice : startPage:paginationLimit"
+                            (click)="popularClicked(kw)">
+                            <span *ngIf="kw.autoname">{{kw.autoname}}</span>
+                            <span *ngIf="kw.displayName">{{kw.displayName}}</span></a>
+                        <a class="learnmore-pointer" style="padding-left:10px !important;"
+                            *ngIf="paginationLimit < popSearches.length" (click)="showMoreItems()">more...</a>
+                        <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="paginationLimit > 6"
+                            (click)="showMoreItems()">less...</a>
+                    </p>
+                </div>
+            </div>
+            <ng-container>
+                <div class="more-opt popular_search headerpop" [class.show]="showmorepopularoptions">
+                    <span class="closebtn" (click)="closeMorepopularoptions()"></span>
+                    <div class="mo-content">
+                        <app-popularsearch-moreoptions *ngIf="showmorepopularoptions"
+                            (searchpopularmoreclick)="popularClicked($event)" [passedPSearches]="popSearches"
+                            [origin]="origin"></app-popularsearch-moreoptions>
+                    </div>
+                </div>
+            </ng-container>
+        </div> -->
+     <div style="margin-top: 20px">   Popular Searches:</div>
+        <div class="popular-searches p-popular-info" [class.topStyle]="!shared_functions.checkLogin()">
+               
+            <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme', 'sliding']" [items]="popSearches">
+                <div class="item" *ngFor="let kw of popSearches">
+                    <a *ngIf="kw.autoname" (click)="popularClicked(kw)"> {{kw.autoname}}</a>
+                    <a *ngIf="kw.displayName" (click)="popularClicked(kw)">{{kw.displayName}}</a>
+                </div>
+            </owl-carousel>
+            <div class="owl-theme">
+                <div class="owl-controls">
+                    <div class="custom-nav owl-nav"></div>
                 </div>
             </div>
         </div>
