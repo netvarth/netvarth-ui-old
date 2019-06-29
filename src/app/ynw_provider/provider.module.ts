@@ -61,6 +61,8 @@ import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { ProviderBprofileSearchDynamicComponent } from './components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
+import { HealthcareLearnmoreComponent } from './components/healthcare_learnmore/healthcare_learnmore.component';
+import { PersonalCareLearnmoreComponent } from './components/personalcare_learnmore/personalcare_learnmore.component';
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -112,7 +114,9 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderWaitlistServiceComponent,
     GoogleMapComponent,
     ProviderBprofileSearchDynamicComponent,
-    VirtualFieldsComponent
+    VirtualFieldsComponent,
+    HealthcareLearnmoreComponent,
+    PersonalCareLearnmoreComponent
   ],
   exports: [ConfirmBoxComponent,ConfirmPaymentBoxComponent],
   entryComponents: [

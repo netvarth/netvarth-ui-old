@@ -268,8 +268,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   help() {
 
-    const pdata = { 'ttype': 'learn_more', 'target': this.moreOptions };
-    this.shared_functions.sendMessage(pdata);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.moreOptions };
+    this.router.navigate(['learn_more']);
+    // this.shared_functions.sendMessage(pdata);
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');

@@ -40,6 +40,7 @@ import { ProviderReimburseReportComponent } from './components/provider-reimburs
 import { ViewReportComponent } from './components/view-report/view-report.component';
 import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-details/provider-jcoupon-details.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
+import { HealthcareLearnmoreComponent } from './components/healthcare_learnmore/healthcare_learnmore.component';
 const routes: Routes = [
   {
     path: '', component: ProviderComponent,
@@ -59,7 +60,9 @@ const routes: Routes = [
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin] },
-      { path: 'members', component: ProviderMembersComponent },
+      {path: 'members', component: ProviderMembersComponent},
+
+      {path: 'learnmore', component: HealthcareLearnmoreComponent},
       { path: 'customers', component: ProviderCustomersComponent },
       {
         path: 'inbox',

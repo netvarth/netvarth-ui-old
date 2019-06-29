@@ -48,6 +48,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
+    private router: Router,
     public routerobj: Router, private shared_services: SharedServices) { }
   normal_profile_active = 1;
   normal_locationinfo_show = 1;
@@ -352,8 +353,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
 
 
   learnmore_clicked(mod) {
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.shared_functions.sendMessage(pdata);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    this.router.navigate(['/learnmore']);
+    // this.shared_functions.sendMessage(pdata);
   }
   getMode(mod) {
     switch (mod) {
