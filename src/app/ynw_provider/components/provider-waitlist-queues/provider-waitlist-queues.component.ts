@@ -753,39 +753,39 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       this.getTomorrowCheckinCount(queueObj, index, que);
       if (que === 'scheduleQ') {
         if (!this.sqShowFutureCount[index]) {
-          this.sqShowFutureCount[index] = true;
-          this.futureQcountCaption[index] = 'Hide Checkins Count';
+           this.sqShowFutureCount[index] = true;
+           this.futureQcountCaption[index] = 'Checkins Count';
         } else {
           this.sqShowFutureCount[index] = false;
-          this.futureQcountCaption[index] = 'Show Checkins Count';
-        }
+          this.futureQcountCaption[index] = 'Checkins Count';
+         }
       } else {
         if (!this.sqShowActiveQFutureCount[index]) {
           this.sqShowActiveQFutureCount[index] = true;
-          this.todayQcountCaption[index] = 'Hide Checkins Count';
+          this.todayQcountCaption[index] = 'Checkins Count';
         } else {
-          this.sqShowActiveQFutureCount[index] = false;
-          this.todayQcountCaption[index] = 'Show Checkins Count';
-        }
+           this.sqShowActiveQFutureCount[index] = false;
+           this.todayQcountCaption[index] = 'Checkins Count';
+         }
       }
-    }
-    if (que === 'scheduleQ') {
-      if (!this.sqShowTodayCount[index]) {
-        this.sqShowTodayCount[index] = true;
-        this.futureQcountCaption[index] = 'Hide Checkins Count';
-      } else {
+     }
+     if (que === 'scheduleQ') {
+       if (!this.sqShowTodayCount[index]) {
+         this.sqShowTodayCount[index] = true;
+     this.futureQcountCaption[index] = 'Checkins Count';
+       } else {
         this.sqShowTodayCount[index] = false;
-        this.futureQcountCaption[index] = 'Show Checkins Count';
+       this.futureQcountCaption[index] = 'Checkins Count';
       }
     } else {
-      if (!this.sqShowActiveQTodayCount[index]) {
-        this.sqShowActiveQTodayCount[index] = true;
-        this.todayQcountCaption[index] = 'Hide Checkins Count';
-      } else {
-        this.sqShowActiveQTodayCount[index] = false;
-        this.todayQcountCaption[index] = 'Show Checkins Count';
-      }
-    }
+       if (!this.sqShowActiveQTodayCount[index]) {
+         this.sqShowActiveQTodayCount[index] = true;
+      this.todayQcountCaption[index] = 'Checkins Count';
+       } else {
+         this.sqShowActiveQTodayCount[index] = false;
+       this.todayQcountCaption[index] = 'Checkins Count';
+       }
+     }
   }
 
   getfutureCheckinCount(queue, index, origin) {

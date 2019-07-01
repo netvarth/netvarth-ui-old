@@ -300,11 +300,18 @@
                                                                 <mat-menu #appMenu="matMenu">
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
-                                                                                *ngIf="queue.queueState=='ENABLED'">
+                                                                                *ngIf="queue.queueState=='ENABLED' && todayQcountCaption[i]">
+                                                                                <i *ngIf="sqShowTodayCount[i] || sqShowActiveQTodayCount[i]" class="fa fa-minus"></i>
+                                                                                <i *ngIf=" !sqShowTodayCount[i] && !sqShowActiveQTodayCount[i]" class="fa fa-plus"></i>
                                                                                 {{todayQcountCaption[i]}}
-                                                                                <span *ngIf="!todayQcountCaption[i]">
-                                                                                        Show Checkins Count </span>
+                                                                                 <!-- <span *ngIf="!todayQcountCaption[i]">
+                                                                                        Show Checkins Count</span> -->
                                                                         </button>
+                                                                        <button mat-menu-item
+                                                                        (click)="viewDashboard(queue,i,'todayQ')"
+                                                                        *ngIf="queue.queueState=='ENABLED' && !todayQcountCaption[i]">
+                                                                        <i  class="fa fa-plus"></i>Checkins Count
+                                                                </button>
                                                                         <button mat-menu-item
                                                                                 (click)="editInstantQueue(queue)"
                                                                                 *ngIf="queue.queueState=='ENABLED'">
@@ -437,10 +444,18 @@
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                 *ngIf="queue.queueState=='ENABLED'">
+                                                                                <i *ngIf="sqShowFutureCount[i] || sqShowActiveQFutureCount[i]" class="fa fa-minus"></i>
+                                                                                <i *ngIf=" !sqShowFutureCount[i] && !sqShowActiveQFutureCount[i]" class="fa fa-plus"></i>
                                                                                 {{futureQcountCaption[i]}}
-                                                                                <span *ngIf="!futureQcountCaption[i]">Show
-                                                                                        Checkins Count</span>
+                                                                                 <!-- <span *ngIf="!futureQcountCaption[i]">Show Checkins Count</span> -->
                                                                         </button>
+                                                                        <button mat-menu-item
+                                                                        (click)="viewDashboard(queue,i,'scheduleQ')"
+                                                                        *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i]">
+                                                                       <i  class="fa fa-plus"></i>Checkins Count
+                                                                        
+                                                                         
+                                                                </button>
                                                                         <button mat-menu-item
                                                                                 (click)="addEditProviderQueue('edit', queue)"
                                                                                 *ngIf="queue.queueState=='ENABLED'">
