@@ -133,13 +133,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
   ) {
     this.onResize();
-    /*router.events.subscribe((val) => {
-       if (val['url']) {
-         this.curPgurl = val['url'];
-         this.handleHeaderclassbasedonURL();
-       }
-    }
-   });*/
 
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -170,7 +163,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           break;
         case 'learn_more':
           this.showLearnMore = true;
-          // this.scrollhideclass.emit(true);
           this.scrollhideclass.emit(false);
           this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
           break;
@@ -186,11 +178,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.popular_search(this.jsonlist);
           break;
       }
-
-      /*if (message.ttype === 'updateuserdetails') {
-        this.getUserdetails();
-        this.handleHeaderclassbasedonURL();
-      }*/
       this.getBusinessdetFromLocalstorage();
     });
 
@@ -201,19 +188,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.setLicense();
     this.getBusinessdetFromLocalstorage();
-    // this.handleHeaderclassbasedonURL();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.inboxCntFetched = false;
-    // this.getInboxUnreadCnt();
-
     // Section which handles the periodic reload
     if (this.ctype === 'consumer' || this.ctype === 'provider') {
       this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
@@ -243,7 +226,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       mouseDrag: true,
       touchDrag: true,
       pullDrag: true,
-      autoWidth: true
+      autoWidth: true,
+      autoHeight:true
     };
   }
   getLicenseDetails(call_type = 'init') {
@@ -303,10 +287,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   help() {
-
-    // const pdata = { 'ttype': 'learn_more', 'target': this.moreOptions };
     this.router.navigate(['learn_more']);
-    // this.shared_functions.sendMessage(pdata);
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
@@ -354,7 +335,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.headercls = '';
     const currenturl = this.router.url.split(';');
     const checkUrl = currenturl[0]; // this.curPgurl;
-    // return this.headercls;
     for (const url of this.urls_class) {
       if (url.url != null) {
         const match = checkUrl.match(url.url);
@@ -370,13 +350,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   doSignup(origin?, moreOptions = {}) {
-    // const ctype = this.checkProvider(origin);
-    //   let cClass = 'consumerpopupmainclass';
-    //   if (ctype === 'true') {
-    //     cClass = 'commonpopupmainclass';
-    //   }
     if (origin === 'provider') {
-      // cClass = 'commonpopupmainclass';
     }
     const dialogRef = this.dialog.open(SignUpComponent, {
       width: '50%',
@@ -395,7 +369,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   doLogin(origin?) {
     if (origin === 'provider') {
-      // cClass = 'commonpopupmainclass';
     }
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '50%',
@@ -408,7 +381,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
       if (result === 'showsignupfromlogin') {
         this.doSignup(origin);
       }
@@ -421,14 +393,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   doLogout() {
-    // this.router.navigate(['logout']);
     this.shared_functions.doLogout()
       .then(
         () => {
           this.router.navigate(['/home']);
         },
         () => {
-          // this.router.navigate(['/']);
         }
       );
   }
@@ -566,11 +536,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   handleScroll(target) {
-    // if (this.data.moreOptions.scrollKey !== undefined) {
     setTimeout(() => {
       this.triggerScrollTo(target);
     }, 200);
-    // }
   }
   providerLinkClicked() {
     this.router.navigate(['/phome']);

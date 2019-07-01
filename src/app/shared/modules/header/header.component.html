@@ -4,7 +4,6 @@
 <div class="overlay" [class.show]="showLearnMore" [class.learnmore]="showLearnMore" (click)="hideLearnmore()"></div>
 <div class="lm-popup" *ngIf="showLearnMore">
     <span (click)="hideLearnmore()" class="close"></span>
-    <!-- <span class="backTotop" (click)="handleScroll('learnmore-begining')">Back To Top</span> -->
     <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore>
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
@@ -19,17 +18,10 @@
                         *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"
                         (click)="doSignup('consumer')" *ngIf="!shared_functions.checkLogin()">{{join_cap}}</button>
                 </div>
-                <!-- <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()">{{are_you_ser_pro}} <span
-                        [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
-                        (click)="doLogin('provider')">{{click_here_cap}}</span></div> -->
                 <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
                         style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
                         [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                         (click)="providerLinkClicked()">{{click_here_cap}}</button>
-                    <!-- <div
-                        class="clickhere-cont"><button class="jn" [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
-                            (click)="providerLinkClicked()">Go</button>
-                        </div> -->
                 </div>
             </div>
             <div class="lg-opt ml-auto" *ngIf="provider_loggedin">
@@ -79,10 +71,6 @@
                                 <i class="icon-mobile"></i>
                                 <span>{{change_mobile}}</span>
                             </button>
-                            <!-- <button mat-menu-item (click)="redirectto('change-email')">
-                            <i class="icon-inbox"></i>
-                            <span>{{add_change_email}}</span>
-                        </button> -->
                             <button mat-menu-item (click)="switchtoConsumer()" *ngIf="isprovider && !hideMenu">
                                 <i class="icon-switch"></i>
                                 <span>{{switch_to_consumer}}</span>
@@ -117,12 +105,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row beta-cap" *ngIf="!shared_functions.checkLogin()">
-            <div class="col-md-12 text-center">
-                <p class="red" style="padding-left:10px;font-size: 1rem"><b>Beta Version (becomes full live on June
-                        20<sup>th</sup>)</b></p>
-            </div>
-        </div> -->
     </div>
     <ng-container *ngIf="ctype=='provider' &&  headercls!='itl-steps'">
         <div class="mobile-menu" [class.show]="showmobileSubmenu" *ngIf="small_device_display">
@@ -176,7 +158,6 @@
                                         {{change_password}}</li>
                                     <li (click)="redirectto('change-mobile')"><i class="icon-mobile"></i>
                                         {{change_mobile}}</li>
-                                    <!-- <li (click)="redirectto('change-email')"><i class="icon-inbox"></i> {{add_change_email}}</li> -->
                                     <li (click)="switchtoConsumer()" *ngIf="isprovider"><i class="icon-switch"></i>
                                         {{switch_to_consumer}}</li>
                                     <li (click)="doLogout()"><i class="icon-logout"></i> {{logout_cap}}</li>
@@ -203,7 +184,6 @@
                                 (click)="doSignup('consumer')"
                                 *ngIf="!shared_functions.checkLogin()">{{join_cap}}</button>
                             <ng-container *ngIf="ctype=='consumer'">
-                                <!-- <div class="bnps" *ngIf="headercls=='dashb'"> -->
                                 <div class="bnps">
                                     <div class="inbx" (click)="inboxiconClick()" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="inboxiconTooltip">
@@ -238,10 +218,6 @@
                                             <i class="icon-mobile"></i>
                                             <span>{{change_mobile}}</span>
                                         </button>
-                                        <!-- <button mat-menu-item (click)="redirectto('change-email')">
-                                        <i class="icon-inbox"></i>
-                                        <span>{{add_change_email}}</span>
-                                    </button> -->
                                         <button mat-menu-item (click)="redirectto('members')">
                                             <i class="icon-members"></i>
                                             <span>{{family_members}}</span>
@@ -278,59 +254,11 @@
                     <app-search [showopennow]="0" [searchfields]="searchfields" [includedfrom]="'consumer_header'"
                         [passedRefine]="passedRefine" (searchclick)="handlesearchClick($event)"
                         [passedDomain]="passedDomain" [passedkwdet]="passedkwdet"></app-search>
-
-                    <!-- <div class="tp-srch">
-                        <div class="sa-lc flex-shrink-0">
-                        </div>
-
-                        <div class="sa-dm flex-shrink-0 ml5">
-                        </div>
-
-                        <div class="sa-src flex-shrink-1 plr0i ml5">
-                        </div>
-                        <div class="flex-shrink-0 plr0i">
-                            <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1">
-                            <span href="#" class="icon icon-search"></span>
-                            </div>
-                        </div>
-                        <div class="sa-mo flex-shrink-0">
-                            <a href="#" class="icon icon-filter"></a>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
-
-        <!-- <div class="sa-ps">
-            <div class="topstyle col-md-12">
-                <div class="row" *ngIf="popSearches">
-                    <p class="popular-searches"> <b style="padding-right: 10px; line-height:40px">Popular Searches:
-                        </b>
-                        <a class="pointer-cursor" *ngFor="let kw of popSearches | slice : startPage:paginationLimit"
-                            (click)="popularClicked(kw)">
-                            <span *ngIf="kw.autoname">{{kw.autoname}}</span>
-                            <span *ngIf="kw.displayName">{{kw.displayName}}</span></a>
-                        <a class="learnmore-pointer" style="padding-left:10px !important;"
-                            *ngIf="paginationLimit < popSearches.length" (click)="showMoreItems()">more...</a>
-                        <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="paginationLimit > 6"
-                            (click)="showMoreItems()">less...</a>
-                    </p>
-                </div>
-            </div>
-            <ng-container>
-                <div class="more-opt popular_search headerpop" [class.show]="showmorepopularoptions">
-                    <span class="closebtn" (click)="closeMorepopularoptions()"></span>
-                    <div class="mo-content">
-                        <app-popularsearch-moreoptions *ngIf="showmorepopularoptions"
-                            (searchpopularmoreclick)="popularClicked($event)" [passedPSearches]="popSearches"
-                            [origin]="origin"></app-popularsearch-moreoptions>
-                    </div>
-                </div>
-            </ng-container>
-        </div> -->
-     <div style="margin-top: 20px">   Popular Searches:</div>
-        <div class="popular-searches p-popular-info" [class.topStyle]="!shared_functions.checkLogin()">
-               
+        <div style="margin-top: 20px"> Popular Searches:</div>
+        <div class="popular-searches p-popular-info">
             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme', 'sliding']" [items]="popSearches">
                 <div class="item" *ngFor="let kw of popSearches">
                     <a *ngIf="kw.autoname" (click)="popularClicked(kw)"> {{kw.autoname}}</a>
@@ -339,7 +267,7 @@
             </owl-carousel>
             <div class="owl-theme">
                 <div class="owl-controls">
-                    <div class="custom-nav owl-nav"></div>
+                    <div class="custom-nav owl-nav" [class.topStyle]="!shared_functions.checkLogin()"></div>
                 </div>
             </div>
         </div>

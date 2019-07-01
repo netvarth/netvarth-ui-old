@@ -448,7 +448,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     if (this.fromDateCaption === 'Now') {
       this.instantQForm = this.fb.group({
-        // qlocation: ['', Validators.compose([Validators.required])],
         // tslint:disable-next-line:radix
         dstart_time: [{ hour: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH')), minute: parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm')) }, Validators.compose([Validators.required])],
         // tslint:disable-next-line:radix
@@ -458,7 +457,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       });
     } else {
       this.instantQForm = this.fb.group({
-        // qlocation: ['', Validators.compose([Validators.required])],
         // tslint:disable-next-line:radix
         dstart_time: [{ hour: parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.fromDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
         // tslint:disable-next-line:radix
@@ -588,17 +586,22 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    * @param post_data input to update Instant Q
    */
   updateInstantQ(post_data) {
-    this.provider_services.editInstantQ(post_data)
-      .subscribe(
-        () => {
-          this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
-          this.showInstantQFlag = false;
-          this.initializeQs();
-        },
-        (error) => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+    if (post_data.services.length === 0) {
+      const error = 'Please select services';
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    } else {
+      this.provider_services.editInstantQ(post_data)
+        .subscribe(
+          () => {
+            this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+            this.showInstantQFlag = false;
+            this.initializeQs();
+          },
+          (error) => {
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    }
   }
   /**
    * ------------------------
@@ -751,39 +754,33 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     if (!queueObj.instantQueue) {
       this.getfutureCheckinCount(queueObj, index, que);
       this.getTomorrowCheckinCount(queueObj, index, que);
+      this.futureQcountCaption[index] = 'Checkins Count';
+      this.todayQcountCaption[index] = 'Checkins Count';
       if (que === 'scheduleQ') {
         if (!this.sqShowFutureCount[index]) {
            this.sqShowFutureCount[index] = true;
-           this.futureQcountCaption[index] = 'Checkins Count';
         } else {
           this.sqShowFutureCount[index] = false;
-          this.futureQcountCaption[index] = 'Checkins Count';
          }
       } else {
         if (!this.sqShowActiveQFutureCount[index]) {
           this.sqShowActiveQFutureCount[index] = true;
-          this.todayQcountCaption[index] = 'Checkins Count';
         } else {
            this.sqShowActiveQFutureCount[index] = false;
-           this.todayQcountCaption[index] = 'Checkins Count';
          }
       }
      }
      if (que === 'scheduleQ') {
        if (!this.sqShowTodayCount[index]) {
          this.sqShowTodayCount[index] = true;
-     this.futureQcountCaption[index] = 'Checkins Count';
        } else {
         this.sqShowTodayCount[index] = false;
-       this.futureQcountCaption[index] = 'Checkins Count';
       }
     } else {
        if (!this.sqShowActiveQTodayCount[index]) {
          this.sqShowActiveQTodayCount[index] = true;
-      this.todayQcountCaption[index] = 'Checkins Count';
        } else {
          this.sqShowActiveQTodayCount[index] = false;
-       this.todayQcountCaption[index] = 'Checkins Count';
        }
      }
   }

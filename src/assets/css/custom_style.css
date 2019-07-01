@@ -3794,80 +3794,84 @@ i.notavail {color:grey !important}
 }
 .baseloc{
   text-align: center;
-  }
-  .baseloc i{
+}
+.baseloc i{
   font-size: 1.5625rem;
   color: #fda60d;
-  }
-  .editbutton{
-    color: #00aef2 !important;
-    border: 1px solid #00aef2 !important;
-    border-radius: 30px !important;
-    background: transparent !important;
-    margin-right: 5px !important;
-    font-weight: 500 !important;
-    }
-    .helpcolor{
-      background: #0a0a0a24 !important;
-      font-weight: bold !important;
-      font-size: 0.80rem;
-    }
-    .help{
-      border-right: 1px solid lightgray;
-font-size: 0.70rem;
-line-height: 25px;
-font-weight: 450;
-color: midnightblue;
-    }
-    .helptext{
-      margin-left: 20px !important;
-    }
-    .helplink{
-      color: lightblue !important;
-      font-size: 0.70rem;
-      font-weight: 450;
-    }
-    .helpcontent{
+}
+.editbutton{
+  color: #00aef2 !important;
+  border: 1px solid #00aef2 !important;
+  border-radius: 30px !important;
+  background: transparent !important;
+  margin-right: 5px !important;
+  font-weight: 500 !important;
+}
+.helpcolor{
+  background: #0a0a0a24 !important;
+  font-weight: bold !important;
+  font-size: 0.80rem;
+}
+.help{
+  border-right: 1px solid lightgray;
+  font-size: 0.70rem;
+  line-height: 25px;
+  font-weight: 450;
+  color: midnightblue;
+}
+.helptext{
+  margin-left: 20px !important;
+}
+.helplink{
+  color: lightblue !important;
+  font-size: 0.70rem;
+  font-weight: 450;
+}
+.helpcontent{
     
 font-size: 0.70rem;
 line-height: 25px;
 font-weight: 450;
 color: midnightblue;
-    }
-    .popular-searches a{
-      margin-right: 10px !important;
-      font-weight: 500 !important;
-      margin-bottom: 10px !important;
-    }
-    .popular-searches a:hover{
-     text-decoration: underline !important;
-    }
-    .popular_more {
-      color: #00aef2 !important;
-      cursor:  pointer !important;
-      font-weight: 500 !important;
-    }
-    
-    .headerpop {
-      top: 150px !important;
-    }
-    .popular-searches .owl-theme .owl-nav [class*='owl-']{
-      background: transparent !important;
-    }
-    .popular-searches .owl-theme .owl-nav:hover [class*='owl-']{
-      background: transparent !important;
-    }
-    .popular-searches .owl-theme .owl-nav {
-      margin-top: 0px !important;
-    }
-    .popular-searches .custom-nav {
-      top: 15% !important;
-    }
-    .popular-searches .custom-nav .owl-next i,
-    .popular-searches .custom-nav .owl-prev i {
-      font-size: 2rem !important;
-      color: #bcb9b9 !important;
-    }
-    .topStyle {
-      top: 18% !important;
-    }
+}
+.popular-searches a{
+  margin-right: 10px !important;
+  font-weight: 500 !important;
+  margin-bottom: 10px !important;
+}
+.popular-searches a:hover{
+  text-decoration: underline !important;
+}
+.popular_more {
+  color: #00aef2 !important;
+  cursor:  pointer !important;
+  font-weight: 500 !important;
+}
+
+.headerpop {
+  top: 150px !important;
+}
+.popular-searches .owl-theme .owl-nav [class*='owl-']{
+  background: transparent !important;
+}
+.popular-searches .owl-theme .owl-nav:hover [class*='owl-']{
+  background: transparent !important;
+}
+.popular-searches .owl-theme .owl-nav {
+  margin-top: 0px !important;
+}
+.popular-searches .custom-nav {
+  top: 15% !important;
+}
+.popular-searches .custom-nav .owl-next i,
+.popular-searches .custom-nav .owl-prev i {
+  font-size: 2rem !important;
+  color: #bcb9b9 !important;
+}
+.popular-searches .topStyle {
+  top: 18% !important;
+}
+.popular-searches a {
+  cursor: pointer !important;
+  margin-right: 15px !important;
+}

@@ -12,6 +12,7 @@ import { HeaderComponent } from './header.component';
 import { LearnmoreModule } from '../learnmore/learnmore.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/se
         SearchModule,
         LearnmoreModule,
         OwlModule,
-        SearchPopularMoreoptionsModule
+        SearchPopularMoreoptionsModule,
+        LoadingSpinnerModule
        // MatMenuModule,
       //  MatIconModule
     ],

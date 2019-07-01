@@ -23,15 +23,12 @@ export class SearchPopularMoreOptionsComponent implements OnInit {
   constructor(public sharedfunctionObj: SharedFunctions) { }
 
   ngOnInit() {
-    console.log(this.passedPSearches);
-    console.log()
     if (this.origin === 'header') {
       this.jsonlist = this.passedPSearches;
     } else {
       const searchlabel = this.sharedfunctionObj.getitemfromLocalStorage('srchLabels');
       this.jsonlist = searchlabel.all.labels;
     }
-    console.log(this.jsonlist);
   }
 
   popularClicked(kw) {

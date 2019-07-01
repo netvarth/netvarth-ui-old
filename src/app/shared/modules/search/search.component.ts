@@ -323,7 +323,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         for (const locs of this.locationList) {
           const holdlocname = locs.autoname.toLowerCase();
           if (holdlocname.startsWith(hold_criteria)) {
-            // if (holdlocname.includes(hold_criteria)) {
             if (curcnt <= maxcnt) {
               this.displaylocationList.push(locs);
             }
@@ -339,7 +338,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.keywordgroupList = [];
     this.holdisplaylist = [];
     if (criteria === '') {
-      //  this.displaykeywordList = [];
       this.setNullKeyword('');
       this.searchfields.kw = '';
       this.searchfields.kwautoname = '';
@@ -470,7 +468,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;
-          // this.loadkeywordAPIreponsetoArray();
         }
       }
     }
@@ -479,7 +476,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         .subscribe(
           res => {
             this.domainlist_data = res;
-            //  this.loadkeywordAPIreponsetoArray();
             const today = new Date();
             const postdata = {
               cdate: today,
@@ -567,8 +563,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         // do nothing for above keys
         break;
       case 13: // enter key
-        // this.provRef.nativeElement.closePanel();
-        // this.provRef.closePanel();
         this.provRef.closePanel();
         this.setKeyword(this.keywordholder);
         break;
@@ -578,7 +572,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         this.keywordholder.autoname = val;
         this.keywordholder.domain = '';
         this.keywordholder.subdomain = '';
-        // this.keywordholder.typ = 'kwtitle';
         this.keywordholder.typ = 'kwphrase';
         this.curlabel.typ = '';
         this.curlabel.query = '';
@@ -614,12 +607,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.checktoSetLocationtoDefaultLocation();
     if (currenturl[0] === '/searchdetail') { // if clicked search button from the search result page itself
       this.onsearchclick(labelq);
-      // window.location.reload();
     } else { // clicked search button from home page
-      /*this.routerobj.navigate(['/searchdetail'], { queryParams: { do: this.selected_domain, la: this.location_latitude,
-          lo: this.location_longitude, prov: this.prov_name, lon: this.location_name,
-          srt: this.sortfield + ' ' + this.sortorder, ps: this.searchlabel_search, on: this.opennow_search,
-        lq: labelq }}); */
       const passparam = {
         do: this.selected_domain || '',
         la: this.locationholder.lat || '',
@@ -667,7 +655,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchfields.latitude = undefined;
       this.searchfields.longitude = undefined;
     } else {
-      // this.location_name = this.locationholder.autoname;
       if (this.locRef.nativeElement) {
         this.locRef.nativeElement.value = this.locationholder.autoname;
       }
@@ -698,13 +685,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
     if (labelq === '' || labelq === undefined || labelq === 'undefined') {
       this.searchfields.kwdomain = '';
-      // this.searchfields.kwtyp = this.keywordholder.typ;
     }
-    // this.searchfields.provider = this.prov_name;
     this.searchfields.sortfield = this.sortfield;
     this.searchfields.sortorder = this.sortorder;
     this.searchfields.labelq = labelq || '';
-    // if (this.searchfields.labelq != '') {
     if (labelq !== '' && labelq !== undefined && labelq !== 'undefined') {
       const ret_arr = this.parsesearchLabelsQuerystring(this.searchfields.labelq);
       if (ret_arr['sector'] !== '') {
@@ -728,7 +712,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         this.searchfields.kwsubdomain = '';
         this.searchfields.kwtyp = 'subdom';
         this.selected_domain = this.searchfields.domain;
-        // this.kw_autoname = this.searchfields.kw;
         this.kw_autoname = ret_arr['subdom_dispname'];
       }
     }
@@ -766,10 +749,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           }
         }
       }
-    } // else {
+    }
     retarr = { 'dom': '', 'special_dispname': '' };
     return retarr;
-    // }
   }
   // function which parse the querystring from search leabels
   parsesearchLabelsQuerystring(str = null) {
@@ -795,7 +777,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   handledomainchange(domain, avoidclear?) {
     // setting the domain in the selected_domain holder variable
     if (domain === 'All') {
-      // domain = '';
     }
     this.selected_domain = domain;
 
@@ -814,11 +795,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.keyssearchcriteria = '';
     this.prov_name = '';
     this.getSearchlabelsbydomain(domain);
-    // this.loadkeywordAPIreponsetoArray();
     if (avoidclear === undefined) {
       this.handleNormalSearchClick();
     }
-    // this.handleNormalSearchClick();
   }
   getSearchlabelsbydomain(domain) {
     if (domain == null || domain === '' || domain === 'All') {
@@ -830,7 +809,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   searchlabels_clicked(obj) {
     this.setNulllocationvalues('');
-    // this.setNullKeyword('');
     this.do_search(obj.query);
   }
   handleCustomfilter(val) {

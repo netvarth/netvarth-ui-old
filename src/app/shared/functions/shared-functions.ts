@@ -36,7 +36,6 @@ export class SharedFunctions {
 
   doLogout() {
     const promise = new Promise((resolve, reject) => {
-      // if (localStorage.getItem('ynw-user')) {
       if (localStorage.getItem('isBusinessOwner') === 'true') {
         this.providerLogout()
           .then(
@@ -52,9 +51,6 @@ export class SharedFunctions {
             }
           );
       }
-      // } else {
-      //   reject();
-      // }
     });
     return promise;
   }
@@ -123,36 +119,7 @@ export class SharedFunctions {
 
     });
     return promise;
-
   }
-
-  /* providerLogin(post_data) {
-
-    const promise = new Promise((resolve, reject) => {
-      this.shared_service.ProviderLogin(post_data)
-      .subscribe(
-          data => {
-            resolve(data);
-            this.setLoginData(data, post_data);
-            this.router.navigate(['/provider']);
-
-          },
-          error => {
-
-              if (error.status === 401) {
-                // Not registred provider or session alredy exists
-                this.consumerLogin(post_data)
-                .then(
-                  data => resolve(data),
-                  err => reject(err)
-                );
-              } else {
-                reject(error);
-              }
-          });
-      });
-      return promise;
-   }*/
 
   providerLogin(post_data) {
     this.sendMessage({ ttype: 'main_loading', action: true });
@@ -185,7 +152,6 @@ export class SharedFunctions {
 
   public setLoginData(data, post_data, mod) {
     localStorage.setItem('ynw-user', JSON.stringify(data));
-    // localStorage.setItem('isBusinessOwner', data['isProvider']);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
 
@@ -264,7 +230,6 @@ export class SharedFunctions {
     const curdate = new Date();
     const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
       curdate.getUTCMinutes(), curdate.getUTCSeconds(), curdate.getUTCMilliseconds()));
-    // const dates = date.toUTCString().slice(0, -4);
     return cdate.toISOString();
   }
 
@@ -312,24 +277,8 @@ export class SharedFunctions {
     return promise;
   }
 
-  /*getNearByLocation (centerLat: number, centerLon: number) {
-      const d = 15000; // desired distance in meter
-      const angle = 45 * Math.PI / 180; // 45 degrees in radians
-      const oneDegree = 111319.9; // distance in meters from degree to degree at the equato
-      // const maxLat = parseFloat(centerLat) + parseFloat((d / oneDegree) * Math.sin(angle));
-      // const maxLon = parseFloat(centerLon) + parseFloat((d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle));
-      const maxLat = Number(centerLat) + Number((d / oneDegree) * Math.sin(angle));
-      const maxLon = Number(centerLon) + Number((d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle));
-      // const minLat = centerLat - (d / oneDegree) * Math.sin(angle);
-      //  const minLon = centerLon - (d / (oneDegree * (Math.cos(centerLat * Math.PI / 180)))) * Math.cos(angle);
-      const locationRange = '[\'' + maxLat + ',' + maxLon + '\',\'' + centerLat + ',' + centerLon + '\']';
-      return locationRange;
-  }*/
   getNearByLocation(centerLat: number, centerLon: number, loctype?) {
     let distance = 0;
-    // if (loctype === undefined || loctype === '') {
-    //   distance = 5; // in KM
-    // } else {
     switch (loctype) {
       case 'state':
         distance = projectConstants.DISTANCE_STATE;
@@ -350,7 +299,6 @@ export class SharedFunctions {
         distance = projectConstants.DISTANCE_AREA;
         break;
     }
-    // }
     const distInDegree = distance / 111;
     const upperLeftLat = Number(centerLat) - Number(distInDegree);
     const upperLeftLon = Number(centerLon) + Number(distInDegree);
@@ -403,40 +351,9 @@ export class SharedFunctions {
     let retdet = [];
     switch (labeltype) {
       case 'global':
-        // retdet = searchlabels_arr.searchLabels[0].globalSearchLabels;
-        // retdet = searchlabels_arr.globalSearchLabels;
-        // // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
-        // for (const labelarr of searchlabels_arr.sectorLevelLabels) {
-        //   for (const subsecarr of labelarr.subSectorLevelLabels) {
-        //     // retdet.concat(subsecarr.specializationLabels);
-        //     const result = subsecarr.specializationLabels.map(function (el) {
-        //       const o = Object.assign({}, el);
-        //       o.type = 'special';
-        //       return o;
-        //     });
-        //     retdet.push.apply(retdet, result);
-        //   }
-        // }
-        // break;
         retdet = searchlabels_arr.all.labels;
         break;
       case 'domain':
-        // for (const labelarr of searchlabels_arr.searchLabels[1].sectorLevelLabels) {
-        // for (const labelarr of searchlabels_arr.sectorLevelLabels) {
-        //   if (labelarr.name === params['domain']) {
-        //     // retdet = labelarr.sectorLabels;
-        //     for (const subsecarr of labelarr.subSectorLevelLabels) {
-        //       retdet.push({ 'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain' });
-        //       // retdet.concat(subsecarr.specializationLabels);
-        //       const result = subsecarr.specializationLabels.map(function (el) {
-        //         const o = Object.assign({}, el);
-        //         o.type = 'special';
-        //         return o;
-        //       });
-        //       retdet.push.apply(retdet, result);
-        //     }
-        //   }
-        // }
         Object.keys(searchlabels_arr).forEach(keys => {
           const dom = params['domain'];
           if (keys === dom) {
@@ -597,7 +514,6 @@ export class SharedFunctions {
     const schedule_arr = [];
     // extracting the schedule intervals
     if (queueSchedule) {
-      // for (let i = 0; i < this.queues[ii].queueSchedule.length; i++) {
       for (let j = 0; j < queueSchedule.repeatIntervals.length; j++) {
         // pushing the schedule details to the respective array to show it in the page
         schedule_arr.push({
@@ -606,7 +522,6 @@ export class SharedFunctions {
           eTime: queueSchedule.timeSlots[0].eTime
         });
       }
-      // }
     }
     return schedule_arr;
   }
@@ -640,7 +555,6 @@ export class SharedFunctions {
     for (const obj in timebase) {
       if (obj) {
         let curstr = '';
-        // let pday = 0;
         let gap = 0;
         for (let i = 0; i < timebase[obj].length; i++) {
           if (i === 0) {
@@ -661,10 +575,8 @@ export class SharedFunctions {
                 curstr = curstr + ' - ' + this.getDay(timebase[obj][i].day);
               }
               gap++;
-              // alert("gap"+gap)
             }
             pday = timebase[obj][i].day;
-            // alert("outer pday"+pday)
           }
         }
         displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj });
@@ -717,13 +629,8 @@ export class SharedFunctions {
     const displaysch = [];
     for (const obj in timebase) {
       if (obj) {
-        // let curstr = '';
         const curstr = [];
         for (let i = 0; i < timebase[obj].length; i++) {
-          // if (curstr !== '') {
-          //   curstr += ',';
-          // }
-          // curstr += timebase[obj][i].day;
           curstr.push(timebase[obj][i].day);
         }
         displaysch.push({ 'stime': timebase[obj][0]['sTime'], 'etime': timebase[obj][0]['eTime'], 'daystr': curstr });
@@ -751,8 +658,6 @@ export class SharedFunctions {
       buss_det.logo = logo;
     }
     this.setitemonLocalStorage('ynwbp', buss_det);
-    // const pdata = { 'test': 'this is a test' };
-    // this.sendMessage(pdata);
   }
   retSubSectorNameifRequired(domain, subdomainname) {
     const bprof = this.getitemfromLocalStorage('ynw-bconf');
@@ -766,8 +671,6 @@ export class SharedFunctions {
               cdate: today,
               bdata: this.holdbdata
             };
-            // this.setitemonLocalStorage('ynw-bconf', postdata);
-            // const bprofn = this.getitemfromLocalStorage('ynw-bconf');
             const bprofn = postdata;
             const getdata = this.compareData(bprofn, domain, subdomainname);
             return getdata;
@@ -827,9 +730,7 @@ export class SharedFunctions {
       duration = params['duration'];
     }
     const replaced_message = this.findTerminologyTerm(message);
-    // alert(replaced_message)
     const snackBarRef = this.snackBar.open(replaced_message, '', { duration: duration, panelClass: panelclass });
-    // const snackBarRef = this.snackBar.open(message, '', {duration: 100000, panelClass: panelclass });
     return snackBarRef;
   }
 
@@ -929,13 +830,6 @@ export class SharedFunctions {
   }
   Lbase64Encode(str) {
     let retstr = '';
-    /* // retstr = str.replace(/'/g, '~');
-    retstr = encodeURI(str);
-    if (str !== '' && str !== undefined) {
-      retstr = atob(retstr);
-    }
-    return retstr; */
-    // return str;
     if (str !== '' && str !== undefined) {
       retstr = str.replace('(', '~');
       retstr = retstr.replace(')', '~~');
@@ -946,14 +840,6 @@ export class SharedFunctions {
   }
   Lbase64Decode(str) {
     let retstr = '';
-    /*if (str !== '' && str !== undefined) {
-     // retstr = btoa(str);
-     retstr = btoa(str);
-     // retstr = retstr.replace(/~/g, '\'');
-     retstr = decodeURI(retstr);
-   }
-    return retstr;*/
-    // return str;
     if (str !== '' && str !== undefined) {
       retstr = str.replace('~~', ')');
       retstr = retstr.replace('~', '(');
@@ -1024,7 +910,6 @@ export class SharedFunctions {
 
   doCancelWaitlist(waitlist, cthis?) {
     return new Promise((resolve, reject) => {
-
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -1071,19 +956,6 @@ export class SharedFunctions {
   }
   doDeleteFavProvider(fav, cthis?) {
     return new Promise((resolve, reject) => {
-      // cthis.remfavdialogRef = this.dialog.open(ConfirmBoxComponent, {
-      //   width: '50%',
-      //   panelClass : ['consumerpopupmainclass', 'confirmationmainclass'],
-      //   disableClose: true,
-      //   data: {
-      //     'message' : 'Do you want to remove " ' + fav.businessName + ' " from favourite list?',
-      //     'heading' : 'Confirm'
-      //   }
-      // });
-
-      // cthis.remfavdialogRef.afterClosed().subscribe(result => {
-
-      // if (result) {
       this.deleteFavProvider(fav.id)
         .then(
           data => {
@@ -1093,12 +965,7 @@ export class SharedFunctions {
             reject(error);
           }
         );
-      // } else {
-      //   resolve();
-      // }
-
     });
-    // });
   }
   deleteFavProvider(id) {
     return new Promise((resolve, reject) => {
@@ -1124,29 +991,6 @@ export class SharedFunctions {
     if (val === 0.0) {
       retval = 0;
     }
-    /*if (val > 0 && val <= .5) {
-      retval = .5;
-    } else if (val > .5 && val <= 1) {
-      retval = 1;
-    } else if (val > 1 && val <= 1.5) {
-      retval = 1.5;
-    } else if (val > 1.5 && val <= 2) {
-      retval = 2;
-    } else if (val > 2 && val <= 2.5) {
-      retval = 2.5;
-    } else if (val > 2.5 && val <= 3) {
-      retval = 3;
-    } else if (val > 3 && val <= 3.5) {
-      retval = 3.5;
-    } else if (val > 3.5 && val <= 4) {
-      retval = 4;
-    } else if (val > 4 && val <= 4.5) {
-      retval = 4.5;
-    } else if (val > 4.5 && val <= 5) {
-      retval = 5;
-    } else {
-      retval = val;
-    }*/
     return retval;
   }
   setTerminologies(terminologies) {
@@ -1157,10 +1001,7 @@ export class SharedFunctions {
   }
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, '').toLowerCase();
-    // alert("in terminology termonly or not"+term_only)
-    // term may me with or without '[' ']'
     const terminologies = this.common_datastorage.get('terminologies');
-    //  alert(terminologies);
     if (terminologies) {
       return (terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term);
     } else {
@@ -1169,20 +1010,12 @@ export class SharedFunctions {
   }
 
   removeTerminologyTerm(term, full_message) {
-    // alert("term"+term);
-    // alert("msg"+full_message);
     const term_replace = this.getTerminologyTerm(term);
-    // alert("term replace"+term_replace);
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
-    // alert(term_replace+term_only+term);
     return full_message.replace('[' + term_only + ']', term_replace);
-
   }
 
   toCamelCase(str) {
-    /*return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
-        return match.charAt(match.length - 1).toUpperCase();
-    });*/
     return str;
   }
 
@@ -1249,7 +1082,6 @@ export class SharedFunctions {
     let value1 = evt.target.value;
     if (plceValue === 'HH') {
       if (value1 > 23) {
-        // alert(value1);
         evt.preventDefault();
         value1 = value1.substr(0, value1.length - 1);
         // tslint:disable-next-line:radix
@@ -1259,7 +1091,6 @@ export class SharedFunctions {
       return true;
     } else {
       if (value1 > 59) {
-        // alert(value1);
         evt.preventDefault();
         value1 = value1.substr(0, value1.length - 1);
         // tslint:disable-next-line:radix
@@ -1268,7 +1099,6 @@ export class SharedFunctions {
       }
       return true;
     }
-
   }
 
   isNumeric(evt) {
@@ -1280,43 +1110,6 @@ export class SharedFunctions {
       return false;
     }
   }
-
-
-  // if (inputKeyCode !== 8 && inputKeyCode !== 0 &&
-  //     ((inputKeyCode < 48 || inputKeyCode > 57) &&
-  //        (inputKeyCode < 96 || inputKeyCode > 105) && (inputKeyCode !== 110))) {
-  //         evt.preventDefault();
-  //         return false;
-  //      }
-  // if (inputKeyCode !== null) {
-  //     if (inputKeyCode === 45) {
-  //     }
-  // }
-  // const stringvalue = evt.target.value;
-  // tslint:disable-next-line:radix
-  // const value = parseInt(evt.target.value);
-  // tslint:disable-next-line:radix
-  // const max = parseInt(evt.target.max);
-  // if (evt.which !== 8 && evt.which !== 0 &&
-  //   ((evt.which < 48 || evt.which > 57) &&
-  //     (evt.which < 96 || evt.which > 105) && (evt.which !== 110)) ||
-  //   isNaN(value) || value < 0) {
-  // evt.target.value = stringvalue.substring(0, (stringvalue.length - 1));
-  // if (evt.stopPropagation) {
-  //   evt.stopPropagation();
-  //   evt.preventDefault();
-  // } else {
-  //   evt.preventDefault();
-  // }
-
-  // }
-  // if (value > max) {
-  //   // tslint:disable-next-line:radix
-  //   evt.preventDefault();
-  //   return false;
-  // }
-  // return true;
-  // }
 
   filterJson(jsonArray, key, value) {
     const newArray = jsonArray.filter(function (el) {
