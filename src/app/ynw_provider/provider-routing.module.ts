@@ -41,6 +41,13 @@ import { ViewReportComponent } from './components/view-report/view-report.compon
 import { ProviderJcouponDetailsComponent } from './components/provider-jcoupon-details/provider-jcoupon-details.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { HealthcareLearnmoreComponent } from './components/healthcare_learnmore/healthcare_learnmore.component';
+import { PersonalCareLearnmoreComponent } from './components/personalcare_learnmore/personalcare_learnmore.component';
+import { ProfessionalLearnmoreComponent } from './components/professional_learnmore/professional_learnmore.component';
+import { VastuLearnmoreComponent } from './components/vastu_learnmore/vastu_learnmore.component';
+import { ReligiousLearnmoreComponent } from './components/religious_learnmore/religious_learnmore.component';
+import { FoodjointsLearnmoreComponent } from './components/food_learnmore/food_learnmore.component';
+import { FinanceLearnmoreComponent } from './components/finance_learnmore/finance_learnmore.component';
+import { VeterinaryLearnmoreComponent } from './components/veterinary_learnmore/veterinary_learnmore.component';
 const routes: Routes = [
   {
     path: '', component: ProviderComponent,
@@ -62,7 +69,14 @@ const routes: Routes = [
       { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin] },
       {path: 'members', component: ProviderMembersComponent},
 
-      {path: 'learnmore', component: HealthcareLearnmoreComponent},
+      {path: 'learnmore/healthCare/:parent/:child', component: HealthcareLearnmoreComponent},
+      {path: 'learnmore/personalCare/:parent/:child', component: PersonalCareLearnmoreComponent},
+      {path: 'learnmore/professionalConsulting/:parent/:child', component: ProfessionalLearnmoreComponent},
+      {path: 'learnmore/vastuAstrology/:parent/:child', component: VastuLearnmoreComponent},
+      {path: 'learnmore/religiousPriests/:parent/:child', component: ReligiousLearnmoreComponent},
+      {path: 'learnmore/foodJoints/:parent/:child', component: FoodjointsLearnmoreComponent},
+      {path: 'learnmore/finance/:parent/:child', component: FinanceLearnmoreComponent},
+      {path: 'learnmore/veterinaryPetcare/:parent/:child', component: VeterinaryLearnmoreComponent},
       { path: 'customers', component: ProviderCustomersComponent },
       {
         path: 'inbox',

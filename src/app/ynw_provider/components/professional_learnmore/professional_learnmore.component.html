@@ -680,7 +680,7 @@
     
                         <span>A provider can add multiple languages known to him/her. This can widen the client base and attract more clients.</span>
     
-                        <ol class="ol-normal">
+                        <ol  class="ol-normal">
                                 <li>Initially, to add a language, a provider has to click on <strong>“Add it Now”</strong>.</li>
                                 <li>The languages added in the section are displayed here.</li>
                                 <li>To choose from the list of languages, click on the <strong>“Pencil”</strong> button to edit.</li>
@@ -947,9 +947,12 @@
                                                                             </table>
                                                                     </tr>
                                                             </tbody>
+                                                        
                             </table>
                         </div>
                     </section>
+                
+              
     
     
                     <section *ngIf="childContent =='photo-gallery'">
@@ -1359,50 +1362,45 @@
                     </section>
                     <section *ngIf="childContent =='license-package'">
                         <h6>Upgrade License:</h6>
-                        <span>Here a doctor can upgrade the license anytime.</span>
+                        <span>Here a provider can upgrade the license anytime.</span>
     
                         <ul class="ul-normal">
-                            <li>When the doctor clicks on the <strong>“Upgrade License”</strong> button, a window appears
-                                where a drop-down menu is listed with the available license packages.</li>
+                            <li>When a provider clicks on the <strong>“Upgrade License”</strong> button, a window appears where a
+                                drop-down menu is listed with the available license packages.</li>
                             <li>To upgrade to a license package, select a package from the drop-down menu.</li>
                             <li>The license package has a monthly subscription, i.e. monthly payment has to be done.</li>
-                            <li>A doctor can also upgrade the license package using the below links from dashboard:
+                            <li>A provider can also upgrade the license package using the below links from dashboard:
                                 <ul class="ul-normal">
-                                    <li><strong>Click here</strong> to Upgrade License : If license package is
-                                        <strong>Platinum Free 60 days trial</strong>.</li>
-                                    <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
-                                            higher</strong>.</li>
-                                </ul>
+                                    <li><strong>Click here</strong> to Upgrade License : If license package is <strong>Platinum Free 60 days trial</strong>.</li>
+                                    <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or higher</strong>.</li>
+                                </ul></li>
+                            <li>Here, a provider can view the owned license package, due amount as well as the next payment date.
                             </li>
-                            <li>Here, a doctor can view the owned license package, due amount as well as the next payment
-                                date.</li>
                             <li>An invoice is generated on a monthly basis.</li>
-                            <li>For example, if a doctor has created a profile on 10th January then all invoices will be
-                                generated on a monthly basis i.e. on 10th of each month. In case, the doctor buys add-on and
-                                Jaldee-keywords on a different date (suppose on 20th January), the first bill of the add-on
-                                and Jaldee-keywords will be calculated from 20 January - 10 February. After that, the same
-                                “10↔10” bill cycle will continue from next month. This billing cycle will include License
-                                and Addon amount in a single invoice until the license or Add-on gets
-                                upgraded/downgraded.<br><br>
-                                <span><strong>*To downgrade the existing license package, a doctor needs to contact the Jaldee
-                                        team, call us on 0487-2325650 or you can send us an email at <span
-                                            class="linkb">support@jaldee.com</span>.</strong></span>
+                            <li>For example, if a provider has created a profile on 10th January then all invoices will be generated
+                                on a monthly basis i.e. on 10th of each month. In case, the provider buys add-on and Jaldee-keywords on a
+                                different date (suppose on 20th January), the first bill of the add-on and Jaldee-keywords will be
+                                calculated from 20 January - 10 February. After that, the same “10↔10” bill cycle will continue from
+                                next month. This billing cycle will include License and Addon amount in a single invoice until the
+                                license or Add-on gets upgraded/downgraded.<br><br>
+                                <p><strong>*To downgrade the existing license package, a provider needs to contact the Jaldee team,
+                                        call us on 0487-2325650 or you can send us an email at <span
+                                            class="linkb">support@jaldee.com</span>.</strong></p>
                             </li>
-                            <li>An invoice is generated when an addon is included in a subscription using
-                                <strong>“ADD-ON(+)”</strong> option.</li>
-                            <li>When a doctor click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
-                                    grades),</strong> he/she can see the generated invoices. To proceed with payment from
-                                here, click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface
-                                and thus proceed with the actual payment.</li>
-                            <li>The doctor will receive a confirmation email informing the payment status.</li>
-                            <li>A doctor can see all the payments completed so far in the <strong>“Payments
-                                    History”</strong> section.</li>
-                            <li>The invoice is generated every month on the same date of profile creation, whether or not
-                                the previous payment is made.</li>
-                            <li>The license gets upgraded as soon as a doctor clicks on license upgrade button, but the
-                                invoice gets generated from the next month and the amount is calculated based on the daily
-                                usage of the license package.</li>
-                            <li>An email will be sent to the doctor upon each invoice generation.</li>
+                            <li>An invoice is generated when an addon is included in a subscription using <strong>“ADD-ON(+)”</strong> option.</li>
+                            <li>When a provider click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
+                                    grades),</strong> he/she can see the generated invoices. To proceed with payment from here,
+                                click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface and thus proceed
+                                with the actual payment.</li>
+                            <li>The provider will receive a confirmation email informing the payment status.</li>
+                            <li>A provider can see all the payments completed so far in the <strong>“Payments History”</strong>
+                                section.</li>
+                            <li>The invoice is generated every month on the same date of profile creation, whether or not the
+                                previous payment is made.</li>
+                            <li>The license gets upgraded as soon as a provider clicks on license upgrade button, but the invoice
+                                gets generated from the next month and the amount is calculated based on the daily usage of the
+                                license package.</li>
+                            <li>An email will be sent to the provider upon each invoice generation.</li>
                         </ul>
                     </section>
     
@@ -1648,38 +1646,38 @@
                     <section *ngIf="childContent =='license-package'">
                         <h6>1. License Change History</h6>
     
-                        <span>The license change history shows the list of the changes applied in the license package. Here a
-                            doctor can see the starting date of the current license package, it’s expiry date (only if
-                            upgraded to higher grades), and the status of the license package either active or expired.</span>
-                        <span>A doctor can also downgrade the license via Jaldee support. The effects of this on the bill is
-                            reflected from the next bill cycle (next month) onwards.</span>
+                        <span>The license change history shows the list of the changes applied in the license package. Here a provider can
+                            see the starting date of the current license package, it’s expiry date (only if upgraded to higher grades),
+                            and the status of the license package either active or expired.</span>
+                        <span>A provider can also downgrade the license via Jaldee support. The effects of this on the bill is reflected
+                            from the next bill cycle (next month) onwards.</span>
     
                         <h6>2. License Usage</h6>
     
-                        <span>Here a doctor can track the license usage. This section shows the following information:</span>
+                        <span>Here a provider can track the license usage. This section shows the following information:</span>
                         <ul class="ul-normal">
-                            <li><strong>Number of business profile views :</strong> This refers to the number of patients
-                                who have clicked for a detailed view of the doctor.</li>
+                            <li><strong>Number of business profile views :</strong> This refers to the number of clients who have
+                                clicked for a detailed view of the service provider.</li>
                             <li><strong>Transactions :</strong> This refers to the number of check-ins.</li>
-                            <li><strong>Profile gallery storage :</strong> This shows the total storage space given to the
-                                doctor under the availed license package.</li>
-                            <li><strong>Jaldee-Keyords :</strong> This shows the total number of Jaldee-Keyords allowed for
-                                the availed package.</li>
+                            <li><strong>Profile gallery storage :</strong> This shows the total storage space given to the provider
+                                under the availed license package.</li>
+                            <li><strong>Jaldee-Keywords :</strong> This shows the total number of Jaldee-Keywords allowed for the availed
+                                package.</li>
                         </ul>
-                        <span>A doctor also gets to know whether the usages are in compliance with the current license package.
-                            The data until yesterday is updated here.</span>
+                        <span>A provider also gets to know whether the usages are in compliance with the current license package. The data
+                            until yesterday is updated here.</span>
     
                         <h6>3. Payment History</h6>
     
-                        <span>Here a doctor can view the entire history of the payments done to Jaldee so far.</span>
+                        <span>Here a provider can view the entire history of the payments done to Jaldee so far.</span>
                     </section>
     
                     <section *ngIf="childContent =='addon'">
                         <h6>Add-on</h6>
     
-                        <span>Add-ons are used when a license package reaches its maximum limit and a doctor wants to add more
-                            features. With the help of add-ons, a doctor can avail additional features without upgrading the
-                            license. Add-ons are charged accordingly.</span>
+                        <span>Add-ons are used when a license package reaches its maximum limit and a provider wants to add more features.
+                            With the help of add-ons, a provider can avail additional features without upgrading the license. Add-ons
+                            are charged accordingly.</span>
                         <span><br>Following are the list of add-ons:</span>
                         <table class="table addon-tbl">
                             <tbody>
@@ -1706,16 +1704,15 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted, its effect on the
-                            bill can be seen from the next bill cycle onwards.</span>
+                        <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted, its effect on the bill can be
+                            seen from the next bill cycle onwards.</span>
                     </section>
     
                     <section *ngIf="childContent =='adwords'">
                         <h6>Jaldee-Keyword</h6>
     
-                        <span>Jaldee-Keyword is common keywords. A patient generally uses such keywords to search for a doctor.
-                            Buying relevant keywords that a prospective patient would be searching on Jaldee. For example,
-                            if yours is an eye clinic, you can buy Jaldee-Keywords like “optometrist”, “eye doctor” etc.</span>
+                        <span>Jaldee-Keyword is common keywords. A client generally uses such keywords to search for a service provider.
+                            Buying relevant keywords that a prospective client would be searching on Jaldee. For example, if yours is a business consultancy,  you can buy Jaldee-Keywords like “Business Consultancy”, “Business Planning”, etc.</span>
     
                         <h6>How to add an Jaldee-Keyword ?</h6>
     
@@ -1757,15 +1754,15 @@
                             </tbody>
                         </table>
                         <ul class="ul-normal">
-                            <li>All the available Jaldee-Keyword for the current license package are shown below the
-                                Jaldee-Keywords label.</li>
-                            <li>To insert the keywords for your business click on the <strong>“+”</strong> symbol. Enter the
-                                keywords in the window and choose <strong>“Save”</strong>.</li>
-                            <li>Here a doctor can view the already added Jaldee-Keyword. The option to delete the
-                                Jaldee-Keyword is available.</li>
-                            <li>In case the current license package does not support any free Jaldee-Keyword or the doctor
-                                wants to add more Jaldee-Keyword than a license package offers, one can buy Jaldee-Keyword
-                                as Addon. Addon packages (5,20) are listed along with the pricing.</li>
+                            <li>All the available Jaldee-Keyword for the current license package are shown below the Jaldee-Keywords
+                                label.</li>
+                            <li>To insert the keywords for your business click on the <strong>“+”</strong> symbol. Enter the keywords in
+                                the window and choose <strong>“Save”</strong>.</li>
+                            <li>Here a provider can view the already added Jaldee-Keyword. The option to delete the Jaldee-Keyword is
+                                available.</li>
+                            <li>In case the current license package does not support any free Jaldee-Keyword or the provider wants to add
+                                more Jaldee-Keyword than a license package offers, one can buy Jaldee-Keyword as Addon. Addon packages
+                                (5,20) are listed along with the pricing.</li>
                         </ul>
                     </section>
     
@@ -1773,21 +1770,15 @@
                     <section *ngIf="childContent =='adjustdelay' && parentContent == 'adjustdelay'">
                         <h6>Adjust Delay</h6>
     
-                        <span>Delay can be caused by any reason. This interferes with the smooth
-                            functioning of the business. Adjust delay helps the doctor to set a delay to the current or
-                            earliest working hour.</span>
+                        <span>Delay can be caused by any reason. This interferes with the smooth functioning of the business. Adjust delay helps the provider to set a delay to the current or earliest working hour.</span>
     
                         <ol class="ol-normal adjust-delay-num">
                             <li>Select a working hour from the dashboard to adjust the delay.</li>
-                            <li>Click on the <strong>"Adjust Delay"</strong> button. This opens a new window.</li>
-                            <li>Further, set the delayed time (in hours and minutes) in the <strong>Delay</strong> field.
-                            </li>
-                            <li>In case if the doctor wants to inform the patient about the delay, click <strong>"Send
-                                    Message”.</strong> A default message will be sent to the patients informing that the
-                                wait time has been extended for some time along with the new estimated waiting time.</li>
-                            <li>The doctor can also send a personalized message. Enter the message in the given text box.
-                            </li>
-                            <li>Click the <strong>“Save”</strong> button to confirm the adjustments.</li>
+                    <li>Click on the <strong>“Adjust Delay”</strong> button. This opens a new window.</li>
+                   <li>Further, set the delayed time (in hours and minutes) in the <strong>Delay</strong> field.</li>
+                    <li>In case if the provider wants to inform the client about the delay, click <strong>“Send Message”</strong>. A default message will be sent to the clients informing that the wait time has been extended for some time along with the new estimated waiting time.</li>
+                   <li>The provider can also send a personalized message. Enter the message in the given text box.</li>
+                   <li>Click the <strong>“Save”</strong> button to confirm the adjustments.</li>
                         </ol>
                     </section>
     
@@ -1795,24 +1786,18 @@
     
                         <h6>NON WORKING DAY</h6>
     
-                        <span>Non-Working Day allows the doctor to set up different Public holidays
-                            and other non-working days. Unless a holiday has been mentioned in this section, it will be
-                            assumed that the service is being provided during the working hours specified under the Working
-                            Hours. Here is how a doctor can update non-working days in <strong>Jaldee.</strong></span>
+                        <span>Non-Working Day allows the provider to set up different Public holidays and other non-working days. Unless a holiday has been mentioned in this section, it will be assumed that the service is being provided during the working hours specified under the Working Hours. Here is how a provider can update non-working days in <strong>Jaldee</strong>.</span>
     
                         <ol class="ol-normal adjust-delay-num">
                             <li>Click <strong>“Add Non-Working Day”</strong> under Miscellaneous.</li>
-                            <li>Select the corresponding date of the holiday (use calendar).</li>
-                            <li>Enter the reason for the holiday.</li>
-                            <li>Next, enter the duration of non-working hours. Keep in mind that the start time cannot be a
-                                different time from the timing of the working hours.</li>
-                            <li>Before adding a non-working day, ensure to have no pending waitlists for the day’s working
-                                hours.</li>
-                            <li>Upon having all the information, click <strong>“Save”</strong> to add the holiday.</li>
-                            <li>Subsequently, to add more holidays, click <strong>“(+)”.</strong> </li>
-                            <li>The date, time, and reason for each non-working day are listed here.</li>
-                            <li>A provider can edit or delete a particular non-working day. To do so, click on the three
-                                dots menu given in the right corner.</li>
+                <li>Select the corresponding date of the holiday (use calendar).</li>
+                <li>Enter the reason for the holiday.</li>
+                <li>Next, enter the duration of non-working hours. Keep in mind that the start time cannot be a different time from the timing of the working hours.</li>
+                <li>Before adding a non-working day, ensure to have no pending waitlists for the day’s working hours.</li>
+                <li>Upon having all the information, click <strong>“Save”</strong> to add the holiday.</li>
+                <li>Subsequently, to add more holidays, click <strong>“(+)”.</strong> </li>
+                <li>The date, time, and reason for each non-working day are listed here.</li>
+                <li>A provider can edit or delete a particular non-working day. To do so, click on the three dots menu given in the right corner.</li>
                         </ol>
                     </section>
     
@@ -1821,30 +1806,19 @@
                         <h6>PROVIDER DASHBOARD</h6>
                         <section>
     
-                            <span>The dashboard section lets the doctor manage and monitor the
-                                check-ins of a patient. Here a doctor can monitor the current check-ins
-                                <strong>(Today)</strong> and the future check-ins <strong>(Future).</strong> The patient's
-                                previous check-ins can be viewed in this section under the <strong>“History”</strong> tab.
-                                To view the details, click on the patient’s name. There are location and working hours to
-                                help the doctor monitor the details of check-ins in different windows.</span>
+                            <span>The dashboard section lets the provider manage and monitor the check-ins of a client. Here a provider can monitor the current check-ins <strong>(Today)</strong> and the future check-ins <strong>(Future)</strong>. The client's previous check-ins can be viewed in this section under the <strong>“History”</strong> tab. To view the details, click on the client's name. There are location and working hours to help the provider monitor the details of check-ins in different windows.</span>
                         </section>
     
     
                         <ol class="ol-normal adjust-delay-num">
-                            <li><strong>Today ()</strong> - All the present day’s online and walk-in check-ins are listed
-                                here. The adjoined brackets display the number of check-ins.</li>
-                            <li><strong>Future()</strong> - All the check-ins for future dates are listed here. The adjoined
-                                brackets display the number of future check-ins.</li>
-                            <li><strong>History</strong> - All of the patient’s previous check-ins until a day before are
-                                listed here. To view the details click on the “date of check-in” or on the “name of the
-                                patient”. Actions can also be changed from here.</li>
+                            <li><strong>Today ()</strong> - All the present day’s online and walk-in check-ins are listed here. The adjoined brackets display the number of check-ins.</li>
+                            <li><strong>Future()</strong> - All the check-ins for future dates are listed here. The adjoined brackets display the number of future check-ins.</li>
+                            <li><strong>History</strong> - All of the client’s previous check-ins until a day before are listed here. To view the details click on the “date of check-in” or on the “name of the client.”. Actions can also be changed from here.</li>
                         </ol>
                         <section>
                             <h6><u>Location Selection</u></h6>
-                            <span>Here a doctor can select the exact location if multiple locations are available. The doctor
-                                can check the details of a particular check-in for a specific location.</span>
-                            <span><strong>Note: A doctor needs to select the location of service while he/she checks-in a
-                                    “walk-in” patient.</strong></span>
+                            <span>Here a provider can select the exact location if multiple locations are available. The provider can check the details of a particular check-in for a specific location.</span>
+                            <span><strong>Note: A provider needs to select the location of service while he/she checks-in a “walk-in” client.</strong></span>
                         </section>
                         <section>
                             <mat-accordion>
@@ -1856,83 +1830,33 @@
                                     </mat-expansion-panel-header>
                                     <div>
                                         <ul class="ul-normal">
-                                            <li>If the business has multiple locations, select the location and the working
-                                                hour from
-                                                the dashboard.</li>
-                                            <li>Here the doctor can see a list of patients who have checked in (Online or
-                                                Walk-in ).
-                                            </li>
-                                            <li>In some cases, a “cloud symbol” is prefixed to a name, it means that the
-                                                patient has
-                                                checked in online. </li>
-                                            <li>To view the check-in details of a patient, doctor can click on the name of
-                                                the patient.
-                                                Check-in history, communication history, and history of private notes are
-                                                listed here.
-                                                In addition to that, the user can cancel a patient’s check-in and inform
-                                                this through
-                                                <strong>Send Message.</strong> A doctor can add a private note for a patient
-                                                using
-                                                <strong>Add private note.</strong></li>
-                                            <li>For <strong>“Manual”</strong> wait time calculation, the doctor can edit
-                                                individual
-                                                check-ins wait time from the check-in details.</li>
-                                            <li>Each of the patient’s <strong>Name, Wait Time</strong> and
-                                                <strong>Service</strong> is
-                                                displayed here.</li>
+                                            <li>If the business has multiple locations, select the location and the working hour from the dashboard.</li>
+                                            <li>Here the provider can see a list of clients who have checked in (Online or  Walk-in ).</li>
+                                            <li>In some cases, a “cloud symbol” is prefixed to a name, it means that the client has checked in online.</li>
+                                            <li>To view the check-in details of a client, provider can click on the name of the client. Check-in history, communication history, and history of private notes are listed here. In addition to that, the user can cancel a client's check-in and inform this through <strong>Send Message</strong>. A provider can add a private note for a client using <strong>Add private note</strong>.</li>
+                                            <li>For <strong>“Manual”</strong> wait time calculation, the provider can edit individual check-ins wait time from the check-in details.</li>
+                                            <li>Each of the client's <strong>Name, Wait Time</strong> and <strong>Service</strong> is displayed here.</li>
                                             <li>The three dots menu in the right side of check-in has the following options:
-                                            </li>
-                                            <ol class="ol-normal">
-                                                <li><strong>Send Message :</strong> Instantly type and send a message to the
-                                                    patient
-                                                    here. These messages can be seen in communication history anytime.</li>
+                                              <ol class="ol-normal">
+                                                <li><strong>Send Message :</strong> Instantly type and send a message to the client here. These messages can be seen in communication history anytime.</li>
                                                 <li><strong>Cancel check-in :</strong>
-                                                    <ul class="ul-normal">
-                                                        <li>To cancel a patient’s check-in, click on <strong>”Cancel
-                                                                Check-In”</strong>.
-                                                        </li>
-                                                        <li>Patients are notified about the cancellation of Check-in through
-                                                            push
-                                                            message/email.</li>
-                                                        <li>When a doctor clicks on <strong>“Cancel Check-In”</strong> a
-                                                            pop-up window
-                                                            appears which shows the reasons for cancellation of the
-                                                            check-in. Use the
-                                                            checkboxes to select from the suggested reasons and then click
-                                                            <strong>“Save”.</strong> </li>
-                                                        <li>The doctor can inform the patient about the cancellation. To do
-                                                            this, click
-                                                            on the <strong>Send Message</strong> button. A text box will
-                                                            appear with a
-                                                            default message for each reason, doctor can either send the
-                                                            default message
-                                                            or can edit and type a personalized message.</li>
-                                                    </ul>
+                                                  <ul class="ul-normal">
+                                                    <li>To cancel a client's check-in, click on <strong>“Cancel Check-In”.</strong></li>
+                                                    <li>clients are notified about the cancellation of Check-in through push message/email.</li>
+                                                    <li>When a provider clicks on <strong>“Cancel Check-In”</strong> a pop-up window appears which shows the reasons for cancellation of the check-in. Use the checkboxes to select from the suggested reasons and then click <strong>“Save”</strong>.</li>
+                                                    <li>The provider can inform the client about the cancellation. To do this, click on the <strong>Send Message</strong> button. A text box will appear with a default message for each reason, provider can either send the default message or can edit and type a personalized message.</li>
+                                                  </ul>
                                                 </li>
-                                                <li><strong>Add private note :</strong> In case the doctor wants to keep a
-                                                    personal note
-                                                    about a particular patient, he/she can write and add a note here. This
-                                                    note can be
-                                                    seen anytime the patient checks-in again with the doctor under
-                                                    <strong>“Private
-                                                        Notes”.</strong></li>
-                                                <li><strong>Change Status to Check-in :</strong> The option to check-in a
-                                                    patient
-                                                    appears only when the patient’s status is <strong>“Arrived”.</strong>
-                                                    The doctor can
-                                                    change the status back to <strong>“Check-in”</strong> using this option.
-                                                    This can be
-                                                    used in the following circumstances:
-                                                    <ul class="ul-normal">
-                                                        <li>When a patient gets cancelled for some reason and wanted to
-                                                            check-in again.
-                                                        </li>
-                                                        <li>When a patient’s check-in status has been mistakenly changed to
-                                                            <strong>Arrived</strong> status.</li>
-                                                    </ul>
-                                                </li>
-                                            </ol>
-                                        </ul>
+                                                <li><strong>Add private note :</strong> In case the provider wants to keep a personal note about a particular client, he/she can write and add a note here. This note can be seen anytime the client checks-in again with the provider under <strong>“Private Notes”</strong>.</li>
+                                                <li><strong>Change Status to Check-in :</strong>The option to check-in a client appears only when the client's status is <strong>“Arrived”</strong>. The provider can change the status back to <strong>“Check-in”</strong> using this option. This can be used in the following circumstances:
+                                                  <ul class="ul-normal">
+                                                    <li>When a client gets cancelled for some reason and wanted to check-in again.</li>
+                                                    <li>When a client's check-in status has been mistakenly changed to <strong>“Arrived”</strong> status.</li>
+                                                  </ul>
+                                                  </li>
+                                              </ol>
+                                      </li>
+                                          </ul>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -1945,56 +1869,15 @@
                                     </mat-expansion-panel-header>
                                     <div>
     
-                                        <span>The following are the main actions the doctor can perform:</span>
+                                        <span>The following are the main actions the provider can perform:</span>
                                         <ol class="ol-normal adjust-delay-num">
-                                            <li><strong>Arrived :</strong> This button is used when a patient arrives at the
-                                                premise of
-                                                the business location to avail the services. When a doctor clicks this
-                                                button, an
-                                                <strong>“Arrived”</strong> label gets adjoined to the name of the patient.
-                                                In case of a
-                                                walk-in or kiosk patient, the <strong>“Arrived”</strong> label is
-                                                automatically adjoined
-                                                as the patients are present at the premises. Service can now be started.
-                                            </li>
-                                            <li><strong>Start :</strong> Click on <strong>“Start”</strong> when the service
-                                                is started.
-                                                This will move the patient’s entry to <strong>“Started”</strong> tab. This
-                                                will lead to
-                                                the activation of the other two buttons, namely, <strong>“Complete”</strong>
-                                                and
-                                                <strong>“Bill”.</strong> Click on these buttons as and when required.</li>
-                                            <li><strong>Complete :</strong>Click on the <strong>“Complete”</strong> tab
-                                                after completion
-                                                of the service. The check-in status of the patient changes to complete. This
-                                                will move
-                                                the patient’s entry to the <strong>“Completed”</strong> tab. The completed
-                                                tab generates
-                                                two actions, namely <strong>“Bill”</strong> & <strong>“Accept
-                                                    Payment”.</strong></li>
-                                            <li><strong>Cancel :</strong>If the service gets cancelled for some reason,
-                                                click on the
-                                                <strong>“Cancel”</strong> tab. This will remove the patient’s check-in entry
-                                                from the
-                                                list.</li>
-                                            <li><strong>Bill :</strong>After the completion of the service, a bill gets
-                                                generated. Click
-                                                on the <strong>“Bill”</strong> tab to view the receipt. Here a doctor can
-                                                add extra
-                                                services or items in the bill. From the three dots menu, a doctor can also
-                                                <strong>“Apply order discount”, “Apply coupon” & “Apply Jaldee
-                                                    coupon”</strong> to the
-                                                bill. The bill can be settled either by <strong></strong>JaldeePay or
-                                                <strong>Pay by
-                                                    Cash or Others.</strong></li>
-                                            <li><strong>Accept Payment :</strong>Click on <strong>“Accept
-                                                    Payment”</strong>“Accept
-                                                Payment” tab to receive the payment for the services. This opens the
-                                                generated Bill
-                                                page. Once the patient pays the bill, a doctor can settle the bill by
-                                                clicking on the
-                                                <strong>“Settle”</strong> tab.</li>
-                                        </ol>
+                                            <li><strong>Arrived :</strong> This button is used when a client arrives at the premise of the business location to avail the services. When a provider clicks this button, an <strong>“Arrived”</strong> label gets adjoined to the name of the client. In case of a walk-in or kiosk client, the <strong>“Arrived”</strong> label is automatically adjoined as the clients are present at the premises. Service can now be started.</li>
+                                            <li><strong>Start :</strong> Click on <strong>“Start”</strong> when the service is started. This will move the client’s entry to <strong>“Started”</strong> tab. This will lead to the activation of the other two buttons, namely, <strong>“Complete”</strong> and <strong>“Bill”</strong>. Click on these buttons as and when required.</li>
+                                            <li><strong>Complete :</strong>Click on the <strong>“Complete”</strong> tab after completion of the service. The check-in status of the client changes to complete. This will move the client’s entry to the <strong>“Completed”</strong> tab. The completed tab generates two actions, namely <strong>“Bill”</strong> & <strong>“Accept Payment”.</strong></li>
+                                            <li><strong>Cancel :</strong>If the service gets cancelled for some reason, click on the <strong>“Cancel”</strong> tab. This will remove the client’s check-in entry from the list.</li>
+                                            <li><strong>Bill :</strong>After the completion of the service, a bill gets generated. Click on the <strong>“Bill”</strong> tab to view the receipt. Here a provider can add extra services or items in the bill. From the three dots menu, a provider can also <strong>“Apply order discount”, “Apply coupon” & “Apply Jaldee coupon”</strong> to the bill. The bill can be settled either by <strong></strong>JaldeePay or <strong>Pay by Cash or Others.</strong></li>
+                                            <li><strong>Accept Payment :</strong>Click on <strong>“Accept Payment”</strong>“Accept Payment” tab to receive the payment for the services. This opens the generated Bill page. Once the client pays the bill, a provider can settle the bill by clicking on the <strong>“Settle”</strong> tab.</li>
+                                          </ol>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -2009,104 +1892,45 @@
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div>
-                                        <ul class="ul-normal">
-                                            <li>Under this tab, a doctor can view the list of patients who have already
-                                                started availing
-                                                the service. The check-in tab will no longer contain these patients entry.
-                                            </li>
-                                            <li>Name, Wait Time and Service will be the same as that in the check-ins tab.
-                                            </li>
-                                            <li>Two actions are available here:</li>
-                                        </ul>
-                                        <ol class="ol-normal">
-                                            <li><strong>Complete :</strong> Click on the <strong>“Complete”</strong> button
-                                                after the
-                                                completion of the service. This will move the patient’s entry from
-                                                <strong>Started
-                                                    tab</strong> to the <strong>Completed tab.</strong> In case the
-                                                <strong>“End of
-                                                    Service Notification”</strong> button is enabled in the <strong>“Add
-                                                    Service”</strong>, a push message or email will be sent to the patient,
-                                                thus
-                                                informing them about the service completion.</li>
-                                            <li><strong>Bill :</strong> A <strong>“Bill”</strong> button appears when a
-                                                service is
-                                                started. This opens the bill generated for the service. Click on
-                                                <strong>“Add
-                                                    Service/Item”</strong> in order to add more services or items to the
-                                                bill before
-                                                proceeding with the payment. The three dots menu near this button has the
-                                                following
-                                                options:
-                                                <ul class="ul-normal">
-                                                    <li><strong>Apply Jaldee Coupon :</strong> These coupons have been
-                                                        provided by
-                                                        Jaldee.</li>
-                                                    <li><strong>Apply Coupon :</strong> These are coupons generated by
-                                                        doctor.</li>
-                                                    <li><strong>Apply Order Discount :</strong> These discounts are offered
-                                                        by the
-                                                        doctor.</li>
-                                                    <span>*The option to Add Private Note and Patient Note is available here.
-                                                    </span>
-                                                    <li>These coupons are applied to the total bill amount.</li>
-                                                    <li>Discounts can either be applied to the Gross amount or to each item.
-                                                    </li>
-                                                    <li>Three dots menu near service/item in the bill has the following
-                                                        actions:
-                                                        <ol class="ol-normal">
-                                                            <li><strong>Change Quantity :</strong> Here a doctor can change
-                                                                the quantity
-                                                                of the item or service already added to the bill.</li>
-                                                            <li><strong>Apply Discount :</strong> Here a doctor can apply a
-                                                                discount to
-                                                                the bill.</li>
-                                                            <li><strong>Remove Service/Item :</strong> Click here to remove
-                                                                a service or
-                                                                item from the bill.</li>
-                                                        </ol>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ol>
-                                        <ul class="ul-normal">
-                                            <li>Additionally the option to <strong>“Add Private Note”, “Send Message”, and
-                                                    “Change
-                                                    Status to Check-in”</strong> is also available.
-                                                <ol class="ol-normal">
-                                                    <li><strong>Add Private Note :</strong> Write a note about a particular
-                                                        patient
-                                                        here.</li>
-                                                    <li><strong>Send Message :</strong> Write text to the patient here and
-                                                        send it to
-                                                        the patient. All of the sent messages can be seen in communication
-                                                        history
-                                                        anytime.</li>
-                                                    <li><strong>Change Status to check-in :</strong>The option to check-in a
-                                                        patient
-                                                        appears only if the patient’s status is marked to
-                                                        <strong>“Arrived”.</strong> A
-                                                        doctor can change the status back to <strong>“Check-in”</strong>
-                                                        using this
-                                                        option. This can be used in the following circumstances:
-                                                        <ul>
-                                                            <li>When a patient gets cancelled for some reason and wanted to
-                                                                check-in
-                                                                again.</li>
-                                                            <li>When a patient’s check-in status has been mistakenly changed
-                                                                to
-                                                                <strong>“Arrived”</strong> status.</li>
-                                                        </ul>
-                                                    </li>
-                                                </ol>
-                                            </li>
-                                            <li><strong>Payment Status:</strong> This shows the payment status (not paid,
-                                                partially
-                                                paid, or fully paid) of the patient.</li>
-                                            <li><strong>Patient Note:</strong> When a patient adds any note while
-                                                checking-in, it is
-                                                displayed here.</li>
-                                        </ul>
+                                        <li>Under this tab, a provider can view the list of clients who have already started availing the service. The check-in tab will no longer contain these clients entry. </li>
+          <li>Name, Wait Time and Service will be the same as that in the check-ins tab.</li>
+          <li>Two actions are available here:</li>
+          <ol class="ol-normal">
+            <li><strong>Complete :</strong> Click on the <strong>“Complete”</strong> button after the completion of the service. This will move the client’s entry from <strong>Started tab</strong> to the <strong>Completed tab.</strong> In case the <strong>“End of Service Notification”</strong> button is enabled in the <strong>“Add Service”</strong>, a push message or email will be sent to the client, thus informing them about the service completion.</li>
+            <li><strong>Bill :</strong> A <strong>“Bill”</strong> button appears when a service is started. This opens the bill generated for the service. Click on <strong>“Add Service/Item”</strong> in order to add more services or items to the bill before proceeding with the payment. The three dots menu near this button has the following options:
+              <ul class="ul-normal">
+                <li><strong>Apply Jaldee Coupon :</strong> These coupons have been provided by Jaldee.</li>
+                <li><strong>Apply Coupon :</strong> These are provider generated coupons.</li>
+                <li><strong>Apply Order Discount :</strong> These discounts are offered by the provider.</li>
+                <P>*The option to Add Private Note and Patient Note is available here.</P>
+                <li>These coupons are applied to the total bill amount.</li>
+                <li>Discounts can either be applied to the Gross amount or to each item.</li>
+                <li>Three dots menu near service/item in the bill has the following actions:
+                    <ol class="ol-normal">
+                      <li><strong>Change Quantity :</strong> Here a provider can change the quantity of the item/service already added to the bill.</li>
+                      <li><strong>Apply Discount :</strong> Here a provider can apply a discount to the bill.</li>
+                      <li><strong>Remove Service/Item :</strong> Click here to remove a service or item from the bill.</li>
+                    </ol>
+                  </li>
+              </ul>
+            </li>
+          </ol>
+          <ul class="ul-normal">
+            <li>Additionally the option to <strong>“Add Private Note”, “Send Message”, and “Change Status to Check-in”</strong> is also available.
+            <ol class="ol-normal">
+                <li><strong>Add Private Note :</strong> Write a note about a particular client here.</li>
+                <li><strong>Send Message :</strong> Write text to the client here and send it to the client. All of the sent messages can be seen in communication history anytime.</li>
+                <li><strong>Change Status to check-in :</strong>The option to check-in a client appears only if the client’s status is marked to <strong>“Arrived”</strong>. A provider can change the status back to <strong>“Check-in”</strong> using this option. This can be used in the following circumstances:
+                  <ul>
+                    <li>When a client gets cancelled for some reason and wanted to check-in again.</li>
+                    <li>When a client’s check-in status has been mistakenly changed to <strong>“Arrived”</strong> status.</li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+            <li><strong>Payment Status:</strong> This shows the payment status (not paid, partially paid, or fully paid) of the client.</li>
+            <li><strong>client Note:</strong> When a client adds any note while checking-in, it is displayed here.</li>
+          </ul>
     
                                     </div>
                                 </mat-expansion-panel>
@@ -2123,51 +1947,25 @@
                                     </mat-expansion-panel-header>
                                     <div>
                                         <ul class="ul-normal">
-                                            <li>Once a service is done click on”Complete” button, the patient’s entry will
-                                                move under
-                                                the <strong>“Completed”</strong> tab.</li>
-                                            <li>The doctor is equipped with the following actions in this section:
-                                                <ol class="ol-normal">
-                                                    <li><strong>Accept Payment :</strong> Click on this button to view the
-                                                        saved bill. A
-                                                        doctor has the option to either continue with the payment procedure
-                                                        or to edit
-                                                        the bill by adding new services or items to the bill. The bill has
-                                                        the following
-                                                        options:
-                                                        <ul class="normal-abc">
-                                                            <li><strong>Settle Bill :</strong> Click on this button to
-                                                                settle the bill.
-                                                                The due amount in the bill is also visible in the patient
-                                                                dashboard.
-                                                            </li>
-                                                            <li><strong>Jaldee Pay :</strong> This enables the patient to
-                                                                pay online by
-                                                                generating the bill to the patient dashboard also.</li>
-                                                            <li><strong>Pay by cash or others :</strong> This enables the
-                                                                patient to
-                                                                complete the bill settlement either in cash or by other
-                                                                means.</li>
-                                                        </ul>
-                                                    </li>
-    
-                                                </ol>
+                                            <li>Once a service is done click on”Complete” button, the client’s entry will move under the <strong>“Completed”</strong> tab.</li>
+                                            <li>The provider is equipped with the following actions in this section:
+                                              <ol class="ol-normal">
+                                                <li><strong>Accept Payment :</strong>  Click on this button to view the saved bill. A provider has the option to either continue with the payment procedure or to edit the bill by adding new services or items to the bill. The bill has the following options:
+                                                  <ul class="normal-abc">
+                                                    <li><strong>Settle Bill :</strong>  Click on this button to settle the bill. The due amount in the bill is also visible in the client dashboard.</li>
+                                                    <li><strong>Jaldee Pay :</strong>  This enables the client to pay online by generating the bill to the client dashboard also.</li>
+                                                    <li><strong>Pay by cash or others :</strong> This enables the client to complete the bill settlement either in cash or by other means.</li>
+                                                  </ul>
+                                                </li>
+                                                
+                                              </ol>
                                             </li>
-                                            <li>Additionally the options <strong>“Add Private Note”</strong> and
-                                                <strong>“Send
-                                                    Message”</strong> are also available.
-                                                <ol class="ol-normal">
-                                                    <li><strong>Add Private Note :</strong> Write a note about a particular
-                                                        patient
-                                                        here.</li>
-                                                    <li><strong>Send Message :</strong> Write text to the patient here and
-                                                        send it to
-                                                        the patient. All of the sent messages can be seen in communication
-                                                        history
-                                                        anytime.</li>
-                                                </ol>
+                                            <li>Additionally the options <strong>“Add Private Note”</strong> and  <strong>“Send Message”</strong>  are also available.
+                                              <ol class="ol-normal">
+                                                <li><strong>Add Private Note :</strong> Write a note about a particular client here.</li>
+                                                <li><strong>Send Message :</strong> Write text to the client here and send it to the client. All of the sent messages can be seen in communication history anytime.</li>
+                                              </ol>
                                             </li>
-    
                                         </ul>
                                     </div>
                                 </mat-expansion-panel>
@@ -2184,27 +1982,15 @@
                                     <div>
     
                                         <ul class="ul-normal">
-                                            <li>Here the doctor can view the list of all cancelled patient check-ins.</li>
+                                            <li>Here the provider can view the list of all cancelled client check-ins.</li>
                                             <li>The three dot menu available has the following options:
-                                                <ul class="normal-abc">
-                                                    <li><strong>Add Private Note :</strong> Write a note about a particular
-                                                        patient
-                                                        here.</li>
-                                                    <li><strong>Send Message :</strong> Write text to the patient here and
-                                                        send it to
-                                                        the patient. All of the sent messages can be seen in communication
-                                                        history
-                                                        anytime.</li>
-                                                    <li><strong>Change Status to check-in :</strong> The option to check-in
-                                                        a patient
-                                                        appears only if the patient’s status is marked to
-                                                        <strong>“Arrived”.</strong> A
-                                                        doctor can change the status back to <strong>“Check-in”</strong>
-                                                        using this
-                                                        option.</li>
-                                                </ul>
+                                              <ul class="normal-abc">
+                                                <li><strong>Add Private Note :</strong> Write a note about a particular client here.</li>
+                                                <li><strong>Send Message :</strong> Write text to the client here and send it to the client. All of the sent messages can be seen in communication history anytime.</li>
+                                                <li><strong>Change Status to check-in :</strong> The option to check-in a client appears only if the client’s status is marked to <strong>“Arrived”</strong>. A provider can change the status back to <strong>Check-in”</strong>“ using this option.</li>
+                                              </ul>
                                             </li>
-                                        </ul>
+                                          </ul>
                                     </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
@@ -2215,190 +2001,114 @@
                     <section *ngIf="childContent =='payment' && parentContent == 'payment'">
                         <h6>PAYMENTS</h6>
                         <section>
-                            <span>In this section, a doctor can select the payment mode with which
-                                he/she wishes to accept/settle payments.
+                            <span>In this section, a provider can select the payment mode with which he/she wishes to accept/settle payments.
                             </span>
                         </section>
                         <section>
                             <ul class="ul-normal">
-                                <li>To enable online payments using any payment system, a doctor has to switch on the
-                                    <strong>“Patients Self pay”</strong> mode. Initially, this is set to
-                                    <strong>off</strong> mode.</li>
-                                <li>If a doctor has not entered an email address before, click on the link <strong>“Go To
-                                        Email Settings”</strong> (Payment Settings) to add the email id. This can be set
-                                    directly from My Account.</li>
-                                <h6 id="payment-settings">Payment Settings</h6>
+                                <li>To enable online payments using any payment system, a provider has to switch on the “Clients Self pay” mode. Initially, this is set to off mode.</li>
+                                <li>If a provider has not entered an email address before, click on the link <strong>“Go To Email Settings”</strong> ( Payment Settings) to add the email id. This can be set directly from My Account.</li>
+                                <h4 id="payment-settings"> Payment Settings</h4>
                                 <li>Two modes of payments can be enabled. These are:</li>
                                 <ul ol class="ol-normal">
-                                    <li><strong>Jaldee Bank :</strong> Jaldee account means a patient can pay online for the
-                                        services directly to the <strong>Jaldee Bank</strong> and in turn, the
-                                        <strong>Jaldee team</strong> will reimburse the amount (charging a commission for
-                                        each transaction) to the doctor. Jaldee bank is available for online payment. Upto
-                                        <strong>Silver license package,</strong> only Jaldee bank is available for online
-                                        payments. However, the doctors with higher license packages (from Gold onwards) may
-                                        or may not opt for the Jaldee bank for online payment.</li>
-                                    <li><strong>My Own Bank Account :</strong> In this section, a doctor is required to
-                                        submit the account details of <strong>Paytm/CC/DC/Net Banking.</strong> In case the
-                                        doctor has not added an email address, click on the link <strong>“Go To Email
-                                            Settings”</strong> (Payment Settings) to add the email address. Furthermore, a
-                                        doctor needs to click on any mode of payment (with which he/she wants to settle the
-                                        bill). The mode of payment can be either <strong>“Paytm"</strong> or
-                                        <strong>“CC/DC/Net Banking”</strong> or both.
+                                  <li><strong>Jaldee Bank :</strong> Jaldee account means a client can pay online for the services directly to the <strong>Jaldee Bank</strong> and in turn, the <strong>Jaldee team</strong> will reimburse the amount (charging a commission for each transaction) to the service provider. Jaldee bank is available for online payment. Upto <strong>Silver license package,</strong> only Jaldee bank is available for online payments. However, the providers with higher license packages (from Gold onwards) may or may not opt for the Jaldee bank for online payment.</li>
+                                  <li><strong>My Own Bank Account :</strong> In this section, a provider is required to submit the account details of <strong>Paytm/CC/DC/Net Banking</strong>. In case the provider has not added an email address, click on the link <strong>“Go To Email Settings”</strong> (Payment Settings) to add the email address. Furthermore, a provider needs to click on any mode of payment (with which he/she wants to settle the bill). The mode of payment can be either <strong>“Paytm"</strong> or <strong>“CC/DC/Net Banking”</strong> or both.
+                                    <ul class="ul-normal">
+                                      <li><strong>Paytm :</strong> This is an effortless mode of online payment commonly used these days. If the provider has a Paytm account, he/she needs to provide the following details:
                                         <ul class="ul-normal">
-                                            <li><strong>Paytm :</strong> This is an effortless mode of online payment
-                                                commonly used these days. If the doctor has a Paytm account, he/she needs to
-                                                provide the following details:
-                                                <ul class="ul-normal">
-                                                    <li><strong>Mobile Number</strong></li>
-                                                    <li><strong>Merchant Id</strong></li>
-                                                    <li><strong>Merchant Key</strong></li>
-                                                </ul>
-                                            </li>
-                                            <li><strong>CC/Dc/Net Banking :</strong> To settle the bill using this mode of
-                                                payment, a doctor has to provide the following information:
-                                                <ul class="ul-normal">
-                                                    <li><strong>Account Holder Name</strong></li>
-                                                    <li><strong>Bank Account Number</strong></li>
-                                                    <li><strong>Pan Card Number</strong></li>
-                                                    <li><strong>Bank Name</strong></li>
-                                                    <li><strong>IFSC Code</strong></li>
-                                                    <li><strong>Name on Pan Card</strong></li>
-                                                    <li><strong>Branch Name</strong></li>
-                                                    <li><strong>Business Filing Status</strong></li>
-                                                    <li><strong>Account Type</strong></li>
-                                                </ul>
-                                            </li>
+                                          <li><strong>Mobile Number</strong></li>
+                                          <li><strong>Merchant Id</strong></li>
+                                          <li><strong>Merchant Key</strong></li>
                                         </ul>
-                                    </li>
+                                      </li>
+                                      <li><strong>CC/DC/Net Banking :</strong> To settle the bill using this mode of payment, a provider has to provide the following information:
+                                        <ul class="ul-normal">
+                                          <li><strong>Account Holder Name</strong></li>
+                                          <li><strong>Bank Account Number</strong></li>
+                                          <li><strong>Pan Card Number</strong></li>
+                                          <li><strong>Bank Name</strong></li>
+                                          <li><strong>IFSC Code</strong></li>
+                                          <li><strong>Name on Pan Card</strong></li>
+                                          <li><strong>Branch Name</strong></li>
+                                          <li><strong>Business Filing Status</strong></li>
+                                          <li><strong>Account Type</strong></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </li>
                                 </ul>
-                                <li>To verify the <strong>Paytm/CC/DC/Net Banking</strong> and to start accepting digital
-                                    payments, please call the Jaldee team on 0487-2325650 or mail us to support@jaldee.com.
-                                </li>
-                            </ul>
+                                <li>To verify the <strong>Paytm/CC/DC/Net</strong> Banking and to start accepting digital payments, please call the Jaldee team on  0487-2325650 or mail us to support@jaldee.com.</li>
+                              </ul>
                         </section>
                     </section>
     
                     <section *ngIf="parentContent == 'billing'">
                         <h6 id="items">Billing/POS</h6>
-                        <span>Billing/POS page is the one-stop-shop for adding items, discounts,
-                            coupons and tax settings. Discounts and coupons play a major role in driving patients toward a
-                            service. Jaldee gives flexibility and ease of adding items and providing discounts or coupons to
-                            patients.<strong> This is only available from Platinum License package.</strong></span>
+                        <span>Billing/POS page is the one-stop-shop for adding items, discounts, coupons and tax settings. Discounts and coupons play a major role in driving clients toward a product/service and in boosting sales. Jaldee gives flexibility and ease of adding items and providing discounts or coupons to clients.<strong> This is only available from Platinum License package.</span>
     
-                        <ul class="ul-normal">
-                            <li>A doctor can add/remove the item, service, discounts, and coupons anytime in the bill. The
-                                changes in the bill will be reflected immediately.</li>
-                            <li>A doctor can settle the bill only after the full amount is paid (either by paying the full
-                                amount, or applying discount/coupon/on demand discount).</li>
-                            <li>Once settled a bill cannot be updated. The settled bill can be emailed.</li>
-                        </ul>
+                            <ul class="ul-normal">
+                                <li>A provider can add/remove the item, service, discounts, and coupons anytime in the bill. The changes in the bill will be reflected immediately.</li>
+                                <li>A provider can settle the bill only after the full amount is paid (either by paying the full amount, or applying discount/coupon/on demand discount).</li>
+                                <li>Once settled a bill cannot be updated. The settled bill can be emailed.</li>
+                              </ul>
                     </section>
                     <section *ngIf="childContent == 'items'">
                         <h6 id="items">Items</h6>
-                        <span> Under Items a doctor can create and publish a list of items that are
-                            being sold at the clinic. To add a new item, click <strong>“Add Item”.</strong> A new window
-                            appears where the doctor can insert the information regarding the item such as its name, price,
-                            a short description, and a detailed description. If the item is taxable, the doctor is required
-                            to enable the <strong>“Taxable”</strong> toggle button (the percentage of tax can be set in
-                            <strong>tax settings</strong>). This can be enabled only if the <strong>Tax settings</strong> is
-                            already set. Click <strong>“Submit”</strong> when all the information is filled. The doctor can
-                            always change the quantity of the service or item in the bill. The changes will be reflected
-                            right away in the bill.<strong> This is only available from Platinum License package.</strong>
+                        <span> Under Items a provider can create and publish a list of items that are being sold at the premise. To add a new item, click <strong>“Add Item”.</strong> A new window appears where the provider can insert the information regarding the item such as its name, price, a short description, and a detailed description. If the item is taxable, the provider is required to enable the <strong>“Taxable”</strong> toggle button (the percentage of tax can be set in <strong>tax settings</strong>). This can be enabled only if the <strong>Tax settings</strong> is already set. Click <strong>“Submit”</strong> when all the information is filled. The provider can always change the quantity of the service or item in the bill. The changes will be reflected right away in the bill. <strong>This is only available from Platinum License package.</strong>
                         </span>
                     </section>
     
                     <section *ngIf="childContent == 'discount'">
                         <h6 id="discount">Discounts</h6>
-                        <span>To add a discount for the first time, click
-                            <strong>“Discounts”.</strong> Here the doctor needs to enter the discount name, its type
-                            (Percentage/Fixed), and provide a description to the discount along with the value in Rupees.
-                            The discounts can be applied to the total bill as well as to each item and service. A doctor can
-                            set up two types of Discounts:</span>
+                        <span>To add a discount for the first time, click <strong>“Discounts”.</strong> Here the provider needs to enter the discount name, its type (Percentage/Fixed), and provide a description to the discount along with the value in Rupees. The discounts can be applied to the total bill as well as to each item and service.  A provider can set up two types of Discounts:</span>
                         <ol class="ol-normal adjust-delay-num">
-                            <li><strong>Fixed Amount: </strong> A specified amount will be deducted from either the total
-                                amount or from each specified item/service in the bill.</li>
-                            <li><strong>Percentage: </strong> A specific percentage of the total amount from the invoice or
-                                from each item will be deducted in this case. <strong>“Percentage”</strong> type discounts
-                                can be applied either to the total amount on the invoice or to each specified item/service
-                                in the bill.
-                            </li>
+                            <li><strong>Fixed Amount: </strong> A specified amount will be deducted from either the total amount or from each specified item/service in the bill.</li>
+        <li><strong>Percentage: </strong> A specific percentage of the total amount from the invoice or from each item will be deducted in this case. <strong>“Percentage”</strong> type discounts can be applied either to the total amount on the invoice or to each specified item/service in the bill.
+        </li>
                         </ol>
-                        <span>The discount dashboard shows all the existing discounts that have been
-                            created in Jaldee settings. Discount name, value, and description of each discount is visible
-                            here. A doctor can create, delete and edit the discount. For creating more discounts, click on
-                            “(+)” symbol.</span>
-                        <span><strong>* Note: On Demand Discount is created during the account
-                                creation and its price is set to zero by default. It can only be applied to the total bill.
-                                It can be viewed under discounts list, right after the account creation. Its price cannot be
-                                updated. It can be used to waive the bill amount. At the time of bill updation, the doctor
-                                can give any amount of on-demand discount by selecting this discount.</strong></span>
+                        <span>The discount dashboard shows all the existing discounts that have been created in Jaldee settings. Discount name, value, and description of each discount is visible here. A provider can create, delete and edit the discount. For creating more discounts, click on <strong>“(+)”</strong> symbol.</span>
+                        <span>* Note: <strong>On Demand Discount</strong> is created during the account creation and its price is set to zero by default. It can only be applied to the total bill. It can be viewed under discounts list, right after the account creation. Its price cannot be updated. It can be used to waive the bill amount.  At the time of bill updation, the provider can give any amount of on-demand discount by selecting this discount.</span>
                     </section>
     
                     <section *ngIf="childContent == 'coupon'">
                         <h6 id="coupon">Coupons</h6>
-                        <span>This section is divided into two main sections, viz. <strong>Jaldee
-                                Coupons</strong> and <strong>My Coupons. Coupons, either Jaldee coupons or My
-                                Coupons</strong> can only be applied to the total bill amount.</span>
+                        <span>This section is divided into two main sections, viz. <strong>Jaldee Coupons</strong> and <strong>My Coupons. Coupons, either Jaldee coupons or My Coupons</strong> can only be applied to the total bill amount.</span>
                         <ol class="ol-normal adjust-delay-num">
                             <li><strong>Jaldee Coupons : </strong>
                                 <ul class="ul-normal">
-                                    <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name,
-                                        validity date (from and to), status. The option to enable/disable the coupon is also
-                                        available in the three dots menu.</li>
-                                    <li>The coupons with no three dots menu are enabled by the Jaldee. The doctor has no
-                                        option to enable/disable the coupon.</li>
+                                    <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name, validity date (from and to), status. The option to enable/disable the coupon is also available in the three dots menu.</li>
+                                    <li>The coupons with no three dots menu are enabled by the Jaldee. The provider has no option to enable/disable the coupon.</li>
                                     <li>To view the details of a particular coupon, click on the coupon code.</li>
-                                    <li>In the detailed view, the doctor can see the valid dates, discount value or
-                                        percentage, rules, and the coupon stats as well.</li>
-                                </ul>
-                                <span>Following are the rules for each coupon. “✅” or “❌” indicates
-                                    whether the rules are applicable or not.</span>
+                                    <li>In the detailed view, the provider can see the valid dates, discount value or percentage, rules, and the coupon stats as well.</li>
+                                  </ul>
+                                <span>Following are the rules for each coupon. “✅” or “❌” indicates whether the rules are applicable or not.</span>
                                 <ol class="ol-normal adjust-delay-num">
-                                    <li><strong>Always Enabled :</strong> This coupon will always be enabled. A doctor has
-                                        no option over enabling or disabling these coupons.</li>
-                                    <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its status
-                                        can be changed by the doctor.</li>
-                                    <li><strong>Online Check in Required :</strong> This coupon is available only for those
-                                        patients who check-in online.</li>
-                                    <li><strong>Self Payment Required :</strong> This coupon is available only for those
-                                        patients who pay online for the services.</li>
-                                    <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other
-                                        available coupons.</li>
-                                    <li><strong>First Check-in Only :</strong> This coupon is available only for those
-                                        patients who checks-in for the first time on Jaldee.</li>
-                                    <li><strong>First Check-in Per Provider Only : </strong> This coupon is available only
-                                        for those patients who check-in for the first time for a particular doctor.</li>
-                                    <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of
-                                        limited patients on whom a doctor can apply the coupon.</li>
-                                    <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to
-                                        which the coupon can be applied.</li>
-                                    <li><strong>Consumer Use Limit :</strong> This refers to the number of times a patient
-                                        can apply the coupon.</li>
-                                    <li><strong>Provider Use Limit :</strong> This refers to the number of times a doctor
-                                        can apply the coupon.</li>
-                                </ol>
-                                <ul class="ul-normal">
-                                    <li>Here a doctor can view the terms and conditions as well as the doctor description
-                                        for the coupon.</li>
-                                    <li>Corresponding patient description is displayed to him/her at their dashboard.</li>
-                                    <li>Coupon status is visible in the bottom of the page. The doctor has the option to
-                                        enable/disable the coupon here (only if permitted).</li>
+                                    <li><strong>Always Enabled :</strong> This coupon will always be enabled. A provider has no option over enabling or disabling these coupons.</li>
+                                    <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its status can be changed by the provider.</li>
+                                    <li><strong>Online Check in Required :</strong> This coupon is available only for those clients who check-in online.</li>
+                                    <li><strong>Self Payment Required :</strong> This coupon is available only for those clients who pay online for the services.</li>
+                                    <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other available coupons.</li>
+                                    <li><strong>First Check-in Only :</strong> This coupon is available only for those clients who checks-in for the first time on Jaldee.</li>
+                                    <li><strong>First Check-in Per Provider Only : </strong> This coupon is available only for those clients who check-in for the first time for a particular provider.</li>
+                                    <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of limited clients on whom a provider can apply the coupon.</li>
+                                    <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to which the coupon can be applied.</li>
+                                    <li><strong>Consumer Use Limit :</strong> This refers to the number of times a client can apply the coupon.</li>
+                                    <li><strong>Provider Use Limit :</strong> This refers to the number of times a provider can apply the coupon.</li>
+                                  </ol>
+                                  <ul class="ul-normal">
+                                    <li>Here a provider can view the terms and conditions as well as the provider description for the coupon.</li>
+                                    <li>Corresponding client description is displayed to him/her at their dashboard.</li>
+                                    <li>Coupon status is visible in the bottom of the page. The provider has the option to enable/disable the coupon here (only if permitted).</li>
                                     <li>In addition, a coupon stat section is given where the following is shown:</li>
                                     <ol class="ol-normal adjust-delay-num">
-                                        <li><strong>Check ins Applied :</strong> This shows the number of times check-ins
-                                            applied for the coupon.</li>
-                                        <li><strong>Total Amount Discounted :</strong> This shows the total amount waived to
-                                            the patients by the doctor using the coupon.</li>
-                                        <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount given
-                                            to the doctor by Jaldee.</li>
+                                      <li><strong>Check ins Applied :</strong> This shows the number of times check-ins applied for the coupon.</li>
+                                      <li><strong>Total Amount Discounted :</strong> This shows the total amount waived to the clients by the provider using the coupon.</li>
+                                      <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount given to the provider by Jaldee.</li>
                                     </ol>
-                                </ul>
+                                  </ul>
                             </li>
                             <li><strong>My Coupons</strong>
-                                <span>These coupons are created by doctors. To add a coupon for the
-                                    first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon, type
-                                    of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
-                                    coupon can only be applied to the total bill. A doctor can set up two types of Coupons:
+                                <span>These coupons are created by providers. To add a coupon for the first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon, type of the coupon (Percentage/Fixed) and provide a brief description to the discount. A coupon can only be applied to the total bill. A provider can set up two types of Coupons:
                                 </span>
                                 <ol class="ol-normal adjust-delay-num">
                                     <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the total
@@ -2407,76 +2117,54 @@
                                         bill will be deducted in this case. <strong>“Percentage”</strong> type coupons can
                                         be applied to the total bill.</li>
                                 </ol>
-                                <span>The Coupons dashboard shows all the existing coupons that have
-                                    been created on the profile. Here a doctor can create, delete and edit a coupon. To
-                                    create more coupons, click on the “(+)” symbol. </span>
+                                <span>The Coupons dashboard shows all the existing coupons that have been created on the profile. Here a provider can create, delete and edit a coupon. To create more coupons, click on the “(+)” symbol.</span>
                             </li>
                         </ol>
                     </section>
     
                     <section *ngIf="childContent == 'tax-settings'">
                         <h6 id="tax-settings">Tax Settings</h6>
-                        <span>Before setting up the taxes, ensure that one is familiar with the tax requirements of one’s
-                            business. The following instructions will help the doctor through the tax setup of the business
-                            services in Jaldee:</span>
-                        <ul ol class="ol-normal">
-                            <li>When the doctor clicks on the tax settings under the Billing/PoS section, a window appears.
-                                The doctor is required to fill the textbox (Enter the GST number of the business and the tax
-                                percentage for the respective sector here).</li>
+                        <span>Before setting up the taxes, ensure that one is familiar with the tax requirements of one’s business. The following instructions will help the provider through the tax setup of the business services in Jaldee:</span>
+                        <ul ol class="ol-normal"> 
+                            <li>When the provider clicks on the tax settings under the Billing/PoS section, a window appears. The provider is required to fill the textbox (Enter the GST number of the business and the tax percentage for the respective sector here).</li>
                             <li>At first, enter the <strong>GST</strong> number of the business.</li>
-                            <li>Next, enter the <strong>Tax Percentage.</strong></li>
+                            <li>Next, enter the <strong>Tax Percentage</strong>.</li>
                             <li>After the complete insertion of the details, click <strong>“Save”.</strong></li>
-                            <li>This tax will be applied to the services offered and the items that are being sold at the
-                                time of billing, only if the <strong>“Tax Applicable”</strong> toggle button is enabled in
-                                the respective section (i.e. Settings -> Check-in Manager ->Services).</li>
-                            <li>Jaldee has no role in paying taxes paid by the patient to the doctor. All types of taxes are
-                                collected directly by the doctor, so it is the doctor’s responsibility to remit the taxes to
-                                the Government.</li>
-                        </ul>
+                            <li>This tax will be applied to the services offered and the items that are being sold at the time of billing, only if the <strong>“Tax Applicable”</strong> toggle button is enabled in the respective section (i.e. Settings -> Check-In Manager ->Services).</li>
+                            <li>Jaldee has no role in paying taxes paid by the client to the service provider. All types of taxes are collected directly by the service provider, so it is the provider’s responsibility to remit the taxes to the Government.</li>
+                          </ul>
                     </section>
     
     
                     <section *ngIf="childContent =='profile' && parentContent == 'profile'">
-                        <h6>DOCTOR’S PROFILE</h6>
-                        <span>The doctor profile is a collection of settings and information associated with a business
-                            owner.
-                            The system creates a doctor profile at the time of registration. The profile contains
-                            information such as name, mobile, email, etc. Jaldee doctor profile has the following options:
+                        <h6>PROVIDER PROFILE</h6>
+                        <span>The provider profile is a collection of settings and information associated with a business owner. The system creates a provider profile at the time of registration. The profile contains information such as name, mobile, email, etc. Jaldee provider profile has the following options:
                         </span>
                         <ul class="ul-normal">
-                                <li><strong>My Account :</strong> Here lies the personal data of the service doctor. Option to edit the data is also available.</li>
-                                <li><strong>Change Password :</strong> Here the doctor can change the password keeping in line with the following guidelines:
-                                  <ul class="ul-normal">
-                                    <li>Minimum 8 characters</li>
-                                    <li>Maximum 32 characters</li>
-                                    <li>Must have at least one uppercase letter and one digit.</li>
-                                  </ul>
-                                  </li>
-                                <li><strong>Change Mobile :</strong> Enter a new mobile number and click on Submit. To verify the mobile number, enter the OTP sent to the number.</li>
-                                <li><strong>Switch to Consumer :</strong> When a doctor profile is created in Jaldee.com, a corresponding client profile also gets created automatically for the same doctor. From here, the doctor can easily switch to the clients dashboard.</li>
-                                <li><strong>Logout :</strong> One can log out of the account here.</li>
-                                </ul>
+                            <li><strong>My Account :</strong> Here lies the personal data of the service provider. Option to edit the data is also available.</li>
+                            <li><strong>Change Password :</strong> Here the provider can change the password keeping in line with the following guidelines:
+                              <ul class="ul-normal">
+                                <li>Minimum 8 characters</li>
+                                <li>Maximum 32 characters</li>
+                                <li>Must have at least one uppercase letter and one digit.</li>
+                              </ul>
+                              </li>
+                            <li><strong>Change Mobile :</strong> Enter a new mobile number and click on Submit. To verify the mobile number, enter the OTP sent to the number.</li>
+                            <li><strong>Switch to Consumer :</strong> When a provider profile is created in Jaldee.com, a corresponding client profile also gets created automatically for the same provider. From here, the provider can easily switch to the clients dashboard.</li>
+                            <li><strong>Logout :</strong> One can log out of the account here.</li>
+                            </ul>
                     </section>
     
                     <section *ngIf="childContent =='downpanel' && parentContent == 'downpanel'">
                         <h6>DOWN PANEL OPTIONS</h6>
                         <ul class="ul-normal">
-                            <li><strong>My Account :</strong> Here lies the personal data of the service doctor. Option to
-                                edit the data is also available.</li>
-                            <li><strong>Change Password :</strong> Here the doctor can change the password keeping in line
-                                with the following guidelines:
-                                <ul class="ul-normal">
-                                    <li>Minimum 8 characters</li>
-                                    <li>Maximum 32 characters</li>
-                                    <li>Must have at least one uppercase letter and one digit.</li>
-                                </ul>
-                            </li>
-                            <li><strong>Change Mobile :</strong> Enter a new mobile number and click on Submit. To verify
-                                the mobile number, enter the OTP sent to the number.</li>
-                            <li><strong>Switch to Consumer :</strong> When a doctor profile is created in Jaldee.com, a
-                                corresponding client profile also gets created automatically for the same doctor. From here,
-                                the doctor can easily switch to the clients dashboard.</li>
-                            <li><strong>Logout :</strong> One can log out of the account here.</li>
+                            <li>Here the provider can quickly access the following options:</li>
+                               <ul class="normal-abc">
+                                 <li><strong>Alerts :</strong> All the Jaldee Broadcasts are shown here. These are the Jaldee provided notifications. Here a provider can learn about new coupons or any other such information directly from Jaldee Super admin.</li>
+                                 <li><strong>Audit Log :</strong> Here the provider can view the activities done by him/her. The details appear with a date and time stamp. It also shows the actions completed by the provider along with a little description.</li>
+                                 <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the provider to enable check-in, if disabled or to disable the check-in, if enabled.</li>
+                                 <li><strong>License Details :</strong> Here the provider can see the current License version he/she is using. This option directly leads to the license page, where the provider can view the license history, its usage, payment history and upgrade the current License package.</li>
+                              </ul>
                         </ul>
                     </section>
                 </div>

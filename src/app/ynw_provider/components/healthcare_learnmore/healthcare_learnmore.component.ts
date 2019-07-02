@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-healthcare-learnmore',
@@ -20,6 +21,7 @@ export class HealthcareLearnmoreComponent implements OnInit, OnDestroy {
   // contentprofiles = 'public-search' ;
   // contentcheckins ='settings' ;
   constructor(
+    private activated_route: ActivatedRoute,
     private _scrollToService: ScrollToService
   ) { }
 

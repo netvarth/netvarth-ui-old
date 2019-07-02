@@ -63,6 +63,12 @@ import { ProviderBprofileSearchDynamicComponent } from './components/provider-bp
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
 import { HealthcareLearnmoreComponent } from './components/healthcare_learnmore/healthcare_learnmore.component';
 import { PersonalCareLearnmoreComponent } from './components/personalcare_learnmore/personalcare_learnmore.component';
+import { ProfessionalLearnmoreComponent } from './components/professional_learnmore/professional_learnmore.component';
+import { VastuLearnmoreComponent } from './components/vastu_learnmore/vastu_learnmore.component';
+import { ReligiousLearnmoreComponent } from './components/religious_learnmore/religious_learnmore.component';
+import { FoodjointsLearnmoreComponent } from './components/food_learnmore/food_learnmore.component';
+import { FinanceLearnmoreComponent } from './components/finance_learnmore/finance_learnmore.component';
+import { VeterinaryLearnmoreComponent } from './components/veterinary_learnmore/veterinary_learnmore.component';
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -116,7 +122,15 @@ import { PersonalCareLearnmoreComponent } from './components/personalcare_learnm
     ProviderBprofileSearchDynamicComponent,
     VirtualFieldsComponent,
     HealthcareLearnmoreComponent,
-    PersonalCareLearnmoreComponent
+    PersonalCareLearnmoreComponent,
+    ProfessionalLearnmoreComponent,
+    VastuLearnmoreComponent,
+    ReligiousLearnmoreComponent,
+    FoodjointsLearnmoreComponent,
+    FinanceLearnmoreComponent,
+    VeterinaryLearnmoreComponent
+
+
   ],
   exports: [ConfirmBoxComponent,ConfirmPaymentBoxComponent],
   entryComponents: [

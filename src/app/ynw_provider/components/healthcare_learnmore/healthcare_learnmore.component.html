@@ -4,9 +4,9 @@
             <div class="col-md-3 help" style="border-right: 1px solid lightgray">
                 <ul>
 
-                    <li><a>Profile and Search</a>
+                    <li>Profile and Search
 
-                        <ul *ngIf="profilesearch">
+                        <ul *ngIf="profilesearch" class="pointlist">
 
                             <li (click)="handleScroll('public-search', 'profile-search')"
                                 [ngClass]="{'helpcolor': (childContent =='public-search' && parentContent == 'profile-search')}">
@@ -41,8 +41,8 @@
                         </ul>
                     </li>
 
-                    <li><a>Check-In Manager</a>
-                        <ul *ngIf="checkinmanager">
+                    <li>Check-In Manager
+                        <ul *ngIf="checkinmanager" class="pointlist">
                             <li (click)="handleScroll('settings', 'checkinmanager')"
                                 [ngClass]="{'helpcolor': (childContent =='settings' && parentContent == 'checkinmanager')}">
                                 Settings</li>
@@ -62,17 +62,17 @@
                     </li>
 
                     <li><a (click)="handleScroll('checkin', 'checkin')"
-                            [ngClass]="{'helpcolor': (childContent =='checkin' && parentContent == 'checkin')}">Check-In</a>
+                            [ngClass]="{'helpcolor': (childContent =='checkin' && parentContent == 'checkin')}" class="pointlist">Check-In</a>
                     </li>
                     <li><a (click)="handleScroll('customer', 'customer')"
-                            [ngClass]="{'helpcolor': (childContent =='customer' && parentContent == 'customer')}">Customer</a>
+                            [ngClass]="{'helpcolor': (childContent =='customer' && parentContent == 'customer')}" class="pointlist">Customer</a>
                     </li>
                     <li><a (click)="handleScroll('kiosk', 'kiosk')"
-                            [ngClass]="{'helpcolor': (childContent =='kiosk' && parentContent == 'kiosk')}">Kiosk</a>
+                            [ngClass]="{'helpcolor': (childContent =='kiosk' && parentContent == 'kiosk')}" class="pointlist">Kiosk</a>
                     </li>
 
-                    <li><a>License</a>
-                        <ul *ngIf="license">
+                    <li>License
+                        <ul *ngIf="license" class="pointlist">
                             <li (click)="handleScroll('license-list', 'license')"
                                 [ngClass]="{'helpcolor': (childContent =='license-list' && parentContent == 'license')}">
                                 license</li>
@@ -88,20 +88,20 @@
                         </ul>
                     </li>
                     <li><a (click)="handleScroll('adjustdelay', 'adjustdelay')"
-                            [ngClass]="{'helpcolor': (childContent =='adjustdelay' && parentContent == 'adjustdelay')}">Adjust
+                            [ngClass]="{'helpcolor': (childContent =='adjustdelay' && parentContent == 'adjustdelay')}" class="pointlist">Adjust
                             Delay</a></li>
                     <li><a (click)="handleScroll('miscellaneous', 'miscellaneous')"
-                            [ngClass]="{'helpcolor': (childContent =='miscellaneous' && parentContent == 'miscellaneous')}">Miscellaneous</a>
+                            [ngClass]="{'helpcolor': (childContent =='miscellaneous' && parentContent == 'miscellaneous')}" class="pointlist">Miscellaneous</a>
                     </li>
                     <li><a (click)="handleScroll('dashboard', 'dashboard')"
-                            [ngClass]="{'helpcolor': (childContent =='dashboard' && parentContent == 'dashboard')}">Dashboard</a>
+                            [ngClass]="{'helpcolor': (childContent =='dashboard' && parentContent == 'dashboard')}" class="pointlist">Dashboard</a>
                     </li>
                     <li><a (click)="handleScroll('payment', 'payment')"
-                            [ngClass]="{'helpcolor': (childContent =='payment' && parentContent == 'payment')}">Payment
+                            [ngClass]="{'helpcolor': (childContent =='payment' && parentContent == 'payment')}" class="pointlist">Payment
                             Settings</a></li>
 
-                    <li><a>Billing/POS</a>
-                        <ul *ngIf="billing">
+                    <li>Billing/POS
+                        <ul *ngIf="billing" class="pointlist">
                             <li (click)="handleScroll('items', 'billing')"
                                 [ngClass]="{'helpcolor': (childContent =='items' && parentContent == 'billing')}">Items
                             </li>
@@ -118,10 +118,10 @@
                     </li>
 
                     <li><a (click)="handleScroll('profile', 'profile')"
-                            [ngClass]="{'helpcolor': (childContent =='profile' && parentContent == 'profile')}">Provider
+                            [ngClass]="{'helpcolor': (childContent =='profile' && parentContent == 'profile')}" class="pointlist">Provider
                             Profile</a></li>
                     <li><a (click)="handleScroll('downpanel', 'downpanel')"
-                            [ngClass]="{'helpcolor': (childContent =='downpanel' && parentContent == 'downpanel')}">Down
+                            [ngClass]="{'helpcolor': (childContent =='downpanel' && parentContent == 'downpanel')}" class="pointlist">Down
                             Panel Options</a></li>
                 </ul>
 
@@ -130,8 +130,10 @@
                 <section *ngIf="parentContent == 'profile-search'">
                     <h6>PROFILE AND SEARCH SETTINGS</h6>
                     <span>The profile & search settings offers an in-depth overview of a doctor's profile. This would
-                        help patients make informed decisions and choose a relevant doctor. The dashboard will display every new detail updated by the doctor, keeping patients aware of all changes occurring in the service.</span>
-                </section>
+                        help patients make informed decisions and choose a relevant doctor. The dashboard will display
+                        every new detail updated by the doctor, keeping patients aware of all changes occurring in the
+                        service.</span>
+                </section><br>
 
                 <section *ngIf="childContent == 'public-search'">
                     <h6>PUBLIC SEARCH</h6>
@@ -177,7 +179,8 @@
                     <div class="box-indent">
 
 
-                        <h6 id="verified-levels">JALDEE VERIFIED LEVELS</h6>
+                       <h6 id="verified-levels">JALDEE VERIFIED LEVELS</h6>
+                      
                         <ul class="ul-normal abc">
                             <li>After creating the profile, a doctor becomes eligible to get their profile verified with
                                 Jaldee.
@@ -197,7 +200,7 @@
                                 verified
                                 levels are depicted in the following table:</li>
                         </ul>
-
+                   
 
 
                         <mat-accordion>
@@ -208,8 +211,8 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
 
-                                <div>
-                                    <img height="100" width="100" src="./assets/images/BasicOrg.png" alt="Basic">
+                                <div class="helpcontent">
+                                    <img height="100" width="100" src="./assets/images/BasicOrg.png" alt="Basic"><br>
                                     <li><strong>Provide any two of the following Government ID proof with
                                             photo)</strong></li>
                                     <ul class="ul-normal">
@@ -241,31 +244,31 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
 
-                                <div>
-                                    
-                                        <img height="100" width="100" src="./assets/images/BasicPlsOrg.png"
-                                            alt="Basic Plus">
-                                        <li><strong>Provide any two of the Government ID proof
-                                                (with
-                                                photo)</strong></li>
-                                        <ul class="ul-normal">
-                                            <li>Driving License</li>
-                                            <li>Voter’s ID</li>
-                                            <li>Aadhar Card</li>
-                                            <li>Passport</li>
-                                        </ul>
-                                        <li><strong>Mobile Number Verification</strong></li>
-                                        <ul class="ul-normal">
-                                            <li>Jaldee team will call and verify the mobile number
-                                                used for
-                                                sign
-                                                up process to which OTP was sent.</li>
-                                        </ul>
-                                        <li><strong>Profile Picture</strong></li>
-                                        <ul class="ul-normal">
-                                            <li>Provide a sharp and clear profile pic.</li>
-                                        </ul>
-                                    
+                                <div class="helpcontent">
+
+                                    <img height="100" width="100" src="./assets/images/BasicPlsOrg.png"
+                                        alt="Basic Plus"><br>
+                                    <li><strong>Provide any two of the Government ID proof
+                                            (with
+                                            photo)</strong></li>
+                                    <ul class="ul-normal">
+                                        <li>Driving License</li>
+                                        <li>Voter’s ID</li>
+                                        <li>Aadhar Card</li>
+                                        <li>Passport</li>
+                                    </ul>
+                                    <li><strong>Mobile Number Verification</strong></li>
+                                    <ul class="ul-normal">
+                                        <li>Jaldee team will call and verify the mobile number
+                                            used for
+                                            sign
+                                            up process to which OTP was sent.</li>
+                                    </ul>
+                                    <li><strong>Profile Picture</strong></li>
+                                    <ul class="ul-normal">
+                                        <li>Provide a sharp and clear profile pic.</li>
+                                    </ul>
+
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>
@@ -278,8 +281,8 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
 
-                                <div>
-                                    <img height="100" width="100" src="./assets/images/PremiumOrg.png" alt="Advanced">
+                                <div class="helpcontent">
+                                    <img height="100" width="100" src="./assets/images/PremiumOrg.png" alt="Advanced"><br>
                                     <li><strong>Provide any two of the Government ID proof
                                             (with
                                             photo)</strong></li>
@@ -400,7 +403,7 @@
                                         Location
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div>
+                                <div class="helpcontent">
                                     <ul class="ul-normal abc">
                                         <li>The information related to the business’s location comes under this section.
                                         </li>
@@ -446,7 +449,7 @@
                                         Location Amenities
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div>
+                                <div class="helpcontent">
                                     <ul class="ul-normal abc">
                                         <li>Location amenities are resources, conveniences, facilities or benefits
                                             offered to the
@@ -460,14 +463,12 @@
                                     </ul>
                                     <br>
                                     <div class="tscroll">
-                                        <table class="table addword-tbl">
+                                       
                                             <tbody>
                                                 <tr>
-                                                    <td class="td1">
-                                                        Health Care
-                                                    </td>
+                                                    
                                                     <td class="td2">
-                                                        <table class="table">
+                                                      
                                                             <tbody>
                                                                 <tr>
                                                                     <td class="td2">1. Doctors</td>
@@ -513,13 +514,14 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                        </table>
+                                                        
                                                     </td>
                                                 </tr>
 
                                             </tbody>
-                                        </table>
+                                       
                                     </div>
+                                    <br>
                                     <section>
                                         <div class="fweight">SEARCHABLE - YES <span
                                                 class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -545,14 +547,14 @@
                                         Working Hours
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div>
+                                <div class="helpcontent">
                                     <span>Working hours of the base location are shown here. The doctor can click here
                                         to redirect to
                                         the
                                         <strong>Working Hours</strong> page. Here doctor can add or edit the working
                                         hours. The
                                         working hours
-                                        for other business locations are also shown in this page.</span>
+                                        for other business locations are also shown in this page.</span><br><br>
                                     <section>
                                         <div class="fweight">SEARCHABLE - NO <span
                                                 class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -567,7 +569,7 @@
                                                     profile in
                                                     search
                                                     results.)</i></span></div>
-                                    </section><br>
+                                    </section>
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>
@@ -582,10 +584,18 @@
                         important strategy
                         to protect your information. Here the system allows the doctor to add, edit or delete both phone
                         number and
-                        email address. </span>
+                        email address. </span><br>
 
                     <div class="box-indent">
-                        <h6><u>PHONE</u></h6>
+                            <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                    Phone
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                       
 
                         <ol class="ol-normal">
                             <li>A doctor can view the phone number used to create a Jaldee account. By default, the
@@ -619,9 +629,18 @@
                                 menu on the
                                 right corner.</li>
                         </ol>
+                        </div>
+                        </mat-expansion-panel>
+                        </mat-accordion>
 
-                        <h6><u>EMAIL</u></h6>
-
+                        <mat-accordion>
+                                <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                                Email
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="helpcontent">
                         <ol class="ol-normal">
                             <li>A doctor can add, edit and delete the email address here.</li>
                             <li>The 3 dots menu on the right corner has two options, viz. <strong>Edit</strong> and
@@ -657,6 +676,9 @@
                                 doctor, such as
                                 notifications on invoice, Jaldee coupons, discounts, etc.</li>
                         </ol>
+                        </div>
+                        </mat-expansion-panel>
+                        </mat-accordion><br>
                         <section>
                             <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                                         Searchable
@@ -676,20 +698,21 @@
 
                     <span>Specializations benefits both the doctor and the patient. Here a doctor can select his/her
                         specialization
-                        from the given list. Below table shows the specialization list of the health sector.</span>
+                        from the given list. Below table shows the specialization list of the health sector.</span><br>
 
-                    <div class="tscroll">
-                        <table class="table addword-tbl">
-                            <tbody>
-                                <tr>
-                                    <td class="td2">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="td1">Doctors</td>
-                                                    <td class="td2">
-                                                        <ol class="ol-normal">
-                                                            <li>Allergists</li>
+                    <div class="tscroll" style="display: block">
+                        
+                           
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Doctors : Specialization
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                                        <ol class="ol-normal specllist">
+                                                                <li>Allergists</li>
                                                             <li>Anaesthesiology</li>
                                                             <li>Andrology</li>
                                                             <li>Audiology</li>
@@ -791,11 +814,21 @@
                                                             <li>Veterinary</li>
                                                             <li>Virology</li>
                                                         </ol>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td1">Dentists</td>
-                                                    <td class="td2">
+                                                        </div>
+                                                   </mat-expansion-panel>
+                                                   </mat-accordion>
+                                                      
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Dentists : Specialization
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                                
+                                                   
+                                                  
                                                         <ol class="ol-normal">
                                                             <li>Dental Public Health</li>
                                                             <li>Endodontics</li>
@@ -808,11 +841,20 @@
                                                             <li>Periodontics</li>
                                                             <li>Prosthodontist</li>
                                                         </ol>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td1">Alternate Medicine Practitioners</td>
-                                                    <td class="td2">
+                                                        </div>
+                                                        </mat-expansion-panel>
+                                                        </mat-accordion>
+
+                                                        <mat-accordion>
+                                                            <mat-expansion-panel [expanded]="false">
+                                                                <mat-expansion-panel-header>
+                                                                    <mat-panel-title>
+                                                                        Alternate Medicine Practitioners : Specialization
+                                                                    </mat-panel-title>
+                                                                </mat-expansion-panel-header>
+                                                                <div class="helpcontent">
+                                               
+                                                  
                                                         <ol class="ol-normal">
                                                             <li>Acupressure</li>
                                                             <li>Acupuncture</li>
@@ -830,11 +872,20 @@
                                                             <li>Unani</li>
                                                             <li>Yoga Therapy</li>
                                                         </ol>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td1">Hospital</td>
-                                                    <td class="td2">
+                                                        </div>
+                                                        </mat-expansion-panel>
+                                                        </mat-accordion>
+                                                   
+                                                        <mat-accordion>
+                                                            <mat-expansion-panel [expanded]="false">
+                                                                <mat-expansion-panel-header>
+                                                                    <mat-panel-title>
+                                                                        Hospital : Specialization
+                                                                    </mat-panel-title>
+                                                                </mat-expansion-panel-header>
+                                                                <div class="helpcontent">
+                                                  
+                                                  
                                                         <ol class="ol-normal">
                                                             <li>Advanced Center for orthopaedics and spine surgery</li>
                                                             <li>Neuro spine center</li>
@@ -873,15 +924,15 @@
                                                             <li>Wellness check package</li>
                                                             <li>Health insurance</li>
                                                         </ol>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                                        </div>
+                                                        </mat-expansion-panel>
+                                                    
+                                                        </mat-accordion>
+                                                    
+                               
+                           
+                      
+                    </div><br>
                     <span>All the specializations added during the initial profile set up are listed in this section. To
                         edit this, click on the edit pencil button.</span>
                     <section>
@@ -899,7 +950,8 @@
                 <section *ngIf="childContent =='languages-known'">
                     <h6 id="languages-known">LANGUAGES KNOWN</h6>
 
-                    <span>A doctor can add multiple languages known to him/her. This can widen the patient base and attract
+                    <span>A doctor can add multiple languages known to him/her. This can widen the patient base and
+                        attract
                         more
                         patients.</span>
 
@@ -928,159 +980,301 @@
                 <section *ngIf="childContent =='additional-info'">
                     <h6 id="additional-info">ADDITIONAL INFO</h6>
 
-                    <span>Following is the list of additional information for the Health sector. A doctor needs to fill in
+                    <span>Following is the list of additional information for the Health sector. A doctor needs to fill
+                        in
                         the details
                         for each section. This is to let the patients know more about the business as well as the
-                        doctor.</span>
+                        doctor.</span><br>
 
                     <div class="tscroll">
-                        <table class="table addword-tbl">
+
+
+                        <div class="box">
+                           <span style="font-size: 15px">Dentists/Alternate Medicine Practitioner</span>
+                        </div>
+                        <td>
+
                             <tbody>
-                                <tr>
-                                    <td>Health Care</td>
-                                    <td class="td2 bord">
-                                        <div class="box">
-                                            Doctors/Dentists/Alternate Medicine Practitioner
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                1.Educational Qualification
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+
+                                            <span class="bord helptext">Here the doctor needs to mention the educational
+                                                qualification(Ex. MBBS/MS/MD). Also enter the name of board or
+                                                university.</span><br>
+                                            <span class="brown-color helptext">SEARCHABLE-YES</span>
+                                            <span class="brown-color helptext">VIEWABLE-YES</span>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <table class="table verify-tbl">
-                                            <tbody>
-                                                <tr>
-                                                    <td>1.Educational Qualification
-                                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord ">Here the doctor needs to mention the educational
-                                                        qualification(Ex. MBBS/MS/MD).Also enter the name of board or
-                                                        university.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2.Membership/Associations
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord ">Here a doctor should mention his/her
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                    2.Membership/Associations
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord ">Here a doctor should mention his/her
                                                         memberships/associations
                                                         with other organizations (Ex. IMA).
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3.MCI Number
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord ">Mention your MCI number here.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4.Gender
-                                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Male/Female/Others
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5.Associated Clinics
-                                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Here a doctor can mention the names of other
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                3.MCI Number
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord ">Mention your MCI number here.
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                               
+                                           
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                4.Gender
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Male/Female/Others
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-YES</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                5.Associated Clinics
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div>
+                                                <span class="bord">Here a doctor can mention the names of other
                                                         clinics that are
                                                         associated with the doctor
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>6.Medical Problems
-                                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">The doctor needs to mention the medical conditions
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-YES</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                6.Medical Problems
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">The doctor needs to mention the medical conditions
                                                         in which
                                                         he/she specializes (Ex. Diabetes).
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>7.Symptoms
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Here a doctor enters the symptoms of the medical
-                                                        condition (Ex.
-                                                        Unexpected Weight Loss).
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>8.Treatments
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Here the doctor can mention the treatments
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-YES</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                7.Symptoms
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                        <span class="bord">Here a doctor enters the symptoms of the medical
+                                                                condition (Ex.
+                                                                Unexpected Weight Loss).
+                                                            </span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                8.Treatments
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Here the doctor can mention the treatments
                                                         available for the
                                                         medical condition (Ex. Medication/Diet/Exercise).
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>9.Medical Procedures
-                                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">The doctor can mention the medical procedures and
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                9.Medical Procedures
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">The doctor can mention the medical procedures and
                                                         tests
                                                         available for the medical condition (Ex. Insulin).
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>10.Experience
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Enter the Work Experience here (Ex. 10 Years).
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>11.Awards & Recognitions
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Here a doctor can mention the awards received in
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-YES</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                10.Experience
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                        <span class="bord">Enter the Work Experience here (Ex. 10 Years).
+                                                            </span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                11.Awards & Recognitions
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Here a doctor can mention the awards received in
                                                         the respective
                                                         field.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12.Reference URL
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Give the direct link of the doctor’s own website.
+                                                    </span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                    12.Reference URL
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Give the direct link of the doctor’s own website.
                                                         Also mention
                                                         the other sites where the doctor profile is listed.
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>13.Medical Insurance Supported
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Mention here the medical insurance supported.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>14.Facilities
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Choose from the list of facilities available in
-                                                        your hospital.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>15.Departments
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Choose from the list of departments in your
-                                                        hospital.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>16.Government Hospital
-                                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                                    <td class="bord">Enable the toggle button, if the hospital is
-                                                        government undertaking.</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
+                                                    </span><br>
+                                                 <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                13.Medical Insurance Supported
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Mention here the medical insurance supported.</span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                14.Facilities
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Choose from the list of facilities available in
+                                                        your hospital.</span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                15.Departments
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                                <span class="bord">Choose from the list of departments in your
+                                                        hospital.</span><br>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                16.Government Hospital
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                                         <span class="bord">Enable the toggle button, if the hospital is
+                                                government undertaking.</span>
+                                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                                    <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
                             </tbody>
-                        </table>
+
+                        </td>
+
+
+
                     </div>
                 </section>
 
@@ -1094,7 +1288,7 @@
                         Gallery
                         section has <strong>view</strong> options and <strong>add multiple images</strong> option. All
                         the added
-                        images are shown here.</span>
+                        images are shown here.</span><br>
 
                     <div class="box-indent">
                         <h6>How to add a new image?</h6>
@@ -1142,28 +1336,16 @@
                                 information.</li>
                         </ol>
 
-                        <table class="table social-tbl">
-                            <tbody>
-                                <tr>
-                                    <td class="td1">Facebook</td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Twitter</td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Youtube</td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">LinkedIn</td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Google+</td>
-                                </tr>
-                                <tr>
-                                    <td class="td1" (click)="handleScroll('learnmore-begining')">Pinterest</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                      <ul>
+                          <li>Facebook</li>
+                          <li>Twitter</li>
+                          <li>Youtube</li>
+                          <li>LinkedIn</li>
+                          <li>Google</li>
+                          <li>Pinterest</li>
+                      </ul>
+                         
+                           
                     </div>
                     <section>
                         <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -1179,13 +1361,14 @@
                 <section *ngIf="childContent =='custom-id'">
                     <h6 id="custom-id">CUSTOM BUSINESS ID</h6>
 
-                    <span>A custom business id is a unique id that redirects to a doctor’s detailed profile page in Jaldee
+                    <span>A custom business id is a unique id that redirects to a doctor’s detailed profile page in
+                        Jaldee
                         . You can
                         add a custom URL based on things like your hospital name, username used in Jaldee or anything of
                         your
                         choice. You can share this custom URL to your patients in your website or any other
                         portal.<strong> To add a
-                            custom url, make sure your license package is upgraded to Ruby.</strong></span>
+                            custom url, make sure your license package is upgraded to Ruby.</strong></span><br><br>
                     <h6>How to add a custom business id in Jaldee?</h6>
 
                     <div class="box-indent">
@@ -1528,19 +1711,19 @@
                         themselves for the services offered by the business. KIOSK is available to doctors who has
                         chosen license packages <strong>Ruby</strong> or <strong>Diamond</strong>.</span>
 
-                    <div class="box-indent">
+                    <!-- <div class="box-indent">
                         <table class="table verify-tbl">
                             <tbody>
                                 <tr>
                                     <td>
-                                        <h6>Kiosk</h6>
+                                       Kiosk
                                     </td>
                                     <td>
                                         <div>
-                                            <h6>Free</h6>
+                                            Free
                                         </div>
                                         <div>
-                                            <p>No</p>
+                                          No
                                         </div>
                                     </td>
 
@@ -1587,10 +1770,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                     <div class="box-indent">
                         <h6>How it works?</h6>
-                        <span>The <strong>KIOSK</strong> feature is designed for walk-in patients. With this feature, the
+                        <span>The <strong>KIOSK</strong> feature is designed for walk-in patients. With this feature,
+                            the
                             walk-in patients can self-check-in for the services, sign up to Jaldee and view the status
                             of the check-in.</span>
                         <ol class="ol-normal">
@@ -1624,7 +1808,8 @@
                                 <li>Future Check-in is done in the same way as that of normal check-in. The only
                                     difference here in Future check-in is to select the date.</li>
                                 <span>Note: A patient is restricted only to the above-mentioned information. The patient
-                                    cannot access any other information about the service doctor’s Jaldee account. </span>
+                                    cannot access any other information about the service doctor’s Jaldee account.
+                                </span>
                             </ul>
                             <li><strong><u>Checked-in Online Check Your Status/Report as Arrived</u></strong></li>
                             <ul class="ul-normal">
@@ -1637,7 +1822,8 @@
                             </ul>
 
                             <li><strong><u>Do You Want to Sign Up?</u></strong></li>
-                            <span>The patients can sign up to Jaldee through the KIOSK machine under this option. To do so,
+                            <span>The patients can sign up to Jaldee through the KIOSK machine under this option. To do
+                                so,
                                 simply enter the mobile number, first name, and last name. This will get the patient
                                 registered with Jaldee.</span>
                             <ul class="ul-normal">
@@ -1733,7 +1919,8 @@
                             “10↔10” bill cycle will continue from next month. This billing cycle will include License
                             and Addon amount in a single invoice until the license or Add-on gets
                             upgraded/downgraded.<br><br>
-                            <span><strong>*To downgrade the existing license package, a doctor needs to contact the Jaldee
+                            <span><strong>*To downgrade the existing license package, a doctor needs to contact the
+                                    Jaldee
                                     team, call us on 0487-2325650 or you can send us an email at <span
                                         class="linkb">support@jaldee.com</span>.</strong></span>
                         </li>
@@ -1997,15 +2184,18 @@
                 <section *ngIf="childContent =='license-package'">
                     <h6>1. License Change History</h6>
 
-                    <span>The license change history shows the list of the changes applied in the license package. Here a
+                    <span>The license change history shows the list of the changes applied in the license package. Here
+                        a
                         doctor can see the starting date of the current license package, it’s expiry date (only if
-                        upgraded to higher grades), and the status of the license package either active or expired.</span>
+                        upgraded to higher grades), and the status of the license package either active or
+                        expired.</span>
                     <span>A doctor can also downgrade the license via Jaldee support. The effects of this on the bill is
                         reflected from the next bill cycle (next month) onwards.</span>
 
                     <h6>2. License Usage</h6>
 
-                    <span>Here a doctor can track the license usage. This section shows the following information:</span>
+                    <span>Here a doctor can track the license usage. This section shows the following
+                        information:</span>
                     <ul class="ul-normal">
                         <li><strong>Number of business profile views :</strong> This refers to the number of patients
                             who have clicked for a detailed view of the doctor.</li>
@@ -2015,7 +2205,8 @@
                         <li><strong>Jaldee-Keyords :</strong> This shows the total number of Jaldee-Keyords allowed for
                             the availed package.</li>
                     </ul>
-                    <span>A doctor also gets to know whether the usages are in compliance with the current license package.
+                    <span>A doctor also gets to know whether the usages are in compliance with the current license
+                        package.
                         The data until yesterday is updated here.</span>
 
                     <h6>3. Payment History</h6>
@@ -2026,7 +2217,8 @@
                 <section *ngIf="childContent =='addon'">
                     <h6>Add-on</h6>
 
-                    <span>Add-ons are used when a license package reaches its maximum limit and a doctor wants to add more
+                    <span>Add-ons are used when a license package reaches its maximum limit and a doctor wants to add
+                        more
                         features. With the help of add-ons, a doctor can avail additional features without upgrading the
                         license. Add-ons are charged accordingly.</span>
                     <span><br>Following are the list of add-ons:</span>
@@ -2041,7 +2233,7 @@
                                         <li class="fsize">1GB for rs 250 per month</li>
                                     </ul>
                                 </td>
-                                <!-- <td class="td3">Passive</td> -->
+                             
                             </tr>
                             <tr>
                                 <td class="td1">Keywords</td>
@@ -2051,24 +2243,28 @@
                                         <li class="fsize">Pack of 20 keywords for Rs 1000 per month</li>
                                     </ul>
                                 </td>
-                                <!-- <td class="td3">Passive</td> -->
+                              
                             </tr>
                         </tbody>
                     </table>
-                    <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted, its effect on the
+                    <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted, its effect on
+                        the
                         bill can be seen from the next bill cycle onwards.</span>
                 </section>
 
                 <section *ngIf="childContent =='adwords'">
                     <h6>Jaldee-Keyword</h6>
 
-                    <span>Jaldee-Keyword is common keywords. A patient generally uses such keywords to search for a doctor.
+                    <span>Jaldee-Keyword is common keywords. A patient generally uses such keywords to search for a
+                        doctor.
                         Buying relevant keywords that a prospective patient would be searching on Jaldee. For example,
-                        if yours is an eye clinic, you can buy Jaldee-Keywords like “optometrist”, “eye doctor” etc.</span>
+                        if yours is an eye clinic, you can buy Jaldee-Keywords like “optometrist”, “eye doctor”
+                        etc.</span>
 
                     <h6>How to add an Jaldee-Keyword ?</h6>
 
-                    <span>Different number of Jaldee-Keyword is available for different license packages. These are listed
+                    <span>Different number of Jaldee-Keyword is available for different license packages. These are
+                        listed
                         below:</span>
 
                     <table class="table addword-tbl">
@@ -2083,7 +2279,7 @@
                                 <td class="td1">FREE</td>
                                 <td class="td2">0</td>
                             </tr>
-                            <tr class="adwordbronzerow">
+                            <tr class="tr1">
                                 <td class="td1">SILVER</td>
                                 <td class="td2">0</td>
                             </tr>
@@ -2190,7 +2386,8 @@
                     </ol>
                     <section>
                         <h6><u>Location Selection</u></h6>
-                        <span>Here a doctor can select the exact location if multiple locations are available. The doctor
+                        <span>Here a doctor can select the exact location if multiple locations are available. The
+                            doctor
                             can check the details of a particular check-in for a specific location.</span>
                         <span><strong>Note: A doctor needs to select the location of service while he/she checks-in a
                                 “walk-in” patient.</strong></span>
@@ -2396,7 +2593,8 @@
                                                 <li><strong>Apply Order Discount :</strong> These discounts are offered
                                                     by the
                                                     doctor.</li>
-                                                <span>*The option to Add Private Note and Patient Note is available here.
+                                                <span>*The option to Add Private Note and Patient Note is available
+                                                    here.
                                                 </span>
                                                 <li>These coupons are applied to the total bill amount.</li>
                                                 <li>Discounts can either be applied to the Gross amount or to each item.
@@ -2793,18 +2991,23 @@
                         information such as name, mobile, email, etc. Jaldee doctor profile has the following options:
                     </span>
                     <ul class="ul-normal">
-                            <li><strong>My Account :</strong> Here lies the personal data of the service doctor. Option to edit the data is also available.</li>
-                            <li><strong>Change Password :</strong> Here the doctor can change the password keeping in line with the following guidelines:
-                              <ul class="ul-normal">
+                        <li><strong>My Account :</strong> Here lies the personal data of the service doctor. Option to
+                            edit the data is also available.</li>
+                        <li><strong>Change Password :</strong> Here the doctor can change the password keeping in line
+                            with the following guidelines:
+                            <ul class="ul-normal">
                                 <li>Minimum 8 characters</li>
                                 <li>Maximum 32 characters</li>
                                 <li>Must have at least one uppercase letter and one digit.</li>
-                              </ul>
-                              </li>
-                            <li><strong>Change Mobile :</strong> Enter a new mobile number and click on Submit. To verify the mobile number, enter the OTP sent to the number.</li>
-                            <li><strong>Switch to Consumer :</strong> When a doctor profile is created in Jaldee.com, a corresponding client profile also gets created automatically for the same doctor. From here, the doctor can easily switch to the clients dashboard.</li>
-                            <li><strong>Logout :</strong> One can log out of the account here.</li>
                             </ul>
+                        </li>
+                        <li><strong>Change Mobile :</strong> Enter a new mobile number and click on Submit. To verify
+                            the mobile number, enter the OTP sent to the number.</li>
+                        <li><strong>Switch to Consumer :</strong> When a doctor profile is created in Jaldee.com, a
+                            corresponding client profile also gets created automatically for the same doctor. From here,
+                            the doctor can easily switch to the clients dashboard.</li>
+                        <li><strong>Logout :</strong> One can log out of the account here.</li>
+                    </ul>
                 </section>
 
                 <section *ngIf="childContent =='downpanel' && parentContent == 'downpanel'">

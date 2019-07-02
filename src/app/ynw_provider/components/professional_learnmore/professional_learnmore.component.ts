@@ -2,10 +2,10 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
-  selector: 'app-healthcare-learnmore',
-  templateUrl: './healthcare_learnmore.component.html'
+  selector: 'app-professional-learnmore',
+  templateUrl: './professional_learnmore.component.html'
 })
-export class HealthcareLearnmoreComponent implements OnInit, OnDestroy {
+export class ProfessionalLearnmoreComponent implements OnInit, OnDestroy {
   @Input() target: string;
   childContent = 'public-search';
   parentContent = 'profile-search';

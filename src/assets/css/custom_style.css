@@ -3834,6 +3834,23 @@ line-height: 25px;
 font-weight: 450;
 color: midnightblue;
 }
+
+      .listalign{
+        display: flex;
+        width: 50px; 
+        margin-right: 10px;  
+        text-decoration: none;
+      }
+      .specllist li{
+       
+        list-style-type: decimal;
+      }
+      .specllist ol li{
+        display: inline-block;
+      }
+      .pointlist{
+        cursor: pointer !important;
+      }
 .popular-searches a{
   margin-right: 10px !important;
   font-weight: 500 !important;

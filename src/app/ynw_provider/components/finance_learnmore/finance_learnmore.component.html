@@ -129,8 +129,7 @@
             <div class="col-md-8 helpcontent" style="margin-left: 20px ">
                 <section *ngIf="parentContent == 'profile-search'">
                     <h6>PROFILE AND SEARCH SETTINGS</h6>
-                    <span>The profile & search settings offers an in-depth overview of a provider's profile. This would
-                        help customers make informed decisions and choose a relevant provider. The dashboard will display every new detail updated by the provider, keeping customers aware of all changes occurring in the service.</span>
+                    <span>The profile & search settings offers an in-depth overview of a provider's profile. This would help customers make informed decisions and choose a relevant provider. The dashboard will display every new detail updated by the provider, keeping customers aware of all changes occurring in the service.</span>
                 </section>
 
                 <section *ngIf="childContent == 'public-search'">
@@ -138,9 +137,8 @@
                     <ol class="ol-normal">
                         <li>A provider is required to click on the “TURN ON” button to enable the Public Search if he/she wants to be visible in the customer’s search results.</li>
                         <li>If a provider has disabled the Public Search, customers cannot see the provider’s profile in their search results.</li>
-                        <li>Customers can search for a provider with any attributes that are listed under the Profile and Search section. These attributes can include the business name, Jaldee verified levels, AdWord, Basic Information, Location, Location Amenities, Specialization, Languages Known, Additional Info.</li>
+                        <li>Customers can search for a provider with any attributes that are listed under the Profile and Search section. These attributes can include the business name, Jaldee verified levels, Jaldee-KeyWord, Basic Information, Location, Location Amenities, Specialization, Languages Known, Additional Info.</li>
                         <li>During the initial profile setup, a provider can proceed with setting the Profile Name & Summary, Location, Working Hours, Service and Public Search status. The provider can setup or update these informations here.
-                        
                           <ul class="ul-normal abc">
                                 <li>If the provider logs out of the website after setting the password, the account will not be active. To activate the account, the provider has to completely fill basic details and turn on the Public Search. At this point, a default service gets created which can be edited in <strong>Services</strong> under the Check-In Manager.</li>
                                 <li>If the provider logs out of the website after setting up the location, a default service time window gets created. The provider can edit this from here.</li>
@@ -314,14 +312,6 @@
                             <div class="fweight">SEARCHABLE	 - 	YES    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
                             <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
                           </section>
-
-
-
-
-
-
-
-
                     </div>
                 </section>
                 <section *ngIf="childContent =='basic-information'">
@@ -341,8 +331,8 @@
                     <div class="box-indent">
                         <section>
                             <div class="fweight">SEARCHABLE	 - 	YES    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
-                      <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
-                        </section><br>
+                            <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
+                          </section><br>
                         <mat-accordion>
                             <mat-expansion-panel [expanded]="false">
                                 <mat-expansion-panel-header>
@@ -354,13 +344,12 @@
                                     <ul class="ul-normal abc">
                                         <li>The information related to the business’s location comes under this section.</li>
                                         <li>Initially the location added to the provider profile during the initial profile set up, will be automatically set as the base location.</li>
-                                        <li>The provider can add multiple locations of the business. The link to add a new location is given here.</li>
-                                        <li>If the business has multiple locations, then, only the base location is displayed here. The provider can edit the base location as well. To do so, click on the edit button.</li>
-                                        <li>To add working hours to the location, a provider needs to go to <strong>“Locations”</strong> under <strong>“Check-In Manager”</strong>.</li>
+                                        <li>The provider can edit the base location as well. To do so, click on the edit button.</li>
+                                        <li>To add working hours to the location, a provider needs to go to <strong>“Locations”</strong> under <strong>Check-In Manager”</strong>.</li>
                                     </ul>
                                     <section>
                                         <div class="fweight">SEARCHABLE	 - 	YES    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
-                                        <div class="fweight">VIEWABLE	 -	NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
+                                        <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
                                       </section><br>
                                 </div>
                             </mat-expansion-panel>
@@ -375,7 +364,7 @@
                                 <div>
                                     <ul class="ul-normal abc">
                                         <li>Location amenities are resources, conveniences, facilities or benefits offered to the customers for their use.</li>
-                                        <li>A provider can manage the location amenities here. Choose the available amenities from the list. The following table shows the location amenities for the <strong>Vastu/Astrologer sector.</strong>.</li>
+                                        <li>A provider can manage the location amenities here. Choose the available amenities from the list. The following table shows the location amenities for the <strong>Finance/Loan/Insurance Sector</strong>.</li>
                                     </ul>
                                     <br>
                                     <div class="tscroll">
@@ -383,31 +372,35 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="td1">
-                                                        Vastu
+                                                        Finance/Loan/Insurance
                                                     </td>
                                                     <td class="td2">
                                                         <table class="table">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="td2">1. Vastu</td>
-                                                                    <td class="td3">
+                                                                    <td class="td2">Banks</td>
+                                                                    <td class="td3 bord">
                                                                         <ul class="ul-normal">
-                                                                            <li>24 hours</li>
                                                                             <li>Parking</li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                   
-                                                                    <td class="td2">2. Astrologer</td>
+                                                                    <td class="td2">NBF</td>
                                                                     <td class="td3">
                                                                         <ul class="ul-normal">
-                                                                            <li>24 hours</li>
                                                                             <li>Parking</li>
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
-                                                                
+                                                                <tr>
+                                                                    <td class="td2">Insurance</td>
+                                                                    <td class="td3">
+                                                                        <ul class="ul-normal">
+                                                                            <li>Parking</li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -446,10 +439,11 @@
                 <section *ngIf="childContent =='privacy-settings'">
                     <h6 id="privacy-settings">PRIVACY SETTINGS</h6>
 
-                    <span>Getting to know and controlling your privacy settings (Phone number & Email address) is an important strategy to protect your information. Here the system allows the provider to add, edit or delete both phone number and email address. </span>
+                    <span>Getting to know and controlling your privacy settings (Phone number & Email address) is an important strategy to protect your information. Here the system allows the provider to add, edit or delete both phone number and email address.</span>
 
                     <div class="box-indent">
                         <h6><u>PHONE</u></h6>
+
                         <ol class="ol-normal">
                             <li>A provider can view the phone number used to create a Jaldee account. By default, the visibility of the number is set to none.</li>
                             <li>The three dots menu on the right corner has two options, namely, <strong>Edit</strong> and <strong>Delete</strong>.</li>
@@ -465,97 +459,94 @@
                             </li>
                             <li>A provider can also delete a phone number. To do so, click <strong>“Delete”</strong> from the three dots menu on the right corner.</li>
                         </ol>
-                       
-                               
                         <h6><u>EMAIL</u></h6>
 
-                        <ol class="ol-normal">
-                            <li>A provider can add, edit and delete the email address here.</li>
-                            <li>The three dots menu on the right corner has two options, viz. <strong>Edit</strong> and <strong>Delete</strong>.</li>
-                            <li>In case, a provider wants to edit an entry, he/she can click on the <strong>“Edit”</strong> button. Here, the provider can change the email address, email label (for example,Office Email Id, Personal Email Id, etc.) and also the visibility of the email address.</li>
-                            <li>The email address provided here is shown to the customers in the detailed view of the provider profile.</li>
-                            <li>The provider has an option to restrict the visibility of the email address. Three options to filter the visibility are:
-                            
-                                <ul class="ul-normal abc">
-                                    <li><strong>Public(All can see) :</strong> When set to Public, everyone can see the provider’s email.</li>
-                                    <li><strong>My Customers only (Customers who checks-in for the services) :</strong> When set to ‘My customers only’, the email is visible only to the provider’s customers.</li>
-                                    <li><strong>Private(None can see) :</strong> When set to Private, only the provider can view the email.</li>
-                                </ul>
-                            </li>
-                            <li>A provider can delete an email address. To do so, click <strong>“Delete”</strong> from the three dots menu on the right corner.</li>
-                            <li>Jaldee.com uses the email address to communicate the general notifications to the provider, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
-                        </ol>
-
-                               
-                        <section>
-                            <div class="fweight">SEARCHABLE	 - 	NO    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
-                            <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
-                          </section><br>
+                        
+              <ol class="ol-normal">
+                <li>A provider can add, edit and delete the email address here.</li>
+                <li>The three dots menu on the right corner has two options, viz. <strong>Edit</strong> and <strong>Delete</strong>.</li>
+                <li>In case, a provider wants to edit an entry, he/she can click on the <strong>“Edit”</strong> button. Here, the provider can change the email address, email label (for example,Office Email Id, Personal Email Id, etc.) and also the visibility of the email address.</li>
+                <li>The email address provided here is shown to the customers in the detailed view of the provider profile.</li>
+                <li>The provider has an option to restrict the visibility of the email address. Three options to filter the visibility are:
+                
+                    <ul class="ul-normal abc">
+                        <li><strong>Public(All can see) :</strong> When set to Public, everyone can see the provider’s email.</li>
+                        <li><strong>My Customers only (Customers who checks-in for the services) :</strong> When set to ‘My customers only’, the email is visible only to the provider’s customers.</li>
+                        <li><strong>Private(None can see) :</strong> When set to Private, only the provider can view the email.</li>
+                    </ul>
+                </li>
+                <li>A provider can delete an email address. To do so, click <strong>“Delete”</strong> from the three dots menu on the right corner.</li>
+                <li>Jaldee.com uses the email address to communicate the general notifications to the provider, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
+            </ol>
+            <section>
+                <div class="fweight">SEARCHABLE	 - 	NO    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
+                <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
+              </section><br>
                     </div>
                 </section>
 
                 <section *ngIf="childContent =='specialization'">
                     <h6 id="specialization">SPECIALIZATION</h6>
 
-                    <span>Specializations benefits both the provider and the customer. Here a provider can select his/her specialization from the given list. Below table shows the specialization list of the Vastu/Astrologer sector.</span>
+                    <span>Specializations benefits both the provider and the customer. Here a provider can select his/her specialization from the given list. Below table shows the specialization list of the Finance/Loan/Insurance sector.</span>
 
                     <div class="tscroll">
                         <table class="table addword-tbl">
                             <tbody>
                                 <tr>
-                                    <td class="td1">
-                                      Vastu/Astrologer
-                                    </td>
                                     <td class="td2">
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <td class="td1">Vastu</td>
+                                                    <td class="td1">Banks</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td1">NBF</td>
                                                     <td class="td2">
                                                         <ol class="ol-normal">
-                                                            <li>Vedic Astrology</li>
-                                                            <li>Residential Vastu</li>
-                                                            <li>Commercial Vastu</li>
-                                                            <li>Design of traditional temples</li>
-                                                            <li>Idol designing and making</li>
-                                                            <li>Vastu supervision</li>
-                                                            <li>Vastu for career</li>
-                                                            <li>Vastu for happy married life</li>
-                                                            <li>Interior designing for Vastu</li>
-                                                            <li>Vastu for Finance</li>
-                                                            <li>Vastu for Health</li>
-                                                            <li>Agasthiyar Nadi Jyothisham</li>
-                                                            <li>Deva prashnam</li>
-                                                            <li>Muhurtham</li>
-                                                            <li>Tamboola prasnam for temples</li>
-                                                            <li>Tamboola prasnam for families</li>
-                                                            <li>Ashtamangala prasnam for families</li>
-                                                            <li>Ashtamangala prasnam for temples</li>
-                                                            <li>Birth chart</li>
-                                                            <li>Horoscope</li>
-                                                            <li>Marriage compatibility</li>
-                                                            <li>Numerology</li>
-                                                            <li>Career predictions</li>
-                                                            <li>After death remedies</li>
+                                                            <li>Gold Loan</li>
+                                                            <li>SME Finance</li>
+                                                            <li>Money Transfer</li>
+                                                            <li>Commercial Vehicle Loans</li>
+                                                            <li>Micro Finance</li>
+                                                            <li>Home Loan</li>
+                                                            <li>Personal Loan</li>
+                                                            <li>Health Insurance</li>
+                                                            <li>Life Insurance</li>
+                                                            <li>Pan Card Services</li>
+                                                            <li>Security Services</li>
+                                                            <li>Mutual Fund</li>
+                                                            <li>Share Broker</li>
+                                                            <li>Stock Broker</li>
+                                                            <li>Commodity Broker</li>
+                                                            <li>Automobile Loan</li>
+                                                            <li>Online Share trading</li>
                                                         </ol>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="td1">Astrologer</td>
+                                                    <td class="td1">Insurance</td>
                                                     <td class="td2">
                                                         <ol class="ol-normal">
-                                                            <li>Vedic Astrology</li>
-                                                            <li>Residential Vastu</li>
-                                                            <li>Commercial Vastu</li>
-                                                            <li>Design of traditional temples</li>
-                                                            <li>Idol designing and making</li>
-                                                            <li>Vastu supervision</li>
-                                                            <li>Vastu for career</li>
-                                                            <li>Vastu for happy married life</li>
-                                                            <li>Interior designing for Vastu</li>
-                                                            <li>Vastu for Finance</li>
-                                                            <li>Vastu for Health</li>
-                                                            <li>Agasthiyar Nadi Jyothisham</li>
+                                                            <li>Auto Insurance</li>
+                                                            <li>Commercial Insurance</li>
+                                                            <li>Critical Illness Insurance</li>
+                                                            <li>Health Insurance</li>
+                                                            <li>Gap Insurance</li>
+                                                            <li>General Insurance</li>
+                                                            <li>Homeowners/Renters Insurance</li>
+                                                            <li>Identity Theft Protection</li>
+                                                            <li>Liability Insurance</li>
+                                                            <li>Long-Term Care Insurance</li>
+                                                            <li>Long-Term Disability Insurance</li>
+                                                            <li>Marine Insurance</li>
+                                                            <li>Pet Insurance</li>
+                                                            <li>Property Insurance</li>
+                                                            <li>Term Life Insurance</li>
+                                                            <li>Travel Insurance</li>
+                                                            <li>Umbrella Policy</li>
+                                                            <li>Worker’s compensation Insurance</li>
                                                         </ol>
                                                     </td>
                                                 </tr>
@@ -566,102 +557,170 @@
                             </tbody>
                         </table>
                     </div>
-                    <span>All the specializations added during the initial profile set up are listed in this section. To
-                        edit this, click on the edit pencil button.</span>
-                        <section>
-                            <div class="fweight">SEARCHABLE	 - 	YES    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
-                            <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
-                          </section>
+                    <span>All the specializations added during the initial profile set up are listed in this section. To edit this, click on the edit pencil button.</span>
+                    <section>
+                        <div class="fweight">SEARCHABLE	 - 	YES    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
+                        <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
+                      </section>
                 </section>
 
                 <section *ngIf="childContent =='languages-known'">
                     <h6 id="languages-known">LANGUAGES KNOWN</h6>
 
                     <span>A provider can add multiple languages known to him/her. This can widen the customer base and attract more customers.</span>
+
                     <ol class="ol-normal">
                         <li>Initially, to add a language, a provider has to click on <strong>“Add it Now”</strong>.</li>
                         <li>The languages added in the section are displayed here.</li>
                         <li>To choose from the list of languages, click on the <strong>“Pencil”</strong> button to edit.</li>
                         <li>The provider should check the languages that he/she wants to use while communicating with the customers and uncheck the languages that are not preferred.</li>
                         <li>Click <strong>“Save”</strong> to retain the information.</li>
-                        <li>Newly added languages are displayed here.</li>
                     </ol>
                     <section>
                         <div class="fweight">SEARCHABLE	 - 	YES    <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that customers can search for the provider using mentioned attributes.)</i></span></div>
-                        <div class="fweight">VIEWABLE	 -	NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
+                        <div class="fweight">VIEWABLE	 -	YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable label indicates that customers can only view the attributes in providers profile in search results.)</i></span></div>
                       </section>
                 </section>
 
                 <section *ngIf="childContent =='additional-info'">
                     <h6 id="additional-info">ADDITIONAL INFO</h6>
 
-                    <span>Following is the list of additional information for the Vastu/Astrologer sector. A provider needs to fill in the details for each section. This is to let the customers know more about the business as well as the provider.</span>
+                    <span>Following is the list of additional information for the Finance/Loan/Insurance sector. A provider needs to fill in the details for each section. This is to let the customers know more about the business as well as the provider.</span>
 
                     <div class="tscroll">
                         <table class="table addword-tbl">
-                            <tbody>
+                          <tbody>
                                 <tr>
-                                    <td class="td2">
-                                        <div class="box">
-                                            <strong>Vastu/Astrologer</strong>
-                                        </div>
-                                    </td>
-                                    <td>
-                                            <table class="table verify-tbl">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1.Age
-                                                            <span class="brown-color">SEARCHABLE-NO</span> 
-                                                            <span class="brown-color">VIEWABLE-YES</span></td>
-                                                            <td class="bord">The service provider needs to mention the number of staff  working at the establishment.
-                                                           </td>
-                                                        </tr>
-                                                         <tr>
-                                                            <td>2.Gender
-                                                            <span class="brown-color">SEARCHABLE-NO</span> 
-                                                            <span class="brown-color">VIEWABLE-YES</span></td>
-                                                            <td class="bord">Male/Female/Others
-                                                            </td>
-                                                         </tr>
-                                                         <tr>
-                                                            <td>3.Experience
-                                                            <span class="brown-color">SEARCHABLE-NO</span> 
-                                                            <span class="brown-color">VIEWABLE-YES</span></td>
-                                                            <td class="bord">Enter the Work Experience here.
-                                                            </td>  
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4.Awards & Recognitions
-                                                            <span class="brown-color">SEARCHABLE-NO</span> 
-                                                            <span class="brown-color">VIEWABLE-YES</span></td> 
-                                                            <td class="bord">Here a provider can mention the awards received in the respective field.
-                                                             </td>  
-                                                        </tr>
-                                                        <tr>
-                                                            <td>5.Reference URL
-                                                            <span class="brown-color">SEARCHABLE-YES</span> 
-                                                            <span class="brown-color">VIEWABLE-YES</span></td>
-                                                            <td class="bord">This shows the direct link of the provider’s own website. Also mention the other sites where the profile is listed.
-                                                            </td>  
-                                                        </tr>
-                                                        <tr>
-                                                             <td>6.Family History
-                                                            <span class="brown-color">SEARCHABLE-NO</span> 
-                                                            <span class="brown-color">VIEWABLE-YES</span></td>
-                                                            <td class="bord">Here provider can mention their family history in respective field.
-                                                            </td>  
-                                                        </tr>
-                                                        <tr>
-                                                          <td>7.Payment Options
-                                                         <span class="brown-color">SEARCHABLE-NO</span> 
-                                                         <span class="brown-color">VIEWABLE-YES</span></td>
-                                                         <td class="bord">Here a provider can select the different modes of payments available to customers.
-                                                         </td>  
-                                                     </tr>
-                                                    </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
+                                        <td class="td1">
+                                          Finance/Loan/Insurance
+                                        </td>
+                                        <td class="td2">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="td1">BANKS</td>
+                                                        <table class="table">
+                                                                <tbody>
+                                                                     <tr>
+                                                                      <td class="pbord">Bank Type
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">
+                                                                       </td>      
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Service Since
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider need to mention the year from which the enterprise has been delivering services. 
+                                                                       </td>      
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="pbord">Awards & Recognitions
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider can mention the awards received in the respective field.
+                                                                       </td>      
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Payment options
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider can select the different modes of payments available to customers.
+                                                                       </td>
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Reference Url
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Give the direct link of the provider’s own website. Also mention the other sites where the provider profile is listed.
+                                                                       </td> 
+                                                                      </tr>
+                                                                </tbody>
+                                                        </table>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td1">NBFC</td>
+                                                        <table class="table">
+                                                                <tbody>
+                                                                     <tr>
+                                                                      <td class="pbord">NBFC Type
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Choose from the list, the type of non banking finance company.
+                                                                       </td>      
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Category
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Choose a category from the list. 
+                                                                       </td>      
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="pbord">Licensed
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Mention whether the enterprise is licensed or not, set to Yes/No.
+                                                                       </td>      
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Service Since
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider need to mention the year from which the enterprise has been delivering services.
+                                                                       </td>
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Awards & Recognitions
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider can mention the awards received in the respective field.
+                                                                       </td> 
+                                                                      </tr>       
+                                                                </tbody>
+                                                        </table>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td1">INSURANCE</td>
+                                                        <table class="table">
+                                                                <tbody>
+                                                                     <tr>
+                                                                      <td class="pbord">Service Since
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider need to mention the year from which the enterprise has been delivering services.
+                                                                       </td>      
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Awards & Recognitions
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider can mention the awards received in the respective field. 
+                                                                       </td>      
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td class="pbord">Payment options
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Here a provider can select the different modes of payments available to customers.
+                                                                       </td>      
+                                                                    </tr> 
+                                                                    <tr>
+                                                                      <td class="pbord">Reference Url
+                                                                        <span class="brown-color">SEARCHABLE-NO</span> 
+                                                                        <span class="brown-color">VIEWABLE-YES</span></td>
+                                                                        <td class="bord">Give the direct link of the provider’s own website. Also mention the other sites where the provider profile is listed.
+                                                                       </td>
+                                                                    </tr>     
+                                                                </tbody>
+                                                        </table>
+                                                      </tr>       
+                                                </tbody>
+                                            </table>
+                                  </td>
+                               </tr>
+                              
                             </tbody>
                         </table>
                     </div>
@@ -675,11 +734,12 @@
 
                     <div class="box-indent">
                         <h6>How to add a new image?</h6>
-                        
+
                         <ol class="ol-normal">
                             <li>To add an image, click <strong>“Add it Now”</strong> and upload the images here. The provider also needs to write a caption for the image in the <strong>image’s caption box</strong>.</li>
                             <li>To add more images in the collection, click on the <strong>“(+)”</strong> symbol.</li>
-                            <li>Supported images file types: jpg, jpeg, bmp, png, gif.</li>
+                                    <li>Supported images file types: jpg, jpeg, bmp, png, gif.</li>
+                            
                         </ol>
                     </div>
                     <section>
@@ -694,12 +754,11 @@
                     <span>A provider can connect his/her Jaldee profile with the social media profiles. These social media icons are displayed on the profile. This option allows customers to view the provider’s social media profile, such as Facebook, Twitter, etc.</span>
 
                     <div class="box-indent">
-                        
-                    <ol class="ol-normal">
-                        <li>To add social media links to the Jaldee profile, click <strong>“Add It Now"</strong>.</li>
-                        <li>If the profile has already been linked to the social media, a provider can add more or edit the existing links by clicking on the <strong>“(+)”</strong>.</li>
-                        <li>Select any of the following social media sites from the drop-down list and enter the URL which will redirect the page to the profile in respective sites. Choose <strong>“Save”</strong> to retain the information.</li>
-                    </ol>
+                        <ol class="ol-normal">
+                            <li>To add social media links to the Jaldee profile, click <strong>“Add It Now"</strong>.</li>
+                            <li>If the profile has already been linked to the social media, a provider can add more or edit the existing links by clicking on the <strong>“(+)”</strong>.</li>
+                            <li>Select any of the following social media sites from the drop-down list and enter the URL which will redirect the page to the profile in respective sites. Choose <strong>“Save”</strong> to retain the information.</li>
+                        </ol>
 
                         <table class="table social-tbl">
                             <tbody>
@@ -732,11 +791,11 @@
                 <section *ngIf="childContent =='custom-id'">
                     <h6 id="custom-id">CUSTOM BUSINESS ID</h6>
 
-                    <span>A custom business id is a unique id that redirects to a provider's detailed profile page in Jaldee . You can add a custom URL based on things like your business name, username used in Jaldee or anything of your choice. You can share this  custom URL to your customers in your website or any other portal.<strong> To add a custom url, make sure your license package is upgraded to Ruby.</strong></span>
+                    <span>A custom business id is a unique id that redirects to a provider's detailed profile page in Jaldee . You can add a custom URL based on things like your business name, username used in Jaldee or anything of your choice. You can share this  custom URL to your customers in your website or any other portal.<strong> To add a custom url, make sure your license package is upgraded to Ruby.</strong></span>
                     <h6>How to add a custom business id in Jaldee?</h6>
 
                     <div class="box-indent">
-                      
+
                         <ul class="ul-normal abc">
                             <li>Initially to add a custom business id click<strong>“Add It Now"</strong>.</li>
                             <li>Enter a valid custom business id keeping in line with the following guidelines:
@@ -777,30 +836,27 @@
                         </li>
                         <li>Walk-in check-ins are always enabled.</li>
                     </ul>
-                    
                     <h6><u>Calculation of waiting time</u></h6>
                     <span>Waiting time simply refers to the time a customer has to wait before he/she can avail the services offered at the premise.</span>
                     <ul class="ul-normal">
                         <li><strong>Automatic (Machine Learning) :</strong> Using a machine learning algorithm, the system automatically calculates the turnaround time for each service by analyzing a provider’s service history.</li>
                         <li><strong>Manual :</strong> Using this option, a provider can fix a wait time which will be applied to all the check-ins (for example, If a provider sets 10 minutes of manual time, by default all the customers will get 10 minutes of waiting time.) Manual time should be used when a provider can guarantee to serve all the customers in the given time. To do so, it is advisable that the service provider is equipped with enough resources. An additional option is available for providers choosing “Manual” wait time calculation. He/She can edit individual check-ins wait time from the check-in details in provider dashboard.</li>
-                        <li><strong>Token System (Do not show waiting time for customers) :</strong> If a service provider chooses this option, then all the customers will receive and see a token number instead of any waiting time.</li>
+                        <li><strong>Token System(Do not show waiting time for customers):</strong> If a service provider chooses this option, then all the customers will receive and see a token number instead of any waiting time. </li>
                         <li><strong>No Token :</strong> If a service provider chooses this option, the customers won’t be able to see the waiting time as well as the token number. Here a customer can see the number of persons ahead of him/her.</li>
                     </ul>  
                 </section>
-                <section>
-                    <h4><u>Send Notification</u></h4>
-                    <p>If a provider wants to receive notification in <strong>Jaldee Provider App,</strong> when a check-in is done or when a check-in is cancelled, he/she needs to turn on this toggle button.</p>
+                <section *ngIf="childContent =='settings'">
+                    <h6><u>Send Notification</u></h6>
+                    <span>If a provider wants to receive notification in <strong>Jaldee Provider App,</strong> when a check-in is done or when a check-in is cancelled, he/she needs to turn on this toggle button.</span>
                 </section>
-        
-            <section>
-                <h4><u>Accept Future Check-In</u></h4>
-        
-                <ul class="ul-normal">
-                    <li>This advanced feature of Jaldee.com helps a provider accept check-ins online for a service that will be availed in a future date.</li>
-                    <li>If a provider enables this button, online check-in clients can avail the services for a future date</li>
-                    <li>In case a provider disables<strong>“Accept Future Check-in”,</strong> customers can only check-in for the current day’s working hours.</li>
-                </ul>
-            </section>
+                <section *ngIf="childContent =='settings'">
+                    <h6><u>Accept Future Check-In</u></h6>
+                    <ul class="ul-normal">
+                        <li>This advanced feature of Jaldee.com helps a provider accept check-ins online for a service that will be availed in a future date.</li>
+                        <li>If a provider enables this button, online check-in clients can avail the services for a future date</li>
+                        <li>In case a provider disables<strong>“Accept Future Check-in”,</strong> customers can only check-in for the current day’s working hours.</li>
+                    </ul>
+                </section>
                 <section *ngIf="childContent =='settings-locations'">
                     <h6 id="settings-locations">LOCATIONS</h6>
 
@@ -827,7 +883,7 @@
                 <section *ngIf="childContent =='settings-services'">
                     <h6 id="settings-services">SERVICES</h6>
 
-                    <span>This page lists all the services offered to the customers. While listing the services, please keep the name of services simple and comprehensible which will help the customers easily know more about the services offered by the provider.</span>
+                    <span>This page lists all the services offered to the customers. While listing the services, please keep the name of services simple and comprehensible which will help the customers easily know more about the services offered by the clinic.</span>
 
                     <ul class="ul-normal">
                         <li>When the provider clicks on the <strong>“Services”</strong>, a page appears where one can view a service by default name “Facial”(If provider has edited the default service during the initial profile set up, the updated service details is  seen here). Other details such as Estimated duration, End of Service notification fields also have values by default. The provider can edit this section by clicking on the pencil button.</li>
@@ -867,7 +923,7 @@
                         <li><strong>Service :</strong> All added services offered by the provider are displayed here. Check the services offered in this working hour from the list of services displayed here.</li>
                         <li><strong>Schedule :</strong> Select the days according to the schedule. A provider has the option to choose <strong>“Select all days”</strong>, in case the business is open 24*7.</li>
                         <li><strong>Start Time/End Time :</strong> Enter the start time and the end time for a particular working hour.</li>
-                        <li><strong>Maximum customers served :</strong> Enter the maximum number of customers the business can serve in particular schedule. No more check-ins will be accepted, once the limit is reached. If the limit is not set, then endless check-ins will be accepted between the working hours.</li>
+                        <li><strong>Maximum patients served :</strong> Enter the maximum number of customers the business can serve in particular schedule. No more check-ins will be accepted, once the limit is reached. If the limit is not set, then endless check-ins will be accepted between the working hours.</li>
                         <li><strong>Customers served at a time :</strong> Here enter the number of customers that can be served at the same time.</li>
                         <li><strong>Online check-ins :</strong> Enable this toggle button to make this particular  working hours available for customers to check-in online for the same day.</li>
                         <li><strong>Future check-ins :</strong> Enable this toggle button to make this particular  working hours available for customers to check-in online for a future date.</li>
@@ -882,7 +938,8 @@
                     <li>To edit the timing of this particular working hours, click on the pencil button given in the right corner.</li>
                     <li>A working hour window appears where the fields show current data. Edit the sections and click on the <strong>“Save”</strong> button to retain the modified data.</li>
                 </ul>
-                </section>
+            </section>
+            
                 <section *ngIf="childContent =='settings-time_windows'">
                     <h6 id="settings-time_windows">My Availability Today(+)</h6>
                     <span>In Jaldee, if provider is available to provide services to customers other than the available working hours, he/she can create an instant working hour for a time period other than the saved working hours.</span>
@@ -906,9 +963,9 @@
                         <li>Enter the department name, department id and give a brief  description.</li>
                         <li>Click <strong>“Save”</strong> to add the department.</li>
                         <li>Most importantly, add available services to each department.</li>
-                        <li>The added departments are listed here. provider can enable or disable added departments from three dots menu.</li>
+                        <li>The added departments are listed here. Provider can enable or disable added departments from three dots menu.</li>
                         <li>To edit department details, click on the department name.</li>
-                        <li>To allow Customers to check-in department wise enable the toggle button <strong>“Select services by department”</strong> from check-in manager.</li>
+                        <li>To allow customers to check-in department wise enable the toggle button <strong>“Select services by department”</strong> from check-in manager.</li>
                 </ul>
                 </section>
 
@@ -919,17 +976,19 @@
                         <li>To search for a customer and to check whether he/she has already been registered with Jaldee, the provider can use the customer’s mobile number, his/her first name/last name.</li>
                         <li>In case, the customer’s data does not exist in the Jaldee database, the provider can input the details of the customer and get him/her registered with Jaldee.com.</li>
                     </ul>
+                
+
+
                     <div class="box-indent">
                         <ul class="ul-normal">
                             <li>In the check-in/get token window, first, select the service from the drop-down menu that a customer wishes to avail. In case, the provider has only one default service, then there will be no drop-down menu.</li>
                             <li>Check-in/Get Token window has a feature to add or change a family member whom the customer wishes to do a check-in for. Click “Add/Change Member” to add a new member with the first name and the last name. In case the family member is already added, it can be directly selected from the list of members.</li>
                             <li>If a customer has any note, the provider can click <strong>“If you have a note, Click here (+)”</strong> to write the message in the textbox.</li>
-                            <li>With all this information the provider can now proceed with the check-in process of  the walk-in customer by clicking on <strong>“Confirm”.</strong></li>
+                            <li>With all this information the provider can now proceed with the check-in process of  the walk-in customer by clicking on <strong>“Confirm Check-in".</strong></li>
                             <li>Push message will be sent to the customer’s mobile and an email notification to the registered email address regarding the information of check-in.</li>
                             <li>Future Check-in can be done in the same way as that of Check-in. The only difference between these check-ins is that the provider needs to select a date of check-ins in the Future Check-in.</li>
-                         </ul>
+                        </ul>
                     </div>
-                    
                 </section>
 
 
@@ -1007,8 +1066,8 @@
                         </table>
                     </div>
                     <div class="box-indent">
-                        <h4>How it works?</h4>
-                        <p>The <strong>KIOSK</strong> feature is designed for walk-in customers. With this feature, the walk-in customers can self-check-in for the services, sign up to Jaldee and view the status of the check-in.</p>
+                        <h6>How it works?</h6>
+                        <span>The <strong>KIOSK</strong> feature is designed for walk-in customers. With this feature, the walk-in customers can self-check-in for the services, sign up to Jaldee and view the status of the check-in.</span>
                         <ol class="ol-normal">
                             <li><strong><u>Check-In Yourself</u></strong></li>
                             <p>A customer can walk-in to any open Kiosk. The Kiosk prompts the customer to enter the mobile number and the first three letters of their first name/last name. This is to look up if the customer is already registered with <strong>Jaldee</strong>.</p>
@@ -1032,7 +1091,7 @@
                                 <li>A customer (who has already checked-in online) can view the status of the check-in by entering the mobile number and name.</li>
                                 <li>The window shows the status of the customer’s check-in along with the estimated waiting time or token number with persons ahead. If the customer has arrived at the business premise, he/she can mark their status to Arrived by clicking on the <strong>“Confirm Arrival”</strong>.</li>
                             </ul>
-        
+          
                             <li><strong><u>Do You Want to Sign Up?</u></strong></li>
                             <p>The customers can sign up to Jaldee through the KIOSK machine under this option. To do so, simply enter the mobile number, first name, and last name. This will get the customer registered with Jaldee.</p>
                             <ul class="ul-normal">
@@ -1377,8 +1436,8 @@
                         <li><strong>Jaldee-Keywords :</strong> This shows the total number of Jaldee-Keywords allowed for the availed
                             package.</li>
                     </ul>
-                    <span>A provider also gets to know whether the usages are in compliance with the current license package.
-                        The data until yesterday is updated here.</span>
+                    <span>A provider also gets to know whether the usages are in compliance with the current license package. The data
+                        until yesterday is updated here.</span>
 
                     <h6>3. Payment History</h6>
 
@@ -1388,9 +1447,9 @@
                 <section *ngIf="childContent =='addon'">
                     <h6>Add-on</h6>
 
-                    <span>Add-ons are used when a license package reaches its maximum limit and a provider wants to add more
-                        features. With the help of add-ons, a provider can avail additional features without upgrading the
-                        license. Add-ons are charged accordingly.</span>
+                    <span>Add-ons are used when a license package reaches its maximum limit and a provider wants to add more features.
+                        With the help of add-ons, a provider can avail additional features without upgrading the license. Add-ons
+                        are charged accordingly.</span>
                     <span><br>Following are the list of add-ons:</span>
                     <table class="table addon-tbl">
                         <tbody>
@@ -1417,15 +1476,15 @@
                             </tr>
                         </tbody>
                     </table>
-                    <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted, its effect on the
-                        bill can be seen from the next bill cycle onwards.</span>
+                    <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted, its effect on the bill can be
+                        seen from the next bill cycle onwards.</span>
                 </section>
 
                 <section *ngIf="childContent =='adwords'">
                     <h6>Jaldee-Keyword</h6>
 
                     <span>Jaldee-Keyword is common keywords. A customer generally uses such keywords to search for a service provider.
-                        Buying relevant keywords that a prospective customer would be searching on Jaldee. For example, if you are an Astrologer, you can buy Jaldee-Keywords like “Astrology”, “Career predictions” etc.</span>
+                        Buying relevant keywords that a prospective customer would be searching on Jaldee. For example, if yours is a Non Banking Financial Company,  you can buy jaldee-Keywords like “Housing Loan”, “Insurance” etc.</span>
 
                     <h6>How to add an Jaldee-Keyword ?</h6>
 
@@ -1528,11 +1587,11 @@
                         <li><strong>Future()</strong> - All the check-ins for future dates are listed here. The adjoined brackets display the number of future check-ins.</li>
                         <li><strong>History</strong> - All of the customer’s previous check-ins until a day before are listed here. To view the details click on the “date of check-in” or on the “name of the customer.”. Actions can also be changed from here.</li>
                       </ol>
-                      <section>
-                        <h4><u>Location Selection</u></h4>
-                        <p>Here a provider can select the exact location if multiple locations are available. The provider can check the details of a particular check-in for a specific location.</p>
-                        <p><strong>Note: A provider needs to select the location of service while he/she checks-in a “walk-in” customer.</strong></p>
-                      </section>
+                    <section>
+                        <h6><u>Location Selection</u></h6>
+                        <span>Here a provider can select the exact location if multiple locations are available. The provider can check the details of a particular check-in for a specific location.</span>
+                        <span><strong>Note: A provider needs to select the location of service while he/she checks-in a “walk-in” customer.</strong></span>
+                    </section>
                     <section>
                         <mat-accordion>
                             <mat-expansion-panel [expanded]="false">
@@ -1543,7 +1602,7 @@
                                 </mat-expansion-panel-header>
                                 <div>
                                     <ul class="ul-normal">
-                                        <li>If the business has multiple locations, select the location and the working hour from the dashboard.</li>
+                                        <li>If the business has multiple working hours, select the working hour from the dashboard.</li>
                                         <li>Here the provider can see a list of customers who have checked in (Online or  Walk-in ).</li>
                                         <li>In some cases, a “cloud symbol” is prefixed to a name, it means that the customer has checked in online.</li>
                                         <li>To view the check-in details of a customer, provider can click on the name of the customer. Check-in history, communication history, and history of private notes are listed here. In addition to that, the user can cancel a customer’s check-in and inform this through <strong>Send Message</strong>. A provider can add a private note for a customer using <strong>Add private note</strong>.</li>
@@ -1617,7 +1676,7 @@
                                             <li><strong>Apply Jaldee Coupon :</strong> These coupons have been provided by Jaldee.</li>
                                             <li><strong>Apply Coupon :</strong> These are provider generated coupons.</li>
                                             <li><strong>Apply Order Discount :</strong> These discounts are offered by the provider.</li>
-                                            <P>*The option to Add Private Note and Customer Note is available here.</P>
+                                            <P>*The option to Add Private Note and Patient Note is available here.</P>
                                             <li>These coupons are applied to the total bill amount.</li>
                                             <li>Discounts can either be applied to the Gross amount or to each item.</li>
                                             <li>Three dots menu near service/item in the bill has the following actions:
@@ -1646,7 +1705,6 @@
                                         <li><strong>Payment Status:</strong> This shows the payment status (not paid, partially paid, or fully paid) of the customer.</li>
                                         <li><strong>Customer Note:</strong> When a customer adds any note while checking-in, it is displayed here.</li>
                                       </ul>
-                              
 
                                 </div>
                             </mat-expansion-panel>
@@ -1723,7 +1781,7 @@
                     </section>
                     <section>
                         <ul class="ul-normal">
-                            <li>To enable online payments using any payment system, a provider has to switch on the “Customers Self pay” mode. Initially, this is set to off mode.</li>
+                            <li> To enable online payments using any payment system, a provider has to switch on the <strong>“Customers Self pay”</strong> mode. Initially, this is set to <strong>off</strong> mode.</li>
                             <li>If a provider has not entered an email address before, click on the link <strong>“Go To Email Settings”</strong> (Payment Settings) to add the email id. This can be set directly from My Account.</li>
                             <h4 id="payment-settings">Payment Settings</h4>
                             <li>Two modes of payments can be enabled. These are:</li>
@@ -1761,7 +1819,7 @@
 
                 <section *ngIf="parentContent == 'billing'">
                     <h6 id="items">Billing/POS</h6>
-                    <span>Billing/POS page is the one-stop-shop for adding items, discounts,coupons and tax settings. Discounts and coupons play a major role in driving customers toward a product/service and in boosting sales. Jaldee gives flexibility and ease of adding items and providing discounts or coupons to customers.<strong> This is only available from Platinum License package.</strong></span>
+                    <span>Billing/POS page is the one-stop-shop for adding items, discounts, coupons and tax settings. Discounts and coupons play a major role in driving customers toward a product/service and in boosting sales. Jaldee gives flexibility and ease of adding items and providing discounts or coupons to customers.<strong> This is only available from Platinum License package.</strong></span>
 
                     <ul class="ul-normal">
                         <li>A provider can add/remove the item, service, discounts, and coupons anytime in the bill. The changes in the bill will be reflected immediately.</li>
@@ -1784,7 +1842,7 @@
                         </li>
                       </ol>
                     <span>The discount dashboard shows all the existing discounts that have been created in Jaldee settings. Discount name, value, and description of each discount is visible here. A provider can create, delete and edit the discount. For creating more discounts, click on <strong>“(+)”</strong> symbol.</span>
-                    <span><strong>* Note: <strong>On Demand Discount</strong> is created during the account creation and its price is set to zero by default. It can only be applied to the total bill. It can be viewed under discounts list, right after the account creation. Its price cannot be updated. It can be used to waive the bill amount.  At the time of bill updation, the provider can give any amount of on-demand discount by selecting this discount.</strong></span>
+                    <span>* Note: <strong>On Demand Discount</strong> is created during the account creation and its price is set to zero by default. It can only be applied to the total bill. It can be viewed under discounts list, right after the account creation. Its price cannot be updated. It can be used to waive the bill amount.  At the time of bill updation, the provider can give any amount of on-demand discount by selecting this discount.</span>
                 </section>
 
                 <section *ngIf="childContent == 'coupon'">
@@ -1792,48 +1850,47 @@
                     <span>This section is divided into two main sections, viz. <strong>Jaldee Coupons</strong> and <strong>My Coupons. Coupons, either Jaldee coupons or My Coupons</strong> can only be applied to the total bill amount.</span>
                     <ol class="ol-normal adjust-delay-num">
                         <li><strong>Jaldee Coupons : </strong>
-                            <ul class="ul-normal">
-                                <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name, validity date (from and to), status. The option to enable/disable the coupon is also available in the three dots menu.</li>
-                                <li>The coupons with no three dots menu are enabled by the Jaldee. The provider has no option to enable/disable the coupon.</li>
-                                <li>To view the details of a particular coupon, click on the coupon code.</li>
-                                <li>In the detailed view, the provider can see the valid dates, discount value or percentage, rules, and the coupon stats as well.</li>
-                              </ul>
-                            <span>Following are the rules for each coupon. “✅” or “❌” indicates
-                                whether the rules are applicable or not.</span>
-                                <ol class="ol-normal adjust-delay-num">
-                                    <li><strong>Always Enabled :</strong> This coupon will always be enabled. A provider has no option over enabling or disabling these coupons.</li>
-                                    <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its status can be changed by the provider.</li>
-                                    <li><strong>Online Check in Required :</strong> This coupon is available only for those customers who check-in online.</li>
-                                    <li><strong>Self Payment Required :</strong> This coupon is available only for those customers who pay online for the services.</li>
-                                    <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other available coupons.</li>
-                                    <li><strong>First Check-in Only :</strong> This coupon is available only for those customers who checks-in for the first time on Jaldee.</li>
-                                    <li><strong>First Check-in Per Provider Only : </strong> This coupon is available only for those customers who check-in for the first time for a particular provider.</li>
-                                    <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of limited customers on whom a provider can apply the coupon.</li>
-                                    <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to which the coupon can be applied.</li>
-                                    <li><strong>Consumer Use Limit :</strong> This refers to the number of times a customer can apply the coupon.</li>
-                                    <li><strong>Provider Use Limit :</strong> This refers to the number of times a provider can apply the coupon.</li>
-                                  </ol>
-                                  <ul class="ul-normal">
-                                    <li>Here a provider can view the terms and conditions as well as the provider description for the coupon.</li>
-                                    <li>Corresponding customer description is displayed to him/her at their dashboard.</li>
-                                    <li>Coupon status is visible in the bottom of the page. The provider has the option to enable/disable the coupon here (only if permitted).</li>
-                                    <li>In addition, a coupon stat section is given where the following is shown:</li>
-                                    <ol class="ol-normal adjust-delay-num">
-                                      <li><strong>Check ins Applied :</strong> This shows the number of times check-ins applied for the coupon.</li>
-                                      <li><strong>Total Amount Discounted :</strong> This shows the total amount waived to the customers by the provider using the coupon.</li>
-                                      <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount given to the provider by Jaldee.</li>
-                                    </ol>
-                                  </ul>
+                          <ul class="ul-normal">
+                            <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name, validity date (from and to), status. The option to enable/disable the coupon is also available in the three dots menu.</li>
+                            <li>The coupons with no three dots menu are enabled by the Jaldee. The provider has no option to enable/disable the coupon.</li>
+                            <li>To view the details of a particular coupon, click on the coupon code.</li>
+                            <li>In the detailed view, the provider can see the valid dates, discount value or percentage, rules, and the coupon stats as well.</li>
+                          </ul>
+                          <p class="adjust-delay-para">Following are the rules for each coupon. “✅” or “❌” indicates whether the rules are applicable or not.</p>
+                          <ol class="ol-normal adjust-delay-num">
+                            <li><strong>Always Enabled :</strong> This coupon will always be enabled. A provider has no option over enabling or disabling these coupons.</li>
+                            <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its status can be changed by the provider.</li>
+                            <li><strong>Online Check in Required :</strong> This coupon is available only for those customers who check-in online.</li>
+                            <li><strong>Self Payment Required :</strong> This coupon is available only for those customers who pay online for the services.</li>
+                            <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other available coupons.</li>
+                            <li><strong>First Check-in Only :</strong> This coupon is available only for those customers who checks-in for the first time on Jaldee.</li>
+                            <li><strong>First Check-in Per Provider Only : </strong> This coupon is available only for those customers who check-in for the first time for a particular provider.</li>
+                            <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of limited customers on whom a provider can apply the coupon.</li>
+                            <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to which the coupon can be applied.</li>
+                            <li><strong>Consumer Use Limit :</strong> This refers to the number of times a customer can apply the coupon.</li>
+                            <li><strong>Provider Use Limit :</strong> This refers to the number of times a provider can apply the coupon.</li>
+                          </ol>
+                          <ul class="ul-normal">
+                            <li>Here a provider can view the terms and conditions as well as the provider description for the coupon.</li>
+                            <li>Corresponding customer description is displayed to him/her at their dashboard.</li>
+                            <li>Coupon status is visible in the bottom of the page. The provider has the option to enable/disable the coupon here (only if permitted).</li>
+                            <li>In addition, a coupon stat section is given where the following is shown:</li>
+                            <ol class="ol-normal adjust-delay-num">
+                              <li><strong>Check ins Applied :</strong> This shows the number of times check-ins applied for the coupon.</li>
+                              <li><strong>Total Amount Discounted :</strong> This shows the total amount waived to the customers by the provider using the coupon.</li>
+                              <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount given to the provider by Jaldee.</li>
+                            </ol>
+                          </ul>
                         </li>
                         <li><strong>My Coupons</strong>
-                            <p class="adjust-delay-para">These coupons are created by providers. To add a coupon for the first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon, type of the coupon (Percentage/Fixed) and provide a brief description to the discount. A coupon can only be applied to the total bill. A provider can set up two types of Coupons:</p>
-                            <ol class="ol-normal adjust-delay-num">
-                                <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the total bill.</li>
-                                <li><strong>Percentage: </strong> A specific percentage of the amount from the total bill will be deducted in this case. <strong>“Percentage”</strong> type coupons can be applied to the total bill.</li>
-                              </ol>
-                            <p class="adjust-delay-para">The Coupons dashboard shows all the existing coupons that have been created on the profile. Here a provider can create, delete and edit a coupon. To create more coupons, click on the “(+)” symbol. </p>
-                          </li>
-                    </ol>
+                          <p class="adjust-delay-para">These coupons are created by providers. To add a coupon for the first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon, type of the coupon (Percentage/Fixed) and provide a brief description to the discount. A coupon can only be applied to the total bill. A provider can set up two types of Coupons:</p>
+                          <ol class="ol-normal adjust-delay-num">
+                              <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the total bill.</li>
+                              <li><strong>Percentage: </strong> A specific percentage of the amount from the total bill will be deducted in this case. <strong>“Percentage”</strong> type coupons can be applied to the total bill.</li>
+                            </ol>
+                          <p class="adjust-delay-para">The Coupons dashboard shows all the existing coupons that have been created on the profile. Here a provider can create, delete and edit a coupon. To create more coupons, click on the “(+)” symbol. </p>
+                        </li>
+                      </ol>
                 </section>
 
                 <section *ngIf="childContent == 'tax-settings'">
@@ -1844,7 +1901,7 @@
                         <li>At first, enter the <strong>GST</strong> number of the business.</li>
                         <li>Next, enter the <strong>Tax Percentage</strong>.</li>
                         <li>After the complete insertion of the details, click <strong>“Save”.</strong></li>
-                        <li>This tax will be applied to the services offered and the items that are being sold at the time of billing, only if the <strong>“Tax Applicable”</strong> toggle button is enabled in the respective section (i.e. Settings -> Check-In Manager ->Services).</li>
+                        <li>This tax will be applied to the services offered and the items that are being sold at the time of billing, only if the <strong>“Tax Applicable”</strong> toggle button is enabled in the respective section (i.e. Settings -> Check-in Manager ->Services).</li>
                         <li>Jaldee has no role in paying taxes paid by the customer to the service provider. All types of taxes are collected directly by the service provider, so it is the provider’s responsibility to remit the taxes to the Government.</li>
                       </ul>
                 </section>
@@ -1872,12 +1929,12 @@
                 <section *ngIf="childContent =='downpanel' && parentContent == 'downpanel'">
                     <h6>DOWN PANEL OPTIONS</h6>
                     <ul class="ul-normal">
-                        <li>Here the provider can quickly access the following options:</li>
+                        <li>Here the doctor can quickly access the following options:</li>
                            <ul class="normal-abc">
-                             <li><strong>Alerts :</strong> All the Jaldee Broadcasts are shown here. These are the Jaldee provided notifications. Here a provider can learn about new coupons or any other such information directly from Jaldee Super admin.</li>
-                             <li><strong>Audit Log :</strong> Here the provider can view the activities done by him/her. The details appear with a date and time stamp. It also shows the actions completed by the provider along with a little description.</li>
-                             <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the provider to enable check-in, if disabled or to disable the check-in, if enabled.</li>
-                             <li><strong>License Details :</strong> Here the provider can see the current License version he/she is using. This option directly leads to the license page, where the provider can view the license history, its usage, payment history and upgrade the current License package.</li>
+                             <li><strong>Alerts :</strong> All the Jaldee Broadcasts are shown here. These are the Jaldee provided notifications. Here a doctor can learn about new coupons or any other such information directly from Jaldee Super admin.</li>
+                             <li><strong>Audit Log :</strong> Here the doctor can view the activities done by him/her. The details appear with a date and time stamp. It also shows the actions completed by the doctor along with a little description.</li>
+                             <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the doctor to enable check-in, if disabled or to disable the check-in, if enabled.</li>
+                             <li><strong>License Details :</strong>Here the doctor can see the current License version he/she is using. This option directly leads to the license page, where the doctor can view the license history, its usage, payment history and upgrade the current License package.</li>
                           </ul>
                     </ul>
                 </section>

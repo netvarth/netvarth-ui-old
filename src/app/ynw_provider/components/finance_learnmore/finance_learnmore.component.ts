@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-foodjoint-learnmore',
-  templateUrl: './food_learnmore.component.html'
+  selector: 'app-finance-learnmore',
+  templateUrl: './finance_learnmore.component.html'
 })
-export class FoodjointsLearnmoreComponent implements OnInit, OnDestroy {
+export class FinanceLearnmoreComponent implements OnInit, OnDestroy {
   @Input() target: string;
   childContent = 'public-search';
   parentContent = 'profile-search';
@@ -21,7 +20,6 @@ export class FoodjointsLearnmoreComponent implements OnInit, OnDestroy {
   // contentprofiles = 'public-search' ;
   // contentcheckins ='settings' ;
   constructor(
-    private activated_route: ActivatedRoute,
     private _scrollToService: ScrollToService
   ) { }
 
