@@ -27,7 +27,7 @@ export class SearchPopularMoreOptionsComponent implements OnInit {
       this.jsonlist = this.passedPSearches;
     } else {
       const searchlabel = this.sharedfunctionObj.getitemfromLocalStorage('srchLabels');
-      this.jsonlist = searchlabel.all.labels;
+      this.jsonlist = searchlabel.popularSearchLabels.all.labels;
     }
   }
 

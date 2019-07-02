@@ -94,26 +94,6 @@
                                                     </div>
                                                 </ng-container>
                                             </div>
-                                            <!-- <div class="services" *ngIf="servicesjson.length > 0">
-                                              <span class="sub-title">Services Offered</span>
-                                              <ul>
-                                                <ng-container *ngIf="servicesjson.length <=serMaxcnt">
-                                                  <li *ngFor="let serv of servicesjson">{{serv.name}}</li>
-                                                </ng-container>
-                                                <ng-container *ngIf="servicesjson.length > 3">
-                                                    <ng-container *ngFor="let serv of servicesjson; let i = index">
-                                                    <li *ngIf="i<serMaxcnt">{{serv.name}}</li>
-                                                    </ng-container>
-                                                    <li class="viewall" (click)="showallServices()" *ngIf="!viewallServices"><span>More</span></li>
-                                                    <ng-container *ngIf="viewallServices">
-                                                    <ng-container *ngFor="let serv of servicesjson; let j = index" >
-                                                        <li *ngIf="j >= serMaxcnt">{{serv.name}}</li>
-                                                    </ng-container>
-                                                    <li class="viewall" (click)="showallServices()" *ngIf="viewallServices"><span>Less</span></li>
-                                                    </ng-container>
-                                                </ng-container>
-                                              </ul>
-                                          </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -127,27 +107,13 @@
                                 </div>
                             </div>
                             <div class="tp-r">
-                                <!-- <div>{{businessjson.verifyLevel}}</div> -->
-                                <!-- <div *ngIf="businessjson.verifyLevel== 'NONE' && (businessjson.verifyLevel== 'BASIC' || businessjson.verifyLevel== 'BASIC PLUS' || businessjson.verifyLevel== 'PREMIUM')"> -->
-
-                                <!-- <div  *ngIf="businessjson.verifyLevel && businessjson.verifyLevel != 'NONE'"> -->
-                                <!-- <div>
-                                        <span *ngIf="businessjson.verifyLevel == 'BASIC'"><img height="100" width="85"
-                                                src="./assets/images/BasicOrg.png"></span>
-                                        <span *ngIf="businessjson.verifyLevel == 'BASIC PLUS'"><img height="100" width="85"
-                                                src="./assets/images/BasicPlsOrg.png"></span>
-                                        <span *ngIf="businessjson.verifyLevel == 'PREMIUM'"><img height="100" width="85"
-                                                src="./assets/images/PremiumOrg.png"></span>
-                                    </div> -->
                                 <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
                                     <span class="icon-male" *ngIf="genderType=='male'"
                                         [matTooltip]="maleTooltip"></span>
                                     <span class="icon-female" *ngIf="genderType=='female'"
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
-                                <!-- <div [class.femaleicon]="genderType=='female'" [class.maleicon]="genderType=='male'" *ngIf="genderType"></div> -->
-                                <!-- <ul class="side-menu" *ngIf="settings_exists && business_exists && service_exists && gallery_exists && location_exists"> -->
-                                <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
+                               <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
@@ -159,11 +125,8 @@
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isInFav"><span class="icon-favourite-filled"
                                             (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
-                                    <!-- <li><span class="icon-inbox" (click)="redirectMe('inbox')">Inbox <span class="count" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span></span></li> -->
-                                    <li><span class="icon-message" (click)="communicateHandler()"
+                                     <li><span class="icon-message" (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
-                                    <!-- <li><span class="icon-dashboard" (click)="redirectMe('dashboard')">Dashboard</span></li> -->
-
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
                                     <a rel="noopener" [href]="soc.value" target="_blank"
@@ -185,9 +148,6 @@
                                                     <mat-panel-title>
                                                         {{virtualsectionHeader}}
                                                     </mat-panel-title>
-                                                    <!-- <mat-panel-description>
-                                                        Description
-                                                    </mat-panel-description> -->
                                                 </mat-expansion-panel-header>
                                                 <div class="question-main-outer">
                                                     <ng-container *ngFor="let vfield of virtualfieldsCombinedjson">
@@ -222,8 +182,7 @@
                         </ng-container>
                     </div>
                     <ng-container *ngIf="locationjson.length > 0">
-                        <!-- <div class="location" *ngFor ="let loc of locationjson" [@locationjson]="locationjson.length"> -->
-                        <div *ngFor="let loc of locationjson">
+                       <div *ngFor="let loc of locationjson">
                             <div class="location">
                                 <div class="top-sect">
                                     <div class="tp-l">
@@ -277,36 +236,11 @@
                                                 <span class="icon-emergency"></span></li>
                                             <li *ngIf="loc?.locationVirtualFields?.firstaid=='true'"
                                                 [matTooltip]="'First Aid'"><span class="icon-first-aid"></span></li>
-
-                                            <!-- <li><span class="icon-trauma"></span></li>
-                                      <li><span class="icon-emergency"></span></li>
-                                      <li><span class="icon-first-aid"></span></li>
-                                      <li><span class="icon-ambulance"></span></li>
-                                      <li><span class="icon-payment"></span></li> -->
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="bottom-sect pdetail">
-                                    <!-- <div class="bt-l" *ngIf="!settingsjson['onlineCheckIns']">
-                                        <div class="wt-tme notallowed padding-tp-10">
-                                            {{sorry_cap}}
-                                            {{getTerminologyTerm('waitlist')}} {{not_allowed_cap}}
-                                        </div>
-                                    </div> -->
                                     <div class="bt-l">
-                                        <!-- <div class="c-checkin" *ngIf="loc.checkins.length>0">
-                                      <div class="ch-l">
-                                          <span class="ch-title">You have <span class="count">{{loc.checkins.length}} Check-ins</span>  at this location</span>
-                                      </div>
-                                      <div class="ch-r">
-                                          <ol class="check-list">
-                                              <li *ngFor="let chkin of loc.checkins">
-                                                  <span class="service">{{chkin.service.name}}</span> <span class="service-for">for {{getWaitlistingFor(chkin.waitlistingFor)}},</span> scheduled on  <span class="schedule">{{getDateDisplay(chkin.date)}}</span> Estimated Waiting Time is <span class="est-time">{{chkin.appxWaitingTime}} Min(s)</span>
-                                              </li>
-                                          </ol>
-                                      </div>
-                                  </div> -->
-
                                         <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                             <div class="o-now" *ngIf="loc.opennow">
                                                 {{open_now_cap}}</div>
@@ -314,8 +248,6 @@
                                                 *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                                                 <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                                 <span class="time-data">{{loc['estimatedtime_det']['time']}}
-                                                    <!-- <span class="icon-question"
-                                                        [matTooltip]="waitlistestimatetimetooltip"></span> -->
                                                 </span>
                                             </div>
                                             <div

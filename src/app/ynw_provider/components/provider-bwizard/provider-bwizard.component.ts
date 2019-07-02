@@ -203,7 +203,6 @@ export class ProviderbWizardComponent implements OnInit {
       'lat': '',
       'lon': '',
       'address': '',
-      // 'searchstatus': false,
       'accountstatus': '',
       'location': ''
     };
@@ -213,10 +212,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.shared_functions.sendMessage(pdata);
     this.getServices();
     this.getgeneralBusinessSchedules(); // method to fetch the default schedule from the ynwconf API respose
-    // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
-    // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.getUserdetails();
-    // this.getBusinessProfile();
     this.getBusinessConfiguration();
     const package_id = (this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId']) ?
       this.userdet['accountLicenseDetails']['accountLicense']['licPkgOrAddonId'] : null;
@@ -234,7 +230,6 @@ export class ProviderbWizardComponent implements OnInit {
     this.loading_active = true;
     this.resetErrors();
     if (changetostep === 2) {
-      // this.ischange_schedule_clicked = false;
     } else if (changetostep === 4) {
       this.getSearchstatus();
     }
@@ -270,11 +265,6 @@ export class ProviderbWizardComponent implements OnInit {
           'businessDesc': this.wizard_data_holder.summary || ''
         };
 
-        // adding the basic data to the submit_data
-        /* const blob_itemdata1 = new Blob([JSON.stringify(post_itemdata1)], { type: 'application/json' });
-        const submit_data1: FormData = new FormData();
-        submit_data1.append('data', blob_itemdata1);*/
-        // this.provider_services.createPrimaryFields(submit_data1)
         this.provider_services.patchbProfile(post_itemdata1)
           .subscribe(
             data => {
@@ -365,7 +355,6 @@ export class ProviderbWizardComponent implements OnInit {
             'longitude': this.wizard_data_holder.lon || '',
             'lattitude': this.wizard_data_holder.lat || '',
             'googleMapUrl': this.wizard_data_holder.mapurl || '',
-            // 'pinCode': this.wizard_data_holder.pincode || '',
             'address': this.wizard_data_holder.address || '',
             'bSchedule': {
               'timespec': []
@@ -375,7 +364,6 @@ export class ProviderbWizardComponent implements OnInit {
 
         // Check whether atleast one schedule is added. If not setting the base schedule from constants to save it as the schedule for base location
         if (this.schedule_arr.length === 0) {
-          // this.schedule_arr = projectConstants.BASE_SCHEDULE;
           this.setDefaultSchedules();
         }
 
@@ -460,14 +448,6 @@ export class ProviderbWizardComponent implements OnInit {
             }
           }
         };
-        // this.loading_active = false;
-
-        // adding the schedule for the location
-        /* const blob_itemdata3 = new Blob([JSON.stringify(post_itemdata3)], { type: 'application/json' });
-        const submit_data3: FormData = new FormData();
-        submit_data3.append('data', blob_itemdata3);*/
-        // this.provider_services.createPrimaryFields(submit_data3)
-
         this.provider_services.patchbProfile(post_itemdata3)
           .subscribe(
             data => {
@@ -490,14 +470,13 @@ export class ProviderbWizardComponent implements OnInit {
         this.loading_active = false;
         break;
       case 6:
-        // this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
         this.active_step = 5;
         this.loading_active = false;
         break;
-        case 7:
-          this.active_step = 6;
-          this.loading_active = false;
-          break;
+      case 7:
+        this.active_step = 6;
+        this.loading_active = false;
+        break;
     }
   }
   onSubmit(form_data) {
@@ -519,12 +498,6 @@ export class ProviderbWizardComponent implements OnInit {
     let changerequired = false;
     let changeid = -1;
     if (curstep === 3 && changetostep === 4) { // from location to schedule
-      // check whether the is sufficient location details to show the schedule
-      /*if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon  === '' || this.wizard_data_holder.location === '' ) {
-        // case if sufficient info is not there to show the schedule page, so navigate user to the no sufficient page
-        changerequired = true;
-        changeid = 5; // commented since ynw told that schedule page should be shown even if location details are blank
-      }*/
     } else if (curstep === 4 && changetostep === 5) { // from schedule to search
       if (this.wizard_data_holder.lat === '' || this.wizard_data_holder.lon === '' || this.wizard_data_holder.location === '' ||
         this.wizard_data_holder.name === '') {
@@ -602,7 +575,6 @@ export class ProviderbWizardComponent implements OnInit {
       this.wizard_data_holder.lat = obj.baseLocation.lattitude || '';
       this.wizard_data_holder.lon = obj.baseLocation.longitude || '';
       this.wizard_data_holder.address = obj.baseLocation.address || '';
-      // this.wizard_data_holder.pincode =  obj.baseLocation.pinCode || '';
       this.wizard_data_holder.location = obj.baseLocation.place || '';
       this.wizard_data_holder.mapurl = obj.baseLocation.googleMapUrl || '';
       if (this.wizard_data_holder.mapurl === '' && this.wizard_data_holder.lat.trim() !== '' && this.wizard_data_holder.lon.trim !== '') {
@@ -641,12 +613,10 @@ export class ProviderbWizardComponent implements OnInit {
     this.schedule_arr = obj;
     this.display_schedule = this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
     this.disablebuttonsInSchedule = false;
-    // this.ischange_schedule_clicked = false;
   }
   handleCancelschedule(obj) {
     this.handlesSaveschedule(obj);
     this.disablebuttonsInSchedule = false;
-    // this.ischange_schedule_clicked = false;
   }
   handleaddeditscheduleclicked(obj) {
     if (obj === 'addeditclicked') {
@@ -673,23 +643,19 @@ export class ProviderbWizardComponent implements OnInit {
         if (result['status'] === 'selectedonmap') {
           if (result['map_point'].latitude) {
             const mapurl = projectConstants.MAP_BASE_URL + result['map_point'].latitude + ',' + result['map_point'].longitude + '/@' + result['map_point'].latitude + ',' + result['map_point'].longitude + ',15z';
-
             this.wizard_data_holder['lat'] = result['map_point'].latitude || null;
             this.wizard_data_holder['lon'] = result['map_point'].longitude || null;
             this.wizard_data_holder['address'] = result['address'] || null;
-            // this.wizard_data_holder['pincode'] = result['pincode'] || null;
             this.wizard_data_holder['mapurl'] = mapurl || null;
             if (!this.wizard_data_holder['address']) {
               if (this.document.getElementById('locaddress')) {
                 this.document.getElementById('locaddress').focus();
               }
             }
-          //  if (!this.wizard_data_holder['location']) {
-              const addr = result['address'] || null;
-              if (addr) {
-                this.wizard_data_holder['location'] = addr.split(',')[0];
-              }
-           // }
+            const addr = result['address'] || null;
+            if (addr) {
+              this.wizard_data_holder['location'] = addr.split(',')[0];
+            }
           }
         }
       }
@@ -719,10 +685,8 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.getPublicSearch()
       .subscribe(data => {
         if (data) {
-          // this.wizard_data_holder['searchstatus'] = 1;
           this.search_status = 'ENABLE';
         } else {
-          // this.wizard_data_holder['searchstatus'] = 2;
           this.search_status = 'DISABLE';
         }
       });
@@ -742,10 +706,8 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.updatePublicSearch(status)
       .subscribe(() => {
         if (status === 'ENABLE') {
-          // this.wizard_data_holder['searchstatus'] = 1;
           this.search_status = 'ENABLE';
         } else if (status === 'DISABLE') {
-          // this.wizard_data_holder['searchstatus'] = 2;
           this.search_status = 'DISABLE';
         }
       }, error => {
@@ -826,7 +788,6 @@ export class ProviderbWizardComponent implements OnInit {
     } else {
       this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
     }
-    // this.display_schedule =  this.shared_functions.arrageScheduleforDisplay(this.schedule_arr);
   }
   handlekeyup(mod) {
     switch (mod) {
@@ -848,18 +809,13 @@ export class ProviderbWizardComponent implements OnInit {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
-        // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-        // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
-        // taxable: [false],
         notification: [false]
       });
     } else {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
@@ -910,8 +866,6 @@ export class ProviderbWizardComponent implements OnInit {
           }
         },
         () => {
-          // this.shared_functions.apiErrorAutoHide(this, error);
-          // this.amForm.get('isPrePayment').setValue(false);
         }
       );
   }
@@ -932,11 +886,6 @@ export class ProviderbWizardComponent implements OnInit {
         'name': data['name'] || this.amForm.get('name').value,
         'description': data['description'] || this.amForm.get('description').value,
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
-        /*'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
-        'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
-                                data['minPrePaymentAmount'] !== 0
-                                ) ? true : false,
-        'taxable': data['taxable'] || this.amForm.get('taxable').value,*/
         'notification': false,
       });
     } else {
@@ -1300,9 +1249,6 @@ export class ProviderbWizardComponent implements OnInit {
   }
   checkEnumList(questions, submit_data) {
     for (const row of questions) {
-      // if (row.controlType === 'enumlist') {
-      //   submit_data[row.key] = this.changeEnumValues(submit_data[row.key]);
-      // }
     }
     return submit_data;
   }
@@ -1386,10 +1332,8 @@ export class ProviderbWizardComponent implements OnInit {
 
   handleCancel(obj) {
     this.showAddSection1 = false;
-
   }
   handlegridCancel(obj) {
     this.showAddSection = false;
   }
 }
-

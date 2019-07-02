@@ -258,7 +258,7 @@
             </div>
         </div>
         <div style="margin-top: 20px"> Popular Searches:</div>
-        <div class="popular-searches p-popular-info">
+        <div class="popular-searches p-popular-info" style="margin-left: 20px; margin-right: 20px">
             <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme', 'sliding']" [items]="popSearches">
                 <div class="item" *ngFor="let kw of popSearches">
                     <a *ngIf="kw.autoname" (click)="popularClicked(kw)"> {{kw.autoname}}</a>

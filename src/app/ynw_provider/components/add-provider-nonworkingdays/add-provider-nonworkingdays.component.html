@@ -1,36 +1,30 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()"
-  class="ynw-common-form">
+onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
   <h1 class="mat-dialog-title">{{non_working_day_cap}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
-  <app-common-innerloading-spinner  *ngIf="api_loading1">
+  <app-common-innerloading-spinner *ngIf="api_loading1">
   </app-common-innerloading-spinner>
   <mat-dialog-content *ngIf="!api_loading1">
     <div class="form-group col-md-4 no-padding">
-      <!-- <label for="reason" class="col-form-label">{{(data.type === 'edit') ? 'Selected Date' : 'Select Date'}}</label> -->
       <mat-form-field class="selctDte">
-        <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'add'" formControlName="selectdate" [min]="minDate" [max]="maxDate"
-          autocomplete="off" tabindex="-1" placeholder="Select Date (DD/MM/YYYY)">
-          <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'edit'" formControlName="selectdate" [min]="minDate" [max]="maxDate"
-          autocomplete="off" tabindex="-1" placeholder="Selected Date (DD/MM/YYYY)">
+        <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'add'" formControlName="selectdate"
+          [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Select Date (DD/MM/YYYY)">
+        <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'edit'" formControlName="selectdate"
+          [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date (DD/MM/YYYY)">
         <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
       </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')" errorMsg="Please enter valid date">
+      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'selectdate')"
+        errorMsg="Please enter valid date">
       </app-field-error-display>
-      <!-- <div class="pickerouter">
-        <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
-        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-        <input class="form-control" type="text" matInput [matDatepicker]="picker" formControlName="selectdate" [min]="minDate"
-          [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="DD/MM/YYYY">
-      </div> -->
     </div>
     <div class="form-group">
       <mat-form-field>
-        <input type="text" matInput formControlName="reason" class="form-control" autocomplete="off" placeholder="Mention the cause *">
+        <input type="text" matInput id="reason" formControlName="reason" class="form-control" autocomplete="off"
+          placeholder="Mention the cause *">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')" [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
     {
@@ -44,13 +38,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="starttimediv">
           <label for="changeHourStep">{{start_time_cap}}</label>
           <ngb-timepicker formControlName="starttime" meridian="true"></ngb-timepicker>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')" errorMsg="Please enter the start time">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'starttime')"
+            errorMsg="Please enter the start time">
           </app-field-error-display>
         </div>
         <div class="endtimediv">
           <label for="changeHourStep">{{end_time_cap}}</label>
           <ngb-timepicker formControlName="endtime" meridian="true"></ngb-timepicker>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')" errorMsg="Please enter the Closing time">
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'endtime')"
+            errorMsg="Please enter the Closing time">
           </app-field-error-display>
         </div>
       </div>
@@ -60,9 +56,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
     <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}
     </button>
-    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"> </app-common-innerloading-spinner>
+    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+    </app-common-innerloading-spinner>
   </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

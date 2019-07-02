@@ -8,24 +8,10 @@
     <div class="content w-manager">
         <div class="container" *ngIf="waitlist_manager != null">
             <div class="row">
-                    <div class="card p0" *ngIf="loading">
-                            <app-common-innerloading-spinner ></app-common-innerloading-spinner>
-                    </div>
+                <div class="card p0" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
                 <div class="card p0" *ngIf="!loading">
-                    <!-- <div class="hd-t">
-                        <h2>{{accept_online_cap}} {{checkin_label | capitalizeFirst}}</h2>
-                        <div class="ctrl"> -->
-                    <!-- <mat-slide-toggle
-                          class="example-margin"
-                          (change)="changAcceptOnlineCheckin($event)"
-                          [checked]="online_checkin"></mat-slide-toggle> -->
-                    <!-- <mat-slide-toggle class="example-margin" (change)="changAcceptOnlineCheckin($event)"
-                                [(ngModel)]="online_checkin"></mat-slide-toggle>
-                        </div> -->
-                    <!-- <div class="info ml-auto"><i data-icon="B"></i></div> -->
-                    <!-- </div> -->
-
-
                     <div class="copy">
                         <div class="row">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12">
@@ -44,10 +30,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <app-provider-waitlist-online-checkin *ngIf="online_checkin"> -->
                     <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
-
                     </app-provider-waitlist-online-checkin>
                 </div>
             </div>
@@ -97,7 +80,6 @@
                     </span>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

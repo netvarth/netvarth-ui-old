@@ -8,6 +8,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
+import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
 @Component({
   selector: 'app-provider-waitlist-queues',
@@ -119,6 +120,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     private router: Router,
     public provider_shared_functions: ProviderSharedFuctions,
     private shared_services: SharedServices,
+    public fed_service: FormMessageDisplayService,
     private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -583,11 +585,19 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     instantQInput['capacity'] = instantQ.qcapacity;
     instantQInput['queueState'] = 'ENABLED';
     instantQInput['instantQueue'] = true;
+    if (isNaN(instantQ.qcapacity)) {
+      const error = 'Please enter a numeric value for capacity';
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
+    } else if (isNaN(instantQ.qserveonce)) {
+      const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
+    }  else {
     if (this.action === 'edit') {
       this.updateInstantQ(instantQInput);
     } else {
       this.createInstantQ(instantQInput);
     }
+  }
   }
   /**
    * Method to create instant Q

@@ -351,13 +351,13 @@ export class SharedFunctions {
     let retdet = [];
     switch (labeltype) {
       case 'global':
-        retdet = searchlabels_arr.all.labels;
+        retdet = searchlabels_arr.popularSearchLabels.all.labels;
         break;
       case 'domain':
-        Object.keys(searchlabels_arr).forEach(keys => {
+        Object.keys(searchlabels_arr.popularSearchLabels).forEach(keys => {
           const dom = params['domain'];
           if (keys === dom) {
-            for (const labelarr of searchlabels_arr[dom].labels) {
+            for (const labelarr of searchlabels_arr.popularSearchLabels[dom].labels) {
               retdet.push(labelarr);
             }
           }

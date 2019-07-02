@@ -61,7 +61,6 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.getWaitlistMgr();
     this.getLocationCount();
     this.getQueuesCount();
-    // this.getInstantCount();
     this.getServiceCount();
     this.getDepartmentsCount();
     this.getBusinessConfiguration();
@@ -91,7 +90,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
           this.futureDateWaitlist = data['futureDateWaitlist'];
           this.provider_datastorage.set('waitlistManage', data);
         });
-        this.loading = false;
+    this.loading = false;
   }
   getBusinessProfile() {
     this.loading = true;
@@ -102,7 +101,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
           this.provider_datastorage.set('bProfile', data);
 
         });
-        this.loading = false;
+    this.loading = false;
   }
   changAcceptOnlineCheckin(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
@@ -140,7 +139,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         data => {
           this.location_count = data;
         });
-        this.loading = false;
+    this.loading = false;
   }
   getServiceCount() {
     this.loading = true;
@@ -149,7 +148,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         data => {
           this.service_count = data;
         });
-        this.loading = false;
+    this.loading = false;
   }
   getQueuesCount() {
     this.loading = true;
@@ -158,15 +157,9 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         data => {
           this.queues_count = data;
         });
-        this.loading = false;
+    this.loading = false;
   }
-  // getInstantCount() {
-  //   this.provider_services.getInstantCount()
-  //     // .subscribe(
-  //     //   data => {
-  //     //     this.instant_count = data;
-  //     //   });
-  // }
+
   getBusinessConfiguration() {
     this.loading = true;
     this.shared_services.bussinessDomains()
@@ -174,7 +167,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         this.businessConfig = data;
         this.getBussinessProfile();
       });
-      this.loading = false;
+    this.loading = false;
   }
   getBussinessProfile() {
     this.provider_services.getBussinessProfile()
@@ -210,6 +203,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.provider_services.setAcceptOnlineCheckin(is_check)
       .subscribe(
         () => {
+          this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
         },
         error => {
@@ -224,6 +218,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.provider_services.setFutureCheckinStatus(is_check)
       .subscribe(
         () => {
+          this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
         },
         error => {
@@ -238,6 +233,6 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         data => {
           this.departmentCount = data;
         });
-        this.loading = false;
+    this.loading = false;
   }
 }

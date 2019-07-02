@@ -139,7 +139,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.getAllsearchlabels();
     const searchlabel = this.shared_functions.getitemfromLocalStorage('srchLabels');
     if (searchlabel) {
-      this.jsonlist = searchlabel.all.labels;
+      this.jsonlist = searchlabel.popularSearchLabels.all.labels;
     }
     this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
@@ -359,11 +359,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.holdisplaylist['special'] = [];
       for (const label of this.show_searchlabellist) {
         let holdkeyword;
-        if (label.displayName && label.displayName !== '') {
-          holdkeyword = label.displayName.toLowerCase();
+        if (label.displayname && label.displayname !== '') {
+          holdkeyword = label.displayname.toLowerCase();
           if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
             const lbl = label.query.split('&');
-            const labelspec = { autoname: label.displayName, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+            const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
             this.holdisplaylist['label'].push(labelspec);
           }
         }
@@ -385,6 +385,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.displaykeywordList = this.holdisplaylist;
     if (this.kw_autoname === '') {
       this.popularSearchList = this.holdisplaylist;
+      console.log(this.popularSearchList);
       const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
       this.shared_functions.sendMessage(pdata);
       if (this.popularSearchList) {
@@ -493,14 +494,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchlabels_data = srchlabels || [];
       this.searchdataserviceobj.set(this.searchlabels_data);
       this.handledomainchange(this.selected_domain, 1);
-      this.jsonlist = this.searchlabels_data.all.labels;
+      this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
     } else {
       this.shared_service.getAllSearchlabels()
         .subscribe(
           res => {
             this.shared_functions.setitemonLocalStorage('srchLabels', res);
             this.searchlabels_data = res || [];
-            this.jsonlist = this.searchlabels_data.all.labels;
+            this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
             this.searchdataserviceobj.set(this.searchlabels_data);
             this.handledomainchange(this.selected_domain, 1);
           }

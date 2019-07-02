@@ -3875,3 +3875,6 @@ color: midnightblue;
   cursor: pointer !important;
   margin-right: 15px !important;
 }
+.qerrmsg {
+  color: #f24949 !important;
+}

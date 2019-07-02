@@ -4,7 +4,7 @@
     <div class="more-box">
       <p class="pop-search">
         <a class="pointer-cursor" *ngFor="let domain of jsonlist" (click)="popularClicked(domain)">
-          <span *ngIf="domain.displayName">{{domain.displayName}}</span>
+          <span *ngIf="domain.displayname">{{domain.displayname}}</span>
           <span *ngIf="domain.autoname">{{domain.autoname}}</span>
         </a>
       </p>
