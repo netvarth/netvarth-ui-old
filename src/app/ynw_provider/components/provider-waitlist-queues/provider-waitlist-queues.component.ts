@@ -295,6 +295,24 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
             this.disabledQs = [];
             const activeQs = [];
             allQs = data;
+            const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
+            const today = new Date(server_date.split(' ')[0]);
+            const dd = today.getDate();
+            const mm = today.getMonth() + 1;
+            const yyyy = today.getFullYear();
+            let cmon;
+            let cdate;
+            if (mm < 10) {
+              cmon = '0' + mm;
+            } else {
+              cmon = '' + mm;
+            }
+            if (dd < 10) {
+              cdate = '0' + dd;
+            } else {
+              cdate = '' + dd;
+            }
+            const todayDate = yyyy + '-' + cmon + '-' + cdate;
             for (let ii = 0; ii < allQs.length; ii++) {
               let schedule_arr = [];
               // extracting the schedule intervals
@@ -316,6 +334,13 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
               }
               if (allQs[ii].queueState === 'ENABLED') {
                 activeQs.push(allQs[ii]);
+              }
+            }
+            for (let ii = 0; ii < this.disabledQs.length; ii++) {
+              if (!this.disabledQs[ii].instantQueue || (this.disabledQs[ii].instantQueue && this.disabledQs[ii].queueSchedule.startDate === todayDate)) {
+                this.disabledQs[ii].showDisableBtn = true;
+              } else {
+                this.disabledQs[ii].showDisableBtn = false;
               }
             }
             this.provider_shared_functions.setActiveQueues(activeQs);
@@ -751,38 +776,38 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
 
   viewDashboard(queueObj, index, que) {
     this.getTodayCheckinCount(queueObj, index, que);
-    if (!queueObj.instantQueue) {
+    // if (!queueObj.instantQueue) {
       this.getfutureCheckinCount(queueObj, index, que);
       this.getTomorrowCheckinCount(queueObj, index, que);
       this.futureQcountCaption[index] = 'Checkins Count';
       this.todayQcountCaption[index] = 'Checkins Count';
       if (que === 'scheduleQ') {
         if (!this.sqShowFutureCount[index]) {
-           this.sqShowFutureCount[index] = true;
+          this.sqShowFutureCount[index] = true;
         } else {
           this.sqShowFutureCount[index] = false;
-         }
+        }
       } else {
         if (!this.sqShowActiveQFutureCount[index]) {
           this.sqShowActiveQFutureCount[index] = true;
         } else {
-           this.sqShowActiveQFutureCount[index] = false;
-         }
+          this.sqShowActiveQFutureCount[index] = false;
+        }
       }
-     }
-     if (que === 'scheduleQ') {
-       if (!this.sqShowTodayCount[index]) {
-         this.sqShowTodayCount[index] = true;
-       } else {
+    // }
+    if (que === 'scheduleQ') {
+      if (!this.sqShowTodayCount[index]) {
+        this.sqShowTodayCount[index] = true;
+      } else {
         this.sqShowTodayCount[index] = false;
       }
     } else {
-       if (!this.sqShowActiveQTodayCount[index]) {
-         this.sqShowActiveQTodayCount[index] = true;
-       } else {
-         this.sqShowActiveQTodayCount[index] = false;
-       }
-     }
+      if (!this.sqShowActiveQTodayCount[index]) {
+        this.sqShowActiveQTodayCount[index] = true;
+      } else {
+        this.sqShowActiveQTodayCount[index] = false;
+      }
+    }
   }
 
   getfutureCheckinCount(queue, index, origin) {
