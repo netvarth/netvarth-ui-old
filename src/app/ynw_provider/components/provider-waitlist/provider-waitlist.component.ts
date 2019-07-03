@@ -29,6 +29,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   checkin_label = '';
   prevcheckstatus;
   loc_list: any = [];
+  active_user;
   customer_label = '';
   loading = true;
   breadcrumbs = [
@@ -47,6 +48,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private router: Router,
+    private routerobj: Router,
     private shared_functions: SharedFunctions,
     private shared_services: SharedServices) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
@@ -56,6 +58,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
   frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.loading = true;
     this.getBusinessProfile();
     this.getWaitlistMgr();
@@ -190,14 +193,15 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.shared_functions.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/checkinmanager->'+ mod]);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.shared_functions.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': mod };
+  //   return moreOptions;
+  // }
   handle_waitliststatus(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
     this.provider_services.setAcceptOnlineCheckin(is_check)

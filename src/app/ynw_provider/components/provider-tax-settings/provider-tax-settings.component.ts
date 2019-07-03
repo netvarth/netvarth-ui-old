@@ -3,6 +3,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-provider-settings',
@@ -24,6 +25,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
     savetaxEnabled = true;
     errorExist = false;
     taxpercentage;
+    active_user;
     showError: any = [];
     gstnumber;
     taxDetails: any = [];
@@ -34,10 +36,12 @@ export class ProvidertaxSettingsComponent implements OnInit {
     isCheckin;
 
     constructor(private shared_functions: SharedFunctions,
+        private routerobj: Router,
        private provider_services: ProviderServices ) {
 
     }
     ngOnInit() {
+        this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.resetApi();
 this.getTaxpercentage();
@@ -118,15 +122,16 @@ this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing' }
             };
         }
     }
-    getMode(mod) {
-        let moreOptions = {};
-        moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-        return moreOptions;
-    }
+    // getMode(mod) {
+    //     let moreOptions = {};
+    //     moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+    //     return moreOptions;
+    // }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-        this.shared_functions.sendMessage(pdata);
+        this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->tax-settings']);
+        // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        // this.shared_functions.sendMessage(pdata);
     }
 }
 

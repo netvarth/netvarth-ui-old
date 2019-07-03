@@ -57,9 +57,11 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   showmobileSubmenu = false;
   showlocation = false;
   queues;
+  active_user;
   calculationmode;
   showToken = false;
   ngOnInit() {
+     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getLocationList();
     // this.getProviderLocationQueues();
     this.selected_location = this.shared_functions.getitemfromLocalStorage('loc_id');
@@ -357,19 +359,23 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/learnmore']);
     // this.shared_functions.sendMessage(pdata);
   }
+
   getMode(mod) {
     switch (mod) {
       case 'checkin':
-        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
+      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/checkin']);
+        // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
         break;
       case 'customer':
-        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
+      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/customer']);
+        // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
         break;
       case 'kiosk':
-        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
+      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/kiosk']);
+        // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
         break;
       case 'help':
-        this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'help' };
+      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/profile-search->public-search']);
         break;
     }
     return this.moreOptions;

@@ -29,6 +29,28 @@ export class HealthcareLearnmoreComponent implements OnInit, OnDestroy {
     if (this.target) {
       // this.triggerScrollTo(this.target);
     }
+    this.activated_route.paramMap
+      .subscribe(params => {
+        const group = params.get('parent').split('->');
+        const parent = group[0];
+        let child;
+        if(group.length>1){
+         child = group[1];
+        }  else {
+          child=parent;
+        }
+        console.log(parent);
+        console.log(child);
+        this.handleScroll(child,parent)
+        // if (passid) {
+        //   if (passid === 'mobile') {
+        //     this.showheaderandfooter = false;
+        //   } else {
+        //     this.showheaderandfooter = true;
+        //   }
+        // } else {
+        // }
+      });
   }
   ngOnDestroy() {
     // window.removeEventListener('scroll', this.scroll, true);

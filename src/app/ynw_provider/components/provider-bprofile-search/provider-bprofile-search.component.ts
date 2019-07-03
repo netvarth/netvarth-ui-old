@@ -264,6 +264,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   editMode = 3;
   customForm: FormGroup;
   custId;
+  active_user;
   current_license;
 
   constructor(private provider_services: ProviderServices,
@@ -272,6 +273,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions,
     private sanitizer: DomSanitizer, private fb: FormBuilder,
     private dialog: MatDialog,
+    public shared_functions: SharedFunctions,
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
@@ -281,6 +283,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
@@ -1688,14 +1691,15 @@ this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionobj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/profile-search->'+ mod]);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionobj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'bprofile', 'subKey': mod };
+  //   return moreOptions;
+  // }
 
   editCustomId(customId?) {
     this.normal_customid_show = 1;

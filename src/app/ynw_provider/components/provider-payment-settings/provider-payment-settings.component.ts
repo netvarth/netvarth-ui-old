@@ -93,6 +93,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     customer_label = '';
     payment_set_cap = '';
     isCheckin;
+    active_user;
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
 
     breadcrumbs = [
@@ -124,6 +125,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         });
     }
     ngOnInit() {
+        this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
@@ -143,18 +145,19 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      */
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-        this.shared_functions.sendMessage(pdata);
+        this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/payment']);
+        // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        // this.shared_functions.sendMessage(pdata);
     }
     /**
      * Get target for the learnmore
      * @param mod id of the section
      */
-    getMode(mod) {
-        let moreOptions = {};
-        moreOptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings', 'subKey': mod };
-        return moreOptions;
-    }
+    // getMode(mod) {
+    //     let moreOptions = {};
+    //     moreOptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings', 'subKey': mod };
+    //     return moreOptions;
+    // }
     /**
     * Clear all fields
     * @param code field name

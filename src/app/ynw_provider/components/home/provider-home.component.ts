@@ -182,6 +182,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   hideServiceBillCount = 0;
   showEditView = false;
   calculationmode;
+  active_user;
   showToken = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -226,6 +227,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getDomainSubdomainSettings();
     this.getServiceList();
     this.breadcrumb_moreoptions = {
@@ -1130,9 +1132,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (kCode === 13) { this.doSearch(); }
   }
   learnmore_clicked() {
-    const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
-    const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
-    this.shared_functions.sendMessage(pdata);
+    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/dashboard']);
+    // const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
+    // const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
+    // this.shared_functions.sendMessage(pdata);
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');

@@ -5,6 +5,7 @@ import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderDiscountsComponent } from '../add-provider-discounts/add-provider-discounts.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-discounts',
@@ -39,13 +40,18 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   adddiscdialogRef;
   remdiscdialogRef;
   isCheckin;
+  active_user;
   constructor(private provider_servicesobj: ProviderServices,
+    
     private dialog: MatDialog,
+    private router: Router,
+    public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('DISCOUNT_LISTEMPTY');
   }
 
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
@@ -144,12 +150,13 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
 
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionObj.sendMessage(pdata);
+    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->discount']);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+  //   return moreOptions;
+  // }
 }

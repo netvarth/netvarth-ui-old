@@ -82,6 +82,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'license' };
   upgradedialogRef;
   addondialogRef;
+  active_user;
   lichistorydialogRef;
   addonhistorydialogRef;
   licenseusedialogRef;
@@ -91,6 +92,8 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions,
     private route: ActivatedRoute,
+    private shared_functions: SharedFunctions,
+    private routerobj: Router,
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document) {
     this.onResize();
@@ -105,6 +108,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.loading = true;
     this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
     this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
@@ -429,14 +433,15 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/license->'+ mod]);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
+  //   return moreOptions;
+  // }
   makePayment(invoice) {
     this.pay_data.amount = invoice.amount;
     this.pay_data.uuid = invoice.ynwUuid;

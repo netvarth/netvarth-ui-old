@@ -45,13 +45,16 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   statuschangedialogRef;
   removeitemdialogRef;
   isCheckin;
+  active_user;
   constructor(private provider_servicesobj: ProviderServices,
+    public shared_functions: SharedFunctions,
     private router: Router, private dialog: MatDialog,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
   }
 
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getitems();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
@@ -192,12 +195,12 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionObj.sendMessage(pdata);
+    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->items']);
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+  //   return moreOptions;
+  // }
 }

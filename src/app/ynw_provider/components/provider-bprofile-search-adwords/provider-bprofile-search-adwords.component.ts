@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-bprofile-search-adwords',
@@ -35,17 +36,21 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
   remadwdialogRef;
   adwdialogRef;
+  active_user;
 
   customer_label = '';
   frm_adword_cap = '';
 
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
+    private shared_functions: SharedFunctions,
+    private routerobj: Router,
     private sharedfunctionObj: SharedFunctions) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
     this.getTotalAllowedAdwordsCnt();
     this.frm_adword_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG.replace('[customer]', this.customer_label);
@@ -168,12 +173,13 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/license->adwords']);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };
+  //   return moreOptions;
+  // }
 }

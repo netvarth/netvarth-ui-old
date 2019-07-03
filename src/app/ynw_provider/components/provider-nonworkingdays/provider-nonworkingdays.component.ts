@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderNonworkingdaysComponent } from '../add-provider-nonworkingdays/add-provider-nonworkingdays.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-nonworkingdays',
@@ -43,13 +44,17 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   addholdialogRef;
   editholdialogRef;
   remholdialogRef;
+  active_user;
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
+    private routerobj: Router,
+    private shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
 
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
@@ -154,12 +159,13 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/miscellaneous']);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': mod };
+  //   return moreOptions;
+  // }
 }

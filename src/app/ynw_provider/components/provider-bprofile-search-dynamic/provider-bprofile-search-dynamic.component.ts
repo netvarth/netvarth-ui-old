@@ -4,6 +4,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-bprofile-search-dynamic',
@@ -21,15 +22,18 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
   title = null;
   subdomain = null;
   api_error = null;
+  active_user;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private service: QuestionService,
+    private routerobj: Router,
     public shared_functions: SharedFunctions,
     public dialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
     this.grid_row_index = this.data['grid_row_index'];
@@ -276,6 +280,12 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
 
   resetApiError() {
     this.api_error = null;
+  }
+  learnmore_clicked(mod, e) {
+    e.stopPropagation();
+    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/profile-search->additional-info']);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionobj.sendMessage(pdata);
   }
 
 }

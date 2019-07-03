@@ -56,14 +56,17 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   editcoupdialogRef;
   confirmremdialogRef;
   errorExist = false;
+  active_user;
   frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
   frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
+    public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
@@ -201,13 +204,14 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    this.sharedfunctionObj.sendMessage(pdata);
+    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->coupon']);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
-  getMode(mod) {
-    let moreOptions = {};
-    moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-    return moreOptions;
-  }
+  // getMode(mod) {
+  //   let moreOptions = {};
+  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
+  //   return moreOptions;
+  // }
 }
 

@@ -33,14 +33,14 @@
                             <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
                                 {{checkin_label |capitalizeFirst}}</span>
                             <span *ngIf="calculationmode=='NoCalc' && showToken"> Get Token</span>
-                        </button><i data-icon="B" id="checkin-help" (click)="learnmore_clicked('checkin')"></i></span>
+                        </button><i data-icon="B" id="checkin-help" (click)="getMode('checkin')"></i></span>
                     <span class="top-help-icon"><button class="cs-btn bt4" (click)="searchCustomer('createCustomer')"><i
                                 data-icon="u"></i> {{create_cap}} {{customer_label | capitalizeFirst}}</button><i
-                            data-icon="B" id="customer-help" (click)="learnmore_clicked('customer')"></i></span>
+                            data-icon="B" id="customer-help" (click)="getMode('customer')"></i></span>
                     <span class="top-help-icon" *ngIf="kiosk_active"><a routerLink="/kiosk">
                             <div class="cs-btn bt4"><i data-icon="A"></i> Kiosk</div>
-                        </a><i data-icon="B" id="kiosk-help" (click)="learnmore_clicked('kiosk')"></i></span>
-                    <span class="top-help-icon"> <a routerLink="/provider/learnmore">
+                        </a><i data-icon="B" id="kiosk-help" (click)="getMode('kiosk')"></i></span>
+                    <span class="top-help-icon"> <a (click)="getMode('help')">
                             <div class="cs-btn bt4"><i data-icon="u"></i> {{help_cap}}</div>
                         </a></span>
                 </div>
