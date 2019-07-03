@@ -255,7 +255,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           for (const waitlist of this.waitlists) {
 
             const waitlist_date = new Date(waitlist.date);
-
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
 
@@ -324,11 +323,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     } else {
+      let time = [];
+      let time1 = [];
+      let t2 ;
       appx_ret.caption = 'Checked in for';
       appx_ret.date = waitlist.date;
       appx_ret.time = waitlist.queue.name + ' [' + waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime + ']';
-      appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime).format('YYYY-MM-DD');
-      appx_ret.cancelled_time = moment(waitlist.statusUpdatedTime).format('hh:mm A');
+      appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime,'YYYY-MM-DD').format();
+      time = waitlist.statusUpdatedTime.split('-');
+      time1 = time[2].trim();
+      t2 = time1.slice(2);
+      console.log(t2);
+      appx_ret.cancelled_time = t2;
       appx_ret.cancelled_caption = 'Cancelled at ';
     }
     return appx_ret;
@@ -341,6 +347,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
       return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
     }*/
+  }
+  formatTime(time) {
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return  strTime;
   }
 
   AMHourto24(date, time12) {
