@@ -348,6 +348,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
     }*/
   }
+  
   formatTime(time) {
     var hours = time.getHours();
     var minutes = time.getMinutes();
