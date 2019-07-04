@@ -195,7 +195,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->items']);
+    this.router.navigate(['/provider/learnmore/billing->items']);
     // this.sharedfunctionObj.sendMessage(pdata);
   }
   // getMode(mod) {

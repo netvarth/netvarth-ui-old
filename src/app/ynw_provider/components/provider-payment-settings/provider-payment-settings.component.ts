@@ -145,7 +145,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      */
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/payment']);
+        this.router.navigate(['/provider/learnmore/payment']);
         // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
         // this.shared_functions.sendMessage(pdata);
     }

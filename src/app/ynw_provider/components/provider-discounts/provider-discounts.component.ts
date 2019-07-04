@@ -150,7 +150,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
 
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->discount']);
+    this.router.navigate(['/provider/learnmore/billing->discount']);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionObj.sendMessage(pdata);
   }

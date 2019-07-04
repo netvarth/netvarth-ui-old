@@ -162,9 +162,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
           break;
         case 'learn_more':
-          this.showLearnMore = true;
-          this.scrollhideclass.emit(false);
-          this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
+          // this.showLearnMore = true;
+          // this.scrollhideclass.emit(false);
+          // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
+          this.router.navigate(['/provider/learnmore/' + message.target.scrollKey]);
           break;
         case 'instant_q':
           this.qAvailability = message.qAvailability;
@@ -211,7 +212,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isAvailableNow();
       this.getLicenseDetails();
     }
-    if (this.jsonlist && this.ctype != 'provider') {
+    if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
     this.carouselOne = {
@@ -227,7 +228,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       touchDrag: true,
       pullDrag: true,
       autoWidth: true,
-      autoHeight:true
+      autoHeight: true
     };
   }
   getLicenseDetails(call_type = 'init') {

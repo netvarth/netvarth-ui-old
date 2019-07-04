@@ -129,7 +129,7 @@ this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing' }
     // }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/billing->tax-settings']);
+        this.routerobj.navigate(['/provider/learnmore/billing->tax-settings']);
         // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
         // this.shared_functions.sendMessage(pdata);
     }

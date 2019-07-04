@@ -41,7 +41,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
       title: Messages.WAITLIST_MANAGE_CAP
     }
   ];
-  breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager' };
+  breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager', 'subKey': 'settings' };
   subscription: Subscription;
   isCheckin;
   futureDateWaitlist = false;
@@ -193,7 +193,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/checkinmanager->'+ mod]);
+    this.routerobj.navigate(['/provider/learnmore/checkinmanager->' + mod]);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.shared_functions.sendMessage(pdata);
   }

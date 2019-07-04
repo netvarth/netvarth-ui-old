@@ -173,7 +173,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/license->adwords']);
+    this.routerobj.navigate(['/provider/learnmore/license->adwords']);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionObj.sendMessage(pdata);
   }

@@ -1691,7 +1691,7 @@ this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/profile-search->'+ mod]);
+    this.routerobj.navigate(['/provider/learnmore/profile-search->' + mod]);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionobj.sendMessage(pdata);
   }

@@ -283,7 +283,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/' + this.active_user.sector + '/profile-search->additional-info']);
+    this.routerobj.navigate(['/provider/learnmore/profile-search->additional-info']);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionobj.sendMessage(pdata);
   }

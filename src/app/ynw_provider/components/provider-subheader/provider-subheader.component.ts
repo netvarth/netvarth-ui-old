@@ -363,19 +363,19 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   getMode(mod) {
     switch (mod) {
       case 'checkin':
-      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/checkin']);
+      this.router.navigate(['/provider/learnmore/checkin']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
         break;
       case 'customer':
-      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/customer']);
+      this.router.navigate(['/provider/learnmore/customer']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
         break;
       case 'kiosk':
-      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/kiosk']);
+      this.router.navigate(['/provider/learnmore/kiosk']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
         break;
       case 'help':
-      this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/profile-search->public-search']);
+      this.router.navigate(['/provider/learnmore/profile-search->public-search']);
         break;
     }
     return this.moreOptions;

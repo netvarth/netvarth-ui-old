@@ -39,11 +39,11 @@ export class DepartmentsComponent implements OnInit {
         this.loading = true;
         this.getDepartments();
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': 'timewindow', 'classname': 'b-queue',
+            'show_learnmore': true, 'scrollKey': 'checkinmanager', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' }]
         };
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
-        //this.loading = false;
+        // this.loading = false;
     }
     gotoDepartmentDetails(dept) {
         this.router.navigate(['provider', 'settings', 'waitlist-manager',

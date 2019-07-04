@@ -48,7 +48,7 @@ export class ProviderCustomersComponent implements OnInit {
   isCheckin;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   loadComplete = false;
-  minday= new Date(2015, 0, 1);
+  minday = new Date(2015, 0, 1);
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
@@ -137,8 +137,7 @@ export class ProviderCustomersComponent implements OnInit {
     this.getCustomersList();
     if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
       this.filterapplied = true;
-    }
-    else {
+    } else {
       this.filterapplied = false;
     }
   }
@@ -164,7 +163,6 @@ export class ProviderCustomersComponent implements OnInit {
 
   setFilterForApi() {
     const api_filter = {};
-    
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }

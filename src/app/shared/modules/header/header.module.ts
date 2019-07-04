@@ -9,7 +9,6 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 // import { MatIconModule } from '@angular/material/icon';
 
 import { HeaderComponent } from './header.component';
-import { LearnmoreModule } from '../learnmore/learnmore.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';

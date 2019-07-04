@@ -1132,7 +1132,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (kCode === 13) { this.doSearch(); }
   }
   learnmore_clicked() {
-    this.router.navigate(['/provider/learnmore/' + this.active_user.sector + '/dashboard']);
+    this.router.navigate(['/provider/learnmore/dashboard']);
     // const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
     // const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
     // this.shared_functions.sendMessage(pdata);

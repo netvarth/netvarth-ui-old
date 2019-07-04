@@ -43,6 +43,7 @@ export class BreadCrumbComponent implements OnInit, OnChanges {
     learnmore_clicked() {
         const pdata = { 'ttype': 'learn_more', 'target': this.moreOptions };
         this.sharedfunctionObj.sendMessage(pdata);
+
     }
 
 }
