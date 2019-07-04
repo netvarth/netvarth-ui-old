@@ -303,7 +303,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     this.getBusinessConfiguration();
     this.getGalleryImages();
     this.getProviderLocations();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'bprofile' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
 
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);

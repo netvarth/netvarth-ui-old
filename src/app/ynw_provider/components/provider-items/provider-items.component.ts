@@ -56,7 +56,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getitems();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->items' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {

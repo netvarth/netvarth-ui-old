@@ -304,11 +304,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
   performActions(action) {
-    if (action === 'adjustdelay') {
-      this.showAdjustDelay();
-    } else if (action === 'adjustdelay_learnmore') {
-      this.learnmore_clicked();
-    }
+this.router.navigate(['/provider/learnmore/adjustdelay']);
+
+    // if (action === 'adjustdelay') {
+    //   this.showAdjustDelay();
+    // } else if (action === 'adjustdelay_learnmore') {
+    //   this.learnmore_clicked();
+    // }
   }
   ngOnDestroy() {
     if (this.cronHandle) {

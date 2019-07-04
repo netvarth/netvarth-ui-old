@@ -42,7 +42,6 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   isCheckin;
   active_user;
   constructor(private provider_servicesobj: ProviderServices,
-    
     private dialog: MatDialog,
     private router: Router,
     public shared_functions: SharedFunctions,
@@ -53,7 +52,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->discount' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 

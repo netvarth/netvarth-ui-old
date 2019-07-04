@@ -69,7 +69,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->coupon' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {

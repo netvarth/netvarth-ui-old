@@ -45,7 +45,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.resetApi();
 this.getTaxpercentage();
-this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing' };
+this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->tax-settings' };
     }
 
     getTaxpercentage() {
