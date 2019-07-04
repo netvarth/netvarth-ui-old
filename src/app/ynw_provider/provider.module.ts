@@ -61,14 +61,14 @@ import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { ProviderBprofileSearchDynamicComponent } from './components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
-import { HealthcareLearnmoreComponent } from './components/healthcare_learnmore/healthcare_learnmore.component';
-import { PersonalCareLearnmoreComponent } from './components/personalcare_learnmore/personalcare_learnmore.component';
-import { ProfessionalLearnmoreComponent } from './components/professional_learnmore/professional_learnmore.component';
-import { VastuLearnmoreComponent } from './components/vastu_learnmore/vastu_learnmore.component';
-import { ReligiousLearnmoreComponent } from './components/religious_learnmore/religious_learnmore.component';
-import { FoodjointsLearnmoreComponent } from './components/food_learnmore/food_learnmore.component';
-import { FinanceLearnmoreComponent } from './components/finance_learnmore/finance_learnmore.component';
-import { VeterinaryLearnmoreComponent } from './components/veterinary_learnmore/veterinary_learnmore.component';
+import { HealthcareLearnmoreComponent } from './components/help/healthcare_learnmore/healthcare_learnmore.component';
+import { PersonalCareLearnmoreComponent } from './components/help/personalcare_learnmore/personalcare_learnmore.component';
+import { ProfessionalLearnmoreComponent } from './components/help/professional_learnmore/professional_learnmore.component';
+import { VastuLearnmoreComponent } from './components/help/vastu_learnmore/vastu_learnmore.component';
+import { ReligiousLearnmoreComponent } from './components/help/religious_learnmore/religious_learnmore.component';
+import { FoodjointsLearnmoreComponent } from './components/help/food_learnmore/food_learnmore.component';
+import { FinanceLearnmoreComponent } from './components/help/finance_learnmore/finance_learnmore.component';
+import { VeterinaryLearnmoreComponent } from './components/help/veterinary_learnmore/veterinary_learnmore.component';
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -132,7 +132,7 @@ import { VeterinaryLearnmoreComponent } from './components/veterinary_learnmore/
 
 
   ],
-  exports: [ConfirmBoxComponent,ConfirmPaymentBoxComponent],
+  exports: [ConfirmBoxComponent, ConfirmPaymentBoxComponent],
   entryComponents: [
     ConfirmBoxComponent,
     ConfirmPaymentBoxComponent,
