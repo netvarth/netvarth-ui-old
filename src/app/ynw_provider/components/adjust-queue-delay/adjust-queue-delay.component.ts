@@ -104,9 +104,17 @@ export class AdjustQueueDelayComponent implements OnInit {
       );
   }
   onSubmit(form_data) {
+    this.resetApiErrors();
+
+    if(form_data.send_message){
+      if (!form_data.message.replace(/\s/g, '').length) {
+        this.api_error = 'Message cannot be empty';
+        return;
+      }
+    }
     this.disableButton = true;
     const time = this.getTimeinMin();
-    // if (time !== 0) {
+       // if (time !== 0) {
     const post_data = {
       'delayDuration': time,
       'sendMsg': form_data.send_message,
@@ -172,6 +180,10 @@ export class AdjustQueueDelayComponent implements OnInit {
   }
   isInRange(evt) {
     return this.sharedfunctionObj.isInRange(evt);
+  }
+  resetApiErrors() {
+    this.api_error = null;
+    this.api_success = null;
   }
   // isNumeric(evt) {
   //   return this.sharedfunctionObj.isNumeric(evt);

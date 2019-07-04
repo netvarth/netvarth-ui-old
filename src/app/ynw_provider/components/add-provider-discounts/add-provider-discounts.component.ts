@@ -97,6 +97,10 @@ export class AddProviderDiscountsComponent implements OnInit {
         }
         return;
       }
+      if (!form_data.name.replace(/\s/g, '').length) {
+        this.api_error = 'Please enter discount name';
+        return;
+      }
       if (form_data.calculationType === 'Percentage') {
         if (form_data.discValue < 0 || form_data.discValue > 100) {
           this.api_error = 'Discount percentage should be between 0 and 100';
