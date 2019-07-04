@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LearnmoreRoutingModule } from './learnmore_routing.module';
-import { VastuLearnmoreComponent } from '../../../../ynw_provider/components/vastu_learnmore/vastu_learnmore.component';
+import { VastuLearnmoreComponent } from '../../../components/help/vastu_learnmore/vastu_learnmore.component';
 
 
 

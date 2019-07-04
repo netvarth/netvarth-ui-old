@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LearnmoreRoutingModule } from './learnmore_routing.module';
-import { VeterinaryLearnmoreComponent } from '../../../../ynw_provider/components/veterinary_learnmore/veterinary_learnmore.component';
+import { VeterinaryLearnmoreComponent } from '../../../components/help/veterinary_learnmore/veterinary_learnmore.component';
 
 
 

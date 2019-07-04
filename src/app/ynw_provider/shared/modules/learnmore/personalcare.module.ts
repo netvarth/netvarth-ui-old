@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LearnmoreRoutingModule } from './learnmore_routing.module';
-import { PersonalCareLearnmoreComponent } from '../../../../ynw_provider/components/personalcare_learnmore/personalcare_learnmore.component';
+import { PersonalCareLearnmoreComponent } from '../../../components/help/personalcare_learnmore/personalcare_learnmore.component';
 
 
 // import { SearchDataStorageService  } from '../../services/search-datastorage.services';

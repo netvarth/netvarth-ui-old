@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LearnmoreRoutingModule } from './learnmore_routing.module';
-import { ProfessionalLearnmoreComponent } from '../../../../ynw_provider/components/professional_learnmore/professional_learnmore.component';
+import { ProfessionalLearnmoreComponent } from '../../../components/help/professional_learnmore/professional_learnmore.component';
 
 
 // import { SearchDataStorageService  } from '../../services/search-datastorage.services';

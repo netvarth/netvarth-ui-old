@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HealthcareLearnmoreComponent } from '../../../../ynw_provider/components/healthcare_learnmore/healthcare_learnmore.component';
+import { HealthcareLearnmoreComponent } from '../../../components/help/healthcare_learnmore/healthcare_learnmore.component';
 import { LearnmoreRoutingModule } from './learnmore_routing.module';
 
 

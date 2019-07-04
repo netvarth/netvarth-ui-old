@@ -1,71 +1,60 @@
-      <!-- <h1 class="mat-dialog-title">Learn More
-        <button #queue mat-dialog-close class="modal_close" tabindex="-1">
-            <i class="fa fa-window-close" aria-hidden="true"></i>
-        </button>
-      </h1>
-      <mat-dialog-content> --> 
-          <div *ngIf="ctype=='provider'">
-        
-       <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub==''">
-         <ul class='index-ul'>
-            <li (click)="sethelpSub('bprofile')">Profile & Search</li>
-            <li (click)="sethelpSub('waitlistmanager')">Check-In Manager</li>
-            <li (click)="sethelpSub('checkin')">Checkin</li>
-            <li (click)="sethelpSub('customer')">Customer</li>
-            <li (click)="sethelpSub('kiosk')" *ngIf="curtype!='finance'">Kiosk</li>
-            <li (click)="sethelpSub('license')">License</li>
-            <li (click)="sethelpSub('adjustdelay')">Adjust Delay</li>
-            <li (click)="sethelpSub('miscellaneous')">Miscellaneous</li>
-            <li (click)="sethelpSub('dashboard')">Dashboard</li>
-            <li (click)="sethelpSub('paymentsettings')">Payment Settings</li>
-            <li (click)="sethelpSub('billing')">Billing/POS</li>
-            <li (click)="sethelpSub('providerprofile')">Provider Profile</li>
-            <li (click)="sethelpSub('downpaneloptions')">Down panel options</li>
-         </ul>
-       </div>
-       <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub !=''" (click)="sethelpSub('')"><span class="back-to-index">Back to Index</span></div>
-
-
-        <!-- Bprofile -->
-        <app-bprofile-learnmore [target]="subKey" *ngIf="destination=='bprofile' || helpSub =='bprofile'"></app-bprofile-learnmore>
-        
-        <!-- Check-In Manager -->
-        <app-waitlistmanager-learnmore [target]="subKey" *ngIf="destination=='waitlistmanager' || helpSub =='waitlistmanager'"></app-waitlistmanager-learnmore>
-
-        <!-- Checkins -->
-        <app-checkin-learnmore [target]="'checkin'" *ngIf="destination=='checkin' || helpSub =='checkin'"></app-checkin-learnmore>
-
-        <!-- Customer -->
-        <app-customer-learnmore [target]="'customer'" *ngIf="destination=='customer' || helpSub =='customer'"></app-customer-learnmore>
-
-        <!-- Kiosk -->
-        <app-kiosk-learnmore [target]="'kiosk'" *ngIf="destination=='kiosk' || helpSub =='kiosk'"></app-kiosk-learnmore>
-
-        <!-- License -->
-        <app-license-learnmore [target]="subKey" *ngIf="destination=='license' || helpSub =='license'"></app-license-learnmore>
-        <!-- Delay -->
-        <app-adjustdelay-learnmore [target]="'adjustdelay'" *ngIf="destination=='adjustdelay' || helpSub =='adjustdelay'"></app-adjustdelay-learnmore>
-
-        <!-- Delay -->
-        <app-miscellaneous-learnmore [target]="'miscellaneous'" *ngIf="destination=='miscellaneous' || helpSub =='miscellaneous'"></app-miscellaneous-learnmore>
-        <!-- Dashboard -->
-        <app-learnmore-dashboard [target]="'dashboard'" *ngIf="destination=='dashboard' || helpSub =='dashboard'"></app-learnmore-dashboard>
-
-        <!-- Paymentsettings -->
-        <app-learnmore-paymentsettings [target]="'paymentsettings'" *ngIf="destination=='paymentsettings' || helpSub =='paymentsettings'"></app-learnmore-paymentsettings>
-
-        <!-- Billing/POS -->
-        <app-learnmore-billing [target]="'billing'" *ngIf="destination=='billing' || helpSub =='billing'"></app-learnmore-billing>
-
-        <app-learnmore-provider-profile [target]="'providerprofile'" *ngIf="destination=='providerprofile' || helpSub =='providerprofile'"></app-learnmore-provider-profile>
-
-        <app-learnmore-downpanel-options [target]="'downpaneloptions'" *ngIf="destination=='downpaneloptions' || helpSub =='downpaneloptions'"></app-learnmore-downpanel-options>
-      </div>
-      <div *ngIf="ctype!=='provider'">
-          <app-consumer-learnmore></app-consumer-learnmore>
-      </div>
-
-      <!-- </mat-dialog-content>
-      <mat-dialog-actions>
-        <button  type="button" mat-dialog-close class="cs-btn bt2">Close</button>
-      </mat-dialog-actions> -->
+<div *ngIf="ctype=='provider'">
+  <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub==''">
+    <ul class='index-ul'>
+      <li (click)="sethelpSub('bprofile')">Profile & Search</li>
+      <li (click)="sethelpSub('waitlistmanager')">Check-In Manager</li>
+      <li (click)="sethelpSub('checkin')">Checkin</li>
+      <li (click)="sethelpSub('customer')">Customer</li>
+      <li (click)="sethelpSub('kiosk')" *ngIf="curtype!='finance'">Kiosk</li>
+      <li (click)="sethelpSub('license')">License</li>
+      <li (click)="sethelpSub('adjustdelay')">Adjust Delay</li>
+      <li (click)="sethelpSub('miscellaneous')">Miscellaneous</li>
+      <li (click)="sethelpSub('dashboard')">Dashboard</li>
+      <li (click)="sethelpSub('paymentsettings')">Payment Settings</li>
+      <li (click)="sethelpSub('billing')">Billing/POS</li>
+      <li (click)="sethelpSub('providerprofile')">Provider Profile</li>
+      <li (click)="sethelpSub('downpaneloptions')">Down panel options</li>
+    </ul>
+  </div>
+  <div class="help-mainouter-index" *ngIf="destination=='help' && helpSub !=''" (click)="sethelpSub('')"><span
+      class="back-to-index">Back to Index</span></div>
+  <!-- Bprofile -->
+  <app-bprofile-learnmore [target]="subKey" *ngIf="destination=='bprofile' || helpSub =='bprofile'">
+  </app-bprofile-learnmore>
+  <!-- Check-In Manager -->
+  <app-waitlistmanager-learnmore [target]="subKey"
+    *ngIf="destination=='waitlistmanager' || helpSub =='waitlistmanager'"></app-waitlistmanager-learnmore>
+  <!-- Checkins -->
+  <app-checkin-learnmore [target]="'checkin'" *ngIf="destination=='checkin' || helpSub =='checkin'">
+  </app-checkin-learnmore>
+  <!-- Customer -->
+  <app-customer-learnmore [target]="'customer'" *ngIf="destination=='customer' || helpSub =='customer'">
+  </app-customer-learnmore>
+  <!-- Kiosk -->
+  <app-kiosk-learnmore [target]="'kiosk'" *ngIf="destination=='kiosk' || helpSub =='kiosk'"></app-kiosk-learnmore>
+  <!-- License -->
+  <app-license-learnmore [target]="subKey" *ngIf="destination=='license' || helpSub =='license'">
+  </app-license-learnmore>
+  <!-- Delay -->
+  <app-adjustdelay-learnmore [target]="'adjustdelay'" *ngIf="destination=='adjustdelay' || helpSub =='adjustdelay'">
+  </app-adjustdelay-learnmore>
+  <!-- Delay -->
+  <app-miscellaneous-learnmore [target]="'miscellaneous'"
+    *ngIf="destination=='miscellaneous' || helpSub =='miscellaneous'"></app-miscellaneous-learnmore>
+  <!-- Dashboard -->
+  <app-learnmore-dashboard [target]="'dashboard'" *ngIf="destination=='dashboard' || helpSub =='dashboard'">
+  </app-learnmore-dashboard>
+  <!-- Paymentsettings -->
+  <app-learnmore-paymentsettings [target]="'paymentsettings'"
+    *ngIf="destination=='paymentsettings' || helpSub =='paymentsettings'"></app-learnmore-paymentsettings>
+  <!-- Billing/POS -->
+  <app-learnmore-billing [target]="'billing'" *ngIf="destination=='billing' || helpSub =='billing'">
+  </app-learnmore-billing>
+  <app-learnmore-provider-profile [target]="'providerprofile'"
+    *ngIf="destination=='providerprofile' || helpSub =='providerprofile'"></app-learnmore-provider-profile>
+  <app-learnmore-downpanel-options [target]="'downpaneloptions'"
+    *ngIf="destination=='downpaneloptions' || helpSub =='downpaneloptions'"></app-learnmore-downpanel-options>
+</div>
+<div *ngIf="ctype!=='provider'">
+  <app-consumer-learnmore></app-consumer-learnmore>
+</div>

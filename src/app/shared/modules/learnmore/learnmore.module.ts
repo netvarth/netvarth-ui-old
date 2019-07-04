@@ -296,8 +296,7 @@ import { VeterinaryKioskComponent } from './learnmore-kiosk/veterinary-kiosk/vet
         PersonalcareProviderProfileComponent,
         LearnmoreDownpanelOptionsComponent,
         ConsumerLearnmoreComponent,
-        VeterinaryKioskComponent,
-       
+        VeterinaryKioskComponent
     ],
     entryComponents: [
         LearnmoreComponent

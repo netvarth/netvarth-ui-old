@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LearnmoreRoutingModule } from './learnmore_routing.module';
-import { FoodjointsLearnmoreComponent } from '../../../../ynw_provider/components/food_learnmore/food_learnmore.component';
+import { FoodjointsLearnmoreComponent } from '../../../components/help/food_learnmore/food_learnmore.component';
 
 
 // import { SearchDataStorageService  } from '../../services/search-datastorage.services';

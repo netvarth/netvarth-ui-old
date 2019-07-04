@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HealthcareLearnmoreComponent } from '../../../../ynw_provider/components/healthcare_learnmore/healthcare_learnmore.component';
+import { HealthcareLearnmoreComponent } from '../../../components/help/healthcare_learnmore/healthcare_learnmore.component';
 
 
 const routes: Routes = [
