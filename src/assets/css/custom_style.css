@@ -3355,8 +3355,8 @@ figcaption {
 
 @media only screen and (min-width: 320px) and (max-width: 370px) {
   .pro_details .c-outer .c-body .srlst.details .top-sect .tp-l .tp1 .pro-img {
-    width: 70% !important;
-    height: 15% !important;
+    width: 60% !important;
+    height: 30% !important;
   }
   .pro_details .c-outer .c-body .srlst .top-sect .tp-l .tp1 .gal li {
     width: 50% !important;
@@ -3404,14 +3404,16 @@ figcaption {
   width: 100% !important;
 }
 
-.srch .sa .sa-ps p a {
+.srch .sa .sa-ps p a,
+.popular a {
   display: inline-block !important;
   margin-left: 22px !important;
   text-align: center !important;
   text-decoration: none !important;
 }
 
-.srch .sa .sa-ps p a:hover {
+.srch .sa .sa-ps p a:hover,
+.popular a:hover {
   text-decoration: underline !important
 }
 
@@ -3894,4 +3896,9 @@ color: midnightblue;
 }
 .qerrmsg {
   color: #f24949 !important;
+}
+.popular a {
+  margin-left: 0px !important;
+  margin-right: 15px !important;
+  cursor: pointer !important;
 }

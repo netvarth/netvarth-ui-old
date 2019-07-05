@@ -361,11 +361,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         let holdkeyword;
         if (label.displayname && label.displayname !== '') {
           holdkeyword = label.displayname.toLowerCase();
-          if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
-            const lbl = label.query.split('&');
-            const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
-            this.holdisplaylist['label'].push(labelspec);
-          }
+          // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
+          const lbl = label.query.split('&');
+          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+          this.holdisplaylist['label'].push(labelspec);
+          // }
         }
       }
       // Check whether search labels heading is to be displayed
@@ -383,9 +383,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
     this.displaykeywordList = this.holdisplaylist;
-    if (this.kw_autoname === '') {
+
+    if (this.selected_domain !== '') {
       this.popularSearchList = this.holdisplaylist;
-      console.log(this.popularSearchList);
       const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
       this.shared_functions.sendMessage(pdata);
       if (this.popularSearchList) {
@@ -502,6 +502,13 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             this.shared_functions.setitemonLocalStorage('srchLabels', res);
             this.searchlabels_data = res || [];
             this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
+            //         if (!this.shared_functions.getitemfromLocalStorage('popularSearch')
+            //         || this.shared_functions.getitemfromLocalStorage('popularSearch') === undefined
+            // || this.shared_functions.getitemfromLocalStorage('popularSearch') === '') {
+            this.shared_functions.setitemonLocalStorage('popularSearch', this.jsonlist);
+            const pdata = { 'ttype': 'popularSearchList', 'target': this.jsonlist };
+            this.shared_functions.sendMessage(pdata);
+            // }
             this.searchdataserviceobj.set(this.searchlabels_data);
             this.handledomainchange(this.selected_domain, 1);
           }
@@ -520,21 +527,39 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.location_data = undefined;
   }
   private setKeyword(kw) {
+    if (this.kw_autoname) {
+      this.filterKeywords();
+    }
+    let autoName;
+    let query;
+    let dom;
+    let subdom;
+    if (kw.autoname) {
+      autoName = kw.autoname;
+      dom = kw.domain;
+      subdom = kw.subdomain;
+    } else if (kw.displayname) {
+      autoName = kw.displayname;
+      query = kw.query.split('\'');
+      dom = kw.query;
+      subdom = query[3];
+      kw.typ = 'label';
+    }
     if (kw.name !== '') {
-      this.kw_autoname = kw.autoname;
+      this.kw_autoname = autoName;
       this.keywordholder = {
-        autoname: kw.autoname,
+        autoname: autoName,
         name: kw.name,
-        domain: kw.domain,
-        subdomain: kw.subdomain,
+        domain: dom,
+        subdomain: subdom,
         typ: kw.typ
       };
     }
     if (kw.typ === 'label') {
       this.curlabel.typ = 'label';
-      this.curlabel.query = kw.domain;
-      const passkw = { query: kw.domain }; // kw.domain holds the hardcoded query for the search labels
-      if (kw.domain !== '') {
+      this.curlabel.query = dom;
+      const passkw = { query: dom }; // kw.domain holds the hardcoded query for the search labels
+      if (dom !== '') {
         this.searchlabels_clicked(passkw);
       }
     } else {

@@ -364,11 +364,12 @@ export class SharedFunctions {
         });
         break;
     }
-    if (!this.getitemfromLocalStorage('popularSearch')) {
-      this.setitemonLocalStorage('popularSearch', retdet);
-      const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
-      this.sendMessage(pdata);
-    }
+    // if (!this.getitemfromLocalStorage('popularSearch') || this.getitemfromLocalStorage('popularSearch') === undefined
+    // || this.getitemfromLocalStorage('popularSearch') === '') {
+    this.setitemonLocalStorage('popularSearch', retdet);
+    const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
+    this.sendMessage(pdata);
+    // }
     return retdet;
   }
 

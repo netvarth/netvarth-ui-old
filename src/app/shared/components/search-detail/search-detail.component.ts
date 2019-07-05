@@ -1289,10 +1289,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           }
         }
       }
-    }//  else {
+    }
     retarr = { 'dom': '', 'subdom_name': '', 'subdom_dispname': '' };
     return retarr;
-    // }
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
@@ -1483,7 +1482,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           } else {
             retstr += ' ' + fieldname + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
           }
-          console.log(retstr);
         }
       }
       // retstr += ' ' + fieldname + '_cust:' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
