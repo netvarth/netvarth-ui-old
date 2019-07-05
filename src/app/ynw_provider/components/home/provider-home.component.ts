@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
-import {Subscription } from 'rxjs/Subscription';
-import { filter} from 'rxjs/operators/filter';
+import { Subscription } from 'rxjs/Subscription';
+import { filter } from 'rxjs/operators/filter';
 import { pairwise } from 'rxjs/operators/pairwise';
 import { Component, OnInit, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -15,7 +15,6 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../provider-waitli
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { SharedServices } from '../../../shared/services/shared-services';
 import * as moment from 'moment';
-
 import { projectConstants } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-home',
@@ -103,7 +102,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   today_completed_count = 0;
   today_cancelled_count = 0;
   today_checkedin_count = 0;
-  pos = false ;
+  pos = false;
   filter = {
     first_name: '',
     last_name: '',
@@ -286,7 +285,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const ynw = this.shared_functions.getitemfromLocalStorage('loc_id');
       switch (message.ttype) {
         case 'location_change': {
-           this.changeLocation(ynw);
+          this.changeLocation(ynw);
           // this.selected_location = ynw;
         }
       }
@@ -304,13 +303,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
   performActions(action) {
-this.router.navigate(['/provider/learnmore/adjustdelay']);
-
-    // if (action === 'adjustdelay') {
-    //   this.showAdjustDelay();
-    // } else if (action === 'adjustdelay_learnmore') {
-    //   this.learnmore_clicked();
-    // }
+    this.router.navigate(['/provider/learnmore/adjustdelay']);
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -379,7 +372,7 @@ this.router.navigate(['/provider/learnmore/adjustdelay']);
           }
           // this.getLocationList();
         },
-        () => {}
+        () => { }
       );
   }
 
@@ -423,8 +416,8 @@ this.router.navigate(['/provider/learnmore/adjustdelay']);
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
         this.settings = data;
-          this.calculationmode = this.settings.calculationMode;
-          this.showToken = this.settings.showTokenId;
+        this.calculationmode = this.settings.calculationMode;
+        this.showToken = this.settings.showTokenId;
       }, () => {
       });
   }
@@ -530,7 +523,7 @@ this.router.navigate(['/provider/learnmore/adjustdelay']);
   getQueueListByDate() {
     this.load_queue = 0;
     // if (!this.selected_queue) {
-    if (this. selected_location.id) {
+    if (this.selected_location.id) {
       this.provider_services.getProviderLocationQueuesByDate(
         this.selected_location.id, this.queue_date)
         .subscribe(
@@ -1127,7 +1120,7 @@ this.router.navigate(['/provider/learnmore/adjustdelay']);
   }
   focusInput(ev, input) {
     const kCode = parseInt(ev.keyCode, 10);
-    if (kCode === 13) { input.focus();  }
+    if (kCode === 13) { input.focus(); }
   }
   focusInputSp(ev) {
     const kCode = parseInt(ev.keyCode, 10);
@@ -1135,9 +1128,6 @@ this.router.navigate(['/provider/learnmore/adjustdelay']);
   }
   learnmore_clicked() {
     this.router.navigate(['/provider/learnmore/dashboard']);
-    // const moreOptions = { 'show_learnmore': true, 'scrollKey': 'adjustdelay' };
-    // const pdata = { 'ttype': 'learn_more', 'target': moreOptions };
-    // this.shared_functions.sendMessage(pdata);
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -1147,7 +1137,7 @@ this.router.navigate(['/provider/learnmore/adjustdelay']);
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
         .subscribe(
           (data: any) => {
-          this.pos = data.pos;
+            this.pos = data.pos;
             if (data.serviceBillable === false) {
               this.isServiceBillable = false;
               this.hideServiceBillCount = 1;

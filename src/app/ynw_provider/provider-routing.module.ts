@@ -15,19 +15,11 @@ import { ProviderSystemAuditLogComponent } from './components/provider-system-au
 import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
 import { ProviderResolver } from './services/provider-resolver.service';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ProviderHelpComponent } from './components/learnmore/provider-help.component';
 const routes: Routes = [
   {
-    path: '', component: ProviderComponent,
-    resolve: {
-      terminologies: ProviderResolver
-    },
+    path: '', component: ProviderComponent, resolve: {terminologies: ProviderResolver},
     children: [
-      {
-        path: '',
-        component: ProviderHomeComponent,
-        canActivate: [AuthGuardProviderHome]
-      },
+      { path: '', component: ProviderHomeComponent, canActivate: [AuthGuardProviderHome]},
       { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
       {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},
       { path: 'settings', loadChildren: './components/provider-settings/provider-settings.module#ProviderSettingsModule' },
@@ -35,20 +27,12 @@ const routes: Routes = [
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin] },
-      {path: 'members', component: ProviderMembersComponent},
-
-      {path: 'learnmore/:parent', component: ProviderHelpComponent},
+      { path: 'members', component: ProviderMembersComponent},
+      { path: 'learnmore/:parent', loadChildren: './components/learnmore/learnmore.module#LearnmoreModule'},
       { path: 'customers', component: ProviderCustomersComponent },
-      {
-        path: 'inbox',
-        loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
-      },
-      {
-        path: 'auditlog', component: ProviderSystemAuditLogComponent
-      },
-      {
-        path: 'alerts', component: ProviderSystemAlertComponent
-      },
+      { path: 'inbox', loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'},
+      { path: 'auditlog', component: ProviderSystemAuditLogComponent},
+      { path: 'alerts', component: ProviderSystemAlertComponent},
       { path: 'bwizard', component: ProviderbWizardComponent }
     ]
   }
