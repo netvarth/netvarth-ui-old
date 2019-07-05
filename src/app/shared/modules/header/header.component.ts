@@ -119,12 +119,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   jsonlist: any = [];
   popSearches: any = [];
   public popular_searches: any = [];
-  carouselOne;
-  paginationLimit = 6;
-  startPage = 0;
   showmorepopularoptions = false;
   showMorepopularOptionsOverlay = false;
   origin = 'header';
+  showmoreSearch = false;
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -172,7 +170,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           break;
         case 'popularList':
           this.jsonlist = message.target;
-          this.popular_search(this.jsonlist.label);
+          if (this.jsonlist) {
+            this.popular_search(this.jsonlist.label);
+          }
           break;
         case 'popularSearchList':
           this.jsonlist = message.target;
@@ -181,7 +181,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
       this.getBusinessdetFromLocalstorage();
     });
-
   }
   hideLearnmore() {
     this.showLearnMore = false;
@@ -215,21 +214,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
-    this.carouselOne = {
-      dots: false,
-      nav: true,
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      navContainer: '.p-popular-info .custom-nav',
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      autoWidth: true,
-      autoHeight: true
-    };
+
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
@@ -567,10 +552,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   popular_search(jsonlist) {
     this.popSearches = [];
-    if (jsonlist.length === 0) {
+    if (jsonlist && jsonlist.length === 0) {
       this.popSearches = this.shared_functions.getitemfromLocalStorage('popularSearch');
     } else {
       this.popSearches = jsonlist;
+    }
+    if (this.popSearches) {
+      const max = 5;
+      for (let i = 0; i < this.popSearches.length; i++) {
+        if (i < max) {
+          this.popSearches[i].show = true;
+        }
+      }
     }
   }
 
@@ -587,5 +580,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
   closeMorepopularoptions() {
     this.showmorepopularoptions = false;
     this.showMorepopularOptionsOverlay = false;
+  }
+
+  showpopularSerach(origin) {
+    const max = 7;
+    if (origin === 'more') {
+      for (let i = 0; i < this.popSearches.length; i++) {
+        if (i >= max) {
+          this.popSearches[i].show = true;
+        }
+      }
+      this.showmoreSearch = true;
+    }
+    if (origin === 'less') {
+      for (let i = 0; i < this.popSearches.length; i++) {
+        if (i >= max) {
+          this.popSearches[i].show = false;
+        }
+      }
+      this.showmoreSearch = false;
+    }
   }
 }

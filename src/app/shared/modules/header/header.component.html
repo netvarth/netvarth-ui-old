@@ -2,10 +2,10 @@
     <mat-spinner class="outer-load-spinner"></mat-spinner>
 </div>
 <!-- <div class="overlay" [class.show]="showLearnMore" [class.learnmore]="showLearnMore" (click)="hideLearnmore()"></div>
-<div class="lm-popup" *ngIf="showLearnMore">
-    <span (click)="hideLearnmore()" class="close"></span>
-    <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore>
-</div> -->
+    <div class="lm-popup" *ngIf="showLearnMore">
+        <span (click)="hideLearnmore()" class="close"></span>
+        <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore>
+    </div> -->
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container no-padding">
         <div class="row">
@@ -257,18 +257,19 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top: 20px"> Popular Searches:</div>
-        <div class="popular-searches p-popular-info" style="margin-left: 20px; margin-right: 20px">
-            <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme', 'sliding']" [items]="popSearches">
-                <div class="item" *ngFor="let kw of popSearches">
-                    <a *ngIf="kw.autoname" (click)="popularClicked(kw)"> {{kw.autoname}}</a>
-                    <a *ngIf="kw.displayName" (click)="popularClicked(kw)">{{kw.displayName}}</a>
-                </div>
-            </owl-carousel>
-            <div class="owl-theme">
-                <div class="owl-controls">
-                    <div class="custom-nav owl-nav" [class.topStyle]="!shared_functions.checkLogin()"></div>
-                </div>
+
+        <div class="col-md-12" *ngIf="popSearches !== null">
+            <div class="row popular">
+                <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
+                    <span class="pointer-cursor" *ngFor="let kw of popSearches" (click)="popularClicked(kw)">
+                        <a *ngIf="kw.autoname && kw.show">{{kw.autoname}}</a>
+                        <a *ngIf="kw.displayname && kw.show">{{kw.displayname}}</a>
+                    </span>
+                    <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="!showmoreSearch"
+                        (click)="showpopularSerach('more')">more...</a>
+                    <a class="learnmore-pointer" style="padding-left:10px !important;" *ngIf="showmoreSearch"
+                        (click)="showpopularSerach('less')">less...</a>
+                </p>
             </div>
         </div>
     </div>
