@@ -1181,7 +1181,7 @@ export class CheckInInnerComponent implements OnInit {
     else {
       this.api_cp_error = 'Coupon invalid';
     }
-  }
+  } 
 
   getProviderDepart(id) {
     this.shared_services.getProviderDept(id).

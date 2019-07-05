@@ -492,7 +492,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
       });
     }
-  }
+  } 
   /**
    * Learn more button clicked
    * @param mod
