@@ -361,11 +361,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         let holdkeyword;
         if (label.displayname && label.displayname !== '') {
           holdkeyword = label.displayname.toLowerCase();
-          // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
+          if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
           const lbl = label.query.split('&');
           const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
           this.holdisplaylist['label'].push(labelspec);
-          // }
+          }
         }
       }
       // Check whether search labels heading is to be displayed

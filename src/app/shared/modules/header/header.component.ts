@@ -123,6 +123,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showMorepopularOptionsOverlay = false;
   origin = 'header';
   showmoreSearch = false;
+  maxCount = 5;
+  searchLength = 0;
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -552,15 +554,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   popular_search(jsonlist) {
     this.popSearches = [];
+    this.showmoreSearch = false;
     if (jsonlist && jsonlist.length === 0) {
       this.popSearches = this.shared_functions.getitemfromLocalStorage('popularSearch');
     } else {
       this.popSearches = jsonlist;
     }
+    this.searchLength = this.popSearches.length;
     if (this.popSearches) {
-      const max = 5;
       for (let i = 0; i < this.popSearches.length; i++) {
-        if (i < max) {
+        if (i < this.maxCount) {
           this.popSearches[i].show = true;
         }
       }
@@ -583,10 +586,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   showpopularSerach(origin) {
-    const max = 7;
+    this.showmoreSearch = false;
     if (origin === 'more') {
       for (let i = 0; i < this.popSearches.length; i++) {
-        if (i >= max) {
+        if (i >= this.maxCount) {
           this.popSearches[i].show = true;
         }
       }
@@ -594,7 +597,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     if (origin === 'less') {
       for (let i = 0; i < this.popSearches.length; i++) {
-        if (i >= max) {
+        if (i >= this.maxCount) {
           this.popSearches[i].show = false;
         }
       }
