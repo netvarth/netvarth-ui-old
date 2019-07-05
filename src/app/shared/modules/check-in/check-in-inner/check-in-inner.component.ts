@@ -1145,14 +1145,15 @@ export class CheckInInnerComponent implements OnInit {
     this.api_cp_error = null;
   }
   applyCoupons(jCoupon) {
-    const jaldeeCoupn = jCoupon.trim();
+    
     this.api_cp_error = null;
     this.couponvalid = true;
     const couponInfo = {
       'couponCode': '',
       'instructions': ''
     };
-    if (jaldeeCoupn) {
+    if (jCoupon) {
+      const jaldeeCoupn = jCoupon.trim();
       if (this.checkCouponExists(jaldeeCoupn)) {
         this.api_cp_error = 'Coupon already applied';
         this.couponvalid = false;
@@ -1176,6 +1177,9 @@ export class CheckInInnerComponent implements OnInit {
       } else {
         this.api_cp_error = 'Coupon invalid';
       }
+    }
+    else {
+      this.api_cp_error = 'Coupon invalid';
     }
   }
 

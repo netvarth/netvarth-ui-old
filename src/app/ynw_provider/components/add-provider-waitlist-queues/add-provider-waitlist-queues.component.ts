@@ -311,6 +311,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // handles the submit button click for add and edit
   onSubmit(form_data) {
     this.resetApiErrors();
+
+    if (!form_data.qname.replace(/\s/g, '').length) {
+      const error = 'Please enter working hours name';
+      this.sharedfunctionObj.apiErrorAutoHide(this, error);
+      return;
+    }
     const selser: any = [];
     let schedulejson: any = [];
     let found = false;
