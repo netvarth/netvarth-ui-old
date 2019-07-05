@@ -78,8 +78,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   loadingTb = false;
   upgradablepackages = [];
   addonTooltip = '';
-  periodicTooltip = '';
-  breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'license' };
+  breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'license->upgradelicense' };
   upgradedialogRef;
   addondialogRef;
   active_user;

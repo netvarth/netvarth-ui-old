@@ -67,13 +67,10 @@
                         <li><a (click)="handleScroll('kiosk', 'kiosk')"
                                 [ngClass]="{'helpcolor': (childContent =='kiosk' && parentContent == 'kiosk')}">Kiosk</a>
                         </li>
-                        <li><a>License</a>
+                        <li><a>license</a>
                             <ul *ngIf="license">
-                                <li (click)="handleScroll('license-list', 'license')"
-                                    [ngClass]="{'helpcolor': (childContent =='license-list' && parentContent == 'license')}">
-                                    license</li>
-                                <li (click)="handleScroll('license-package', 'license')"
-                                    [ngClass]="{'helpcolor': (childContent =='license-package' && parentContent == 'license')}">
+                                <li (click)="handleScroll('upgradelicense', 'license')"
+                                    [ngClass]="{'helpcolor': (childContent =='upgradelicense' && parentContent == 'license')}">
                                     Your Current License Package</li>
                                 <li (click)="handleScroll('addon','license')"
                                     [ngClass]="{'helpcolor': (childContent =='addon' && parentContent == 'license')}">
@@ -2010,8 +2007,6 @@
                             <li>The Free license package is free of cost with limited features.</li>
 
                         </ul>
-                    </section>
-                    <section *ngIf="childContent =='upgradelicense'">
                         <h6>Upgrade License:</h6>
                         <span>Here a doctor can upgrade the license anytime.</span>
 
@@ -2071,8 +2066,7 @@
                             <li>An email will be sent to the doctor upon each invoice generation.</li>
                         </ul>
                     </section>
-
-
+                    
                     <section class="pricing-phome" *ngIf="childContent =='upgradelicense'">
                         <div class="container text-center">
                             <h3 class="tittle font-weight-bold">Jaldee Pricing</h3>
@@ -4760,7 +4754,7 @@
                         </div>
                     </section>
 
-                    <section *ngIf="parentContent == 'license' && childContent =='license-list'">
+                    <section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
                         <ul class="ul-normal">
                             <li>A provider is granted a selected license at the time of initial sign up. This allows a
                                 provider
@@ -4833,7 +4827,7 @@
                             <li>The Free license package is free of cost with limited features.</li>
                         </ul>
                     </section>
-                    <section *ngIf="childContent =='license-package'">
+                    <section *ngIf="childContent =='upgradelicense'">
                         <h6>Upgrade License:</h6>
                         <span>Here a provider can upgrade the license anytime.</span>
 
@@ -5153,7 +5147,7 @@
                             options:</span>
                     </section>
 
-                    <section *ngIf="childContent =='license-package'">
+                    <section *ngIf="childContent =='upgradelicense'">
                         <h6>1. License Change History</h6>
 
                         <span>The license change history shows the list of the changes applied in the license package.
