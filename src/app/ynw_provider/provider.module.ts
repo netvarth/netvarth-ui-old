@@ -61,7 +61,6 @@ import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { ProviderBprofileSearchDynamicComponent } from './components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
-import { ProviderHelpComponent } from './components/learnmore/provider-help.component';
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -114,9 +113,6 @@ import { ProviderHelpComponent } from './components/learnmore/provider-help.comp
     GoogleMapComponent,
     ProviderBprofileSearchDynamicComponent,
     VirtualFieldsComponent,
-    ProviderHelpComponent
-
-
   ],
   exports: [ConfirmBoxComponent, ConfirmPaymentBoxComponent],
   entryComponents: [

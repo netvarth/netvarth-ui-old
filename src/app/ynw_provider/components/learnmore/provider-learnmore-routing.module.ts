@@ -1,15 +1,15 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LearnmoreComponent } from '../../../shared/modules/learnmore/learnmore.component';
+
 import { NgModule } from '@angular/core';
+import { ProviderLearnmoreComponent } from './provider-learnmore.component';
 
 const routes: Routes = [
-    { path: '', component: LearnmoreComponent }
+    { path: ':parent', component: ProviderLearnmoreComponent }
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class LearnmoreRoutingModule {
-
+export class ProviderLearnmoreRoutingModule {
 }

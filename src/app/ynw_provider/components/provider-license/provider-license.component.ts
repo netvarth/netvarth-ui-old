@@ -110,7 +110,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.loading = true;
     this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
-    this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
+    // this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
     this.getLicenseDetails();
     this.getLicenseUsage();
     this.getInvoiceList();
@@ -432,7 +432,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/license->'+ mod]);
+    this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionObj.sendMessage(pdata);
   }

@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, CommonModule } from '@angular/common';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
-  selector: 'app-provider-help',
-  templateUrl: './provider-help.component.html'
+  selector: 'app-provider-learnmore',
+  templateUrl: './provider-learnmore.component.html'
 })
-export class ProviderHelpComponent implements OnInit, OnDestroy {
+export class ProviderLearnmoreComponent implements  OnInit {
+
   @Input() target: string;
   childContent = 'public-search';
   parentContent = 'profile-search';
@@ -20,17 +21,16 @@ export class ProviderHelpComponent implements OnInit, OnDestroy {
   license = true;
   billing = true;
   activePrice = '';
-    active_user;
-    domain;
-  // contentprofiles = 'public-search' ;
-  // contentcheckins ='settings' ;
+  active_user;
+  parent;
+  child;
+  domain;
   constructor(
     private activated_route: ActivatedRoute,
     private _scrollToService: ScrollToService,
     private _location: Location,
     private shared_functions: SharedFunctions
   ) { }
-
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = this.active_user.sector;
@@ -40,28 +40,14 @@ export class ProviderHelpComponent implements OnInit, OnDestroy {
     this.activated_route.paramMap
       .subscribe(params => {
         const group = params.get('parent').split('->');
-        const parent = group[0];
-        let child;
+        this.parent = group[0];
         if (group.length > 1) {
-          child = group[1];
+          this.child = group[1];
         } else {
-          child = parent;
+          this.child = this.parent;
         }
-        console.log(parent);
-        console.log(child);
-        this.handleScroll(child, parent);
-        // if (passid) {
-        //   if (passid === 'mobile') {
-        //     this.showheaderandfooter = false;
-        //   } else {
-        //     this.showheaderandfooter = true;
-        //   }
-        // } else {
-        // }
+        this.handleScroll(this.child, this.parent);
       });
-  }
-  ngOnDestroy() {
-    // window.removeEventListener('scroll', this.scroll, true);
   }
   scroll() {
   }
@@ -77,13 +63,8 @@ export class ProviderHelpComponent implements OnInit, OnDestroy {
   }
 
   handleScroll(childContent, parentContent) {
-    this.childContent = childContent;
-    this.parentContent = parentContent;
-    // if (this.target.moreOptions.scrollKey !== undefined) {
-    // setTimeout(() => {
-    //   this.triggerScrollTo(profile);
-    // }, 200);
-    // }
+    this.child = childContent;
+    this.parent = parentContent;
   }
   setActivePricing(item) {
     this.activePrice = item;

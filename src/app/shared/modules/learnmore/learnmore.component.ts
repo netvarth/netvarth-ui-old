@@ -4,7 +4,6 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 
-
 @Component({
   selector: 'app-learnmore',
   templateUrl: './learnmore.component.html'

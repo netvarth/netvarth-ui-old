@@ -1,0 +1,151 @@
+<div class="container">
+    <div class="card"><a class="link" (click)="goBack()">back</a></div>
+    <div class="card">
+        <div class="modal-body col-md-12 no-padding">
+            <div class="row">
+                <div class="col-md-4 help" style="border-right: 1px solid lightgray">
+                    <ul>
+                        <li><a>Profile and Search</a>
+                            <ul *ngIf="profilesearch">
+                                <li (click)="handleScroll('public-search', 'profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='public-search' && parent == 'profile-search')}">
+                                    Public Search</li>
+                                <li (click)="handleScroll('verified-levels','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='verified-levels' && parent == 'profile-search')}">
+                                    Jaldee Verified Levels </li>
+                                <li (click)="handleScroll('basic-information','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='basic-information' && parent == 'profile-search')}">
+                                    Profile Name and Summary</li>
+                                <li (click)="handleScroll('privacy-settings','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='privacy-settings' && parent == 'profile-search')}">
+                                    Privacy Settings</li>
+                                <li (click)="handleScroll('specialization','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='specialization' && parent == 'profile-search')}">
+                                    Specialization</li>
+                                <li (click)="handleScroll('languages-known','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='languages-known' && parent == 'profile-search')}">
+                                    Languages Known</li>
+                                <li (click)="handleScroll('additional-info','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='additional-info' && parent == 'profile-search')}">
+                                    Additional Info</li>
+                                <li (click)="handleScroll('photo-gallery','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='photo-gallery' && parent == 'profile-search')}">
+                                    Gallery</li>
+                                <li (click)="handleScroll('your-social-media','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='your-social-media' && parent == 'profile-search')}">
+                                    Your Social Media</li>
+                                <li (click)="handleScroll('custom-id','profile-search')"
+                                    [ngClass]="{'helpcolor': (child =='custom-id' && parent == 'profile-search')}">
+                                    Custom ID</li>
+                            </ul>
+                        </li>
+                        <li><a>Check-In Manager</a>
+                            <ul *ngIf="checkinmanager">
+                                <li (click)="handleScroll('settings', 'checkinmanager')"
+                                    [ngClass]="{'helpcolor': (child =='settings' && parent == 'checkinmanager')}">
+                                    Settings</li>
+                                <li (click)="handleScroll('settings-locations','checkinmanager')"
+                                    [ngClass]="{'helpcolor': (child =='settings-locations' && parent == 'checkinmanager')}">
+                                    Locations</li>
+                                <li (click)="handleScroll('settings-services','checkinmanager')"
+                                    [ngClass]="{'helpcolor': (child =='settings-services' && parent == 'checkinmanager')}">
+                                    Services </li>
+                                <li (click)="handleScroll('settings-time_windows','checkinmanager')"
+                                    [ngClass]="{'helpcolor': (child =='settings-time_windows' && parent == 'checkinmanager')}">
+                                    Working Hours</li>
+                                <li (click)="handleScroll('settings-departments','checkinmanager')"
+                                    [ngClass]="{'helpcolor': (child =='settings-departments' && parent == 'checkinmanager')}">
+                                    Departments</li>
+                            </ul>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='checkin' && parent == 'checkin')}"><a
+                                (click)="handleScroll('checkin', 'checkin')">Check-In</a>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='customer' && parent == 'customer')}"><a
+                                (click)="handleScroll('customer', 'customer')">Customer</a>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='kiosk' && parent == 'kiosk')}"><a
+                                (click)="handleScroll('kiosk', 'kiosk')">Kiosk</a>
+                        </li>
+                        <li><a>license</a>
+                            <ul *ngIf="license">
+                                <li (click)="handleScroll('upgradelicense', 'license')"
+                                    [ngClass]="{'helpcolor': (child =='upgradelicense' && parent == 'license')}">
+                                    Your Current License Package</li>
+                                <li (click)="handleScroll('addon','license')"
+                                    [ngClass]="{'helpcolor': (child =='addon' && parent == 'license')}">
+                                    Addon
+                                </li>
+                                <li (click)="handleScroll('adwords','license')"
+                                    [ngClass]="{'helpcolor': (child =='adwords' && parent == 'license')}">
+                                    Jaldee Keywords </li>
+                            </ul>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='adjustdelay' && parent == 'adjustdelay')}"><a
+                                (click)="handleScroll('adjustdelay', 'adjustdelay')">Adjust
+                                Delay</a></li>
+                        <li [ngClass]="{'helpcolor': (child =='miscellaneous' && parent == 'miscellaneous')}"><a
+                                (click)="handleScroll('miscellaneous', 'miscellaneous')">Miscellaneous</a>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='dashboard' && parent == 'dashboard')}"><a
+                                (click)="handleScroll('dashboard', 'dashboard')">Dashboard</a>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='payment' && parent == 'payment')}"><a
+                                (click)="handleScroll('payment', 'payment')">Payment
+                                Settings</a></li>
+
+                        <li><a>Billing/POS</a>
+                            <ul *ngIf="billing">
+                                <li (click)="handleScroll('items', 'billing')"
+                                    [ngClass]="{'helpcolor': (child =='items' && parent == 'billing')}">
+                                    Items
+                                </li>
+                                <li (click)="handleScroll('discount','billing')"
+                                    [ngClass]="{'helpcolor': (child =='discount' && parent == 'billing')}">
+                                    Discount</li>
+                                <li (click)="handleScroll('coupon','billing')"
+                                    [ngClass]="{'helpcolor': (child =='coupon' && parent == 'billing')}">
+                                    Coupons</li>
+                                <li (click)="handleScroll('tax-settings','billing')"
+                                    [ngClass]="{'helpcolor': (child =='tax-settings' && parent == 'billing')}">
+                                    Tax-Settings</li>
+                            </ul>
+                        </li>
+                        <li [ngClass]="{'helpcolor': (child =='profile' && parent == 'profile')}"><a
+                                (click)="handleScroll('profile', 'profile')">Provider
+                                Profile</a></li>
+                        <li [ngClass]="{'helpcolor': (child =='downpanel' && parent == 'downpanel')}"><a
+                                (click)="handleScroll('downpanel', 'downpanel')">Down
+                                Panel Options</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-8 helpcontent">
+                    <ng-container *ngIf="domain=='healthCare'">
+                        <app-healthcare-learnmore [parent]="parent" [child]="child"></app-healthcare-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='personalCare'">
+                        <app-personalcare-learnmore [parent]="parent" [child]="child"></app-personalcare-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='vastuAstrologer'">
+                        <app-vastu-learnmore [parent]="parent" [child]="child"></app-vastu-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='foodJoints'">
+                        <app-foodjoints-learnmore [parent]="parent" [child]="child"></app-foodjoints-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='professionalConsulting'">
+                        <app-professional-learnmore [parent]="parent" [child]="child"></app-professional-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='finance'">
+                        <app-finance-learnmore [parent]="parent" [child]="child"></app-finance-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='religiousPriest'">
+                        <app-religious-learnmore [parent]="parent" [child]="child"></app-religious-learnmore>
+                    </ng-container>
+                    <ng-container *ngIf="domain=='veterinary'">
+                        <app-veterinary-learnmore [parent]="parent" [child]="child"></app-veterinary-learnmore>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
