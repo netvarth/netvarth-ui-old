@@ -41,6 +41,7 @@ export class CheckInInnerComponent implements OnInit {
   back_to_cap = Messages.BACK_TO_CAP;
   cancel_btn = Messages.CANCEL_BTN;
   save_member_cap = Messages.SAVE_MEMBER_BTN;
+  applied_inbilltime = Messages.APPLIED_INBILLTIME;
   token = Messages.TOKEN;
   get_token_cap;
   domain;

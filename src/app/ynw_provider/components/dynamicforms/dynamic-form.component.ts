@@ -38,7 +38,7 @@ export class DynamicFormComponent implements OnInit {
     'November': 10,
     'December': 11
   };
-  disableButton = false;
+ 
 
   constructor(private qcs: FormControlService, private fb: FormBuilder,
     public shared_functions: SharedFunctions) { }
@@ -50,7 +50,6 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.disableButton = true;
     this.api_error = null;
     // this.payLoad = JSON.stringify(this.form.value);
     const mon_year_key = this.findYearMonthField();
@@ -58,6 +57,7 @@ export class DynamicFormComponent implements OnInit {
       const month_year_valid = this.validateMonthAndYear(mon_year_key);
       if (month_year_valid) {
         this.api_error = null;
+       
         this.retonFormSubmit.emit(this.form.value);
       } else {
         this.shared_functions.apiErrorAutoHide(this, Messages.YEAR_MONTH_VALID);

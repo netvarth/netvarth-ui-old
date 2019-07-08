@@ -124,7 +124,7 @@ export class AdjustQueueDelayComponent implements OnInit {
     this.provider_services.addQueueDelay(this.selected_queue, post_data)
       .subscribe(
         () => {
-          if (this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) {
+          if ((this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) && form_data.send_message ) {
             this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
           this.closePopup('reloadlist');
           } else {

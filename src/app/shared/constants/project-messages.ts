@@ -38,6 +38,7 @@ export const Messages = {
   'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
   'COUPON_DELETED': 'Coupon deleted successfully',
   'COUPON_LISTEMPTY': 'No Coupons found',
+  'APPLIED_INBILLTIME' :'will applied in bill time',
 
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
