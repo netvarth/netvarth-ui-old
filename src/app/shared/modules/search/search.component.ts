@@ -383,8 +383,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
     this.displaykeywordList = this.holdisplaylist;
-
-    if (this.selected_domain !== '') {
+    if (this.selected_domain !== '' && this.kw_autoname === '') {
       this.popularSearchList = this.holdisplaylist;
       const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
       this.shared_functions.sendMessage(pdata);
