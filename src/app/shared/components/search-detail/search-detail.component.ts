@@ -1056,6 +1056,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.provider_label = this.getTerminologyTerm('provider', this.search_data.hits.hit[i].fields) + 's';
               }
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
+              this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
               this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
               cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
@@ -1295,9 +1296,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
-    if (fieldname === 'ynw_verified_level') {
-      selval++;
-    }
+    // if (fieldname === 'ynw_verified_level') {
+    //   selval++;
+    // }
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     if (this.searchrefineresult_arr.length) {

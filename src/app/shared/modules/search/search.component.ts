@@ -361,11 +361,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         let holdkeyword;
         if (label.displayname && label.displayname !== '') {
           holdkeyword = label.displayname.toLowerCase();
-          if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
+          // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
           const lbl = label.query.split('&');
           const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
           this.holdisplaylist['label'].push(labelspec);
-          }
+          // }
         }
       }
       // Check whether search labels heading is to be displayed
@@ -383,7 +383,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
     this.displaykeywordList = this.holdisplaylist;
-    if (this.selected_domain !== '' && this.kw_autoname === '') {
+    if (this.selected_domain !== '') {
       this.popularSearchList = this.holdisplaylist;
       const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
       this.shared_functions.sendMessage(pdata);
