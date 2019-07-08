@@ -41,7 +41,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
       title: Messages.WAITLIST_MANAGE_CAP
     }
   ];
-  breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager', 'subKey': 'settings' };
+ 
   subscription: Subscription;
   isCheckin;
   futureDateWaitlist = false;
@@ -55,6 +55,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
   frm_set_ser_cap = '';
+  breadcrumb_moreoptions: any = [];
   frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
   frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
   ngOnInit() {
@@ -68,6 +69,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.getDepartmentsCount();
     this.getBusinessConfiguration();
     this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings'};
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
       .subscribe(

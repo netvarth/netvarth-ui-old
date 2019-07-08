@@ -301,7 +301,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
   performActions(action) {
-    this.router.navigate(['/provider/learnmore/adjustdelay']);
+    if (action === 'adjustdelay') {
+        this.showAdjustDelay();
+      } else if (action === 'adjustdelay_learnmore') {
+        this.learnmore_clicked(action);
+      }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -1050,8 +1054,14 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) { this.doSearch(); }
   }
-  learnmore_clicked() {
-    this.router.navigate(['/provider/learnmore/dashboard']);
+  learnmore_clicked(action) 
+  {
+    if (action === 'adjustdelay')
+     {
+      this.router.navigate(['/provider/learnmore/dashboard']);
+    } else if (action === 'adjustdelay_learnmore') {
+      this.router.navigate(['/provider/learnmore/adjustdelay']);
+    }
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');

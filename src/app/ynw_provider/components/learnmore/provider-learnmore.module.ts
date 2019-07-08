@@ -6,12 +6,12 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { HealthCareComponent } from './healthcare/healthcare.component';
 import { ProfessionalCareComponent } from './professional/professional.component';
-import { PersonalCareComponent } from './personalCare/personalcare.component';
 import { VastuComponent } from './vastu/vastu.component';
 import { ReligiousComponent } from './religious/religious.component';
 import { FinanceComponent } from './finance/finance.component';
 import { FoodJointComponent } from './foodjoints/foodjoints.component';
 import { VeterinaryComponent } from './veterinary/veterinary.component';
+import { PersonalCareComponent } from './personalcare/personalcare.component';
 @NgModule({
     imports: [
         ProviderLearnmoreRoutingModule,
