@@ -280,13 +280,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
-
     this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
       const ynw = this.shared_functions.getitemfromLocalStorage('loc_id');
       switch (message.ttype) {
         case 'location_change': {
           this.changeLocation(ynw);
-          // this.selected_location = ynw;
         }
       }
     });
@@ -370,12 +368,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
           }
-          // this.getLocationList();
         },
         () => { }
       );
   }
-
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -421,45 +417,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       }, () => {
       });
   }
-  // getLocationList() {
-  //   this.load_locations = 0;
-  //   this.selected_location = null;
-  //   this.provider_services.getProviderLocations()
-  //     .subscribe(
-  //       (data: any) => {
-  //         const locations = data;
-  //         this.locations = [];
-  //         for (const loc of locations) {
-  //           if (loc.status === 'ACTIVE') {
-  //             this.locations.push(loc);
-  //           }
-  //         }
-  //         const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider checkin button page
-  //         const ynw = this.shared_functions.getItemOnCookie('loc_id');
-  //         if (cookie_location_id === '') {
-  //           if (this.locations[0]) {
-  //             this.changeLocation(this.locations[0]);
-  //           }
-  //         } else {
-  //           this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-  //           // this.getQueueList();
-  //         }
-  //         this.getServiceList();
-  //       },
-  //       () => {this.load_locations = 1; },
-  //       () => {this.load_locations = 1; }
-  //     );
-  // }
-  // selectLocationFromCookie(cookie_location_id) {
-  //   let selected_location = null;
-  //   for (const location of this.locations) {
-  //     if (location.id === cookie_location_id) {
-  //       selected_location = location;
-  //     }
-  //   }
-  //   (selected_location !== null) ? this.changeLocation(selected_location) :
-  //     this.changeLocation(this.locations[0]);
-  // }
   getServiceList() {
     this.provider_services.getServicesList()
       .subscribe(
@@ -474,7 +431,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
       .subscribe(
         (data: any) => {
-          // this.all_queues = data;
           const Cqueues = data;
           this.all_queues = [];
           let indx = 0;
@@ -507,9 +463,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
               selqid = ii;
             }
           }
-          // if (this.queues.length === 0) {
-          //   this.queues = this.all_queues;
-          // }
           this.selected_queue = this.all_queues[selqid];
           this.getTodayCheckinCount();
           if (this.time_type === 1) {
@@ -522,13 +475,11 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQueueListByDate() {
     this.load_queue = 0;
-    // if (!this.selected_queue) {
     if (this.selected_location.id) {
       this.provider_services.getProviderLocationQueuesByDate(
         this.selected_location.id, this.queue_date)
         .subscribe(
           (data: any) => {
-            // this.queues = data;
             const Cqueues = data;
             this.queues = [];
             const savedQ = this.shared_functions.getitemfromLocalStorage('pdq') || '';
@@ -562,10 +513,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    // }
-    // else {
-    //   this.selectedQueue(this.selected_queue);
-    // }
   }
   findCurrentActiveQueue(ques) {
     let selindx = 0;
@@ -613,8 +560,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selected_location = location;
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
-    // this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
-    // this.shared_functions.setitemonLocalStorage('loc_id', this.selected_location);
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
     this.check_in_list = this.check_in_filtered_list = [];
@@ -769,7 +714,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              // this.future_waitlist_count = this.check_in_list.length || 0;
             },
             () => {
               this.load_waitlist = 1;
@@ -826,12 +770,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.status_type = 'cancelled';
     }
     this.setFilterDateMaxMin();
-    // this.queues = [];
-    // if (this.time_type === 1 && this.queues.length === 0) {
-    // alert('Time Type : ' + this.time_type);
-    // if (this.time_type === 1) {
-    //   this.getQueueListByDate();
-    // }
     this.filterapplied = false;
     this.loadApiSwitch('setTimeType');
   }
@@ -851,20 +789,13 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
-      // if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
-      //   this.filter.check_in_end_date = this.filter.check_in_start_date;
-      // }
     } else if (type === 'check_in_end_date') {
       this.filter_date_start_max = this.filter.check_in_end_date;
-      // if (this.filter.check_in_end_date < this.filter.check_in_start_date) {
-      //   this.filter.check_in_start_date = this.filter.check_in_end_date;
-      // }
     }
     this.doSearch();
   }
   loadApiSwitch(source) {
     let chkSrc = true;
-    // if (source === 'changeLocation' && this.returnedFromCheckDetails && this.time_type === 0) {
     if (source === 'changeLocation' && this.time_type === 0) {
       const hisPage = this.shared_functions.getitemfromLocalStorage('hP');
       const hFilter = this.shared_functions.getitemfromLocalStorage('hPFil');
@@ -923,11 +854,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.edit_location = 1;
   }
-  // onChangeLocationSelect(event) {
-  //   const value = event.value;
-  //   this.changeLocation(this.locations[value] || []);
-  //   this.edit_location = 0;
-  // }
   reloadAPIs() {
     this.countApiCall();
     this.loadApiSwitch('reloadAPIs');
@@ -935,7 +861,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   countApiCall() {
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
-    // this.getTodayCheckinCount();
   }
   changeStatusType(type) {
     this.status_type = type;
@@ -948,7 +873,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     let status: any = this.status_type;
     switch (type) {
       case 'all': status = ['checkedIn', 'arrived'];
-      // case 'all': status = ['checkedIn', 'arrived', 'prepaymentPending'];
     }
     this.check_in_filtered_list = this.check_in_list.filter(
       check_in => {

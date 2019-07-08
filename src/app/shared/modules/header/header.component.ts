@@ -133,7 +133,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
   ) {
     this.onResize();
-
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.handleHeaderclassbasedonURL();
@@ -188,7 +187,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.showLearnMore = false;
     this.scrollhideclass.emit(false);
   }
-
   ngOnInit() {
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
@@ -216,7 +214,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
-
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
@@ -234,7 +231,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       });
   }
-
   setLicense() {
     const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -307,18 +303,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (this.ctype === 'provider') {
           this.getUpgradablePackages();
         }
-
       }
     }
   }
-
   getUpgradablePackages() {
     this.shared_service.getUpgradableLicensePackages()
       .subscribe(data => {
         this.upgradablepackages = data;
       });
   }
-
   handleHeaderclassbasedonURL() {
     this.headercls = '';
     const currenturl = this.router.url.split(';');
@@ -329,9 +322,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (match instanceof Array && match.length === 1) {
           this.headercls = url.class;
         }
-
       }
-
     }
     if (this.headercls === '') {
       this.headercls = 'dashb';
@@ -349,12 +340,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         moreOptions: moreOptions
       }
     });
-
     dialogRef.afterClosed().subscribe(() => {
     });
-
   }
-
   doLogin(origin?) {
     if (origin === 'provider') {
     }
@@ -367,19 +355,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
         is_provider: this.checkProvider(origin)
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'showsignupfromlogin') {
         this.doSignup(origin);
       }
     });
-
   }
-
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';
   }
-
   doLogout() {
     this.shared_functions.doLogout()
       .then(
@@ -397,7 +381,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   inboxiconClick() {
     this.redirectto('inbox');
   }
-
   redirectto(mod) {
     this.showmobileSubmenu = false;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -511,7 +494,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
   gototop() {
     window.scrollTo(0, 0);
   }
@@ -519,10 +501,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const config: ScrollToConfigOptions = {
       target: destination
     };
-
     this._scrollToService.scrollTo(config);
   }
-
   handleScroll(target) {
     setTimeout(() => {
       this.triggerScrollTo(target);
@@ -531,11 +511,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   providerLinkClicked() {
     this.router.navigate(['/phome']);
   }
-
   btnAvailableClicked() {
     this.router.navigate(['provider/settings/waitlist-manager/queues']);
   }
-
   isAvailableNow() {
     this.shared_service.isAvailableNow()
       .subscribe(data => {
@@ -544,14 +522,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
   popularClicked(kw) {
     this.showmorepopularoptions = false;
     this.popular_searches = kw;
     const pdata = { 'ttype': 'popular', 'target': this.popular_searches };
     this.shared_functions.sendMessage(pdata);
   }
-
   popular_search(jsonlist) {
     this.popSearches = [];
     this.showmoreSearch = false;
@@ -560,8 +536,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.popSearches = jsonlist;
     }
-    this.searchLength = this.popSearches.length;
     if (this.popSearches) {
+      this.searchLength = this.popSearches.length;
       for (let i = 0; i < this.popSearches.length; i++) {
         if (i < this.maxCount) {
           this.popSearches[i].show = true;
@@ -569,7 +545,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   showMoreItems() {
     if (this.showmorepopularoptions) {
       this.showmorepopularoptions = false;
@@ -579,15 +554,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.showMorepopularOptionsOverlay = true;
     }
   }
-
   closeMorepopularoptions() {
     this.showmorepopularoptions = false;
     this.showMorepopularOptionsOverlay = false;
   }
-
   showpopularSerach(origin) {
     this.showmoreSearch = false;
-    if (origin === 'more') {
+    if (origin === 'more' && this.popSearches) {
       for (let i = 0; i < this.popSearches.length; i++) {
         if (i >= this.maxCount) {
           this.popSearches[i].show = true;
