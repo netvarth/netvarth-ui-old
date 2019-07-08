@@ -248,9 +248,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.moreoptions_arr = [];
     this.showmoreoptionsSec = false;
     let srchtxt = this.kw_autoname;
-    if (this.kw_autoname) {
-      srchtxt = this.kw_autoname.replace(/'/g, '\\\'');
-    }
+    // if (this.kw_autoname) {
+    //   srchtxt = this.kw_autoname.replace(/'/g, '\\\'');
+    // }
     if (!this.kw_autoname || this.kw_autoname.trim() === '') {
       this.do_search(null);
     } else if (this.holdisplaylist['label'].length !== 0) {

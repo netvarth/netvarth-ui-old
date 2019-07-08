@@ -66,6 +66,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   queuedialogRef;
   isCheckin;
   selected_location = null;
+  selectedQlocation = null;
   capacitylimit = projectConstants.QTY_MAX_VALUE;
   parallellimit = projectConstants.VALIDATOR_MAX150;
   start_hour;
@@ -244,7 +245,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    */
   onChangeLocationSelect(event) {
     const value = event;
-    this.selected_location = this.locations[value] || [];
+    this.selectedQlocation = this.locations[value] || [];
   }
   /**
    * set values for Instant Q form while editing
@@ -492,7 +493,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
       });
     }
-  } 
+  }
   /**
    * Learn more button clicked
    * @param mod
@@ -568,12 +569,11 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.servicelist.length; i++) {
       services.push({ 'id': this.servicelist[i].id });
     }
-    const curLocation = this.shared_Functionsobj.getitemfromLocalStorage('loc_id');
     if (this.action === 'edit') {
       this.locid = { 'id': this.location.id };
       instantQInput['id'] = this.qId;
     } else {
-      this.locid = { 'id': curLocation.id };
+      this.locid = { 'id': this.selectedQlocation.id };
     }
     instantQInput['location'] = this.locid;
     instantQInput['services'] = services;
@@ -587,17 +587,17 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     instantQInput['instantQueue'] = true;
     if (isNaN(instantQ.qcapacity)) {
       const error = 'Please enter a numeric value for capacity';
-      this.shared_Functionsobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     } else if (isNaN(instantQ.qserveonce)) {
       const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
-      this.shared_Functionsobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
-    }  else {
-    if (this.action === 'edit') {
-      this.updateInstantQ(instantQInput);
+      this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     } else {
-      this.createInstantQ(instantQInput);
+      if (this.action === 'edit') {
+        this.updateInstantQ(instantQInput);
+      } else {
+        this.createInstantQ(instantQInput);
+      }
     }
-  }
   }
   /**
    * Method to create instant Q
@@ -787,23 +787,23 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   viewDashboard(queueObj, index, que) {
     this.getTodayCheckinCount(queueObj, index, que);
     // if (!queueObj.instantQueue) {
-      this.getfutureCheckinCount(queueObj, index, que);
-      this.getTomorrowCheckinCount(queueObj, index, que);
-      this.futureQcountCaption[index] = 'Checkins Count';
-      this.todayQcountCaption[index] = 'Checkins Count';
-      if (que === 'scheduleQ') {
-        if (!this.sqShowFutureCount[index]) {
-          this.sqShowFutureCount[index] = true;
-        } else {
-          this.sqShowFutureCount[index] = false;
-        }
+    this.getfutureCheckinCount(queueObj, index, que);
+    this.getTomorrowCheckinCount(queueObj, index, que);
+    this.futureQcountCaption[index] = 'Checkins Count';
+    this.todayQcountCaption[index] = 'Checkins Count';
+    if (que === 'scheduleQ') {
+      if (!this.sqShowFutureCount[index]) {
+        this.sqShowFutureCount[index] = true;
       } else {
-        if (!this.sqShowActiveQFutureCount[index]) {
-          this.sqShowActiveQFutureCount[index] = true;
-        } else {
-          this.sqShowActiveQFutureCount[index] = false;
-        }
+        this.sqShowFutureCount[index] = false;
       }
+    } else {
+      if (!this.sqShowActiveQFutureCount[index]) {
+        this.sqShowActiveQFutureCount[index] = true;
+      } else {
+        this.sqShowActiveQFutureCount[index] = false;
+      }
+    }
     // }
     if (que === 'scheduleQ') {
       if (!this.sqShowTodayCount[index]) {
