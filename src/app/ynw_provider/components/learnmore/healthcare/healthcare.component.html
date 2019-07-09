@@ -11,74 +11,43 @@
 <section *ngIf="childContent == 'public-search'">
     <h6>Public Search</h6>
     <ol class="ol-normal">
-        <li>A doctor is required to click on the “TURN ON” button to enable the Public Search if
-            he/she
-            wants to
-            be
+        <li>A doctor is required to click on the “TURN ON” button to enable the Public Search if he/she wants to be
             visible in the patient’s search results.</li>
         <li>If a doctor has disabled the Public Search, patients cannot see the doctor’s profile in
-            their search
-            results.</li>
-        <li>Patients can search for a doctor with any attributes that are listed under the Profile
-            and
-            Search
-            section. These attributes can include the business name, Jaldee verified levels,
-            Jaldee-Keyword,
-            Basic
-            Information, Location, Location Amenities, Specialization, Languages Known, Additional
-            Info.
-        </li>
-        <li>During the initial profile setup, a doctor can proceed with setting the Profile Name &
-            Summary,
-            Location, Working Hours, Service and Public Search status. The doctor can setup or
-            update
-            these
+            their search results.</li>
+        <li>Patients can search for a doctor with any attributes that are listed under the Profile and Search section.
+            These attributes can include the business name, Jaldee verified levels,
+            Jaldee-Keyword, Basic Information, Location, Location Amenities, Specialization, Languages Known, Additional
+            Info.</li>
+        <li>During the initial profile setup, a doctor can proceed with setting the Profile Name & Summary,
+            Location, Working Hours, Service and Public Search status. The doctor can setup or update these
             informations here.
             <ul class="ul-normal abc">
-                <li>If the doctor logs out of the website after setting the password, the account
-                    will
-                    not be
-                    active. To activate the account, the doctor has to completely fill basic details
-                    and
-                    turn on
-                    the
-                    Public Search. At this point, a default service gets created which can be edited
-                    in
+                <li>If the doctor logs out of the website after setting the password, the account will not be
+                    active. To activate the account, the doctor has to completely fill basic details and turn on
+                    the Public Search. At this point, a default service gets created which can be edited in
                     <strong>Services</strong> under the Check-In Manager.</li>
                 <li>If the doctor logs out of the website after setting up the location, a default
-                    service time
-                    window gets created. The doctor can edit this from here.</li>
+                    service time window gets created. The doctor can edit this from here.</li>
             </ul>
         </li>
-
     </ol>
 </section>
 <section *ngIf="childContent == 'verified-levels'">
     <div class="box-indent">
         <h6 id="verified-levels">Jaldee Verified Levels</h6>
         <ul class="ul-normal abc">
-            <li>After creating the profile, a doctor becomes eligible to get their profile verified
-                with
-                Jaldee.
-            </li>
-            <li>To verify your Jaldee account, call us on 0487-2325650 or you can send us an email
-                at
+            <li>After creating the profile, a doctor becomes eligible to get their profile verified with Jaldee.</li>
+            <li>To verify your Jaldee account, call us on 0487-2325650 or you can send us an email at
                 <span class="linkb">support@jaldee.com</span></li>
-            <li>Being verified by Jaldee allows patients to know that the doctor has been through
-                the
-                Jaldee
+            <li>Being verified by Jaldee allows patients to know that the doctor has been through the Jaldee
                 verification process and is successfully verified.</li>
-            <li>The verified doctor in patient’s search results carries a flag with the profile
-                name.
-                Initially,
-                the
-                verification flag is set to none.</li>
+            <li>The verified doctor in patient’s search results carries a flag with the profile name.
+                Initially, the verification flag is set to none.</li>
             <li>The priority of a doctor in patient search results increases with the verification
                 levels.</li>
-            <li>Jaldee has 3 verified levels, namely, Basic, Basic Plus, and Advanced. Details of
-                each
-                verified
-                levels are depicted in the following table:</li>
+            <li>Jaldee has 3 verified levels, namely, Basic, Basic Plus, and Advanced. Details of each
+                verified levels are depicted in the following table:</li>
         </ul>
         <mat-accordion>
             <mat-expansion-panel [expanded]="false">
@@ -95,12 +64,9 @@
                         <li>Aadhar Card</li>
                         <li>Passport</li>
                     </ul>
-
                     <li><strong>Mobile Number Verification</strong></li>
                     <ul class="ul-normal">
-                        <li>Jaldee team will call and verify the mobile number used for sign up
-                            process
-                            to which
+                        <li>Jaldee team will call and verify the mobile number used for sign up process to which
                             OTP was sent.</li>
                     </ul>
                     <li><strong>Profile Picture</strong></li>
@@ -110,7 +76,6 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
@@ -118,13 +83,9 @@
                         Basic plus
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-
                 <div class="helpcontent">
-
                     <img height="100" width="100" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus"><br>
-                    <li><strong>Provide any two of the Government ID proof
-                            (with
-                            photo)</strong></li>
+                    <li><strong>Provide any two of the Government ID proof (with photo)</strong></li>
                     <ul class="ul-normal">
                         <li>Driving License</li>
                         <li>Voter’s ID</li>
@@ -142,11 +103,9 @@
                     <ul class="ul-normal">
                         <li>Provide a sharp and clear profile pic.</li>
                     </ul>
-
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
@@ -154,7 +113,6 @@
                         Advanced
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-
                 <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/PremiumOrg.png" alt="Advanced"><br>
                     <li><strong>Provide any two of the Government ID proof
@@ -168,10 +126,7 @@
                     </ul>
                     <li><strong>Mobile Number Verification</strong></li>
                     <ul class="ul-normal">
-                        <li>Jaldee team will call and verify the mobile number
-                            used for
-                            sign
-                            up process to which OTP was sent.</li>
+                        <li>Jaldee team will call and verify the mobile number used for sign up process to which OTP was sent.</li>
                     </ul>
                     <li><strong>Profile Picture</strong></li>
                     <ul class="ul-normal">
@@ -179,34 +134,19 @@
                     </ul>
                     <li><strong>Certificates</strong></li>
                     <ul class="ul-normal">
-                        <li>Submit a copy of educational certificates and
-                            business
-                            license
-                            to Jaldee team.</li>
-                        <li>Provide two personal references. These two can’t be
-                            a family
-                            member and they should provide a valid phone number.
-                        </li>
+                        <li>Submit a copy of educational certificates and business license to Jaldee team.</li>
+                        <li>Provide two personal references. These two can’t be a family member and they should provide a valid phone number.</li>
                         <li>Should submit more pictures of the business or
                             property.
                         </li>
                     </ul>
-                    <li><strong>Physical check (by Jaldee
-                            employees)</strong>
-                    </li>
-                    <span>Jaldee team will visit the business or property directly.
-                    </span>
+                    <li><strong>Physical check (by Jaldee employees)</strong></li>
+                    <span>Jaldee team will visit the business or property directly.</span>
                     <ul class="ul-normal">
-                        <li>The team will take the actual photograph of the
-                            business or
-                            property.</li>
+                        <li>The team will take the actual photograph of the business or property.</li>
                         <li>They will collect the exact GPS coordinates.</li>
-                        <li>They will also collect the details of endorsement
-                            done by
-                            any
-                            celebrity or politician.</li>
+                        <li>They will also collect the details of endorsement done by any celebrity or politician.</li>
                     </ul>
-
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
@@ -214,52 +154,31 @@
         <h6 id="important">Important</h6>
         <ul class="ul-normal abc">
             <li>Basic is free of cost.</li>
-            <li>If verification level is set to None, the doctor will not receive any priority in
-                patient’s
-                search
-                results.</li>
+            <li>If verification level is set to None, the doctor will not receive any priority in patient’s search results.</li>
             <li>A charge is applicable for Basic Plus and Advanced verified level.</li>
-            <li>For the verification process, doctors can email the required documents to the Jaldee
-                support
-                team.
-            </li>
+            <li>For the verification process, doctors can email the required documents to the Jaldee support team.</li>
             <li>Safety of the document is our priority. Jaldee.com pledges to keep them safe.</li>
-            <li>These requirements are subject to change and refinement with prior notification to
-                the
-                doctors.
-            </li>
+            <li>These requirements are subject to change and refinement with prior notification to the doctors.</li>
         </ul>
         <section>
-            <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
-                        Searchable
-                        label indicates that patients can search for the doctor using mentioned
+            <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Searchable label indicates that patients can search for the doctor using mentioned
                         attributes.)</i></span></div>
-            <div class="fweight">VIEWABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
-                        Viewable
-                        label
-                        indicates that patients can only view the attributes in doctors profile in
-                        search
+            <div class="fweight">VIEWABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The Viewable
+                        label indicates that patients can only view the attributes in doctors profile in search
                         results.)</i></span></div>
         </section>
     </div>
 </section>
 <section *ngIf="childContent =='basic-information'">
     <h6 id="basic-information">Basic Information</h6>
-
-    <span>It displays the Basic information about a business given by the doctor at the time of
-        initial
-        profile setup.
+    <span>It displays the Basic information about a business given by the doctor at the time of initia profile setup.
         The doctor is allowed to edit each section under “Basic Information.”</span>
-
     <span>To increase the patient acquisition fill this section with appropriate details.</span>
-
     <ol class="ol-normal">
         <li>Click the edit button (pen symbol) to change the business name and description.</li>
         <li>Click on the image to change the Profile picture and upload a new one.</li>
         <li>Images may include the photograph of your clinic, a photograph of the doctor, etc. </li>
     </ol>
-
-
     <div class="box-indent">
         <section>
             <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -281,27 +200,16 @@
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
                     <ul class="ul-normal abc">
-                        <li>The information related to the business’s location comes under this
-                            section.
-                        </li>
-                        <li>Initially the location added to the doctor profile during the initial
-                            profile set up,
-                            will be
+                        <li>The information related to the business’s location comes under this section.</li>
+                        <li>Initially the location added to the doctor profile during the initial profile set up, will be
                             automatically set as the base location.</li>
-                        <li>The doctor can add multiple locations of the business. The link to add a
-                            new
-                            location is
-                            given here.
-                        </li>
-                        <li>If the business has multiple locations, then, only the base location is
-                            displayed here.
-                            The doctor
-                            can edit the base location as well. To do so, click on the edit button.
-                        </li>
+                        <li>The doctor can add multiple locations of the business. The link to add a new location is
+                            given here.</li>
+                        <li>If the business has multiple locations, then, only the base location is displayed here. The doctor
+                            can edit the base location as well. To do so, click on the edit button.</li>
                         <li>To add working hours to the location, a doctor needs to go to
                             <strong>“Locations”</strong> under
                             <strong>“Check-In Manager”.</strong></li>
-
                     </ul>
                     <section>
                         <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -328,27 +236,19 @@
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
                     <ul class="ul-normal abc">
-                        <li>Location amenities are resources, conveniences, facilities or benefits
-                            offered to the
-                            patients for
-                            their use.</li>
-                        <li>A doctor can manage the location amenities here. Choose the available
-                            amenities from the
-                            list. The
-                            following table shows the location amenities for the <strong>Health Care
-                                Sector</strong>.</li>
+                        <li>Location amenities are resources, conveniences, facilities or benefits offered to the
+                            patients for their use.</li>
+                        <li>A doctor can manage the location amenities here. Choose the available amenities from the
+                            list. The following table shows the location amenities for the <strong>Health Care Sector</strong>.</li>
                     </ul>
                     <br>
                     <div class="tscroll">
-
                         <tbody>
                             <tr>
-
                                 <td class="td2">
-
                         <tbody>
                             <tr>
-                                <td class="td2">1. Doctors</td>
+                                <td class="td2">Doctors</td>
                                 <td class="td3">
                                     <ul class="ul-normal">
                                         <li>24 hours</li>
@@ -360,7 +260,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="td2">2. Dentists</td>
+                                <td class="td2">Dentists</td>
                                 <td class="td3">
                                     <ul class="ul-normal">
                                         <li>24 hours</li>
@@ -370,7 +270,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="td2">3. Alternate Medicine Practitioners
+                                <td class="td2">Alternate Medicine Practitioners
                                 </td>
                                 <td class="td3">
                                     <ul class="ul-normal">
@@ -381,7 +281,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="td2">4. Hospital</td>
+                                <td class="td2">Hospital</td>
                                 <td class="td3">
                                     <ul class="ul-normal">
                                         <li>24 hours</li>
@@ -391,12 +291,9 @@
                                 </td>
                             </tr>
                         </tbody>
-
                         </td>
                         </tr>
-
                         </tbody>
-
                     </div>
                     <br>
                     <section>
@@ -448,9 +345,7 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
-
 </section>
-
 <section *ngIf="childContent =='privacy-settings'">
     <h6 id="privacy-settings">Privacy Settings</h6>
 
@@ -460,7 +355,6 @@
         phone
         number and
         email address. </span><br>
-
     <div class="box-indent">
         <mat-accordion>
             <mat-expansion-panel [expanded]="false">
@@ -470,8 +364,6 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
-
-
                     <ol class="ol-normal">
                         <li>A doctor can view the phone number used to create a Jaldee account. By
                             default, the
@@ -498,7 +390,6 @@
                             options to
                             filter the
                             visibility are:
-
                             <ul class="ul-normal abc">
                                 <li><strong>Public(All can see) :</strong> When set to Public,
                                     everyone
@@ -521,7 +412,6 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-
         <mat-accordion>
             <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
@@ -551,7 +441,6 @@
                             Three options
                             to filter
                             the visibility are:
-
                             <ul class="ul-normal abc">
                                 <li><strong>Public(All can see) :</strong> When set to Public,
                                     everyone
@@ -912,7 +801,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                1.Educational Qualification
+                                Educational Qualification
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -931,7 +820,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                2.Membership/Associations
+                                Membership/Associations
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -949,7 +838,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                3.MCI Number
+                                MCI Number
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -967,7 +856,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                4.Gender
+                                Gender
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -983,7 +872,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                5.Associated Clinics
+                                Associated Clinics
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div>
@@ -1001,7 +890,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                6.Medical Problems
+                                Medical Problems
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1019,7 +908,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                7.Symptoms
+                                Symptoms
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1037,7 +926,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                8.Treatments
+                                Treatments
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1055,7 +944,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                9.Medical Procedures
+                                Medical Procedures
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1073,7 +962,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                10.Experience
+                                Experience
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1089,7 +978,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                11.Awards & Recognitions
+                                Awards & Recognitions
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1107,7 +996,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                12.Reference URL
+                                Reference URL
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1125,7 +1014,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                13.Medical Insurance Supported
+                                Medical Insurance Supported
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1141,7 +1030,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                14.Facilities
+                                Facilities
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1157,7 +1046,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                15.Departments
+                                Departments
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1173,7 +1062,7 @@
                     <mat-expansion-panel [expanded]="false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                16.Government Hospital
+                                Government Hospital
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
@@ -1867,302 +1756,318 @@
 
     </ul>
     <mat-accordion>
-            <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                            Upgrade License
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="helpcontent">
-    <span>Here a doctor can upgrade the license anytime.</span>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Upgrade License
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <span>Here a doctor can upgrade the license anytime.</span>
 
-    <ul class="ul-normal">
-        <li>When the doctor clicks on the <strong>“Upgrade License”</strong> button, a window
-            appears
-            where a drop-down menu is listed with the available license packages.</li>
-        <li>To upgrade to a license package, select a package from the drop-down menu.</li>
-        <li>The license package has a monthly subscription, i.e. monthly payment has to be done.
-        </li>
-        <li>A doctor can also upgrade the license package using the below links from dashboard:
-            <ul class="ul-normal">
-                <li><strong>Click here</strong> to Upgrade License : If license package is
-                    <strong>Platinum Free 60 days trial</strong>.</li>
-                <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
-                        higher</strong>.</li>
-            </ul>
-        </li>
-        <li>Here, a doctor can view the owned license package, due amount as well as the next
-            payment
-            date.</li>
-        <li>An invoice is generated on a monthly basis.</li>
-        <li>For example, if a doctor has created a profile on 10th January then all invoices will be
-            generated on a monthly basis i.e. on 10th of each month. In case, the doctor buys add-on
-            and
-            Jaldee-keywords on a different date (suppose on 20th January), the first bill of the
-            add-on
-            and Jaldee-keywords will be calculated from 20 January - 10 February. After that, the
-            same
-            “10↔10” bill cycle will continue from next month. This billing cycle will include
-            License
-            and Addon amount in a single invoice until the license or Add-on gets
-            upgraded/downgraded.<br><br>
-            <span><strong>*To downgrade the existing license package, a doctor needs to contact the
-                    Jaldee
-                    team, call us on 0487-2325650 or you can send us an email at <span
-                        class="linkb">support@jaldee.com</span>.</strong></span>
-        </li>
-        <li>An invoice is generated when an addon is included in a subscription using
-            <strong>“ADD-ON(+)”</strong> option.</li>
-        <li>When a doctor click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
-                grades),</strong> he/she can see the generated invoices. To proceed with payment
-            from
-            here, click on <strong>“Make Payment”</strong>. This redirects the page to PayU
-            interface
-            and thus proceed with the actual payment.</li>
-        <li>The doctor will receive a confirmation email informing the payment status.</li>
-        <li>A doctor can see all the payments completed so far in the <strong>“Payments
-                History”</strong> section.</li>
-        <li>The invoice is generated every month on the same date of profile creation, whether or
-            not
-            the previous payment is made.</li>
-        <li>The license gets upgraded as soon as a doctor clicks on license upgrade button, but the
-            invoice gets generated from the next month and the amount is calculated based on the
-            daily
-            usage of the license package.</li>
-        <li>An email will be sent to the doctor upon each invoice generation.</li>
-    </ul>
-    </div>
-    </mat-expansion-panel>
+                <ul class="ul-normal">
+                    <li>When the doctor clicks on the <strong>“Upgrade License”</strong> button, a window
+                        appears
+                        where a drop-down menu is listed with the available license packages.</li>
+                    <li>To upgrade to a license package, select a package from the drop-down menu.</li>
+                    <li>The license package has a monthly subscription, i.e. monthly payment has to be done.
+                    </li>
+                    <li>A doctor can also upgrade the license package using the below links from dashboard:
+                        <ul class="ul-normal">
+                            <li><strong>Click here</strong> to Upgrade License : If license package is
+                                <strong>Platinum Free 60 days trial</strong>.</li>
+                            <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
+                                    higher</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Here, a doctor can view the owned license package, due amount as well as the next
+                        payment
+                        date.</li>
+                    <li>An invoice is generated on a monthly basis.</li>
+                    <li>For example, if a doctor has created a profile on 10th January then all invoices will be
+                        generated on a monthly basis i.e. on 10th of each month. In case, the doctor buys add-on
+                        and
+                        Jaldee-keywords on a different date (suppose on 20th January), the first bill of the
+                        add-on
+                        and Jaldee-keywords will be calculated from 20 January - 10 February. After that, the
+                        same
+                        “10↔10” bill cycle will continue from next month. This billing cycle will include
+                        License
+                        and Addon amount in a single invoice until the license or Add-on gets
+                        upgraded/downgraded.<br><br>
+                        <span><strong>*To downgrade the existing license package, a doctor needs to contact the
+                                Jaldee
+                                team, call us on 0487-2325650 or you can send us an email at <span
+                                    class="linkb">support@jaldee.com</span>.</strong></span>
+                    </li>
+                    <li>An invoice is generated when an addon is included in a subscription using
+                        <strong>“ADD-ON(+)”</strong> option.</li>
+                    <li>When a doctor click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
+                            grades),</strong> he/she can see the generated invoices. To proceed with payment
+                        from
+                        here, click on <strong>“Make Payment”</strong>. This redirects the page to PayU
+                        interface
+                        and thus proceed with the actual payment.</li>
+                    <li>The doctor will receive a confirmation email informing the payment status.</li>
+                    <li>A doctor can see all the payments completed so far in the <strong>“Payments
+                            History”</strong> section.</li>
+                    <li>The invoice is generated every month on the same date of profile creation, whether or
+                        not
+                        the previous payment is made.</li>
+                    <li>The license gets upgraded as soon as a doctor clicks on license upgrade button, but the
+                        invoice gets generated from the next month and the amount is calculated based on the
+                        daily
+                        usage of the license package.</li>
+                    <li>An email will be sent to the doctor upon each invoice generation.</li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
     </mat-accordion>
 </section>
 
 <section class="pricing-phome" *ngIf="childContent =='upgradelicense'">
-        <mat-accordion>
-                <mat-expansion-panel [expanded]="false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                                Jaldee Pricing
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="helpcontent">
-        <div class="container text-center">
-                <div class="row" *ngIf="activePrice == ''">
-                  <!-- <div class="scroll"> -->
-                  <div class="jd-pricing">
-                    <table align="center">
-                      <tr>
-                        <th class="th1 headcol lic_metric">Licensable metrics</th>
-                        <td class="th2 long head_bg">FREE</td>
-                        <td class="long head_bg">Silver</td>
-                        <td class="th3 long head_bg">Gold</td>
-                        <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
-                        <td class="th5 long head_bg">Ruby</td>
-                        <td class="th6 long head_bg">Diamond</td>
-                      </tr>
-                      <tr>
-                        <th class="th3 headcol">Price(Rs/Month)</th>
-                        <td class="th2 light-col long">FREE</td>
-                        <td class="brozelicensecol long">499 Rs</td>
-                        <td class="th3 light-col long">1499 Rs</td>
-                        <td class="th4 brozelicensecol long">2999 Rs</td>
-                        <td class="th5 light-col long">5999 Rs</td>
-                        <td class="th6 brozelicensecol long">7999 Rs</td>
-                      </tr>
-                      <tr>
-                        <th class="td1  headcol">Jaldee Business Listing</th>
-                        <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1  headcol">Public searches <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'[Business name, domain, subdomain, specializations,
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Jaldee Pricing
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <div class="container text-center">
+                    <div class="row" *ngIf="activePrice == ''">
+                        <!-- <div class="scroll"> -->
+                        <div class="jd-pricing">
+                            <table align="center">
+                                <tr>
+                                    <th class="th1 headcol lic_metric">Licensable metrics</th>
+                                    <td class="th2 long head_bg">FREE</td>
+                                    <td class="long head_bg">Silver</td>
+                                    <td class="th3 long head_bg">Gold</td>
+                                    <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
+                                    <td class="th5 long head_bg">Ruby</td>
+                                    <td class="th6 long head_bg">Diamond</td>
+                                </tr>
+                                <tr>
+                                    <th class="th3 headcol">Price(Rs/Month)</th>
+                                    <td class="th2 light-col long">FREE</td>
+                                    <td class="brozelicensecol long">499 Rs</td>
+                                    <td class="th3 light-col long">1499 Rs</td>
+                                    <td class="th4 brozelicensecol long">2999 Rs</td>
+                                    <td class="th5 light-col long">5999 Rs</td>
+                                    <td class="th6 brozelicensecol long">7999 Rs</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1  headcol">Jaldee Business Listing</th>
+                                    <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1  headcol">Public searches <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'[Business name, domain, subdomain, specializations,
                           keywords etc..]'"></i></th>
-                        <td class="td2 light-col long">Unlimited</td>
-                        <td class="brozelicensecol long">Unlimited</td>
-                        <td class="td3 light-col long">Unlimited</td>
-                        <td class="td4 brozelicensecol long">Unlimited</td>
-                        <td class="td5 light-col long">Unlimited</td>
-                        <td class="td6 brozelicensecol long">Unlimited</td>
-                      </tr>
-                      <tr>
-                        <th class="td1  headcol">Business profile detailed views</th>
-                        <td class="td2 light-col long">20 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'30 per month'"></i></td>
-                        <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'300 per month'"></i></td>
-                        <td class="td3 light-col long">50 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'1000 per month'"></i></td>
-                        <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
-                        <td class="td5 light-col long">300 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'5000 per month'"></i></td>
-                        <td class="td6 brozelicensecol long">Unlimited</td>
-                      </tr>
-                      <tr>
-                        <th class="td1  headcol">Number of Transactions <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
+                                    <td class="td2 light-col long">Unlimited</td>
+                                    <td class="brozelicensecol long">Unlimited</td>
+                                    <td class="td3 light-col long">Unlimited</td>
+                                    <td class="td4 brozelicensecol long">Unlimited</td>
+                                    <td class="td5 light-col long">Unlimited</td>
+                                    <td class="td6 brozelicensecol long">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1  headcol">Business profile detailed views</th>
+                                    <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i></td>
+                                    <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i></td>
+                                    <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month'"></i></td>
+                                    <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
+                                    <td class="td5 light-col long">300 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'5000 per month'"></i></td>
+                                    <td class="td6 brozelicensecol long">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1  headcol">Number of Transactions <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
                           appointment-
                           both online and walk-ins together)'"></i></th>
-                        <td class="td2 light-col long">20 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'30 per month'"></i></td>
-                        <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'300 per month'"></i></td>
-                        <td class="td3 light-col long">50 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'500 per month, Unlimited for 2019'"></i></td>
-                        <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month, Unlimited for 2019'"></i></td>
-                        <td class="td5 light-col long">250 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'2500 per month, Unlimited for 2019'"></i></td>
-                        <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1  headcol">Jaldee coupons</th>
-                        <td class="td2 light-col long">Only sign up coupons</td>
-                        <td class="brozelicensecol long">Only sign up coupons</td>
-                        <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td4 brozelicensecol long">Sign up coupons + 2 <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td6 brozelicensecol long">Sign up coupons + 5 <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1  headcol">Customised coupons</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long">1 per month</td>
-                        <td class="td6 brozelicensecol long">2 per month</td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Jaldee POS</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Jaldee pay / Billing</th>
-                        <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Custom URL</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Storage (image upload)</th>
-                        <td class="td2 light-col long">10 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(eg.10 images - 1mb)'"></i></td>
-                        <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(eg.20 images - 1mb)'"></i></td>
-                        <td class="td3 light-col long">40 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(eg.40 images - 1mb)'"></i></td>
-                        <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(eg.100 images - 1mb)'"></i></td>
-                        <td class="td5 light-col long">250 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(eg.250 images - 1mb)'"></i></td>
-                        <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(eg.1000 images - 1mb)'"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Jaldee Keywords</th>
-                        <td class="td2 light-col long">0</td>
-                        <td class="brozelicensecol long">0</td>
-                        <td class="td3 light-col long">2</td>
-                        <td class="td4 brozelicensecol long">5</td>
-                        <td class="td5 light-col long">10</td>
-                        <td class="td6 brozelicensecol long">25</td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Kiosk</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Number of users</th>
-                        <td class="td2 light-col long">1</td>
-                        <td class="brozelicensecol long">1</td>
-                        <td class="td3 light-col long">1</td>
-                        <td class="td4 brozelicensecol long">upto 5</td>
-                        <td class="td5 light-col long">upto 20</td>
-                        <td class="td6 brozelicensecol long">upto 100</td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(pay only 99 Rs for the
+                                    <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i></td>
+                                    <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i></td>
+                                    <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'500 per month, Unlimited for 2019'"></i></td>
+                                    <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'1000 per month, Unlimited for 2019'"></i></td>
+                                    <td class="td5 light-col long">250 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'2500 per month, Unlimited for 2019'"></i></td>
+                                    <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1  headcol">Jaldee coupons</th>
+                                    <td class="td2 light-col long">Only sign up coupons</td>
+                                    <td class="brozelicensecol long">Only sign up coupons</td>
+                                    <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td4 brozelicensecol long">Sign up coupons + 2 <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td6 brozelicensecol long">Sign up coupons + 5 <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1  headcol">Customised coupons</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long">1 per month</td>
+                                    <td class="td6 brozelicensecol long">2 per month</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee POS</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee pay / Billing</th>
+                                    <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Custom URL</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Storage (image upload)</th>
+                                    <td class="td2 light-col long">10 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.10 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.20 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">40 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.40 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.100 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td5 light-col long">250 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.250 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.1000 images - 1mb)'"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee Keywords</th>
+                                    <td class="td2 light-col long">0</td>
+                                    <td class="brozelicensecol long">0</td>
+                                    <td class="td3 light-col long">2</td>
+                                    <td class="td4 brozelicensecol long">5</td>
+                                    <td class="td5 light-col long">10</td>
+                                    <td class="td6 brozelicensecol long">25</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Kiosk</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Number of users</th>
+                                    <td class="td2 light-col long">1</td>
+                                    <td class="brozelicensecol long">1</td>
+                                    <td class="td3 light-col long">1</td>
+                                    <td class="td4 brozelicensecol long">upto 5</td>
+                                    <td class="td5 light-col long">upto 20</td>
+                                    <td class="td6 brozelicensecol long">upto 100</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Guaranteed business value protection <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(pay only 99 Rs for the
                           current
                           billing month if all below three are true<br> 1) In last 90 days no transactions made<br> 2) In
                           last
                           90 days none viewed business profile details<br> 3) In last 90 days Not once found in searches)'"></i>
-                        </th>
-                        <td class="td2 light-col long">NA</td>
-                        <td class="brozelicensecol long">NA</td>
-                        <td class="td3 light-col long">Yes</td>
-                        <td class="td4 brozelicensecol long">Yes</td>
-                        <td class="td5 light-col long">Yes</td>
-                        <td class="td6 brozelicensecol long">Yes</td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
-                        <td class="td2 light-col long">Option not available</td>
-                        <td class="brozelicensecol long">3 Rs</td>
-                        <td class="td3 light-col long">3 Rs</td>
-                        <td class="td4 brozelicensecol long">2 Rs</td>
-                        <td class="td5 light-col long">1.5 Rs</td>
-                        <td class="td6 brozelicensecol long">1 Rs</td>
-                      </tr>
-                      <tr>
-                        <th class="td1 headcol">Jaldee verification</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                      </tr>
-                    </table>
-                  </div>
+                                    </th>
+                                    <td class="td2 light-col long">NA</td>
+                                    <td class="brozelicensecol long">NA</td>
+                                    <td class="td3 light-col long">Yes</td>
+                                    <td class="td4 brozelicensecol long">Yes</td>
+                                    <td class="td5 light-col long">Yes</td>
+                                    <td class="td6 brozelicensecol long">Yes</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
+                                    <td class="td2 light-col long">Option not available</td>
+                                    <td class="brozelicensecol long">3 Rs</td>
+                                    <td class="td3 light-col long">3 Rs</td>
+                                    <td class="td4 brozelicensecol long">2 Rs</td>
+                                    <td class="td5 light-col long">1.5 Rs</td>
+                                    <td class="td6 brozelicensecol long">1 Rs</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee verification</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-              </div>
 
-</div>
-</mat-expansion-panel>
-</mat-accordion>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
     <span><br>The three dots menu in the top right corner of the page has the following
         options:</span>
 </section>
@@ -2180,7 +2085,7 @@
         bill is
         reflected from the next bill cycle (next month) onwards.</span>
 
-    <h6 >2. License Usage</h6>
+    <h6>2. License Usage</h6>
     <span>Here a doctor can track the license usage. This section shows the following
         information:</span>
     <ul class="ul-normal">
@@ -2990,82 +2895,82 @@
     <span>This section is divided into two main sections, viz. <strong>Jaldee
             Coupons</strong> and <strong>My Coupons. Coupons, either Jaldee coupons or My
             Coupons</strong> can only be applied to the total bill amount.</span><br><br>
-            <mat-accordion>
-                <mat-expansion-panel [expanded]="false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Jaldee Coupons
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="helpcontent">
-    <ol class="ol-normal adjust-delay-num">
-            <ul class="ul-normal">
-                <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name,
-                    validity date (from and to), status. The option to enable/disable the coupon is
-                    also
-                    available in the three dots menu.</li>
-                <li>The coupons with no three dots menu are enabled by the Jaldee. The doctor has no
-                    option to enable/disable the coupon.</li>
-                <li>To view the details of a particular coupon, click on the coupon code.</li>
-                <li>In the detailed view, the doctor can see the valid dates, discount value or
-                    percentage, rules, and the coupon stats as well.</li>
-            </ul><br>
-            <span>Following are the rules for each coupon. “✅” or “❌” indicates
-                whether the rules are applicable or not.</span>
-            <ol class="ol-normal adjust-delay-num">
-                <li><strong>Always Enabled :</strong> This coupon will always be enabled. A doctor
-                    has
-                    no option over enabling or disabling these coupons.</li>
-                <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its
-                    status
-                    can be changed by the doctor.</li>
-                <li><strong>Online Check in Required :</strong> This coupon is available only for
-                    those
-                    patients who check-in online.</li>
-                <li><strong>Self Payment Required :</strong> This coupon is available only for those
-                    patients who pay online for the services.</li>
-                <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other
-                    available coupons.</li>
-                <li><strong>First Check-in Only :</strong> This coupon is available only for those
-                    patients who checks-in for the first time on Jaldee.</li>
-                <li><strong>First Check-in Per Provider Only : </strong> This coupon is available
-                    only
-                    for those patients who check-in for the first time for a particular doctor.</li>
-                <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of
-                    limited patients on whom a doctor can apply the coupon.</li>
-                <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to
-                    which the coupon can be applied.</li>
-                <li><strong>Consumer Use Limit :</strong> This refers to the number of times a
-                    patient
-                    can apply the coupon.</li>
-                <li><strong>Provider Use Limit :</strong> This refers to the number of times a
-                    doctor
-                    can apply the coupon.</li>
-            </ol><br>
-            <ul class="ul-normal">
-                <li>Here a doctor can view the terms and conditions as well as the doctor
-                    description
-                    for the coupon.</li>
-                <li>Corresponding patient description is displayed to him/her at their dashboard.
-                </li>
-                <li>Coupon status is visible in the bottom of the page. The doctor has the option to
-                    enable/disable the coupon here (only if permitted).</li>
-                <li>In addition, a coupon stat section is given where the following is shown:</li>
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Jaldee Coupons
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
                 <ol class="ol-normal adjust-delay-num">
-                    <li><strong>Check ins Applied :</strong> This shows the number of times
-                        check-ins
-                        applied for the coupon.</li>
-                    <li><strong>Total Amount Discounted :</strong> This shows the total amount
-                        waived to
-                        the patients by the doctor using the coupon.</li>
-                    <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
-                        given
-                        to the doctor by Jaldee.</li>
+                    <ul class="ul-normal">
+                        <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name,
+                            validity date (from and to), status. The option to enable/disable the coupon is
+                            also
+                            available in the three dots menu.</li>
+                        <li>The coupons with no three dots menu are enabled by the Jaldee. The doctor has no
+                            option to enable/disable the coupon.</li>
+                        <li>To view the details of a particular coupon, click on the coupon code.</li>
+                        <li>In the detailed view, the doctor can see the valid dates, discount value or
+                            percentage, rules, and the coupon stats as well.</li>
+                    </ul><br>
+                    <span>Following are the rules for each coupon. “✅” or “❌” indicates
+                        whether the rules are applicable or not.</span>
+                    <ol class="ol-normal adjust-delay-num">
+                        <li><strong>Always Enabled :</strong> This coupon will always be enabled. A doctor
+                            has
+                            no option over enabling or disabling these coupons.</li>
+                        <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its
+                            status
+                            can be changed by the doctor.</li>
+                        <li><strong>Online Check in Required :</strong> This coupon is available only for
+                            those
+                            patients who check-in online.</li>
+                        <li><strong>Self Payment Required :</strong> This coupon is available only for those
+                            patients who pay online for the services.</li>
+                        <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other
+                            available coupons.</li>
+                        <li><strong>First Check-in Only :</strong> This coupon is available only for those
+                            patients who checks-in for the first time on Jaldee.</li>
+                        <li><strong>First Check-in Per Provider Only : </strong> This coupon is available
+                            only
+                            for those patients who check-in for the first time for a particular doctor.</li>
+                        <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of
+                            limited patients on whom a doctor can apply the coupon.</li>
+                        <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to
+                            which the coupon can be applied.</li>
+                        <li><strong>Consumer Use Limit :</strong> This refers to the number of times a
+                            patient
+                            can apply the coupon.</li>
+                        <li><strong>Provider Use Limit :</strong> This refers to the number of times a
+                            doctor
+                            can apply the coupon.</li>
+                    </ol><br>
+                    <ul class="ul-normal">
+                        <li>Here a doctor can view the terms and conditions as well as the doctor
+                            description
+                            for the coupon.</li>
+                        <li>Corresponding patient description is displayed to him/her at their dashboard.
+                        </li>
+                        <li>Coupon status is visible in the bottom of the page. The doctor has the option to
+                            enable/disable the coupon here (only if permitted).</li>
+                        <li>In addition, a coupon stat section is given where the following is shown:</li>
+                        <ol class="ol-normal adjust-delay-num">
+                            <li><strong>Check ins Applied :</strong> This shows the number of times
+                                check-ins
+                                applied for the coupon.</li>
+                            <li><strong>Total Amount Discounted :</strong> This shows the total amount
+                                waived to
+                                the patients by the doctor using the coupon.</li>
+                            <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
+                                given
+                                to the doctor by Jaldee.</li>
+                        </ol>
+                    </ul>
                 </ol>
-            </ul>
-            </ol>
-        </div>
-    </mat-expansion-panel>
+            </div>
+        </mat-expansion-panel>
     </mat-accordion>
     <mat-accordion>
         <mat-expansion-panel [expanded]="false">
@@ -3075,30 +2980,30 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="helpcontent">
-       
-            <span>These coupons are created by doctors. To add a coupon for the
-                first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon,
-                type
-                of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
-                coupon can only be applied to the total bill. A doctor can set up two types of
-                Coupons:
-            </span>
-            <ol class="ol-normal adjust-delay-num">
-                <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the
-                    total
-                    bill.</li>
-                <li><strong>Percentage: </strong> A specific percentage of the amount from the total
-                    bill will be deducted in this case. <strong>“Percentage”</strong> type coupons
-                    can
-                    be applied to the total bill.</li>
-            </ol>
-            <span>The Coupons dashboard shows all the existing coupons that have
-                been created on the profile. Here a doctor can create, delete and edit a coupon. To
-                create more coupons, click on the “(+)” symbol. </span>
-       
-   </div>
-   </mat-expansion-panel>
-   </mat-accordion>
+
+                <span>These coupons are created by doctors. To add a coupon for the
+                    first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon,
+                    type
+                    of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
+                    coupon can only be applied to the total bill. A doctor can set up two types of
+                    Coupons:
+                </span>
+                <ol class="ol-normal adjust-delay-num">
+                    <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the
+                        total
+                        bill.</li>
+                    <li><strong>Percentage: </strong> A specific percentage of the amount from the total
+                        bill will be deducted in this case. <strong>“Percentage”</strong> type coupons
+                        can
+                        be applied to the total bill.</li>
+                </ol>
+                <span>The Coupons dashboard shows all the existing coupons that have
+                    been created on the profile. Here a doctor can create, delete and edit a coupon. To
+                    create more coupons, click on the “(+)” symbol. </span>
+
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </section>
 
 <section *ngIf="childContent == 'tax-settings'">
