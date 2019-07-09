@@ -34,9 +34,11 @@
                                         </ul>
                                         <div class="rating-stars">
                                             <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
-                                                src="./assets/images/star.svg" alt=""/>
-                                                <img class="ratingstar" *ngIf="ratingenabledHalf" src="./assets/images/star-half.svg" alt=""/>
-                                                <img class="ratingstar" *ngFor="let enable of ratingdisabledArr" src="./assets/images/star-disabled.svg" alt=""/>
+                                                src="./assets/images/star.svg" alt="" />
+                                            <img class="ratingstar" *ngIf="ratingenabledHalf"
+                                                src="./assets/images/star-half.svg" alt="" />
+                                            <img class="ratingstar" *ngFor="let enable of ratingdisabledArr"
+                                                src="./assets/images/star-disabled.svg" alt="" />
                                         </div>
                                     </div>
                                     <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
@@ -113,7 +115,7 @@
                                     <span class="icon-female" *ngIf="genderType=='female'"
                                         [matTooltip]="femaleTooltip"></span>
                                 </div>
-                               <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
+                                <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
@@ -125,7 +127,7 @@
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isInFav"><span class="icon-favourite-filled"
                                             (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
-                                     <li><span class="icon-message" (click)="communicateHandler()"
+                                    <li><span class="icon-message" (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
@@ -182,7 +184,7 @@
                         </ng-container>
                     </div>
                     <ng-container *ngIf="locationjson.length > 0">
-                       <div *ngFor="let loc of locationjson">
+                        <div *ngFor="let loc of locationjson">
                             <div class="location">
                                 <div class="top-sect">
                                     <div class="tp-l">
@@ -253,9 +255,11 @@
                                             <div
                                                 *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
                                                 <div class="timing" *ngIf="loc['personAhead']">
-                                                    <span class="timing" style="margin-bottom: 5px" *ngIf="!loc.opennow">
-                                                            <span class="est-time"> Next Available Time: </span>
-                                                            <span class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
+                                                    <span class="timing" style="margin-bottom: 5px"
+                                                        *ngIf="!loc.opennow">
+                                                        <span class="est-time"> Next Available Time: </span>
+                                                        <span
+                                                            class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
                                                     <div style="display: flex"> <b>{{loc['personAhead']}} &nbsp;
                                                         </b><span *ngIf="loc['personAhead'] > 1" class="people-ahead">
                                                             {{people_ahead}}</span><span *ngIf="loc['personAhead'] == 1"
@@ -264,9 +268,11 @@
 
                                                 </div>
                                                 <div class="timing" *ngIf="!loc['personAhead']">
-                                                        <span class="timing" style="margin-bottom: 5px" *ngIf="!loc.opennow">
-                                                                <span class="est-time"> Next Available Time: </span>
-                                                                <span class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
+                                                    <span class="timing" style="margin-bottom: 5px"
+                                                        *ngIf="!loc.opennow">
+                                                        <span class="est-time"> Next Available Time: </span>
+                                                        <span
+                                                            class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
                                                     <div class="">
                                                         {{loc['personAhead']}} {{people_ahead}} </div>{{get_token_cap}}
                                                 </div>
@@ -279,20 +285,21 @@
                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
                                         <span class="cs-btn chk-btn"
                                             (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                            *ngIf="loc['isAvailableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
+                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
                                         <span class="cs-btn chk-btn"
                                             (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                            *ngIf="loc['isAvailableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
+                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
                                         <span class="cs-btn chk-btn disabled"
-                                            *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'])">{{getTerminologyTerm('waitlist')}}</span>
+                                            *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
                                         <span class="cs-btn chk-btn disabled"
-                                            *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'])">{{get_token_btn}}</span>
+                                            *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
                                         <span class="cs-btn bt10"
                                             *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
                                             (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                             <span
                                                 *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
-                                            <span *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
+                                            <span
+                                                *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
                                             {{for_cap}}
                                             <span>{{different_date_cap}}</span></span>
                                     </div>

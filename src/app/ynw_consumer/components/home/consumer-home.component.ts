@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
-import {Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -8,7 +8,6 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConsumerServices } from '../../services/consumer-services.service';
-import { ConsumerDataStorageService } from '../../services/consumer-datastorage.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
@@ -90,10 +89,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   settingsjson = null;
   settings_exists = false;
   futuredate_allowed = false;
-
   waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
   public searchfields: SearchFields = new SearchFields();
-
   reload_history_api = { status: true };
   subscription: Subscription;
   cronHandle: Subscription;
@@ -128,7 +125,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   isCheckinEnabled = true;
   coupondialogRef: MatDialogRef<{}, any>;
   nextAvailDate;
-  terminologiesJson: any= [];
+  terminologiesJson: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -160,8 +157,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
-    // this.getHistoryCount();
-    // this.getFavouriteProvider();
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -237,14 +232,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
   getWaitlist() {
-
     this.loadcomplete.waitlist = false;
-
     const params = {
-      //  'sort_id': 'asc',
-      // 'waitlistStatus-eq': 'checkedIn,arrived'
     };
-
     this.consumer_services.getWaitlist(params)
       .subscribe(
         data => {
@@ -253,11 +243,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
-
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
-
             this.waitlists[i].future = false;
             retval = this.getAppxTime(waitlist);
             if (today.valueOf() < waitlist_date.valueOf()) {
@@ -280,7 +268,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.waitlists[i].cancelled_time = retval.cancelled_time;
             i++;
           }
-
           this.loadcomplete.waitlist = true;
         },
         error => {
@@ -294,7 +281,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (waitlist.waitlistStatus !== 'cancelled') {
       if (waitlist.hasOwnProperty('serviceTime') || waitlist.calculationMode === 'NoCalc') {
         appx_ret.caption = 'Checked in for'; // 'Check-In Time';
-        // appx_ret.date = waitlist.date;
         if (waitlist.calculationMode === 'NoCalc') {
           appx_ret.time = waitlist.queue.name + ' [' + waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime + ']';
         } else {
@@ -325,11 +311,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       let time = [];
       let time1 = [];
-      let t2 ;
+      let t2;
       appx_ret.caption = 'Checked in for';
       appx_ret.date = waitlist.date;
       appx_ret.time = waitlist.queue.name + ' [' + waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime + ']';
-      appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime,'YYYY-MM-DD').format();
+      appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime, 'YYYY-MM-DD').format();
       time = waitlist.statusUpdatedTime.split('-');
       time1 = time[2].trim();
       t2 = time1.slice(2);
@@ -338,26 +324,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.cancelled_caption = 'Cancelled at ';
     }
     return appx_ret;
-    /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
-      return 'Now';
-    } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
-      return this.shared_functions.convertMinutesToHourMinute(waitlist.appxWaitingTime);
-
-    }  else {
-      const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
-      return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
-    }*/
   }
-  
+
   formatTime(time) {
     var hours = time.getHours();
     var minutes = time.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
-    return  strTime;
+    return strTime;
   }
 
   AMHourto24(date, time12) {
@@ -369,7 +346,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (AMPM === 'AM' && hours === 12) { hours = hours - 12; }
     const sHours = hours;
     const sMinutes = minutes;
-    // alert(sHours + ':' + sMinutes);
     const mom_date = moment(date);
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);
@@ -411,15 +387,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getFavouriteProvider() {
-
     this.loadcomplete.fav_provider = false;
-
     this.shared_services.getFavProvider()
       .subscribe(
         data => {
-
           this.loadcomplete.fav_provider = true;
-
           this.fav_providers = data;
           this.fav_providers_id_list = [];
           this.setWaitlistTimeDetails();
@@ -433,11 +405,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   setWaitlistTimeDetails() {
     let k = 0;
     for (const x of this.fav_providers) {
-
       this.fav_providers_id_list.push(x.id);
-      /// setWaitlistTimeDetailsProvider
       k++;
-
     }
   }
 
@@ -459,11 +428,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
       for (let i = 0; i < provids_locid.length; i++) {
-        // if (provids[i] !== undefined) {
         post_provids_locid.push(provids_locid[i].locid);
-        // }
       }
-
       this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;
@@ -494,11 +460,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let cdate;
           for (let i = 0; i < waitlisttime_arr.length; i++) {
             locindx = provids_locid[i].locindx;
-            // if (waitlisttime_arr[i]['isCheckinAllowed']) {
-
-            // } else {
-            //   this.fav_providers[index]['locations'][locindx]['isCheckinAllowed'] = this.isCheckinEnabled;
-            // }
             this.fav_providers[index]['locations'][locindx]['waitingtime_res'] = waitlisttime_arr[i];
             this.fav_providers[index]['locations'][locindx]['estimatedtime_det'] = [];
             if (waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
@@ -512,18 +473,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['cdate'] = waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 1;
               cdate = new Date(waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-              // if (waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-              // if (cdate.getTime() !== check_dtoday.getTime()) {
+              if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                this.fav_providers[index]['locations'][locindx]['availableToday'] = true;
+              } else {
+                this.fav_providers[index]['locations'][locindx]['availableToday'] = false;
+              }
               if (!this.fav_providers[index]['locations'][locindx]['opennow']) {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 1;
-                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                //     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                // } else {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], {'rettype': 'monthname'})
-                //   + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                // }
                 if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
                   if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
@@ -537,16 +493,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' }) + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-          
+
               } else {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-                // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['isFuture'] = 2;
-                // if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                // } else {
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = 'Next Available Time ';
-                //   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-                // }
                 if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
@@ -557,7 +506,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             } else {
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['queue_available'] = 0;
             }
-
             if (waitlisttime_arr[i]['message']) {
               this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['message'] = waitlisttime_arr[i]['message'];
             }
@@ -570,7 +518,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (!waitlist.ynwUuid || !waitlist.provider.id) {
       return false;
     }
-
     this.shared_functions.doCancelWaitlist(waitlist, this)
       .then(
         data => {
@@ -584,12 +531,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       );
   }
 
-
   doDeleteFavProvider(fav) {
     if (!fav.id) {
       return false;
     }
-
     this.shared_functions.doDeleteFavProvider(fav, this)
       .then(
         data => {
@@ -606,14 +551,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (!id) {
       return false;
     }
-
     this.shared_services.addProvidertoFavourite(id)
       .subscribe(
         data => {
           this.getFavouriteProvider();
         },
         error => {
-
         }
       );
   }
@@ -626,7 +569,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (!data) {
       return false;
     }
-
     this.notificationdialogRef = this.dialog.open(NotificationListBoxComponent, {
       width: '50%',
       disableClose: true,
@@ -634,15 +576,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         'messages': data
       }
     });
-
     this.notificationdialogRef.afterClosed().subscribe(result => {
-
     });
   }
 
   checkIfFav(id) {
     let fav = false;
-
     this.fav_providers_id_list.map((e) => {
       if (e === id) {
         fav = true;
@@ -658,7 +597,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.provider.id;
     pass_ob['name'] = waitlist.provider.businessName;
     this.addNote(pass_ob);
-
   }
 
   addCommonMessage(provider) {
@@ -670,7 +608,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   addNote(pass_ob) {
-
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -678,7 +615,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       autoFocus: true,
       data: pass_ob
     });
-
     this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
@@ -695,32 +631,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const api_filter = {};
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     api_filter['count'] = this.pagination.perPage;
-
     return api_filter;
   }
 
   showCheckin(data, origin = 'consumer') {
-
-    // const  cdate = new Date();
-    // const  mn = cdate.getMonth() + 1;
-    // const  dy = cdate.getDate();
-    // let mon = '';
-    // let day = '';
-    // if (mn < 10) {
-    //   mon = '0' + mn;
-    // } else {
-    //   mon = '' + mn;
-    // }
-    // if (dy < 10) {
-    //   day = '0' + dy;
-    // } else {
-    //   day = '' + dy;
-    // }
-    // const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
-
     const provider_data = data.provider_data;
     const location_data = data.location_data;
-
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
@@ -738,12 +654,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         datechangereq: data.chdatereq
       }
     });
-
     this.checkindialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.getWaitlist();
       }
-
     });
   }
 
@@ -751,19 +665,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
 
-
   goCheckin(data, location, currdata, chdatereq, type) {
-
     let provider_data = null;
     if (type === 'fav_provider') {
       provider_data = data;
     } else {
       provider_data = data.provider || null;
     }
-
     this.setCheckinData(provider_data, location, currdata, chdatereq);
-
-
   }
 
   setCheckinData(provider, location, currdate, chdatereq = false) {
@@ -802,11 +711,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   // gets the various json files based on the value of "section" parameter
   getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
     let UTCstring = null;
-
     if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
       return false;
     }
-
     if (modDateReq) {
       UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     }
@@ -854,21 +761,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-  // getWaitlistBill(waitlist) {
-  //   this.consumer_services.getWaitlistBill(waitlist.ynwUuid)
-  //     .subscribe(
-  //       data => {
-  //         const bill_data = data;
-  //         this.viewBill(waitlist, bill_data);
-  //       },
-  //       error => {
-  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       }
-  //     );
-  // }
+
   viewBill(checkin) {
     if (!this.billdialogRef) {
-      // bill_data['passedProvname'] = checkin['provider']['businessName'];
       this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
         width: '40%',
         panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
@@ -878,29 +773,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       });
       this.billdialogRef.afterClosed().subscribe(result => {
-        // if ( result === 'makePayment') {
-        //   // this.makePayment(checkin, bill_data);
-        // }
+
         if (this.billdialogRef) {
           this.billdialogRef = null;
         }
       });
     }
   }
-  // makePayment(checkin, bill_data) {
-  //   this.paydialogRef = this.dialog.open(ConsumerWaitlistCheckInPaymentComponent, {
-  //     width: '50%',
-  //     panelClass: ['commonpopupmainclass', 'consumerpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       checkin: checkin,
-  //       bill_data: bill_data
-  //     }
-  //   });
-  //   this.paydialogRef.afterClosed().subscribe(result => {
-  //     this.reloadAPIs();
-  //   });
-  // }
+
   rateService(waitlist) {
     this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
       width: '50%',
@@ -950,7 +830,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   openCoupons() {
-    // alert('Clicked coupon');
     this.coupondialogRef = this.dialog.open(CouponsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
@@ -960,23 +839,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.coupondialogRef.afterClosed().subscribe(result => {
     });
   }
-  // showPersonsAhead(waitlist) {
-  //   let retstat = false;
-  //   if (waitlist.hasOwnProperty('personsAhead')) {
-  //     switch (waitlist.waitlistStatus) {
-  //       case 'cancelled':
-  //       case 'started':
-  //       case 'done':
-  //         retstat = false;
-  //         break;
-  //       default:
-  //         retstat = true;
-  //     }
-  //   } else {
-  //     retstat = false;
-  //   }
-  //   return retstat;
-  // }
+
   makeFailedPayment(waitlist) {
     let prepayamt = 0;
     this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
@@ -985,7 +848,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.servicesjson.length; i++) {
           if (this.servicesjson[i].id === waitlist.service.id) {
             prepayamt = waitlist.waitlistingFor.length * this.servicesjson[i].minPrePaymentAmount || 0;
-            // this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
             if (prepayamt > 0) {
               const payData = {
                 'amount': prepayamt,
@@ -1020,7 +882,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   getTerminologyTerm(term) {
     if (this.terminologiesJson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
-      // const terminologies = this.common_datastorage.get('terminologies');
       if (this.terminologiesJson) {
         return this.shared_functions.firstToUpper((this.terminologiesJson[term_only]) ? this.terminologiesJson[term_only] : ((term === term_only) ? term_only : term));
       } else {
@@ -1030,5 +891,5 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return term;
     }
   }
-  
+
 }

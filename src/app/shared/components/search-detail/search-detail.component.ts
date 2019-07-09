@@ -1,9 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
@@ -40,8 +38,6 @@ import { CouponsComponent } from '../coupons/coupons.component';
 
   ]
 })
-
-
 
 export class SearchDetailComponent implements OnInit, OnDestroy {
 
@@ -177,7 +173,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
@@ -185,29 +180,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
     this.bNameTooltip = this.shared_functions.getProjectMesssages('BUSSNAME_TOOPTIP');
     this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
-    // this.activaterouterobj.queryParams
     this.getDomainListMain()
       .then(data => {
         this.domainlist_data = data;
-
         this.activaterouterobj.params
           .subscribe(paramsv => {
             this.setSearchfields(paramsv, 1);
             this.setEnvironment(false);
-            // this.do_search();
           });
       });
     const activeUser = this.shared_functions.getitemfromLocalStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
-    // this.sortfieldsels = 'distanceasc';
     this.nosearch_results = false;
     this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
     this.shared_functions.setitemonLocalStorage('sctop', 0);
-    // setTimeout(() => {
-    //   window.scrollTo(0, scrolltop);
-    //  }, 3200);
   }
   stringToInt(stringVal) {
     return parseInt(stringVal, 0);
@@ -310,7 +298,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.showsearchsection = true;
     if (!bypassotherfunction) {
       this.setfields();
-      // this.getRefinedSearch(true);
       if (this.labelq === '') {
         this.getRefinedSearch(true, 0, 'domainlist');
       } else {
@@ -320,7 +307,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   checklocationExistsinStorage() {
     const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
-    // if (!localloc) {
     const holdLocObj = {
       autoname: this.locautoname || '',
       name: this.locname || '',
@@ -336,7 +322,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       holdLocObj.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
     }
     this.shared_functions.setitemonLocalStorage('ynw-locdet', holdLocObj);
-    // }
   }
 
   setSearchfields(obj, src) {
@@ -350,7 +335,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.longitude = obj.lo;
       this.kw = obj.kw;
       this.kwautoname = obj.kwauto;
-      // this.kwdomain = obj.kwdomain;
       this.kwsubdomain = obj.kwsubdomain;
       this.kwtyp = obj.kwtyp;
       this.labelq = this.shared_functions.Lbase64Decode(obj.lq) || '';
@@ -365,28 +349,22 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       };
 
       if (this.kwtyp === 'special') {
-        // if (this.domain === '' || this.domain === undefined || this.domain === 'undefined') {
         if (this.kwdomain !== '') {
           this.domain = this.kwdomain;
-          // this.getlistofSubdomains(this.domain);
         }
         if (this.kwsubdomain !== '') {
           this.selected_leftsubdomain = this.kwsubdomain;
         }
-        // }
         this.specialization_hide = true;
       }
 
       if (this.kwtyp === 'subdom') {
-        // if (this.domain === '' || this.domain === undefined || this.domain === 'undefined') {
         if (this.kwdomain !== '') {
           this.domain = this.kwdomain;
-          // this.getlistofSubdomains(this.domain);
         }
         if (this.kw !== '') {
           this.selected_leftsubdomain = this.kw;
         }
-        // }
       }
       // calling method to parse refine filters in query string to respective array
       this.parseRefinedfiltersQueryString(obj);
@@ -399,7 +377,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       } else {
         this.startpageval = 1;
       }
-      // this.startpageval = 1;
       if (obj.sort && obj.srt !== ' ') {
         const sr = obj.srt.split(' ');
         this.sortfield = sr[0];
@@ -453,7 +430,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
         if (this.kwsubdomain !== '') {
           this.subsector = this.kwsubdomain;
-          // this.selected_leftsubdomain = this.kwsubdomain;
           const domdet = this.getdomainofaSubdomain(this.kwsubdomain);
           if (domdet.dom !== '') {
             this.domain = domdet.dom;
@@ -541,7 +517,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           retval = true;
         }
       }
-      // this.handle_optionclick(fieldheader, fieldtype, fieldname, true);
       return retval;
     } else if (fieldtype === 'Boolean') { // case of multiple selection of radio slider
       let retval = false;
@@ -553,7 +528,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       let retval = '';
       if (this.querystringrefineretain_arr[fieldheader]) {
         retval = this.querystringrefineretain_arr[fieldheader][0];
-        // this.handleTextrefineblur(fieldheader, retval, fieldtype, true);
       }
       return retval;
     }
@@ -604,9 +578,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.kwdomain = domainobtain['dom'] || '';
         }
       }
-      // this.kwsubdomain = '';
       this.kwtyp = 'subdom';
-      // this.showsearchsection = true;
     } else {
       if (this.domain !== '' && this.domain !== 'All' && this.specialization !== '') {
         const obtarr = this.getSubdomainofaSpecialization(this.specialization, this.domain);
@@ -662,12 +634,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       urlstr += 'la=' + this.latitude + ';lo=' + this.longitude;
     }
-    /*if (this.provider) {
-      if (urlstr != '') {
-        urlstr += '&';
-      }
-      urlstr += 'prov=' + this.provider;
-    }*/
     if (this.locname) {
       if (urlstr !== '') {
         urlstr += ';';
@@ -692,7 +658,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       urlstr += 'kw=' + this.kw + ';kwauto=' + this.kwautoname + ';kwdomain=' + this.kwdomain + ';kwsubdomain=' + this.kwsubdomain + ';kwtyp=' + this.kwtyp;
     }
-    // }
     if (this.commonfilters !== '') {
       if (urlstr !== '') {
         urlstr += ';';
@@ -709,19 +674,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.refined_options_url_str !== '') {
       urlstr += this.refined_options_url_str;
     }
-    // if (this.sortfield === '') {
-    //   this.sortfield = 'title';
-    //   this.sortorder = 'asc';
-    // }
     if (this.sortfield) {
       if (urlstr !== '') {
         urlstr += ';';
       }
       urlstr += 'srt=' + this.sortfield + ' ' + this.sortorder;
     }
-    /*if (urlstr !== '' && !this.labelq) {
-      urlstr = ';' + urlstr;
-    }*/
     if (urlstr !== '') {
       urlstr = ';' + urlstr;
     }
@@ -733,7 +691,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
     if (this.sortfield) {
       sortval = this.sortfield;
-      // sortval = this.sortfield + ' ' + this.sortorder;
     }
     let q_str = '';
     let locstr = '';
@@ -742,8 +699,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // calling shared function to get the coordinates for nearybylocation
       const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, this.loctype);
       const coordinates = retcoordinates['locationRange'];
-      // const locstr = 'location1:' + coordinates + ' ' + 'location2:' + coordinates + 'location3:' + coordinates + 'location4:' + coordinates + 'location5:' + coordinates;
-      // q_str = q_str + ' ( or ' + locstr + ')';
       projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
       locstr = 'location1:' + coordinates;
       q_str = q_str + locstr;
@@ -753,7 +708,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       let ptitle = this.kw.replace('/', '');
       ptitle = ptitle.replace(/'/g, '\\\'');
       q_str = q_str + ' title:\'' + ptitle + '\'';
-      // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     } else if (this.kwtyp === 'kwphrase') {
       const words = [];
       this.kw = this.kw.replace(/'/g, '\\\'');
@@ -781,21 +735,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         }
         queryStr += ')';
       }
-      // let phrase = this.kw.replace('/', '');
       phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
         ' specialization_displayname:\'' + this.kw + '\''
         + ' title:\'' + this.kw + '\'' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\'' + queryStr + ' )';
-      // adwords:\'' + queryStr + '\'
-      // phrase = phrase.replace(/'/g, '\\\'');
-      // phrasestr = ' (phrase \'' + phrase + '\') ';
-      // q_str = q_str + ' title:\'' + this.kw.replace('/', '') + '\'';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
       q_str = q_str + 'sector:\'' + this.domain + '\'';
     } else {
       if (this.latitude) {
-        // q_str = q_str + '\'\'';
-        // q_str = q_str + '\'';
       }
     }
     if (this.kw) {
@@ -823,17 +770,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       const labelqarr = this.labelq.split('&');
       q_str = labelqarr[0].replace('?q=', '');
       q_str = q_str.replace('[loc_details]', locstr);
-      /*if (this.latitude) { // case of location is selected
-        // calling shared function to get the coordinates for nearybylocation
-        q_str = q_str + '( and location1:' + this.shared_functions.getNearByLocation(this.latitude, this.longitude) + ')';
-      }*/
-      // projectConstants.searchpass_criteria.parser = labelqarr[1].replace('q.parser=', '');
-      // projectConstants.searchpass_criteria.return = labelqarr[2].replace('return=', '');
     } else {
       // if (this.latitude || this.domain || this.labelq || this.refined_querystr) {
       if (this.latitude || this.domain || this.labelq || time_qstr || phrasestr) {
-        // if location or domain is selected, then the criteria should include following syntax
-        // q_str = '(and ' + time_qstr + q_str + this.refined_querystr + ')';
         q_str = '(and ' + q_str + time_qstr + phrasestr + ')';
       }
     }
@@ -848,7 +787,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else {
       projectConstants.searchpass_criteria.start = 0;
     }
-    // this.search_string = base_url + q_str + suffix_url;
     if (this.search_return) {
       this.search_return.unsubscribe();
     }
@@ -857,31 +795,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else {
       this.shared_functions.getCloudUrl()
         .then(url => {
-          /* const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
-           let testUser = false;
-           if (userobj !== null) {
-             const phno = (userobj.primaryPhoneNumber.toString());
-             if (phno.startsWith('55')) {
-               testUser = true;
-             }
-           }
-           const qvar = projectConstants.searchpass_criteria.fq;
-           let qvarlen;
-           if (!testUser) {
-             if (qvar !== '') {
-               qvarlen = qvar.length;
-               projectConstants.searchpass_criteria.fq = qvar.substring(0, (qvarlen - 1)) + ' (not test_account:1) ' + qvar.substring(qvarlen - 1, 1);
-             } else {
-               projectConstants.searchpass_criteria.fq = ' (not test_account:1) ';
-             }
-           } else {
-             if (qvar !== '') {
-               qvarlen = qvar.length;
-               projectConstants.searchpass_criteria.fq = qvar.substring(0, (qvarlen - 1)) + ' test_account:1 ' + qvar.substring(qvarlen - 1, 1);
-             } else {
-               projectConstants.searchpass_criteria.fq = ' (and test_account:1) ';
-             }
-           } */
           this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria)
             .subscribe(res => {
               this.search_data = res;
@@ -890,7 +803,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               let schedule_arr = [];
               let locationcnt = 0;
               for (let i = 0; i < this.search_data.hits.hit.length; i++) {
-                // this.getTerminologyTerm('waitlist', this.search_data.hits.hit[i].fields);
                 this.account_type = this.search_data.hits.hit[i].fields.account_type;
                 this.branch_id = this.search_data.hits.hit[i].fields.branch_id;
                 const addres = this.search_data.hits.hit[i].fields['address1'];
@@ -906,12 +818,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
                 this.search_data.hits.hit[i].fields.rating = this.shared_functions.ratingRounding(this.search_data.hits.hit[i].fields.rating);
                 this.search_data.hits.hit[i].fields['checkInsallowed'] = (this.search_data.hits.hit[i].fields.hasOwnProperty('online_checkins')) ? true : false;
-                // const providarr = this.search_data.hits.hit[i].id.split('-');
                 const provid = this.search_data.hits.hit[i].id;
-                // this.result_provid[i] = this.search_data.hits.hit[i].id;
                 if (this.search_data.hits.hit[i].fields.claimable !== '1') {
-                  // this.result_provid[i] = providarr[0]; // this.search_data.hits.hit[i].id;
-                  // this.result_providdet.push({'provid': providarr[0], 'searchindx': i});
                   this.result_providdet.push({ 'provid': provid, 'searchindx': i });
                 } else {
                 }
@@ -928,22 +836,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   ++locationcnt;
                 }
                 this.search_data.hits.hit[i].fields.moreclinics = locationcnt;
-                /*if (this.search_data.hits.hit[i].fields.business_hours1) {
-                  schedule_arr = [];
-                  for (let j = 0; j < this.search_data.hits.hit[i].fields.business_hours1.length; j++) {
-                    const obt_sch = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[j]);
-                      for (let k = 0; k < obt_sch[0].repeatIntervals.length; k++) {
-                        // pushing the schedule details to the respective array to show it in the page
-                        schedule_arr.push({
-                            day: obt_sch[0].repeatIntervals[k],
-                            sTime: obt_sch[0].timeSlots[0].sTime,
-                            eTime: obt_sch[0].timeSlots[0].eTime
-                        });
-                      }
-                      this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-                  }
-                }*/
-
                 if (this.search_data.hits.hit[i].fields.business_hours1) {
                   schedule_arr = [];
                   const business_hours = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[0]);
@@ -962,9 +854,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
 
               }
-              /*let display_schedule = [];
-              display_schedule =  this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-              this.queues[ii]['displayschedule'] = display_schedule;*/
               this.getWaitingTime(this.result_providdet);
               this.search_result_count = this.search_data.hits.found || 0;
               if (this.search_data.hits.found === 0) {
@@ -1005,9 +894,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (provids.length > 0) {
       const post_provids: any = [];
       for (let i = 0; i < provids.length; i++) {
-        // if (provids[i] !== undefined) {
         post_provids.push(provids[i].provid);
-        // }
       }
       this.searchdetailserviceobj.getEstimatedWaitingTime(post_provids)
         .subscribe(data => {
@@ -1060,11 +947,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['queue_available'] = 1;
               this.search_data.hits.hit[srchindx].fields['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
               cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-              // if (this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'] !== dtoday) {
-              // if (cdate.getTime() !== check_dtoday.getTime()) {
+              if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['availableToday'] = true;
+              } else {
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['availableToday'] = false;
+              }
               if (!this.search_data.hits.hit[srchindx].fields['opennow']) {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
-                // this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 1;
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = 'Today';
@@ -1080,7 +969,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['nextAvailDate'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' }) + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-                // this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['isFuture'] = 2;
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 } else {
@@ -1172,7 +1060,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         subdom = this.kwsubdomain;
       }
     }
-    // if (this.kwtyp === 'label') {
     if (this.kwtyp === 'label' || (this.labelq !== '' && this.labelq !== undefined)) {
       subdom = this.kwsubdomain;
     }
@@ -1185,7 +1072,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     let pasdomain = (this.domain !== 'All') ? this.domain : '';
     if (subdom === '') {
-      // pasdomain = '';
     }
     if (fromrefine === 1) { // case of coming to this function from left side domain or subdomain selection
       if (this.refined_domain !== '' && this.refined_domain !== 'All') {
@@ -1200,7 +1086,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         subdom = this.refined_subdomain;
       }
       if (subdom === '') {
-        // pasdomain = '';
       }
     }
     this.searchdetailserviceobj.getRefinedSearch(pasdomain, subdom)
@@ -1247,7 +1132,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           }
         });
         if (call_dosearch === true) {
-          // this.do_search();
           this.buildQuery(false);
         }
       });
@@ -1296,9 +1180,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
-    // if (fieldname === 'ynw_verified_level') {
-    //   selval++;
-    // }
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     if (this.searchrefineresult_arr.length) {
@@ -1315,9 +1196,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         const chk_fieldvalexist = this.check_fieldvalexistsinArray(fieldname, selval);
         if (chk_fieldvalexist[0]['indx'] !== -1) {
           this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].splice(chk_fieldvalexist[0]['key'], 1);
-          /*if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']].length === 0) {
-            this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
-          }*/
           if (this.searchrefineresult_arr[chk_fieldvalexist[0]['indx']][chk_fieldvalexist[0]['field']].length === 0) {
             this.searchrefineresult_arr.splice(chk_fieldvalexist[0]['indx'], 1);
           }
@@ -1401,12 +1279,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     for (const field in this.searchrefinetextresult_arr) {
       if (field) {
         if (this.searchrefinetextresult_arr[field] !== '') {
-          // textstr += ' ' + field + '_cust:' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
           tmpholder = this.searchrefinetextresult_arr[field];
-          if (tmpholder) {
+          if (typeof this.searchrefinetextresult_arr[field] === 'object') {
+            tmpholder = this.searchrefinetextresult_arr[field][0];
+          }
+          if (tmpholder && tmpholder.includes('\'')) {
             tmpholder = tmpholder.replace(/'/g, '\\\'');
           }
-          // textstr += ' ' + field + ':' + '\'' + this.searchrefinetextresult_arr[field] + '\'' + ' ';
           textstr += ' ' + field + ':' + '\'' + tmpholder + '\'' + ' ';
           this.refined_options_url_str += ';myref_' + field + '=' + this.searchrefinetextresult_arr[field];
         }
@@ -1429,8 +1308,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else {
       testuserQry = ' test_account:1 ';
     }
-    // this.refined_querystr = ' and (' + this.refined_querystr + textstr + ')';
-    // this.refined_querystr = this.refined_querystr + textstr;
     if (this.refined_querystr !== '' || textstr !== '' || testuserQry !== '') {
       this.refined_querystr = '(and ' + this.refined_querystr + textstr + testuserQry + ')';
     }
@@ -1456,17 +1333,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       const if_special = fieldname.substr(-10);
       if (if_special === '_location*') {
-        // for (let j = 1; j <= 1; j++) {
         retstr += ' ' + fieldname.replace('_location*', '_location1') + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
-        //   curcnt++;
-        // }
-        /*for (let j = 1; j <= 5; j++) {
-          retstr += ' ' + fieldname.replace('_location*', '_location' + j) + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
-          curcnt++;
-        }*/
-        /*if (curcnt === this.searchrefineresult_arr[indx][fieldname].length) {} {
-          retstr = ' ( or ' + retstr + ') ';
-        }*/
       } else {
         if (fieldname === 'opennow') {
           let time_qstr = '';
@@ -1485,7 +1352,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           }
         }
       }
-      // retstr += ' ' + fieldname + '_cust:' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
       returlstr += this.searchrefineresult_arr[indx][fieldname][i][0];
       curcnt++;
     }
@@ -1528,7 +1394,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   getlistofSubdomains(curdomain, src?) {
-    // const curdomain = this.refined_domain;
     this.subdomainlist_data = [];
     if (curdomain !== '' && curdomain !== 'All') {
       for (const domains of this.domainlist_data) {
@@ -1540,7 +1405,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   handleratingClick(obj) {
     this.searchButtonClick = false;
-    // this.ratingholder = obj.selectedrating;
     this.handle_optionclick(obj.cloudindex, 'Rating', obj.selectedrating, false);
   }
 

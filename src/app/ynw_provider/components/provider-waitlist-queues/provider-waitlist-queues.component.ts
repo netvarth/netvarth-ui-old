@@ -33,9 +33,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   api_error = null;
   api_success = null;
   locations;
-  locationExists = false;
   api_loading = true;
-
   api_load_complete = 0;
   add_button = Messages.ADD_BUTTON;
   tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
@@ -225,11 +223,6 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
               if (this.locationsjson[index].status === 'ACTIVE') {
                 this.locations.push(this.locationsjson[index]);
               }
-              if (this.locations.length === 0) {
-                this.locationExists = false;
-              } else {
-                this.locationExists = true;
-              }
               resolve();
             }
           },
@@ -246,6 +239,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   onChangeLocationSelect(event) {
     const value = event;
     this.selectedQlocation = this.locations[value] || [];
+    this.selected_location = this.locations[value] || [];
   }
   /**
    * set values for Instant Q form while editing
@@ -573,6 +567,9 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       this.locid = { 'id': this.location.id };
       instantQInput['id'] = this.qId;
     } else {
+      if (this.selectedQlocation === null) {
+        this.selectedQlocation = this.selected_location;
+      }
       this.locid = { 'id': this.selectedQlocation.id };
     }
     instantQInput['location'] = this.locid;

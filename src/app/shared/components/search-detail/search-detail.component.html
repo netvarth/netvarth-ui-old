@@ -9,16 +9,16 @@
             <div class="status-bar"
                 *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
                 <div class="ct1">
-                     <!-- <span class="fa fa-filter" (click)="togger_refinesection()" [matTooltipClass]="tooltipcls"
+                    <!-- <span class="fa fa-filter" (click)="togger_refinesection()" [matTooltipClass]="tooltipcls"
                         [matTooltip]="refTooltip"> -->
-                        <span>
-                                <i class="icon-filter-one" style="font-size: x-large" (click)="togger_refinesection()"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="refTooltip"></i>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </span>
-                        
+                    <span>
+                        <i class="icon-filter-one" style="font-size: x-large" (click)="togger_refinesection()"
+                            [matTooltipClass]="tooltipcls" [matTooltip]="refTooltip"></i>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
                     <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
                 </div>
             </div>
@@ -309,67 +309,69 @@
                                         <!-- {{search_result.fields.rating}}  -->
                                         <ng-container *ngIf="search_result.fields.rating>0">
                                             <ng-container *ngIf="search_result.fields.rating==.5">
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star-disabled.svg" alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==1">
-                                                <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star.svg" alt="" />
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star-disabled.svg" alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==1.5">
-                                                <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star.svg" alt="" />
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star-disabled.svg" alt="" />
                                             </ng-container>
                                             <ng-container *ngIf="search_result.fields.rating==2">
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star.svg" alt=""/>
+                                                    src="./assets/images/star.svg" alt="" />
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star-disabled.svg" alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==2.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star.svg" alt=""/>
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                                                    src="./assets/images/star.svg" alt="" />
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star-disabled.svg" alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==3">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star.svg" alt=""/>
+                                                    src="./assets/images/star.svg" alt="" />
                                                 <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                    src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star-disabled.svg" alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==3.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                    src="./assets/images/star.svg" alt=""/>
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star.svg" alt="" />
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg"
+                                                    alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==4">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star.svg" alt=""/>
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
+                                                    src="./assets/images/star.svg" alt="" />
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg"
+                                                    alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==4.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                    src="./assets/images/star.svg" alt=""/>
-                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt=""/>
+                                                    src="./assets/images/star.svg" alt="" />
+                                                <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
                                             </ng-container>
 
                                             <ng-container *ngIf="search_result.fields.rating==5">
                                                 <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                    <img class="ratingstar" src="./assets/images/star.svg" alt=""/>
+                                                    <img class="ratingstar" src="./assets/images/star.svg" alt="" />
                                                 </ng-container>
                                             </ng-container>
 
@@ -377,7 +379,8 @@
                                         </ng-container>
                                         <ng-container *ngIf="search_result.fields.rating==0">
                                             <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                <img class="ratingstar" src="./assets/images/star-disabled.svg" alt=""/>
+                                                <img class="ratingstar" src="./assets/images/star-disabled.svg"
+                                                    alt="" />
                                             </ng-container>
                                         </ng-container>
 
@@ -416,7 +419,8 @@
 
                                     <div *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['branchSpCount']"
                                         class="pointer-cursor" (click)="providerDetClicked(search_result)">
-                                        <b>{{search_result.fields['estimatedtime_det']['branchSpCount']}} {{provider_label}} </b>
+                                        <b>{{search_result.fields['estimatedtime_det']['branchSpCount']}}
+                                            {{provider_label}} </b>
                                     </div>
 
 
@@ -533,11 +537,14 @@
                                             *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
                                         </span>
                                     </div>
-                                    <div *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                    <div
+                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
                                         <div *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
-                                            <div class="timing" style="margin-bottom: 5px" *ngIf="!search_result.fields['opennow']">
-                                                    <span class="est-time">Next Available Time:</span>
-                                                    <span class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
+                                            <div class="timing" style="margin-bottom: 5px"
+                                                *ngIf="!search_result.fields['opennow']">
+                                                <span class="est-time">Next Available Time:</span>
+                                                <span
+                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
                                             </div>
                                             <b>{{search_result.fields['estimatedtime_det']['personAhead']}} </b><span
                                                 class="people-ahead"
@@ -546,10 +553,12 @@
                                                 *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
                                         </div>
                                         <div *ngIf="!search_result.fields['estimatedtime_det']['personAhead']">
-                                                <div class="timing" style="margin-bottom: 5px" *ngIf="!search_result.fields['opennow']">
-                                                        <span class="est-time">Next Available Time:</span>
-                                                        <span class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
-                                                </div>
+                                            <div class="timing" style="margin-bottom: 5px"
+                                                *ngIf="!search_result.fields['opennow']">
+                                                <span class="est-time">Next Available Time:</span>
+                                                <span
+                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
+                                            </div>
                                             <div class="time-data">
                                                 {{search_result.fields['estimatedtime_det']['personAhead']}}
                                                 {{people_ahead}} </div>{{get_token_cap}}
@@ -566,22 +575,20 @@
                                     </div>
                                 </div>
 
-
-
                             </div>
                             <div class="bt-r"
                                 *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)"
-                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && (search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken']))">{{getTerminologyTerm('waitlist',
+                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && (search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken']))">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
                                 <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)"
-                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                                    *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
                                 <span class="cs-btn chk-btn disabled"
-                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'])">{{getTerminologyTerm('waitlist',
+                                    *ngIf="(search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])) && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
                                 <span class="cs-btn chk-btn disabled"
-                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'])">{{get_token_btn}}</span>
-                                       <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)"
+                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
+                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)"
                                     *ngIf="search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}}
                                     <span
                                         *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span><span
