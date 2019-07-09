@@ -3811,8 +3811,6 @@ i.notavail {color:grey !important}
 }
 .helpcolor{
   background: #0a0a0a24 !important;
-  font-weight: bold !important;
-  font-size: 0.80rem;
 }
 .help{
   border-right: 1px solid lightgray;

@@ -270,7 +270,7 @@
                         Location
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal abc">
                         <li>The information related to the business’s location comes under this
                             section.
@@ -307,7 +307,7 @@
                         Location Amenities
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal abc">
                         <li>Location amenities are resources, conveniences, facilities or benefits
                             offered to the customers for their use.</li>
@@ -439,7 +439,7 @@
                         Working Hours
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <span>Working hours of the base location are shown here. The provider can click
                         here
                         to redirect to the <strong>Working Hours</strong> page. Here provider can
@@ -1207,18 +1207,18 @@
 </section>
 <section *ngIf="childContent =='settings'">
     <h6><u>Send Notification</u></h6>
-    <span>If a doctor wants to receive notification in <strong>Jaldee Provider App,</strong> when a
+    <span>If a provider wants to receive notification in <strong>Jaldee Provider App,</strong> when a
         check-in is done or when a check-in is cancelled, he/she needs to turn on this toggle
         button.</span>
 </section>
 <section *ngIf="childContent =='settings'">
     <h6><u>Accept Future Check-In</u></h6>
     <ul class="ul-normal">
-        <li>This advanced feature of Jaldee.com helps a doctor accept check-ins online for a service
+        <li>This advanced feature of Jaldee.com helps a provider accept check-ins online for a service
             that will be availed in a future date.</li>
-        <li>If a doctor enables this button, online check-in patients can avail the services for a
+        <li>If a provider enables this button, online check-in customers can avail the services for a
             future date.</li>
-        <li>In case a doctor disables<strong>“Accept Future Check-in”,</strong> patients can only
+        <li>In case a provider disables<strong>“Accept Future Check-in”,</strong> customers can only
             check-in for the current day’s working hours.</li>
     </ul>
 </section>
@@ -1581,7 +1581,7 @@
         </table>
     </div>
     <div class="box-indent">
-        <h4>How it works?</h4>
+        <h6>How it works?</h6>
         <p>The <strong>KIOSK</strong> feature is designed for walk-in customers. With this feature,
             the
             walk-in customers can self-check-in for the services, sign up to Jaldee and view the
@@ -1589,10 +1589,10 @@
             of the check-in.</p>
         <ol class="ol-normal">
             <li><strong><u>Check-In Yourself</u></strong></li>
-            <p>A customer can walk-in to any open Kiosk. The Kiosk prompts the customer to enter the
+            <span>A customer can walk-in to any open Kiosk. The Kiosk prompts the customer to enter the
                 mobile number and the first three letters of their first name/last name. This is to
                 look
-                up if the customer is already registered with <strong>Jaldee</strong>.</p>
+                up if the customer is already registered with <strong>Jaldee</strong>.</span>
             <ul class="ul-normal abc">
                 <li>If the customer is already a registered member, he/she can check-in online for
                     the
@@ -1629,10 +1629,10 @@
                     customer’s registered mobile number.</li>
                 <li>Future Check-in is done in the same way as that of normal check-in. The only
                     difference here in Future check-in is to select the date.</li>
-                <p>Note: A customer is restricted only to the above-mentioned information. The
+                <span>Note: A customer is restricted only to the above-mentioned information. The
                     customer
                     cannot access any other information about the service provider’s Jaldee account.
-                </p>
+                </span>
             </ul>
             <li><strong><u>Checked-in Online Check Your Status/Report as Arrived</u></strong></li>
             <ul class="ul-normal">
@@ -1647,10 +1647,10 @@
             </ul>
 
             <li><strong><u>Do You Want to Sign Up?</u></strong></li>
-            <p>The customers can sign up to Jaldee through the KIOSK machine under this option. To
+            <span>The customers can sign up to Jaldee through the KIOSK machine under this option. To
                 do
                 so, simply enter the mobile number, first name, and last name. This will get the
-                customer registered with Jaldee.</p>
+                customer registered with Jaldee.</span>
             <ul class="ul-normal">
                 <li>A customer can also register themselves with Jaldee and proceed with the
                     check-in.
@@ -2688,7 +2688,7 @@
                     To
                     Email Settings”</strong> (Payment Settings) to add the email id. This can be set
                 directly from My Account.</li>
-            <h4 id="payment-settings">Payment Settings</h4>
+            <h6 id="payment-settings">Payment Settings</h6>
             <li>Two modes of payments can be enabled. These are:</li>
             <ul ol class="ol-normal">
                 <li><strong>Jaldee Bank :</strong> Jaldee account means a customer can pay online
@@ -2920,13 +2920,13 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
-            <p class="adjust-delay-para">These coupons are created by providers. To add a coupon for
+            <span>These coupons are created by providers. To add a coupon for
                 the
                 first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon,
                 type
                 of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
                 coupon can only be applied to the total bill. A provider can set up two types of
-                Coupons:</p>
+                Coupons:</span>
             <ol class="ol-normal adjust-delay-num">
                 <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the
                     total
@@ -2936,11 +2936,11 @@
                     can
                     be applied to the total bill.</li>
             </ol>
-            <p class="adjust-delay-para">The Coupons dashboard shows all the existing coupons that
+            <span>The Coupons dashboard shows all the existing coupons that
                 have
                 been created on the profile. Here a provider can create, delete and edit a coupon.
                 To
-                create more coupons, click on the “(+)” symbol. </p>
+                create more coupons, click on the “(+)” symbol. </span>
             </div>
         </mat-expansion-panel>
         </mat-accordion>

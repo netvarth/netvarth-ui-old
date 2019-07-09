@@ -5,8 +5,8 @@
             <div class="row">
                 <div class="col-md-4 help" style="border-right: 1px solid lightgray">
                     <ul>
-                        <li>Profile and Search
-                            <ul *ngIf="profilesearch">
+                        <li><a (click)="menu()">Profile and Search </a>
+                            <ul *ngIf="profilesearch && showprofile">
                                 <li (click)="handleScroll('public-search', 'profile-search')"
                                     [ngClass]="{'helpcolor': (child =='public-search' && parent == 'profile-search')}" class="pointlist">
                                     Public Search</li>
@@ -39,8 +39,8 @@
                                     Custom ID</li>
                             </ul>
                         </li>
-                        <li>Check-In Manager
-                            <ul *ngIf="checkinmanager">
+                        <li><a click="menu()">Check-In Manager</a>
+                            <ul *ngIf="checkinmanager && showcheckinmanager">
                                 <li (click)="handleScroll('settings', 'checkinmanager')"
                                     [ngClass]="{'helpcolor': (child =='settings' && parent == 'checkinmanager')}" class="pointlist">
                                     Settings</li>
@@ -67,8 +67,8 @@
                         <li [ngClass]="{'helpcolor': (child =='kiosk' && parent == 'kiosk')}"><a
                                 (click)="handleScroll('kiosk', 'kiosk')" class="pointlist">Kiosk</a>
                         </li>
-                        <li>license
-                            <ul *ngIf="license">
+                        <li><a click="menu()">license</a>
+                            <ul *ngIf="license && showlicense">
                                 <li (click)="handleScroll('upgradelicense', 'license')"
                                     [ngClass]="{'helpcolor': (child =='upgradelicense' && parent == 'license')}" class="pointlist">
                                     Your Current License Package</li>
@@ -94,8 +94,8 @@
                                 (click)="handleScroll('payment', 'payment')" class="pointlist">Payment
                                 Settings</a></li>
 
-                        <li>Billing/POS
-                            <ul *ngIf="billing">
+                        <li><a click="menu()">Billing/POS</a>
+                            <ul *ngIf="billing && showbill">
                                 <li (click)="handleScroll('items', 'billing')"
                                     [ngClass]="{'helpcolor': (child =='items' && parent == 'billing')}" class="pointlist">
                                     Items
@@ -126,7 +126,7 @@
                     <ng-container *ngIf="domain=='personalCare'">
                         <app-personalcare-learnmore [parent]="parent" [child]="child"></app-personalcare-learnmore>
                     </ng-container>
-                    <ng-container *ngIf="domain=='vastuAstrologer'">
+                    <ng-container *ngIf="domain=='vastuAstrology'">
                         <app-vastu-learnmore [parent]="parent" [child]="child"></app-vastu-learnmore>
                     </ng-container>
                     <ng-container *ngIf="domain=='foodJoints'">
@@ -138,10 +138,10 @@
                     <ng-container *ngIf="domain=='finance'">
                         <app-finance-learnmore [parent]="parent" [child]="child"></app-finance-learnmore>
                     </ng-container>
-                    <ng-container *ngIf="domain=='religiousPriest'">
+                    <ng-container *ngIf="domain=='religiousPriests'">
                         <app-religious-learnmore [parent]="parent" [child]="child"></app-religious-learnmore>
                     </ng-container>
-                    <ng-container *ngIf="domain=='veterinary'">
+                    <ng-container *ngIf="domain=='veterinaryPetcare'">
                         <app-veterinary-learnmore [parent]="parent" [child]="child"></app-veterinary-learnmore>
                     </ng-container>
                 </div>

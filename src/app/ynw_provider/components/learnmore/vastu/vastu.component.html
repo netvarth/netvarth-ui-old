@@ -1,4 +1,3 @@
-<!-- Vastu -->
 <section *ngIf="parentContent == 'profile-search'">
     <h6>PROFILE AND SEARCH SETTINGS</h6>
     <span>The profile & search settings offers an in-depth overview of a provider's profile. This
@@ -230,33 +229,20 @@
                         Viewable label indicates that customers can only view the attributes in
                         providers profile in search results.)</i></span></div>
         </section>
-
-
-
-
-
-
-
-
     </div>
 </section>
 <section *ngIf="childContent =='basic-information'">
     <h6 id="basic-information">Basic Information</h6>
-
     <span>It displays the Basic information about a business given by the provider at the time of
         initial profile setup. The provider is allowed to edit each section under “Basic
         Information”.</span>
-
     <span>To increase the customer acquisition fill this section with appropriate details.</span>
-
     <ol class="ol-normal">
         <li>Click the edit button (pen symbol) to change the business name and description.</li>
         <li>Click on the image to change the Profile picture and upload a new one.</li>
         <li>Images may include the photograph of your clinic, a photograph of the provider, etc.
         </li>
     </ol>
-
-
     <div class="box-indent">
         <section>
             <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -273,7 +259,7 @@
                         Location
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal abc">
                         <li>The information related to the business’s location comes under this
                             section.
@@ -314,7 +300,7 @@
                         Location Amenities
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal abc">
                         <li>Location amenities are resources, conveniences, facilities or benefits
                             offered to the customers for their use.</li>
@@ -325,39 +311,39 @@
                     </ul>
                     <br>
                     <div class="tscroll">
-                            <tbody>
-                                    <tr>
-        
-                                        <td class="td2">
-        
-                                <tbody>
-                                    <tr>
-                                        <td class="td2">Vastu</td>
-                                        <td class="td3">
-                                            <ul class="ul-normal">
-                                                <li>24 hours</li>
-                                                <li>Parking</li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                            <td class="td2">Astrologer</td>
-                                            <td class="td3">
-                                                <ul class="ul-normal">
-                                                    <li>24 hours</li>
-                                                    <li>Parking</li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                        <tbody>
+                            <tr>
 
+                                <td class="td2">
+
+                        <tbody>
+                            <tr>
+                                <td class="td2">Vastu</td>
+                                <td class="td3">
+                                    <ul class="ul-normal">
+                                        <li>24 hours</li>
+                                        <li>Parking</li>
+                                    </ul>
                                 </td>
-                                </tr>
-        
-                                </tbody>
-        
-                            </div>
-                            <br>
+                            </tr>
+                            <tr>
+                                <td class="td2">Astrologer</td>
+                                <td class="td3">
+                                    <ul class="ul-normal">
+                                        <li>24 hours</li>
+                                        <li>Parking</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        </td>
+                        </tr>
+
+                        </tbody>
+
+                    </div>
+                    <br>
                     <section>
                         <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                                     Searchable label
@@ -381,7 +367,7 @@
                         Working Hours
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <span>Working hours of the base location are shown here. The provider can click
                         here
                         to redirect to the <strong>Working Hours</strong> page. Here provider can
@@ -418,96 +404,96 @@
         or delete both phone number and email address. </span>
 
     <div class="box-indent">
-                    <mat-accordion>
-                        <mat-expansion-panel [expanded]="false">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Phone
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="helpcontent">
-        <ol class="ol-normal">
-            <li>A provider can view the phone number used to create a Jaldee account. By default,
-                the
-                visibility of the number is set to none.</li>
-            <li>The three dots menu on the right corner has two options, namely,
-                <strong>Edit</strong>
-                and <strong>Delete</strong>.</li>
-            <li>If a provider wants to edit an entry, he/she can click on the
-                <strong>“Edit”</strong>
-                button. Here, the provider can change the phone number, phone label (for example,
-                mobile, emergency, mainline or others) and also the visibility of the number.</li>
-            <li>The phone number is shown in the profile’s detailed view in customer’s dashboard.
-                This
-                helps the customers to contact provider easily.</li>
-            <li>The provider has an option to restrict the visibility of the phone number. Two
-                options
-                to filter the visibility are:
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Phone
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>A provider can view the phone number used to create a Jaldee account. By default,
+                            the
+                            visibility of the number is set to none.</li>
+                        <li>The three dots menu on the right corner has two options, namely,
+                            <strong>Edit</strong>
+                            and <strong>Delete</strong>.</li>
+                        <li>If a provider wants to edit an entry, he/she can click on the
+                            <strong>“Edit”</strong>
+                            button. Here, the provider can change the phone number, phone label (for example,
+                            mobile, emergency, mainline or others) and also the visibility of the number.</li>
+                        <li>The phone number is shown in the profile’s detailed view in customer’s dashboard.
+                            This
+                            helps the customers to contact provider easily.</li>
+                        <li>The provider has an option to restrict the visibility of the phone number. Two
+                            options
+                            to filter the visibility are:
 
-                <ul class="ul-normal abc">
-                    <li><strong>Public(All can see) :</strong> When set to Public, everyone can see
-                        the
-                        provider’s number.</li>
-                    <li><strong>Private(None can see) :</strong> When set to Private, only the
-                        provider
-                        can view the phone number.</li>
-                    <li>None</li>
-                </ul>
-            </li>
-            <li>A provider can also delete a phone number. To do so, click <strong>“Delete”</strong>
-                from the three dots menu on the right corner.</li>
-            </ol>
-        </div>
-    </mat-expansion-panel>
-</mat-accordion>
+                            <ul class="ul-normal abc">
+                                <li><strong>Public(All can see) :</strong> When set to Public, everyone can see
+                                    the
+                                    provider’s number.</li>
+                                <li><strong>Private(None can see) :</strong> When set to Private, only the
+                                    provider
+                                    can view the phone number.</li>
+                                <li>None</li>
+                            </ul>
+                        </li>
+                        <li>A provider can also delete a phone number. To do so, click <strong>“Delete”</strong>
+                            from the three dots menu on the right corner.</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
 
-<mat-accordion>
-    <mat-expansion-panel [expanded]="false">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Email
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="helpcontent">
-        <ol class="ol-normal">
-            <li>A provider can add, edit and delete the email address here.</li>
-            <li>The three dots menu on the right corner has two options, viz. <strong>Edit</strong>
-                and
-                <strong>Delete</strong>.</li>
-            <li>In case, a provider wants to edit an entry, he/she can click on the
-                <strong>“Edit”</strong> button. Here, the provider can change the email address,
-                email
-                label (for example,Office Email Id, Personal Email Id, etc.) and also the visibility
-                of
-                the email address.</li>
-            <li>The email address provided here is shown to the customers in the detailed view of
-                the
-                provider profile.</li>
-            <li>The provider has an option to restrict the visibility of the email address. Three
-                options to filter the visibility are:
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Email
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>A provider can add, edit and delete the email address here.</li>
+                        <li>The three dots menu on the right corner has two options, viz. <strong>Edit</strong>
+                            and
+                            <strong>Delete</strong>.</li>
+                        <li>In case, a provider wants to edit an entry, he/she can click on the
+                            <strong>“Edit”</strong> button. Here, the provider can change the email address,
+                            email
+                            label (for example,Office Email Id, Personal Email Id, etc.) and also the visibility
+                            of
+                            the email address.</li>
+                        <li>The email address provided here is shown to the customers in the detailed view of
+                            the
+                            provider profile.</li>
+                        <li>The provider has an option to restrict the visibility of the email address. Three
+                            options to filter the visibility are:
 
-                <ul class="ul-normal abc">
-                    <li><strong>Public(All can see) :</strong> When set to Public, everyone can see
-                        the
-                        provider’s email.</li>
-                    <li><strong>My Customers only (Customers who checks-in for the services)
-                            :</strong>
-                        When set to ‘My customers only’, the email is visible only to the provider’s
-                        customers.</li>
-                    <li><strong>Private(None can see) :</strong> When set to Private, only the
-                        provider
-                        can view the email.</li>
-                </ul>
-            </li>
-            <li>A provider can delete an email address. To do so, click <strong>“Delete”</strong>
-                from
-                the three dots menu on the right corner.</li>
-            <li>Jaldee.com uses the email address to communicate the general notifications to the
-                provider, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
-            </ol>
-        </div>
-    </mat-expansion-panel>
-</mat-accordion><br>
+                            <ul class="ul-normal abc">
+                                <li><strong>Public(All can see) :</strong> When set to Public, everyone can see
+                                    the
+                                    provider’s email.</li>
+                                <li><strong>My Customers only (Customers who checks-in for the services)
+                                        :</strong>
+                                    When set to ‘My customers only’, the email is visible only to the provider’s
+                                    customers.</li>
+                                <li><strong>Private(None can see) :</strong> When set to Private, only the
+                                    provider
+                                    can view the email.</li>
+                            </ul>
+                        </li>
+                        <li>A provider can delete an email address. To do so, click <strong>“Delete”</strong>
+                            from
+                            the three dots menu on the right corner.</li>
+                        <li>Jaldee.com uses the email address to communicate the general notifications to the
+                            provider, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion><br>
 
         <section>
             <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -528,76 +514,76 @@
         Vastu/Astrologer sector.</span>
 
     <div class="tscroll">
-            <mat-accordion>
-                    <mat-expansion-panel [expanded]="false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Vastu
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="helpcontent">
-                            <ol class="ol-normal specllist">
-                        
-                                            <li>Vedic Astrology</li>
-                                            <li>Residential Vastu</li>
-                                            <li>Commercial Vastu</li>
-                                            <li>Design of traditional temples</li>
-                                            <li>Idol designing and making</li>
-                                            <li>Vastu supervision</li>
-                                            <li>Vastu for career</li>
-                                            <li>Vastu for happy married life</li>
-                                            <li>Interior designing for Vastu</li>
-                                            <li>Vastu for Finance</li>
-                                            <li>Vastu for Health</li>
-                                            <li>Agasthiyar Nadi Jyothisham</li>
-                                            <li>Deva prashnam</li>
-                                            <li>Muhurtham</li>
-                                            <li>Tamboola prasnam for temples</li>
-                                            <li>Tamboola prasnam for families</li>
-                                            <li>Ashtamangala prasnam for families</li>
-                                            <li>Ashtamangala prasnam for temples</li>
-                                            <li>Birth chart</li>
-                                            <li>Horoscope</li>
-                                            <li>Marriage compatibility</li>
-                                            <li>Numerology</li>
-                                            <li>Career predictions</li>
-                                            <li>After death remedies</li>
-                                        </ol>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-        
-                <mat-accordion>
-                    <mat-expansion-panel [expanded]="false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                    Astrologer
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="helpcontent">
-        
-        
-        
-                                <ol class="ol-normal">
-                                        <li>Vedic Astrology</li>
-                                        <li>Residential Vastu</li>
-                                        <li>Commercial Vastu</li>
-                                        <li>Design of traditional temples</li>
-                                        <li>Idol designing and making</li>
-                                        <li>Vastu supervision</li>
-                                        <li>Vastu for career</li>
-                                        <li>Vastu for happy married life</li>
-                                        <li>Interior designing for Vastu</li>
-                                        <li>Vastu for Finance</li>
-                                        <li>Vastu for Health</li>
-                                        <li>Agasthiyar Nadi Jyothisham</li>
-                                    </ol>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-        
-       
-                               
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Vastu
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal specllist">
+
+                        <li>Vedic Astrology</li>
+                        <li>Residential Vastu</li>
+                        <li>Commercial Vastu</li>
+                        <li>Design of traditional temples</li>
+                        <li>Idol designing and making</li>
+                        <li>Vastu supervision</li>
+                        <li>Vastu for career</li>
+                        <li>Vastu for happy married life</li>
+                        <li>Interior designing for Vastu</li>
+                        <li>Vastu for Finance</li>
+                        <li>Vastu for Health</li>
+                        <li>Agasthiyar Nadi Jyothisham</li>
+                        <li>Deva prashnam</li>
+                        <li>Muhurtham</li>
+                        <li>Tamboola prasnam for temples</li>
+                        <li>Tamboola prasnam for families</li>
+                        <li>Ashtamangala prasnam for families</li>
+                        <li>Ashtamangala prasnam for temples</li>
+                        <li>Birth chart</li>
+                        <li>Horoscope</li>
+                        <li>Marriage compatibility</li>
+                        <li>Numerology</li>
+                        <li>Career predictions</li>
+                        <li>After death remedies</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Astrologer
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+
+
+
+                    <ol class="ol-normal">
+                        <li>Vedic Astrology</li>
+                        <li>Residential Vastu</li>
+                        <li>Commercial Vastu</li>
+                        <li>Design of traditional temples</li>
+                        <li>Idol designing and making</li>
+                        <li>Vastu supervision</li>
+                        <li>Vastu for career</li>
+                        <li>Vastu for happy married life</li>
+                        <li>Interior designing for Vastu</li>
+                        <li>Vastu for Finance</li>
+                        <li>Vastu for Health</li>
+                        <li>Agasthiyar Nadi Jyothisham</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+
     </div><br>
     <span>All the specializations added during the initial profile set up are listed in this
         section. To
@@ -653,148 +639,140 @@
         business as well as the provider.</span>
 
     <div class="tscroll">
-            <div class="box">
-                    <span style="font-size: 15px">Vastu/Astrologer</span>
-                </div>
-                <td>
-        
-                    <tbody>
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]="false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                      Age
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="helpcontent">
-        
-                                    <span>The service provider needs to mention the
-                                            number of
-                                            staff working at the establishment.</span><br>
-                                    <span class="brown-color helptext">SEARCHABLE-NO</span>
-                                    <span class="brown-color helptext">VIEWABLE-YES</span>
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-        
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]="false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                       Gender
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="helpcontent">
-                                    <span class="bord ">Male/Female/Others
-                                    </span><br>
-                                    <span class="brown-color">SEARCHABLE-NO</span>
-                                    <span class="brown-color">VIEWABLE-YES</span>
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-        
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]="false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                      Experience
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="helpcontent">
-                                    <span class="bord ">Enter the Work Experience here.
-                                    </span><br>
-                                    <span class="brown-color">SEARCHABLE-NO</span>
-                                    <span class="brown-color">VIEWABLE-YES</span>
-        
-        
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-        
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]="false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                            Awards & Recognitions
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="helpcontent">
-                                    <span class="bord">Here a provider can mention the awards received
-                                            in
-                                            the respective field.
-                                    </span><br>
-                                    <span class="brown-color">SEARCHABLE-NO</span>
-                                    <span class="brown-color">VIEWABLE-YES</span>
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-        
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]="false">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                            Reference URL
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div>
-                                    <span class="bord">This shows the direct link of the provider’s
-                                            own
-                                            website. Also mention the other sites where the profile is
-                                            listed.
-                                    </span><br>
-                                    <span class="brown-color">SEARCHABLE-YES</span>
-                                    <span class="brown-color">VIEWABLE-YES</span>
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                        <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
-                                    <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                                Family History
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div>
-                                        <span class="bord">Here provider can mention their family history
-                                                in
-                                                respective field.
-                                        </span><br>
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                            <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                    Payment Options
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div>
-                                            <span class="bord">Here a provider can select the different modes
-                                                    of
-                                                    payments available to customers.
-                                            </span><br>
-                                            <span class="brown-color">SEARCHABLE-NO</span>
-                                            <span class="brown-color">VIEWABLE-YES</span>
-                                        </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-                            </tbody>
+        <div class="box">
+            <span style="font-size: 15px">Vastu/Astrologer</span>
+        </div>
+        <td>
 
-                        </td>
-                
-                
-                
-                    </div>
-   
+            <tbody>
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Age
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+
+                            <span>The service provider needs to mention the
+                                number of
+                                staff working at the establishment.</span><br>
+                            <span class="brown-color helptext">SEARCHABLE-NO</span>
+                            <span class="brown-color helptext">VIEWABLE-YES</span>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Gender
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord ">Male/Female/Others
+                            </span><br>
+                            <span class="brown-color">SEARCHABLE-NO</span>
+                            <span class="brown-color">VIEWABLE-YES</span>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Experience
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord ">Enter the Work Experience here.
+                            </span><br>
+                            <span class="brown-color">SEARCHABLE-NO</span>
+                            <span class="brown-color">VIEWABLE-YES</span>
+
+
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Awards & Recognitions
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">Here a provider can mention the awards received
+                                in
+                                the respective field.
+                            </span><br>
+                            <span class="brown-color">SEARCHABLE-NO</span>
+                            <span class="brown-color">VIEWABLE-YES</span>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Reference URL
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">This shows the direct link of the provider’s
+                                own
+                                website. Also mention the other sites where the profile is
+                                listed.
+                            </span><br>
+                            <span class="brown-color">SEARCHABLE-YES</span>
+                            <span class="brown-color">VIEWABLE-YES</span>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Family History
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">Here provider can mention their family history
+                                in
+                                respective field.
+                            </span><br>
+                            <span class="brown-color">SEARCHABLE-NO</span>
+                            <span class="brown-color">VIEWABLE-YES</span>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Payment Options
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">Here a provider can select the different modes
+                                of
+                                payments available to customers.
+                            </span><br>
+                            <span class="brown-color">SEARCHABLE-NO</span>
+                            <span class="brown-color">VIEWABLE-YES</span>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </tbody>
+        </td>
+    </div>
 </section>
-
-
 <section *ngIf="childContent =='photo-gallery'">
     <h6 id="photo-gallery">Gallery</h6>
-
     <span>Image and Photos seize the customer’s attention and make a profile more engaging.
         providers
         are suggested to add service or specialization related images to the profile. This will
@@ -802,10 +780,8 @@
         customers’ attention. Gallery section has <strong>view</strong> options and <strong>add
             multiple
             images</strong> option. All the added images are shown here.</span>
-
     <div class="box-indent">
         <h6>How to add a new image?</h6>
-
         <ol class="ol-normal">
             <li>To add an image, click <strong>“Add it Now”</strong> and upload the images here. The
                 provider also needs to write a caption for the image in the <strong>image’s caption
@@ -828,12 +804,10 @@
 
 <section *ngIf="childContent =='your-social-media'">
     <h6 id="your-social-media">Your Social Media</h6>
-
     <span>A provider can connect his/her Jaldee profile with the social media profiles. These social
         media icons are displayed on the profile. This option allows customers to view the
         provider’s
         social media profile, such as Facebook, Twitter, etc.</span>
-
     <div class="box-indent">
 
         <ol class="ol-normal">
@@ -850,14 +824,14 @@
         </ol>
 
         <ul>
-                <li>Facebook</li>
-                <li>Twitter</li>
-                <li>Youtube</li>
-                <li>LinkedIn</li>
-                <li>Google</li>
-                <li>Pinterest</li>
-            </ul>
-    
+            <li>Facebook</li>
+            <li>Twitter</li>
+            <li>Youtube</li>
+            <li>LinkedIn</li>
+            <li>Google</li>
+            <li>Pinterest</li>
+        </ul>
+
     </div>
     <section>
         <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -963,17 +937,17 @@
             number of persons ahead of him/her.</li>
     </ul>
 </section>
-<section>
-    <h4><u>Send Notification</u></h4>
-    <p>If a provider wants to receive notification in <strong>Jaldee Provider App,</strong> when a
+<section *ngIf="childContent =='settings'">
+        <h6 id="settings"><u>Send Notification</u></h6>
+  
+    <span>If a provider wants to receive notification in <strong>Jaldee Provider App,</strong> when a
         check-in is done or when a check-in is cancelled, he/she needs to turn on this toggle
         button.
-    </p>
+    </span>
 </section>
 
-<section>
-    <h4><u>Accept Future Check-In</u></h4>
-
+<section *ngIf="childContent =='settings'">
+        <h6 id="settings"><u>Accept Future Check-In</u></h6>
     <ul class="ul-normal">
         <li>This advanced feature of Jaldee.com helps a provider accept check-ins online for a
             service
@@ -1177,7 +1151,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-time_windows'">
-    <h6 id="settings-time_windows">My Availability Today(+)</h6>
+        <h6 id="settings-time_windows">My Availability Today(+)</h6>
     <span>In Jaldee, if provider is available to provide services to customers other than the
         available
         working hours, he/she can create an instant working hour for a time period other than the
@@ -1344,18 +1318,18 @@
         </table>
     </div>
     <div class="box-indent">
-        <h4>How it works?</h4>
-        <p>The <strong>KIOSK</strong> feature is designed for walk-in customers. With this feature,
+        <h6>How it works?</h6>
+        <span>The <strong>KIOSK</strong> feature is designed for walk-in customers. With this feature,
             the
             walk-in customers can self-check-in for the services, sign up to Jaldee and view the
             status
-            of the check-in.</p>
+            of the check-in.</span>
         <ol class="ol-normal">
             <li><strong><u>Check-In Yourself</u></strong></li>
-            <p>A customer can walk-in to any open Kiosk. The Kiosk prompts the customer to enter the
+            <span>A customer can walk-in to any open Kiosk. The Kiosk prompts the customer to enter the
                 mobile number and the first three letters of their first name/last name. This is to
                 look
-                up if the customer is already registered with <strong>Jaldee</strong>.</p>
+                up if the customer is already registered with <strong>Jaldee</strong>.</span>
             <ul class="ul-normal abc">
                 <li>If the customer is already a registered member, he/she can check-in online for
                     the
@@ -1428,7 +1402,7 @@
 </section>
 
 <section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
-        <h6>LICENSE</h6>
+    <h6>LICENSE</h6>
     <ul class="ul-normal">
         <li>A provider is granted a selected license at the time of initial sign up. This allows a
             provider
@@ -1501,329 +1475,338 @@
         <li>The Free license package is free of cost with limited features.</li>
     </ul>
     <mat-accordion>
-            <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                            Upgrade License
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="helpcontent">
-    <span>Here a provider can upgrade the license anytime.</span>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Upgrade License
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <span>Here a provider can upgrade the license anytime.</span>
 
-    <ul class="ul-normal">
-        <li>When a provider clicks on the <strong>“Upgrade License”</strong> button, a window
-            appears
-            where a
-            drop-down menu is listed with the available license packages.</li>
-        <li>To upgrade to a license package, select a package from the drop-down menu.</li>
-        <li>The license package has a monthly subscription, i.e. monthly payment has to be done.
-        </li>
-        <li>A provider can also upgrade the license package using the below links from dashboard:
-            <ul class="ul-normal">
-                <li><strong>Click here</strong> to Upgrade License : If license package is
-                    <strong>Platinum Free 60 days trial</strong>.</li>
-                <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
-                        higher</strong>.</li>
-            </ul>
-        </li>
-        <li>Here, a provider can view the owned license package, due amount as well as the next
-            payment
-            date.
-        </li>
-        <li>An invoice is generated on a monthly basis.</li>
-        <li>For example, if a provider has created a profile on 10th January then all invoices will
-            be
-            generated
-            on a monthly basis i.e. on 10th of each month. In case, the provider buys add-on and
-            Jaldee-Keywords on a
-            different date (suppose on 20th January), the first bill of the add-on and
-            Jaldee-Keywords
-            will be
-            calculated from 20 January - 10 February. After that, the same “10↔10” bill cycle will
-            continue from
-            next month. This billing cycle will include License and Addon amount in a single invoice
-            until the
-            license or Add-on gets upgraded/downgraded.<br><br>
-            <p><strong>*To downgrade the existing license package, a provider needs to contact the
-                    Jaldee team,
-                    call us on 0487-2325650 or you can send us an email at <span
-                        class="linkb">support@jaldee.com</span>.</strong></p>
-        </li>
-        <li>An invoice is generated when an addon is included in a subscription using
-            <strong>“ADD-ON(+)”</strong> option.</li>
-        <li>When a provider click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
-                grades),</strong> he/she can see the generated invoices. To proceed with payment
-            from
-            here,
-            click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface and
-            thus
-            proceed
-            with the actual payment.</li>
-        <li>The provider will receive a confirmation email informing the payment status.</li>
-        <li>A provider can see all the payments completed so far in the <strong>“Payments
-                History”</strong>
-            section.</li>
-        <li>The invoice is generated every month on the same date of profile creation, whether or
-            not
-            the
-            previous payment is made.</li>
-        <li>The license gets upgraded as soon as a provider clicks on license upgrade button, but
-            the
-            invoice
-            gets generated from the next month and the amount is calculated based on the daily usage
-            of
-            the
-            license package.</li>
-        <li>An email will be sent to the provider upon each invoice generation.</li>
-    </ul>
-</div>
-</mat-expansion-panel>
-</mat-accordion>
+                <ul class="ul-normal">
+                    <li>When a provider clicks on the <strong>“Upgrade License”</strong> button, a window
+                        appears
+                        where a
+                        drop-down menu is listed with the available license packages.</li>
+                    <li>To upgrade to a license package, select a package from the drop-down menu.</li>
+                    <li>The license package has a monthly subscription, i.e. monthly payment has to be done.
+                    </li>
+                    <li>A provider can also upgrade the license package using the below links from dashboard:
+                        <ul class="ul-normal">
+                            <li><strong>Click here</strong> to Upgrade License : If license package is
+                                <strong>Platinum Free 60 days trial</strong>.</li>
+                            <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
+                                    higher</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Here, a provider can view the owned license package, due amount as well as the next
+                        payment
+                        date.
+                    </li>
+                    <li>An invoice is generated on a monthly basis.</li>
+                    <li>For example, if a provider has created a profile on 10th January then all invoices will
+                        be
+                        generated
+                        on a monthly basis i.e. on 10th of each month. In case, the provider buys add-on and
+                        Jaldee-Keywords on a
+                        different date (suppose on 20th January), the first bill of the add-on and
+                        Jaldee-Keywords
+                        will be
+                        calculated from 20 January - 10 February. After that, the same “10↔10” bill cycle will
+                        continue from
+                        next month. This billing cycle will include License and Addon amount in a single invoice
+                        until the
+                        license or Add-on gets upgraded/downgraded.<br><br>
+                        <p><strong>*To downgrade the existing license package, a provider needs to contact the
+                                Jaldee team,
+                                call us on 0487-2325650 or you can send us an email at <span
+                                    class="linkb">support@jaldee.com</span>.</strong></p>
+                    </li>
+                    <li>An invoice is generated when an addon is included in a subscription using
+                        <strong>“ADD-ON(+)”</strong> option.</li>
+                    <li>When a provider click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
+                            grades),</strong> he/she can see the generated invoices. To proceed with payment
+                        from
+                        here,
+                        click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface and
+                        thus
+                        proceed
+                        with the actual payment.</li>
+                    <li>The provider will receive a confirmation email informing the payment status.</li>
+                    <li>A provider can see all the payments completed so far in the <strong>“Payments
+                            History”</strong>
+                        section.</li>
+                    <li>The invoice is generated every month on the same date of profile creation, whether or
+                        not
+                        the
+                        previous payment is made.</li>
+                    <li>The license gets upgraded as soon as a provider clicks on license upgrade button, but
+                        the
+                        invoice
+                        gets generated from the next month and the amount is calculated based on the daily usage
+                        of
+                        the
+                        license package.</li>
+                    <li>An email will be sent to the provider upon each invoice generation.</li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </section>
 
 <section class="pricing-phome" *ngIf="childContent =='upgradelicense'">
-        <mat-accordion>
-                <mat-expansion-panel [expanded]="false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                                Jaldee Pricing
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="helpcontent">
-        <div class="container text-center">
-                <div class="row" *ngIf="activePrice == ''">
-                  <!-- <div class="scroll"> -->
-                  <div class="jd-pricing">
-                <table align="center">
-                    <tr>
-                        <th class="th1 headcol lic_metric">Licensable metrics</th>
-                        <td class="th2 long head_bg">FREE</td>
-                        <td class="long head_bg">Silver</td>
-                        <td class="th3 long head_bg">Gold</td>
-                        <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
-                        <td class="th5 long head_bg">Ruby</td>
-                        <td class="th6 long head_bg">Diamond</td>
-                    </tr>
-                    <tr>
-                        <th class="th3 headcol">Price(Rs/Month)</th>
-                        <td class="th2 light-col long">FREE</td>
-                        <td class="brozelicensecol long">499 Rs</td>
-                        <td class="th3 light-col long">1499 Rs</td>
-                        <td class="th4 brozelicensecol long">2999 Rs</td>
-                        <td class="th5 light-col long">5999 Rs</td>
-                        <td class="th6 brozelicensecol long">7999 Rs</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee Business Listing</th>
-                        <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Public searches <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'[Business name, domain, subdomain, specializations,
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Jaldee Pricing
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <div class="container text-center">
+                    <div class="row" *ngIf="activePrice == ''">
+                        <!-- <div class="scroll"> -->
+                        <div class="jd-pricing">
+                            <table align="center">
+                                <tr>
+                                    <th class="th1 headcol lic_metric">Licensable metrics</th>
+                                    <td class="th2 long head_bg">FREE</td>
+                                    <td class="long head_bg">Silver</td>
+                                    <td class="th3 long head_bg">Gold</td>
+                                    <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
+                                    <td class="th5 long head_bg">Ruby</td>
+                                    <td class="th6 long head_bg">Diamond</td>
+                                </tr>
+                                <tr>
+                                    <th class="th3 headcol">Price(Rs/Month)</th>
+                                    <td class="th2 light-col long">FREE</td>
+                                    <td class="brozelicensecol long">499 Rs</td>
+                                    <td class="th3 light-col long">1499 Rs</td>
+                                    <td class="th4 brozelicensecol long">2999 Rs</td>
+                                    <td class="th5 light-col long">5999 Rs</td>
+                                    <td class="th6 brozelicensecol long">7999 Rs</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee Business Listing</th>
+                                    <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Public searches <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'[Business name, domain, subdomain, specializations,
                                         keywords etc..]'"></i></th>
-                        <td class="td2 light-col long">Unlimited</td>
-                        <td class="brozelicensecol long">Unlimited</td>
-                        <td class="td3 light-col long">Unlimited</td>
-                        <td class="td4 brozelicensecol long">Unlimited</td>
-                        <td class="td5 light-col long">Unlimited</td>
-                        <td class="td6 brozelicensecol long">Unlimited</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Business profile detailed views</th>
-                        <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
-                        </td>
-                        <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
-                        </td>
-                        <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month'"></i>
-                        </td>
-                        <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
-                        <td class="td5 light-col long">300 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'5000 per month'"></i>
-                        </td>
-                        <td class="td6 brozelicensecol long">Unlimited</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Number of Transactions <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
+                                    <td class="td2 light-col long">Unlimited</td>
+                                    <td class="brozelicensecol long">Unlimited</td>
+                                    <td class="td3 light-col long">Unlimited</td>
+                                    <td class="td4 brozelicensecol long">Unlimited</td>
+                                    <td class="td5 light-col long">Unlimited</td>
+                                    <td class="td6 brozelicensecol long">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Business profile detailed views</th>
+                                    <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
+                                    <td class="td5 light-col long">300 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'5000 per month'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Number of Transactions <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
                                         appointment-
                                         both online and walk-ins together)'"></i></th>
-                        <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
-                        </td>
-                        <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
-                        </td>
-                        <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'500 per month, Unlimited for 2019'"></i>
-                        </td>
-                        <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month, Unlimited for 2019'"></i>
-                        </td>
-                        <td class="td5 light-col long">250 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'2500 per month, Unlimited for 2019'"></i>
-                        </td>
-                        <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee coupons</th>
-                        <td class="td2 light-col long">Only sign up coupons</td>
-                        <td class="brozelicensecol long">Only sign up coupons</td>
-                        <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td4 brozelicensecol long">Sign up coupons + 2 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td6 brozelicensecol long">Sign up coupons + 5 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Customised coupons</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long">1 per month</td>
-                        <td class="td6 brozelicensecol long">2 per month</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee POS</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee pay / Billing</th>
-                        <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Custom URL</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Storage (image upload)</th>
-                        <td class="td2 light-col long">10 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(eg.10 images - 1mb)'"></i></td>
-                        <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.20 images - 1mb)'"></i></td>
-                        <td class="td3 light-col long">40 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(eg.40 images - 1mb)'"></i></td>
-                        <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.100 images - 1mb)'"></i></td>
-                        <td class="td5 light-col long">250 mb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.250 images - 1mb)'"></i></td>
-                        <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.1000 images - 1mb)'"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee Keywords</th>
-                        <td class="td2 light-col long">0</td>
-                        <td class="brozelicensecol long">0</td>
-                        <td class="td3 light-col long">2</td>
-                        <td class="td4 brozelicensecol long">5</td>
-                        <td class="td5 light-col long">10</td>
-                        <td class="td6 brozelicensecol long">25</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Kiosk</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Number of users</th>
-                        <td class="td2 light-col long">1</td>
-                        <td class="brozelicensecol long">1</td>
-                        <td class="td3 light-col long">1</td>
-                        <td class="td4 brozelicensecol long">upto 5</td>
-                        <td class="td5 light-col long">upto 20</td>
-                        <td class="td6 brozelicensecol long">upto 100</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(pay only 99 Rs for the
+                                    <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'500 per month, Unlimited for 2019'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'1000 per month, Unlimited for 2019'"></i>
+                                    </td>
+                                    <td class="td5 light-col long">250 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'2500 per month, Unlimited for 2019'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee coupons</th>
+                                    <td class="td2 light-col long">Only sign up coupons</td>
+                                    <td class="brozelicensecol long">Only sign up coupons</td>
+                                    <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td4 brozelicensecol long">Sign up coupons + 2 <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td6 brozelicensecol long">Sign up coupons + 5 <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Customised coupons</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long">1 per month</td>
+                                    <td class="td6 brozelicensecol long">2 per month</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee POS</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee pay / Billing</th>
+                                    <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Custom URL</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Storage (image upload)</th>
+                                    <td class="td2 light-col long">10 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.10 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.20 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">40 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.40 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.100 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td5 light-col long">250 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.250 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.1000 images - 1mb)'"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee Keywords</th>
+                                    <td class="td2 light-col long">0</td>
+                                    <td class="brozelicensecol long">0</td>
+                                    <td class="td3 light-col long">2</td>
+                                    <td class="td4 brozelicensecol long">5</td>
+                                    <td class="td5 light-col long">10</td>
+                                    <td class="td6 brozelicensecol long">25</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Kiosk</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Number of users</th>
+                                    <td class="td2 light-col long">1</td>
+                                    <td class="brozelicensecol long">1</td>
+                                    <td class="td3 light-col long">1</td>
+                                    <td class="td4 brozelicensecol long">upto 5</td>
+                                    <td class="td5 light-col long">upto 20</td>
+                                    <td class="td6 brozelicensecol long">upto 100</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Guaranteed business value protection <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(pay only 99 Rs for the
                                         current
                                         billing month if all below three are true<br> 1) In last 90 days no transactions made<br> 2) In
                                         last
                                         90 days none viewed business profile details<br> 3) In last 90 days Not once found in searches)'"></i>
-                        </th>
-                        <td class="td2 light-col long">NA</td>
-                        <td class="brozelicensecol long">NA</td>
-                        <td class="td3 light-col long">Yes</td>
-                        <td class="td4 brozelicensecol long">Yes</td>
-                        <td class="td5 light-col long">Yes</td>
-                        <td class="td6 brozelicensecol long">Yes</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
-                        <td class="td2 light-col long">Option not available</td>
-                        <td class="brozelicensecol long">3 Rs</td>
-                        <td class="td3 light-col long">3 Rs</td>
-                        <td class="td4 brozelicensecol long">2 Rs</td>
-                        <td class="td5 light-col long">1.5 Rs</td>
-                        <td class="td6 brozelicensecol long">1 Rs</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee verification</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                </table>
-              </div>
-            </div>
-          </div>
+                                    </th>
+                                    <td class="td2 light-col long">NA</td>
+                                    <td class="brozelicensecol long">NA</td>
+                                    <td class="td3 light-col long">Yes</td>
+                                    <td class="td4 brozelicensecol long">Yes</td>
+                                    <td class="td5 light-col long">Yes</td>
+                                    <td class="td6 brozelicensecol long">Yes</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
+                                    <td class="td2 light-col long">Option not available</td>
+                                    <td class="brozelicensecol long">3 Rs</td>
+                                    <td class="td3 light-col long">3 Rs</td>
+                                    <td class="td4 brozelicensecol long">2 Rs</td>
+                                    <td class="td5 light-col long">1.5 Rs</td>
+                                    <td class="td6 brozelicensecol long">1 Rs</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee verification</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-</div>
-</mat-expansion-panel>
-</mat-accordion>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 
     <span><br>The three dots menu in the top right corner of the page has the following
         options:</span>
@@ -2070,10 +2053,10 @@
     </ol>
     <section>
         <h4><u>Location Selection</u></h4>
-        <p>Here a provider can select the exact location if multiple locations are available. The
-            provider can check the details of a particular check-in for a specific location.</p>
-        <p><strong>Note: A provider needs to select the location of service while he/she checks-in a
-                “walk-in” customer.</strong></p>
+        <span>Here a provider can select the exact location if multiple locations are available. The
+            provider can check the details of a particular check-in for a specific location.</span>
+        <span><strong>Note: A provider needs to select the location of service while he/she checks-in a
+                “walk-in” customer.</strong></span>
     </section>
     <section>
         <mat-accordion>
@@ -2452,7 +2435,7 @@
                     To
                     Email Settings”</strong> (Payment Settings) to add the email id. This can be set
                 directly from My Account.</li>
-            <h4 id="payment-settings">Payment Settings</h4>
+                <h6 id="payment-settings">Payment Settings</h6>
             <li>Two modes of payments can be enabled. These are:</li>
             <ul ol class="ol-normal">
                 <li><strong>Jaldee Bank :</strong> Jaldee account means a customer can pay online
@@ -2579,7 +2562,7 @@
         settings. Discount name, value, and description of each discount is visible here. A provider
         can
         create, delete and edit the discount. For creating more discounts, click on
-        <strong>“(+)”</strong> symbol.</span>
+        <strong>“(+)”</strong> symbol.</span><br>
     <span><strong>* Note: <strong>On Demand Discount</strong> is created during the account creation
             and
             its price is set to zero by default. It can only be applied to the total bill. It can be
@@ -2596,119 +2579,117 @@
         <strong>My Coupons. Coupons, either Jaldee coupons or My Coupons</strong> can only be
         applied to
         the total bill amount.</span><br><br>
-        <mat-accordion>
-                <mat-expansion-panel [expanded]="false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Jaldee Coupons
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="helpcontent">
-    <ol class="ol-normal adjust-delay-num">
-        <li><strong>Jaldee Coupons : </strong>
-            <ul class="ul-normal">
-                <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name,
-                    validity date (from and to), status. The option to enable/disable the coupon is
-                    also
-                    available in the three dots menu.</li>
-                <li>The coupons with no three dots menu are enabled by the Jaldee. The provider has
-                    no
-                    option to enable/disable the coupon.</li>
-                <li>To view the details of a particular coupon, click on the coupon code.</li>
-                <li>In the detailed view, the provider can see the valid dates, discount value or
-                    percentage, rules, and the coupon stats as well.</li>
-            </ul>
-            <span>Following are the rules for each coupon. “✅” or “❌” indicates
-                whether the rules are applicable or not.</span>
-            <ol class="ol-normal adjust-delay-num">
-                <li><strong>Always Enabled :</strong> This coupon will always be enabled. A provider
-                    has
-                    no option over enabling or disabling these coupons.</li>
-                <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its
-                    status
-                    can be changed by the provider.</li>
-                <li><strong>Online Check in Required :</strong> This coupon is available only for
-                    those
-                    customers who check-in online.</li>
-                <li><strong>Self Payment Required :</strong> This coupon is available only for those
-                    customers who pay online for the services.</li>
-                <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other
-                    available coupons.</li>
-                <li><strong>First Check-in Only :</strong> This coupon is available only for those
-                    customers who checks-in for the first time on Jaldee.</li>
-                <li><strong>First Check-in Per Provider Only : </strong> This coupon is available
-                    only
-                    for those customers who check-in for the first time for a particular provider.
-                </li>
-                <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of
-                    limited customers on whom a provider can apply the coupon.</li>
-                <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to
-                    which the coupon can be applied.</li>
-                <li><strong>Consumer Use Limit :</strong> This refers to the number of times a
-                    customer
-                    can apply the coupon.</li>
-                <li><strong>Provider Use Limit :</strong> This refers to the number of times a
-                    provider
-                    can apply the coupon.</li>
-            </ol>
-            <ul class="ul-normal">
-                <li>Here a provider can view the terms and conditions as well as the provider
-                    description for the coupon.</li>
-                <li>Corresponding customer description is displayed to him/her at their dashboard.
-                </li>
-                <li>Coupon status is visible in the bottom of the page. The provider has the option
-                    to
-                    enable/disable the coupon here (only if permitted).</li>
-                <li>In addition, a coupon stat section is given where the following is shown:</li>
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Jaldee Coupons
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
                 <ol class="ol-normal adjust-delay-num">
-                    <li><strong>Check ins Applied :</strong> This shows the number of times
-                        check-ins
-                        applied for the coupon.</li>
-                    <li><strong>Total Amount Discounted :</strong> This shows the total amount
-                        waived to
-                        the customers by the provider using the coupon.</li>
-                    <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
-                        given
-                        to the provider by Jaldee.</li>
-                    </ol>
-                </ul>
+                    <li><strong>Jaldee Coupons : </strong>
+                        <ul class="ul-normal">
+                            <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name,
+                                validity date (from and to), status. The option to enable/disable the coupon is
+                                also
+                                available in the three dots menu.</li>
+                            <li>The coupons with no three dots menu are enabled by the Jaldee. The provider has
+                                no
+                                option to enable/disable the coupon.</li>
+                            <li>To view the details of a particular coupon, click on the coupon code.</li>
+                            <li>In the detailed view, the provider can see the valid dates, discount value or
+                                percentage, rules, and the coupon stats as well.</li>
+                        </ul>
+                        <span>Following are the rules for each coupon. “✅” or “❌” indicates
+                            whether the rules are applicable or not.</span>
+                        <ol class="ol-normal adjust-delay-num">
+                            <li><strong>Always Enabled :</strong> This coupon will always be enabled. A provider
+                                has
+                                no option over enabling or disabling these coupons.</li>
+                            <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its
+                                status
+                                can be changed by the provider.</li>
+                            <li><strong>Online Check in Required :</strong> This coupon is available only for
+                                those
+                                customers who check-in online.</li>
+                            <li><strong>Self Payment Required :</strong> This coupon is available only for those
+                                customers who pay online for the services.</li>
+                            <li><strong>Combine with Other Coupons :</strong> This coupon can be used with other
+                                available coupons.</li>
+                            <li><strong>First Check-in Only :</strong> This coupon is available only for those
+                                customers who checks-in for the first time on Jaldee.</li>
+                            <li><strong>First Check-in Per Provider Only : </strong> This coupon is available
+                                only
+                                for those customers who check-in for the first time for a particular provider.
+                            </li>
+                            <li><strong>Consumer Use Limit Per Provider :</strong> This refers to the number of
+                                limited customers on whom a provider can apply the coupon.</li>
+                            <li><strong>Minimum Bill Amount :</strong> This refers to the minimum bill amount to
+                                which the coupon can be applied.</li>
+                            <li><strong>Consumer Use Limit :</strong> This refers to the number of times a
+                                customer
+                                can apply the coupon.</li>
+                            <li><strong>Provider Use Limit :</strong> This refers to the number of times a
+                                provider
+                                can apply the coupon.</li>
+                        </ol>
+                        <ul class="ul-normal">
+                            <li>Here a provider can view the terms and conditions as well as the provider
+                                description for the coupon.</li>
+                            <li>Corresponding customer description is displayed to him/her at their dashboard.
+                            </li>
+                            <li>Coupon status is visible in the bottom of the page. The provider has the option
+                                to
+                                enable/disable the coupon here (only if permitted).</li>
+                            <li>In addition, a coupon stat section is given where the following is shown:</li>
+                            <ol class="ol-normal adjust-delay-num">
+                                <li><strong>Check ins Applied :</strong> This shows the number of times
+                                    check-ins
+                                    applied for the coupon.</li>
+                                <li><strong>Total Amount Discounted :</strong> This shows the total amount
+                                    waived to
+                                    the customers by the provider using the coupon.</li>
+                                <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
+                                    given
+                                    to the provider by Jaldee.</li>
+                            </ol>
+                        </ul>
                 </ol>
             </div>
         </mat-expansion-panel>
-        </mat-accordion>
-        <mat-accordion>
-            <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        My Coupons
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="helpcontent">
-            <span>These coupons are created by providers. To add a coupon for
-                the
-                first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon,
-                type
-                of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
-                coupon can only be applied to the total bill. A provider can set up two types of
-                Coupons:</span>
-            <ol class="ol-normal adjust-delay-num">
-                <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the
-                    total
-                    bill.</li>
-                <li><strong>Percentage: </strong> A specific percentage of the amount from the total
-                    bill will be deducted in this case. <strong>“Percentage”</strong> type coupons
-                    can
-                    be applied to the total bill.</li>
-            </ol>
-            <span class="adjust-delay-para">The Coupons dashboard shows all the existing coupons that
-                have
-                been created on the profile. Here a provider can create, delete and edit a coupon.
-                To
-                create more coupons, click on the “(+)” symbol. </span>
+    </mat-accordion>
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    My Coupons
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <span>These coupons are created by providers. To add a coupon for
+                    the
+                    first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon,
+                    type
+                    of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
+                    coupon can only be applied to the total bill. A provider can set up two types of
+                    Coupons:</span>
+                <ol class="ol-normal adjust-delay-num">
+                    <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the
+                        total
+                        bill.</li>
+                    <li><strong>Percentage: </strong> A specific percentage of the amount from the total
+                        bill will be deducted in this case. <strong>“Percentage”</strong> type coupons
+                        can
+                        be applied to the total bill.</li>
+                </ol>
+                <span>The Coupons dashboard shows all the existing coupons that
+                    have been created on the profile. Here a provider can create, delete and edit a coupon.
+                    To create more coupons, click on the “(+)” symbol. </span>
             </div>
         </mat-expansion-panel>
-        </mat-accordion>
-     </section>
+    </mat-accordion>
+</section>
 
 <section *ngIf="childContent == 'tax-settings'">
     <h6 id="tax-settings">Tax Settings</h6>

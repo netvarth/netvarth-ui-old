@@ -22,9 +22,14 @@ export class ProviderLearnmoreComponent implements  OnInit {
   billing = true;
   activePrice = '';
   active_user;
+  showprofile = false;
+  showcheckinmanager = false;
+  showlicense = false;
+  showbill = false;
   parent;
   child;
   domain;
+  show ='false';
   constructor(
     private activated_route: ActivatedRoute,
     private _scrollToService: ScrollToService,
@@ -65,6 +70,7 @@ export class ProviderLearnmoreComponent implements  OnInit {
   handleScroll(childContent, parentContent) {
     this.child = childContent;
     this.parent = parentContent;
+    this.menu(parentContent);
   }
   setActivePricing(item) {
     this.activePrice = item;
@@ -72,4 +78,36 @@ export class ProviderLearnmoreComponent implements  OnInit {
   goBack() {
     this._location.back();
   }
+  menu(parentContent){
+    if(parentContent === 'profile-search'){
+      this.showprofile = true;
+      this.showcheckinmanager = false;
+      this.showlicense = false;
+      this.showbill = false;
+    }
+    if(parentContent === 'checkinmanager'){
+      this.showprofile = false;
+      this.showcheckinmanager = true;
+      this.showlicense = false;
+      this.showbill = false;
+    }
+    if(parentContent === 'license'){
+      this.showlicense = true;
+      this.showprofile = false;
+      this.showcheckinmanager = false;
+      this.showbill = false;
+    }
+    if(parentContent === 'billing'){
+      this.showbill = true;
+      this.showlicense = false;
+      this.showprofile = false;
+      this.showcheckinmanager = false;
+    }
+
+
+
+
+    }
+ 
+ 
 }

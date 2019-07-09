@@ -10,9 +10,13 @@ export class VastuComponent implements OnChanges {
     @Input() child;
     parentContent;
     childContent;
+    activePrice = '';
 
     ngOnChanges() {
         this.parentContent = this.parent;
         this.childContent = this.child;
     }
+    setActivePricing(item) {
+        this.activePrice = item;
+      }
 }
