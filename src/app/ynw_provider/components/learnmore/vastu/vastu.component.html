@@ -9,7 +9,7 @@
 </section>
 
 <section *ngIf="childContent == 'public-search'">
-    <h6>PUBLIC SEARCH</h6>
+    <h6>Public Search</h6>
     <ol class="ol-normal">
         <li>A provider is required to click on the “TURN ON” button to enable the Public Search if
             he/she wants to be visible in the customer’s search results.</li>
@@ -49,7 +49,7 @@
     <div class="box-indent">
 
 
-        <h6 id="verified-levels">JALDEE VERIFIED LEVELS</h6>
+        <h6 id="verified-levels">Jaldee Verified Levels</h6>
         <ul class="ul-normal abc">
             <li>After creating the profile, a provider becomes eligible to get their profile
                 verified
@@ -82,7 +82,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/BasicOrg.png" alt="Basic">
                     <li><strong>Provide any two of the following Government ID proof with
                             photo)</strong></li>
@@ -116,7 +116,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
 
                     <img height="100" width="100" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus">
                     <li><strong>Provide any two of the Government ID proof
@@ -152,7 +152,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/PremiumOrg.png" alt="Advanced">
                     <li><strong>Provide any two of the Government ID proof
                             (with
@@ -208,7 +208,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <br>
-        <h6 id="important"><u>IMPORTANT</u></h6>
+        <h6 id="important">Important</h6>
         <ul class="ul-normal abc">
             <li>Basic is free of cost.</li>
             <li>If verification level is set to None, the provider will not receive any priority in
@@ -241,7 +241,7 @@
     </div>
 </section>
 <section *ngIf="childContent =='basic-information'">
-    <h6 id="basic-information">BASIC INFORMATION</h6>
+    <h6 id="basic-information">Basic Information</h6>
 
     <span>It displays the Basic information about a business given by the provider at the time of
         initial profile setup. The provider is allowed to edit each section under “Basic
@@ -325,43 +325,39 @@
                     </ul>
                     <br>
                     <div class="tscroll">
-                        <table class="table addword-tbl">
                             <tbody>
-                                <tr>
-                                    <td class="td1">
-                                        Vastu
-                                    </td>
-                                    <td class="td2">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="td2">1. Vastu</td>
-                                                    <td class="td3">
-                                                        <ul class="ul-normal">
-                                                            <li>24 hours</li>
-                                                            <li>Parking</li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr>
+                                    <tr>
+        
+                                        <td class="td2">
+        
+                                <tbody>
+                                    <tr>
+                                        <td class="td2">Vastu</td>
+                                        <td class="td3">
+                                            <ul class="ul-normal">
+                                                <li>24 hours</li>
+                                                <li>Parking</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                            <td class="td2">Astrologer</td>
+                                            <td class="td3">
+                                                <ul class="ul-normal">
+                                                    <li>24 hours</li>
+                                                    <li>Parking</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
 
-                                                    <td class="td2">2. Astrologer</td>
-                                                    <td class="td3">
-                                                        <ul class="ul-normal">
-                                                            <li>24 hours</li>
-                                                            <li>Parking</li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </td>
+                                </td>
                                 </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
+        
+                                </tbody>
+        
+                            </div>
+                            <br>
                     <section>
                         <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                                     Searchable label
@@ -414,7 +410,7 @@
 </section>
 
 <section *ngIf="childContent =='privacy-settings'">
-    <h6 id="privacy-settings">PRIVACY SETTINGS</h6>
+    <h6 id="privacy-settings">Privacy Settings</h6>
 
     <span>Getting to know and controlling your privacy settings (Phone number & Email address) is an
         important strategy to protect your information. Here the system allows the provider to add,
@@ -422,7 +418,14 @@
         or delete both phone number and email address. </span>
 
     <div class="box-indent">
-        <h6><u>PHONE</u></h6>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Phone
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
         <ol class="ol-normal">
             <li>A provider can view the phone number used to create a Jaldee account. By default,
                 the
@@ -453,11 +456,19 @@
             </li>
             <li>A provider can also delete a phone number. To do so, click <strong>“Delete”</strong>
                 from the three dots menu on the right corner.</li>
-        </ol>
+            </ol>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
 
-
-        <h6><u>EMAIL</u></h6>
-
+<mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Email
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
         <ol class="ol-normal">
             <li>A provider can add, edit and delete the email address here.</li>
             <li>The three dots menu on the right corner has two options, viz. <strong>Edit</strong>
@@ -493,8 +504,10 @@
                 the three dots menu on the right corner.</li>
             <li>Jaldee.com uses the email address to communicate the general notifications to the
                 provider, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
-        </ol>
-
+            </ol>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion><br>
 
         <section>
             <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -508,26 +521,23 @@
 </section>
 
 <section *ngIf="childContent =='specialization'">
-    <h6 id="specialization">SPECIALIZATION</h6>
+    <h6 id="specialization">Specialization</h6>
 
     <span>Specializations benefits both the provider and the customer. Here a provider can select
         his/her specialization from the given list. Below table shows the specialization list of the
         Vastu/Astrologer sector.</span>
 
     <div class="tscroll">
-        <table class="table addword-tbl">
-            <tbody>
-                <tr>
-                    <td class="td1">
-                        Vastu/Astrologer
-                    </td>
-                    <td class="td2">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td class="td1">Vastu</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
+            <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Vastu
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <ol class="ol-normal specllist">
+                        
                                             <li>Vedic Astrology</li>
                                             <li>Residential Vastu</li>
                                             <li>Commercial Vastu</li>
@@ -553,34 +563,42 @@
                                             <li>Career predictions</li>
                                             <li>After death remedies</li>
                                         </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Astrologer</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Vedic Astrology</li>
-                                            <li>Residential Vastu</li>
-                                            <li>Commercial Vastu</li>
-                                            <li>Design of traditional temples</li>
-                                            <li>Idol designing and making</li>
-                                            <li>Vastu supervision</li>
-                                            <li>Vastu for career</li>
-                                            <li>Vastu for happy married life</li>
-                                            <li>Interior designing for Vastu</li>
-                                            <li>Vastu for Finance</li>
-                                            <li>Vastu for Health</li>
-                                            <li>Agasthiyar Nadi Jyothisham</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+        
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                    Astrologer
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+        
+        
+        
+                                <ol class="ol-normal">
+                                        <li>Vedic Astrology</li>
+                                        <li>Residential Vastu</li>
+                                        <li>Commercial Vastu</li>
+                                        <li>Design of traditional temples</li>
+                                        <li>Idol designing and making</li>
+                                        <li>Vastu supervision</li>
+                                        <li>Vastu for career</li>
+                                        <li>Vastu for happy married life</li>
+                                        <li>Interior designing for Vastu</li>
+                                        <li>Vastu for Finance</li>
+                                        <li>Vastu for Health</li>
+                                        <li>Agasthiyar Nadi Jyothisham</li>
+                                    </ol>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+        
+       
+                               
+    </div><br>
     <span>All the specializations added during the initial profile set up are listed in this
         section. To
         edit this, click on the edit pencil button.</span>
@@ -596,7 +614,7 @@
 </section>
 
 <section *ngIf="childContent =='languages-known'">
-    <h6 id="languages-known">LANGUAGES KNOWN</h6>
+    <h6 id="languages-known">Languages Known</h6>
 
     <span>A provider can add multiple languages known to him/her. This can widen the customer base
         and
@@ -626,7 +644,7 @@
 </section>
 
 <section *ngIf="childContent =='additional-info'">
-    <h6 id="additional-info">ADDITIONAL INFO</h6>
+    <h6 id="additional-info">Additional Info</h6>
 
     <span>Following is the list of additional information for the Vastu/Astrologer sector. A
         provider
@@ -635,89 +653,147 @@
         business as well as the provider.</span>
 
     <div class="tscroll">
-        <table class="table addword-tbl">
-            <tbody>
-                <tr>
-                    <td class="td2">
-                        <div class="box">
-                            <strong>Vastu/Astrologer</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <table class="table verify-tbl">
-                            <tbody>
-                                <tr>
-                                    <td>1.Age
+            <div class="box">
+                    <span style="font-size: 15px">Vastu/Astrologer</span>
+                </div>
+                <td>
+        
+                    <tbody>
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      Age
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+        
+                                    <span>The service provider needs to mention the
+                                            number of
+                                            staff working at the establishment.</span><br>
+                                    <span class="brown-color helptext">SEARCHABLE-NO</span>
+                                    <span class="brown-color helptext">VIEWABLE-YES</span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+        
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                       Gender
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                    <span class="bord ">Male/Female/Others
+                                    </span><br>
+                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                    <span class="brown-color">VIEWABLE-YES</span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+        
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      Experience
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                    <span class="bord ">Enter the Work Experience here.
+                                    </span><br>
+                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                    <span class="brown-color">VIEWABLE-YES</span>
+        
+        
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+        
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                            Awards & Recognitions
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+                                    <span class="bord">Here a provider can mention the awards received
+                                            in
+                                            the respective field.
+                                    </span><br>
+                                    <span class="brown-color">SEARCHABLE-NO</span>
+                                    <span class="brown-color">VIEWABLE-YES</span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+        
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                            Reference URL
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div>
+                                    <span class="bord">This shows the direct link of the provider’s
+                                            own
+                                            website. Also mention the other sites where the profile is
+                                            listed.
+                                    </span><br>
+                                    <span class="brown-color">SEARCHABLE-YES</span>
+                                    <span class="brown-color">VIEWABLE-YES</span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion>
+                                <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                                Family History
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div>
+                                        <span class="bord">Here provider can mention their family history
+                                                in
+                                                respective field.
+                                        </span><br>
                                         <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">The service provider needs to mention the
-                                        number of
-                                        staff working at the establishment.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2.Gender
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Male/Female/Others
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3.Experience
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Enter the Work Experience here.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4.Awards & Recognitions
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Here a provider can mention the awards received
-                                        in
-                                        the respective field.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5.Reference URL
-                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">This shows the direct link of the provider’s
-                                        own
-                                        website. Also mention the other sites where the profile is
-                                        listed.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>6.Family History
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Here provider can mention their family history
-                                        in
-                                        respective field.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>7.Payment Options
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Here a provider can select the different modes
-                                        of
-                                        payments available to customers.
-                                    </td>
-                                </tr>
+                                        <span class="brown-color">VIEWABLE-YES</span>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                    Payment Options
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div>
+                                            <span class="bord">Here a provider can select the different modes
+                                                    of
+                                                    payments available to customers.
+                                            </span><br>
+                                            <span class="brown-color">SEARCHABLE-NO</span>
+                                            <span class="brown-color">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
                             </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+                        </td>
+                
+                
+                
+                    </div>
+   
 </section>
 
 
 <section *ngIf="childContent =='photo-gallery'">
-    <h6 id="photo-gallery">GALLERY</h6>
+    <h6 id="photo-gallery">Gallery</h6>
 
     <span>Image and Photos seize the customer’s attention and make a profile more engaging.
         providers
@@ -751,7 +827,7 @@
 </section>
 
 <section *ngIf="childContent =='your-social-media'">
-    <h6 id="your-social-media">YOUR SOCIAL MEDIA</h6>
+    <h6 id="your-social-media">Your Social Media</h6>
 
     <span>A provider can connect his/her Jaldee profile with the social media profiles. These social
         media icons are displayed on the profile. This option allows customers to view the
@@ -773,28 +849,15 @@
                 <strong>“Save”</strong> to retain the information.</li>
         </ol>
 
-        <table class="table social-tbl">
-            <tbody>
-                <tr>
-                    <td class="td1">Facebook</td>
-                </tr>
-                <tr>
-                    <td class="td1">Twitter</td>
-                </tr>
-                <tr>
-                    <td class="td1">Youtube</td>
-                </tr>
-                <tr>
-                    <td class="td1">LinkedIn</td>
-                </tr>
-                <tr>
-                    <td class="td1">Google+</td>
-                </tr>
-                <tr>
-                    <td class="td1" (click)="handleScroll('learnmore-begining')">Pinterest</td>
-                </tr>
-            </tbody>
-        </table>
+        <ul>
+                <li>Facebook</li>
+                <li>Twitter</li>
+                <li>Youtube</li>
+                <li>LinkedIn</li>
+                <li>Google</li>
+                <li>Pinterest</li>
+            </ul>
+    
     </div>
     <section>
         <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -807,7 +870,7 @@
     </section>
 </section>
 <section *ngIf="childContent =='custom-id'">
-    <h6 id="custom-id">CUSTOM BUSINESS ID</h6>
+    <h6 id="custom-id">Custom Business ID</h6>
 
     <span>A custom business id is a unique id that redirects to a provider's detailed profile page
         in
@@ -841,7 +904,7 @@
     </div>
 </section>
 <section *ngIf="parentContent == 'checkinmanager'">
-    <h6 id="main-top">Check-in Manager</h6>
+    <h6 id="main-top">CHECK-IN MANAGER</h6>
 
 
     <span>The Check-in manager helps the provider in managing the working hours and ensuring the
@@ -922,7 +985,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-locations'">
-    <h6 id="settings-locations">LOCATIONS</h6>
+    <h6 id="settings-locations">Locations</h6>
 
     <ul class="ul-normal">
         <li>The information related to the business location comes under this section.</li>
@@ -965,7 +1028,7 @@
 </section>
 
 <section *ngIf="childContent =='settings-services'">
-    <h6 id="settings-services">SERVICES</h6>
+    <h6 id="settings-services">Services</h6>
 
     <span>This page lists all the services offered to the customers. While listing the services,
         please
@@ -1039,7 +1102,7 @@
 </section>
 
 <section *ngIf="childContent =='settings-time_windows'">
-    <h6 id="settings-time_windows">WORKING HOURS</h6>
+    <h6 id="settings-time_windows">Working Hours</h6>
 
     <span>Working Hours simply means the active time of the business. One can add multiple Working
         Hours
@@ -1135,7 +1198,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-departments'">
-    <h6 id="settings-departments">DEPARTMENTS</h6>
+    <h6 id="settings-departments">Departments</h6>
 
     <span>A corporate structure consists of various departments which performs specific functions
         while
@@ -1158,7 +1221,7 @@
 </section>
 
 <section *ngIf="childContent =='checkin' && parentContent == 'checkin'">
-    <h6>Check In</h6>
+    <h6>CHECK IN</h6>
     <ul class="ul-normal">
         <li>A provider can create and check-in a customer for service.</li>
         <li>To search for a customer and to check whether he/she has already been registered with
@@ -1199,7 +1262,7 @@
 
 
 <section *ngIf="childContent =='customer' && parentContent == 'customer'">
-    <h6>Create Customer</h6>
+    <h6>CREATE CUSTOMER</h6>
     <ul class="ul-normal">
         <li>A provider can create a customer profile.</li>
         <li>The first step is that of the Search Process. To search for a customer in the Jaldee
@@ -1364,7 +1427,8 @@
     </div>
 </section>
 
-<section *ngIf="parentContent == 'license' && childContent =='license-list'">
+<section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
+        <h6>LICENSE</h6>
     <ul class="ul-normal">
         <li>A provider is granted a selected license at the time of initial sign up. This allows a
             provider
@@ -1436,9 +1500,14 @@
         <li>An alert message will be sent one week before the package expires.</li>
         <li>The Free license package is free of cost with limited features.</li>
     </ul>
-</section>
-<section *ngIf="childContent =='license-package'">
-    <h6>Upgrade License:</h6>
+    <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                            Upgrade License
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
     <span>Here a provider can upgrade the license anytime.</span>
 
     <ul class="ul-normal">
@@ -1507,15 +1576,24 @@
             license package.</li>
         <li>An email will be sent to the provider upon each invoice generation.</li>
     </ul>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
 </section>
 
-
-<section class="pricing-phome" *ngIf="childContent =='license-package'">
-    <div class="container text-center">
-        <h3 class="tittle font-weight-bold">Jaldee Pricing</h3>
-        <div class="row" *ngIf="activePrice == ''">
-            <!-- <div class="scroll"> -->
-            <div class="jd-pricing">
+<section class="pricing-phome" *ngIf="childContent =='upgradelicense'">
+        <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                                Jaldee Pricing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
+        <div class="container text-center">
+                <div class="row" *ngIf="activePrice == ''">
+                  <!-- <div class="scroll"> -->
+                  <div class="jd-pricing">
                 <table align="center">
                     <tr>
                         <th class="th1 headcol lic_metric">Licensable metrics</th>
@@ -1739,16 +1817,19 @@
                         <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
                     </tr>
                 </table>
+              </div>
             </div>
-        </div>
-    </div>
+          </div>
 
+</div>
+</mat-expansion-panel>
+</mat-accordion>
 
     <span><br>The three dots menu in the top right corner of the page has the following
         options:</span>
 </section>
 
-<section *ngIf="childContent =='license-package'">
+<section *ngIf="childContent =='upgradelicense'">
     <h6>1. License Change History</h6>
 
     <span>The license change history shows the list of the changes applied in the license package.
@@ -1904,7 +1985,7 @@
 
 
 <section *ngIf="childContent =='adjustdelay' && parentContent == 'adjustdelay'">
-    <h6>Adjust Delay</h6>
+    <h6>ADJUST DELAY</h6>
 
     <span>Delay can be caused by any reason. This interferes with the smooth functioning of the
         business. Adjust delay helps the provider to set a delay to the current or earliest working
@@ -2002,7 +2083,7 @@
                         Check-Ins
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal">
                         <li>If the business has multiple locations, select the location and the
                             working
@@ -2094,7 +2175,7 @@
                         Actions
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
 
                     <span>The following are the main actions the provider can perform:</span>
                     <ol class="ol-normal adjust-delay-num">
@@ -2154,7 +2235,7 @@
                         Started
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal">
                         <li>Under this tab, a provider can view the list of customers who have
                             already
@@ -2268,7 +2349,7 @@
                         Completed
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal">
                         <li>Once a service is done click on”Complete” button, the customer’s entry
                             will
@@ -2326,7 +2407,7 @@
                         Cancelled
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
 
                     <ul class="ul-normal">
                         <li>Here the provider can view the list of all cancelled customer check-ins.
@@ -2435,7 +2516,7 @@
 </section>
 
 <section *ngIf="parentContent == 'billing'">
-    <h6 id="items">Billing/POS</h6>
+    <h6 id="items">BILLING/POS</h6>
     <span>Billing/POS page is the one-stop-shop for adding items, discounts,coupons and tax
         settings.
         Discounts and coupons play a major role in driving customers toward a product/service and in
@@ -2514,7 +2595,15 @@
     <span>This section is divided into two main sections, viz. <strong>Jaldee Coupons</strong> and
         <strong>My Coupons. Coupons, either Jaldee coupons or My Coupons</strong> can only be
         applied to
-        the total bill amount.</span>
+        the total bill amount.</span><br><br>
+        <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Jaldee Coupons
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
     <ol class="ol-normal adjust-delay-num">
         <li><strong>Jaldee Coupons : </strong>
             <ul class="ul-normal">
@@ -2581,17 +2670,27 @@
                     <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
                         given
                         to the provider by Jaldee.</li>
+                    </ol>
+                </ul>
                 </ol>
-            </ul>
-        </li>
-        <li><strong>My Coupons</strong>
-            <p class="adjust-delay-para">These coupons are created by providers. To add a coupon for
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        My Coupons
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+            <span>These coupons are created by providers. To add a coupon for
                 the
                 first time click <strong>“Add Coupon”.</strong> Here enter the name of the coupon,
                 type
                 of the coupon (Percentage/Fixed) and provide a brief description to the discount. A
                 coupon can only be applied to the total bill. A provider can set up two types of
-                Coupons:</p>
+                Coupons:</span>
             <ol class="ol-normal adjust-delay-num">
                 <li><strong>Fixed Amount: </strong> A specified amount will be deducted from the
                     total
@@ -2601,14 +2700,15 @@
                     can
                     be applied to the total bill.</li>
             </ol>
-            <p class="adjust-delay-para">The Coupons dashboard shows all the existing coupons that
+            <span class="adjust-delay-para">The Coupons dashboard shows all the existing coupons that
                 have
                 been created on the profile. Here a provider can create, delete and edit a coupon.
                 To
-                create more coupons, click on the “(+)” symbol. </p>
-        </li>
-    </ol>
-</section>
+                create more coupons, click on the “(+)” symbol. </span>
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+     </section>
 
 <section *ngIf="childContent == 'tax-settings'">
     <h6 id="tax-settings">Tax Settings</h6>

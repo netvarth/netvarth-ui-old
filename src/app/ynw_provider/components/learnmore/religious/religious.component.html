@@ -11,7 +11,7 @@
 </section>
 
 <section *ngIf="childContent == 'public-search'">
-    <h6>PUBLIC SEARCH</h6>
+    <h6>Public Search</h6>
     <ol class="ol-normal">
         <li>A priest is required to click on the “TURN ON” button to enable the Public Search if
             he/she
@@ -50,7 +50,7 @@
     <div class="box-indent">
 
 
-        <h6 id="verified-levels">JALDEE VERIFIED LEVELS</h6>
+        <h6 id="verified-levels">Jaldee Verified Levels</h6>
         <ul class="ul-normal abc">
             <li>After creating the profile, a priest becomes eligible to get their profile verified
                 with
@@ -81,7 +81,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/BasicOrg.png" alt="Basic">
                     <li><strong>Provide any two of the following Government ID proof with
                             photo)</strong></li>
@@ -115,7 +115,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
 
                     <img height="100" width="100" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus">
                     <li><strong>Provide any two of the Government ID proof
@@ -151,7 +151,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/PremiumOrg.png" alt="Advanced">
                     <li><strong>Provide any two of the Government ID proof
                             (with
@@ -207,7 +207,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <br>
-        <h6 id="important"><u>IMPORTANT</u></h6>
+        <h6 id="important">Important</h6>
         <ul class="ul-normal abc">
             <li>Basic is free of cost.</li>
             <li>If verification level is set to None, the priest will not receive any priority in
@@ -232,7 +232,7 @@
     </div>
 </section>
 <section *ngIf="childContent =='basic-information'">
-    <h6 id="basic-information">BASIC INFORMATION</h6>
+    <h6 id="basic-information">Basic Information</h6>
 
     <span>It displays the Basic information about a business given by the priest at the time of
         initial
@@ -311,40 +311,39 @@
                     </ul>
                     <br>
                     <div class="tscroll">
-                        <table class="table addword-tbl">
-                            <tbody>
-                                <tr>
-                                    <td class="td1">
-                                        Religious/Priests
-                                    </td>
-                                    <td class="td2">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="td2">1. Temple</td>
-                                                    <td class="td3">
-                                                        <ul class="ul-normal">
-                                                            <li>24 hours</li>
-                                                            <li>Parking</li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td2">2. Poojari</td>
-                                                    <td class="td3">
-                                                        <ul class="ul-normal">
-                                                            <li>24 hours</li>
-                                                            <li>Parking</li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
+                        <tbody>
+                            <tr>
 
-                            </tbody>
-                        </table>
+                                <td class="td2">
+
+                        <tbody>
+                           
+                            
+                            <tr>
+                                <td class="td2">1. Temple
+                                </td>
+                                <td class="td3">
+                                    <ul class="ul-normal">
+                                        <li>24 hours</li>
+                                        <li>Parking</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td2">2. Poojari</td>
+                                <td class="td3">
+                                    <ul class="ul-normal">
+                                        <li>24 hours</li>
+                                        <li>Parking</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        </td>
+                        </tr>
+
+                        </tbody>
                     </div>
                     <section>
                         <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -401,10 +400,17 @@
     <span>Getting to know and controlling your privacy settings (Phone number & Email address) is an
         important strategy to protect your information. Here the system allows the priest to add,
         edit
-        or delete both phone number and email address.</span>
+        or delete both phone number and email address.</span><br>
 
-    <div class="box-indent">
-        <h6><u>PHONE</u></h6>
+        <div class="box-indent">
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Phone
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
 
         <ol class="ol-normal">
             <li>A priest can view the phone number used to create a Jaldee account. By default, the
@@ -436,9 +442,19 @@
             <li>A priest can also delete a phone number. To do so, click <strong>“Delete”</strong>
                 from
                 the three dots menu on the right corner.</li>
-        </ol>
+            </ol>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
 
-        <h6><u>EMAIL</u></h6>
+<mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Email
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
 
         <ol class="ol-normal">
             <li>A priest can add, edit and delete the email address here.</li>
@@ -474,7 +490,10 @@
                 three dots menu on the right corner.</li>
             <li>Jaldee.com uses the email address to communicate the general notifications to the
                 priest, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
-        </ol>
+            </ol>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion><br>
         <section>
             <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                         Searchable label indicates that devotees can search for the priest using
@@ -496,23 +515,31 @@
         Religious/Priests sector.</span>
 
     <div class="tscroll">
-        <table class="table addword-tbl">
-            <tbody>
-                <tr>
-                    <td class="td2">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td class="td1">Temple</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
+      
+                                                  <mat-accordion>
+                                        <mat-expansion-panel [expanded]="false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Temple
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="helpcontent">
+                                                    <ol class="ol-normal specllist">
                                             <li>Pooja</li>
                                         </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Poojari</td>
-                                    <td class="td2">
+                                    
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                
+                        <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                            Poojari
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
                                         <ol class="ol-normal">
                                             <li>Arati</li>
                                             <li>Archana</li>
@@ -539,15 +566,11 @@
                                             <li>Upanayana ceremony</li>
                                             <li>Weddings</li>
                                         </ol>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+    
+</div><br>
     <span>All the specializations added during the initial profile set up are listed in this
         section. To
         edit this, click on the edit pencil button.</span>
@@ -601,67 +624,104 @@
         business as well as the priest.</span>
 
     <div class="tscroll">
-        <table class="table addword-tbl">
-            <tbody>
-                <tr>
-                    <td>Religious/Priests</td>
-                    <td class="td2 bord">
-                        <div class="box">
-                            Temple/Poojari
-                        </div>
-                    </td>
-                    <td>
-                        <table class="table verify-tbl">
-                            <tbody>
-                                <tr>
-                                    <td>1.Educational Qualification
-                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Here the priest needs to mention the
+            <div class="box">
+                    <span style="font-size: 15px"> Temple/Poojari</span>
+                </div>
+                <td>
+              <tbody>
+                    <mat-accordion>
+                            <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                            Educational Qualification
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="helpcontent">
+        
+                                    <span>Here the doctor needs to mention the
                                         educational
-                                        qualification.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2.Experience
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Enter the Work Experience here.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3.Awards & Recognitions
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Here a priest can mention the awards received
-                                        in
-                                        the respective field.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4.Reference URL
-                                        <span class="brown-color">SEARCHABLE-YES</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">This shows the direct link of the priest’s own
-                                        website. Also mention the other sites where the profile is
-                                        listed.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5.Family History
-                                        <span class="brown-color">SEARCHABLE-NO</span>
-                                        <span class="brown-color">VIEWABLE-YES</span></td>
-                                    <td class="bord">Here a priest can mention his family history in
-                                        the
-                                        respective field.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                        qualification(Ex. MBBS/MS/MD). Also enter the name of board or
+                                        university.</span><br>
+                                    <span class="brown-color helptext">SEARCHABLE-YES</span>
+                                    <span class="brown-color helptext">VIEWABLE-YES</span>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <mat-accordion>
+                                <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                                Experience
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="helpcontent">
+            
+                                        <span>Enter the Work Experience here.</span><br>
+                                        <span class="brown-color helptext">SEARCHABLE-NO</span>
+                                        <span class="brown-color helptext">VIEWABLE-YES</span>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                       
+
+                            <mat-accordion>
+                                    <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                    Awards & Recognitions
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="helpcontent">
+                
+                                            <span>Here a priest can mention the awards received
+                                                    in
+                                                    the respective field.</span><br>
+                                            <span class="brown-color helptext">SEARCHABLE-NO</span>
+                                            <span class="brown-color helptext">VIEWABLE-YES</span>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+
+                                <mat-accordion>
+                                        <mat-expansion-panel [expanded]="false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                        Reference URL
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="helpcontent">
+                    
+                                                <span>This shows the direct link of the priest’s own
+                                                        website. Also mention the other sites where the profile is
+                                                        listed.</span><br>
+                                                <span class="brown-color helptext">SEARCHABLE-YES</span>
+                                                <span class="brown-color helptext">VIEWABLE-YES</span>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    
+
+                                    <mat-accordion>
+                                            <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                            Family History
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="helpcontent">
+                        
+                                                    <span>Here a priest can mention his family history in
+                                                            the
+                                                            respective field.</span><br>
+                                                    <span class="brown-color helptext">SEARCHABLE-NO</span>
+                                                    <span class="brown-color helptext">VIEWABLE-YES</span>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </tbody>
+
+                                </td>
     </div>
 </section>
 
@@ -721,28 +781,14 @@
                 <strong>“Save”</strong> to retain the information.</li>
         </ol>
 
-        <table class="table social-tbl">
-            <tbody>
-                <tr>
-                    <td class="td1">Facebook</td>
-                </tr>
-                <tr>
-                    <td class="td1">Twitter</td>
-                </tr>
-                <tr>
-                    <td class="td1">Youtube</td>
-                </tr>
-                <tr>
-                    <td class="td1">LinkedIn</td>
-                </tr>
-                <tr>
-                    <td class="td1">Google+</td>
-                </tr>
-                <tr>
-                    <td class="td1" (click)="handleScroll('learnmore-begining')">Pinterest</td>
-                </tr>
-            </tbody>
-        </table>
+        <ul>
+                <li>Facebook</li>
+                <li>Twitter</li>
+                <li>Youtube</li>
+                <li>LinkedIn</li>
+                <li>Google</li>
+                <li>Pinterest</li>
+            </ul>
     </div>
     <section>
         <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -788,7 +834,7 @@
     </div>
 </section>
 <section *ngIf="parentContent == 'checkinmanager'">
-    <h6 id="main-top">Check-in Manager</h6>
+    <h6 id="main-top">CHECK-IN MANAGER</h6>
 
 
     <span>The Check-in manager helps the priest in managing the working hours and ensuring the
@@ -866,7 +912,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-locations'">
-    <h6 id="settings-locations">LOCATIONS</h6>
+    <h6 id="settings-locations">Locations</h6>
 
     <ul class="ul-normal">
         <li>The information related to the business location comes under this section.</li>
@@ -909,7 +955,7 @@
 </section>
 
 <section *ngIf="childContent =='settings-services'">
-    <h6 id="settings-services">SERVICES</h6>
+    <h6 id="settings-services">Services</h6>
 
     <span>This page lists all the services offered to the devotees. While listing the services,
         please
@@ -981,7 +1027,7 @@
 </section>
 
 <section *ngIf="childContent =='settings-time_windows'">
-    <h6 id="settings-time_windows">WORKING HOURS</h6>
+    <h6 id="settings-time_windows">Working Hours</h6>
 
     <span>Working Hours simply means the active time of the business. One can add multiple Working
         Hours
@@ -1074,7 +1120,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-departments'">
-    <h6 id="settings-departments">DEPARTMENTS</h6>
+    <h6 id="settings-departments">Departments</h6>
 
     <span>A corporate structure consists of various departments which performs specific functions
         while
@@ -1097,7 +1143,7 @@
 </section>
 
 <section *ngIf="childContent =='checkin' && parentContent == 'checkin'">
-    <h6>Check In</h6>
+    <h6>CHECK IN</h6>
     <ul class="ul-normal">
         <li>A priest can create and check-in a devotee for service.</li>
         <li>To search for a devotee and to check whether he/she has already been registered with
@@ -1143,7 +1189,7 @@
 
 
 <section *ngIf="childContent =='customer' && parentContent == 'customer'">
-    <h6>Create Devotee</h6>
+    <h6>CREATE DEVOTEE</h6>
     <ul class="ul-normal">
         <li>A priest can create a devotee profile.</li>
         <li>The first step is that of the Search Process. To search for a devotee in the Jaldee
@@ -1306,7 +1352,8 @@
     </div>
 </section>
 
-<section *ngIf="parentContent == 'license' && childContent =='license-list'">
+<section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
+        <h6>LICENSE</h6>
     <ul class="ul-normal">
         <li>A priest is granted a selected license at the time of initial sign up. This allows a
             priest
@@ -1378,9 +1425,14 @@
         <li>The Free license package is free of cost with limited features.</li>
 
     </ul>
-</section>
-<section *ngIf="childContent =='license-package'">
-    <h6>Upgrade License:</h6>
+    <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                            Upgrade License
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
     <span>Here a priest can upgrade the license anytime.</span>
 
     <ul class="ul-normal">
@@ -1447,15 +1499,24 @@
             license package.</li>
         <li>An email will be sent to the priest upon each invoice generation.</li>
     </ul>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
 </section>
 
-
-<section class="pricing-phome" *ngIf="childContent =='license-package'">
-    <div class="container text-center">
-        <h3 class="tittle font-weight-bold">Jaldee Pricing</h3>
-        <div class="row" *ngIf="activePrice == ''">
-            <!-- <div class="scroll"> -->
-            <div class="jd-pricing">
+<section class="pricing-phome" *ngIf="childContent =='upgradelicense'">
+        <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                                Jaldee Pricing
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
+        <div class="container text-center">
+                <div class="row" *ngIf="activePrice == ''">
+                  <!-- <div class="scroll"> -->
+                  <div class="jd-pricing">
                 <table align="center">
                     <tr>
                         <th class="th1 headcol lic_metric">Licensable metrics</th>
@@ -1679,16 +1740,19 @@
                         <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
                     </tr>
                 </table>
+              </div>
             </div>
-        </div>
-    </div>
+          </div>
 
+</div>
+</mat-expansion-panel>
+</mat-accordion>
 
     <span><br>The three dots menu in the top right corner of the page has the following
         options:</span>
 </section>
 
-<section *ngIf="childContent =='license-package'">
+<section *ngIf="childContent =='upgradelicense'">
     <h6>1. License Change History</h6>
 
     <span>The license change history shows the list of the changes applied in the license package.
@@ -2375,7 +2439,7 @@
 </section>
 
 <section *ngIf="parentContent == 'billing'">
-    <h6 id="items">Billing/POS</h6>
+    <h6 id="items">BILLING/POS</h6>
     <span>Billing/POS page is the one-stop-shop for adding items, discounts, coupons and tax
         settings.
         Discounts and coupons play a major role in driving devotees toward a product/service and in
@@ -2447,11 +2511,19 @@
 </section>
 
 <section *ngIf="childContent == 'coupon'">
-    <h6 id="coupon">Coupons</h6>
+        <h6 id="coupon">Coupons</h6>
     <span>This section is divided into two main sections, viz. <strong>Jaldee Coupons</strong> and
         <strong>My Coupons. Coupons, either Jaldee coupons or My Coupons</strong> can only be
         applied to
         the total bill amount.</span>
+        <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Jaldee Coupons
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
     <ol class="ol-normal adjust-delay-num">
         <li><strong>Jaldee Coupons : </strong>
             <ul class="ul-normal">
@@ -2517,10 +2589,20 @@
                     <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
                         given
                         to the priest by Jaldee.</li>
+                    </ol>
+                </ul>
                 </ol>
-            </ul>
-        </li>
-        <li><strong>My Coupons</strong>
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        My Coupons
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
             <span>These coupons are created by priests. To add a coupon for the first time click
                 <strong>“Add Coupon”.</strong> Here enter the name of the coupon, type of the coupon
                 (Percentage/Fixed) and provide a brief description to the discount. A coupon can
@@ -2539,9 +2621,10 @@
             <span>The Coupons dashboard shows all the existing coupons that have been created on the
                 profile. Here a priest can create, delete and edit a coupon. To create more coupons,
                 click on the “(+)” symbol. </span>
-        </li>
-    </ol>
-</section>
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+     </section>
 
 <section *ngIf="childContent == 'tax-settings'">
     <h6 id="tax-settings">Tax Settings</h6>
@@ -2569,9 +2652,8 @@
             taxes are collected directly by the service priest, so it is the priest’s responsibility
             to
             remit the taxes to the Government.</li>
-    </ul>
-</section>
-
+        </ul>
+    </section>
 
 <section *ngIf="childContent =='profile' && parentContent == 'profile'">
     <h6>PRIEST PROFILE</h6>

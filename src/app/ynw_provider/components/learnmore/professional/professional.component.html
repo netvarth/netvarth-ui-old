@@ -11,7 +11,7 @@
 </section>
 
 <section *ngIf="childContent == 'public-search'">
-    <h6>PUBLIC SEARCH</h6>
+    <h6>Public Search</h6>
     <ol class="ol-normal">
         <li>A provider is required to click on the “TURN ON” button to enable the Public Search if
             he/she wants to be visible in the client's search results.</li>
@@ -50,7 +50,7 @@
     <div class="box-indent">
 
 
-        <h6 id="verified-levels">JALDEE VERIFIED LEVELS</h6>
+        <h6 id="verified-levels">Jaldee Verified Levels</h6>
         <ul class="ul-normal abc">
             <li>After creating the profile, a provider becomes eligible to get their profile
                 verified
@@ -82,7 +82,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/BasicOrg.png" alt="Basic">
                     <li><strong>Provide any two of the following Government ID proof with
                             photo)</strong></li>
@@ -116,7 +116,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
 
                     <img height="100" width="100" src="./assets/images/BasicPlsOrg.png" alt="Basic Plus">
                     <li><strong>Provide any two of the Government ID proof
@@ -152,7 +152,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div>
+                <div class="helpcontent">
                     <img height="100" width="100" src="./assets/images/PremiumOrg.png" alt="Advanced">
                     <li><strong>Provide any two of the Government ID proof
                             (with
@@ -208,7 +208,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <br>
-        <h6 id="important"><u>IMPORTANT</u></h6>
+        <h6 id="important">Important</h6>
         <ul class="ul-normal abc">
             <li>Basic is free of cost.</li>
             <li>If verification level is set to None, the provider will not receive any priority in
@@ -235,7 +235,7 @@
     </div>
 </section>
 <section *ngIf="childContent =='basic-information'">
-    <h6 id="basic-information">BASIC INFORMATION</h6>
+    <h6 id="basic-information">Basic Information</h6>
 
     <span>It displays the Basic information about a business given by the provider at the time of
         initial profile setup. The provider is allowed to edit each section under “Basic
@@ -268,7 +268,7 @@
                         Location
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal abc">
                         <li>The information related to the business’s location comes under this
                             section.
@@ -309,7 +309,7 @@
                         Location Amenities
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal abc">
                         <li>Location amenities are resources, conveniences, facilities or benefits
                             offered to the clients for their use.</li>
@@ -320,14 +320,13 @@
                     </ul>
                     <br>
                     <div class="tscroll">
-                        <table class="table addword-tbl">
+                     
                             <tbody>
                                 <tr>
-                                    <td class="td1">
-                                        Professional Consulting
-                                    </td>
+                                   
+                                       
                                     <td class="td2">
-                                        <table class="table">
+                                       
                                             <tbody>
                                                 <tr>
                                                     <td class="td2">1.Lawyers</td>
@@ -394,13 +393,14 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>
+                                      
                                     </td>
                                 </tr>
 
                             </tbody>
-                        </table>
+                        
                     </div>
+                    <br>
                     <section>
                         <div class="fweight">SEARCHABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                                     Searchable label
@@ -424,7 +424,7 @@
                         Working Hours
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <span>Working hours of the base location are shown here. The provider can click
                         here
                         to redirect to the <strong>Working Hours</strong> page. Here provider can
@@ -453,15 +453,22 @@
 </section>
 
 <section *ngIf="childContent =='privacy-settings'">
-    <h6 id="privacy-settings">PRIVACY SETTINGS</h6>
+    <h6 id="privacy-settings">Privacy Settings</h6>
 
     <span>Getting to know and controlling your privacy settings (Phone number & Email address) is an
         important strategy to protect your information. Here the system allows the provider to add,
         edit
         or delete both phone number and email address.</span>
 
-    <div class="box-indent">
-        <h6><u>PHONE</u></h6>
+        <div class="box-indent">
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Phone
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="helpcontent">
 
         <ol class="ol-normal">
             <li>A provider can view the phone number used to create a Jaldee account. By default,
@@ -494,8 +501,18 @@
                 from the three dots menu on the right corner.</li>
         </ol>
 
-        <h6><u>EMAIL</u></h6>
+    </div>
+</mat-expansion-panel>
+</mat-accordion>
 
+<mat-accordion>
+<mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Email
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="helpcontent">
         <ol class="ol-normal">
             <li>A provider can add, edit and delete the email address here.</li>
             <li>The three dots menu on the right corner has two options, viz. <strong>Edit</strong>
@@ -532,6 +549,9 @@
             <li>Jaldee.com uses the email address to communicate the general notifications to the
                 provider, such as notifications on invoice, Jaldee coupons, discounts, etc.</li>
         </ol>
+    </div>
+</mat-expansion-panel>
+</mat-accordion><br>
         <section>
             <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                         Searchable label indicates that clients can search for the provider using
@@ -545,7 +565,7 @@
 </section>
 
 <section *ngIf="childContent =='specialization'">
-    <h6 id="specialization">SPECIALIZATION</h6>
+    <h6 id="specialization">Specialization</h6>
 
     <span>Specializations benefits both the provider and the client. Here a provider can select
         his/her
@@ -553,142 +573,175 @@
         professional consulting sector.</span>
 
     <div class="tscroll">
-        <table class="table addword-tbl">
-            <tbody>
-                <tr>
-                    <td class="td2">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td class="td1">Lawyers</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Bankruptcy Lawyer</li>
-                                            <li>Civil Litigation Lawyer</li>
-                                            <li>Consumer Lawyer</li>
-                                            <li>Corporate Lawyer</li>
-                                            <li>Criminal Defense Lawyer</li>
-                                            <li>Divorce Lawyer</li>
-                                            <li>Digital Media and Internet Lawyer</li>
-                                            <li>Employment and Labour Lawyer</li>
-                                            <li>Entertainment Lawyer</li>
-                                            <li>Estate planning Lawyer</li>
-                                            <li>Family Lawyer</li>
-                                            <li>General Practice</li>
-                                            <li>Intellectual Property Lawyer</li>
-                                            <li>Legal Malpractice or Professional Responsibility
-                                                Lawyer
-                                            </li>
-                                            <li>Mergers and Acquisitions Lawyer</li>
-                                            <li>Personal injury Lawyer</li>
-                                            <li>Real Estate lawyer</li>
-                                            <li>Responsibility Lawyer</li>
-                                            <li>Traffic Lawyer</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Chartered Accountants</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Advice on business structures</li>
-                                            <li>Company Formation &amp; Compliance</li>
-                                            <li>Debt and Equity Financing General Consulting</li>
-                                            <li>Handling FEMA(Foreign Exchange Management Act)</li>
-                                            <li>LLP(Limited Liability Partnership)</li>
-                                            <li>Management consultancy</li>
-                                            <li>Project Finance</li>
-                                            <li>Structuring Commercial transactions</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Tax Consultants</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Central Excise Tax</li>
-                                            <li>General Consultant</li>
-                                            <li>Gift Tax</li>
-                                            <li>GST</li>
-                                            <li>Income Tax</li>
-                                            <li>Sales Tax/ VAT</li>
-                                            <li>Service Tax</li>
-                                            <li>Wealth Tax</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Civil Architects</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>2D/3D Design</li>
-                                            <li>Colour Consultation</li>
-                                            <li>Commercial Architect</li>
-                                            <li>Cost effective</li>
-                                            <li>Decor</li>
-                                            <li>Design Consultation</li>
-                                            <li>Design Execution</li>
-                                            <li>Residential Architect</li>
-                                            <li>Elevation Design</li>
-                                            <li>Execution supervision</li>
-                                            <li>False ceiling</li>
-                                            <li>Flooring</li>
-                                            <li>Floor plan layouts</li>
-                                            <li>Interior</li>
-                                            <li>Interior Design</li>
-                                            <li>Lighting Selection</li>
-                                            <li>Site Inspection</li>
-                                            <li>Space Planning</li>
-                                            <li>Residential Architecture</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Stockbroker</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Online trading</li>
-                                            <li>Discount Brokers</li>
-                                            <li>Offline/Phone trading</li>
-                                            <li>Full Service Broker</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Auditor</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Independent/External Auditors</li>
-                                            <li>Internal Auditors</li>
-                                            <li>Government Auditors</li>
-                                            <li>Forensic Auditors</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Geologist</td>
-                                    <td class="td2">
-                                        <ol class="ol-normal">
-                                            <li>Paleontology</li>
-                                            <li>Volcanology</li>
-                                            <li>Seismology</li>
-                                            <li>Hydrogeology</li>
-                                            <li>Hydrology</li>
-                                            <li>Geochemistry</li>
-                                            <li>Geophysics</li>
-                                            <li>Structural Geology</li>
-                                            <li>Paleoclimatology</li>
-                                            <li>Oceanography</li>
-                                        </ol>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Lawyers
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal specllist">
+                        <li>Bankruptcy Lawyer</li>
+                        <li>Civil Litigation Lawyer</li>
+                        <li>Consumer Lawyer</li>
+                        <li>Corporate Lawyer</li>
+                        <li>Criminal Defense Lawyer</li>
+                        <li>Divorce Lawyer</li>
+                        <li>Digital Media and Internet Lawyer</li>
+                        <li>Employment and Labour Lawyer</li>
+                        <li>Entertainment Lawyer</li>
+                        <li>Estate planning Lawyer</li>
+                        <li>Family Lawyer</li>
+                        <li>General Practice</li>
+                        <li>Intellectual Property Lawyer</li>
+                        <li>Legal Malpractice or Professional Responsibility
+                            Lawyer
+                        </li>
+                        <li>Mergers and Acquisitions Lawyer</li>
+                        <li>Personal injury Lawyer</li>
+                        <li>Real Estate lawyer</li>
+                        <li>Responsibility Lawyer</li>
+                        <li>Traffic Lawyer</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Chartered Accountants
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>Advice on business structures</li>
+                        <li>Company Formation &amp; Compliance</li>
+                        <li>Debt and Equity Financing General Consulting</li>
+                        <li>Handling FEMA(Foreign Exchange Management Act)</li>
+                        <li>LLP(Limited Liability Partnership)</li>
+                        <li>Management consultancy</li>
+                        <li>Project Finance</li>
+                        <li>Structuring Commercial transactions</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Tax Consultants
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>Central Excise Tax</li>
+                        <li>General Consultant</li>
+                        <li>Gift Tax</li>
+                        <li>GST</li>
+                        <li>Income Tax</li>
+                        <li>Sales Tax/ VAT</li>
+                        <li>Service Tax</li>
+                        <li>Wealth Tax</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Civil Architects
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>2D/3D Design</li>
+                        <li>Colour Consultation</li>
+                        <li>Commercial Architect</li>
+                        <li>Cost effective</li>
+                        <li>Decor</li>
+                        <li>Design Consultation</li>
+                        <li>Design Execution</li>
+                        <li>Residential Architect</li>
+                        <li>Elevation Design</li>
+                        <li>Execution supervision</li>
+                        <li>False ceiling</li>
+                        <li>Flooring</li>
+                        <li>Floor plan layouts</li>
+                        <li>Interior</li>
+                        <li>Interior Design</li>
+                        <li>Lighting Selection</li>
+                        <li>Site Inspection</li>
+                        <li>Space Planning</li>
+                        <li>Residential Architecture</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Stockbroker
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>Online trading</li>
+                        <li>Discount Brokers</li>
+                        <li>Offline/Phone trading</li>
+                        <li>Full Service Broker</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Auditor
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>Independent/External Auditors</li>
+                        <li>Internal Auditors</li>
+                        <li>Government Auditors</li>
+                        <li>Forensic Auditors</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Geologist
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                    <ol class="ol-normal">
+                        <li>Paleontology</li>
+                        <li>Volcanology</li>
+                        <li>Seismology</li>
+                        <li>Hydrogeology</li>
+                        <li>Hydrology</li>
+                        <li>Geochemistry</li>
+                        <li>Geophysics</li>
+                        <li>Structural Geology</li>
+                        <li>Paleoclimatology</li>
+                    </ol>
+                </div>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+    </div><br>
     <span>All the specializations added during the initial profile set up are listed in this
         section. To
         edit this, click on the edit pencil button.</span>
@@ -704,7 +757,7 @@
 </section>
 
 <section *ngIf="childContent =='languages-known'">
-    <h6 id="languages-known">LANGUAGES KNOWN</h6>
+    <h6 id="languages-known">Languages Known</h6>
 
     <span>A provider can add multiple languages known to him/her. This can widen the client base and
         attract more clients.</span>
@@ -734,358 +787,880 @@
 </section>
 
 <section *ngIf="childContent =='additional-info'">
-    <h6 id="additional-info">ADDITIONAL INFO</h6>
+    <h6 id="additional-info">Additional Info</h6>
 
     <span>Following is the list of additional information for the Professional Consulting sector. A
         provider needs to fill in the details for each section. This is to let the clients know more
-        about the business as well as the provider.</span>
-
+        about the business as well as the provider.</span><br>
     <div class="tscroll">
-        <table class="table addword-tbl">
+
+
+        <div class="box">
+            <span style="font-size: 15px">Lawyers</span>
+        </div>
+        <td>
             <tbody>
-                <tr>
-                    <td class="td1">
-                        Professional Consulting
-                    </td>
-                    <td class="td2">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td class="td1">Lawyers</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Type Of Cases </td>
-                                                <td class="td2">1. Here a lawyer can mention the
-                                                    type
-                                                    cases he/she specializes in (Ex. Civil,
-                                                    Corporate,
-                                                    etc.) </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Places Of Practice </td>
-                                                <td class="td2">2. This shows where the lawyer
-                                                    practices
-                                                    law. </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Entity Type</td>
-                                                <td class="td2">3. Individual/Law Firm</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Experience </td>
-                                                <td class="td2">4. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Awards & Recognitions </td>
-                                                <td class="td2">5. Here a lawyer can mention the
-                                                    awards
-                                                    received in the respective field.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">6. Reference URL </td>
-                                                <td class="td2">6. This shows the direct link of the
-                                                    provider’s own website. Also mention the other
-                                                    sites
-                                                    where the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">7. Educational Qualification</td>
-                                                <td class="td2">7. Here the lawyer needs to mention
-                                                    the
-                                                    educational qualification.</td>
-                                            </tr>
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                1. Type Of Cases
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
 
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Chartered Accountants</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Entity Type </td>
-                                                <td class="td2">1. Proprietor Firm/ Partnership Firm
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Experience </td>
-                                                <td class="td2">2. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Awards & Recognitions</td>
-                                                <td class="td2">3. Here a CA can mention the awards
-                                                    received in the respective field.(Ex. ICAI
-                                                    Awards)
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Reference URL </td>
-                                                <td class="td2">4. This shows the direct link of the
-                                                    CA’s own website. Also mention the other sites
-                                                    where
-                                                    the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Educational Qualification</td>
-                                                <td class="td2">5. Here the provider needs to
-                                                    mention
-                                                    the educational qualification.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Tax Consultants</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Entity Type</td>
-                                                <td class="td2">1. Individual/Firm </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Experience </td>
-                                                <td class="td2">2. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Awards & Recognitions</td>
-                                                <td class="td2">3. Here a Tax consultant can mention
-                                                    the
-                                                    awards received in the respective field.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Reference URL </td>
-                                                <td class="td2">4. This shows the direct link of the
-                                                    consultant’s own website. Also mention the other
-                                                    sites where the profile is listed. </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Educational Qualification </td>
-                                                <td class="td2">5. Here the consultant needs to
-                                                    mention
-                                                    the educational qualification.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Civil Architects</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Number Of Projects</td>
-                                                <td class="td2">1. Here a service provider can
-                                                    mention
-                                                    the number of projects completed and undertaken
-                                                    till
-                                                    date.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Types Of Projects</td>
-                                                <td class="td2">2. An architect can mention the
-                                                    types of
-                                                    projects taken here. (Ex.Clinics, College, Home
-                                                    Designs, etc.)</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Models</td>
-                                                <td class="td2">3. Mention the models (Ex. Casual,
-                                                    Contemporary, Minimalistic, etc.)</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Vaastu Compliant</td>
-                                                <td class="td2">4. Slide the toggle button to
-                                                    specify
-                                                    whether the project is vastu compliant or not.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Entity Type </td>
-                                                <td class="td2">5. Firm/Freelancer</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">6. Experience </td>
-                                                <td class="td2">6. Enter the work experience here
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">7. Awards & Recognitions </td>
-                                                <td class="td2">7. Here an Architect can mention the
-                                                    awards received in the respective field. (Ex.
-                                                    Pritzker Architecture Prize).</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">8. Reference URL </td>
-                                                <td class="td2">8. This shows the direct link of the
-                                                    architect’s own website. Also mention the other
-                                                    sites where the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">9. Educational Qualification</td>
-                                                <td class="td2">9. Here the architect needs to
-                                                    mention
-                                                    the educational qualification</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Financial Advisor</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Entity Type</td>
-                                                <td class="td2">1. Commission Based/Fee
-                                                    Based/Hybrid/Fee
-                                                    only/Independent Registered</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Experience</td>
-                                                <td class="td2">2. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Awards & Recognitions</td>
-                                                <td class="td2">3. Here an Advisor can mention the
-                                                    awards received in the respective field.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Reference URL</td>
-                                                <td class="td2">4. This shows the direct link of the
-                                                    Advisor’s own website. Also mention the other
-                                                    sites
-                                                    where the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Educational Qualification </td>
-                                                <td class="td2">5. Here the financial advisor needs
-                                                    to
-                                                    show the educational qualification.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Stockbroker</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Entity Type</td>
-                                                <td class="td2">1. Full service / Traditional
-                                                    Broker/Discount broker/Online broker</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Experience</td>
-                                                <td class="td2">2. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Awards & Recognitions</td>
-                                                <td class="td2">3. Here a Stockbroker can mention
-                                                    the
-                                                    awards received in the respective field.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Reference URL</td>
-                                                <td class="td2">4. This shows the direct link of the
-                                                    Stockbroker’s own website. Also mention the
-                                                    other
-                                                    sites where the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Educational Qualification </td>
-                                                <td class="td2">5. Here the Stockbroker can mention
-                                                    the
-                                                    educational qualification.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Auditor</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Entity Type</td>
-                                                <td class="td2">1. Private Auditors/Government
-                                                    Auditors
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Experience</td>
-                                                <td class="td2">2. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Awards & Recognitions</td>
-                                                <td class="td2">3. Mention the awards received by
-                                                    the
-                                                    Auditor here.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Reference URL</td>
-                                                <td class="td2">4. This shows the direct link of the
-                                                    auditor’s own website. Also mention the other
-                                                    sites
-                                                    where the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">5. Educational Qualification </td>
-                                                <td class="td2">5. Here the Auditor can mention the
-                                                    educational qualification.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                                <tr>
-                                    <td class="td1">Geologist</td>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td class="td2">1. Experience </td>
-                                                <td class="td2">1. Enter the Work Experience here.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">2. Awards & Recognitions</td>
-                                                <td class="td2">2. Mention the the awards received
-                                                    in
-                                                    the field.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">3. Reference URL</td>
-                                                <td class="td2">3. This shows the direct link of the
-                                                    Geologist’s own website. Also mention the other
-                                                    sites where the profile is listed.</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td2">4. Educational Qualification</td>
-                                                <td class="td2">4. Here the Geologist needs to
-                                                    mention
-                                                    the educational qualification.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tr>
-                            </tbody>
+                            <span>1. Here a lawyer can mention the
+                                type
+                                cases he/she specializes in (Ex. Civil,
+                                Corporate,
+                                etc.)</span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
 
-                        </table>
-                    </td>
-                </tr>
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                2. Places Of Practice
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord ">2. This shows where the lawyer
+                                practices
+                                law.
+                            </span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                3. Entity Type
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord ">3. Individual/Law Firm
+                            </span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                4. Experience
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">4. Enter the Work Experience here.
+                            </span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                5. Awards & Recognitions
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <span class="bord">5. Here a lawyer can mention the
+                                awards
+                                received in the respective field.
+                            </span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                6. Reference URL
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">6. This shows the direct link of the
+                                provider’s own website. Also mention the other
+                                sites
+                                where the profile is listed.
+                            </span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                7. Educational Qualification
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="helpcontent">
+                            <span class="bord">7. Here the lawyer needs to mention
+                                the
+                                educational qualification.
+                            </span><br>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
             </tbody>
-        </table>
 
-    </div>
+        </td>
+    </div><br><br>
+        <div class="tscroll">
+
+
+            <div class="box">
+                <span style="font-size: 15px">Chartered Accountants</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    1. Entity Type
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span>1. Proprietor Firm/ Partnership Firm</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    2. Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">2. Enter the Work Experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    3. Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">3. Here a CA can mention the awards
+                                    received in the respective field.(Ex. ICAI
+                                    Awards)
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">This shows the direct link of the
+                                    CA’s own website. Also mention the other sites
+                                    where
+                                    the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span class="bord">Here the provider needs to
+                                    mention
+                                    the educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    6. Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">6. This shows the direct link of the
+                                    provider’s own website. Also mention the other
+                                    sites
+                                    where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    7. Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">7. Here the lawyer needs to mention
+                                    the
+                                    educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                </tbody>
+
+            </td>
+        </div>
+<br><br>
+       <div class="tscroll">
+
+
+            <div class="box">
+                <span style="font-size: 15px">Tax Consultants</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    1. Entity Type
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span> Individual/Firm</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord "> Enter the Work Experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">Here a Tax consultant can mention
+                                    the
+                                    awards received in the respective field.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">This shows the direct link of the
+                                    consultant’s own website. Also mention the other
+                                    sites where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span class="bord">Here the consultant needs to
+                                    mention
+                                    the educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    6. Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">6. This shows the direct link of the
+                                    provider’s own website. Also mention the other
+                                    sites
+                                    where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    7. Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">7. Here the lawyer needs to mention
+                                    the
+                                    educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                </tbody>
+
+            </td>
+        </div>
+<br><br>
+        <div class="tscroll">
+
+
+            <div class="box">
+                <span style="font-size: 15px">Civil Architects</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Number Of Projects
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span> Here a service provider can
+                                    mention
+                                    the number of projects completed and undertaken
+                                    till
+                                    date.</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Types Of Projects
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord "> An architect can mention the
+                                    types of
+                                    projects taken here. (Ex.Clinics, College, Home
+                                    Designs, etc.)
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Models
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">Mention the models (Ex. Casual,
+                                    Contemporary, Minimalistic, etc.)
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Vaastu Compliant
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">Slide the toggle button to
+                                    specify
+                                    whether the project is vastu compliant or not.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Entity Type 
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span class="bord"> Firm/Freelancer
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">Enter the work experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">Here an Architect can mention the
+                                    awards received in the respective field. (Ex.
+                                    Pritzker Architecture Prize).
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">This shows the direct link of the
+                                    architect’s own website. Also mention the other
+                                    sites where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">Here the architect needs to
+                                    mention
+                                    the educational qualification
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                </tbody>
+
+            </td>
+        </div>
+       
+<br><br>
+        <div class="tscroll">
+            <div class="box">
+                <span style="font-size: 15px">Stockbroker</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Entity Type
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span> Commission Based/Fee
+                                    Based/Hybrid/Fee
+                                    only/Independent Registered</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord "> Enter the Work Experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">  Here an Advisor can mention the
+                                    awards received in the respective field.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">This shows the direct link of the
+                                    Advisor’s own website. Also mention the other
+                                    sites
+                                    where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span class="bord">Here the financial advisor needs
+                                    to
+                                    show the educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </tbody>
+
+            </td>
+        </div>
+       <br><br>
+        <div class="tscroll">
+            <div class="box">
+                <span style="font-size: 15px">Auditor</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Entity Type
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span> Full service / Traditional
+                                    Broker/Discount broker/Online broker</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">Enter the Work Experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">  Here a Stockbroker can mention
+                                    the
+                                    awards received in the respective field.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">This shows the direct link of the
+                                    Stockbroker’s own website. Also mention the
+                                    other
+                                    sites where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span class="bord"> Here the Stockbroker can mention
+                                    the
+                                    educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </tbody>
+
+            </td>
+        </div>
+<br><br>
+        <div class="tscroll">
+            <div class="box">
+                <span style="font-size: 15px">Stockbroker</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Entity Type
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span> Private Auditors/Government
+                                    Auditors</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">Enter the Work Experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">  Mention the awards received by
+                                    the
+                                    Auditor here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">This shows the direct link of the
+                                    auditor’s own website. Also mention the other
+                                    sites
+                                    where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div>
+                                <span class="bord">Here the Auditor can mention the
+                                    educational qualification.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </tbody>
+
+            </td>
+        </div>
+      <br><br>
+        <div class="tscroll">
+            <div class="box">
+                <span style="font-size: 15px">Geologist</span>
+            </div>
+            <td>
+                <tbody>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Experience
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+
+                                <span>  Enter the Work Experience here.</span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Awards & Recognitions
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord ">Enter the Work Experience here.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Reference URL
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord "> This shows the direct link of the
+                                    Geologist’s own website. Also mention the other
+                                    sites where the profile is listed.
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]="false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Educational Qualification
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                                <span class="bord">Here the Geologist needs to
+                                    mention
+                                    the educational qualification
+                                </span><br>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                  
+                </tbody>
+
+            </td>
+        </div>
+      
+      
+        
 </section>
 
 
 
 
 <section *ngIf="childContent =='photo-gallery'">
-    <h6 id="photo-gallery">GALLERY</h6>
+    <h6 id="photo-gallery">Gallery</h6>
 
     <span>Image and Photos seize the client’s attention and make a profile more engaging. Providers
         are
@@ -1118,7 +1693,7 @@
 </section>
 
 <section *ngIf="childContent =='your-social-media'">
-    <h6 id="your-social-media">YOUR SOCIAL MEDIA</h6>
+    <h6 id="your-social-media">Your Social Media</h6>
 
     <span>A provider can connect his/her Jaldee profile with the social media profiles. These social
         media icons are displayed on the profile. This option allows clients to view the provider’s
@@ -1138,28 +1713,14 @@
                 <strong>“Save”</strong> to retain the information.</li>
         </ol>
 
-        <table class="table social-tbl">
-            <tbody>
-                <tr>
-                    <td class="td1">Facebook</td>
-                </tr>
-                <tr>
-                    <td class="td1">Twitter</td>
-                </tr>
-                <tr>
-                    <td class="td1">Youtube</td>
-                </tr>
-                <tr>
-                    <td class="td1">LinkedIn</td>
-                </tr>
-                <tr>
-                    <td class="td1">Google+</td>
-                </tr>
-                <tr>
-                    <td class="td1" (click)="handleScroll('learnmore-begining')">Pinterest</td>
-                </tr>
-            </tbody>
-        </table>
+        <ul>
+            <li>Facebook</li>
+            <li>Twitter</li>
+            <li>Youtube</li>
+            <li>LinkedIn</li>
+            <li>Google</li>
+            <li>Pinterest</li>
+        </ul>
     </div>
     <section>
         <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -1172,7 +1733,7 @@
     </section>
 </section>
 <section *ngIf="childContent =='custom-id'">
-    <h6 id="custom-id">CUSTOM BUSINESS ID</h6>
+    <h6 id="custom-id">Custom Business ID</h6>
 
     <span>A custom business id is a unique id that redirects to a providers detailed profile page in
         Jaldee . You can add a custom URL based on things like your business name, username used in
@@ -1180,7 +1741,7 @@
         website
         or any other portal.<strong> To add a custom url, make sure your license package is upgraded
             to
-            Ruby.</strong></span>
+            Ruby.</strong></span><br>
     <h6>How to add a custom business id in Jaldee?</h6>
 
     <div class="box-indent">
@@ -1207,7 +1768,7 @@
     </div>
 </section>
 <section *ngIf="parentContent == 'checkinmanager'">
-    <h6 id="main-top">Check-in Manager</h6>
+    <h6 id="main-top">CHECK-IN MANAGER</h6>
 
 
     <span>The Check-in manager helps the provider in managing the working hours and ensuring the
@@ -1287,7 +1848,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-locations'">
-    <h6 id="settings-locations">LOCATIONS</h6>
+    <h6 id="settings-locations">Locations</h6>
 
     <ul class="ul-normal">
         <li>The information related to the business location comes under this section.</li>
@@ -1335,7 +1896,7 @@
 </section>
 
 <section *ngIf="childContent =='settings-services'">
-    <h6 id="settings-services">SERVICES</h6>
+    <h6 id="settings-services">Services</h6>
 
     <span>This page lists all the services offered to the clients. While listing the services,
         please
@@ -1409,7 +1970,7 @@
 </section>
 
 <section *ngIf="childContent =='settings-time_windows'">
-    <h6 id="settings-time_windows">WORKING HOURS</h6>
+    <h6 id="settings-time_windows">Working Hours</h6>
 
     <span>Working Hours simply means the active time of the business. One can add multiple Working
         Hours
@@ -1506,7 +2067,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings-departments'">
-    <h6 id="settings-departments">DEPARTMENTS</h6>
+    <h6 id="settings-departments">Departments</h6>
 
     <span>A corporate structure consists of various departments which performs specific functions
         while
@@ -1529,7 +2090,7 @@
 </section>
 
 <section *ngIf="childContent =='checkin' && parentContent == 'checkin'">
-    <h6>Check In</h6>
+    <h6>CHECK IN</h6>
     <ul class="ul-normal">
         <li>A provider can create and check-in a client for service.</li>
         <li>To search for a client and to check whether he/she has already been registered with
@@ -1571,7 +2132,7 @@
 
 
 <section *ngIf="childContent =='customer' && parentContent == 'customer'">
-    <h6>Create Client</h6>
+    <h6>CREATE CLIENT</h6>
     <ul class="ul-normal">
         <li>You can create a client.</li>
         <li>Initial step is the search process. With mobile number and first name/last name of
@@ -1734,7 +2295,8 @@
     </div>
 </section>
 
-<section *ngIf="parentContent == 'license' && childContent =='license-list'">
+<section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
+    <h6>LICENSE</h6>
     <ul class="ul-normal">
         <li>A provider is granted a selected license at the time of initial sign up. This allows a
             provider
@@ -1805,321 +2367,347 @@
             the license package being upgraded to <strong>“FREE”</strong>.</li>
         <li>An alert message will be sent one week before the package expires.</li>
         <li>The Free license package is free of cost with limited features.</li>
-
     </ul>
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Upgrade License
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <span>Here a provider can upgrade the license anytime.</span>
+
+                <ul class="ul-normal">
+                    <li>When a provider clicks on the <strong>“Upgrade License”</strong> button, a window
+                        appears
+                        where a
+                        drop-down menu is listed with the available license packages.</li>
+                    <li>To upgrade to a license package, select a package from the drop-down menu.</li>
+                    <li>The license package has a monthly subscription, i.e. monthly payment has to be done.
+                    </li>
+                    <li>A provider can also upgrade the license package using the below links from dashboard:
+                        <ul class="ul-normal">
+                            <li><strong>Click here</strong> to Upgrade License : If license package is
+                                <strong>Platinum Free 60 days trial</strong>.</li>
+                            <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
+                                    higher</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>Here, a provider can view the owned license package, due amount as well as the next
+                        payment
+                        date.
+                    </li>
+                    <li>An invoice is generated on a monthly basis.</li>
+                    <li>For example, if a provider has created a profile on 10th January then all invoices will
+                        be
+                        generated
+                        on a monthly basis i.e. on 10th of each month. In case, the provider buys add-on and
+                        Jaldee-keywords on a
+                        different date (suppose on 20th January), the first bill of the add-on and
+                        Jaldee-keywords
+                        will be
+                        calculated from 20 January - 10 February. After that, the same “10↔10” bill cycle will
+                        continue from
+                        next month. This billing cycle will include License and Addon amount in a single invoice
+                        until the
+                        license or Add-on gets upgraded/downgraded.<br><br>
+                        <p><strong>*To downgrade the existing license package, a provider needs to contact the
+                                Jaldee team,
+                                call us on 0487-2325650 or you can send us an email at <span
+                                    class="linkb">support@jaldee.com</span>.</strong></p>
+                    </li>
+                    <li>An invoice is generated when an addon is included in a subscription using
+                        <strong>“ADD-ON(+)”</strong> option.</li>
+                    <li>When a provider click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
+                            grades),</strong> he/she can see the generated invoices. To proceed with payment
+                        from
+                        here,
+                        click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface and
+                        thus
+                        proceed
+                        with the actual payment.</li>
+                    <li>The provider will receive a confirmation email informing the payment status.</li>
+                    <li>A provider can see all the payments completed so far in the <strong>“Payments
+                            History”</strong>
+                        section.</li>
+                    <li>The invoice is generated every month on the same date of profile creation, whether or
+                        not
+                        the
+                        previous payment is made.</li>
+                    <li>The license gets upgraded as soon as a provider clicks on license upgrade button, but
+                        the
+                        invoice
+                        gets generated from the next month and the amount is calculated based on the daily usage
+                        of
+                        the
+                        license package.</li>
+                    <li>An email will be sent to the provider upon each invoice generation.</li>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </section>
-<section *ngIf="childContent =='license-package'">
-    <h6>Upgrade License:</h6>
-    <span>Here a provider can upgrade the license anytime.</span>
 
-    <ul class="ul-normal">
-        <li>When a provider clicks on the <strong>“Upgrade License”</strong> button, a window
-            appears
-            where a
-            drop-down menu is listed with the available license packages.</li>
-        <li>To upgrade to a license package, select a package from the drop-down menu.</li>
-        <li>The license package has a monthly subscription, i.e. monthly payment has to be done.
-        </li>
-        <li>A provider can also upgrade the license package using the below links from dashboard:
-            <ul class="ul-normal">
-                <li><strong>Click here</strong> to Upgrade License : If license package is
-                    <strong>Platinum Free 60 days trial</strong>.</li>
-                <li><strong>Upgrade License Now</strong> : If license package is <strong>Basic or
-                        higher</strong>.</li>
-            </ul>
-        </li>
-        <li>Here, a provider can view the owned license package, due amount as well as the next
-            payment
-            date.
-        </li>
-        <li>An invoice is generated on a monthly basis.</li>
-        <li>For example, if a provider has created a profile on 10th January then all invoices will
-            be
-            generated
-            on a monthly basis i.e. on 10th of each month. In case, the provider buys add-on and
-            Jaldee-keywords on a
-            different date (suppose on 20th January), the first bill of the add-on and
-            Jaldee-keywords
-            will be
-            calculated from 20 January - 10 February. After that, the same “10↔10” bill cycle will
-            continue from
-            next month. This billing cycle will include License and Addon amount in a single invoice
-            until the
-            license or Add-on gets upgraded/downgraded.<br><br>
-            <p><strong>*To downgrade the existing license package, a provider needs to contact the
-                    Jaldee team,
-                    call us on 0487-2325650 or you can send us an email at <span
-                        class="linkb">support@jaldee.com</span>.</strong></p>
-        </li>
-        <li>An invoice is generated when an addon is included in a subscription using
-            <strong>“ADD-ON(+)”</strong> option.</li>
-        <li>When a provider click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
-                grades),</strong> he/she can see the generated invoices. To proceed with payment
-            from
-            here,
-            click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface and
-            thus
-            proceed
-            with the actual payment.</li>
-        <li>The provider will receive a confirmation email informing the payment status.</li>
-        <li>A provider can see all the payments completed so far in the <strong>“Payments
-                History”</strong>
-            section.</li>
-        <li>The invoice is generated every month on the same date of profile creation, whether or
-            not
-            the
-            previous payment is made.</li>
-        <li>The license gets upgraded as soon as a provider clicks on license upgrade button, but
-            the
-            invoice
-            gets generated from the next month and the amount is calculated based on the daily usage
-            of
-            the
-            license package.</li>
-        <li>An email will be sent to the provider upon each invoice generation.</li>
-    </ul>
-</section>
-
-
-<section class="pricing-phome" *ngIf="childContent =='license-package'">
-    <div class="container text-center">
-        <h3 class="tittle font-weight-bold">Jaldee Pricing</h3>
-        <div class="row" *ngIf="activePrice == ''">
-            <!-- <div class="scroll"> -->
-            <div class="jd-pricing">
-                <table align="center">
-                    <tr>
-                        <th class="th1 headcol lic_metric">Licensable metrics</th>
-                        <td class="th2 long head_bg">FREE</td>
-                        <td class="long head_bg">Silver</td>
-                        <td class="th3 long head_bg">Gold</td>
-                        <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
-                        <td class="th5 long head_bg">Ruby</td>
-                        <td class="th6 long head_bg">Diamond</td>
-                    </tr>
-                    <tr>
-                        <th class="th3 headcol">Price(Rs/Month)</th>
-                        <td class="th2 light-col long">FREE</td>
-                        <td class="brozelicensecol long">499 Rs</td>
-                        <td class="th3 light-col long">1499 Rs</td>
-                        <td class="th4 brozelicensecol long">2999 Rs</td>
-                        <td class="th5 light-col long">5999 Rs</td>
-                        <td class="th6 brozelicensecol long">7999 Rs</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee Business Listing</th>
-                        <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Public searches <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'[Business name, domain, subdomain, specializations,
+<section class="pricing-phome" *ngIf="childContent =='upgradelicense'">
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Jaldee Pricing
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="helpcontent">
+                <div class="container text-center">
+                    <div class="row" *ngIf="activePrice == ''">
+                        <!-- <div class="scroll"> -->
+                        <div class="jd-pricing">
+                            <table align="center">
+                                <tr>
+                                    <th class="th1 headcol lic_metric">Licensable metrics</th>
+                                    <td class="th2 long head_bg">FREE</td>
+                                    <td class="long head_bg">Silver</td>
+                                    <td class="th3 long head_bg">Gold</td>
+                                    <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
+                                    <td class="th5 long head_bg">Ruby</td>
+                                    <td class="th6 long head_bg">Diamond</td>
+                                </tr>
+                                <tr>
+                                    <th class="th3 headcol">Price(Rs/Month)</th>
+                                    <td class="th2 light-col long">FREE</td>
+                                    <td class="brozelicensecol long">499 Rs</td>
+                                    <td class="th3 light-col long">1499 Rs</td>
+                                    <td class="th4 brozelicensecol long">2999 Rs</td>
+                                    <td class="th5 light-col long">5999 Rs</td>
+                                    <td class="th6 brozelicensecol long">7999 Rs</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee Business Listing</th>
+                                    <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Public searches <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'[Business name, domain, subdomain, specializations,
                                             keywords etc..]'"></i></th>
-                        <td class="td2 light-col long">Unlimited</td>
-                        <td class="brozelicensecol long">Unlimited</td>
-                        <td class="td3 light-col long">Unlimited</td>
-                        <td class="td4 brozelicensecol long">Unlimited</td>
-                        <td class="td5 light-col long">Unlimited</td>
-                        <td class="td6 brozelicensecol long">Unlimited</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Business profile detailed views</th>
-                        <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
-                        </td>
-                        <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
-                        </td>
-                        <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month'"></i>
-                        </td>
-                        <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
-                        <td class="td5 light-col long">300 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'5000 per month'"></i>
-                        </td>
-                        <td class="td6 brozelicensecol long">Unlimited</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Number of Transactions <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
+                                    <td class="td2 light-col long">Unlimited</td>
+                                    <td class="brozelicensecol long">Unlimited</td>
+                                    <td class="td3 light-col long">Unlimited</td>
+                                    <td class="td4 brozelicensecol long">Unlimited</td>
+                                    <td class="td5 light-col long">Unlimited</td>
+                                    <td class="td6 brozelicensecol long">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Business profile detailed views</th>
+                                    <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
+                                    <td class="td5 light-col long">300 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'5000 per month'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">Unlimited</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Number of Transactions <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
                                             appointment-
                                             both online and walk-ins together)'"></i></th>
-                        <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
-                        </td>
-                        <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
-                        </td>
-                        <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'500 per month, Unlimited for 2019'"></i>
-                        </td>
-                        <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month, Unlimited for 2019'"></i>
-                        </td>
-                        <td class="td5 light-col long">250 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'2500 per month, Unlimited for 2019'"></i>
-                        </td>
-                        <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee coupons</th>
-                        <td class="td2 light-col long">Only sign up coupons</td>
-                        <td class="brozelicensecol long">Only sign up coupons</td>
-                        <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td4 brozelicensecol long">Sign up coupons + 2 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                        <td class="td6 brozelicensecol long">Sign up coupons + 5 <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Customised coupons</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long">1 per month</td>
-                        <td class="td6 brozelicensecol long">2 per month</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee POS</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee pay / Billing</th>
-                        <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Custom URL</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Storage (image upload)</th>
-                        <td class="td2 light-col long">10 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(eg.10 images - 1mb)'"></i></td>
-                        <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.20 images - 1mb)'"></i></td>
-                        <td class="td3 light-col long">40 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(eg.40 images - 1mb)'"></i></td>
-                        <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.100 images - 1mb)'"></i></td>
-                        <td class="td5 light-col long">250 mb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.250 images - 1mb)'"></i></td>
-                        <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.1000 images - 1mb)'"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee Keywords</th>
-                        <td class="td2 light-col long">0</td>
-                        <td class="brozelicensecol long">0</td>
-                        <td class="td3 light-col long">2</td>
-                        <td class="td4 brozelicensecol long">5</td>
-                        <td class="td5 light-col long">10</td>
-                        <td class="td6 brozelicensecol long">25</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Kiosk</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Number of users</th>
-                        <td class="td2 light-col long">1</td>
-                        <td class="brozelicensecol long">1</td>
-                        <td class="td3 light-col long">1</td>
-                        <td class="td4 brozelicensecol long">upto 5</td>
-                        <td class="td5 light-col long">upto 20</td>
-                        <td class="td6 brozelicensecol long">upto 100</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls"
-                                [matTooltip]="'(pay only 99 Rs for the
+                                    <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'500 per month, Unlimited for 2019'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'1000 per month, Unlimited for 2019'"></i>
+                                    </td>
+                                    <td class="td5 light-col long">250 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'2500 per month, Unlimited for 2019'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee coupons</th>
+                                    <td class="td2 light-col long">Only sign up coupons</td>
+                                    <td class="brozelicensecol long">Only sign up coupons</td>
+                                    <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td4 brozelicensecol long">Sign up coupons + 2 <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                    <td class="td6 brozelicensecol long">Sign up coupons + 5 <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(business promotion coupon) per month'"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Customised coupons</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long">1 per month</td>
+                                    <td class="td6 brozelicensecol long">2 per month</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee POS</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee pay / Billing</th>
+                                    <td class="td2 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Custom URL</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Storage (image upload)</th>
+                                    <td class="td2 light-col long">10 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.10 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.20 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td3 light-col long">40 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.40 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.100 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td5 light-col long">250 mb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.250 images - 1mb)'"></i>
+                                    </td>
+                                    <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.1000 images - 1mb)'"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee Keywords</th>
+                                    <td class="td2 light-col long">0</td>
+                                    <td class="brozelicensecol long">0</td>
+                                    <td class="td3 light-col long">2</td>
+                                    <td class="td4 brozelicensecol long">5</td>
+                                    <td class="td5 light-col long">10</td>
+                                    <td class="td6 brozelicensecol long">25</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Kiosk</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Number of users</th>
+                                    <td class="td2 light-col long">1</td>
+                                    <td class="brozelicensecol long">1</td>
+                                    <td class="td3 light-col long">1</td>
+                                    <td class="td4 brozelicensecol long">upto 5</td>
+                                    <td class="td5 light-col long">upto 20</td>
+                                    <td class="td6 brozelicensecol long">upto 100</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Guaranteed business value protection <i
+                                            class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'(pay only 99 Rs for the
                                             current
                                             billing month if all below three are true<br> 1) In last 90 days no transactions made<br> 2) In
                                             last
                                             90 days none viewed business profile details<br> 3) In last 90 days Not once found in searches)'"></i>
-                        </th>
-                        <td class="td2 light-col long">NA</td>
-                        <td class="brozelicensecol long">NA</td>
-                        <td class="td3 light-col long">Yes</td>
-                        <td class="td4 brozelicensecol long">Yes</td>
-                        <td class="td5 light-col long">Yes</td>
-                        <td class="td6 brozelicensecol long">Yes</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
-                        <td class="td2 light-col long">Option not available</td>
-                        <td class="brozelicensecol long">3 Rs</td>
-                        <td class="td3 light-col long">3 Rs</td>
-                        <td class="td4 brozelicensecol long">2 Rs</td>
-                        <td class="td5 light-col long">1.5 Rs</td>
-                        <td class="td6 brozelicensecol long">1 Rs</td>
-                    </tr>
-                    <tr>
-                        <th class="td1 headcol">Jaldee verification</th>
-                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                        <td class="td5 light-col long"><i class="fa fa-check"></i></td>
-                        <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                    </tr>
-                </table>
+                                    </th>
+                                    <td class="td2 light-col long">NA</td>
+                                    <td class="brozelicensecol long">NA</td>
+                                    <td class="td3 light-col long">Yes</td>
+                                    <td class="td4 brozelicensecol long">Yes</td>
+                                    <td class="td5 light-col long">Yes</td>
+                                    <td class="td6 brozelicensecol long">Yes</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
+                                            [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
+                                    <td class="td2 light-col long">Option not available</td>
+                                    <td class="brozelicensecol long">3 Rs</td>
+                                    <td class="td3 light-col long">3 Rs</td>
+                                    <td class="td4 brozelicensecol long">2 Rs</td>
+                                    <td class="td5 light-col long">1.5 Rs</td>
+                                    <td class="td6 brozelicensecol long">1 Rs</td>
+                                </tr>
+                                <tr>
+                                    <th class="td1 headcol">Jaldee verification</th>
+                                    <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                    <td class="td5 light-col long"><i class="fa fa-check"></i></td>
+                                    <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 
 
     <span><br>The three dots menu in the top right corner of the page has the following
         options:</span>
 </section>
 
-<section *ngIf="childContent =='license-package'">
+<section *ngIf="childContent =='upgradelicense'">
     <h6>1. License Change History</h6>
 
     <span>The license change history shows the list of the changes applied in the license package.
@@ -2370,7 +2958,7 @@
                         Check-Ins
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal">
                         <li>If the business has multiple locations, select the location and the
                             working
@@ -2465,7 +3053,7 @@
                         Actions
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
 
                     <span>The following are the main actions the provider can perform:</span>
                     <ol class="ol-normal adjust-delay-num">
@@ -2526,7 +3114,7 @@
                         Started
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <li>Under this tab, a provider can view the list of clients who have already
                         started
                         availing the service. The check-in tab will no longer contain these clients
@@ -2638,7 +3226,7 @@
                         Completed
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
                     <ul class="ul-normal">
                         <li>Once a service is done click on”Complete” button, the client’s entry
                             will
@@ -2696,7 +3284,7 @@
                         Cancelled
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
+                <div class="helpcontent">
 
                     <ul class="ul-normal">
                         <li>Here the provider can view the list of all cancelled client check-ins.
@@ -2884,9 +3472,16 @@
     <span>This section is divided into two main sections, viz. <strong>Jaldee Coupons</strong> and
         <strong>My Coupons. Coupons, either Jaldee coupons or My Coupons</strong> can only be
         applied to
-        the total bill amount.</span>
+        the total bill amount.</span><br><br>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Jaldee Coupons
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
     <ol class="ol-normal adjust-delay-num">
-        <li><strong>Jaldee Coupons : </strong>
             <ul class="ul-normal">
                 <li>The coupons provided by Jaldee are listed here. Each coupon has a code, name,
                     validity date (from and to), status. The option to enable/disable the coupon is
@@ -2952,10 +3547,20 @@
                     <li><strong>Amount Reimbursed by Jaldee.com :</strong> This shows the amount
                         given
                         to the provider by Jaldee.</li>
+                    </ol>
+                </ul>
                 </ol>
-            </ul>
-        </li>
-        <li><strong>My Coupons</strong>
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        My Coupons
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
             <span>These coupons are created by providers. To add a coupon for the first time click
                 <strong>“Add Coupon”.</strong> Here enter the name of the coupon, type of the coupon
                 (Percentage/Fixed) and provide a brief description to the discount. A coupon can
@@ -2975,9 +3580,10 @@
                 profile. Here a provider can create, delete and edit a coupon. To create more
                 coupons,
                 click on the “(+)” symbol.</span>
-        </li>
-    </ol>
-</section>
+            </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+     </section>
 
 <section *ngIf="childContent == 'tax-settings'">
     <h6 id="tax-settings">Tax Settings</h6>
