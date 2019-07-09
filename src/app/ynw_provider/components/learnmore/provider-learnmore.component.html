@@ -5,56 +5,71 @@
             <div class="row">
                 <div class="col-md-4 help" style="border-right: 1px solid lightgray">
                     <ul>
-                        <li><a (click)="menu()">Profile and Search </a>
+                        <li><a (click)="menu('profile-search')">Profile and Search </a>
                             <ul *ngIf="profilesearch && showprofile">
                                 <li (click)="handleScroll('public-search', 'profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='public-search' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='public-search' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Public Search</li>
                                 <li (click)="handleScroll('verified-levels','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='verified-levels' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='verified-levels' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Jaldee Verified Levels </li>
                                 <li (click)="handleScroll('basic-information','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='basic-information' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='basic-information' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Profile Name and Summary</li>
                                 <li (click)="handleScroll('privacy-settings','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='privacy-settings' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='privacy-settings' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Privacy Settings</li>
                                 <li (click)="handleScroll('specialization','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='specialization' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='specialization' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Specialization</li>
                                 <li (click)="handleScroll('languages-known','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='languages-known' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='languages-known' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Languages Known</li>
                                 <li (click)="handleScroll('additional-info','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='additional-info' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='additional-info' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Additional Info</li>
                                 <li (click)="handleScroll('photo-gallery','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='photo-gallery' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='photo-gallery' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Gallery</li>
                                 <li (click)="handleScroll('your-social-media','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='your-social-media' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='your-social-media' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Your Social Media</li>
                                 <li (click)="handleScroll('custom-id','profile-search')"
-                                    [ngClass]="{'helpcolor': (child =='custom-id' && parent == 'profile-search')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='custom-id' && parent == 'profile-search')}"
+                                    class="pointlist">
                                     Custom ID</li>
                             </ul>
                         </li>
-                        <li><a click="menu()">Check-In Manager</a>
+                        <li><a (click)="menu('checkinmanager')">Check-In Manager</a>
                             <ul *ngIf="checkinmanager && showcheckinmanager">
                                 <li (click)="handleScroll('settings', 'checkinmanager')"
-                                    [ngClass]="{'helpcolor': (child =='settings' && parent == 'checkinmanager')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='settings' && parent == 'checkinmanager')}"
+                                    class="pointlist">
                                     Settings</li>
                                 <li (click)="handleScroll('settings-locations','checkinmanager')"
-                                    [ngClass]="{'helpcolor': (child =='settings-locations' && parent == 'checkinmanager')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='settings-locations' && parent == 'checkinmanager')}"
+                                    class="pointlist">
                                     Locations</li>
                                 <li (click)="handleScroll('settings-services','checkinmanager')"
-                                    [ngClass]="{'helpcolor': (child =='settings-services' && parent == 'checkinmanager')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='settings-services' && parent == 'checkinmanager')}"
+                                    class="pointlist">
                                     Services </li>
                                 <li (click)="handleScroll('settings-time_windows','checkinmanager')"
-                                    [ngClass]="{'helpcolor': (child =='settings-time_windows' && parent == 'checkinmanager')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='settings-time_windows' && parent == 'checkinmanager')}"
+                                    class="pointlist">
                                     Working Hours</li>
                                 <li (click)="handleScroll('settings-departments','checkinmanager')"
-                                    [ngClass]="{'helpcolor': (child =='settings-departments' && parent == 'checkinmanager')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='settings-departments' && parent == 'checkinmanager')}"
+                                    class="pointlist">
                                     Departments</li>
                             </ul>
                         </li>
@@ -67,17 +82,20 @@
                         <li [ngClass]="{'helpcolor': (child =='kiosk' && parent == 'kiosk')}"><a
                                 (click)="handleScroll('kiosk', 'kiosk')" class="pointlist">Kiosk</a>
                         </li>
-                        <li><a click="menu()">license</a>
+                        <li><a (click)="menu('license')">license</a>
                             <ul *ngIf="license && showlicense">
                                 <li (click)="handleScroll('upgradelicense', 'license')"
-                                    [ngClass]="{'helpcolor': (child =='upgradelicense' && parent == 'license')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='upgradelicense' && parent == 'license')}"
+                                    class="pointlist">
                                     Your Current License Package</li>
                                 <li (click)="handleScroll('addon','license')"
-                                    [ngClass]="{'helpcolor': (child =='addon' && parent == 'license')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='addon' && parent == 'license')}"
+                                    class="pointlist">
                                     Addon
                                 </li>
                                 <li (click)="handleScroll('adwords','license')"
-                                    [ngClass]="{'helpcolor': (child =='adwords' && parent == 'license')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='adwords' && parent == 'license')}"
+                                    class="pointlist">
                                     Jaldee Keywords </li>
                             </ul>
                         </li>
@@ -85,7 +103,8 @@
                                 (click)="handleScroll('adjustdelay', 'adjustdelay')" class="pointlist">Adjust
                                 Delay</a></li>
                         <li [ngClass]="{'helpcolor': (child =='miscellaneous' && parent == 'miscellaneous')}"><a
-                                (click)="handleScroll('miscellaneous', 'miscellaneous')" class="pointlist">Miscellaneous</a>
+                                (click)="handleScroll('miscellaneous', 'miscellaneous')"
+                                class="pointlist">Miscellaneous</a>
                         </li>
                         <li [ngClass]="{'helpcolor': (child =='dashboard' && parent == 'dashboard')}"><a
                                 (click)="handleScroll('dashboard', 'dashboard')" class="pointlist">Dashboard</a>
@@ -94,20 +113,24 @@
                                 (click)="handleScroll('payment', 'payment')" class="pointlist">Payment
                                 Settings</a></li>
 
-                        <li><a click="menu()">Billing/POS</a>
+                        <li><a (click)="menu('billing')">Billing/POS</a>
                             <ul *ngIf="billing && showbill">
                                 <li (click)="handleScroll('items', 'billing')"
-                                    [ngClass]="{'helpcolor': (child =='items' && parent == 'billing')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='items' && parent == 'billing')}"
+                                    class="pointlist">
                                     Items
                                 </li>
                                 <li (click)="handleScroll('discount','billing')"
-                                    [ngClass]="{'helpcolor': (child =='discount' && parent == 'billing')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='discount' && parent == 'billing')}"
+                                    class="pointlist">
                                     Discount</li>
                                 <li (click)="handleScroll('coupon','billing')"
-                                    [ngClass]="{'helpcolor': (child =='coupon' && parent == 'billing')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='coupon' && parent == 'billing')}"
+                                    class="pointlist">
                                     Coupons</li>
                                 <li (click)="handleScroll('tax-settings','billing')"
-                                    [ngClass]="{'helpcolor': (child =='tax-settings' && parent == 'billing')}" class="pointlist">
+                                    [ngClass]="{'helpcolor': (child =='tax-settings' && parent == 'billing')}"
+                                    class="pointlist">
                                     Tax-Settings</li>
                             </ul>
                         </li>
