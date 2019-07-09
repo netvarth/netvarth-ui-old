@@ -55,6 +55,7 @@ import { AboutJaldeeModule } from './shared/modules/about-jaldee/about-jaldee.mo
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
 import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,6 +114,7 @@ import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
     OwlModule,
     ProviderAppModule,
     LoadingSpinnerModule,
+    LazyModule,
     ScrollToModule.forRoot()
   ],
   providers: [

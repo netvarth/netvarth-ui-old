@@ -17,7 +17,20 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-
+  images = {
+    jaldee_find: 'assets/images/home/jaldee_find.svg',
+    jaldee_find_img: 'assets/images/home/01_26.jpg',
+    jaldee_checkin: 'assets/images/home/jaldee_checkin.svg',
+    jaldee_checkin_img: 'assets/images/home/Graph-06_26.jpg',
+    jaldee_alerts: 'assets/images/home/jaldee_alerts.svg',
+    jaldee_alerts_img: 'assets/images/home/Graph-07_26.jpg',
+    jaldee_coupons: 'assets/images/home/jaldee_coupons.svg',
+    jaldee_coupons_img: 'assets/images/home/Graph-08.jpg',
+    jaldee_pay: 'assets/images/home/jaldee_pay.svg',
+    jaldee_pay_img: 'assets/images/home/Graphs-15.jpg',
+    jaldee_graph: 'assets/images/home/banner-01.svg',
+    jaldee_home: 'assets/images/home/02.png'
+  };
   public domainlist_data: any = [];
   sector_info: any = [];
   special_info: any = [];
@@ -29,50 +42,6 @@ export class HomeComponent implements OnInit {
   domain_obtained = false;
   carouselOne;
   playvideo = false;
-  mySlideImages = ['assets/images/home/haircutsvg-01.svg', 'assets/images/home/handshake2-01.svg', 'assets/images/home/home2-01.svg',
-    'assets/images/home/doc-01.svg'];
-  featureImages = [
-    {
-      'left': {
-        'image': 'assets/images/home/jaldee_find.png'
-      },
-      'right': {
-        'image': 'assets/images/home/01_26.jpg'
-      }
-    },
-    {
-      'left': {
-        'image': 'assets/images/home/jaldee_checkin.png'
-      },
-      'right': {
-        'image': 'assets/images/home/Graph-06_26.jpg'
-      }
-    },
-    {
-      'left': {
-        'image': 'assets/images/home/jaldee_alerts.png'
-      },
-      'right': {
-        'image': 'assets/images/home/Graph-07_26.jpg'
-      }
-    },
-    {
-      'left': {
-        'image': 'assets/images/home/jaldee_coupon.png'
-      },
-      'right': {
-        'image': 'assets/images/home/Graph-08.jpg'
-      }
-    },
-    {
-      'left': {
-        'image': 'assets/images/home/jaldee_pay.png'
-      },
-      'right': {
-        'image': 'assets/images/home/Graphs-15.jpg'
-      }
-    }
-  ];
   customOptions: any;
   carouselPackages: any;
 
@@ -129,116 +98,78 @@ export class HomeComponent implements OnInit {
       },
       nav: true
     };
-    this.carouselOne = { items: 1, dots: false, nav: true, autoplayTimeout: 15000, autoplayHoverPause: true, loop: true, autoplay: true, mouseDrag: true, touchDrag: true, pullDrag: true };
+    this.carouselOne = {
+      items: 1,
+      dots: false,
+      // nav: true,
+      autoplayTimeout: 15000,
+      autoplayHoverPause: true,
+      loop: true,
+      autoplay: true,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true
+    };
   }
 
   handleScroll(target) {
     this.triggerScrollTo(target);
-}
-public triggerScrollTo(destination) {
-  const config: ScrollToConfigOptions = {
-    target: destination,
-    duration: 150,
-    easing: 'easeOutElastic',
-    offset: 0
-  };
-  this._scrollToService.scrollTo(config);
-}
+  }
+  public triggerScrollTo(destination) {
+    const config: ScrollToConfigOptions = {
+      target: destination,
+      duration: 150,
+      easing: 'easeOutElastic',
+      offset: 0
+    };
+    this._scrollToService.scrollTo(config);
+  }
   setRequiredCaptions() {
     // building array to hold the details related to the specialization
     this.special_info['healthCare'] = [
-      { 'caption': 'Paediatrics <span class="itm-no">(100)</span>', 'kw': 'Paediatrics', 'kwautoname': 'Paediatrics', 'kwtyp': 'special' },
-      { 'caption': 'Ayurvedic Medicine <span class="itm-no">(250)', 'kw': 'AyurvedicMedicine', 'kwautoname': 'Ayurvedic Medicine', 'kwtyp': 'special' },
-      { 'caption': 'Dentists <span class="itm-no">(600)', 'kw': 'dentists', 'kwautoname': 'Dentists', 'kwtyp': 'subdom' }
+      { 'caption': 'Paediatrics', 'kw': 'Paediatrics', 'kwautoname': 'Paediatrics', 'kwtyp': 'special' },
+      { 'caption': 'Ayurvedic Medicine', 'kw': 'AyurvedicMedicine', 'kwautoname': 'Ayurvedic Medicine', 'kwtyp': 'special' },
+      { 'caption': 'Dentists', 'kw': 'dentists', 'kwautoname': 'Dentists', 'kwtyp': 'subdom' }
     ];
 
     this.special_info['personalCare'] = [
-      { 'caption': 'Beauty Care for Men <span class="itm-no">(150)</span>', 'kw': 'BeautyCareForMen', 'kwautoname': 'Beauty Care for Men', 'kwtyp': 'special' },
-      { 'caption': 'Beauty Care for Women <span class="itm-no">(160)</span>', 'kw': 'BeautyCareForWomen', 'kwautoname': 'Beauty Care for Women', 'kwtyp': 'special' },
-      { 'caption': 'Personal Fitness <span class="itm-no">(310)</span>', 'kw': 'HairSalonForKids', 'kwautoname': 'Personal Fitness', 'kwtyp': 'special' }
+      { 'caption': 'Beauty Care for Men', 'kw': 'BeautyCareForMen', 'kwautoname': 'Beauty Care for Men', 'kwtyp': 'special' },
+      { 'caption': 'Beauty Care for Women', 'kw': 'BeautyCareForWomen', 'kwautoname': 'Beauty Care for Women', 'kwtyp': 'special' },
+      { 'caption': 'Personal Fitness', 'kw': 'HairSalonForKids', 'kwautoname': 'Personal Fitness', 'kwtyp': 'special' }
     ];
-
-    // this.special_info['foodJoints'] = [
-    //   { 'caption': 'North Indian <span class="itm-no">(120)</span>', 'kw': 'NorthIndian', 'kwautoname': 'North Indian', 'kwtyp': 'special' },
-    //   { 'caption': 'South Indian <span class="itm-no">(110)</span>', 'kw': 'SouthIndian', 'kwautoname': 'South Indian', 'kwtyp': 'special' },
-    //   { 'caption': 'Multi Cuisine  <span class="itm-no">(300)</span>', 'kw': 'Breakfast', 'kwautoname': 'Multi Cuisine', 'kwtyp': 'special' }
-    // ];
-
     this.special_info['professionalConsulting'] = [
-      { 'caption': 'Lawyer <span class="itm-no">(210)', 'kw': 'lawyers', 'kwautoname': 'Lawyer', 'kwtyp': 'subdom' },
-      { 'caption': 'Tax Consultants <span class="itm-no">(150)</span>', 'kw': 'taxConsultants', 'kwautoname': 'Tax Consultants', 'kwtyp': 'subdom' },
-      { 'caption': 'Civil Architects <span class="itm-no">(170)</span>', 'kw': 'civilArchitects', 'kwautoname': 'Civil Architects', 'kwtyp': 'subdom' },
-      { 'caption': 'Chartered Accountants <span class="itm-no">(320)</span>', 'kw': 'charteredAccountants', 'kwautoname': 'Chartered Accountants', 'kwtyp': 'subdom' }
+      { 'caption': 'Lawyer', 'kw': 'lawyers', 'kwautoname': 'Lawyer', 'kwtyp': 'subdom' },
+      { 'caption': 'Tax Consultants', 'kw': 'taxConsultants', 'kwautoname': 'Tax Consultants', 'kwtyp': 'subdom' },
+      { 'caption': 'Civil Architects', 'kw': 'civilArchitects', 'kwautoname': 'Civil Architects', 'kwtyp': 'subdom' },
+      { 'caption': 'Chartered Accountants', 'kw': 'charteredAccountants', 'kwautoname': 'Chartered Accountants', 'kwtyp': 'subdom' }
     ];
-
-    // this.special_info['vastuAstrology'] = [
-    //   { 'caption': 'Numerology <span class="itm-no">(100)</span>', 'kw': 'Numerology', 'kwautoname': 'Numerology', 'kwtyp': 'special' },
-    //   { 'caption': 'Vastu <span class="itm-no">(100)</span>', 'kw': 'Vaastu', 'kwautoname': 'Vastu', 'kwtyp': 'special' },
-    //   { 'caption': 'Vedic Astrology <span class="itm-no">(120)</span>', 'kw': 'VedicAstrology', 'kwautoname': 'Vedic Astrology', 'kwtyp': 'special' }
-    // ];
-
-    // this.special_info['religiousPriests'] = [
-    //   { 'caption': 'Church <span class="itm-no">(100)</span>', 'kw': 'Numerology', 'kwautoname': 'Church', 'kwtyp': 'subdom' },
-    //   { 'caption': 'Temple <span class="itm-no">(100)</span>', 'kw': 'temple', 'kwautoname': 'Temple', 'kwtyp': 'subdom' },
-    //   { 'caption': 'Mosque <span class="itm-no">(120)</span>', 'kw': 'church', 'kwautoname': 'Mosque', 'kwtyp': 'subdom' }
-    // ];
-
-    // this.special_info['autoMobile'] = [
-    //   { 'caption': 'Car services and repair <span class="itm-no">(250)</span>', 'kw': 'carServicesAndRepair', 'kwautoname': 'Car services and repair', 'kwtyp': 'subdom' },
-    //   { 'caption': 'Car Wash <span class="itm-no">(200)</span>', 'kw': 'carWash', 'kwautoname': 'Car Wash', 'kwtyp': 'subdom' },
-    //   { 'caption': 'Two Wheeler Services <span class="itm-no">(340)</span>', 'kw': 'twoWheelerServicesAndRepair', 'kwautoname': 'Two Wheeler Services', 'kwtyp': 'subdom' }
-    // ];
-
     this.special_info['finance'] = [
-      { 'caption': 'Bank <span class="itm-no">(250)</span>', 'kw': 'bank', 'kwautoname': 'Bank', 'kwtyp': 'subdom' },
-      { 'caption': 'NBFC <span class="itm-no">(200)</span>', 'kw': 'nbfc', 'kwautoname': 'NBFC', 'kwtyp': 'subdom' },
-      { 'caption': 'Insurance <span class="itm-no">(340)</span>', 'kw': 'insurance', 'kwautoname': 'Insurance', 'kwtyp': 'subdom' }
+      { 'caption': 'Bank', 'kw': 'bank', 'kwautoname': 'Bank', 'kwtyp': 'subdom' },
+      { 'caption': 'NBFC', 'kw': 'nbfc', 'kwautoname': 'NBFC', 'kwtyp': 'subdom' },
+      { 'caption': 'Insurance', 'kw': 'insurance', 'kwautoname': 'Insurance', 'kwtyp': 'subdom' }
     ];
     // building array to hold the details related to the domains
     this.sector_info['healthCare'] = {
       'simg': 'assets/images/home/HealthCare.jpg',
-      'imageMap': ['assets/images/home/HealthCare.jpg 303w', 'assets/images/home/HealthCare.jpg 152w'],
       'caption1': '1000s of Doctors', 'caption2': '', 'special': this.special_info['healthCare']
     };
     this.sector_info['personalCare'] = {
       'simg': 'assets/images/home/personal-care.jpg',
-      'imageMap': ['assets/images/home/personal-care.jpg 303w', 'assets/images/home/personal-care.jpg 152w'],
       'caption1': '', 'caption2': '', 'special': this.special_info['personalCare']
     };
-    // this.sector_info['foodJoints'] = {
-    //   'simg': 'assets/images/icon-big-restaurants.svg',
-    //   'imageMap': ['assets/images/home/HealthCare.jpg 303w', 'assets/images/home/HealthCare.jpg 152w'],
-    //   'caption1': '', 'caption2': '', 'special': this.special_info['foodJoints']
-    // };
     this.sector_info['professionalConsulting'] = {
       'simg': 'assets/images/home/Proffesional.jpg',
-      'imageMap': ['assets/images/home/Proffesional.jpg 303w', 'assets/images/home/Proffesional.jpg 152w'],
       'caption1': '', 'caption2': '', 'special': this.special_info['professionalConsulting']
     };
-    // this.sector_info['vastuAstrology'] = {
-    //   'simg': 'assets/images/icon-big-vastu.svg',
-    //   'imageMap': ['assets/images/home/HealthCare.jpg 303w', 'assets/images/home/HealthCare.jpg 152w'],
-    //   'caption1': '', 'caption2': '', 'special': this.special_info['vastuAstrology']
-    // };
-    // this.sector_info['religiousPriests'] = {
-    //   'simg': 'assets/images/icon-big-religious.svg',
-    //   'imageMap': ['assets/images/home/HealthCare.jpg 303w', 'assets/images/home/HealthCare.jpg 152w'],
-    //   'caption1': '', 'caption2': '', 'special': this.special_info['religiousPriests']
-    // };
-    // this.sector_info['autoMobile'] = {
-    //   'simg': 'assets/images/icon-big-automobile.svg',
-    //   'imageMap': ['assets/images/home/HealthCare.jpg 303w', 'assets/images/home/HealthCare.jpg 152w'],
-    //   'caption1': '', 'caption2': '', 'special': this.special_info['autoMobile']
-    // };
     this.sector_info['finance'] = {
       'simg': 'assets/images/home/Graphs-055.jpg',
-      'imageMap': ['assets/images/home/Graphs-055.jpg 303w', 'assets/images/home/Graphs-055.jpg 152w'],
       'caption1': '', 'caption2': '', 'special': this.special_info['finance']
     };
   }
   playvideoClicked() {
-    this.playvideo = !this.playvideo;
+    document.getElementById('vidwrap').innerHTML = '<iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   }
+
   setSystemDate() {
     this.shared_service.getSystemDate()
       .subscribe(
@@ -359,7 +290,7 @@ public triggerScrollTo(destination) {
     alert('Clicked learn more');
   }
   providerLinkClicked() {
-    this.routerobj.navigate(['/phome']);
+    this.routerobj.navigate(['/provider-home']);
   }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';

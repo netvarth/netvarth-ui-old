@@ -227,7 +227,7 @@ export const projectConstants = {
   { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' }],
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
-  DISTANCE_STATE: 100, // in Km
+  DISTANCE_STATE: 500, // in Km
   DISTANCE_CITY: 60, // in Km
   DISTANCE_AREA: 5, // in Km
   DISTANCE_METRO: 10, // in Km

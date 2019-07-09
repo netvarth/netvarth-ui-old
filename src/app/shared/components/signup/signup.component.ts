@@ -571,7 +571,7 @@ export class SignUpComponent implements OnInit {
   }
   goBusinessClicked() {
     this.dialogRef.close();
-    this.router.navigate(['/phome']);
+    this.router.navigate(['/provider-home']);
   }
   // corporate_branch(){
   //   this.CorporateBranch = 'co_branch';

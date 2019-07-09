@@ -18,7 +18,7 @@
               <li>Online token system</li>
               <li>Online appointment system</li>
               <li>Attract more using Jaldee coupons</li>
-              <li>Reduce no show ups using Jalee pre-pay</li>
+              <li>Reduce no show ups using Jaldee pre-pay</li>
             </ul>
             <!-- <a href="about.html" class="btn button-style mt-md-5 mt-4">Read More</a> -->
           </div>
@@ -39,7 +39,8 @@
                 <a (click)="doSignup('provider')" class="button-style" name="">Sign Up</a>
               </div>
               <div class="clearfix text-center" style="padding-top:0px !important;padding-bottom: 0px !important">
-                <img src="assets/images/special offers.svg" alt="Special Offer" />
+                <img [lazySrc]="images.special_offers"
+                lazySrcVisible="visible" alt="Special Offer" />
                 <!-- <p>Will Get <b>Platinum</b> free trial for 60 Days</p> -->
               </div>
               <!-- <div class="lg-opt ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom =='phome'">
@@ -60,43 +61,52 @@
             <tr>
               <td></td>
               <td (click)="setActiveFeature('jaldee_online')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_online'}" 
-                  src="assets/images/home/jaldee_online.svg" alt="Jaldee Online" class="img-fluid Avatar jd_online_ic"></td>
+                  [ngClass]="{'active': activeFeature=='jaldee_online'}" [lazySrc]="images.jaldee_online"
+                  lazySrcVisible="visible"
+                  alt="Jaldee Online" class="img-fluid Avatar jd_online_ic"></td>
               <td></td>
             </tr>
             <tr>
               <td style="text-align: right !important" (click)="setActiveFeature('jaldee_token')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_token'}"
-                  src="assets/images/home/jaldee_token.svg" alt="Jaldee Token" class="img-fluid Avatar jd_token_ic"></td>
+                  [ngClass]="{'active': activeFeature=='jaldee_token'}" [lazySrc]="images.jaldee_token"
+                  lazySrcVisible="visible"
+                   alt="Jaldee Token" class="img-fluid Avatar jd_token_ic"></td>
               <td></td>
               <td style="text-align: left !important" (click)="setActiveFeature('jaldee_checkin')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_checkin'}"
-                  src="assets/images/home/jaldee_checkin.svg" alt="Jaldee Checkin" class="img-fluid Avatar jd_checkin_ic"></td>
+                  [ngClass]="{'active': activeFeature=='jaldee_checkin'}" [lazySrc]="images.jaldee_checkin"
+                  lazySrcVisible="visible"
+                  alt="Jaldee Checkin" class="img-fluid Avatar jd_checkin_ic"></td>
             </tr>
             <tr>
               <td style="text-align: left !important" (click)="setActiveFeature('jaldee_appointment')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_appointment'}"
-                  src="assets/images/home/jaldee_appointment.svg" alt="Jaldee Appointment" class="img-fluid Avatar jd_appt_ic"></td>
+                  [ngClass]="{'active': activeFeature=='jaldee_appointment'}" [lazySrc]="images.jaldee_appt"
+                  lazySrcVisible="visible"
+                  alt="Jaldee Appointment" class="img-fluid Avatar jd_appt_ic"></td>
               <td></td>
               <td style="text-align: right !important" (click)="setActiveFeature('jaldee_comm')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_comm'}" src="assets/images/home/jaldee_comm.svg" alt="Jaldee Comm"
+                  [ngClass]="{'active': activeFeature=='jaldee_comm'}" [lazySrc]="images.jaldee_comm"
+                  lazySrcVisible="visible" alt="Jaldee Comm"
                   class="img-fluid Avatar jd_comm_ic"></td>
             </tr>
             <tr>
               <td style="text-align: left !important" (click)="setActiveFeature('jaldee_pos')"><img
                   [ngClass]="{'active': activeFeature=='jaldee_pos'}"
-                  src="assets/images/home/jaldee_pos.svg" alt="Jaldee Pos" class="img-fluid Avatar jd_pos_ic"></td>
+                 [lazySrc]="images.jaldee_pos"
+                  lazySrcVisible="visible" alt="Jaldee Pos" class="img-fluid Avatar jd_pos_ic"></td>
               <td></td>
               <td style="text-align: center !important" (click)="setActiveFeature('jaldee_pay')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_pay'}" src="assets/images/home/jaldee_pay.svg" alt="Jaldee Pay"
+                  [ngClass]="{'active': activeFeature=='jaldee_pay'}" [lazySrc]="images.jaldee_pay"
+                  lazySrcVisible="visible" alt="Jaldee Pay"
                   class="img-fluid Avatar jd_pay_ic"></td>
             </tr>
             <tr>
               <td style="text-align: right !important" (click)="setActiveFeature('jaldee_coupon')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_coupon'}" src="assets/images/home/jaldee_coupons.svg"
+                  [ngClass]="{'active': activeFeature=='jaldee_coupon'}" [lazySrc]="images.jaldee_coupon"
+                  lazySrcVisible="visible"
                   alt="Jaldee Coupon" class="img-fluid Avatar jd_coupon_ic"></td>
                   <td style="text-align: right  !important" (click)="setActiveFeature('jaldee_kiosk')"><img [ngClass]="{'active': activeFeature=='jaldee_kiosk'}"
-                    src="assets/images/home/jaldee_kiosk.svg" alt="Jaldee Kiosk"
+                    [lazySrc]="images.jaldee_kiosk"
+                  lazySrcVisible="visible" alt="Jaldee Kiosk"
                     class="img-fluid Avatar jd_kiosk_ic">
                 </td>
               <td></td>
@@ -107,9 +117,10 @@
         <div class="col-md-6">
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_online'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_online.svg" alt="Jaldee Online" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_online"
+                lazySrcVisible="visible" alt="Jaldee Online" class="img-fluid"></div>
               <ul>
-                <li>Create your business profile</li>
+                <li>Create your business prof ile</li>
                 <li>Increase brand awareness</li>
                 <li>Create image gallery</li>
                 <li>GPS and Google map integration</li>
@@ -120,7 +131,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_token'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_token.svg" alt="Jaldee Token" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_token"
+                lazySrcVisible="visible" alt="Jaldee Token" class="img-fluid"></div>
               <ul>
                 <li>Enable online token system</li>
                 <li>Your customer can get token online</li>
@@ -132,7 +144,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_checkin'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_checkin.svg" alt="Jaldee Checkin" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_checkin"
+                lazySrcVisible="visible" alt="Jaldee Checkin" class="img-fluid"></div>
               <ul>
                 <li>Online queue management</li>
                 <li>Live queue dashboard</li>
@@ -144,7 +157,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_appointment'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_appointment.svg" alt="Jaldee Appointment" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_appt"
+                lazySrcVisible="visible"  alt="Jaldee Appointment" class="img-fluid"></div>
               <ul>
                 <li>Enable online appointment to get appointment requests</li>
                 <li>Your customers can request for appointments online</li>
@@ -156,7 +170,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_coupon'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_coupons.svg" alt="Jaldee Coupon" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_coupon"
+                lazySrcVisible="visible" alt="Jaldee Coupon" class="img-fluid"></div>
               <ul>
                 <li>Sell more services</li>
                 <li>Enable Jaldee coupons and offer attractive discounts</li>
@@ -167,7 +182,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_comm'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_comm.svg" alt="Jaldee Comm" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_comm"
+                lazySrcVisible="visible" alt="Jaldee Comm" class="img-fluid"></div>
               <ul>
                 <li>Easy and secure communication with customers</li>
                 <li>Send and receive messages from your customers</li>
@@ -177,7 +193,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_pos'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_pos.svg" alt="Jaldee Pos" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_pos"
+                lazySrcVisible="visible" alt="Jaldee Pos" class="img-fluid"></div>
               <ul>
                 <li>No need of a separate PoS system</li>
                 <li>Create bills</li>
@@ -188,7 +205,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_pay'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_pay.svg" alt="Jaldee Pay" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_pay"
+                lazySrcVisible="visible" alt="Jaldee Pay" class="img-fluid"></div>
               <ul>
                 <li>Enable jaldee online payments and receive payments online</li>
                 <li>Collect advance payments</li>
@@ -198,7 +216,8 @@
           </div>
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_kiosk'">
             <div class="features-grid-main">
-              <div><img src="assets/images/home/jaldee_kiosk.svg" alt="Jaldee Kiosk" class="img-fluid"></div>
+              <div><img [lazySrc]="images.jaldee_kiosk"
+                lazySrcVisible="visible" alt="Jaldee Kiosk" class="img-fluid"></div>
               <ul>
                 <li>Use kiosk facility and reduce the operational cost</li>
                 <li>Customer can check-in by their own</li>
@@ -233,7 +252,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/HealthCare.jpg" alt="HealthCare" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_health"
+            lazySrcVisible="visible" alt="HealthCare" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -256,7 +276,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/personal-care.jpg" alt="Personal Care" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_personal"
+            lazySrcVisible="visible" alt="Personal Care" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -279,7 +300,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/Proffesional.jpg" alt="Proffesional" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_prof"
+            lazySrcVisible="visible" alt="Proffesional" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -297,7 +319,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/foodand beverages-01.svg" alt="Food and beverages" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_food"
+            lazySrcVisible="visible"  alt="Food and beverages" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -318,7 +341,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/vasthu-01.svg" alt="Vastu" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_vastu"
+            lazySrcVisible="visible" alt="Vastu" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -336,7 +360,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/religoues presets-01.svg" alt="Religious / Priest" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_religious"
+            lazySrcVisible="visible" alt="Religious / Priest" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -354,7 +379,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/bank-01.svg" alt="Finance" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_bank"
+            lazySrcVisible="visible" alt="Finance" class="img-fluid mt-5">
           </div>
         </div>
         <div class="item row">
@@ -372,7 +398,8 @@
             </ul>
           </div>
           <div class="col-lg-5 text-right">
-            <img src="assets/images/home/pet-01.svg" alt="Veterinary" class="img-fluid mt-5">
+            <img [lazySrc]="images.jaldee_pet"
+            lazySrcVisible="visible" src="" alt="Veterinary" class="img-fluid mt-5">
           </div>
         </div>
       </owl-carousel>
@@ -476,7 +503,7 @@
               <td class="th2 long head_bg">FREE</td>
               <td class="long head_bg">Silver</td>
               <td class="th3 long head_bg">Gold</td>
-              <td class="th4 long head_bg">Platinum (Free 60 days trial)</td>
+              <td class="th4 long head_bg">Platinum <br/><span style="font-size:0.8px">(Free 60 days trial)</span></td>
               <td class="th5 long head_bg">Ruby</td>
               <td class="th6 long head_bg">Diamond</td>
             </tr>
@@ -545,13 +572,13 @@
               <th class="td1  headcol">Jaldee coupons</th>
               <td class="td2 light-col long">Only sign up coupons</td>
               <td class="brozelicensecol long">Only sign up coupons</td>
-              <td class="td3 light-col long">Sign up coupons + 1 <i class="fa fa-info-circle"
+              <td class="td3 light-col long">Sign up coupons +1 <i class="fa fa-info-circle"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-              <td class="td4 brozelicensecol long">Sign up coupons + 2 <i class="fa fa-info-circle"
+              <td class="td4 brozelicensecol long">Sign up coupons +2 <i class="fa fa-info-circle"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-              <td class="td5 light-col long">Sign up coupons + 3 <i class="fa fa-info-circle"
+              <td class="td5 light-col long">Sign up coupons +3 <i class="fa fa-info-circle"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
-              <td class="td6 brozelicensecol long">Sign up coupons + 5 <i class="fa fa-info-circle"
+              <td class="td6 brozelicensecol long">Sign up coupons +5 <i class="fa fa-info-circle"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td>
             </tr>
             <tr>
@@ -646,9 +673,9 @@
               <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'(pay only 99 Rs for the
                 current
-                billing month if all below three are true<br> 1) In last 90 days no transactions made<br> 2) In
+                billing month if all below three are true 1) In last 90 days no transactions made 2) In
                 last
-                90 days none viewed business profile details<br> 3) In last 90 days Not once found in searches)'"></i>
+                90 days none viewed business profile details 3) In last 90 days Not once found in searches)'"></i>
               </th>
               <td class="td2 light-col long">NA</td>
               <td class="brozelicensecol long">NA</td>

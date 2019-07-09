@@ -7,6 +7,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { HeaderModule } from '../../modules/header/header.module';
 import { FooterModule } from '../../modules/footer/footer.module';
 import { MaterialModule } from '../../modules/common/material.module';
+import { LazyModule } from '../../modules/lazy-load/lazy.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -15,7 +16,8 @@ import { MaterialModule } from '../../modules/common/material.module';
         FooterModule,
         PhomeRoutingModule,
         RouterModule,
-        MaterialModule
+        MaterialModule,
+        LazyModule
     ],
     declarations: [PhomeComponent]
 })

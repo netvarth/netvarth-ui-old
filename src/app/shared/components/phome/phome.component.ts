@@ -18,6 +18,28 @@ export class PhomeComponent implements OnInit {
   carouselPricing;
   activePrice = '';
   showMoreList: any = {};
+  images = {
+    special_offers: 'assets/images/special offers.svg',
+    jaldee_online: 'assets/images/home/jaldee_online.svg',
+    jaldee_token: 'assets/images/home/jaldee_token.svg',
+    jaldee_checkin: 'assets/images/home/jaldee_checkin.svg',
+    jaldee_appt: 'assets/images/home/jaldee_appointment.svg',
+    jaldee_comm: 'assets/images/home/jaldee_comm.svg',
+    jaldee_pos: 'assets/images/home/jaldee_pos.svg',
+    jaldee_pay: 'assets/images/home/jaldee_pay.svg',
+    jaldee_coupon: 'assets/images/home/jaldee_coupons.svg',
+    jaldee_pet: 'assets/images/home/pet-01.svg',
+    jaldee_bank: 'assets/images/home/bank-01.svg',
+    jaldee_religious: 'assets/images/home/religoues presets-01.svg',
+    jaldee_vastu: 'assets/images/home/vasthu-01.svg',
+    jaldee_food: 'assets/images/home/foodand beverages-01.svg',
+    jaldee_prof: 'assets/images/home/Proffesional.jpg',
+    jaldee_personal: 'assets/images/home/personal-care.jpg',
+    jaldee_health: 'assets/images/home/HealthCare.jpg',
+    jaldee_kiosk: 'assets/images/home/jaldee_kiosk.svg'
+
+  };
+
   constructor(
     private shared_service: SharedServices,
     public shared_functions: SharedFunctions,

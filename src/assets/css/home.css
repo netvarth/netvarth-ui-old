@@ -226,9 +226,9 @@ section#features {
   background-repeat: no-repeat !important;
 }
 
-.case-study-img {
+/* .case-study-img {
   min-height: 500px !important;
-}
+} */
 
 /* .carousel, .item, .active {
   height: 100% !important;
@@ -316,7 +316,14 @@ section#features {
 
 .cover-background img {
   max-width: 100% !important;
-  height: auto !important;
+  min-height: 375px !important;
+}
+
+@media (min-width : 768px) and (max-width < 860px) {
+  .cover-background img {
+    max-width: 100% !important;
+    min-height: 400px !important;
+  }
 }
 
 .cover-background img {
@@ -414,7 +421,7 @@ section#features {
 
 .buy-theme {
   position: fixed !important;
-  top: 125px !important;
+  top: 175px !important;
   border-radius: 4px !important;
   right: -225px !important;
   background: url("../images/home/buy-theme.png") no-repeat 14px center rgb(221, 221, 221) !important;
@@ -451,7 +458,7 @@ section#features {
 
 .quick-question {
   position: fixed !important;
-  top: 175px !important;
+  top: 225px !important;
   border-radius: 4px !important;
   right: -207px !important;
   background: url("../images/home/quick-question.png") no-repeat 14px center rgb(221, 221, 221) !important;
@@ -775,20 +782,20 @@ figure:hover img {
 }
 
 .srch-slider-features h1 {
-  font-weight: 500 !important;
-  font-size: 2rem !important;
-  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
   /* text-align: justify !important; */
+  font-family: 'arial' !important;
 }
 
 .srch-slider-features .jd_feat_txt {
-  padding-left: 60px !important;
-  padding-right: 50px !important;
+  /* padding-left: 60px !important;
+  padding-right: 50px !important; */
 }
 
 .srch-slider-features .jd_feat {
   vertical-align: middle !important;
-  padding-top: 50px !important
+  /* padding-top: 50px !important */
 }
 
 .graph_jlde h2 {
@@ -1203,7 +1210,7 @@ footer .bg-mid-gray {
 .logo-bullet li {
   list-style-image: url("../images/home/logo-bullet.png");
   font-size: 1.5rem !important;
-  padding: 10px 0 10px 0;
+  padding: 5px 0 5px 0;
 }
 
 .graph_jlde h2 {
@@ -1214,7 +1221,23 @@ footer .bg-mid-gray {
   transition-property: transform;
   transition-timing-function: ease-in-out;
 }
+#vidwrap {
 
+  /* Your thumbnail image */
+
+  background: url("../images/home/video-background.jpg") no-repeat center;
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow:hidden;
+  background-repeat: no-repeat;
+  width:100%;
+  height:315px;
+  cursor:pointer;
+  border: 1px solid #ddd;
+}
 /*
 .thing {
   background: url(../images/home/gym.png) no-repeat 100% 100% !important;
