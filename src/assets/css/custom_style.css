@@ -3900,3 +3900,9 @@ color: midnightblue;
   margin-right: 15px !important;
   cursor: pointer !important;
 }
+@media (max-width: 1199px) {
+  .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul li,
+  .content .c-outer .c-body .location .top-sect .tp-l .tp2 .clr .schedule ul li {
+    flex-direction: inherit !important;  
+  }
+}

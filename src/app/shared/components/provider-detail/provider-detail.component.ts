@@ -381,7 +381,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                         schedule_arr.push({
                           day: this.locationjson[i].bSchedule.timespec[j].repeatIntervals[k],
                           sTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].sTime,
-                          eTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].eTime
+                          eTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].eTime,
+                          recurrtype: this.locationjson[i].bSchedule.timespec[j].recurringType
                         });
                       }
                     }
