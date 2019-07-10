@@ -3,6 +3,7 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 import { ActivatedRoute } from '@angular/router';
 import { Location, CommonModule } from '@angular/common';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-learnmore',
@@ -29,6 +30,7 @@ export class ProviderLearnmoreComponent implements  OnInit {
   parent;
   child;
   domain;
+  go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   show ='false';
   constructor(
     private activated_route: ActivatedRoute,
