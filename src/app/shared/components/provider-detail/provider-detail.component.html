@@ -204,7 +204,9 @@
                                                     <ul>
                                                         <li *ngFor="let schedule of loc.display_schedule">
                                                             <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
-                                                                class="time">{{schedule.time}}</span>
+                                                                class="time">{{schedule.time}}
+                                                                <span class="form-level-settings" *ngIf="schedule.recurrtype === 'Once'">(only for today)</span>
+                                                                </span>
                                                         </li>
                                                     </ul>
                                                 </div>

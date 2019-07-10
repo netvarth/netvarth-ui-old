@@ -13,7 +13,7 @@ import { CommonDataStorageService } from '../services/common-datastorage.service
 
 export class SharedFunctions {
   holdbdata: any = [];
-  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov']; // ['isBusinessOwner'];
+  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType']; // ['isBusinessOwner'];
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
@@ -580,7 +580,7 @@ export class SharedFunctions {
             pday = timebase[obj][i].day;
           }
         }
-        displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj });
+        displaysch.push({ 'time': timebase[obj][0]['sTime'] + ' - ' + timebase[obj][0]['eTime'], 'dstr': curstr, 'indx': obj, 'recurrtype': timebase[obj][0]['recurrtype'] });
       }
     }
     return displaysch;

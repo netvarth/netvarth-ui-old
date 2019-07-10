@@ -397,7 +397,7 @@ export const Messages = {
   'FOODSRVC_FORMLEVEL_CAP': 'Upload  food menu in the gallery and let your customers order food in Jaldee.',
 
   // App-shared-components-return-payment
-  'PAY_DONE_SUCCESS_CAP': 'Your payment has done successfully!',
+  'PAY_DONE_SUCCESS_CAP': 'Your payment is successfully done.',
   'GO_BACK_HOME_CAP': 'Go Back to home',
   'PAY_FAILED_CAP': 'Your payment has failed!',
 

@@ -846,7 +846,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                       schedule_arr.push({
                         day: obt_sch.repeatIntervals[k],
                         sTime: obt_sch.timeSlots[0].sTime,
-                        eTime: obt_sch.timeSlots[0].eTime
+                        eTime: obt_sch.timeSlots[0].eTime,
+                        recurrtype: obt_sch.recurringType
                       });
                     }
                     this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);

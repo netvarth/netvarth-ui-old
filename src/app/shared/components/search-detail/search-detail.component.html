@@ -459,7 +459,9 @@
                                             <ul>
                                                 <li *ngFor="let schedule of search_result.fields.display_schedule">
                                                     <div class="day">{{schedule.dstr}}&nbsp;:</div>
-                                                    <div class="time">{{schedule.time}}</div>
+                                                    <div class="time">{{schedule.time}}
+                                                            <span class="form-level-settings" *ngIf="schedule.recurrtype === 'Once'">(only for today)</span>
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
