@@ -127,7 +127,26 @@ header .tc1 .isprovidertop span {
   width: 100%;
   opacity: 0.7;
 }
-
+.slide-img-new .jaldee-find{
+  margin: 25px 20px !important;
+  width: 85px !important;
+}
+.slide-img-new .jaldee-checkin{
+  margin: 25px 20px !important;
+  width: 150px !important;
+}
+.slide-img-new .jaldee-alerts{
+  margin: 25px 20px !important;
+  width: 100px !important;
+}
+.slide-img-new .jaldee-coupons{
+  margin: 25px 20px !important;
+  width: 150px !important;
+}
+.slide-img-new .jaldee-pay{
+  margin: 25px 20px !important;
+  width: 60px !important;
+}
 /* .srch .sa h1 {
   color: #fff;
 } */
@@ -1051,26 +1070,26 @@ footer .bg-mid-gray {
 
 .srch-slider-features .jd_feat img.type1 {
   pointer-events: none;
-  width: 23%;
-  max-height: 23%;
+  /* width: 23%;
+  max-height: 23%; */
 }
 
 .srch-slider-features .jd_feat img.type2 {
   pointer-events: none;
-  width: 23%;
-  max-height: 24%;
+  /* width: 23%;
+  max-height: 24%; */
 }
 
 .srch-slider-features .jd_feat img.type3 {
   pointer-events: none;
-  width: 25%;
-  max-height: 23%;
+  /* width: 25%;
+  max-height: 23%; */
 }
 
 .srch-slider-features .jd_feat img.type4 {
   pointer-events: none;
-  width: 21%;
-  max-height: 23%;
+  /* width: 21%;
+  max-height: 23%; */
 }
 
 .srch-slider-features .jd_feat {
@@ -2535,35 +2554,142 @@ div.jd-pricing {
   color: green !important
 }
 
-@media only screen and (max-width: 1200px) {
-.jd_online_ic {margin-bottom: -30px;}
-.jd_checkin_ic {margin-top: -40px;}
-.jd_token_ic {margin-top: -45px;}
-.jd_appt_ic {margin-top: 10px; margin-left: -30px;}
-.jd_comm_ic{margin-right: -30px;}
-.jd_pos_ic{margin-top: 10px;margin-left: -30px;}
-.jd_pay_ic{margin-top: -20px;margin-right: -30px;}
-.jd_kiosk_ic{margin-right: -80px; margin-top: -40px;}
-.jd_coupon_ic{margin-right: -70px;margin-top: -15px;}
+.jaldee-features-circle{
+  position: relative;
+  height: 40em;
+  width: 40em;
+  margin-bottom: 8em;
+  margin-left: -8em;
 }
-@media only screen and (min-width: 1200px) {
-  .jd_online_ic {margin-bottom: -30px;}
-  .jd_checkin_ic {margin-top: -40px;}
-  .jd_token_ic {margin-top: -45px;}
-  .jd_appt_ic {margin-top: 10px;}
-  .jd_pos_ic{margin-top: 10px;}
-  .jd_pay_ic{margin-top: 20px; margin-right:-30px}
-  .jd_kiosk_ic{margin-right: -60px; margin-top: -30px;}
-  .jd_coupon_ic{margin-right: -70px;margin-top: -15px;}
+.jaldee-features-circle .jaldee-feature.active{
+  /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+  border: solid 3px #00aef2;
+}
+.jaldee-features-circle .jaldee-feature{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: border 0.3s cubic-bezier(.25,.8,.25,1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8em;height: 8em;
+  background-color: white;
+  border: solid 1px #00aef2;
+  /* box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
+}
+.jd_online_ic {
+  transform: rotate(0deg) translate(20em) rotate(-0deg);
+}
+.jd_online_ic .jaldee-feature-img {
+  width: 70px !important;
+}
+.jd_checkin_ic {
+  transform: rotate(80deg) translate(20em) rotate(-80deg);
+}
+.jd_checkin_ic .jaldee-feature-img {
+  width: 70px !important;
+}
+.jd_token_ic {
+  transform: rotate(40deg) translate(20em) rotate(-40deg);
+}
+.jd_token_ic .jaldee-feature-img {
+  width: 65px !important;
+}
+.jd_appt_ic {
+  transform: rotate(120deg) translate(20em) rotate(-120deg);
+}
+.jd_appt_ic .jaldee-feature-img {
+  width: 80px !important;
+}
+.jd_comm_ic {
+  transform: rotate(160deg) translate(20em) rotate(-160deg);
+}
+.jd_comm_ic .jaldee-feature-img{
+  width: 55px !important;
+}
+.jd_pos_ic {
+  transform: rotate(200deg) translate(20em) rotate(-200deg);
+}
+.jd_pos_ic .jaldee-feature-img{
+  width: 45px !important;
+}
+.jd_pay_ic {
+  transform: rotate(240deg) translate(20em) rotate(-240deg);
+}
+.jd_pay_ic .jaldee-feature-img{
+  width: 40px !important;
+}
+.jd_kiosk_ic {
+  transform: rotate(320deg) translate(20em) rotate(-320deg);
+}
+.jd_kiosk_ic .jaldee-feature-img{
+  width: 60px !important;
+}
+.jd_coupon_ic {
+  transform: rotate(280deg) translate(20em) rotate(-280deg);
+}
+.jd_coupon_ic .jaldee-feature-img{
+  width: 75px !important;
+}
+@media only screen and (max-width: 600px) {
+  .jaldee-features-circle{
+    height: 28em;
+    width: 28em;
   }
-  .features-grid-main img {margin-bottom: -100px; margin-top:-50px;width: 70% !important}
-  .features-grid-main ul {text-align: left !important;}
+  .jd_online_ic {
+    transform: rotate(0deg) translate(14em) rotate(-0deg);
+  }
+  .jd_checkin_ic {
+    transform: rotate(80deg) translate(14em) rotate(-80deg);
+  }
+  .jd_token_ic {
+    transform: rotate(40deg) translate(14em) rotate(-40deg);
+  }
+  .jd_appt_ic {
+    transform: rotate(120deg) translate(14em) rotate(-120deg);
+  }
+  .jd_comm_ic {
+    transform: rotate(160deg) translate(14em) rotate(-160deg);
+  }
+  .jd_pos_ic {
+    transform: rotate(200deg) translate(14em) rotate(-200deg);
+  }
+  .jd_pay_ic {
+    transform: rotate(240deg) translate(14em) rotate(-240deg);
+  }
+  .jd_kiosk_ic {
+    transform: rotate(320deg) translate(14em) rotate(-320deg);
+  }
+  .jd_coupon_ic {
+    transform: rotate(280deg) translate(14em) rotate(-280deg);
+  }
+}
+/* .features-grid-main img {margin-bottom: -100px; margin-top:-50px;width: 70% !important} */
+.features-grid-main img{
+  width: 200px;
+}
+.features-grid-main img.jaldee-appt{
+  width: 300px;
+}
+.features-grid-main img.jaldee-token{
+  width: 170px;
+}
+.features-grid-main img.jaldee-pos{
+  width: 100px;
+}
+.features-grid-main img.jaldee-pay{
+  width: 100px;
+}
+.features-grid-main ul {text-align: left !important;}
 
-  .phome .banner-txt ul li, .features-grid-main ul li {
-    list-style-image: url(../images/home/tick.png) !important;
-    font-size: 1rem!important;
-    padding: 10px 0;
-    margin-bottom: 0px !important
-  }
-  .pricing-phome {padding-bottom: 15px !important}
-  .pricing-phome h3 {padding-top:30px !important; padding-bottom: 30px !important}
+.phome .banner-txt ul li, .features-grid-main ul li {
+  list-style-image: url(../images/home/tick.png) !important;
+  font-size: 1rem!important;
+  padding: 10px 0;
+  margin-bottom: 0px !important
+}
+.pricing-phome {padding-bottom: 15px !important}
+.pricing-phome h3 {padding-top:30px !important; padding-bottom: 30px !important}
