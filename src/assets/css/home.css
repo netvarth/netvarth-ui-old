@@ -22,7 +22,7 @@
   /* .srch .sa {
     padding-top: 40px !important;
     padding-bottom: 10px !important;
-    padding-left: 0px !important 
+    padding-left: 0px !important
   }*/
   .srch .sa .sa-fld .sa-lc, .srch .sa .sa-fld .sa-dm, .srch .sa .sa-fld .sa-src {
     height: 40px !important
@@ -334,7 +334,7 @@ section#features {
   border: 0 !important;
 }
 
-/* 
+/*
 .sidenav {
   width: 65px!important;
   position: fixed !important;
@@ -377,7 +377,7 @@ section#features {
   }
 }
 
-/* 
+/*
 .tooltip1 .tooltiptext {
   visibility: hidden !important;
   background-color: black !important;
@@ -933,7 +933,37 @@ footer ul li a {
 footer ul li a, .copyright {
   font-size: 11px !important;
 }
-
+.footer-social .custom-widget {
+  height: 100%;
+}
+.footer-social .textwidget {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.hcode-footer-middle {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+@media only screen and (max-width: 768px) {
+  .footer-social .textwidget {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+  }
+  .list-inline li {
+    display: block;
+    padding: 18px 30px !important;
+  }
+}
+@media only screen and (max-width: 480px) {
+  footer ul, .footer-link {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .footer-social i {
   font-size: 22px !important;
 }
@@ -1247,13 +1277,13 @@ footer .bg-mid-gray {
   width: 100px;
   height: 100px;
   background-size:100% 100%;
-  -webkit-animation: mymove 5s infinite; 
+  -webkit-animation: mymove 5s infinite;
   animation: mymove 10s infinite;
     transition-property: transform !important;
   background-size:contain !important;
   transition-timing-function: ease-in-out;
   position: absolute !important;
-  transform: translate3d(0px, 150px, 0px ) 
+  transform: translate3d(0px, 150px, 0px )
 }*/
 
 /* Safari 4.0 - 8.0 */
