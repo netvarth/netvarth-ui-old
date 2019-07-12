@@ -952,38 +952,38 @@ footer ul li a {
 footer ul li a, .copyright {
   font-size: 11px !important;
 }
-.footer-social .custom-widget {
+.footer-home .footer-social .custom-widget {
   height: 100%;
 }
-.footer-social .textwidget {
+.footer-home .footer-social .textwidget {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100%;
 }
-.hcode-footer-middle {
+.footer-home .hcode-footer-middle {
   padding-top: 5px;
   padding-bottom: 5px;
 }
 @media only screen and (max-width: 768px) {
-  .footer-social .textwidget {
+  .footer-home .footer-social .textwidget {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 100%;
   }
-  .list-inline li {
+  .footer-home .list-inline li {
     display: block;
     padding: 18px 30px !important;
   }
 }
 @media only screen and (max-width: 480px) {
-  footer ul, .footer-link {
+  footer .footer-home ul, .footer-home .footer-link {
     display: flex;
     flex-direction: column;
   }
 }
-.footer-social i {
+.footer-home .footer-social i {
   font-size: 22px !important;
 }
 
