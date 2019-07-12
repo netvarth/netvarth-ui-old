@@ -1,4 +1,4 @@
-import { tap } from 'rxjs/operators';
+import { tap, catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +9,10 @@ import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
 import { projectConstants } from '../constants/project-constants';
 import { SharedServices } from '../services/shared-services';
+import { Subject } from 'rxjs/Subject';
+import { throwError } from 'rxjs';
+import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -36,92 +40,103 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   loginCompleted = false;
   constructor(private slimLoadingBarService: SlimLoadingBarService,
     private router: Router, private shared_functions: SharedFunctions,
-    public shared_services: SharedServices) { }
+    public shared_services: SharedServices,  private dialog: MatDialog) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.loginAttempted || (this.loginCompleted && req.url.indexOf('/login') === -1) || (this.loginAttempted && req.url.indexOf('/login') !== -1)) {
-      let url = '';
-      if (req.url.substr(0, 4) === 'http') {
-        url = req.url;
-      } else {
-        url = base_url + req.url;
-        if (!this.checkLoaderHideUrl(url)) {
-          this.loaderDisplayed = true;
-          // this.showLoader();
-        }
-        if (!req.headers.has('Content-Type')) {
-          // req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
-        }
-        req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
-        req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-      }
-      req = req.clone({ url: url, responseType: 'json' });
-      return next.handle(req).pipe(tap((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          if (req.url.indexOf('/login') !== -1) {
-            this.loginAttempted = false;
-            this.loginCompleted = true;
-          }
-          if (this.loaderDisplayed) {
-            // this.hideLoader();
-          }
-          this.loaderDisplayed = false;
-        }
-      }, (err: any) => {
-        if (err instanceof HttpErrorResponse) {
-          // this.hideLoader();
-          if (err.status === 301) {
-            // navigator.notification.confirm('This app version is not supported any longer. Please update your app from the Play Store', this.updateDialog, 'Jaldee for Business', ['Update']);
-          }
-          if ((err.status === 401) &&
-            !this.checkUrl(url)) {
-            //  this.shared_functions.logout();
-            // redirect to the login route
-            // or show a modal
-          } else if (err.status === 0) {
-            // this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, {'panelClass': 'snackbarerror'});
-          } else if (err.status === 419) {
-            if (!this.loginAttempted) {
-              this.loginCompleted = false;
-              this.loginAttempted = true;
-              const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
-              const phone_number = ynw_user.loginId;
-              const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
-              const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
-              const post_data = {
-                'countryCode': '+91',
-                'loginId': phone_number,
-                'password': password,
-                'mUniqueId': null
-              };
-              this.shared_services.ProviderLogin(post_data).subscribe(
-                data => {
-                  return next.handle(req);
-                });
-            } else {
-              return next.handle(req);
-            }
-          } else if (err.status === 405) {
-            // this.shared_functions.logout();
-            this.router.navigate(['/maintenance']);
-          }
-        }
-      }));
-    }
-  }
-  updateDialog() {
-    window.location.href = 'market://details?id=com.jaldee.jaldeeBusiess';
-  }
-  checkLoaderHideUrl(url) {
-    let check = false;
-    this.reload_path.forEach(element => {
-      element = element.replace(/[\/]/g, '\\$&');
-      if (url.match(element)) {
-        check = true;
+
+  private _refreshSubject: Subject<any> = new Subject<any>();
+
+  private _ifSessionExpired() {
+    this._refreshSubject.subscribe({
+      complete: () => {
+        this._refreshSubject = new Subject<any>();
       }
     });
-    return check;
+    if (this._refreshSubject.observers.length === 1) {
+      // Hit refresh-token API passing the refresh token stored into the request
+      // to get new access token and refresh token pair
+      // this.sessionService.refreshToken().subscribe(this._refreshSubject);
+
+      const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+      const phone_number = ynw_user.loginId;
+      const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
+      const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
+      const post_data = {
+        'countryCode': '+91',
+        'loginId': phone_number,
+        'password': password,
+        'mUniqueId': ynw_user.mUniqueId
+      };
+      this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+    }
+    return this._refreshSubject;
   }
+
+  private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
+    return (
+      error.status &&
+      error.status === 419
+    );
+  }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let url = '';
+    if (this.checkUrl(url) || req.url.substr(0, 4) === 'http') {
+      return next.handle(req);
+    } else {
+      url = base_url + req.url;
+
+      if (!this.checkLoaderHideUrl(url)) {
+        this.loaderDisplayed = true;
+        // this.showLoader();
+      }
+      return next.handle(this.updateHeader(req, url)).pipe(
+        catchError((error, caught) => {
+          if (error instanceof HttpErrorResponse) {
+            console.log(error);
+            if (this._checkSessionExpiryErr(error)) {
+              return this._ifSessionExpired().pipe(
+                switchMap(() => {
+                  return next.handle(this.updateHeader(req, url));
+                })
+              );
+            } else if (error.status === 405 || error.status === 404) {
+              this.router.navigate(['/maintenance']);
+            } else if (error.status === 0) {
+              // retry(2);
+              this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, {'panelClass': 'snackbarerror'});
+              return next.handle(req);
+            } else if (error.status === 401) {
+              this.shared_functions.logout();
+            } else if (error.status === 301) {
+              const dialogRef = this.dialog.open(ForceDialogComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                  'message': 'This app version is not supported any longer. Please update your app from the Play Store',
+                  'heading': 'Confirm'
+                }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                }
+              });
+            } else {
+              return throwError(error);
+            }
+          }
+          return caught;
+        })
+      );
+    }
+  }
+  updateHeader(req, url) {
+    req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
+    req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
+    req = req.clone({ url: url, responseType: 'json' });
+    return req;
+  }
+
   checkUrl(url) {
     let check = false;
     this.no_redirect_path.forEach(element => {
@@ -132,13 +147,14 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     });
     return check;
   }
-  private showLoader(): void {
-    setTimeout(() => {
-      this.slimLoadingBarService.start(() => {
-      });
-    }, 10);
-  }
-  private hideLoader(): void {
-    this.slimLoadingBarService.complete();
+  checkLoaderHideUrl(url) {
+    let check = false;
+    this.reload_path.forEach(element => {
+      element = element.replace(/[\/]/g, '\\$&');
+      if (url.match(element)) {
+        check = true;
+      }
+    });
+    return check;
   }
 }
