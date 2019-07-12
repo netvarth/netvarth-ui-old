@@ -61,124 +61,70 @@
             <div
               class="jaldee-feature jd_online_ic"
               (click)="setActiveFeature('jaldee_online')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_online'}">
-              <img src="assets/images/home/jaldee_online.svg" alt="Jaldee Online" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_online"
+              lazySrcVisible="visible" alt="Jaldee Online" class="img-fluid jaldee-feature-img">
             </div>
             <div
               [ngClass]="{'active': activeFeature=='jaldee_token'}"
               (click)="setActiveFeature('jaldee_token')"
               class="jaldee-feature jd_token_ic"
-              style="">
-              <img src="assets/images/home/jaldee_token.svg" alt="Jaldee Token" class="img-fluid jaldee-feature-img">
+              >
+              <img [lazySrc]="images.jaldee_token"
+              lazySrcVisible="visible" alt="Jaldee Token" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_checkin_ic"
               (click)="setActiveFeature('jaldee_checkin')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_checkin'}">
-              <img src="assets/images/home/jaldee_checkin.svg" alt="Jaldee Checkin" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_checkin"
+              lazySrcVisible="visible" alt="Jaldee Checkin" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_appt_ic"
               (click)="setActiveFeature('jaldee_appointment')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_appointment'}">
-              <img src="assets/images/home/jaldee_appointment.svg" alt="Jaldee Appointment" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_appt"
+              lazySrcVisible="visible" alt="Jaldee Appointment" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_comm_ic"
               (click)="setActiveFeature('jaldee_comm')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_comm'}" >
-              <img src="assets/images/home/jaldee_comm.svg" alt="Jaldee Comm" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_comm"
+              lazySrcVisible="visible" alt="Jaldee Comm" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_pos_ic"
               (click)="setActiveFeature('jaldee_pos')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_pos'}">
-              <img src="assets/images/home/jaldee_pos.svg" alt="Jaldee Pos" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_pos"
+              lazySrcVisible="visible" alt="Jaldee Pos" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_pay_ic"
               (click)="setActiveFeature('jaldee_pay')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_pay'}" >
-              <img src="assets/images/home/jaldee_pay.svg" alt="Jaldee Pay" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_pay"
+              lazySrcVisible="visible" alt="Jaldee Pay" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_coupon_ic"
               (click)="setActiveFeature('jaldee_coupon')"
-              style=""
               [ngClass]="{'active': activeFeature=='jaldee_coupon'}" >
-              <img src="assets/images/home/jaldee_coupons.svg" alt="Jaldee Coupon" class="img-fluid jaldee-feature-img">
+              <img [lazySrc]="images.jaldee_coupon"
+              lazySrcVisible="visible" alt="Jaldee Coupon" class="img-fluid jaldee-feature-img">
             </div>
             <div
               class="jaldee-feature jd_kiosk_ic"
               (click)="setActiveFeature('jaldee_kiosk')"
               style=""
               [ngClass]="{'active': activeFeature=='jaldee_kiosk'}">
-              <img src="assets/images/home/jaldee_kiosk.svg"
+              <img [lazySrc]="images.jaldee_kiosk"
+              lazySrcVisible="visible"
                 alt="Jaldee Kiosk" class="img-fluid jaldee-feature-img">
             </div>
         </div>
-          <!-- <table class="feature_tbl" align="center">
-            <tr>
-              <td></td>
-              <td (click)="setActiveFeature('jaldee_online')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_online'}" [lazySrc]="images.jaldee_online"
-                  lazySrcVisible="visible"
-                  alt="Jaldee Online" class="img-fluid Avatar jd_online_ic"></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align: right !important" (click)="setActiveFeature('jaldee_token')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_token'}" [lazySrc]="images.jaldee_token"
-                  lazySrcVisible="visible"
-                   alt="Jaldee Token" class="img-fluid Avatar jd_token_ic"></td>
-              <td></td>
-              <td style="text-align: left !important" (click)="setActiveFeature('jaldee_checkin')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_checkin'}" [lazySrc]="images.jaldee_checkin"
-                  lazySrcVisible="visible"
-                  alt="Jaldee Checkin" class="img-fluid Avatar jd_checkin_ic"></td>
-            </tr>
-            <tr>
-              <td style="text-align: left !important" (click)="setActiveFeature('jaldee_appointment')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_appointment'}" [lazySrc]="images.jaldee_appt"
-                  lazySrcVisible="visible"
-                  alt="Jaldee Appointment" class="img-fluid Avatar jd_appt_ic"></td>
-              <td></td>
-              <td style="text-align: right !important" (click)="setActiveFeature('jaldee_comm')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_comm'}" [lazySrc]="images.jaldee_comm"
-                  lazySrcVisible="visible" alt="Jaldee Comm"
-                  class="img-fluid Avatar jd_comm_ic"></td>
-            </tr>
-            <tr>
-              <td style="text-align: left !important" (click)="setActiveFeature('jaldee_pos')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_pos'}"
-                 [lazySrc]="images.jaldee_pos"
-                  lazySrcVisible="visible" alt="Jaldee Pos" class="img-fluid Avatar jd_pos_ic"></td>
-              <td></td>
-              <td style="text-align: center !important" (click)="setActiveFeature('jaldee_pay')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_pay'}" [lazySrc]="images.jaldee_pay"
-                  lazySrcVisible="visible" alt="Jaldee Pay"
-                  class="img-fluid Avatar jd_pay_ic"></td>
-            </tr>
-            <tr>
-              <td style="text-align: right !important" (click)="setActiveFeature('jaldee_coupon')"><img
-                  [ngClass]="{'active': activeFeature=='jaldee_coupon'}" [lazySrc]="images.jaldee_coupon"
-                  lazySrcVisible="visible"
-                  alt="Jaldee Coupon" class="img-fluid Avatar jd_coupon_ic"></td>
-                  <td style="text-align: right  !important" (click)="setActiveFeature('jaldee_kiosk')"><img [ngClass]="{'active': activeFeature=='jaldee_kiosk'}"
-                    [lazySrc]="images.jaldee_kiosk"
-                  lazySrcVisible="visible" alt="Jaldee Kiosk"
-                    class="img-fluid Avatar jd_kiosk_ic">
-                </td>
-              <td></td>
-
-            </tr>
-          </table> -->
         </div>
         <div class="col-lg-6 col-md-12">
           <div class="item features-grid" *ngIf="activeFeature=='jaldee_online'">

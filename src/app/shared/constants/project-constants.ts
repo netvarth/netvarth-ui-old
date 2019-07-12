@@ -153,8 +153,8 @@ export const projectConstants = {
   AUTOSUGGEST_MIN_CHAR: 3,  // minimum characters required for autosuggest
   AUTOSUGGEST_LOC_MAX_CNT: 100000, // max number of locations that will be displayed in the autosuggestion
   SEARCH_DEFAULT_LOCATION: {
-    'autoname': 'Bangalore, Karnataka',
-    'name': 'Bangalore',
+    'autoname': 'Bengaluru, Karnataka',
+    'name': 'Bengaluru',
     'lat': '12.971599',
     'lon': '77.594563',
     'typ': 'state'
@@ -227,7 +227,7 @@ export const projectConstants = {
   { title: 'Too Full', value: 'tooFull', reasonkey: 'tooFullCancel' }],
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
-  DISTANCE_STATE: 500, // in Km
+  DISTANCE_STATE: 300, // in Km
   DISTANCE_CITY: 60, // in Km
   DISTANCE_AREA: 5, // in Km
   DISTANCE_METRO: 10, // in Km

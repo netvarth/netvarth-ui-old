@@ -56,6 +56,7 @@ import { MaintenanceModule } from './shared/modules/maintenance/maintenance.modu
 import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
+import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,8 @@ import { LazyModule } from './shared/modules/lazy-load/lazy.module';
     ConsumerRateServicePopupComponent,
     CouponsComponent,
     RequestForComponent,
-    BusinessPageComponent
+    BusinessPageComponent,
+    ForceDialogComponent
     // PhomeComponent,
   ],
   entryComponents: [

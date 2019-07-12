@@ -117,8 +117,8 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       this.gstnumber = this.bill_data.gstNumber;
     }
     this.bname = this.checkin.provider['businessName'];
-    if (this.bill_data.hasOwnProperty('id')) {
-      this.billnumber = this.bill_data.id;
+    if (this.bill_data.hasOwnProperty('billId')) {
+      this.billnumber = this.bill_data.billId;
     }
   }
   stringtoDate(dt, mod) {

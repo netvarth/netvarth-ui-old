@@ -290,8 +290,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
-    if (this.bill_data.hasOwnProperty('id')) {
-      this.billnumber = this.bill_data.id;
+    if (this.bill_data.hasOwnProperty('billId')) {
+      this.billnumber = this.bill_data.billId;
     }
   }
   filterGroup(val: string): ItemServiceGroup[] {

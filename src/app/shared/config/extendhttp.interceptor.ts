@@ -40,7 +40,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   loginCompleted = false;
   constructor(private slimLoadingBarService: SlimLoadingBarService,
     private router: Router, private shared_functions: SharedFunctions,
-    public shared_services: SharedServices,  private dialog: MatDialog) { }
+    public shared_services: SharedServices, private dialog: MatDialog) { }
 
 
   private _refreshSubject: Subject<any> = new Subject<any>();
@@ -66,7 +66,12 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'password': password,
         'mUniqueId': ynw_user.mUniqueId
       };
-      this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+      const activeuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+      if (activeuser.isProvider) {
+        this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+      } else {
+        this.shared_services.ConsumerLogin(post_data).subscribe(this._refreshSubject);
+      }
     }
     return this._refreshSubject;
   }
@@ -79,12 +84,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let url = '';
-    if (this.checkUrl(url) || req.url.substr(0, 4) === 'http') {
+    if (req.url.substr(0, 4) === 'http') {
       return next.handle(req);
+    }
+    const url = base_url + req.url;
+    if (this.checkUrl(url)) {
+      return next.handle(this.updateHeader(req, url));
     } else {
-      url = base_url + req.url;
-
       if (!this.checkLoaderHideUrl(url)) {
         this.loaderDisplayed = true;
         // this.showLoader();
@@ -103,10 +109,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               this.router.navigate(['/maintenance']);
             } else if (error.status === 0) {
               // retry(2);
-              this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, {'panelClass': 'snackbarerror'});
+              this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
               return next.handle(req);
             } else if (error.status === 401) {
-              this.shared_functions.logout();
+              // this.shared_functions.logout();
             } else if (error.status === 301) {
               const dialogRef = this.dialog.open(ForceDialogComponent, {
                 width: '50%',
