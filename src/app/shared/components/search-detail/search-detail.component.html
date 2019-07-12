@@ -556,7 +556,7 @@
                                             <span class="people-ahead"
                                                 *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
                                         </div>
-                                        <div *ngIf="!search_result.fields['estimatedtime_det']['personAhead']">
+                                        <div *ngIf="search_result.fields['estimatedtime_det']['personAhead'] === 0">
                                             <div class="timing" style="margin-bottom: 5px"
                                                 *ngIf="!search_result.fields['opennow']">
                                                 <span class="est-time">Next Available Time:</span>

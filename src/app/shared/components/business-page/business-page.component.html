@@ -286,7 +286,7 @@
                                                         {{one_person_ahead}}</span></div>
 
                                             </div>
-                                            <div class="timing" *ngIf="!loc['personAhead']">
+                                            <div class="timing" *ngIf="loc['personAhead'] === 0">
                                                 <span class="timing" style="margin-bottom: 5px"
                                                     *ngIf="!loc.opennow">
                                                     <span class="est-time"> Next Available Time: </span>
