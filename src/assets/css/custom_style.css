@@ -861,7 +861,7 @@
 
 /* coupon styles */
 
-/* .coupon_cancel {   
+/* .coupon_cancel {
         color: #00aef2;
         border: none;
         outline: 0;
@@ -1252,6 +1252,7 @@ sup {
 
 .checkin-consumer .mat-dialog-container {
   width: 400px;
+  margin : auto !important;
   max-width: 450px !important;
   min-height: 300px !important;
 }
@@ -3760,7 +3761,7 @@ i.notavail {color:grey !important}
 }
 .depts_details{
   overflow: hidden !important;
-} 
+}
 .content .c-outer .c-body .srlst .top-sect .tp-r .badges .pic_align  {
   margin-top: -6px !important;
 }
@@ -3770,7 +3771,7 @@ i.notavail {color:grey !important}
 .mat-autocomplete-panel .mat-option {
   height: auto !important;
   white-space: normal !important;
-} 
+}
 @media only screen and (max-width: 380px) {
   .new_locStyle {
     margin-right: 10px !important;
@@ -3828,7 +3829,7 @@ i.notavail {color:grey !important}
   font-weight: 450;
 }
 .helpcontent{
-    
+
 font-size: 0.70rem;
 line-height: 25px;
 font-weight: 450;
@@ -3837,12 +3838,12 @@ color: midnightblue;
 
       .listalign{
         display: flex;
-        width: 50px; 
-        margin-right: 10px;  
+        width: 50px;
+        margin-right: 10px;
         text-decoration: none;
       }
       .specllist li{
-       
+
         list-style-type: decimal;
       }
       .specllist ol li{
@@ -3903,6 +3904,6 @@ color: midnightblue;
 @media (max-width: 1199px) {
   .content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .schedule ul li,
   .content .c-outer .c-body .location .top-sect .tp-l .tp2 .clr .schedule ul li {
-    flex-direction: inherit !important;  
+    flex-direction: inherit !important;
   }
 }
