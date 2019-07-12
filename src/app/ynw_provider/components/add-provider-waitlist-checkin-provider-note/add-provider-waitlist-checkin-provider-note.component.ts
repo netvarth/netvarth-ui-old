@@ -66,6 +66,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
       setTimeout(() => {
         this.api_error = null;
       }, projectConstants.TIMEOUT_DELAY);
+      this.disableButton = false;
       return;
     }
 
