@@ -42,20 +42,20 @@
           matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov"
           (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <!-- <mat-autocomplete #autoprov="matAutocomplete" (optionSelected)="selectedOption(provbox.value)"> -->
-        <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest>
-          <!-- <div *ngIf="keywordgroupList"> -->
-          <div>
-            <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList" class="search-text">
-              <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
-                (click)="setKeyword(kw)">
-                <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)"> -->
-                <span
-                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
-                  class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'label'? 'Popular':''))}}</span>
-              </mat-option>
-            </mat-optgroup>
-          </div>
-        </mat-autocomplete>
+          <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest>
+            <!-- <div *ngIf="keywordgroupList"> -->
+            <div>
+              <mat-optgroup [label]="kwgroup.displayname" *ngFor="let kwgroup of keywordgroupList" class="search-text">
+                <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
+                  (click)="setKeyword(kw)">
+                  <!-- <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname" (onSelectionChange)="setKeyword(kw)"> -->
+                  <span
+                    [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
+                    class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
+                </mat-option>
+              </mat-optgroup>
+            </div>
+          </mat-autocomplete>
       </mat-form-field>
     </div>
     <div class="flex-shrink-0 plr0i">

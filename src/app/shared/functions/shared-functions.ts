@@ -347,7 +347,7 @@ export class SharedFunctions {
     return promise;
   }
 
-  get_Searchlabels(labeltype, searchlabels_arr, params?) {
+  get_Popularsarchlabels(labeltype, searchlabels_arr, params?) {
     let retdet = [];
     switch (labeltype) {
       case 'global':
@@ -370,6 +370,41 @@ export class SharedFunctions {
     const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
     this.sendMessage(pdata);
     // }
+    return retdet;
+  }
+
+  get_Searchlabels(labeltype, searchlabels_arr, params?) {
+    let retdet = [];
+    switch (labeltype) {
+      case 'global':
+        retdet = searchlabels_arr.globalSearchLabels;
+        for (const labelarr of searchlabels_arr.sectorLevelLabels) {
+          for (const subsecarr of labelarr.subSectorLevelLabels) {
+            const result = subsecarr.specializationLabels.map(function (el) {
+              const o = Object.assign({}, el);
+              o.type = 'special';
+              return o;
+            });
+            retdet.push.apply(retdet, result);
+          }
+        }
+        break;
+      case 'domain':
+        for (const labelarr of searchlabels_arr.sectorLevelLabels) {
+          if (labelarr.name === params['domain']) {
+            for (const subsecarr of labelarr.subSectorLevelLabels) {
+              retdet.push({ 'name': subsecarr.name, 'displayname': subsecarr.displayname, 'query': subsecarr.query, 'group': labelarr.name, 'type': 'subdomain' });
+              const result = subsecarr.specializationLabels.map(function (el) {
+                const o = Object.assign({}, el);
+                o.type = 'special';
+                return o;
+              });
+              retdet.push.apply(retdet, result);
+            }
+          }
+        }
+        break;
+    }
     return retdet;
   }
 

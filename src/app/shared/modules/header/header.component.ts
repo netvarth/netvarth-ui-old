@@ -172,7 +172,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         case 'popularList':
           this.jsonlist = message.target;
           if (this.jsonlist) {
-            this.popular_search(this.jsonlist.label);
+            this.popular_search(this.jsonlist);
           }
           break;
         case 'popularSearchList':

@@ -70,6 +70,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   public popular_search;
   public opennow_search;
   public searchlabel_search;
+  public show_popularsrchlabellist;
   public show_searchlabellist;
   public commonfilters;
   public insidelocloop;
@@ -91,6 +92,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   keyssearchcriteria = '';
   subdomainList: Keywordscls[] = [];
   holdisplaylist: Keywordscls[] = [];
+  holdisplaySearchlist: Keywordscls[] = [];
   specilizationList: Keywordscls[] = [];
   titleobj: Keywordscls[] = [];
   keywordgroupList: Keywordsgroupcls[] = [];
@@ -236,7 +238,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
   }
   isNameExists(name) {
-    const found = this.holdisplaylist['label'].some(function (el) {
+    const found = this.holdisplaySearchlist['label'].some(function (el) {
       return el.autoname === name;
     });
     if (!found) {
@@ -253,12 +255,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // }
     if (!this.kw_autoname || this.kw_autoname.trim() === '') {
       this.do_search(null);
-    } else if (this.holdisplaylist['label'].length !== 0) {
+    } else if (this.holdisplaySearchlist['label'].length !== 0) {
       if (!this.isNameExists(this.kw_autoname)) {
         this.kw_autoname = srchtxt;
         this.do_search();
       } else {
-        this.setKeyword(this.holdisplaylist['label'][0]);
+        this.setKeyword(this.holdisplaySearchlist['label'][0]);
       }
     } else {
       this.kw_autoname = srchtxt;
@@ -334,9 +336,36 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   filterKeywords(criteria: string = '') {
     this.keyssearchcriteria = criteria.toLowerCase();
+    this.holdisplaylist = [];
+    // Defining the types of details that will be displayed for keywords autocomplete
+    // Check whether search labels exists
+    if (this.show_popularsrchlabellist) {
+      for (const label of this.show_popularsrchlabellist) {
+        let holdkeyword;
+        if (label.displayname && label.displayname !== '') {
+          holdkeyword = label.displayname.toLowerCase();
+          // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
+          const lbl = label.query.split('&');
+          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+          this.holdisplaylist.push(labelspec);
+          // }
+        }
+      }
+    }
+    // assiging the details to the displayed in the autosuggestion for keywords box
+    if (this.selected_domain !== '') {
+      this.popularSearchList = this.holdisplaylist;
+      const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
+      this.shared_functions.sendMessage(pdata);
+      if (this.popularSearchList) {
+        this.shared_functions.setitemonLocalStorage('popularSearch', this.popularSearchList);
+      }
+    }
+
+    // Auto suggestions list in 3rd search box
     this.displaykeywordList = [];
     this.keywordgroupList = [];
-    this.holdisplaylist = [];
+    this.holdisplaySearchlist = [];
     if (criteria === '') {
       this.setNullKeyword('');
       this.searchfields.kw = '';
@@ -344,54 +373,56 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchfields.kwdomain = '';
       this.searchfields.kwsubdomain = '';
       this.searchfields.kwtyp = '';
-
     } else {
-      this.holdisplaylist['kwtitle'] = new Array();
+      this.holdisplaySearchlist['kwtitle'] = new Array();
       if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
-        this.holdisplaylist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle' });
+        this.holdisplaySearchlist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle' });
       }
     }
     // Defining the types of details that will be displayed for keywords autocomplete
     const keywordgroup_val = [];
     // Check whether search labels exists
     if (this.show_searchlabellist) {
-      this.holdisplaylist['label'] = [];
-      this.holdisplaylist['special'] = [];
+      this.holdisplaySearchlist['label'] = [];
+      this.holdisplaySearchlist['special'] = [];
       for (const label of this.show_searchlabellist) {
         let holdkeyword;
+        // const holdkeyword = label.displayname.toLowerCase();
         if (label.displayname && label.displayname !== '') {
           holdkeyword = label.displayname.toLowerCase();
-          // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
-          const lbl = label.query.split('&');
-          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
-          this.holdisplaylist['label'].push(labelspec);
-          // }
+          if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
+            const lbl = label.query.split('&');
+            if (label.type === 'special') {
+              const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
+              this.holdisplaySearchlist['special'].push(labelspec);
+            } else {
+              const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+              this.holdisplaySearchlist['label'].push(labelspec);
+            }
+          }
         }
       }
       // Check whether search labels heading is to be displayed
-      if (this.holdisplaylist['kwtitle']) {
-        if (this.holdisplaylist['kwtitle'].length > 0) {
+      if (this.holdisplaySearchlist['kwtitle']) {
+        if (this.holdisplaySearchlist['kwtitle'].length > 0) {
           const groupdomainobj = { displayname: 'Business Name/Keyword', name: 'kwtitle' };
           keywordgroup_val.push(groupdomainobj);
         }
       }
-      if (this.holdisplaylist['label'].length > 0) {
+      if (this.holdisplaySearchlist['label'].length > 0) {
         const grouplabelsobj = { displayname: 'Suggested Searches', name: 'label' };
+        keywordgroup_val.push(grouplabelsobj);
+      }
+      if (this.holdisplaySearchlist['special'].length > 0) {
+        const grouplabelsobj = { displayname: 'Specialization', name: 'special' };
         keywordgroup_val.push(grouplabelsobj);
       }
     }
     this.keywordgroupList = keywordgroup_val;
     // assiging the details to the displayed in the autosuggestion for keywords box
-    this.displaykeywordList = this.holdisplaylist;
-    if (this.selected_domain !== '') {
-      this.popularSearchList = this.holdisplaylist;
-      const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
-      this.shared_functions.sendMessage(pdata);
-      if (this.popularSearchList) {
-        this.shared_functions.setitemonLocalStorage('popularSearch', this.popularSearchList.label);
-      }
-    }
+    this.displaykeywordList = this.holdisplaySearchlist;
   }
+
   // this method decides how the items are shown in the autosuggestion list
   highlightSelText(curtext, classname, mod?) {
     let criteria = '';
@@ -826,8 +857,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   getSearchlabelsbydomain(domain) {
     if (domain == null || domain === '' || domain === 'All') {
+      this.show_popularsrchlabellist = this.shared_functions.get_Popularsarchlabels('global', this.searchdataserviceobj.getAll());
       this.show_searchlabellist = this.shared_functions.get_Searchlabels('global', this.searchdataserviceobj.getAll());
     } else {
+      this.show_popularsrchlabellist = this.shared_functions.get_Popularsarchlabels('domain', this.searchdataserviceobj.getAll(), { 'domain': domain });
       this.show_searchlabellist = this.shared_functions.get_Searchlabels('domain', this.searchdataserviceobj.getAll(), { 'domain': domain });
     }
     this.filterKeywords(domain);

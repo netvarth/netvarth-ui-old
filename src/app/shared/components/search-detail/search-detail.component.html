@@ -59,7 +59,7 @@
                             </div>
                             <!-- <div  class="bx-block" *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain != 'All'"> -->
                             <div class="bx-block"
-                                *ngIf="subdomainlist_data && !specialization_hide  && (subsector=='' || subsector == undefined)  && (subdomainlist_data.length>1)">
+                                *ngIf="subdomainlist_data && (subsector=='' || subsector == undefined)  && (subdomainlist_data.length>1)">
                                 <mat-accordion *ngIf="refined_domain || (domain !='' && domain != 'All')">
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header [collapsedHeight]="'50px'"
@@ -460,7 +460,9 @@
                                                 <li *ngFor="let schedule of search_result.fields.display_schedule">
                                                     <div class="day">{{schedule.dstr}}&nbsp;:</div>
                                                     <div class="time">{{schedule.time}}
-                                                            <span class="form-level-settings" *ngIf="schedule.recurrtype === 'Once'">(only for today)</span>
+                                                        <span class="form-level-settings"
+                                                            *ngIf="schedule.recurrtype === 'Once'">(only for
+                                                            today)</span>
                                                     </div>
                                                 </li>
                                             </ul>
