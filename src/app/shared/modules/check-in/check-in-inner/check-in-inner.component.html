@@ -189,6 +189,7 @@
                             <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showCouponWB">
                                 <app-field-error-display [displayError]="true" *ngIf="api_cp_error"
                                     errorMsg="{{api_cp_error}}"></app-field-error-display>
+                                   <p class="form-level-settings applybill"> <i class="icon-bell"></i>{{applied_inbilltime}}</p>
                                 <div class="input-group">
                                     <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
                                         placeholder="Enter coupon code" type="text" class="form-control"
@@ -203,7 +204,7 @@
                                 <div class="coupon-outer">
                                     <div class="row" *ngFor="let coupon of couponsList let i=index">
                                         <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
-                                            {{coupon.couponCode}}{{applied_inbilltime}} <div class="delteTC"><span *ngIf="coupon.instructions"
+                                            {{coupon.couponCode}} <div class="delteTC"><span *ngIf="coupon.instructions"
                                                     (click)="toggleterms(i)"
                                                     class="pointer-cursor read-more-checkin">Read
                                                     T & C </span> <i class="pointer-cursor icon-delete"
