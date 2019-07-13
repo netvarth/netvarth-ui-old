@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Roboto+Slab:400,700");
-/*test*/
 .cs-btn {
   position: relative;
   display: inline-block;
@@ -5076,8 +5075,7 @@ header {
     .commonpopupmainclass .mat-dialog-content .pickerouter,
     .googlemainmappopup .mat-dialog-content .pickerouter, .outer-card .mat-dialog-content .pickerouter, .consumerpopupmainclass .mat-dialog-content .pickerouter, .specialclass .mat-dialog-content .pickerouter {
       display: flex;
-      /*height: 26px;
-      width: 26px;*/ }
+       }
       .signupmainclass .mat-dialog-content .pickerouter input[type="text"],
       .loginmainclass .mat-dialog-content .pickerouter input[type="text"],
       .moreoptionsmainclass .mat-dialog-content .pickerouter input[type="text"],
@@ -5403,7 +5401,7 @@ header {
     .commonpopupmainclass .mat-dialog-content .group-outer .log-tbl,
     .googlemainmappopup .mat-dialog-content .group-outer .log-tbl, .outer-card .mat-dialog-content .group-outer .log-tbl, .consumerpopupmainclass .mat-dialog-content .group-outer .log-tbl, .specialclass .mat-dialog-content .group-outer .log-tbl {
       padding: 15px 0 1rem;
-      /*border-bottom: 1px dashed $cc-ash;*/ }
+     }
       .signupmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
       .loginmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
       .moreoptionsmainclass .mat-dialog-content .group-outer .log-tbl p:last-child,
@@ -5494,7 +5492,7 @@ header {
       .googlemainmappopup .mat-dialog-content .group-outer .bill-total .topay, .outer-card .mat-dialog-content .group-outer .bill-total .total, .outer-card .mat-dialog-content .group-outer .bill-total .discount, .outer-card .mat-dialog-content .group-outer .bill-total .coupon, .outer-card .mat-dialog-content .group-outer .bill-total .topay, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .total, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .discount, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .coupon, .consumerpopupmainclass .mat-dialog-content .group-outer .bill-total .topay, .specialclass .mat-dialog-content .group-outer .bill-total .total, .specialclass .mat-dialog-content .group-outer .bill-total .discount, .specialclass .mat-dialog-content .group-outer .bill-total .coupon, .specialclass .mat-dialog-content .group-outer .bill-total .topay {
         color: #666;
         font-size: .75rem;
-        /*padding: 10px;*/ }
+       }
         .signupmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .coupon .col-form-label, .signupmainclass .mat-dialog-content .group-outer .bill-total .topay .col-form-label,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .total .col-form-label,
         .loginmainclass .mat-dialog-content .group-outer .bill-total .discount .col-form-label,

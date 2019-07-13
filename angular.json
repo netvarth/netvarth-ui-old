@@ -29,8 +29,8 @@
               "node_modules/owl.carousel/dist/assets/owl.theme.default.css",
               "src/customTheme.scss",
               "src/styles.css",
-              "src/assets/css/custom_style.css",
-              "src/assets/css/home.css"
+              "src/assets/css/custom_style.min.css",
+              "src/assets/css/home.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

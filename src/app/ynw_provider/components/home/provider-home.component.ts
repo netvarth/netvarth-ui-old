@@ -302,10 +302,10 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   performActions(action) {
     if (action === 'adjustdelay') {
-        this.showAdjustDelay();
-      } else if (action === 'adjustdelay_learnmore') {
-        this.learnmore_clicked(action);
-      }
+      this.showAdjustDelay();
+    } else if (action === 'adjustdelay_learnmore') {
+      this.learnmore_clicked(action);
+    }
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -829,7 +829,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   showAdjustDelay() {
-    if (this.queues.length === 0 || !this.selected_queue.id) {
+    if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
+      this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
     }
     this.adjustdialogRef = this.dialog.open(AdjustQueueDelayComponent, {
@@ -1054,10 +1055,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const kCode = parseInt(ev.keyCode, 10);
     if (kCode === 13) { this.doSearch(); }
   }
-  learnmore_clicked(action) 
-  {
-    if (action === 'adjustdelay')
-     {
+  learnmore_clicked(action) {
+    if (action === 'adjustdelay') {
       this.router.navigate(['/provider/learnmore/dashboard']);
     } else if (action === 'adjustdelay_learnmore') {
       this.router.navigate(['/provider/learnmore/adjustdelay']);

@@ -343,7 +343,6 @@
 }
 
 .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content {
-  /* font-size: 1rem; */
   font-weight: 500;
   width: 100%;
 }
@@ -374,7 +373,6 @@
 
 .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name {
   font-weight: 600;
-  /* font-size: 1rem;  */
 }
 
 .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .name .bill-discount {
@@ -390,7 +388,6 @@
 
 .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.gross .price {
   font-weight: 600;
-  /* font-size: 1rem;  */
 }
 
 .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.discount .price, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.coupon .price {
@@ -425,7 +422,6 @@
 }
 
 .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .name, .bill-section .bill-section-content .bill-wrapper .section-three .amount-table .amt-content .amt.total .price {
-  /* font-size: 1.1rem; */
   font-weight: 700;
 }
 
@@ -792,8 +788,6 @@
   border-bottom: none !important
 }
 
-/* .bill-section-content {min-width: 375px;} */
-
 .commonpopupmainclass .bill-section-content div {
   font-size: 0.75rem!important
 }
@@ -818,7 +812,6 @@
 @media only screen and (max-width: 500px) {
   .billpopup .mat-dialog-content .bill-wrapper .section-one .details {
     flex-direction: row !important;
-    /* font-size:.65rem!important */
   }
 }
 
@@ -858,25 +851,6 @@
 .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.one .price, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .discount-row .price, .billpopup .mat-dialog-content .bill-wrapper .section-three .bill-breakup .list .list-content .c-row.two .coupon-row .price {
   text-align: right
 }
-
-/* coupon styles */
-
-/* .coupon_cancel {
-        color: #00aef2;
-        border: none;
-        outline: 0;
-        padding-left: 20px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: .75rem;
-        font-weight: 600;
-        line-height: 1.4;
-        -moz-user-select: none;
-        z-index: 2;
-        }
-      .coupon_cancel:hover {
-        cursor: pointer;
-      } */
-
 .coupon_success {
   font-size: 10px;
   color: #008000;
@@ -963,7 +937,6 @@
   width: 50px;
   color: #999999;
   font-size: .60rem;
-  /* padding-right: 5px; */
   float: right;
   text-align: right;
   text-transform: uppercase;
@@ -1451,10 +1424,6 @@ sup {
   padding: 10px 20px !important;
 }
 
-/*
-Overriding mat input style
-*/
-
 .signupmainclass .mat-dialog-container, .loginmainclass .mat-dialog-container, .loginmainclass, .ynw-common-form .mat-dialog-container {
   width: 400px !important;
 }
@@ -1513,8 +1482,6 @@ Overriding mat input style
 }
 
 .signup-form .mat-form-field-label-wrapper, .ynw-common-form .mat-form-field-label-wrapper, .login-form .mat-form-field-label-wrapper
-/* {top:-.175em !important} */
-
   {
   top: .1em !important
 }
@@ -1894,7 +1861,6 @@ Overriding mat input style
   -webkit-border-radius: 30px;
   border-radius: 30px;
   background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
   margin-bottom: 0px;
 }
 
@@ -2493,7 +2459,6 @@ body {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
   top: 50%;
   left: 4px;
   margin-top: -4px;
@@ -2558,7 +2523,6 @@ body {
   -webkit-border-radius: 30px;
   border-radius: 30px;
   background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
   height: auto;
   text-transform: none;
   padding: 3px 10px;
@@ -2691,7 +2655,6 @@ body {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
   top: 50%;
   left: 4px;
   margin-top: -4px;
@@ -2786,7 +2749,6 @@ body {
   -webkit-border-radius: 50px;
   border-radius: 50px;
   background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
   background: #fff;
   height: 24px;
   cursor: pointer;
@@ -2896,7 +2858,6 @@ body {
   -webkit-border-radius: 30px;
   border-radius: 30px;
   background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
   margin-bottom: 0px;
 }
 
@@ -3038,12 +2999,6 @@ body {
   display: flex !important;
   font-size: 13px !important;
 }
-
-/* .actvques{
-  border: .5px solid gainsboro !important;
-  border-radius: 10px !important;
-  background-color: #f2f2f2 !important;
-} */
 
 .actvques ul {
   list-style: none !important;
@@ -3388,7 +3343,6 @@ figcaption {
 
 .srch .sa .sa-ps {
   position: relative !important;
-  /* top: 50px !important; */
   width: 100% !important;
 }
 
@@ -3420,8 +3374,6 @@ figcaption {
 
 .pop-search {
   line-height: 40px !important;
-  /* height: 20px; */
-  /* overflow: hidden; */
   width: 100%;
   margin-bottom: 10px !important
 }
@@ -3432,9 +3384,6 @@ figcaption {
 }
 
 @media only screen and (max-width: 991px) {
-  /* .pop-search {
-      height: 50px;
-    } */
   .sa-ps {
     border-radius: 10px;
     background: #fff;
@@ -3614,7 +3563,6 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .paysettings .cc-det .pan-outer .form-group .mat-form-field .mat-form-field-wrapper {
-  /* padding-bottom: 0px !important; */
   width: 280px !important;
 }
 
@@ -3629,11 +3577,6 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 .paysettings .outermost .cc-det {
   padding-left: 28px !important;
 }
-
-/* .paysettings .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
-  height: 50px !important;
-} */
-
 .paysettings .mob-prefix span {
   padding: .375rem .75rem !important;
 }
