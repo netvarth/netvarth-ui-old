@@ -175,6 +175,7 @@ export class ProviderbWizardComponent implements OnInit {
   showvirtualadd = false;
   showAddbtn = false;
   origins = 'bwizard';
+  bussnesnmerror = '';
 
   constructor(
     private fb: FormBuilder,
@@ -260,6 +261,11 @@ export class ProviderbWizardComponent implements OnInit {
         this.loading_active = false;
         break;
       case 1:
+      if (!this.wizard_data_holder.name.replace(/\s/g, '').length) {
+        this.error_Exists = true;
+        this.bussnesnmerror = 'Please enter business name';
+        this.loading_active = false;
+      }else{
         const post_itemdata1 = {
           'businessName': this.wizard_data_holder.name || '',
           'businessDesc': this.wizard_data_holder.summary || ''
@@ -277,10 +283,11 @@ export class ProviderbWizardComponent implements OnInit {
               const pdata = { 'ttype': 'updateuserdetails' };
               this.shared_functions.sendMessage(pdata);
             },
-            () => {
+            (error) => {
               this.loading_active = false;
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
-          );
+          );}
         break;
       case 2:
         this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
@@ -754,6 +761,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.error_Exists = false;
     this.coord_error = '';
     this.locname_error = '';
+    this.bussnesnmerror = '';
     this.address_error = '';
     this.gurl_error = '';
   }
@@ -799,6 +807,9 @@ export class ProviderbWizardComponent implements OnInit {
         break;
       case 'coord_error':
         this.coord_error = '';
+        break;
+        case 'bussnesnmerror':
+        this.bussnesnmerror = '';
         break;
     }
   }

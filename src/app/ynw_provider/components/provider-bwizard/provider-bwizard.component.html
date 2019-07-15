@@ -42,8 +42,10 @@
                             <label>{{business_name_cap}}</label>
                             <input type="text" class="form-control" id="bnameId" maxlength="50"
                                 [(ngModel)]="wizard_data_holder['name']" name="providername"
-                                placeholder={{name_placeholder}} autocomplete="off">
+                                placeholder={{name_placeholder}} (keyup)="handlekeyup('bussnesnmerror')"autocomplete="off">
+                                <div class="sts-msg error" *ngIf="bussnesnmerror!=''">{{bussnesnmerror}}</div>
                         </div>
+                        
                         <div class="form-group">
                             <label>{{profile_summary_cap}}</label>
                             <textarea class="form-control" id="" rows="3" maxlength="1000"
@@ -51,6 +53,7 @@
                                 [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
                         </div>
                     </div>
+                    
                     <div class="footer">
                         <div class="row">
                             <div class="col-6 status">

@@ -23,7 +23,7 @@ onSubmit(deptForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
                 <div class="form-group">
                     <mat-form-field>
                         <input matInput type="text" class="form-control" id="dept_name"
-                            placeholder="Enter Department Name" formControlName="departmentName" autocomplete="off">
+                            placeholder="Enter Department Name *" formControlName="departmentName" autocomplete="off">
                     </mat-form-field>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(deptForm,'departmentName')"
                         [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentName',
@@ -35,8 +35,8 @@ onSubmit(deptForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
                 </div>
                 <div class="form-group">
                     <mat-form-field>
-                        <input matInput type="text" class="form-control" id="dept_name"
-                            placeholder="Enter Department Code" formControlName="departmentCode" autocomplete="off">
+                        <input matInput type="text" class="form-control" id="dept_code"
+                            placeholder="Enter Department Code *" formControlName="departmentCode" autocomplete="off">
                     </mat-form-field>
                     <app-field-error-display [displayError]="fed_service.isFieldValid(deptForm,'departmentCode')"
                         [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentCode',

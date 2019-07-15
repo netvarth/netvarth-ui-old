@@ -106,12 +106,12 @@ export class AdjustQueueDelayComponent implements OnInit {
   onSubmit(form_data) {
     this.resetApiErrors();
 
-    if(form_data.send_message){
-      if (!form_data.message.replace(/\s/g, '').length) {
-        this.api_error = 'Message cannot be empty';
-        return;
-      }
-    }
+    // if(form_data.send_message){
+    //   if (!form_data.message.replace(/\s/g, '').length) {
+    //     this.api_error = 'Message cannot be empty';
+    //     return;
+    //   }
+    // }
     this.disableButton = true;
     const time = this.getTimeinMin();
        // if (time !== 0) {

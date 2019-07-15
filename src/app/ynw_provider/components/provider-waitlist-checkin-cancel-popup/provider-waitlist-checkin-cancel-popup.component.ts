@@ -87,10 +87,15 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   }
 
   onSubmit(form_data) {
+    this.resetApiErrors();
     const post_data = {
       'cancelReason': form_data.reason
     };
     if (form_data.send_message) {
+      if (!form_data.message.replace(/\s/g, '').length) {
+        this.api_error = 'Message cannot be empty';
+        return;
+      }
       post_data['communicationMessage'] = form_data.message;
     }
 
