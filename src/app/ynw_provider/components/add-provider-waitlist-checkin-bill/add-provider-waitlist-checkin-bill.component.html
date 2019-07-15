@@ -185,7 +185,7 @@
 																<div class="spr col-md-5 col-sm-5 col-lg-5 no-padding">
 																	<button class="cs-btn bt1"
 																		*ngIf="jCouponsList.length >0 && showJCouponSection"
-																		[disabled]="selOrderProviderjCoupon===''"
+																		[disabled]="selOrderProviderjCoupon==='' || disableJCouponbtn"
 																		(click)="applyJCoupon(selOrderProviderjCoupon)">{{apply_cap}}</button>
 																	<button class="cs-btn bt2"
 																		(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
@@ -313,12 +313,12 @@
 																					<button
 																						*ngIf="discounts.length >0 && showDiscountSection"
 																						class="cs-btn bt1"
-																						[disabled]="selOrderDiscount===''"
+																						[disabled]="selOrderDiscount==='' || disableDiscountbtn"
 																						(click)="applyOrderDiscount()">{{apply_cap}}</button>
 																					<button
 																						*ngIf="coupons.length >0 && showPCouponSection"
 																						class="cs-btn bt1"
-																						[disabled]="selOrderProviderCoupon===''"
+																						[disabled]="selOrderProviderCoupon==='' || disableCouponbtn"
 																						(click)="applyOrderCoupon()">{{apply_cap}}</button>
 																					<button style="margin-left:5px;"
 																						class="cs-btn bt2"
@@ -473,7 +473,7 @@
 																		<div
 																			class="col-md-12 col-sm-12 col-lg-12 notes">
 																			<button class="cs-btn bt1"
-																				[disabled]="bill_data.service[i].serviceDiscount===''"
+																				[disabled]="bill_data.service[i].serviceDiscount==='' || disableButton"
 																				(click)="applyServiceDiscount(bill_data.service[i])">{{apply_cap}}</button>
 																			<button style="margin-left:5px;"
 																				class="cs-btn bt2"
@@ -574,7 +574,7 @@
 																		<div
 																			class="col-md-12 col-sm-12 col-lg-12 notes">
 																			<button class="cs-btn bt1"
-																				[disabled]="bill_data.items[i].itemDiscount===''"
+																				[disabled]="bill_data.items[i].itemDiscount==='' || disableitembtn"
 																				(click)="applyItemDiscount(bill_data.items[i])">{{apply_cap}}</button>
 																			<button style="margin-left:5px;"
 																				class="cs-btn bt2"
@@ -650,7 +650,7 @@
 																</tr>
 																<tr class="amt discount"
 																	*ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
-																	<td class="name">{{jcoupon.key}} (JC)</td>
+																	<td class="name">{{jcoupon.key}} (Jaldee Coupon)</td>
 																	<td class="price">(-){{jcoupon.value.value |
 																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeJCoupon(jcoupon.key)"

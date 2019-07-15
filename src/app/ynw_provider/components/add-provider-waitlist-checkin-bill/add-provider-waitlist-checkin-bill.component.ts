@@ -192,6 +192,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   amountpay;
   paymentOnline = false;
   couponLoaded: number;
+  disableButton = false;
+  disableDiscountbtn = false;
+  disableCouponbtn = false;
+  disableitembtn = false;
+  disableJCouponbtn = false;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -549,6 +554,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.bill_data.items[indx].showitemdisccoup = false;
       } else {
         this.bill_data.items[indx].showitemdisccoup = true;
+        this.disableitembtn = false;
       }
     }
   }
@@ -563,6 +569,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         this.bill_data.service[indx].showservicedisccoup = false;
       } else {
         this.bill_data.service[indx].showservicedisccoup = true;
+        this.disableButton = false;
       }
     }
   }
@@ -583,6 +590,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   orderDiscountSelected() {
     this.showDiscountSection = true;
+    this.disableDiscountbtn = false;
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showAddItemsec = false;
@@ -591,6 +599,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   orderPCouponSelected() {
     this.showDiscountSection = false;
     this.showPCouponSection = true;
+    this.disableCouponbtn = false;
     this.showJCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
@@ -599,6 +608,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showDiscountSection = false;
     this.showPCouponSection = false;
     this.showJCouponSection = true;
+    this.disableJCouponbtn = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
   }
@@ -662,6 +672,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         },
           error => {
             this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.disableButton = false;
+            this.disableDiscountbtn = false;
+            this.disableCouponbtn = false;
+            this.disableitembtn = false;
+            this.disableJCouponbtn = false;
             reject(error);
           });
     });
@@ -787,6 +802,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const data = {};
     data['serviceId'] = service.serviceId;
     data['discountIds'] = discountIds;
+    this.disableButton = true;
     this.applyAction(action, this.bill_data.uuid, data);
   }
   /**
@@ -828,6 +844,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const data = {};
     data['itemId'] = item.itemId;
     data['discountIds'] = discountIds;
+    this.disableitembtn = true;
     this.applyAction(action, this.bill_data.uuid, data);
   }
 
@@ -871,6 +888,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const action = 'addJaldeeCoupons';
     let jaldeeCoupon: string;
     jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';
+    this.disableJCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
   }
   /**
@@ -954,6 +972,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
     discounts.push(discount);
     data['discounts'] = discounts;
+    this.disableDiscountbtn = true;
     this.applyAction(action, this.bill_data.uuid, data);
   }
   applyOrderCoupon() {
@@ -963,6 +982,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const coupons = [];
     coupons.push(this.selOrderProviderCoupon.id);
     data['couponIds'] = coupons;
+    this.disableCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, data);
   }
   // makePayment(checkin, bill_data) {
