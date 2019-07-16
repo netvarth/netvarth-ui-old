@@ -737,7 +737,7 @@ export class CheckInInnerComponent implements OnInit {
           }
         } else {
           if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-          this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+            this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
           } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
             this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
           }
@@ -758,7 +758,7 @@ export class CheckInInnerComponent implements OnInit {
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe(() => {
         if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-        this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+          this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
         }
@@ -1115,7 +1115,7 @@ export class CheckInInnerComponent implements OnInit {
     this.api_cp_error = null;
   }
   applyCoupons(jCoupon) {
-    
+
     this.api_cp_error = null;
     this.couponvalid = true;
     const couponInfo = {
@@ -1147,11 +1147,10 @@ export class CheckInInnerComponent implements OnInit {
       } else {
         this.api_cp_error = 'Coupon invalid';
       }
-    }
-    else {
+    } else {
       this.api_cp_error = 'Coupon invalid';
     }
-  } 
+  }
 
   getProviderDepart(id) {
     this.shared_services.getProviderDept(id).
@@ -1171,7 +1170,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   handleDeptSelction(obj) {
-    this.selected_dept=obj;
+    this.selected_dept = obj;
     if (obj === 'None') {
       this.servicesjson = this.serviceslist;
     } else {

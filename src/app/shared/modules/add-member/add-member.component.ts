@@ -35,7 +35,7 @@ export class AddMemberComponent implements OnInit {
   api_success = null;
   parent_id;
   tday = new Date();
-  minday= new Date(1900, 0, 1);
+  minday = new Date(1900, 0, 1);
 
   @Input() calledFrom: any;
   @Output() returnDetails = new EventEmitter<any>();
