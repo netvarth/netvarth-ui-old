@@ -228,7 +228,7 @@ export const projectConstants = {
   DOMAINLIST_APIFETCH_HOURS: 1, // hours which decides whether domain list api should be execured or not
   REFINE_ENUMLIST_DEFAULT_SHOW_CNT: 5,
   DISTANCE_STATE: 300, // in Km
-  DISTANCE_CITY: 60, // in Km
+  DISTANCE_CITY: 40, // in Km
   DISTANCE_AREA: 5, // in Km
   DISTANCE_METRO: 10, // in Km
   DISTANCE_CAPITAL: 20, // in Km
