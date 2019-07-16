@@ -1148,7 +1148,7 @@ export class CheckInInnerComponent implements OnInit {
         this.api_cp_error = 'Coupon invalid';
       }
     } else {
-      this.api_cp_error = 'Coupon invalid';
+      this.api_cp_error = 'Enter a Coupon';
     }
   }
 
