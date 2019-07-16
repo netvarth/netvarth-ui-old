@@ -7,90 +7,48 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 @Injectable()
 export class ProviderServices {
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) { }
-
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');
   }
-
   getBussinessProfile() {
-    // return this.servicemeta.httpGet('accounts/bProfile');
     return this.servicemeta.httpGet('provider/bProfile');
   }
-
   getPublicSearch() {
-    // return this.servicemeta.httpGet('accounts/search');
     return this.servicemeta.httpGet('provider/search');
   }
-
   updatePublicSearch(value) {
-    // const path = 'accounts/search/' + value;
     const path = 'provider/search/' + value;
     return this.servicemeta.httpPut(path);
   }
-
   getVirtualFields(domain, subdomain = null) {
-    // const path = (!subdomain) ? 'accounts/conf/dataModel/' + domain :
-    // 'accounts/conf/dataModel/' + domain + '/' + subdomain;
-
     const path = (!subdomain) ? 'provider/ynwConf/dataModel/' + domain :
       'provider/ynwConf/dataModel/' + domain + '/' + subdomain;
 
     return this.servicemeta.httpGet(path);
   }
-
   getMembers(id) {
-    // return this.servicemeta.httpGet('accounts/providers/familyMember/' + id);
     return this.servicemeta.httpGet('provider/familyMember/' + id);
   }
-
-  /*deleteMember(id) {
-    const path = 'providers/familyMember/' + id;
-    return this.servicemeta.httpDelete(path);
-  }*/
-
   addMembers(data) {
-    // return this.servicemeta.httpPost('accounts/providers/familyMember', data);
     return this.servicemeta.httpPost('provider/familyMember', data);
   }
-
-  editMember(data) {
-    // return this.servicemeta.httpPut('providers/familyMember', data);
-  }
-
   getProviderItems(id?) {
     if (id) {
-      // return this.servicemeta.httpGet('accounts/item/' + id);
       return this.servicemeta.httpGet('provider/items/' + id);
     } else {
-      // return this.servicemeta.httpGet('accounts/item');
       return this.servicemeta.httpGet('provider/items');
     }
   }
-
   addItem(data) {
-    // return this.servicemeta.httpPost('accounts/item', data);
     return this.servicemeta.httpPost('provider/items', data);
-
   }
   editItem(data) {
-    // return this.servicemeta.httpPut('accounts/item', data);
     return this.servicemeta.httpPut('provider/items', data);
   }
   deleteItem(id) {
     const path = 'provider/items/' + id;
     return this.servicemeta.httpDelete(path);
   }
-  /*changeItemStatus(id, tochangestatus) {
-    if (tochangestatus == 'ACTIVE') {
-        const path = 'provider/items/enable/' + id;
-        return this.servicemeta.httpPut(path);
-    } else {
-      if (tochangestatus == 'INACTIVE') {
-        const path = 'provider/items/enable/' + id;
-        return this.servicemeta.httpPut(path);
-      }
-    }
-  }*/
   enableItem(id) {
     const path = 'provider/items/enable/' + id;
     return this.servicemeta.httpPut(path);
@@ -100,44 +58,30 @@ export class ProviderServices {
     return this.servicemeta.httpPut(path);
   }
   uploadItemImage(id, data) {
-    // const path = 'accounts/item/' + id + '/image';
     const path = 'provider/items/' + id + '/image';
     return this.servicemeta.httpPost(path, data);
   }
   removeItemImage(data) {
-    // const path = 'accounts/item/' + data.itemId + '/' + encodeURI(data.displayName);
     const path = 'provider/items/' + data.itemId + '/image';
-    // return this.servicemeta.httpPut(path);
     return this.servicemeta.httpDelete(path);
   }
-
   getLicenseDetails() {
-    // return this.servicemeta.httpGet('accounts/license');
     return this.servicemeta.httpGet('provider/license');
   }
-
   getLicenseMetadata() {
-    // return this.servicemeta.httpGet('accounts/license');
     return this.servicemeta.httpGet('provider/license/licensemetadata');
   }
-
   getTotalAllowedAdwordsCnt() {
     return this.servicemeta.httpGet('provider/license/adwords/count');
   }
-
-
   getUpgradableLicensePackages() {
-    // return this.servicemeta.httpGet('accounts/license/upgradablePackages');
     return this.servicemeta.httpGet('provider/license/upgradablePackages');
   }
-
   upgradeLicensePackage(value) {
-    // const path = 'accounts/license/' + value;
     const path = 'provider/license/' + value;
     return this.servicemeta.httpPut(path);
   }
   getAuditList() {
-    // return this.servicemeta.httpGet('accounts/license/auditlog');
     return this.servicemeta.httpGet('provider/license/auditlog');
   }
 
@@ -145,22 +89,12 @@ export class ProviderServices {
     return this.servicemeta.httpGet('provider/license/addon/auditlog');
   }
   getUpgradableAddonPackages() {
-    // return this.servicemeta.httpGet('accounts/license/upgradableAddons');
     return this.servicemeta.httpGet('provider/license/upgradableAddons');
   }
-
   addAddonPackage(value) {
-    // const path = 'accounts/license/addon/' + value;
     const path = 'provider/license/addon/' + value;
     return this.servicemeta.httpPost(path);
   }
-
-  deleteAddonPackage(value) {
-    // const path = 'accounts/license/addon/' + value;
-    // const path = 'provider/license/addon/' + value;
-    // return this.servicemeta.httpDelete(path);
-  }
-
   // Provider Discounts
   getProviderDiscounts(id?) {
     if (id) {
@@ -169,11 +103,9 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/bill/discounts');
     }
   }
-
   addDiscount(data) {
     return this.servicemeta.httpPost('provider/bill/discounts', data);
   }
-
   editDiscount(data) {
     return this.servicemeta.httpPut('provider/bill/discounts', data);
   }
@@ -442,10 +374,6 @@ export class ProviderServices {
   getProviderInbox(filter = {}) {
     return this.servicemeta.httpGet('provider/communications', null, filter);
   }
-  // postProviderInboxReply(consumerId, data) {
-  //   const url = 'provider/communications/' + consumerId;
-  //   return this.servicemeta.httpPost(url, data);
-  // }
   getWaitlistFutureCount(filter = {}) {
     const url = 'provider/waitlist/future/count/';
     return this.servicemeta.httpGet(url, null, filter);
@@ -535,10 +463,6 @@ export class ProviderServices {
     const url = 'provider/waitlist/queues/count';
     return this.servicemeta.httpGet(url);
   }
-  // getInstantCount() {
-  //   const url = 'provider/waitlist/instant';
-  //   return this.servicemeta.httpGet(url);
-  // }
   getSpokenLanguages() {
     const url = 'ynwConf/spokenLangs';
     return this.servicemeta.httpGet(url);
@@ -611,10 +535,6 @@ export class ProviderServices {
     const url = 'provider/payment/tax/';
     return this.servicemeta.httpGet(url);
   }
-  /*setTaxpercentage(tax) {
-    const url = 'provider/payment/tax/' + tax;
-    return this.servicemeta.httpPut(url);
-  }*/
   setTaxpercentage(data) {
     const url = 'provider/payment/tax';
     return this.servicemeta.httpPut(url, data);

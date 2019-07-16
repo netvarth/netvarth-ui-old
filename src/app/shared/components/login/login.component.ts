@@ -208,31 +208,8 @@ export class LoginComponent implements OnInit {
       data: { is_provider: this.is_provider }
     });
     dialogReflog.afterClosed().subscribe(() => {
-      // this.animal = result;
     });
   }
-  /*doSignup() {
-    const cClass = 'consumerpopupmainclass';
-    if (this.is_provider === 'true') {
-      // cClass = 'commonpopupmainclass';
-    }
-    if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin')) {
-      this.dialogRef.close('showsignup');
-    } else {;
-      this.api_loading = false;
-      this.dialogRef.close(); // closing the signin window
-      const dialogReflog = this.dialog.open(SignUpComponent, {
-        width: '50%',
-        panelClass: ['signupmainclass', cClass],
-        disableClose: true,
-        data: { is_provider : this.is_provider}
-      });
-
-      dialogReflog.afterClosed().subscribe(result => {
-        // this.animal = result;
-      });
-    }
-  }*/
   handlekeyup(ev) {
     if (ev.keyCode !== 13) {
       this.resetApiErrors();

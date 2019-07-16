@@ -12,10 +12,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 })
 
 export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
-
-
   @ViewChild('itemservicesearch') item_service_search;
-
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -32,7 +29,6 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
   items: any = [];
   pre_payment_log: any = [];
   close_msg = 'close';
-
   selectedItems = [];
   cart = {
     'items': [],
@@ -44,45 +40,29 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
   };
   bill_load_complete = 0;
   item_service_tax: any = 0;
-
   constructor(
     public dialogRef: MatDialogRef<ViewProviderWaitlistCheckInBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-
   ) {
     this.checkin = this.data.checkin || null;
     this.bill_data = this.data.bill_data || null;
-
     this.bill_data.amount_to_pay = this.bill_data.netRate - this.bill_data.totalAmountPaid;
-
     if (!this.checkin) {
       setTimeout(() => {
         this.dialogRef.close('error');
       }, projectConstants.TIMEOUT_DELAY);
     }
-
-
     this.bill_load_complete = 1;
     this.getPrePaymentDetails();
-
   }
-
   ngOnInit() {
-    /* this.dialogRef.backdropClick().subscribe(result => {
-       this.dialogRef.close(this.close_msg);
-     });*/
   }
-
-
-
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
-
   getWaitlistBill(checkin) {
     this.provider_services.getWaitlistBill(checkin.ynwUuid)
       .subscribe(
@@ -96,7 +76,6 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-
   getPrePaymentDetails() {
     this.provider_services.getPaymentDetail(this.checkin.ynwUuid)
       .subscribe(
@@ -108,15 +87,12 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-
   updateBill() {
     // this.dialogRef.close('updateBill');
   }
-
   makePayment() {
     this.dialogRef.close('makePayment');
   }
-
   settleBill() {
     this.provider_services.settleWaitlistBill(this.checkin.ynwUuid)
       .subscribe(
@@ -130,7 +106,6 @@ export class ViewProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-
   emailBill() {
     this.provider_services.emailWaitlistBill(this.checkin.ynwUuid)
       .subscribe(

@@ -447,6 +447,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.shared_functions.providerLogin(post_data)
           .then(
             res => {
+              this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
             },
             error => {
               this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

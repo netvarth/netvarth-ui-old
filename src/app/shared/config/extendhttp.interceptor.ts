@@ -113,6 +113,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
               return next.handle(req);
             } else if (error.status === 401) {
+              return next.handle(req);
               // this.shared_functions.logout();
             } else if (error.status === 301) {
               const dialogRef = this.dialog.open(ForceDialogComponent, {

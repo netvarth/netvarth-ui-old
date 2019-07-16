@@ -335,13 +335,4 @@ legal_cap = Messages.LEGALCAP;
         break;
     }
   }
-  /*terms() {
-    this.router.navigate(['terms']);
-    window.scroll(0, 0);
-  }
-
-  dataprivacy() {
-    this.router.navigate(['privacy']);
-    window.scroll(0, 0);
-  }*/
 }

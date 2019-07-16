@@ -338,13 +338,6 @@ export class CheckInInnerComponent implements OnInit {
     let self_obj;
     if (this.page_source === 'provider_checkin') {
       fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-      /*self_obj = {
-        'userProfile': {
-          'id': this.customer_data.id,
-          'firstName': 'Self',
-          'lastName' : ''
-        }
-      };*/
       if (this.fromKiosk) {
         self_obj = {
           'userProfile': {
@@ -364,13 +357,6 @@ export class CheckInInnerComponent implements OnInit {
       }
     } else {
       fn = this.shared_services.getConsumerFamilyMembers();
-      /*self_obj = {
-       'userProfile': {
-         'id': this.loggedinuser.id,
-         'firstName': 'Self',
-         'lastName' : ''
-       }
-      };*/
       self_obj = {
         'userProfile': {
           'id': this.loggedinuser.id,
@@ -834,11 +820,7 @@ export class CheckInInnerComponent implements OnInit {
   }
   showCheckinButtonCaption() {
     let caption = '';
-    /*if (this.step === 1) {
-      caption = 'Proceed to Check-in';
-    } else if (this.step === 2) {*/
     caption = 'Confirm';
-    // }
     return caption;
   }
 
@@ -938,14 +920,6 @@ export class CheckInInnerComponent implements OnInit {
         }
       }
     }
-
-    /*if (derror === '' && this.addmemberobj.gender === '') {
-      derror = 'Please select the gender';
-    }
-    if (derror === '' && this.addmemberobj.dob === '') {
-      derror = 'Please select the date of birth';
-    }*/
-
     if (derror === '') {
       const post_data = {
         'userProfile': {
@@ -1028,11 +1002,6 @@ export class CheckInInnerComponent implements OnInit {
     const ddd = new Date(day);
     this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
   }
-  /*convertToDate(dt) {
-    const splt = dt.split('-');
-    const ndate = new Date(splt[2] + '/' + splt[1] + '/' + splt[0]);
-    return ndate;
-  }*/
   disableMinus() {
     const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();

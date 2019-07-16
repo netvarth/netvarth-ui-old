@@ -68,8 +68,6 @@ export class EditProfileComponent implements OnInit {
     this.editProfileForm = this.fb.group({
       first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-      /*gender: ['', Validators.compose([Validators.required])],
-      dob: ['', Validators.compose([Validators.required])]*/
       gender: [''],
       dob: [''],
       email: [''],

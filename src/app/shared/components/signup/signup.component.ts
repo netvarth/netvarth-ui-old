@@ -278,9 +278,6 @@ export class SignUpComponent implements OnInit {
     }
   }
   setDomain(i) {
-    /*if (this.signupForm.get('selectedDomainIndex').value !== i) {
-         this.signupForm.get('selectedDomainIndex').setValue(i);
-     }*/
     this.domainIsthere = this.business_domains[i] || null;
     this.selectedDomain = this.business_domains[i] || null;
     this.setSubDomains(i);

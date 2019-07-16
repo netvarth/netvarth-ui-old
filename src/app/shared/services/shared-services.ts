@@ -82,22 +82,6 @@ export class SharedServices {
   getBusinessUniqueId(customId) {
     return this.servicemeta.httpGet('provider/business/' + customId);
   }
-
-  /* NEW_GetProviders(url, params) {
-    url = url + '/suggester';
-    const pass_params = {
-      'start': 0,
-      'return': 'title',
-      'fq': '',
-      'q': "'" + params.q + "'",
-      'size': 10 ,
-      'q.parser': 'structured', // 'q.parser'
-      'q.options': '', // 'q.options'
-      'sort': 'title asc'
-    };
-   return this.servicemeta.httpGet(url, '', pass_params);
-  }*/
-
   GetProviders(url, params) {
     url = url + '/suggest';
     return this.servicemeta.httpGet(url, '', params);

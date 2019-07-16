@@ -8,8 +8,6 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-consumerwaitlist-history',
   templateUrl: './consumer-waitlist-history.component.html'
-  /*,
-  styleUrls: ['./provider-inbox.component.scss']*/
 })
 export class ConsumerWaitlistHistoryComponent implements OnInit {
 
