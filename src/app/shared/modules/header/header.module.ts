@@ -11,7 +11,6 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { HeaderComponent } from './header.component';
 import { SearchPopularMoreoptionsModule } from '../search-popular-moreoptions/search-popular-moreoptions.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
-import { LearnmoreModule } from '../learnmore/learnmore.module';
 
 @NgModule({
     imports: [
@@ -20,7 +19,6 @@ import { LearnmoreModule } from '../learnmore/learnmore.module';
         RouterModule,
         MaterialModule,
         SearchModule,
-        LearnmoreModule,
         SearchPopularMoreoptionsModule,
         LoadingSpinnerModule
         // MatMenuModule,

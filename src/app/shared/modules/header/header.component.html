@@ -4,7 +4,7 @@
 <div class="overlay" [class.show]="showLearnMore" [class.learnmore]="showLearnMore" (click)="hideLearnmore()"></div>
 <div class="lm-popup" *ngIf="showLearnMore">
     <span (click)="hideLearnmore()" class="close"></span>
-    <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore>
+    <!-- <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore> -->
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container no-padding">

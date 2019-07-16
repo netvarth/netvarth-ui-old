@@ -36,6 +36,7 @@ import { AddMembersHolderComponent } from './components/add-members-holder/add-m
 // import { AddMemberComponent } from './components/add-member/add-member.component';
 import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-manage-privacy.component';
 
+
 import { projectConstants } from '../shared/constants/project-constants';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
 
@@ -65,7 +66,7 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
       NotificationListBoxComponent,
       MembersComponent,
       AddMembersHolderComponent,
-      AddManagePrivacyComponent
+      AddManagePrivacyComponent,
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [

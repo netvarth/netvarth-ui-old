@@ -271,7 +271,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   help() {
-    this.router.navigate(['learn_more']);
+    this.router.navigate(['/consumer/learn_more']);
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
