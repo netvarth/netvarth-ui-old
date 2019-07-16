@@ -13,19 +13,19 @@
                 <div class="card">
                         <div class="modal-body col-md-12 no-padding">
                             <div class="row">
-                                <div class="col-md-4 help" style="border-right: 1px solid lightgray">
+                                <div class="col-md-3 help" style="border-right: 1px solid lightgray">
                                     <ul>
-                                        <li class="pointlist"><a (click)="menuclicked('searchh')">Search </a></li>
-                                        <li class="pointlist"><a (click)="menuclicked('refine')">Refine Search </a></li>
-                                        <li class="pointlist"><a (click)="menuclicked('claim')">Claimb My Business </a></li>
-                                        <li class="pointlist"><a (click)="menuclicked('checkin')">Consumer Checkin </a></li>
-                                        <li class="pointlist"><a (click)="menuclicked('profile')">Consumer Profile </a></li>
-                                        <li class="pointlist"><a (click)="menuclicked('dashboard')">Consumer Dashboard </a></li>
-                                        <li class="pointlist"><a (click)="menuclicked('verified')">Jaldee Verified Levels</a></li>
+                                        <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'searchh')}"><a (click)="menuclicked('searchh')">Search </a></li>
+                                        <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'refine')}"><a (click)="menuclicked('refine')">Refine Search </a></li>
+                                        <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'claim')}"><a (click)="menuclicked('claim')">Claim My Business </a></li>
+                                        <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'checkin')}"><a (click)="menuclicked('checkin')">Consumer Checkin </a></li>
+                                        <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'profile')}"><a (click)="menuclicked('profile')">Consumer Profile </a></li>
+                                        <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'dashboard')}"><a (click)="menuclicked('dashboard')">Consumer Dashboard </a></li>
+                                        <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'verified')}"><a (click)="menuclicked('verified')">Jaldee Verified Levels</a></li>
                                         </ul>
                                         </div>
                           
-                            <div class="col-md-8 helpcontent">
+                            <div class="col-md-9 helpcontent">
         
     <section class="helpcontent" *ngIf="activeMenu == 'searchh'">
         <h6>Search</h6>
@@ -33,125 +33,143 @@
     <li>The search bar is the start of a journey through Jaldee.com. Here the search functionality activates the exploration of services mainly by location, domains, subdomains, Keywords, or business name/specialization.</li>
     <li>To find a particular business, select its location in the first search bar. Next to the location search field comes the domain and subsequently the subdomains or business name/specialization field. Jaldee.com offers services for the below-mentioned domains and subdomains.</li>
     </ul>
-    <br>
-    <div class="tscroll">
-    <table class="table social-tbl tablewidth">
-    <tbody>
-    <tr>
-    <td class="td1"><strong><h6>Domain</h6></strong></td>
-    <td class="td2 tdpaddng"><strong><h6>SUB domain</h6></strong></td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Health Care</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Doctor</li>
-    <li class="fsize">Dentist</li>
-    <li class="fsize">Alternative Medicine Practitioner</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Personal Care</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Beauty Care/Spa/Hair Salon</li>
-    <li class="fsize">Fitness Trainer/Gym</li>
-    <li class="fsize">Massage Centre</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Professional Consulting</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Lawyer</li>
-    <li class="fsize">Chartered Accountant</li>
-    <li class="fsize">Tax Consultant</li>
-    <li class="fsize">Civil Architect</li>
-    <li class="fsize">Financial Advisor</li>
-    <li class="fsize">Stockbroker</li>
-    <li class="fsize">Auditor</li>
-    <li class="fsize">Geologist</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Finance/Loan/Insurance</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Bank</li>
-    <li class="fsize">NBFC</li>
-    <li class="fsize">Insurance</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Food and Beverages</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Restaurant</li>
-    <li class="fsize">Caterer</li>
-    <li class="fsize">Home Baker</li>
-    <li class="fsize">Bakery</li>
-    <li class="fsize">Juice Parlour</li>
-    <li class="fsize">Ice Cream Parlour</li>
-    <li class="fsize">Home Food</li>
-    <li class="fsize">Coffee Shop</li>
-    <li class="fsize">Sweet Shop</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Vastu/Astrologer</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Vastu</li>
-    <li class="fsize">Astrologer</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Religious/Priests</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Temple</li>
-    <li class="fsize">Poojari</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    <tr>
-    <td class="td2">Veterinary/Pet Care</td>
-    <td class="td2 tdpaddng">
-    <ul class="ul-normal">
-    <li class="fsize">Veterinary Doctor</li>
-    <li class="fsize">Pet Care</li>
-    </ul>
-    </td>
-    <!-- <td class="td3">Passive</td> -->
-    </tr>
-    </tbody>
-    </table>
-    </div>
+    <mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Health Care</mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                <ol class="ol-normal">
+                <li>Doctor</li>
+                <li>Dentist</li>
+                <li>Alternative Medicine Practitioner</li>
+                </ol>
+                </div>
+        </mat-expansion-panel>
+     </mat-accordion>
+
+     <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Personal Care</mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                            <ol class="ol-normal">
+                            <li>Beauty Care/Spa/Hair Salon</li>
+                            <li>Fitness Trainer/Gym</li>
+                            <li>Massage Centre</li>
+                            </ol>
+                            </div>
+                    </mat-expansion-panel>
+                 </mat-accordion>
+
+     <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Professional Consulting</mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="helpcontent">
+                            <ol class="ol-normal">
+                            <li>Lawyer</li>
+                            <li>Chartered Accountant</li>
+                            <li>Tax Consultant</li>
+                            <li>Civil Architect</li>
+                            <li>Financial Advisor</li>
+                            <li>Stockbroker</li>
+                            <li>Auditor</li>
+                            <li>Geologist</li>
+                            </ol>
+                            </div>
+                    </mat-expansion-panel>
+                 </mat-accordion>
+
+        <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+        <mat-panel-title>Finance/Loan/Insurance</mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                <ol class="ol-normal">
+                <li>Bank</li>
+                <li>NBFC</li>
+                <li>Insurance</li>
+                </ol>
+                </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                <mat-panel-title>Food and Beverages</mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="helpcontent">
+                <ol class="ol-normal">
+                <li>Restaurant</li>
+                <li>Caterer</li>
+                <li>Home Baker</li>
+                <li>Bakery</li>
+                <li>Juice Parlour</li>
+                 <li>Ice Cream Parlour</li>
+                 <li>Home Food</li>
+                <li>Coffee Shop</li>
+                <li>Sweet Shop</li>
+                </ol>
+                </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+                                              
    
+        <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+        <mat-panel-title>Vastu/Astrologer</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
+        <ol class="ol-normal">
+        <li>Vastu</li>
+        <li>Astrologer</li>
+        </ol>
+        </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+                                                              
+        <mat-accordion>
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+        <mat-panel-title>Religious/Priests</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
+        <ol class="ol-normal">
+        <li>Temple</li>
+        <li>Poojari</li>
+        </ol>
+        </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+         <mat-expansion-panel [expanded]="false">
+         <mat-expansion-panel-header>
+        <mat-panel-title>Veterinary/Pet Care</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="helpcontent">
+        <ol class="ol-normal">
+        <li>Veterinary Doctor</li>
+        <li>Pet Care</li>
+        </ol>
+        </div>
+        </mat-expansion-panel>
+        </mat-accordion>
+   <br>
     <span>Next to the search bar is the “More Options Icon” where a consumer can narrow down the search results using the following filters:</span> 
     <ol class="ol-normal">
-   
     <li><strong>Language Spoken :</strong> A consumer can filter the search using languages in which he/she would like to communicate with the service provider.</li>
     <li><strong>Parking Type :</strong> The search can also be filtered according to the available parking types near the business premises.</li>
     <li><strong>Jaldee Verified Level :</strong> The consumer can search for a service provider on his/her Jaldee verified level as well.</li>
     <li><strong>Rating :</strong> The consumer can filter the search as per the ratings that were given to the provider by other consumers.</li>
     <li><strong>Other Filters :</strong> The consumer can also search for providers on the basis of “open 24 hours” & “Jaldee Coupons”.</li>
     </ol>
-    <br>
     <span>A consumer can filter and customize the search activity to find exactly what is required. To filter the search results accordingly, Jaldee.com presents “Refine Search” to its consumers.</span>
     </section>
    
@@ -166,7 +184,6 @@
     
     </ul>
     </section>
-    <br>
     <section class="helpcontent"  *ngIf="activeMenu == 'claim'">
             <h6>Claim My Business</h6>
     <ul class="ul-normal abc">
@@ -217,7 +234,6 @@
     <li>Future check-in can also be done in the same way. The only difference here is that the consumer is required to select the date of the check-in here.</li>
     </ol>
     </li>
-    <br>
     <span>In the detailed view of the provider, a consumer has the following options:</span>
     <ol class="ol-normal">
     <li><strong>Jaldee Coupons :</strong> Here you can see the available coupons, and choose the appropriate coupons and apply in the check-in window to avail offers.</li>
@@ -227,35 +243,90 @@
     <li><strong>Enquiry :</strong> Here one can send enquiries to this particular provider.</li>
     </ol>
     </section>
-   <br>
     <section class="helpcontent" *ngIf="activeMenu == 'profile'">
             <h6>Consumer Profile</h6>
     <span>Consumer profile is a collection of settings and information associated with a consumer. Jaldee system creates a consumer profile the first time one registers with Jaldee.com. This profile includes information for attributes such as names of the consumer, mobile number, email address, etc. Jaldee consumer profile has the following options:</span>
-    <ul class="ul-normal abc">
-    <li><strong>Dashboard :</strong> This will redirect to the consumer’s dashboard from this page.</li>
-    <li><strong>My Account :</strong> This contains the personal information of a consumer. The option to edit this information is available. A consumer can enter the email ID under My Accounts to receive notifications from Jaldee regarding coupons & discounts.</li>
-    <li><strong>Change Password :</strong> Here a consumer can change the password. A password must adhere to the following guidelines:
-    <ol class="ol-normal">
-    <li>Minimum 8 characters</li>
-    <li>Maximum 32 characters</li>
-    <li>Must include at least one uppercase and one digit.</li>
-    </ol>
-    
-    </li>
-    <li><strong>Change Mobile :</strong> Enter a new mobile number here. When a consumer submits a new number, an SMS with an OTP is sent to the newly registered mobile number. The consumer is required to enter this OTP on the Jaldee portal to verify the mobile number.</li>
-    <li><strong>Family Members :</strong> Here a consumer can manage the family members. One can add, edit or delete the members. The family members can also be added from the check-in window with the member’s first/last name. In such cases, consumers can view the entries here and edit each entry with additional details like mobile number, gender, and date of birth.</li>
-    <li><strong>Switch to Provider :</strong> If a provider account already exists then one can switch to the provider account from here.</li>
-    <li><strong>Logout :</strong> This will enable one to log out from the account.</li>
     <br>
-    <span>*NOTE: If a consumer wants to set up a provider account, he/she can click on <strong>“Create a Provider Account”</strong>.</span>
-    <ol class="ol-normal">
-    <li>Choose the domain and sub domain of the business and accept the Terms & Conditions.</li>
-    <li>Click on Send OTP to receive OTP on the registered mobile number.</li>
-    <li>Enter the OTP to create a provider account.</li>
-    <li>In the next step, create a password for the provider profile.</li>
-    <li>Complete the initial Provider profile setup by entering the brief details of the business such as its Name, Profile Summary, Service, Location, Working Hours, Specialization and Public Search. The provider profile password will be the same as that of the consumer profile.</li>
-    </ol>
-    </ul>
+    <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>Dashboard</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+              <span>This will redirect to the consumer’s dashboard from this page.</span>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
+
+   <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>My Account</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+              <span>This contains the personal information of a consumer. The option to edit this information is available. A consumer can enter the email ID under My Accounts to receive notifications from Jaldee regarding coupons & discounts.</span>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
+
+   <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>Change Password</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+                        <ol class="ol-normal">
+                                        <li>Minimum 8 characters</li>
+                                        <li>Maximum 32 characters</li>
+                                        <li>Must include at least one uppercase and one digit.</li>
+                        </ol>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
+
+   <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>Change Mobile</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+                <span>Enter a new mobile number here. When a consumer submits a new number, an SMS with an OTP is sent to the newly registered mobile number. The consumer is required to enter this OTP on the Jaldee portal to verify the mobile number.</span>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
+
+   <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>Family Members</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+                <span>Here a consumer can manage the family members. One can add, edit or delete the members. The family members can also be added from the check-in window with the member’s first/last name. In such cases, consumers can view the entries here and edit each entry with additional details like mobile number, gender, and date of birth.</span>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
+
+   <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>Switch to Provider</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+                <span> If a provider account already exists then one can switch to the provider account from here.</span>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
+
+   <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+               <mat-panel-title>Logout</mat-panel-title>
+               </mat-expansion-panel-header>
+               <div class="helpcontent">
+                <span> This will enable one to log out from the account.</span>
+               </div>
+               </mat-expansion-panel>
+   </mat-accordion>
     </section>
    
     <section class="helpcontent" *ngIf="activeMenu == 'dashboard'">
@@ -275,16 +346,14 @@
     <li><strong>History</strong><br> All the check-ins from newest to oldest are listed here. If the check-in status is <strong>“Done”</strong>, Bill can be viewed here. The consumer can rate the service provider here or edit the rating with the option <strong>“Rate Your Visit”</strong>.</li>
     </ul>
     </section>
-    <br>
     <section class="helpcontent" *ngIf="activeMenu == 'verified'">
             <h6>Jaldee Verified Levels</h6>
-    <ul class="ul-normal abc">
     <span>Verification refers to a level of security a Jaldee Provider must meet before providing services to Jaldee consumers. The providers with the highest verification levels are listed in the top of search results. We can see there's four different levels of verification to check out here, so let's break them down piece by piece:</span>
+    <ul class="ul-normal abc">
     <li><strong>NONE :</strong> If provider’s verification level is “None”, Jaldee cannot assure whether the provider is genuine or not.</li>
     <li><strong>BASIC :</strong> Under this verification level, Jaldee team verifies the authenticity of the business on a primary level. Provider with BASIC verification level, has gone through ID proof and mobile number verification. This verification level’s badge is a charcoal crown shown in the provider profile in search results.</li>
     <li><strong>BASIC PLUS :</strong> In addition to BASIC verification level, a provider with <strong>BASIC PLUS</strong> verification level has undergone certificate verification. This verification level’s badge is a copper crown shown in the provider profile in search results.</li>
     <li><strong>ADVANCED :</strong> This is the highest verification level in Jaldee. Here in addition to Id proof, mobile number and certificate verification, Jaldee team also physically check and verify the authenticity of the business. This verification level’s badge is a golden crown shown in the provider profile in search results.</li>
-   
     </ul>
     </section>
     </div>
