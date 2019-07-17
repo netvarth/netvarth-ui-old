@@ -1,12 +1,12 @@
 
 
 <div class="container">
-                <div class="card">
-                                <div class="col-md-12">
+                <div class="card" style="background-color: #f2f2f2">
+                                <div class="col-md-12" >
                                     <div class="row">
-                                        <div class="col-md-2" style="font-weight:600">Help</div>
-                                        <div class="col-md-10 rightalign" ><a class="link pointlist" (click)="goBack()"><span
-                                                    class="strong">{{go_back_cap}}</span></a></div>
+                                        <div class="col-md-2" style="font-weight:600 ; font-size:large">Help</div>
+                                        <div class="col-md-10 rightalign" ><a style="display: flex; justify-content:flex-end; align-items: center" (click)="goBack()">
+                                        <i class="material-icons">keyboard_arrow_left</i><span style="font-size: small" class="pointlist"><b> Go Back</b></span></a></div>
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
     <mat-accordion>
     <mat-expansion-panel [expanded]="false">
     <mat-expansion-panel-header>
-        <mat-panel-title>Health Care</mat-panel-title>
+        <mat-panel-title><span class="helpcontent">Health Care</span> </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
                 <ol class="ol-normal">
@@ -51,7 +51,7 @@
      <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>Personal Care</mat-panel-title>
+                    <mat-panel-title><span class="helpcontent">Personal Care</span></mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                             <ol class="ol-normal">
@@ -66,7 +66,7 @@
      <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>Professional Consulting</mat-panel-title>
+                    <mat-panel-title><span class="helpcontent">Professional Consulting</span></mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                             <ol class="ol-normal">
@@ -86,7 +86,7 @@
         <mat-accordion>
         <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
-        <mat-panel-title>Finance/Loan/Insurance</mat-panel-title>
+        <mat-panel-title><span class="helpcontent">Finance/Loan/Insurance</span></mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
                 <ol class="ol-normal">
@@ -101,7 +101,7 @@
         <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-                <mat-panel-title>Food and Beverages</mat-panel-title>
+                <mat-panel-title><span class="helpcontent">Food and Beverages</span></mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
                 <ol class="ol-normal">
@@ -123,7 +123,7 @@
         <mat-accordion>
         <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
-        <mat-panel-title>Vastu/Astrologer</mat-panel-title>
+        <mat-panel-title><span class="helpcontent">Vastu/Astrologer</span></mat-panel-title>
         </mat-expansion-panel-header>
         <div class="helpcontent">
         <ol class="ol-normal">
@@ -137,7 +137,7 @@
         <mat-accordion>
         <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
-        <mat-panel-title>Religious/Priests</mat-panel-title>
+        <mat-panel-title><span class="helpcontent">Religious/Priests</span></mat-panel-title>
         </mat-expansion-panel-header>
         <div class="helpcontent">
         <ol class="ol-normal">
@@ -151,7 +151,7 @@
         <mat-accordion>
          <mat-expansion-panel [expanded]="false">
          <mat-expansion-panel-header>
-        <mat-panel-title>Veterinary/Pet Care</mat-panel-title>
+        <mat-panel-title><span class="helpcontent">Veterinary/Pet Care</span></mat-panel-title>
         </mat-expansion-panel-header>
         <div class="helpcontent">
         <ol class="ol-normal">
@@ -250,7 +250,7 @@
     <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>Dashboard</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">Dashboard</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
               <span>This will redirect to the consumer’s dashboard from this page.</span>
@@ -261,7 +261,7 @@
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>My Account</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">My Account</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
               <span>This contains the personal information of a consumer. The option to edit this information is available. A consumer can enter the email ID under My Accounts to receive notifications from Jaldee regarding coupons & discounts.</span>
@@ -272,7 +272,7 @@
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>Change Password</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">Change Password</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
                         <ol class="ol-normal">
@@ -287,7 +287,7 @@
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>Change Mobile</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">Change Mobile</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
                 <span>Enter a new mobile number here. When a consumer submits a new number, an SMS with an OTP is sent to the newly registered mobile number. The consumer is required to enter this OTP on the Jaldee portal to verify the mobile number.</span>
@@ -298,7 +298,7 @@
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>Family Members</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">Family Members</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
                 <span>Here a consumer can manage the family members. One can add, edit or delete the members. The family members can also be added from the check-in window with the member’s first/last name. In such cases, consumers can view the entries here and edit each entry with additional details like mobile number, gender, and date of birth.</span>
@@ -309,7 +309,7 @@
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>Switch to Provider</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">Switch to Provider</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
                 <span> If a provider account already exists then one can switch to the provider account from here.</span>
@@ -320,7 +320,7 @@
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header>
-               <mat-panel-title>Logout</mat-panel-title>
+               <mat-panel-title><span class="helpcontent">Logout</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
                 <span> This will enable one to log out from the account.</span>
