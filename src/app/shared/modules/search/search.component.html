@@ -37,7 +37,8 @@
       </mat-form-field>
     </div>
     <div class="sa-src flex-shrink-1 plr0i ml5 ">
-      <mat-form-field class="search_keyword_class">
+      <mat-form-field floatLabel="never" class="search_keyword_class">
+        <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
         <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname"
           matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov"
           (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">

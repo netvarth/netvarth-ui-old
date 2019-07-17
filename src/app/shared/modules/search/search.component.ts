@@ -111,6 +111,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   popularSearchList: any = [];
   paginationLimit = 6;
   startPage = 0;
+  domainSuggestionPlaceholder = "";
 
   constructor(
     private shared_service: SharedServices,
@@ -835,7 +836,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (domain === 'All') {
     }
     this.selected_domain = domain;
-
+    this.domainSuggestionPlaceholder = projectConstants.DOMAIN_SEARCH_SUGGESTIONS[domain.toLowerCase()];
     if (avoidclear === 1) {
     } else {
       this.kw_autoname = '';

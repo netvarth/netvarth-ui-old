@@ -379,9 +379,19 @@ export const projectConstants = {
     religiousPriests: 'e.g. Our Lady of Dolours Basilica Church, Sri Vadakkumnatha Temple, etc',
     veterinaryPetcare: 'e.g. Veterinary Clinic, Adat Veterinary Hospital, etc'
   },
+  DOMAIN_SEARCH_SUGGESTIONS : {
+    all : 'e.g. blablaa',
+    professionalconsulting: 'e.g. Adv.Pranav, Ameya Professionals Private Limited, etc',
+    healthcare: 'e.g. Seven Star Clinic, Dr. Mani, Bright Hospital, etc',
+    personalcare: 'e.g. Herbal beauty parlour, Aloe Sita Beauty Salon & Spa, etc',
+    finance: 'e.g. Manappuram Finance Limited, Bajaj Allianz Life Insurance Co. Ltd, etc',
+    foodjoints: 'e.g. Pepper Restaurant, Madurai Vegetarian, etc',
+    vastuastrology: 'e.g. Vastupeedam, Ambadi Jyothisham Center, etc',
+    religiouspriests: 'e.g. Our Lady of Dolours Basilica Church, Sri Vadakkumnatha Temple, etc',
+    veterinarypetcare: 'e.g. Veterinary Clinic, Adat Veterinary Hospital, etc'
+  },
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',
   KEY: 'JALDEESOFT'
 
 };
-

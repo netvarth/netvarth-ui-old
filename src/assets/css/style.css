@@ -415,7 +415,7 @@
       background: $white !important;
       color: $linkblue !important;
       line-height: 16px !important;
-      
+
       &:hover {
           background: $linkblue !important;
           color: $white !important;
@@ -2196,15 +2196,15 @@ app-footer {
     font-weight: normal;
     background: white;
     /* border: 1px solid #b6cdd8;  */
-    border-bottom: 1px solid #b6cdd8; 
+    border-bottom: 1px solid #b6cdd8;
   }
      .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select:focus {
       /* -webkit-box-shadow: 0 0 1px #00aef2 inset;
       -moz-box-shadow: 0 0 1px #00aef2 inset;
       box-shadow: 0 0 1px #00aef2 inset;
       border: 1px solid #00aef2; */
-      background: #fff; 
-    } 
+      background: #fff;
+    }
     .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select.mat-select-disabled {
       background: #e6e6e6;
       /* border: 1px solid transparent; */
@@ -2389,7 +2389,7 @@ app-footer {
             display: flex;
             align-items: center;
             justify-content: center;
-            
+
             &:after {
                 border-width: 0 1.5px 1.5px 0;
             }
@@ -3376,7 +3376,7 @@ header {
               -moz-box-shadow: 0 0 1px #00aef2 inset;
               box-shadow: 0 0 1px #00aef2 inset;
               border: 1px solid #00aef2; */
-              background: #fff; 
+              background: #fff;
             }
           .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .valfield, .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .valfield, .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .valfield, .signupmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .valfield,
           .loginmainclass .mat-dialog-content .form-group .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .valfield,
@@ -4122,7 +4122,7 @@ header {
             padding: 10px;
             background: white;
             /* border: 1px solid #b6cdd8; */
-            border-bottom: 1px solid #b6cdd8; 
+            border-bottom: 1px solid #b6cdd8;
             height: 40px; }
             .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element.nofocus, .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element.nofocus, .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element.nofocus, .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element.nofocus,
             .loginmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element.nofocus,
@@ -4168,25 +4168,25 @@ header {
             .googlemainmappopup .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .googlemainmappopup .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .googlemainmappopup .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
-            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
+            .googlemainmappopup .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .outer-card .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .outer-card .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
-            .outer-card .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
-            .outer-card .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
-            .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
-            .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
+            .outer-card .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
+            .outer-card .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
+            .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
+            .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .consumerpopupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .specialclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
-            .specialclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
-            .specialclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, 
+            .specialclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
+            .specialclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus,
             .specialclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus {
               /* -webkit-box-shadow: 0 0 1px #00aef2 inset;
               -moz-box-shadow: 0 0 1px #00aef2 inset;
               box-shadow: 0 0 1px #00aef2 inset; */
               /* border: 1px solid #00aef2; */
               border-bottom: 1px solid #00aef2;
-              background: #fff; 
+              background: #fff;
             }
           .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .signupmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select,
           .loginmainclass .mat-dialog-content .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select,
@@ -8085,18 +8085,10 @@ header {
               display: block; }
               .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
                 padding-left: 15px;
-                padding-top: 30px;
+                padding-top: 10px;
                 font-family: 'Montserrat', sans-serif;
                 font-weight: normal;
                 font-weight: 500; }
-                @media only screen and (max-width: 767px) {
-                  .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
-                    padding-top: 10px;
-                    padding-left: 20px; } }
-                @media (min-width: 768px) and (max-width: 991px) {
-                  .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
-                    padding-top: 10px;
-                    padding-left: 20px; } }
           .srch .sa .sa-fld .sa-src .search_keyword_class .mat-form-field-underline {
             display: none; }
           .srch .sa .sa-fld .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
@@ -8940,7 +8932,7 @@ footer.itl-steps .sect3 {
             width: 90px;
             height: 90px;
             vertical-align: middle;
-            
+
             span {
                 font-size: 3.5rem;
             }
@@ -11144,7 +11136,7 @@ footer.dashb {
           height: 24px;
           /*&:last-child {
               margin-left: 20px;
-              
+
               &:before {
                   position: absolute;
                   width: 1px;
@@ -11154,7 +11146,7 @@ footer.dashb {
                   left: -20px;
                   top: 0px;
               }
-              
+
               .editbt {
                   font-size: 1rem;
                   top: -4px;
@@ -14982,7 +14974,7 @@ footer.dashb {
               span {
                   cursor: pointer;
                   font-size: 1rem;
-                  
+
                   &:hover {
                       color: $cc-red;
                   }
@@ -15766,18 +15758,10 @@ header.consumer {
                 display: block; }
                 header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
                   padding-left: 15px;
-                  padding-top: 30px;
+                  padding-top: 10px;
                   font-family: 'Montserrat', sans-serif;
                   font-weight: normal;
                   font-weight: 500; }
-                  @media only screen and (max-width: 767px) {
-                    header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
-                      padding-top: 10px;
-                      padding-left: 20px; } }
-                  @media (min-width: 768px) and (max-width: 991px) {
-                    header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
-                      padding-top: 10px;
-                      padding-left: 20px; } }
             header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class .mat-form-field-underline {
               display: none; }
             header.consumer .tp-1 .tp-r .tp-srch .sa-src .search_keyword_class.mat-focused .mat-form-field-label-wrapper .mat-form-field-label {
