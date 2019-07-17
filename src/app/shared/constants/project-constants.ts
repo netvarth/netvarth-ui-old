@@ -380,7 +380,7 @@ export const projectConstants = {
     veterinaryPetcare: 'e.g. Veterinary Clinic, Adat Veterinary Hospital, etc'
   },
   DOMAIN_SEARCH_SUGGESTIONS : {
-    all : 'e.g. blablaa',
+    all : 'e.g. Herbal beauty parlour, Madurai Vegetarian, Bright Hospital, etc',
     professionalconsulting: 'e.g. Adv.Pranav, Ameya Professionals Private Limited, etc',
     healthcare: 'e.g. Seven Star Clinic, Dr. Mani, Bright Hospital, etc',
     personalcare: 'e.g. Herbal beauty parlour, Aloe Sita Beauty Salon & Spa, etc',
