@@ -93,7 +93,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   public search_result_count;
   public sortfield;
   public sortorder;
-  sortfieldsels = '';
+  activeDistanceSort = false;
   public nosearch_results;
   public startpageval;
   public labelq;
@@ -1019,16 +1019,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     };
     return this.searchfields;
   }
-  private selected_sortfield(sel) {
+  private selected_sortfield(boolDistance) {
     let selfield = '';
     let selorder = '';
-    switch (sel) {
-      case 'distanceasc':
-        selfield = 'distance asc, ynw_verified_level desc';
-        selorder = 'asc';
-        break;
+    this.activeDistanceSort = boolDistance;
+    if(boolDistance){
+      selfield = 'distance asc, ynw_verified_level desc';
+      selorder = 'asc';
     }
-    this.sortfieldsels = sel;
     this.sortfield = selfield;
     this.sortorder = selorder;
     // changing the url of the search result page based on the selected criteria

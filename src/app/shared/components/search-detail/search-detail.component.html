@@ -272,7 +272,7 @@
                         <div class="ct-r ml-auto">
                             <div class="fltr">
                                 <div class="search_sort_display">
-                                    <mat-form-field>
+                                    <!-- <mat-form-field>
                                         <mat-select name="sortfield" panelClass="search_domaindropdown_class"
                                             #sortfieldsel (selectionChange)="selected_sortfield(sortfieldsel.value)"
                                             [(ngModel)]="sortfieldsels">
@@ -283,7 +283,14 @@
                                                 {{distance_cap}}
                                             </mat-option>
                                         </mat-select>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <button style="display:flex;justify-content:center;align-items:center;" mat-icon-button [matMenuTriggerFor]="menu">
+                                      <mat-icon>swap_vert</mat-icon>
+                                    </button>
+                                    <mat-menu class="sort-menu" #menu="matMenu">
+                                      <button class="sort-menu-item" [class.active]="activeDistanceSort==false" (click)="selected_sortfield(false)" mat-menu-item>{{jaldee_verified}}</button>
+                                      <button class="sort-menu-item" [class.active]="activeDistanceSort==true" (click)="selected_sortfield(true)" mat-menu-item>{{distance_cap}}</button>
+                                    </mat-menu>
                                 </div>
                             </div>
                         </div>
@@ -437,7 +444,7 @@
                                     <!-- <div class="address" *ngIf="search_result.fields.address1">
                                         {{search_result.fields.address1 | capitalizeFirst }}
 
-                                       
+
                                         <span class="consumr-loc-icon"><a *ngIf="search_result.fields.location1"
                                                 rel="noopener"
                                                 [href]="'https://www.google.com/maps/place/'+search_result.fields.location1+'/@'+search_result.fields.location1+',15z'"

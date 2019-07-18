@@ -24,9 +24,9 @@
                                         <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'verified')}"><a (click)="menuclicked('verified')">Jaldee Verified Levels</a></li>
                                         </ul>
                                         </div>
-                          
+
                             <div class="col-md-9 helpcontent">
-        
+
     <section class="helpcontent" *ngIf="activeMenu == 'searchh'">
         <h6>Search</h6>
     <ul class="ul-normal abc">
@@ -34,23 +34,23 @@
     <li>To find a particular business, select its location in the first search bar. Next to the location search field comes the domain and subsequently the subdomains or business name/specialization field. Jaldee.com offers services for the below-mentioned domains and subdomains.</li>
     </ul>
     <mat-accordion>
-    <mat-expansion-panel [expanded]="false">
-    <mat-expansion-panel-header>
-        <mat-panel-title><span class="helpcontent">Health Care</span> </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="helpcontent">
-                <ol class="ol-normal">
-                <li>Doctor</li>
-                <li>Dentist</li>
-                <li>Alternative Medicine Practitioner</li>
-                </ol>
-                </div>
-        </mat-expansion-panel>
+      <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+          <mat-panel-title><span class="helpcontent">Health Care</span> </mat-panel-title>
+        </mat-expansion-panel-header>
+                  <div class="helpcontent">
+                  <ol class="ol-normal">
+                  <li>Doctor</li>
+                  <li>Dentist</li>
+                  <li>Alternative Medicine Practitioner</li>
+                  </ol>
+                  </div>
+      </mat-expansion-panel>
      </mat-accordion>
 
      <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                     <mat-panel-title><span class="helpcontent">Personal Care</span></mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
@@ -65,7 +65,7 @@
 
      <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                     <mat-panel-title><span class="helpcontent">Professional Consulting</span></mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
@@ -85,7 +85,7 @@
 
         <mat-accordion>
         <mat-expansion-panel [expanded]="false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
         <mat-panel-title><span class="helpcontent">Finance/Loan/Insurance</span></mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
@@ -100,7 +100,7 @@
 
         <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                 <mat-panel-title><span class="helpcontent">Food and Beverages</span></mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
@@ -118,11 +118,11 @@
                 </div>
         </mat-expansion-panel>
         </mat-accordion>
-                                              
-   
+
+
         <mat-accordion>
         <mat-expansion-panel [expanded]="false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
         <mat-panel-title><span class="helpcontent">Vastu/Astrologer</span></mat-panel-title>
         </mat-expansion-panel-header>
         <div class="helpcontent">
@@ -133,10 +133,10 @@
         </div>
         </mat-expansion-panel>
         </mat-accordion>
-                                                              
+
         <mat-accordion>
         <mat-expansion-panel [expanded]="false">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
         <mat-panel-title><span class="helpcontent">Religious/Priests</span></mat-panel-title>
         </mat-expansion-panel-header>
         <div class="helpcontent">
@@ -150,7 +150,7 @@
 
         <mat-accordion>
          <mat-expansion-panel [expanded]="false">
-         <mat-expansion-panel-header>
+         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
         <mat-panel-title><span class="helpcontent">Veterinary/Pet Care</span></mat-panel-title>
         </mat-expansion-panel-header>
         <div class="helpcontent">
@@ -162,7 +162,7 @@
         </mat-expansion-panel>
         </mat-accordion>
    <br>
-    <span>Next to the search bar is the “More Options Icon” where a consumer can narrow down the search results using the following filters:</span> 
+    <span>Next to the search bar is the “More Options Icon” where a consumer can narrow down the search results using the following filters:</span>
     <ol class="ol-normal">
     <li><strong>Language Spoken :</strong> A consumer can filter the search using languages in which he/she would like to communicate with the service provider.</li>
     <li><strong>Parking Type :</strong> The search can also be filtered according to the available parking types near the business premises.</li>
@@ -172,7 +172,7 @@
     </ol>
     <span>A consumer can filter and customize the search activity to find exactly what is required. To filter the search results accordingly, Jaldee.com presents “Refine Search” to its consumers.</span>
     </section>
-   
+
     <section class="helpcontent" *ngIf="activeMenu == 'refine'">
             <h6>Refine Search</h6>
     <ul class="ul-normal abc">
@@ -181,24 +181,24 @@
     <li>In the search result, a consumer can see the list of the available service providers. Here a consumer can see the gallery, location amenities, ratings given to the provider by other consumers.</li>
     <li>In the right side, a consumer can view the available Jaldee coupons & history (previous encounters with the service provider).</li>
     <li>A consumer can also add a specific service provider to Favourites and send a message to the provider if any.</li>
-    
+
     </ul>
     </section>
     <section class="helpcontent"  *ngIf="activeMenu == 'claim'">
             <h6>Claim My Business</h6>
     <ul class="ul-normal abc">
     <span>The search results in Jaldee consumer dashboard has provider profiles with the flag <strong>“Claim My Business”</strong>. The best way to manage your business (if you are a business owner and your business profile is listed in Jaldee) in Jaldee is by claiming your business and creating a provider account. Claiming your business in Jaldee is pretty simple. To begin the claim process, click the <strong>“Claim your business”</strong> button in the provider profile listed. Follow the easy steps to find your business and create your provider account.</span>
-   
+
     <li>Enter mobile number, provider name, choose the license package and accept the Terms & Conditions.</li>
     <li>Click on Send OTP to receive OTP on the entered mobile number.</li>
     <li>Enter the OTP to create a provider account.</li>
     <li>In the next step, create a password for the provider profile.</li>
     <li>Complete the initial Provider profile setup by entering the brief details of the business such as its Name, Profile Summary, Service, Location, Working Hours, Specialization and Public Search.</li>
     <li>Now you are done creating provider account in Jaldee.</li>
-    
+
     </ul>
     </section>
-   
+
     <section class="helpcontent" *ngIf="activeMenu == 'checkin'">
             <h6>Consumer Checkin</h6>
     <li>It is an easy way to check-in online for the services offered by a provider registered with Jaldee.com.
@@ -207,7 +207,7 @@
     <li>One can receive wait-time before availing the services.</li>
     <li>One can get a token number which demonstrates the number of consumers ahead.</li>
     </ol>
-    </li> 
+    </li>
     <li>This mode of check-in is very convenient for consumers as it can be done anytime, anywhere.</li>
     <li>Online Check-in for a day is open from 1:00 am and continues until the working hours end or before the available slots get filled.</li>
     <li>Here is how a consumer can proceed with the check-in process.
@@ -228,7 +228,7 @@
     <li>If the prepayment is successful, the consumer will receive a message for the confirmed check-in.</li>
     <li>In case, the prepayment is pending, the consumer will receive a message notifying the same. Please note that if one couldn’t complete the prepayment process in 15 minutes, the check-in will be automatically cancelled.</li>
     </ol></li>
-    
+
     <li>Completion of the above process enables the consumer to proceed with the online check-in. To confirm the same, click on <strong>“Check-in”</strong>.</li>
     <li>A push message and an email to the registered email id notifying the confirmation of the online check-in will be sent.</li>
     <li>Future check-in can also be done in the same way. The only difference here is that the consumer is required to select the date of the check-in here.</li>
@@ -249,7 +249,7 @@
     <br>
     <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">Dashboard</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -260,7 +260,7 @@
 
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">My Account</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -271,7 +271,7 @@
 
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">Change Password</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -286,7 +286,7 @@
 
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">Change Mobile</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -297,7 +297,7 @@
 
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">Family Members</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -308,7 +308,7 @@
 
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">Switch to Provider</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -319,7 +319,7 @@
 
    <mat-accordion>
                 <mat-expansion-panel [expanded]="false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                <mat-panel-title><span class="helpcontent">Logout</span></mat-panel-title>
                </mat-expansion-panel-header>
                <div class="helpcontent">
@@ -328,7 +328,7 @@
                </mat-expansion-panel>
    </mat-accordion>
     </section>
-   
+
     <section class="helpcontent" *ngIf="activeMenu == 'dashboard'">
             <h6>Consumer Dashboard</h6>
     <span>A consumer login is redirected to the dashboard initially. Here a consumer can search for the service providers, set up the profile and view the status of current check-ins, My favorites and History of check-ins.</span>
