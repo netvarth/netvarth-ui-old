@@ -7896,6 +7896,7 @@ header {
         margin-right: 5px; }
       .srch .sa .sa-fld .sa-lc {
         width: 300px;
+        flex-shrink: 0;
         cursor: pointer;
         position: relative; }
         @media only screen and (max-width: 767px) {
@@ -7972,6 +7973,7 @@ header {
           z-index: 97; }
       .srch .sa .sa-fld .sa-dm {
         width: 200px;
+        flex-shrink: 0;
         cursor: pointer; }
         @media only screen and (max-width: 767px) {
           .srch .sa .sa-fld .sa-dm {
@@ -8036,6 +8038,7 @@ header {
               display: none; }
       .srch .sa .sa-fld .sa-src {
         width: 100%;
+        flex-shrink: 1;
         font-family: 'Montserrat', sans-serif;
         font-weight: normal; }
         .srch .sa .sa-fld .sa-src .search_keyword_class {
@@ -15526,7 +15529,8 @@ header.consumer {
         header.consumer .tp-srch .mr5 {
           margin-right: 5px; }
         header.consumer .tp-srch .sa-lc {
-          width: 250px;
+          width: 20%;
+          flex-shrink: 0;
           cursor: pointer;
           position: relative; }
           @media only screen and (max-width: 767px) {
@@ -15602,7 +15606,8 @@ header.consumer {
             margin-top: -12px;
             z-index: 97; }
         header.consumer .tp-srch .sa-dm {
-          width: 200px;
+          width: 20%;
+          flex-shrink: 0;
           cursor: pointer; }
           @media only screen and (max-width: 767px) {
             header.consumer .tp-srch .sa-dm {
@@ -15661,7 +15666,8 @@ header.consumer {
               header.consumer .tp-srch .sa-dm .mat-form-field .mat-form-field-wrapper .mat-form-field-underline {
                 display: none; }
         header.consumer .tp-srch .sa-src {
-          width: 100%;
+          width: 45%;
+          flex-shrink: 1;
           font-family: 'Montserrat', sans-serif;
           font-weight: normal; }
           header.consumer .tp-srch .sa-src .search_keyword_class {
@@ -15694,7 +15700,7 @@ header.consumer {
                     header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-infix .mat-input-element, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-infix .mat-input-element {
                       height: 50px; } }
               header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper {
-                display: block;}
+                display: block;font-size: 0.9em;margin-top: 0.2em;}
                 header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-infix .mat-form-field-label-wrapper .mat-form-field-label, header.consumer .tp-srch .sa-src .search_keyword_class .mat-form-field-wrapper .mat-form-field-label-wrapper .mat-form-field-label {
                   padding-left: 15px;
                   padding-top: 10px;
