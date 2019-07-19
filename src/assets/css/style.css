@@ -15666,7 +15666,7 @@ header.consumer {
               header.consumer .tp-srch .sa-dm .mat-form-field .mat-form-field-wrapper .mat-form-field-underline {
                 display: none; }
         header.consumer .tp-srch .sa-src {
-          width: 45%;
+          width: 100%;
           flex-shrink: 1;
           font-family: 'Montserrat', sans-serif;
           font-weight: normal; }
