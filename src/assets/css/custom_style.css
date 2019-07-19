@@ -3590,18 +3590,40 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
   position: relative !important;
   color: #999999 !important;
   font-size: .75rem !important;
-  padding-left: 20px !important;
-  margin-left: 5px !important;
+  padding-left: 10px !important;
+  
+}
+.paysettings .outermost .cc-outer .form-group .verified, .paysettings .outermost .paytm-outer .form-group .verified{
+  color: #00cc96 !important;
+  font-size: .75rem !important;
 }
 
-.paysettings .outermost .cc-outer .form-group .not-verified:before, .paysettings .outermost .paytm-outer .form-group .not-verified:before, .paysettings .outermost .cc-outer .form-group .verified:before, .paysettings .outermost .paytm-outer .form-group .verified:before {
-  position: absolute !important;
+
+.paysettings .outermost .cc-outer .form-group .not-verified:before, .paysettings .outermost .paytm-outer .form-group .not-verified:before{
   font-family: "custom-ynw" !important;
+  color: #999999 !important;
   content: "\24" !important;
   left: 0 !important;
   top: 0 !important;
-  font-size: .875rem !important;
+  font-size: .75rem !important;
   margin-top: -2px !important;
+}
+
+.paysettings .outermost .cc-outer .form-group .verified:before, .paysettings .outermost .paytm-outer .form-group .verified:before {
+  /* position: absolute !important; */
+  font-family: "custom-ynw" !important;
+  color: #00cc96 !important;
+  content: "\24" !important;
+  left: 0 !important;
+  top: 0 !important;
+  padding-left: 10px !important;
+  font-size: .75rem !important;
+  margin-top: -2px !important;
+}
+
+.payTypeVerify{
+   color: green !important;
+  font-size: .75rem !important;
 }
 
 .ynw-common-form-nm .paysettings-tab .mat-input-element {

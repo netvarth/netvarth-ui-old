@@ -151,8 +151,10 @@
                                 </li> -->
                                 <li>
                                     <div>
-                                        <div class="form-level-settings" *ngIf="paytmVerified">paytmVerified</div>
-                                        <div class="form-level-settings" *ngIf="payuVerified">payuVerified</div>
+                                        <div class = "payTypeVerify" *ngIf="paytmVerified"><i class="fa fa-check"></i>&nbsp;PayTm</div>
+                                        <div class = "payTypeVerify" *ngIf="payuVerified"><i class="fa fa-check"></i>&nbsp;CC/DC</div>
+                                        <div class = "payTypeVerify" *ngIf="!paytmVerified"><i class="fa fa-times"></i>&nbsp;PayTm</div>
+                                        <div class = "payTypeVerify" *ngIf="!payuVerified"><i class="fa fa-times"></i>&nbsp;CC/DC</div>
                                     </div>
                                 </li>
                             </ul>
