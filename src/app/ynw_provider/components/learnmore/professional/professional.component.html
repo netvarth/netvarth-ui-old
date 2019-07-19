@@ -2163,68 +2163,26 @@
         which is
         self-operated. This provides the clients an easier and more interactive way to check-in
         themselves for the services offered by the business. KIOSK is available to providers who has
-        chosen license packages <strong>Ruby</strong> or <strong>Diamond</strong>.</span>
-
-    <div class="box-indent">
-        <table class="table verify-tbl">
-            <tbody>
-                <tr>
-                    <td>
-                        <h6>Kiosk</h6>
-                    </td>
-                    <td>
-                        <div>
-                            <h6>Free</h6>
-                        </div>
-                        <div>
-                            <p>No</p>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div>
-                            <h6>Silver</h6>
-                        </div>
-                        <div>
-                            <p>No</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <h6>Gold</h6>
-                        </div>
-                        <div>
-                            <p>No</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <h6>Platinum</h6>
-                        </div>
-                        <div>
-                            <p>No</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <h6>Ruby</h6>
-                        </div>
-                        <div>
-                            <p>Included</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <h6>Diamond</h6>
-                        </div>
-                        <div>
-                            <p>Included</p>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        chosen license packages <strong>Ruby</strong> or <strong>Diamond</strong>.</span><br>
+        <mat-accordion>
+                <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                        <mat-panel-title>
+                            <span class="helpcontent">Kiosk</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+        <div class="helpcontent">
+            <ul>
+                <li>Free - No</li>
+                <li>Silver - No</li>
+                <li>Gold - No</li>
+                <li>Platinum - No</li>
+                <li>Ruby - Included</li>
+                <li>Diamond - Included</li>
+            </ul>
+        </div>
+        </mat-expansion-panel>
+        </mat-accordion><br>
     <div class="box-indent">
         <h6>How it works?</h6>
         <span>The <strong>KIOSK</strong> feature is designed for walk-in clients. With this feature,
@@ -2384,7 +2342,7 @@
     </ul>
     <mat-accordion>
         <mat-expansion-panel [expanded]="false">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                 <mat-panel-title>
                     <span class="helpcontent">Upgrade License</span>
                 </mat-panel-title>
