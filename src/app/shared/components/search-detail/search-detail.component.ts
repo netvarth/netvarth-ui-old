@@ -512,10 +512,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   returnRefineCheckboxRetainValue(fieldheader, fieldname, fieldtype) {
     if (fieldtype === 'EnumList' || fieldtype === 'Enum' || fieldtype === 'Gender') { // case of multiple selection of checkbox
       let retval = false;
-      if (this.querystringrefineretain_arr[fieldheader]) {
-        if (this.querystringrefineretain_arr[fieldheader].indexOf(fieldname) !== -1) {
-          retval = true;
-        }
+      if (this.querystringrefineretain_arr[fieldheader]) { if (this.querystringrefineretain_arr[fieldheader].indexOf(fieldname) !== -1) {
+            retval = true;
+          }
       }
       return retval;
     } else if (fieldtype === 'Boolean') { // case of multiple selection of radio slider
@@ -1023,7 +1022,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let selfield = '';
     let selorder = '';
     this.activeDistanceSort = boolDistance;
-    if(boolDistance){
+    if (boolDistance) {
       selfield = 'distance asc, ynw_verified_level desc';
       selorder = 'asc';
     }
@@ -1181,6 +1180,33 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
+
+    const ex = this.check_QuerystrinfieldexistsinArray(fieldname);
+    if (ex === -1) {
+      this.querystringrefineretain_arr[fieldname] = selval;
+      if (fieldname === 'ynw_verified_level') {
+        for (let jjj = 0; jjj < this.querystringrefineretain_arr[fieldname].length; jjj++) {
+          this.querystringrefineretain_arr[fieldname][jjj] = Number(this.querystringrefineretain_arr[fieldname][jjj]);
+        }
+      }
+    } else {
+      const len = this.querystringrefineretain_arr[fieldname].length + 1;
+      for (let i = 0; i < this.querystringrefineretain_arr[fieldname].length; i++) {
+        if (this.querystringrefineretain_arr[fieldname].includes(selval)) {
+        } else {
+          this.querystringrefineretain_arr[fieldname][len] = selval;
+          if (fieldname === 'ynw_verified_level') {
+            for (let jjj = 0; jjj < this.querystringrefineretain_arr[fieldname].length; jjj++) {
+              this.querystringrefineretain_arr[fieldname][jjj] = Number(this.querystringrefineretain_arr[fieldname][jjj]);
+            }
+          }
+        }
+      }
+      this.querystringrefineretain_arr[fieldname]
+    }
+    console.log(this.querystringrefineretain_arr);
+
+
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     if (this.searchrefineresult_arr.length) {
@@ -1237,13 +1263,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   // method which checks whether a particular field value is already there in the refineresult array, if yes then returns the details
   check_fieldvalexistsinArray(fieldname, selval) {
     let ret_arr = [{ 'indx': -1, 'field': '', 'key': '' }];
-    for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
-      for (const key in this.searchrefineresult_arr[i][fieldname]) {
-        if (this.searchrefineresult_arr[i][fieldname][key][0] === selval) {
-          ret_arr = [{ 'indx': i, 'field': fieldname, 'key': key }];
-        }
-      }
-    }
+    // for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
+    //   for (const key in this.searchrefineresult_arr[i][fieldname]) {
+    //     if (this.searchrefineresult_arr[i][fieldname][key][0] === selval) {
+    //       ret_arr = [{ 'indx': i, 'field': fieldname, 'key': key }];
+    //     }
+    //   }
+    // }
     return ret_arr;
   }
   // method which rebuilds the query string to be used on refine filter selection

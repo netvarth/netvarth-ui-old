@@ -251,9 +251,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.moreoptions_arr = [];
     this.showmoreoptionsSec = false;
     let srchtxt = this.kw_autoname;
-    // if (this.kw_autoname) {
-    //   srchtxt = this.kw_autoname.replace(/'/g, '\\\'');
-    // }
     if (!this.kw_autoname || this.kw_autoname.trim() === '') {
       this.do_search(null);
     } else if (this.holdisplaySearchlist['label'].length !== 0) {
@@ -347,7 +344,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           holdkeyword = label.displayname.toLowerCase();
           // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
           const lbl = label.query.split('&');
-          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
+          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' , origin: 'popular'};
           this.holdisplaylist.push(labelspec);
           // }
         }
@@ -377,7 +374,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.holdisplaySearchlist['kwtitle'] = new Array();
       if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
-        this.holdisplaySearchlist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle' });
+        this.holdisplaySearchlist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle', origin: 'gloablsearch' });
       }
     }
     // Defining the types of details that will be displayed for keywords autocomplete
@@ -388,7 +385,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.holdisplaySearchlist['special'] = [];
       for (const label of this.show_searchlabellist) {
         let holdkeyword;
-        // const holdkeyword = label.displayname.toLowerCase();
         if (label.displayname && label.displayname !== '') {
           holdkeyword = label.displayname.toLowerCase();
           if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
@@ -533,13 +529,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             this.shared_functions.setitemonLocalStorage('srchLabels', res);
             this.searchlabels_data = res || [];
             this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
-            //         if (!this.shared_functions.getitemfromLocalStorage('popularSearch')
-            //         || this.shared_functions.getitemfromLocalStorage('popularSearch') === undefined
-            // || this.shared_functions.getitemfromLocalStorage('popularSearch') === '') {
             this.shared_functions.setitemonLocalStorage('popularSearch', this.jsonlist);
             const pdata = { 'ttype': 'popularSearchList', 'target': this.jsonlist };
             this.shared_functions.sendMessage(pdata);
-            // }
             this.searchdataserviceobj.set(this.searchlabels_data);
             this.handledomainchange(this.selected_domain, 1);
           }
@@ -558,9 +550,13 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.location_data = undefined;
   }
   private setKeyword(kw) {
-    if (this.kw_autoname) {
+    // if (this.kw_autoname) {
+    //   this.filterKeywords();
+    // }
+    if (kw.origin === 'popular') {
       this.filterKeywords();
     }
+    
     let autoName;
     let query;
     let dom;
@@ -764,7 +760,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         }
         this.searchfields.subsector = ret_arr['subsector'];
         this.searchfields.kw = ret_arr['subsector'];
-        this.searchfields.kwautoname = ret_arr['subdom_dispname'];
+        if (this.searchfields.kwautoname === '') {
+          this.searchfields.kwautoname = ret_arr['subdom_dispname'];
+        }
         this.searchfields.kwdomain = ret_arr['dom'];
         this.searchfields.kwsubdomain = '';
         this.searchfields.kwtyp = 'subdom';

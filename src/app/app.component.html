@@ -1,2 +1,8 @@
 <ng2-slim-loading-bar></ng2-slim-loading-bar>
 <router-outlet></router-outlet>
+
+<div
+    *ngIf="isShowingRouteLoadIndicator"
+    class="router-load-indicator">
+    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+</div>
