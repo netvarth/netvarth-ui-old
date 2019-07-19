@@ -1683,12 +1683,6 @@ header .tc1 .isprovidertop span {
   border: 1px solid #1E4079 !important;
 }
 
-@media only screen and (max-width: 991px) {
-  header.consumer .tp-1 .tp-r .tc1 {
-    margin-bottom: 20px !important;
-    height: 70px !important;
-  }
-}
 
 marquee p {
   padding-left: 20px !important

@@ -3,7 +3,7 @@
   (click)="closeMorepopularoptions()"></div>
 <ng-container>
   <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
-    <div class="sa-lc flex-shrink-0">
+    <div class="sa-lc">
       <mat-form-field class="search_location_class">
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name" matInput
           [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
@@ -20,7 +20,7 @@
       </mat-form-field>
     </div>
 
-    <div class="sa-dm flex-shrink-0 ml5">
+    <div class="sa-dm ml5">
       <mat-form-field class="search_domain">
         <div>
           <mat-select panelClass="search_domaindropdown_class" [(ngModel)]="selected_domain"
@@ -33,7 +33,7 @@
         </div>
       </mat-form-field>
     </div>
-    <div class="sa-src flex-shrink-1 plr0i ml5 ">
+    <div class="sa-src ml5">
       <mat-form-field floatLabel="never" class="search_keyword_class">
         <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
         <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname"
@@ -53,7 +53,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </div>
-    <div class="flex-shrink-0 plr0i">
+    <div class="sa-btn plr0i">
       <div role="button" tabindex="0" id="search_button" class="search-btn cs-btn anim1"
         (click)="handleNormalSearchClick()" *ngIf="!showmoreoptionsSec"><span class="icon icon-search"></span></div>
     </div>
