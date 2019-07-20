@@ -1,5 +1,4 @@
 import { Component, HostListener } from '@angular/core';
-import { Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,20 +9,6 @@ import { Router, RouterEvent, RouteConfigLoadStart, RouteConfigLoadEnd } from '@
 export class AppComponent {
   public isShowingRouteLoadIndicator: boolean;
   title = 'app';
-  constructor(router: Router) {
-    this.isShowingRouteLoadIndicator = false;
-    var asyncLoadCount = 0;
-    router.events.subscribe(
-      (event: RouterEvent): void => {
-        if (event instanceof RouteConfigLoadStart) {
-          asyncLoadCount++;
-        } else if (event instanceof RouteConfigLoadEnd) {
-          asyncLoadCount--;
-        }
-        this.isShowingRouteLoadIndicator = !!asyncLoadCount;
-      }
-    );
-  }
   // @HostListener('window:message', ['$event'])
   // onMessage(e) {
   //   alert(e.origin);

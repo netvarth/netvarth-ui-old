@@ -52,6 +52,7 @@ export class ProviderCustomersComponent implements OnInit {
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
+  apiloading = false;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -71,6 +72,10 @@ export class ProviderCustomersComponent implements OnInit {
     this.getCustomersList(true);
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+  }
+
+  routeLoadIndicator(e) {
+    this.apiloading = e;
   }
 
   getCustomersList(from_oninit = false) {

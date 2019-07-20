@@ -1,12 +1,13 @@
 <section>
   <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'dashboard'"
-    (reloadActionSubheader)="reloadActionSubheader()"></app-provider-subheader>
+    (reloadActionSubheader)="reloadActionSubheader()" (isShowingRouteLoadIndicator)="routeLoadIndicator($event)">
+  </app-provider-subheader>
   <!-- Subheader section -->
-  <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+  <app-breadcrumb *ngIf="!apiloading" (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
     [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
-<section class="dashboard">
+<section class="dashboard" *ngIf="!apiloading">
   <div class="container">
     <div class="row">
       <div class="card p0 w-dta">
@@ -387,3 +388,7 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="apiloading" class="router-load-indicator">
+  <app-common-innerloading-spinner></app-common-innerloading-spinner>
+</div>

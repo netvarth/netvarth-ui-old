@@ -1,15 +1,17 @@
 <section>
-  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'customers'"></app-provider-subheader> <!-- Subheader section -->
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'customers'"
+    (isShowingRouteLoadIndicator)="routeLoadIndicator($event)"></app-provider-subheader> <!-- Subheader section -->
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading">
+  </app-breadcrumb>
 </section>
-<section class="dashboard customers">
+<section class="dashboard customers" *ngIf="!apiloading">
   <div class="container">
     <div class="row">
       <div class="card p0 w-dta ">
         <div class="head">
           <span class="cust_count">{{customer_label | capitalizeFirst}}s {{checkedin_label}}: {{customer_count}}</span>
         </div>
-          <!-- <mat-accordion>
+        <!-- <mat-accordion>
             <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
               <mat-expansion-panel-header class="fltr" [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
                 <span>
@@ -51,95 +53,103 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion> -->
-          <div class="table-responsive dash-list">
-            <table class="table">
-              <thead>
-                <tr class="tble-filtr-tr">
-                  <th>{{name_cap}}</th>
-                  <th>{{mobile_cap}}</th>
-                  <th>{{email_cap}}</th>
-                  <th [matTooltipClass]="tooltipcls" [matTooltip] = "'Date shown only for '+customer_label+'s who have availed the service'"> {{last_visit_cap}}</th>
-                  <th> 
-                    <table class="fltr-tbl"><tr>
-                      <td class="cl-fltr" *ngIf="filterapplied === true"  (click)="clearFilter()" [matTooltipClass]="tooltipcls"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png" alt=""/></td>
-                  <td> <i class="icon-filter-one-op" (click)="toggleFilter()"
-                  *ngIf="open_filter" [matTooltipClass]="tooltipcls"
-                  [matTooltip]="'Close filter window'"></i>
-              <i class="icon-filter-one" (click)="toggleFilter()"
-                  [matTooltipClass]="tooltipcls"
-                  [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i></td>
-             </tr></table>
-                  </th> 
-                </tr>
-              </thead>
-             
-              <tbody>
-                <tr >
-                  <td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
-                  <mat-accordion>
-                      <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
-                        <div class="form-group first_name">
-                          <mat-form-field class="example-full-width">
-                            <label class="col-form-label">{{first_name_cap}}</label>
-                              <input matInput [(ngModel)]="filter.first_name" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                              autocomplete="off">
-                          </mat-form-field>
-                        </div>
-                        <div class="form-group mobile">
-                          <mat-form-field class="example-full-width">
-                            <label class="col-form-label">{{mobile_cap}}</label>
-                             <input matInput [(ngModel)]="filter.mobile" maxlength="10" #Fmobile (blur)="doSearch()" (keyup)="focusInput($event, Femail)"
-                              autocomplete="off">
-                          </mat-form-field>
-                        </div>
-                        <div class="form-group email">
-                          <mat-form-field class="example-full-width">
-                            <label class="col-form-label">{{email_cap}}</label>
-                             <input matInput [(ngModel)]="filter.email" #Femail (blur)="doSearch()" (keyup)="focusInput($event, Fdate)"
-                              autocomplete="off">
-                          </mat-form-field>
-                        </div>
-                        <div class="check_in_date">
-                          <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}} {{date_cap}}</label>
-                          <mat-form-field>
-                            <input matInput [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
-                              autocomplete="off">
-                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                             <mat-datepicker #picker></mat-datepicker>
-                          </mat-form-field>
-                        </div>
-                      </mat-expansion-panel>
-                    </mat-accordion>
-                  </td>
-                  </tr>
-                </tbody> 
-                <tbody>
-                <tr *ngFor="let customer of customers">
-                  <td data-title="Name" class="name">
-                    {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
-                  </td>
-                  <td data-title="Mobile" class="service"> {{customer.consumer.userProfile.primaryMobileNo}} </td>
-                  <td data-title="Email" class="email">{{customer.consumer.userProfile.email}}</td>
+        <div class="table-responsive dash-list">
+          <table class="table">
+            <thead>
+              <tr class="tble-filtr-tr">
+                <th>{{name_cap}}</th>
+                <th>{{mobile_cap}}</th>
+                <th>{{email_cap}}</th>
+                <th [matTooltipClass]="tooltipcls"
+                  [matTooltip]="'Date shown only for '+customer_label+'s who have availed the service'">
+                  {{last_visit_cap}}</th>
+                <th>
+                  <table class="fltr-tbl">
+                    <tr>
+                      <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
+                        [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img
+                          src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /></td>
+                      <td> <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                        <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
+                          [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i></td>
+                    </tr>
+                  </table>
+                </th>
+              </tr>
+            </thead>
 
-                  <td data-title="Last Visit" class="lastvisit">
-                    {{customer.lastVisitedDate | date: dateFormat }}
-                  </td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-            <ng-container *ngIf="loadComplete && customers.length == 0">
-              <div class="no-dta">
-                {{no_customer_cap}} 
-              </div>
-            </ng-container>
-            <div class="search_paging" *ngIf="loadComplete">
-              <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
-                [curpage]="pagination.startpageval"></app-pager>
+            <tbody>
+              <tr>
+                <td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
+                  <mat-accordion>
+                    <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
+                      <div class="form-group first_name">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">{{first_name_cap}}</label>
+                          <input matInput [(ngModel)]="filter.first_name" #Ffname (blur)="doSearch()"
+                            (keyup)="focusInput($event,Fmobile)" autocomplete="off">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group mobile">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">{{mobile_cap}}</label>
+                          <input matInput [(ngModel)]="filter.mobile" maxlength="10" #Fmobile (blur)="doSearch()"
+                            (keyup)="focusInput($event, Femail)" autocomplete="off">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group email">
+                        <mat-form-field class="example-full-width">
+                          <label class="col-form-label">{{email_cap}}</label>
+                          <input matInput [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                            (keyup)="focusInput($event, Fdate)" autocomplete="off">
+                        </mat-form-field>
+                      </div>
+                      <div class="check_in_date">
+                        <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}}
+                          {{date_cap}}</label>
+                        <mat-form-field>
+                          <input matInput [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+                            (dateChange)="doSearch()" autocomplete="off">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr *ngFor="let customer of customers">
+                <td data-title="Name" class="name">
+                  {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
+                </td>
+                <td data-title="Mobile" class="service"> {{customer.consumer.userProfile.primaryMobileNo}} </td>
+                <td data-title="Email" class="email">{{customer.consumer.userProfile.email}}</td>
+
+                <td data-title="Last Visit" class="lastvisit">
+                  {{customer.lastVisitedDate | date: dateFormat }}
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-container *ngIf="loadComplete && customers.length == 0">
+            <div class="no-dta">
+              {{no_customer_cap}}
             </div>
+          </ng-container>
+          <div class="search_paging" *ngIf="loadComplete">
+            <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+              (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
           </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<div *ngIf="apiloading" class="router-load-indicator">
+  <app-common-innerloading-spinner></app-common-innerloading-spinner>
+</div>

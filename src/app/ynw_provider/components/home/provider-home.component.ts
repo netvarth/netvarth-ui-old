@@ -183,6 +183,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   calculationmode;
   active_user;
   showToken = false;
+  apiloading = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -288,6 +289,9 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
+  }
+  routeLoadIndicator(e) {
+    this.apiloading = e;
   }
   closeCounters() {
     if (this.cronHandle) { this.cronHandle.unsubscribe(); }
