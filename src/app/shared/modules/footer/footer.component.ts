@@ -325,10 +325,10 @@ legal_cap = Messages.LEGALCAP;
         this.router.navigate(['contact']);
         window.scroll(0, 0);
         break;
-        case 'faq':
-        this.router.navigate(['faq']);
-        window.scroll(0, 0);
-        break;
+        // case 'faq':
+        // this.router.navigate(['faq']);
+        // window.scroll(0, 0);
+        // break;
         case 'pricing':
         this.router.navigate(['pricing']);
         window.scroll(0, 0);

@@ -166,6 +166,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
           this.router.navigate(['/provider/learnmore/' + message.target.scrollKey]);
           break;
+          case 'faq':
+          // this.showLearnMore = true;
+          // this.scrollhideclass.emit(false);
+          // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
+          this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
+          break;
         case 'instant_q':
           this.qAvailability = message.qAvailability;
           break;
@@ -272,6 +278,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   help() {
     this.router.navigate(['/consumer/learn_more']);
+  }
+  faq() {
+    this.router.navigate(['/consumer/faq']);
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');

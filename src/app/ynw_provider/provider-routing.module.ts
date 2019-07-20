@@ -29,6 +29,7 @@ const routes: Routes = [
       { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin] },
       { path: 'members', component: ProviderMembersComponent},
       { path: 'learnmore', loadChildren: './components/learnmore/provider-learnmore.module#ProviderLearnmoreModule'},
+      { path: 'faq', loadChildren: './components/faq/provider-faq.module#ProviderFaqModule'},
       { path: 'customers', component: ProviderCustomersComponent },
       { path: 'inbox', loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'},
       { path: 'auditlog', component: ProviderSystemAuditLogComponent},

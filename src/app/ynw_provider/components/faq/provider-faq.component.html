@@ -1,0 +1,380 @@
+<div class="container">
+  <div class="card" style="background-color: #f2f2f2">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-2" style="font-weight:600 ; font-size:large">FAQ</div>
+        <div class="col-md-10 rightalign"><a style="display: flex; justify-content:flex-end; align-items: center"
+            (click)="goBack()">
+            <i class="material-icons">keyboard_arrow_left</i><span style="font-size: small" class="pointlist"><b> Go
+                Back</b></span></a></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="modal-body col-md-12 no-padding">
+      <div class="row">
+        <div class="col-md-3 help" style="border-right: 1px solid lightgray">
+          <ul>
+            <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'profile')}"><a
+                (click)="menuclicked('profile')">Profile & Search </a></li>
+            <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'checkin')}"><a
+                (click)="menuclicked('checkin')">Check-In Manager </a></li>
+            <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'billing')}"><a
+                (click)="menuclicked('billing')">Billing/POS </a></li>
+            <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'payment')}"><a
+                (click)="menuclicked('payment')">Payments</a></li>
+            <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'miscellaneous')}"><a
+                (click)="menuclicked('miscellaneous')">Miscellaneous</a></li>
+            <li class="pointlist" [ngClass]=" {'helpcolor': (activeMenu == 'license')}"><a
+                (click)="menuclicked('license')">License</a></li>
+            <li class="pointlist" [ngClass]="{'helpcolor': (activeMenu == 'general')}"><a
+                (click)="menuclicked('general')">General</a></li>
+          </ul>
+        </div>
+        <div class="col-md-9 helpcontent">
+          <section class="helpcontent" *ngIf="activeMenu == 'profile'">
+            <span class="helpcontent">
+              Q1) HOW TO UPDATE MY BUSINESS PROFILE DETAILS?<br>
+              A1) You can update your business profile in Settings>Profile.
+            </span><br><br>
+            <span class="helpcontent">
+              Q2) CREATED BUSINESS ACCOUNT WITH JALDEE BUT NOT LISTED IN JALDEE PUBLIC SEARCH?<br>
+              A2) Enable public search in Settings>Profile and get listed in jaldee public search.
+            </span><br><br>
+            <span class="helpcontent">
+              Q3) WHAT IS JALDEE VERIFICATION?<br>
+              A3) After creating a business account, you will be eligible to get verified with Jaldee.com. Jaldee has 3
+              levels of verifications. ie Basic, Basic Plus, Premium. All three levels have their own verification
+              criteria when you fulfill those you will get verified by jaldee. A jaldee verified flag will be shown with
+              your profile in public search results.
+            </span><br><br>
+            <span class="helpcontent">
+              Q4) ARE THERE ANY ADDITIONAL CHARGES FOR JALDEE VERIFICATION?<br>
+              A4) There are three levels of jaldee verification Basic, Basic Plus and Premium. Basic is free of cost but
+              charges are applicable for Basic Plus & Premium level verification.
+            </span><br><br>
+            <span class="helpcontent">
+              Q5) WHAT DO YOU MEAN BY ADWORDS?<br>
+              A5) Adwords are the keywords used to help your business to list on top of jaldee search results. You can
+              create suitable adwords related with your business. If you are Dentist and you have specialized in
+              Pediatric Dentistry you can create adword naming “Pediatric”. So when a consumer search for a pediatric
+              dentist, higher is the chance for your profile to be listed in the top of search results.
+            </span><br><br>
+            <span class="helpcontent">
+              Q6) WHAT IS BASIC INFORMATION IN BUSINESS PROFILE?<br>
+              A6) General and basic information about your business you have given at the time of profile activation
+              process is displayed here.You have the permission to edit each section under Basic Information.
+            </span><br><br>
+            <span class="helpcontent">
+              Q7) WHAT DO YOU MEAN BY LOCATION AMENITIES?<br>
+              A7) Location amenities are resources, conveniences, facilities or benefits continuously offered to the
+              consumers for their use and/or enjoyment, with or without charges at your premises. Amenities are regarded
+              as increasingly important to the growth of your business. It affects customer decision in in choosing
+              certain types of firm (for example Parking type, Available 24 hrs etc).
+            </span><br><br>
+            <span class="helpcontent">
+              Q8) WHAT DO YOU MEAN BY PRIVACY SETTINGS?<br>
+              A8) Controlling your privacy settings (Phone number & Email address) is an important part of protecting
+              your information. Here the system allows you to add, edit or delete both phone number and email address.
+              You can also select who can see your information online.
+            </span><br><br>
+            <span class="helpcontent">
+              Q9) WHAT ARE SPECIALIZATIONS?<br>
+              A9) In specialization you can add what you are specialized in. For example, if you are a lawyer you can
+              add Criminal Lawyer, Civil Lawyer, Family Lawyer etc as your specializations.
+            </span><br><br>
+            <span class="helpcontent">
+              Q10) WHAT DO YOU MEANT BY LANGUAGES KNOWN?<br>
+              A10) Adding different languages widens the door to attract more consumers.You can select the languages you
+              wish to communicate with the consumers.
+            </span><br><br>
+            <span class="helpcontent">
+              Q11) WHAT IS ADDITIONAL INFO?<br>
+              A11) In additional information you can give any additional information pertaining to your business fields,
+              such as Educational qualification, Awards & Recognitions, Reference URL etc.
+            </span><br><br>
+            <span class="helpcontent">
+              Q12) CAN I ADD IMAGES FOR MY BUSINESS?<br>
+              A12) Yes you can add images about your business. Images and photos grab attention and make your profile
+              more engaging. Using images in your profile will result in increased consumer attention and can give a
+              boost in consumer check-ins. Photo Gallery provides view options and add multiple images option.
+            </span><br><br>
+              <span class="helpcontent">
+                Q13) EXPLAIN WORKING HOURS?<br>
+                A13) Your business’ working hours can be set under Settings>Queues. This working hours will be visible
+                to the consumer in your public search profile. You can also disable or edit the same.
+              </span><br><br>
+              <span class="helpcontent">
+                Q14) WHAT IS YOUR SOCIAL MEDIA?<br>
+                A14) These days social media is regarded as the face of any business. You can add links to your social
+                media profiles. Social media link to services like Twitter and Facebook allows visitors to access your
+                social media profiles and get more information about your business.
+              </span><br><br>
+          </section>
+
+          <section class="helpcontent" *ngIf="activeMenu == 'checkin'">
+            <span class="helpcontent">
+              Q1) HOW CHECK-IN MANAGER CAN HELP ME IN MY BUSINESS?<br>
+              A1) Waitlist manager helps you to manage the queue and ensure seamless workflow from the point of check-in
+              to the wait list to the actual appointment. Customers can book your service from their mobile/computer
+              from anywhere anytime. Since we provide the estimated waiting time customers can reach for the service at
+              your premises on time which avoids overcrowding and unnecessary waiting. Using jaldee digital payments
+              customer can pay you online or by cash. Jaldee offers different attractive coupons which will attract more
+              customers to you.
+            </span><br><br>
+            <span class="helpcontent">
+              Q2) WHAT You MEAN BY ACCEPT ONLINE CHECK-IN?<br>
+              A2) Accept online Check-in allows you full control over online consumer check-in. If this button is
+              enabled, check-in is open for consumers and if this button is disabled, consumers can only view your
+              profile at their dashboard,but cannot check-in online for any service offered.
+            </span><br><br>
+            <span class="helpcontent">
+              Q3) HOW IS WAITING TIME CALCULATED?<br>
+              A3) Waiting time refers to the time consumer waits to avail his/her service offered at your premise. There
+              are two ways through which waiting time is calculated.
+              The first one is Automatic Machine Learning and the second one is Fixed.
+            </span><br><br>
+            <span class="helpcontent">
+              Q4) CAN I ACCEPT ONLINE CHECK-IN FOR THE FUTURE?<br>
+              A4) Of course you can accept Check-in for future by using our advanced feature “Accept Future Check-in”.
+              If you enable Accept Future Check-in your customer will have an option to do Check-in for future dates.
+            </span><br><br>
+            <span class="helpcontent">
+              Q5) WHAT IS SHOW TOKEN?<br>
+              A5) If you enable “Show token” your consumer will get a token number when he checks-in for a service. This
+              token number is displayed in the consumer dashboard with which consumer can have a brief idea about his
+              position in the waitlist for a particular queue. If you disable this button your consumers will get only
+              the estimated wait time.
+            </span><br><br>
+            <span class="helpcontent">
+              Q6) WHAT IS BASE LOCATION?<br>
+              A6) Location details you have saved at the time of profile activation process is set by default as the
+              base location of your business. You can also change your base location by editing the same and choose
+              another location through “Google Maps”.
+            </span><br><br>
+            <span class="helpcontent">
+              Q7) CAN I ADD MULTIPLE LOCATIONS FOR MY BUSINESS?<br>
+              A7) Yes you can add multiple locations through Add New Location on Wait list Manager, but the time
+              schedule should not overlap.
+            </span><br><br>
+            <span class="helpcontent">
+              Q8) WHAT IS A SERVICE?<br>
+              A8) It is the service you or your business provide. When you create a service corresponding to the service
+              you provide you have to give the name of the service, estimated duration, price etc. When consumers search
+              for you in jaldee the services created by you will be listed under your profile.
+            </span><br><br>
+            <span class="helpcontent">
+              Q9) HOW CAN I DELETE A SERVICE?<br>
+              A9) You cannot delete a service. Instead you can disable it. The disabled service will not be listed in
+              your public profile.
+            </span><br><br>
+            <span class="helpcontent">
+              Q10) WHAT DO MEAN BY QUEUES?<br>
+              A10) Queue simply means the working hours of your enterprise.Services are rendered to the consumer in the
+              order they checked-in online, walk-in consumers and phone-in consumers who checked-in at your desk.
+            </span><br><br>
+            <span class="helpcontent">
+              Q11) CAN I ADD MORE THAN 1 QUEUE?<br>
+              A11) You can more than 1 Queue and adjust your schedule accordingly through Wait list Manager Add New
+              Queue
+              Button.
+            </span><br><br>
+            <span class="helpcontent">
+              Q12) HOW TO SET THE NUMBER OF CONSUMERS SERVED AT THE SAME TIME?<br>
+              A12) While creating or editing a Queue you can set the number of consumers that can be served at a time
+              and
+              the waiting time will automatically get adjusted.
+            </span><br><br>
+            <span class="helpcontent">
+              Q13) HOW TO LIMIT MAXIMUM NUMBER OF CONSUMERS TO BE SERVED FOR A DAY?<br>
+              A13) While creating or editing a Queue you can set the maximum number of consumers to be served for a day.
+              For example if we set 10 as the maximum capacity, only 10 consumers will be served for that Queue.
+            </span><br><br>
+          </section>
+
+
+          <section class="helpcontent" *ngIf="activeMenu == 'billing'">
+            <span class="helpcontent">
+              Q1) CAN I GIVE DISCOUNTS TO MY CUSTOMERS?<br>
+              A1) Yes you can give discount to your customers, create discounts in Settings>Bill discounts which can be
+              applied on customer bill.
+            </span><br><br>
+            <span class="helpcontent">
+              Q2) CAN I SET TAX FOR MY SERVICES?<br>
+              A2) Yes, you can set Tax for your services by enabling the tax applicable toggle button while creating the
+              service. You can also set the tax to be collected in Tax Settings.
+            </span><br><br>
+            <span class="helpcontent">
+              Q3) WHERE CAN ADD MY TAX SETTINGS?<br>
+              A3) You can your GST number and tax percentage under Settings>Payment settings>Tax settings. These
+              settings will be reflected on consumer bill.
+            </span><br><br>
+          </section>
+
+          <section class="helpcontent" *ngIf="activeMenu == 'license'">
+            <span class="helpcontent">
+              Q1) CAN YOU EXPLAIN ABOUT LICENSE?<br>
+              A1) You are granted a License selected at the time of profile activation process to use Jaldee for a
+              period of time. The software product under this License is provided free of charge initially and need to
+              upgrade before basic free subscription ends.
+            </span><br><br>
+            <span class="helpcontent">
+              Q2) CAN I UPGRADE MY LICENSE?<br>
+              A2) Yes you can upgrade your licence whenever applicable.
+            </span><br><br>
+            <span class="helpcontent">
+              Q3) WHAT IS THE PROCESS OF UPGRADING MY LICENSE?<br>
+              A3) You can upgrade your license through “Upgrade License” in License & Invoice section where you can see
+              different types of upgrades according to the one you have already subscribed. You can choose suitable one
+              from the list of upgradeable licenses.
+            </span><br><br>
+            <span class="helpcontent">
+              Q4) CAN I SUBSCRIBE LICENSE PACKAGE FOR AN YEAR?<br>
+              A4) No you cannot.
+            </span><br><br>
+            <span class="helpcontent">
+              Q5) WHAT IS THE PROCESS OF DOWNGRADING MY LICENSE?<br>
+              A5) You have to contact jaldee support team or mail at support@jaldee.com.
+            </span><br><br>
+            <span class="helpcontent">
+              Q6) WHILE DOWNGRADING MY LICENSE WILL I LOSE ANY MONEY?<br>
+              A6) No, the difference will be reflected in the next bill.
+            </span><br><br>
+            <span class="helpcontent">
+              Q7) IF I REACH MAXIMUM USAGE ACCORDING TO MY LICENSE CAN I SUBSCRIBE A SMALLER PACKAGE WITHOUT UPGRADING THE LICENSE?<br>
+              A7) Yes you can use ‘Add On’ to increase the usage.
+            </span><br><br>
+            <span class="helpcontent">
+                Q8) HOW CAN I TRACK USAGE OF MY LICENSE?<br>
+                A8)    You can track your license usage at Settings>License & Invoice>License usage. 
+              </span><br><br>
+          </section>
+
+
+          <section class="helpcontent" *ngIf="activeMenu == 'payment'">
+            <span class="helpcontent">
+              Q1) HOW CAN I ADD MY BANK ACCOUNT DETAILS?<br>
+              A1) It is an easy process, after signing in just go to the Payment settings on the settings page then
+              select CC/ DC/ Net Banking and enter your account details. Once this is done our support team will verify
+              your account and then you can accept payments from your customers.
+            </span><br><br>
+            <span class="helpcontent">
+              Q2) CAN I AVAIL PREPAYMENTS FROM MY CONSUMERS?<br>
+              A2) Yes, you can receive prepayment by enabling the prepayment toggle button while creating a service. You
+              can also set the amount to be collected as prepayment.
+            </span><br><br>
+            <span class="helpcontent">
+              Q3) HOW DO I ADJUST MY ONLINE PAYMENT SETTINGS?<br>
+              A3) Making it as easy as possible for your consumers to pay is essential for growing your business.
+              Through Online Payment Settings you can input your Paytm/CC/DC/Net Banking information on Jaldee. You can
+              select either “Paytm” or “CC/DC/Net Banking” or both. For enabling Paytm payments you need to enter your
+              mobile number and submit. For CC/DC/Net Banking fill out all the fields displayed there and save.
+            </span><br><br>
+            <span class="helpcontent">
+              Q4) WHAT ARE THE PAYMENT METHODS THAT I CAN ACCEPT FROM MY CONSUMERS?<br>
+              A4) For prepayments your consumers can use Paytm, Credit card, Debit card and Net Banking. You can also
+              accept cash payment from consumers for direct payments.
+            </span><br><br>
+            <span class="helpcontent">
+              Q5) HOW CAN I KNOW THAT MY ONLINE PAYMENT SETTINGS ARE VERIFIED?<br>
+              A5) To verify the payment settings please contact our support team who will verify your settings and let
+              you know about it. After verification you can also see your settings verified in Online Payment Settings
+              page. Online payment verification is necessary to receive online payments from your consumers.
+            </span><br><br>
+          </section>
+
+
+          <section class="helpcontent" *ngIf="activeMenu == 'miscellaneous'">
+              <span class="helpcontent">
+                Q1) CAN I LIST A HOLIDAY IN MY SCHEDULE?<br>
+                A1) Yes, you can add a non working day.
+              </span><br><br>
+            </section>
+
+          <section class="helpcontent" *ngIf="activeMenu == 'general'">
+            <span class="helpcontent">
+              Q1) HOW MANY CITIES ARE JALDEE OPERATIONAL IN?<br>
+              A1) We are currently present in whole of India.
+            </span><br><br>
+            <span class="helpcontent">
+              Q2) HOW WILL CONSUMERS GET NOTIFIED ABOUT ANY CHANGES IN CHECK-IN?<br>
+              A2) Whenever you make any changes like cancel a check-in, add delay to the waitlist a push notification
+              (app) or email (if given) will be sent to the consumer.
+            </span><br><br>
+            <span class="helpcontent">
+              Q3) I PROVIDE SERVICE IN MULTIPLE LOCATIONS. HOW DO I INCLUDE AND SHOW THEM ALL?<br>
+              A3) You can add multiple locations but the timings should not be same for both location. If the timings
+              are same it is advisable that you create another provider account with a different mobile number.
+            </span><br><br>
+            <span class="helpcontent">
+              Q4) HOW DO I REGISTER MY BUSINESS ON jaldee.com?<br>
+              A4) Log on to www.jaldee.com. Click on “Are you a business owner” . You will be redirected to the signup
+              page. Fill the required fields and you are done.
+            </span><br><br>
+            <span class="helpcontent">
+              Q5) I NEVER ASKED TO BE LISTED BUT I AM STILL LISTED ON jaldee.com WITHOUT ANY PRIOR NOTIFICATION.
+              WHY?<br>
+              A5) We at jaldee.com have data teams that search for and find out the top service providers in any
+              locality and gather information about them so that they can be listed on our website. In all cases we call
+              or visit the service provider and verify the details thus collected. In your particular case we would have
+              spoken to a staff member at your organization. In case you don’t want to be listed please mail us on
+              support@jaldee.com or call us on 0487-2325650 and we will have one of our senior team members speak to you
+              and explain. If you still want to go ahead and delist please let the team member know when they speak to
+              you and we will delist you immediately.
+            </span><br><br>
+            <span class="helpcontent">
+              Q6) HOW CAN I DEACTIVATE jaldee.com ACCOUNT?<br>
+              A6) Please mail us on support@jaldee.com or call us on 0487-2325650.
+            </span><br><br>
+            <span class="helpcontent">
+              Q7) WHAT IF I AM NOT HAPPY WITH THE SERVICE OR SERVICE PROVIDER?<br>
+              A7) If you do have any complaints, suggestions or feedback regarding the service or service provider
+              please report to our support team on 0487-2-325650 or mail us on support@jaldee.com. We advise you do this
+              within 24 hours of receiving the service.
+            </span><br><br>
+            <span class="helpcontent">
+              Q8) HOW ARE THE SERVICE PROVIDERS RATED?<br>
+              A8) After each service is completed, our customers are asked to rate the service providers on different
+              parameters and judge the overall satisfaction of the service.
+            </span><br><br>
+            <span class="helpcontent">
+              Q9) WHAT HAPPENS IF THERE ARE ANY OBJECTIONABLE CONTENTS IN MY PROFILE ?<br>
+              A9) If any such contents are found jaldee has the right to disable your account.
+            </span><br><br>
+            <span class="helpcontent">
+              Q10) HOW CAN I COMMUNICATE WITH MY CONSUMERS?<br>
+              A10) You can communicate with the consumers in different ways, like sending push notifications via mobile
+              app/email/ for the actions like delay in wait time, service completion etc.
+            </span><br><br>
+            <span class="helpcontent">
+              Q11) HOW SECURE IS jaldee.com?<br>
+              A11) Jaldee uses the most reliable Amazon web services to store the data so that your will be safe and
+              secure.
+            </span><br><br>
+            <span class="helpcontent">
+              Q12) WHAT IS THE ADVANTAGES OF KIOSK?<br>
+              A12) Through Kiosk your walk-in customers can check-in or register on their own in jaldee. Kiosk interface
+              can be provided in Tablet or an Android mobile.
+            </span><br><br>
+            <span class="helpcontent">
+              Q13) HOW CAN I CONTACT jaldee.com ?<br>
+              A13) Through Kiosk your walk-in customers can check-in or register on their own in jaldee. Kiosk interface
+              can be provided in Tablet or an Android mobile.
+            </span><br><br>
+            <span class="helpcontent">
+              Q14) WILL YOUR TERMS & CONDITIONS OR PRIVACY POLICY TENDS TO CHANGE IF SO HOW WILL I GET NOTIFIED?<br>
+              A14) Our Terms & Conditions and Privacy Policy is subject to change without prior notice.
+            </span><br><br>
+            <span class="helpcontent">
+              Q15) WHY SHOULD I GIVE MY MOBILE NUMBER AND OTHER CONTACT DETAILS WHEN I AM REGISTERING ON jaldee.com?<br>
+              A15) Jaldee uses mobile number as your point of contact with jaldee and and also with your customers.
+              Mobile number is your unique identification id.
+            </span><br><br>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

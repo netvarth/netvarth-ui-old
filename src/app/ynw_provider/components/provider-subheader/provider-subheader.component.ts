@@ -51,18 +51,19 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     public routerobj: Router, private shared_services: SharedServices) {
-    var asyncLoadCount = 0;
-    router.events.subscribe(
+      var asyncLoadCount = 0;
+      router.events.subscribe(
       (event: RouterEvent): void => {
-        if (event instanceof RouteConfigLoadStart) {
-          asyncLoadCount++;
-        } else if (event instanceof RouteConfigLoadEnd) {
-          asyncLoadCount--;
-        }
-        this.isShowingRouteLoadIndicator.emit(!!asyncLoadCount);
+      if (event instanceof RouteConfigLoadStart) {
+      asyncLoadCount++;
+      } else if (event instanceof RouteConfigLoadEnd) {
+      asyncLoadCount--;
       }
-    );
-  }
+      this.isShowingRouteLoadIndicator.emit(!!asyncLoadCount);
+      }
+      );
+     }
+   
   normal_profile_active = 1;
   normal_locationinfo_show = 1;
   normal_basicinfo_show = 1;
@@ -74,7 +75,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   calculationmode;
   showToken = false;
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getLocationList();
     // this.getProviderLocationQueues();
     this.selected_location = this.shared_functions.getitemfromLocalStorage('loc_id');
@@ -376,20 +377,23 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   getMode(mod) {
     switch (mod) {
       case 'checkin':
-        this.router.navigate(['/provider/learnmore/checkin']);
+      this.router.navigate(['/provider/learnmore/checkin']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
         break;
       case 'customer':
-        this.router.navigate(['/provider/learnmore/customer']);
+      this.router.navigate(['/provider/learnmore/customer']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
         break;
       case 'kiosk':
-        this.router.navigate(['/provider/learnmore/kiosk']);
+      this.router.navigate(['/provider/learnmore/kiosk']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
         break;
       case 'help':
-        this.router.navigate(['/provider/learnmore/profile-search->public-search']);
+      this.router.navigate(['/provider/learnmore/profile-search->public-search']);
         break;
+        case 'faq':
+          this.router.navigate(['/provider/faq']);
+            break;
     }
     return this.moreOptions;
   }
@@ -440,7 +444,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   // getProviderLocationQueues() {
   //   this.getProviderLocations()
   //     .then(

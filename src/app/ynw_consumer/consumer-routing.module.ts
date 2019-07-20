@@ -12,6 +12,7 @@ import { ChangeEmailComponent } from '../shared/modules/change-email/change-emai
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
 
 import { WaitlistDetailResolver } from './services/waitlist-detail-resolver.service';
+import { ConsumerLearnmoreComponent } from './components/help/consumer-learnmore.component';
 const routes: Routes = [
   {path: '', component: ConsumerComponent, children: [
     {path: '', component: ConsumerHomeComponent},
@@ -21,14 +22,14 @@ const routes: Routes = [
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
     { path: 'members', component: MembersComponent, canActivate: [AuthGuardLogin]},
-    { path: 'learn_more', loadChildren: './components/help/consumer-learnmore.module#ConsumerLearnmoreModule'},
+    { path: 'learn_more', loadChildren: './components/help/consumer-learnmore.module#ConsumerLearnmoreModule', canActivate: [AuthGuardLogin]},
+    { path: 'faq', loadChildren: './components/consumer-faq/consumer-faq.module#ConsumerFaqModule', canActivate: [AuthGuardLogin]},
     {
       path: 'inbox',
       loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
     },
   ]}
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
