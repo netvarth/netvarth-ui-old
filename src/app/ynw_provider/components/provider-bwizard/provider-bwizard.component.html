@@ -221,6 +221,7 @@
                                                 [(ngModel)]="wizard_data_holder['lat']" name="lat"
                                                 placeholder="Latitude" autocomplete="off"
                                                 (keyup)="handlekeyup('coord_error')"></mat-form-field>
+                                                <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
                                     </div>
                                     <div class="col-6">
                                         <mat-form-field><input matInput type="text" class="form-control" id=""
@@ -228,6 +229,7 @@
                                                 placeholder="Longitude" autocomplete="off"
                                                 (keyup)="handlekeyup('coord_error')">
                                         </mat-form-field>
+                                        <div class="sts-msg error" *ngIf="longerror_Exists">{{longi_error}}</div>
                                     </div>
                                 </div>
                                 <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>

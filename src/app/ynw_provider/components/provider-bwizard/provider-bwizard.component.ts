@@ -127,6 +127,8 @@ export class ProviderbWizardComponent implements OnInit {
   search_active = false;
   coord_error = '';
   locname_error = '';
+  lati_error = '';
+  longi_error = '';
   bProfile;
   address_error = '';
   gurl_error = '';
@@ -176,6 +178,8 @@ export class ProviderbWizardComponent implements OnInit {
   showAddbtn = false;
   origins = 'bwizard';
   bussnesnmerror = '';
+  laterror_Exists = false;
+  longerror_Exists = false;
 
   constructor(
     private fb: FormBuilder,
@@ -300,8 +304,10 @@ export class ProviderbWizardComponent implements OnInit {
         const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
         let latexists = false;
         let lonexists = false;
+        
+        
         // validating the fields if they are entered
-        if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined) {
+        if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined ) {
           latlon_Exists = true;
           const lon_validate = floatpattern.test(this.wizard_data_holder.lon);
           latexists = true;
@@ -310,7 +316,7 @@ export class ProviderbWizardComponent implements OnInit {
             this.coord_error = 'Only number are allowed for GPS Coordinate';
           }
         }
-        if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined) {
+        if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined ) {
           latlon_Exists = true;
           lonexists = true;
           const lat_validate = floatpattern.test(this.wizard_data_holder.lat);
@@ -324,6 +330,18 @@ export class ProviderbWizardComponent implements OnInit {
           if (!latexists || !lonexists) {
             this.error_Exists = true;
             this.coord_error = 'Both coordinates are required';
+          }
+          else{
+            if (this.wizard_data_holder['lon']&& this.wizard_data_holder['lon'] == 0) {
+              this.longerror_Exists = true;
+              this.longi_error = 'Longitude must be a valid number';
+              
+            }
+            if (this.wizard_data_holder['lat'] && this.wizard_data_holder['lat'] == 0) {
+              this.laterror_Exists = true;
+              this.lati_error = 'Latitude must be a valid number';
+              
+            }
           }
           if (this.wizard_data_holder.location === undefined) {
             this.wizard_data_holder.location = '';
@@ -351,8 +369,11 @@ export class ProviderbWizardComponent implements OnInit {
           this.error_Exists = true;
           this.coord_error = 'Both coordinates are required';
         }
-
-        if (this.error_Exists === true) {
+        if (this.laterror_Exists === true || this.longerror_Exists == true) {
+          this.loading_active = false;
+          return;
+        }
+        if (this.error_Exists === true ) {
           this.loading_active = false;
           return;
         }
@@ -401,6 +422,7 @@ export class ProviderbWizardComponent implements OnInit {
         }
         // assiging the schedule json to the object to save it
         // post_itemdata2.baseLocation.bSchedule.timespec = this.schedule_json;
+        console.log(post_itemdata2)
         this.provider_services.patchbProfile(post_itemdata2)
           .subscribe(
             data => {
@@ -764,6 +786,8 @@ export class ProviderbWizardComponent implements OnInit {
     this.bussnesnmerror = '';
     this.address_error = '';
     this.gurl_error = '';
+    this.longi_error ='';
+    this.lati_error ='';
   }
 
   getgeneralBusinessSchedules() {
