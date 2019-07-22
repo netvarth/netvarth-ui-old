@@ -15392,7 +15392,7 @@ header.consumer {
       margin-right: 20px; }
     header.consumer .tp-1 .tp-r {
       flex-grow: 1; }
-      header.consumer .tp-1 .tp-r .moreOptionsOverlay {
+      header.consumer .tp-1 .moreOptionsOverlay {
         z-index: 199; }
       header.consumer .tp-1 .tp-r .tc1 {
         margin-top: 0;
