@@ -296,9 +296,8 @@
     </p>
     <p style="width: 100%; text-align: left;"
     *ngIf="active_license!='Platinum - FREE Trial 60 days' && active_license!='Diamond'">
-    Your
-    current license is
-    <i style="color:red">{{active_license}} </i><span (click)="upgradeMembership()" style="color: #00aef2"
+    Your current license is
+    <i style="color:red">{{active_license}}.</i><span (click)="upgradeMembership()" style="color: #00aef2"
     class="pointer-cursor"> Upgrade license now </span>for more features.
     </p>
     <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
