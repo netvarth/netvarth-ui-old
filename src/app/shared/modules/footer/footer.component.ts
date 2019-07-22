@@ -13,7 +13,6 @@ import {Subscription } from 'rxjs/Subscription';
   // styleUrls: ['./home.component.scss']
 })
 
-
 export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   @Input() includedfrom: string;
   about_cap = Messages.ABOUT_CAP;

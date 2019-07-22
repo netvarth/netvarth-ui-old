@@ -18,3 +18,4 @@ import { ConsumerFaqRoutingModule } from './consumer-faq-routing.module';
     exports: [ConsumerFaqComponent]
 })
 export class ConsumerFaqModule {}
+

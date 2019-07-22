@@ -10,7 +10,6 @@ import { Messages } from '../../../shared/constants/project-messages';
   templateUrl: './consumer-faq.component.html'
 })
 export class ConsumerFaqComponent implements  OnInit {
-
   searchh = true;
   childContent = 'searchh';
   parentContent = 'searchh';

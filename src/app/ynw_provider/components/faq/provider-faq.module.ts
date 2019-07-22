@@ -18,3 +18,4 @@ import { ProviderFaqComponent } from './provider-faq.component';
     exports: [ProviderFaqComponent]
 })
 export class ProviderFaqModule {}
+

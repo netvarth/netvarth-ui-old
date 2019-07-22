@@ -69,6 +69,4 @@ export class ProviderFaqComponent implements  OnInit{
   menuclicked(value){
     this.activeMenu = value;
     }
- 
- 
 }
