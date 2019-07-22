@@ -164,7 +164,8 @@
                                             [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
                 {'required' : 'Please enter prepayment amount',
                 'pattern' : 'Enter a valid amount'})">
-                                        </app-field-error-display>
+                                        </app-field-error-display><br>
+                                        <span class="info-lst form-level-settings">{{remem_msg}}</span>
                                     </div>
                                 </ng-container>
                             </form>

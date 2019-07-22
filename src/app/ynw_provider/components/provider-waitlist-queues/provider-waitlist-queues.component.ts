@@ -126,7 +126,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     this.api_loading = true;
     this.selected_location = this.shared_Functionsobj.getitemfromLocalStorage('loc_id');
     this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'checkinmanager', 'subKey': 'timewindow', 'classname': 'b-queue',
+      'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-time_windows', 'subKey': '', 'classname': 'b-queue',
       'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }]
     };
     this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');

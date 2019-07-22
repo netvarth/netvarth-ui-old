@@ -89,6 +89,7 @@ export class ProviderbWizardComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   service_price_cap = Messages.SERVPRICE_CAP;
   foodServc_frmsentns = Messages.FOODSRVC_FORMLEVEL_CAP;
+  remem_msg = Messages.REMEM_MSG_CAP;
   rupee_symbol = '₹';
   @ViewChild('bnameId') bnameIdref: ElementRef;
   tbprof;

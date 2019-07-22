@@ -51,7 +51,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
     this.getDomainSubdomainSettings();
     this.getServices();
     this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'checkinmanager', 'subKey': 'services', 'classname': 'b-service',
+      'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
       'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' }]
     };
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');

@@ -1108,6 +1108,7 @@ export const Messages = {
   'WIZ_COMPL_YOUR_PRO_CAP': 'page and complete your profile, then you can turn on',
   'WIZ_PUB_SEARCH_CAP': 'Public Search!',
   'CUSTM_ID': 'Create your own business id for your details page, to share among your potential [customer]s',
+  'REMEM_MSG_CAP': 'Default bank account selected for online payment is Jaldee bank, if applicable you can set your own bank account from Payment settings.',
   // App-ynw_provider-components-provider-payment-settings
   'PAY_SET_JALDEE_ACCOUNT_CAP': 'Jaldee Bank',
   'PAY_SET_MY_OWN_ACCOUNT_CAP': 'My Own Bank Account',

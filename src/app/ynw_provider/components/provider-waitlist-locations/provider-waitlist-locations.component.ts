@@ -153,7 +153,7 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
             actions.push({ 'title': this.new_loc_cap, 'type': 'addlocation' });
           }
           this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager', 'subKey': 'locations', 'classname': 'b-loc',
+            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-locations', 'subKey': '', 'classname': 'b-loc',
             'actions': actions
           };
           this.init_location = false;
