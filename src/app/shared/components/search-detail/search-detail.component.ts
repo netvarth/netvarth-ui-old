@@ -1180,33 +1180,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
-
-    const ex = this.check_QuerystrinfieldexistsinArray(fieldname);
-    if (ex === -1) {
-      this.querystringrefineretain_arr[fieldname] = selval;
-      if (fieldname === 'ynw_verified_level') {
-        for (let jjj = 0; jjj < this.querystringrefineretain_arr[fieldname].length; jjj++) {
-          this.querystringrefineretain_arr[fieldname][jjj] = Number(this.querystringrefineretain_arr[fieldname][jjj]);
-        }
-      }
-    } else {
-      const len = this.querystringrefineretain_arr[fieldname].length + 1;
-      for (let i = 0; i < this.querystringrefineretain_arr[fieldname].length; i++) {
-        if (this.querystringrefineretain_arr[fieldname].includes(selval)) {
-        } else {
-          this.querystringrefineretain_arr[fieldname][len] = selval;
-          if (fieldname === 'ynw_verified_level') {
-            for (let jjj = 0; jjj < this.querystringrefineretain_arr[fieldname].length; jjj++) {
-              this.querystringrefineretain_arr[fieldname][jjj] = Number(this.querystringrefineretain_arr[fieldname][jjj]);
-            }
-          }
-        }
-      }
-      this.querystringrefineretain_arr[fieldname]
-    }
-    console.log(this.querystringrefineretain_arr);
-
-
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     if (this.searchrefineresult_arr.length) {
@@ -1263,13 +1236,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   // method which checks whether a particular field value is already there in the refineresult array, if yes then returns the details
   check_fieldvalexistsinArray(fieldname, selval) {
     let ret_arr = [{ 'indx': -1, 'field': '', 'key': '' }];
-    // for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
-    //   for (const key in this.searchrefineresult_arr[i][fieldname]) {
-    //     if (this.searchrefineresult_arr[i][fieldname][key][0] === selval) {
-    //       ret_arr = [{ 'indx': i, 'field': fieldname, 'key': key }];
-    //     }
-    //   }
-    // }
+    for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
+      for (const key in this.searchrefineresult_arr[i][fieldname]) {
+        if (this.searchrefineresult_arr[i][fieldname][key][0] === selval) {
+          ret_arr = [{ 'indx': i, 'field': fieldname, 'key': key }];
+        }
+      }
+    }
     return ret_arr;
   }
   // method which rebuilds the query string to be used on refine filter selection
@@ -1282,6 +1255,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.refined_subdomain !== '') {
       this.refined_querystr = this.refined_querystr + ' sub_sector:\'' + this.refined_subdomain + '\'';
     }
+    console.log(this.searchrefineresult_arr);
     for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
       for (const field in this.searchrefineresult_arr[i]) {
         if (field) {
@@ -1597,6 +1571,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.searchButtonClick = false;
     this.refined_domain = val;
     this.refined_subdomain = '';
+    this.searchrefineresult_arr = [];
     this.getlistofSubdomains(val, 'domainchange');
     if (this.subdomainlist_data.length === 1) { // case if there is only one subdomain
       this.handlerefinedsubdomainchange(this.subdomainlist_data[0].subDomain);
