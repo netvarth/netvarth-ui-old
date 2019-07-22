@@ -1255,7 +1255,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.refined_subdomain !== '') {
       this.refined_querystr = this.refined_querystr + ' sub_sector:\'' + this.refined_subdomain + '\'';
     }
-    console.log(this.searchrefineresult_arr);
+    // console.log(this.searchrefineresult_arr);
     for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
       for (const field in this.searchrefineresult_arr[i]) {
         if (field) {

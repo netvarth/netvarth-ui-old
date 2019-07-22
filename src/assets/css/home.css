@@ -74,7 +74,7 @@
   top: 35%; */
   width: 100%;
   z-index: 1;
-  background: url(../images/home/jaldee-home.svg) no-repeat center !important;
+ background: skyblue !important;
   content: "";
   /* background-size: cover !important;
   -webkit-background-size: cover !important;
@@ -85,6 +85,12 @@
   left: 0;
   top: 0;
   position: relative;
+}
+
+@media (min-width: 767px) {
+  .srch {
+    background: url(../images/home/jaldee-home.svg) no-repeat center !important;
+  }
 }
 
 .search_domain, .srch .sa .sa-fld .sa-dm, .search_keyword_class {

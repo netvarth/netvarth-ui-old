@@ -721,6 +721,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       (billInfo => {
         this.bill_data = billInfo;
         this.hideAddItem();
+        this.getWaitlistBill();
       }, error => {
         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
