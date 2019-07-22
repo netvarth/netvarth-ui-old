@@ -430,6 +430,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       for (let i = 0; i < provids_locid.length; i++) {
         post_provids_locid.push(provids_locid[i].locid);
       }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
       this.consumer_services.getEstimatedWaitingTime(post_provids_locid)
         .subscribe(data => {
           let waitlisttime_arr: any = data;

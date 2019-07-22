@@ -898,6 +898,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       for (let i = 0; i < provids.length; i++) {
         post_provids.push(provids[i].provid);
       }
+    	if (post_provids.length === 0) {
+        return;
+      }
       this.searchdetailserviceobj.getEstimatedWaitingTime(post_provids)
         .subscribe(data => {
           this.waitlisttime_arr = data;

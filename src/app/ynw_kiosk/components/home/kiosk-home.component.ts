@@ -212,6 +212,9 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   getWaitingTime(provid_locid) {
     if (provid_locid !== '') {
       this.kiosk_loading = true;
+      if (provid_locid.length === 0) {
+        return;
+      }
       this.kiosk_services.getEstimatedWaitingTime(provid_locid)
         .subscribe(data => {
           this.waitlisttime_arr = data;
