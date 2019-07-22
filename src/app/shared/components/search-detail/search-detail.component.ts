@@ -657,7 +657,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       let autoname = this.kwautoname;
       autoname = autoname.replace(/\//g, '%2F');    // url encoding (replacing forward slash)
-      urlstr += 'kw=' + this.kw + ';kwauto=' + autoname + ';kwdomain=' + this.kwdomain + ';kwsubdomain=' + this.kwsubdomain + ';kwtyp=' + this.kwtyp;
+      let kw = this.kwautoname;
+      kw = kw.replace(/\//g, '%2F'); 
+      urlstr += 'kw=' + kw + ';kwauto=' + autoname + ';kwdomain=' + this.kwdomain + ';kwsubdomain=' + this.kwsubdomain + ';kwtyp=' + this.kwtyp;
     }
     if (this.commonfilters !== '') {
       if (urlstr !== '') {

@@ -205,8 +205,10 @@
                                                         <li *ngFor="let schedule of loc.display_schedule">
                                                             <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
                                                                 class="time">{{schedule.time}}
-                                                                <span class="form-level-settings" *ngIf="schedule.recurrtype === 'Once'">(only for today)</span>
-                                                                </span>
+                                                                <span class="form-level-settings"
+                                                                    *ngIf="schedule.recurrtype === 'Once'">(only for
+                                                                    today)</span>
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -279,8 +281,10 @@
                                                         {{loc['personAhead']}} {{people_ahead}} </div>{{get_token_cap}}
                                                 </div>
                                             </div>
-                                            <div class="wt-msg" *ngIf="loc['estimatedtime_det']['message']">
-                                                {{loc['estimatedtime_det']['message']}}</div>
+                                            <div class="wt-tme notallowed">
+                                                <ng-container *ngIf="loc['estimatedtime_det']['message']">
+                                                    {{loc['estimatedtime_det']['message']}}</ng-container>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="bt-r"
