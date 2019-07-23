@@ -1586,6 +1586,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   handlerefinedsubdomainchange(val) {
+    this.searchrefineresult_arr = [];
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     this.refined_subdomain = val;
