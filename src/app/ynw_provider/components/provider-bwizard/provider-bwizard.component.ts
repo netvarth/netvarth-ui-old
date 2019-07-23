@@ -433,8 +433,8 @@ export class ProviderbWizardComponent implements OnInit {
             },
             (error) => {
               this.loading_active = false;
-              this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
-              // this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              // this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
         break;
@@ -683,9 +683,9 @@ export class ProviderbWizardComponent implements OnInit {
               }
             }
             const addr = result['address'] || null;
-            if (addr) {
-              this.wizard_data_holder['location'] = addr.split(',')[0];
-            }
+            // if (addr) {
+            //   this.wizard_data_holder['location'] = addr.split(',')[0];
+            // }
           }
         }
       }
