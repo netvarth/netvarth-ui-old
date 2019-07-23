@@ -28,10 +28,10 @@
                                     </ul>
                                     <div class="rating-stars">
                                         <img class="ratingstar" *ngFor="let enable of ratingenabledArr"
-                                            src="./assets/images/star.svg" alt=""/><img class="ratingstar"
-                                            *ngIf="ratingenabledHalf" src="./assets/images/star-half.svg" alt=""/><img
+                                            src="./assets/images/star.svg" alt="" /><img class="ratingstar"
+                                            *ngIf="ratingenabledHalf" src="./assets/images/star-half.svg" alt="" /><img
                                             class="ratingstar" *ngFor="let enable of ratingdisabledArr"
-                                            src="./assets/images/star-disabled.svg" alt=""/>
+                                            src="./assets/images/star-disabled.svg" alt="" />
                                     </div>
                                 </div>
                                 <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
@@ -105,11 +105,12 @@
                                 </div>
                                 <ul class="side-menu" *ngIf="settings_exists && business_exists  && location_exists">
                                     <li *ngIf="isfirstCheckinOffer"><i class="fa fa-tag red"></i><span
-                                            class="icon-first-coup pointer-cursor"
-                                            (click)="openCoupons('first')">First Time Sign up Coupon</span></li>
+                                            class="icon-first-coup pointer-cursor" (click)="openCoupons('first')">First
+                                            Time Sign up Coupon</span></li>
                                     <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor"
                                             (click)="openCoupons()">Jaldee Coupons</span></li>
-                                    <li *ngIf="isLoggedIn"><span class="icon-history" (click)="redirectMe('history')">History</span></li>
+                                    <li *ngIf="isLoggedIn"><span class="icon-history"
+                                            (click)="redirectMe('history')">History</span></li>
                                     <li *ngIf="isLoggedIn"><span class="fav icon-favourite" *ngIf="!isInFav"
                                             (click)="handle_Fav('add')">{{add_to_fav_cap}}</span></li>
                                     <li *ngIf="isLoggedIn"><span class="icon-favourite-filled" *ngIf="isInFav"
@@ -179,7 +180,8 @@
                                             (click)="showExistingCheckin(loc)">{{you_have_cap}}
                                             <span class="count">{{loc.checkins.length}}
                                                 {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
-                                        <h3>{{loc.place | capitalizeFirst}}</h3>
+                                        <h3>{{loc.place | capitalizeFirst}}<sup class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                            </sup></h3>
                                         <a rel="noopener" class="directions" [href]="loc.googleMapUrl" target="_blank"
                                             *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
                                         <div class="clr">
@@ -260,38 +262,24 @@
                                 </div>
                             </div> -->
 
+
                             <div class="bottom-sect pdetail">
                                 <div class="bt-l">
                                     <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                         <div class="o-now" *ngIf="loc.opennow">
                                             {{open_now_cap}}</div>
-                                        <div class="timing"
-                                            *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                                            <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
-                                            <span class="time-data">{{loc['estimatedtime_det']['time']}}
-                                            </span>
-                                        </div>
                                         <div
                                             *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
                                             <div class="timing" *ngIf="loc['personAhead']">
-                                                <span class="timing" style="margin-bottom: 5px"
-                                                    *ngIf="!loc.opennow">
-                                                    <span class="est-time"> Next Available Time: </span>
-                                                    <span
-                                                        class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
-                                                <div style="display: flex"> <b>{{loc['personAhead']}} &nbsp;
-                                                    </b><span *ngIf="loc['personAhead'] > 1" class="people-ahead">
-                                                        {{people_ahead}}</span><span *ngIf="loc['personAhead'] == 1"
-                                                        class="people-ahead">
+                                                <div style="display: flex">
+                                                    <b>{{loc['personAhead']}} &nbsp;</b>
+                                                    <span *ngIf="loc['personAhead'] > 1" class="people-ahead">
+                                                        {{people_ahead}}</span>
+                                                    <span *ngIf="loc['personAhead'] == 1" class="people-ahead">
                                                         {{one_person_ahead}}</span></div>
 
                                             </div>
                                             <div class="timing" *ngIf="loc['personAhead'] === 0">
-                                                <span class="timing" style="margin-bottom: 5px"
-                                                    *ngIf="!loc.opennow">
-                                                    <span class="est-time"> Next Available Time: </span>
-                                                    <span
-                                                        class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
                                                 <div class="">
                                                     {{loc['personAhead']}} {{people_ahead}} </div>{{get_token_cap}}
                                             </div>
@@ -300,27 +288,46 @@
                                             {{loc['estimatedtime_det']['message']}}</div>
                                     </div>
                                 </div>
-                                <div class="bt-r"
+                                <div class="cust1"
                                     *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                    <span class="cs-btn chk-btn"
+                                    <span class="cust2 cust3"
                                         (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                         *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
-                                    <span class="cs-btn chk-btn"
+                                    <span class="cust2 cust3"
                                         (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                         *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
-                                    <span class="cs-btn chk-btn disabled"
+                                    <span class="cust2 cust3 disabled"
                                         *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
-                                    <span class="cs-btn chk-btn disabled"
+                                    <span class="cust2 cust3 disabled"
                                         *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
-                                    <span class="cs-btn bt10"
-                                        *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                        (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
-                                        <span
-                                            *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
-                                        <span
-                                            *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
-                                        {{for_cap}}
-                                        <span>{{different_date_cap}}</span></span>
+
+                                    <div class="cust5"
+                                        *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                                        <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
+                                        <span class="time-data">{{loc['estimatedtime_det']['time']}}
+                                        </span>
+                                    </div>
+
+                                    <ng-container
+                                        *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
+                                        <ng-container *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
+                                            <span class="cust5" style="margin-bottom: 5px" *ngIf="!loc.opennow">
+                                                <span class="est-time"> Next Available Time </span>
+                                                <span
+                                                    class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
+                                        </ng-container>
+                                    </ng-container>
+                                    <div>
+                                        <span class="cust6 bt10"
+                                            *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
+                                            (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                            <span
+                                                *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
+                                            <span
+                                                *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
+                                            {{for_cap}}
+                                            <span>{{different_date_cap}}</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

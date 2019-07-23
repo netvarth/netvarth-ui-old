@@ -106,13 +106,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                   return next.handle(this.updateHeader(req, url));
                 })
               );
-            } else if (error.status === 405 || error.status === 404) {
+            } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
             } else if (error.status === 0) {
               // retry(2);
               this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
               return next.handle(req);
-            } else if (error.status === 401) {
+            } else if (error.status === 401 || error.status === 404) {
               return next.handle(req);
               // this.shared_functions.logout();
             } else if (error.status === 301) {
