@@ -272,7 +272,7 @@ export class CheckInInnerComponent implements OnInit {
 
           this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
           this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });  // done to set the min date in the calendar view
-          this.minDate = new Date(this.minDate);
+          this.minDate = new Date(this.minDate.replace(/-/g, "/"));
         }
       }
 
