@@ -1,16 +1,12 @@
 <app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
     (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"
     [passedRefine]="searchcommononlyrefine_arr"></app-header>
-<!-- <app-search *ngIf="showsearchsection" [showopennow]="0" [searchfields] = "searchfields" [subdomainpassedfromrefined]="subdomainleft" [domainpassedfromrefined]="domain"  (searchclick)="handlesearchClick($event)"></app-search> -->
 <section class="content">
     <div class="container">
         <div class="row">
-            <!-- <div class="status-bar" *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && search_result_count > 0"> -->
             <div class="status-bar"
                 *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring && additionalRefineCondition()">
                 <div class="ct1">
-                    <!-- <span class="fa fa-filter" (click)="togger_refinesection()" [matTooltipClass]="tooltipcls"
-                        [matTooltip]="refTooltip"> -->
                     <span>
                         <i class="icon-filter-one" style="font-size: x-large" (click)="togger_refinesection()"
                             [matTooltipClass]="tooltipcls" [matTooltip]="refTooltip"></i>
@@ -18,21 +14,16 @@
                         <span></span>
                         <span></span>
                     </span>
-
                     <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
                 </div>
             </div>
-
             <div class="c-outer">
-                <!-- <div class="sidebar-overlay" *ngIf="showrefinedsection && search_result_count > 0" (click)="togger_refinesection()"></div>
-                <div class="sidebar" [class.show]="showrefinedsection && search_result_count > 0" *ngIf="showrefinedsection && search_result_count > 0"> -->
                 <div class="sidebar-overlay" *ngIf="showrefinedsection && additionalRefineCondition()"
                     (click)="togger_refinesection()"></div>
                 <div class="sidebar" [class.show]="showrefinedsection"
                     *ngIf="showrefinedsection && additionalRefineCondition()">
                     <div class="rs-box">
                         <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
-                            <!-- <div class="bx-block" *ngIf="domainlist_data && kwtyp != 'subdom'"> -->
                             <div class="bx-block" *ngIf="domainlist_data && (domain =='' || domain =='All')">
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
@@ -57,7 +48,6 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                             </div>
-                            <!-- <div  class="bx-block" *ngIf="subdomainlist_data && kwtyp != 'subdom' && domain != 'All'"> -->
                             <div class="bx-block"
                                 *ngIf="subdomainlist_data && (subsector=='' || subsector == undefined)  && (subdomainlist_data.length>1)">
                                 <mat-accordion *ngIf="refined_domain || (domain !='' && domain != 'All')">
@@ -83,19 +73,7 @@
                                         </mat-form-field>
                                     </mat-expansion-panel>
                                 </mat-accordion>
-                                <!-- <div class="refine_subheader">Select Subdomain</div>
-                              <mat-form-field>
-                                  <div>
-                                    <mat-select placeholder="" [(ngModel)]="selected_leftsubdomain" #leftselsubdomain (change)="handleleftsubdomainchange(leftselsubdomain.value)" >
-                                      <mat-option value="">--  Select --</mat-option>
-                                      <mat-option *ngFor="let sdomain of subdomainlist_data" [value]="sdomain.subDomain" >
-                                        {{ sdomain.displayName }}
-                                      </mat-option>
-                                    </mat-select>
-                                  </div>
-                              </mat-form-field> -->
                             </div>
-
                             <ng-container *ngFor="let refine_data of searchrefine_arr; let refindx=index">
                                 <div class="bx-block"
                                     *ngIf="refine_data.dataType!='DataGrid' && refine_data.dataType!='Boolean' && refine_data.dataType!='URL'">
@@ -113,7 +91,6 @@
                                                 <div
                                                     *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'">
                                                     <mat-form-field class="example-full-width">
-                                                        <!-- <input matInput placeholder="Enter {{refine_data.displayName}}" [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)" (blur)="handleTextrefineblur(refine_data.cloudSearchIndex	,$event.target.value,refine_data.dataType, false)"> -->
                                                         <input matInput autocomplete="off"
                                                             [value]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
                                                             (keyup)="handleTextrefineKeypress($event, refine_data.cloudSearchIndex,$event.target.value,refine_data.dataType, false)"
@@ -159,14 +136,8 @@
                                                                 </ng-container>
                                                             </div>
                                                         </ng-container>
-                                                        <!-- <div class="refine_field_subouter" *ngFor="let refine_field of refine_data.enumeratedConstants">
-
-                                                    <mat-checkbox [checked]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, refine_field.name, refine_data.dataType)" class="example-margin" (change)="handle_optionclick(refine_data.cloudSearchIndex	,refine_data.dataType,refine_field.name,false)">{{refine_field.displayName}}</mat-checkbox>
-
-                                                  </div> -->
                                                     </div>
                                                 </div>
-
                                                 <div *ngIf="refine_data.dataType=='Rating'">
                                                     <app-rating-star [cloudindex]="refine_data.cloudSearchIndex"
                                                         [ratingval]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
@@ -176,7 +147,6 @@
                                             </mat-expansion-panel>
                                         </mat-accordion>
                                     </ng-container>
-
                                     <ng-container
                                         *ngIf="refine_data.cloudSearchIndex=='specialization' && !specialization_hide">
                                         <mat-accordion>
@@ -187,7 +157,6 @@
                                                         <span class="refine-head">{{refine_data.displayName}}</span>
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
-
                                                 <div
                                                     *ngIf="refine_data.dataType=='EnumList' || refine_data.dataType=='Enum'">
                                                     <div *ngIf="refine_data.enumeratedConstants.length>0">
@@ -207,7 +176,6 @@
                                                                     <div class="refinemore" (click)="showmore(refindx)">
                                                                         {{show_more_cap}}</div>
                                                                 </ng-container>
-
                                                                 <ng-container
                                                                     *ngIf="refine_data.showhiddendet != undefined && refine_data.showhiddendet">
                                                                     <ng-container *ngIf="i>=showmore_defaultcnt">
@@ -233,7 +201,6 @@
                                     </ng-container>
                                 </div>
                             </ng-container>
-
                             <div class="bx-block">
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
@@ -258,7 +225,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="c-body" [class.hideme]="showrefinedsection" *ngIf="search_result_count">
                     <div class="ct2" [class.ct2pad]="!showrefinedsection">
                         <div class="ct-l">
@@ -266,7 +232,6 @@
                                 <strong>{{search_data.hits.found}}</strong>
                                 {{(search_data.hits.found>1) ? 'results': ''}} {{(search_data.hits.found==1) ?
                                 'result': ''}} {{found_cap}}
-                                <!-- for <span>Ã¢â‚¬ËœDentistsÃ¢â‚¬â„¢</span> -->
                             </div>
                         </div>
                         <div class="ct-r ml-auto">
@@ -313,7 +278,6 @@
                                         </li>
                                     </ul>
                                     <div class="rating-stars">
-                                        <!-- {{search_result.fields.rating}}  -->
                                         <ng-container *ngIf="search_result.fields.rating>0">
                                             <ng-container *ngIf="search_result.fields.rating==.5">
                                                 <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
@@ -362,27 +326,22 @@
                                                 <img class="ratingstar" src="./assets/images/star-disabled.svg"
                                                     alt="" />
                                             </ng-container>
-
                                             <ng-container *ngIf="search_result.fields.rating==4">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
                                                     src="./assets/images/star.svg" alt="" />
                                                 <img class="ratingstar" src="./assets/images/star-disabled.svg"
                                                     alt="" />
                                             </ng-container>
-
                                             <ng-container *ngIf="search_result.fields.rating==4.5">
                                                 <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
                                                     src="./assets/images/star.svg" alt="" />
                                                 <img class="ratingstar" src="./assets/images/star-half.svg" alt="" />
                                             </ng-container>
-
                                             <ng-container *ngIf="search_result.fields.rating==5">
                                                 <ng-container *ngFor="let number of [1,2,3,4,5]">
                                                     <img class="ratingstar" src="./assets/images/star.svg" alt="" />
                                                 </ng-container>
                                             </ng-container>
-
-
                                         </ng-container>
                                         <ng-container *ngIf="search_result.fields.rating==0">
                                             <ng-container *ngFor="let number of [1,2,3,4,5]">
@@ -390,47 +349,22 @@
                                                     alt="" />
                                             </ng-container>
                                         </ng-container>
-
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <!-- <div *ngIf="search_result.fields.ynw_verified && (search_result.fields.ynw_verified_level==2 || search_result.fields.ynw_verified_level==3 || search_result.fields.ynw_verified_level==4) "
-                                        class="ynw-verified">
-                                        <span class="level basic"
-                                            *ngIf="search_result.fields.ynw_verified_level==2">{{basic_cap}}</span>
-                                        <span class="level basicplus"
-                                            *ngIf="search_result.fields.ynw_verified_level==3">{{basic_plus_cap}}</span>
-                                        <span class="level premium"
-                                            *ngIf="search_result.fields.ynw_verified_level==4">{{premium_cap}}</span>
-
-                                    </div> -->
-                                    <!-- <h3 [ngClass]="{'nonClaimed' : search_result.fields.claimable==1}"
-                                        (click)="search_result.fields.claimable!=1 && providerDetClicked(search_result)"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="bNameTooltip">
-                                        {{search_result.fields.title | capitalizeFirst}}<span class="cert"
-                                            *ngIf="search_result.fields.qualification">,
-                                            {{search_result.fields.qualification}}</span></h3> -->
-
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="bNameTooltip">
-                                        {{search_result.fields.title | capitalizeFirst}}
-                                        <!-- <span class="cert" *ngIf="search_result.fields.qualification">,
-                                            {{search_result.fields.qualification}}</span> -->
+                                        {{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now" *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
+                                        </sup>
                                     </h3>
-
-
                                     <div
                                         *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
                                         <b>{{search_result.fields.branch_name}}</b></div>
-
-
                                     <div *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['branchSpCount']"
                                         class="pointer-cursor" (click)="providerDetClicked(search_result)">
                                         <b>{{search_result.fields['estimatedtime_det']['branchSpCount']}}
                                             {{provider_label}} </b>
                                     </div>
-
-
                                     <span
                                         *ngIf="search_result.fields.place1">{{search_result.fields.place1 | capitalizeFirst }}
                                         <span class="consumr-loc-icon"><a *ngIf="search_result.fields.location1"
@@ -440,18 +374,6 @@
                                             </a></span>
                                     </span>
                                     <!-- ({{showinKm(search_result.exprs.distance)}}) -->
-
-                                    <!-- <div class="address" *ngIf="search_result.fields.address1">
-                                        {{search_result.fields.address1 | capitalizeFirst }}
-
-
-                                        <span class="consumr-loc-icon"><a *ngIf="search_result.fields.location1"
-                                                rel="noopener"
-                                                [href]="'https://www.google.com/maps/place/'+search_result.fields.location1+'/@'+search_result.fields.location1+',15z'"
-                                                target="_blank" class="icon-location" matTooltip="Click to navigate">
-                                            </a></span>
-                                    </div> -->
-
                                     <div class="clr">
                                         <div class="otr-elements">
                                             <span
@@ -461,7 +383,6 @@
                                                     *ngFor="let spec of search_result.fields.specialization_displayname; let i = index"><span
                                                         *ngIf="i>0" class="spacer"></span>{{spec}}</span></span>
                                         </div>
-
                                         <div class="schedule" *ngIf="search_result.fields.display_schedule">
                                             <ul>
                                                 <li *ngFor="let schedule of search_result.fields.display_schedule">
@@ -516,8 +437,6 @@
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==4"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-advanced'"><img
                                             src="./assets/images/premium.png" alt="Advanced"></li>
-                                    <!-- <li><span class="icon-ambulance"></span></li>
-                                    <li><span class="icon-payment"></span></li> -->
                                 </ul>
                                 <span class="first-time-jc"
                                     *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
@@ -540,23 +459,13 @@
                                     *ngIf="search_result.fields['estimatedtime_det'] && search_result.fields['estimatedtime_det']['message']!='No active services'">
                                     <div class="o-now" *ngIf="search_result.fields['opennow']">{{open_now_cap}}
                                     </div>
-                                    <div class="timing"
-                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
-                                        <span class="est-time"
-                                            *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
-                                        <span class="time-data"
-                                            *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
-                                        </span>
+                                    <div class="wt-tme notallowed">
+                                        <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">
+                                            {{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                     </div>
                                     <div
                                         *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
                                         <div *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
-                                            <div class="timing" style="margin-bottom: 5px"
-                                                *ngIf="!search_result.fields['opennow']">
-                                                <span class="est-time">Next Available Time:</span>
-                                                <span
-                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
-                                            </div>
                                             <b>{{search_result.fields['estimatedtime_det']['personAhead']}} </b><span
                                                 class="people-ahead"
                                                 *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1">{{people_ahead}}</span>
@@ -564,47 +473,54 @@
                                                 *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1">{{one_person_ahead}}</span>
                                         </div>
                                         <div *ngIf="search_result.fields['estimatedtime_det']['personAhead'] === 0">
-                                            <div class="timing" style="margin-bottom: 5px"
-                                                *ngIf="!search_result.fields['opennow']">
-                                                <span class="est-time">Next Available Time:</span>
-                                                <span
-                                                    class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
-                                            </div>
                                             <div class="time-data">
                                                 {{search_result.fields['estimatedtime_det']['personAhead']}}
                                                 {{people_ahead}} </div>{{get_token_cap}}
                                         </div>
                                     </div>
-
-                                    <div class="wt-tme notallowed">
-                                        <!-- <ng-container *ngIf="!search_result.fields['estimatedtime_det']['message']">
-                                                {{sorry_cap}}
-                                                {{getTerminologyTerm('waitlist', search_result.fields)}} {{not_allowed_cap}}
-                                            </ng-container> -->
-                                        <ng-container *ngIf="search_result.fields['estimatedtime_det']['message']">
-                                            {{search_result.fields['estimatedtime_det']['message']}}</ng-container>
-                                    </div>
                                 </div>
-
                             </div>
-                            <div class="bt-r"
+                            <div class="cust1"
                                 *ngIf="search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['onlineCheckIn'] || search_result.fields.future_checkins==1)">
-                                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)"
+                                <span class="cust2 cust3" (click)="checkinClicked(search_result, false)"
                                     *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && (search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken']))">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
-                                <span class="cs-btn chk-btn" (click)="checkinClicked(search_result, false)"
+                                <span class="cust2 cust3" (click)="checkinClicked(search_result, false)"
                                     *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
-                                <span class="cs-btn chk-btn disabled"
+                                <span class="cust2 cust3 disabled"
                                     *ngIf="(search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])) && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
-                                <span class="cs-btn chk-btn disabled"
+                                <span class="cust2 cust3 disabled"
                                     *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
-                                <span class="cs-btn bt10" (click)="checkinClicked(search_result, true)"
-                                    *ngIf="search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}}
-                                    <span
-                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span><span
-                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
-                                    {{for_cap}} <span>{{different_date}}</span></span>
+                                <div class="cust5"
+                                    *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                    <span class="est-time"
+                                        *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                    <span class="time-data"
+                                        *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
+                                    </span>
+                                </div>
+                                <ng-container
+                                    *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                    <ng-container
+                                        *ngIf="search_result.fields['estimatedtime_det']['personAhead'] || search_result.fields['estimatedtime_det']['personAhead'] === 0">
+                                        <div class="cust5" style="margin-bottom: 5px"
+                                            *ngIf="!search_result.fields['opennow']">
+                                            <span class="est-time">Next Available Time</span>
+                                            <span
+                                                class="time-data">{{search_result.fields['estimatedtime_det']['nextAvailDate']}}</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <div>
+                                    <span class="cust6 bt10" (click)="checkinClicked(search_result, true)"
+                                        *ngIf="search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}}
+                                        <span
+                                            *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
+                                        <span
+                                            *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])">{{getTerminologyTerm('waitlist', search_result.fields)}}</span>
+                                        {{for_cap}} <span>{{different_date}}</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>

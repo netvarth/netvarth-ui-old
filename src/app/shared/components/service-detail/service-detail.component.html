@@ -31,25 +31,12 @@
             <div class="outer1 line">
                 <div class="name">
                     <span class="dispvalue">{{data.serdet.name | capitalizeFirst}} </span>
-                    <!-- <span *ngIf="data.serdet.totalAmount !=0">({{data.serdet.totalAmount | currency:'INR':'symbol':'.2-2'}})</span> -->
                     <span *ngIf="this.data.serdet.taxable"><sup>Tax</sup></span>
                 </div>
                 <div class="description">
                         {{data.serdet.description}}
                     </div>
             </div>
-<!-- 
-            <div class="outer2">
-                <div class="description">
-                    {{data.serdet.description}}
-                </div>
-            </div> -->
-            <!-- <div class="outer2">
-            <div class="duration">
-              <span>Service duration is {{data.serdet.serviceDuration}} mins <span *ngIf="data.serdet.isPrePayment" >and you have to pay {{data.serdet.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}} in advance</span> </span>
-            </div>
-        </div> -->
-
             <div class="outer3" *ngIf="data.serdet.totalAmount != 0">
                 <div class="duration">
                     <span>{{price_cap}} :&nbsp; </span><span style="font-weight: bold">
@@ -57,7 +44,6 @@
                     </span>
                 </div>
             </div>
-
             <div class="outer4" *ngIf="data.serdet.isPrePayment">
                 <div class="prepayment">
                     <span>{{prepayment_amount}} : </span><span style="font-weight: bold">
@@ -65,7 +51,6 @@
                     </span>
                 </div>
             </div>
-
             <div class="outer5">
                 <div class="duration">
                     <span>{{service_duration}} : </span><span style="font-weight: bold">
@@ -73,28 +58,9 @@
                     </span>
                 </div>
             </div>
-
-
-            <!-- <div class="outer4" *ngIf="data.serdet.description">
-                <div class="description">
-                    <span class="caption">{{description_cap}}</span><span class="dispvalue">{{data.serdet.description}} </span>
-                </div>
-        </div> -->
         </div>
     </div>
-    <!-- <div class="outer4" *ngIf="data.serdet.description" style="margin-top: 5px">
-        <div class="description">
-            <span class="dispvalue">{{data.serdet.description}} </span>
-        </div>
-    </div> -->
-
 </mat-dialog-content>
-
-<!-- <mat-dialog-actions>
-    <button  type="button" mat-dialog-close class="cs-btn bt2">{{close_btn_cap}}</button>
-    </mat-dialog-actions> -->
-
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
 </app-form-success-display>
