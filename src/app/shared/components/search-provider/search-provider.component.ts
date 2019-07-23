@@ -154,20 +154,35 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             this.searchResults[srchindx]['waitingtime_res'] = this.waitlisttime_arr[i];
             if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
               this.searchResults[srchindx]['estimatedtime_det']['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
+              this.searchResults[srchindx]['estimatedtime_det']['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
+              this.searchResults[srchindx]['estimatedtime_det']['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
+              this.searchResults[srchindx]['estimatedtime_det']['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
               this.searchResults[srchindx]['estimatedtime_det']['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
               this.searchResults[srchindx]['estimatedtime_det']['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
+              this.searchResults[srchindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
               this.searchResults[srchindx]['estimatedtime_det']['queue_available'] = 1;
               this.searchResults[srchindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'] || false;
               cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
+              if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                this.searchResults[srchindx]['estimatedtime_det']['availableToday'] = true;
+              } else {
+                this.searchResults[srchindx]['estimatedtime_det']['availableToday'] = false;
+              }
               if (!this.searchResults[srchindx]['opennow']) {
                 this.searchResults[srchindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
-                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-                  this.searchResults[srchindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.searchResults[srchindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.searchResults[srchindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                  }
+                  this.searchResults[srchindx]['estimatedtime_det']['time'] = this.searchResults[srchindx]['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
                   this.searchResults[srchindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                    + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
+                this.searchResults[srchindx]['estimatedtime_det']['nextAvailDate'] = this.searchResults[srchindx]['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 this.searchResults[srchindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {

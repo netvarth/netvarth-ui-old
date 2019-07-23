@@ -157,7 +157,7 @@
                                     <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
                                         <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" type="text" class="form-control number-ip-sm"
-                                            id="prepayment_amount" placeholder="{{prepayment_cap}} ({{rupee_symbol}})*"
+                                            id="prepayment_amount" placeholder="Amount ({{rupee_symbol}})*"
                                             formControlName="minPrePaymentAmount" autocomplete="off">
                                         <app-field-error-display
                                             [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
