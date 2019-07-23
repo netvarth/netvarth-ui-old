@@ -512,9 +512,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   returnRefineCheckboxRetainValue(fieldheader, fieldname, fieldtype) {
     if (fieldtype === 'EnumList' || fieldtype === 'Enum' || fieldtype === 'Gender') { // case of multiple selection of checkbox
       let retval = false;
-      if (this.querystringrefineretain_arr[fieldheader]) { if (this.querystringrefineretain_arr[fieldheader].indexOf(fieldname) !== -1) {
-            retval = true;
-          }
+      if (this.querystringrefineretain_arr[fieldheader]) {
+        if (this.querystringrefineretain_arr[fieldheader].indexOf(fieldname) !== -1) {
+          retval = true;
+        }
       }
       return retval;
     } else if (fieldtype === 'Boolean') { // case of multiple selection of radio slider
@@ -658,7 +659,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       let autoname = this.kwautoname;
       autoname = autoname.replace(/\//g, '%2F');    // url encoding (replacing forward slash)
       let kw = this.kwautoname;
-      kw = kw.replace(/\//g, '%2F'); 
+      kw = kw.replace(/\//g, '%2F');
       urlstr += 'kw=' + kw + ';kwauto=' + autoname + ';kwdomain=' + this.kwdomain + ';kwsubdomain=' + this.kwsubdomain + ';kwtyp=' + this.kwtyp;
     }
     if (this.commonfilters !== '') {
@@ -900,7 +901,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       for (let i = 0; i < provids.length; i++) {
         post_provids.push(provids[i].provid);
       }
-    	if (post_provids.length === 0) {
+      if (post_provids.length === 0) {
         return;
       }
       this.searchdetailserviceobj.getEstimatedWaitingTime(post_provids)
@@ -973,7 +974,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
                     + ', ' + this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
-                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['nextAvailDate'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' }) + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['nextAvailDate'] = this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] + ',' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {

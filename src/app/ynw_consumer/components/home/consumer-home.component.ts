@@ -495,8 +495,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
                     + ', ' + this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
-                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' }) + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-
+                this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['nextAvailDate'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] + ',' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
               } else {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {

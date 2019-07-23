@@ -487,10 +487,10 @@
                                     search_result.fields)}}</span>
                                 <span class="cust2 cust3" (click)="checkinClicked(search_result, false)"
                                     *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday'] && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
-                                <span class="cust2 cust3 disabled"
+                                <span class="cust2 cust3 disabled" style="cursor: auto"
                                     *ngIf="(search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' || (search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && !search_result.fields['estimatedtime_det']['showToken'])) && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{getTerminologyTerm('waitlist',
                                     search_result.fields)}}</span>
-                                <span class="cust2 cust3 disabled"
+                                <span class="cust2 cust3 disabled" style="cursor: auto"
                                     *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
                                 <div class="cust5"
                                     *ngIf="!search_result.fields['estimatedtime_det']['message'] && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">

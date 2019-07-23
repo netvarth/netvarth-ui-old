@@ -175,15 +175,39 @@ export class ProviderReimburseReportComponent implements OnInit {
    * set Filter Values for Rest API Coupon List
    */
   setFilterForApi() {
+    let toDate;
+    let fromDate;
+    if (this.filter.from_date) {
+      let dd1 = this.filter.from_date.getDate();
+      if (dd1 < 10) {
+        dd1 = '0' + dd1;
+      };
+      let mm1 = this.filter.from_date.getMonth() + 1;
+      if (mm1 < 10) {
+        mm1 = '0' + mm1;
+      }
+      fromDate = this.filter.from_date.getFullYear() + '-' + mm1 + '-' + dd1;
+    }
+    if (this.filter.to_date) {
+      let dd2 = this.filter.to_date.getDate();
+      if (dd2 < 10) {
+        dd2 = '0' + dd2;
+      }
+      let mm2 = this.filter.to_date.getMonth() + 1;
+      if (mm2 < 10) {
+        mm2 = '0' + mm2;
+      }
+      toDate = this.filter.to_date.getFullYear() + '-' + mm2 + '-' + dd2;
+    }
     const api_filter = {};
     if (this.filter.pay_status !== 'all') {
       api_filter['status-eq'] = this.filter.pay_status;
     }
     if (this.filter.from_date != null) {
-      api_filter['reportFromDate-ge'] = this.filter.from_date.format('YYYY-MM-DD');
+      api_filter['reportFromDate-ge'] = fromDate;
     }
     if (this.filter.to_date != null) {
-      api_filter['reportEndDate-le'] = this.filter.to_date.format('YYYY-MM-DD');
+      api_filter['reportEndDate-le'] = toDate;
     }
     return api_filter;
   }

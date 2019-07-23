@@ -247,7 +247,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="bottom-sect pdetail">
+                                <div class="bottom-sect pdetail" style="padding-bottom: 10px">
                                     <div class="bt-l">
                                         <div class="wt-tme" *ngIf="loc['estimatedtime_det']">
                                             <div class="o-now" *ngIf="loc.opennow">
@@ -281,9 +281,9 @@
                                         <span class="cust2 cust3"
                                             (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
                                             *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
-                                        <span class="cust2 cust3 disabled"
+                                        <span class="cust2 cust3 disabled" style="cursor: auto"
                                             *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
-                                        <span class="cust2 cust3 disabled"
+                                        <span class="cust2 cust3 disabled" style="cursor: auto"
                                             *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
 
                                         <div class="cust5"
