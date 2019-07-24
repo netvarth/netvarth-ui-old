@@ -80,9 +80,32 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   getSearchData() {
     this.searchResults = this.searchResult;
     for (let i = 0; i < this.searchResults.length; i++) {
+      this.result_providdet = [];
+      if (this.searchResults[i]['logo']) {
+        this.searchResults[i]['logo'] = this.searchResults[i]['logo'] + '?' + new Date();
+      }
+      this.searchResults[i].rating = this.shared_functions.ratingRounding(this.searchResults[i].rating);
+      this.searchResults[i]['checkInsallowed'] = (this.searchResults[i].hasOwnProperty('online_checkins')) ? true : false;
       const provid = this.searchResults[i].id;
-      if (this.searchResults.claimable !== '1') {
+      if (this.searchResults[i].claimable !== '1') {
         this.result_providdet.push({ 'provid': provid, 'searchindx': i });
+      } else {
+      }
+      if (this.searchResults[i].business_hours1) {
+        let schedule_arr = [];
+        const business_hours = JSON.parse(this.searchResults[i].business_hours1[0]);
+        for (let j = 0; j < business_hours.length; j++) {
+          const obt_sch = business_hours[j];
+          for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+            schedule_arr.push({
+              day: obt_sch.repeatIntervals[k],
+              sTime: obt_sch.timeSlots[0].sTime,
+              eTime: obt_sch.timeSlots[0].eTime,
+              recurrtype: obt_sch.recurringType
+            });
+          }
+          this.searchResults[i]['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+        }
       }
     }
     this.getWaitingTime(this.result_providdet);
@@ -95,7 +118,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     }
     if (terminologies !== null) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
-      // const terminologies = this.common_datastorage.get('terminologies');
       if (terminologies) {
         return this.shared_functions.firstToUpper((terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term));
       } else {
@@ -204,10 +226,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
 
   checkinClicked(obj, chdatereq) {
-    // this.actionPerformed.emit(data);
     this.current_provider = obj;
     this.changedate_req = chdatereq;
-    // const usertype = this.shared_functions.isBusinessOwner('returntyp');
     this.showCheckin('consumer');
   }
 
