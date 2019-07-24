@@ -490,11 +490,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.refinedExists = true;
           if (this.check_QuerystrinfieldexistsinArray(sufield) === -1) {
             this.querystringrefineretain_arr[orgfield] = obj[ufield].split('~'); // split values based on delimiter to an array
-            if (orgfield === 'ynw_verified_level') {
-              for (let jjj = 0; jjj < this.querystringrefineretain_arr[orgfield].length; jjj++) {
-                this.querystringrefineretain_arr[orgfield][jjj] = Number(this.querystringrefineretain_arr[orgfield][jjj]);
-              }
-            }
+            // if (orgfield === 'ynw_verified_level') {
+            //   for (let jjj = 0; jjj < this.querystringrefineretain_arr[orgfield].length; jjj++) {
+            //     this.querystringrefineretain_arr[orgfield][jjj] = Number(this.querystringrefineretain_arr[orgfield][jjj]);
+            //   }
+            // }
           }
         }
       }
@@ -1186,6 +1186,24 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval, bypassbuildquery?) {
+    // adding to the array which is used to tick the checkbox in refine search
+    const checkExistence = this.check_QuerystrinfieldexistsinArray(fieldname);
+    if (fieldname === 'rating') {
+      this.querystringrefineretain_arr[fieldname] = selval;
+    } else {
+      if (checkExistence === -1) {
+        this.querystringrefineretain_arr[fieldname] = [selval];
+      } else {
+        const len = this.querystringrefineretain_arr[fieldname].length;
+        for (let i = 0; i < this.querystringrefineretain_arr[fieldname].length; i++) {
+          if (this.querystringrefineretain_arr[fieldname].includes(selval)) {
+          } else {
+            this.querystringrefineretain_arr[fieldname][len] = selval;
+          }
+        }
+      }
+    }
+
     this.startpageval = 1; // added now to reset the paging to the first page if any refine filter option is clicked
     this.searchButtonClick = false;
     if (this.searchrefineresult_arr.length) {
@@ -1261,7 +1279,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.refined_subdomain !== '') {
       this.refined_querystr = this.refined_querystr + ' sub_sector:\'' + this.refined_subdomain + '\'';
     }
-    // console.log(this.searchrefineresult_arr);
     for (let i = 0; i < this.searchrefineresult_arr.length; i++) {
       for (const field in this.searchrefineresult_arr[i]) {
         if (field) {
