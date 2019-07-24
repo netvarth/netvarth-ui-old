@@ -782,6 +782,8 @@ export class ProviderbWizardComponent implements OnInit {
   }
   resetErrors() {
     this.error_Exists = false;
+    this.longerror_Exists = false;
+    this.laterror_Exists = false;
     this.coord_error = '';
     this.locname_error = '';
     this.bussnesnmerror = '';
