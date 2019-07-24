@@ -52,6 +52,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   source = 'payment-history';
   payment_loading = false;
   disablebutton = false;
+  details: any = null;
+  paymentDetlId;
 
   constructor(
     public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
@@ -128,11 +130,19 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.payment_detail = data;
+          this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+
+  getJsonPaymentId(paymentdetail){
+      for(const payment of paymentdetail){
+        this.details = JSON.parse(payment.paymentId);
+      }
+      return this.details;
   }
 
   makePayment() {
