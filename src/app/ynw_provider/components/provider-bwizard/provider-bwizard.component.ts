@@ -21,7 +21,11 @@ import { ProviderBprofileSearchDynamicComponent } from '../provider-bprofile-sea
 
 export class ProviderbWizardComponent implements OnInit {
 
-
+  profileTooltip = Messages.PROFILE_TOOLTIP;
+  settingsTooltip = Messages.SETTINGS_TOOLTIP;
+  locationTooltip = Messages.LOCATION_TOOLTIP;
+  workinghourTooltip = Messages.WORKINGHOUR_TOOLTIP;
+  searchTooltip = Messages.SEARCH_TOOLTIP;
   add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
   congradulations_cap = Messages.WIZ_CONGRATULATIONS_CAP;
   right_choice_by_signin_up_cap = Messages.WIZ_RIGHT_CHOICE_BY_SIGNIN_UP_CAP;
@@ -93,6 +97,7 @@ export class ProviderbWizardComponent implements OnInit {
   rupee_symbol = '₹';
   @ViewChild('bnameId') bnameIdref: ElementRef;
   tbprof;
+  
 
   amForm: FormGroup;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';

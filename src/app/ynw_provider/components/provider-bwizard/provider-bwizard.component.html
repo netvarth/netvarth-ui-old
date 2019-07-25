@@ -13,11 +13,11 @@
                 </div>
                 <div class="pt-btm">
                     <ul class="ico">
-                        <li><span data-icon="l"></span></li>
-                        <li><span data-icon="D"></span></li>
-                        <li><span data-icon="k"></span></li>
-                        <li><span data-icon="1"></span></li>
-                        <li><span data-icon="d"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="profileTooltip" data-icon="l"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="settingsTooltip" data-icon="D"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="locationTooltip" data-icon="k"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="workinghourTooltip" data-icon="1"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="searchTooltip" data-icon="d"></span></li>
                     </ul>
                     <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i
                             class="icon icon-angle-right"></i>
@@ -242,7 +242,6 @@
                                     placeholder="This is what your {{customer_label}}s see when they search online"
                                     id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address"
                                     #locaddress></textarea>
-                                    <div class="sts-msg error" *ngIf="address_error!=''">{{address_error}}</div>
                             </div>
                             <div class="form-group">
                                 <label>{{loc_name_cap}} *</label>

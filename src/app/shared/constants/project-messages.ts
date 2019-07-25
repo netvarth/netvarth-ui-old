@@ -224,7 +224,11 @@ export const Messages = {
   'CHECKINS_TIME_CAPTION': 'Next Available Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
-
+  'PROFILE_TOOLTIP' : 'Profile & Search',
+  'SETTINGS_TOOLTIP' : 'Settings',
+  'LOCATION_TOOLTIP' : 'Location',
+  'WORKINGHOUR_TOOLTIP' : 'Working Hour',
+  'SEARCH_TOOLTIP' : 'Search',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
