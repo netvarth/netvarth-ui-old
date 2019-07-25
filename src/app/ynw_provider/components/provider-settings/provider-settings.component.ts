@@ -100,6 +100,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   waitlist_details;
   paytmVerified = false;
   payuVerified = false;
+  isJaldeeAccount = false;
   departmentCount: any = 0;
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
@@ -165,6 +166,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.payment_status = (data['onlinePayment']) || false;
           this.paytmVerified = (data['payTmVerified']) || false;
           this.payuVerified = (data['payUVerified']) || false;
+          this.isJaldeeAccount = (data['isJaldeeAccount'])|| false;
           this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
           if (this.payment_settings.isJaldeeAccount) {
             this.accountActiveMsg = 'You are using Jaldee bank account';

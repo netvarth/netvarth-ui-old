@@ -151,10 +151,9 @@
                                 </li> -->
                                 <li>
                                     <div>
-                                        <div class = "payTypeVerify" *ngIf="paytmVerified"><i class="fa fa-check"></i>&nbsp;PayTm</div>
-                                        <div class = "payTypeVerify" *ngIf="payuVerified"><i class="fa fa-check"></i>&nbsp;CC/DC</div>
-                                        <div class = "payTypeVerify" *ngIf="!paytmVerified"><i class="fa fa-times"></i>&nbsp;PayTm</div>
-                                        <div class = "payTypeVerify" *ngIf="!payuVerified"><i class="fa fa-times"></i>&nbsp;CC/DC</div>
+                                        <div class = "payTypeVerify" *ngIf="paytmVerified && !isJaldeeAccount">Currently your payment mode is PayTm </div>
+                                        <div class = "payTypeVerify" *ngIf="payuVerified && !isJaldeeAccount">Currently your payment mode is CC/DC/Netbanking</div>
+                                        <div class = "payTypeVerify" *ngIf="isJaldeeAccount">Currently your payment mode is Jaldee Bank</div>
                                     </div>
                                 </li>
                             </ul>
