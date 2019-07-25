@@ -260,6 +260,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         switch (section) {
           case 'businessProfile': {
+            this.socialMedialist = [];
             this.businessjson = res;
             this.branch_id = this.businessjson.branchId;
             this.account_Type = this.businessjson.accountType;
