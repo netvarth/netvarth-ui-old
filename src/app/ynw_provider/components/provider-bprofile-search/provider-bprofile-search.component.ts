@@ -121,7 +121,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   serviceSector = null;
   public_search = false;
   error_msg = '';
-
+  vkeyNameMap = {};
   loc_badges: any = [];
   badge_map_arr: any = [];
   loc_list: any = [];
@@ -1486,18 +1486,28 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  getSubDomainVirtualFields() {
-
+   getSubDomainVirtualFields() {
     this.getVirtualFields(this.bProfile['serviceSector']['domain'],
       this.bProfile['serviceSubSector']['subDomain']).then(
         data => {
           this.subdomain_fields = data['fields'];
           this.subdomain_questions = data['questions'] || [];
           this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
+          for (let fdIndex = 0; fdIndex < this.subdomain_fields.length; fdIndex++) {
+            // tslint:disable-next-line:no-unused-expression
+            if (this.subdomain_fields[fdIndex]['dataType'] === 'DataGrid') {
+              for (let colIndex = 0; colIndex < this.subdomain_fields[fdIndex]['Columns'].length; colIndex++) {
+                if (this.subdomain_fields[fdIndex]['Columns'][colIndex]['type'] === 'Enum') {
+                  for (let enumIndex = 0; enumIndex < this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'].length; enumIndex++) {
+                    this.vkeyNameMap[this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'][enumIndex]['name']] = this.subdomain_fields[fdIndex]['Columns'][colIndex]['enumeratedConstants'][enumIndex]['displayName'];
+                  }
+                }
+              }
+            }
+          }
           // normal_subdomainfield_show = 4 // no data
         }
       );
-
   }
   getdispVal(typ, field) {
     let retfield = '';

@@ -863,7 +863,7 @@
                                                                     <tr *ngFor="let row of fields.value;let i = index">
                                                                         <td *ngFor="let column of fields.Columns;let j = index"
                                                                             [attr.data-title]="fields.Columns[j].displayName">
-                                                                            {{row[column.key]}}</td>
+                                                                            {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}</td>
                                                                         <td class="action"><span class="mbt">
                                                                                 <button type="button" mat-icon-button
                                                                                     [matMenuTriggerFor]="menu">
