@@ -72,6 +72,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   first_time_coupon = Messages.FIRST_TIME_COUPON;
   get_token_cap = Messages.GET_FIRST_TOKEN;
   nextAvailDate;
+  sortTooltip = Messages.SORT_TOOLTIP;
 
   public domainlist_data;
   public domain;

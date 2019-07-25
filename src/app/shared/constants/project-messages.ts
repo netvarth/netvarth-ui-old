@@ -229,6 +229,7 @@ export const Messages = {
   'LOCATION_TOOLTIP' : 'Location',
   'WORKINGHOUR_TOOLTIP' : 'Working Hour',
   'SEARCH_TOOLTIP' : 'Search',
+  'SORT_TOOLTIP' : 'Sort By',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
