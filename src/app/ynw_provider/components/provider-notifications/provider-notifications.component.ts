@@ -47,8 +47,9 @@ export class ProviderNotificationsComponent implements OnInit {
   savechekinNotification_json: any = [];
   savecancelNotification_json: any = [];
   saveNotification: any = [];
-
-  constructor(private sharedfunctionObj: SharedFunctions) { }
+  saveCanclNotification: any = [];
+  constructor(private sharedfunctionObj: SharedFunctions,
+    public provider_services: ProviderServices) { }
 
   ngOnInit() {
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
@@ -150,28 +151,93 @@ export class ProviderNotificationsComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
-  removeChkinPh() { }
 
-  saveNotifications() {
+  savechkinNotifications(){
+    this.savechekinNotification_json = [];
+    if(!this.email){
+     this.em_arr = [];
+    }
+    if(!this.sms){
+      this.ph_arr = [];
+     }
     this.savechekinNotification_json.push({
-      'type': 'create checkin',
+      'resourceType': 'CHECKIN',
+      'eventType': 'WAITLISTADD',
       'sms': this.ph_arr,
       'email': this.em_arr,
       'pushnotifications': this.cheknpush
     });
+    alert(JSON.stringify(this.savechekinNotification_json))
+   // this.saveNotification.push(this.savechekinNotification_json);
 
+  //  this.provider_services.addNotification(this.savechekinNotification_json)
+  //  .subscribe(
+  //    () => {
+  //      this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS');
+  //    },
+  //    error => {
+  //      this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+  
+  //    }
+  //  );
+    
+  }
+  
+  savechkinCnclNotifications() {
+    this.savecancelNotification_json = [];
+    if(!this.cancelemail){
+      this.em1_arr = [];
+     }
+     if(!this.cancelsms){
+       this.ph1_arr = [];
+      }
+    
     this.savecancelNotification_json.push({
-      'type': 'cancel checkin',
+      'resourceType': 'CHECKIN',
+      'eventType': 'WAITLISTCANCEL',
       'sms': this.ph1_arr,
       'email': this.em1_arr,
       'pushnotifications': this.cancelpush
     });
-// alert(JSON.stringify(this.savechekinNotification_json))
-// alert(JSON.stringify(this.savecancelNotification_json))
-    this.saveNotification.push(this.savechekinNotification_json);
-    this.saveNotification.push(this.savecancelNotification_json);
-    this.saveNotification = [];
+ 
+ alert(JSON.stringify(this.savecancelNotification_json))
+    //this.saveCanclNotification.push(this.savecancelNotification_json);
+  //    this.provider_services.addNotification(this.savecancelNotification_json)
+  //  .subscribe(
+  //    () => {
+  //      this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS');
+  //    },
+  //    error => {
+  //      this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+  
+  //    }
+  //  );
+   
   }
-
+  
+  removeChkinPh(cheknphn) { 
+    var index = this.ph_arr.indexOf(cheknphn);
+    if (index > -1) {
+      this.ph_arr.splice(index, 1);
+    }
+  }
+  removeChkinEmail(cheknmail){
+    var index = this.em_arr.indexOf(cheknmail);
+    if (index > -1) {
+      this.em_arr.splice(index, 1);
+    }
+  }
+  removecanclChkinPh(canclcheknphn){
+    var index = this.ph1_arr.indexOf(canclcheknphn);
+    if (index > -1) {
+      this.ph1_arr.splice(index, 1);
+    }
+  }
+  removeCanclChkinEmil(canclcheknmail){
+    var index = this.em1_arr.indexOf(canclcheknmail);
+    if (index > -1) {
+      this.em1_arr.splice(index, 1);
+    }
+  }
 
 }

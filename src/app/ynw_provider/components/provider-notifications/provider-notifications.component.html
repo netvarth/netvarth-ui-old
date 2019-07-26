@@ -53,7 +53,7 @@
                             </span> -->
                             <div *ngFor="let phne of ph_arr">
                                  <span>{{phne}} <i class="pointer-cursor icon-delete"
-                                        (click)="removeChkinPh()"></i></span>
+                                        (click)="removeChkinPh(phne)"></i></span>
                             </div>
 
                         </div>
@@ -74,9 +74,9 @@
                             
                                 <button class="btn bt3 btn-default emadd" (click)="addChkinemil()" type="button">Add</button>
                             </span> -->
-                            <div *ngFor="let emil of em_arr">
-                                <span>{{emil}} <i class="pointer-cursor icon-delete"
-                                       (click)="removeChkinEmail()"></i></span>
+                            <div *ngFor="let emailval of em_arr">
+                                <span>{{emailval}} <i class="pointer-cursor icon-delete"
+                                       (click)="removeChkinEmail(emailval)"></i></span>
                            </div>
 
 
@@ -87,6 +87,7 @@
                         </li>
                         </ul>
                         </section>
+                        <button (click)="savechkinNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
                         </div>
                                 
 
@@ -97,7 +98,7 @@
                                           
                                           <div >
                                               <i class="fa fa-square-o" *ngIf="SelchkincnclNotify" (click)="selectChekinCanclNotify()">
-                                                  Notify me whenever checkin got cancel</i>
+                                                  Notify me whenever new checkin got cancel</i>
                                               <i class="fa fa-check-square-o" *ngIf="!SelchkincnclNotify" (click)="unselectChekinCanclNotify()">
                                                   Notify me whenever new checkin got cancel</i>
                                           </div>
@@ -122,9 +123,9 @@
                                           
                                               <button class="btn bt3 btn-default phadd" (click)="addCanclph()" type="button">Add</button>
                                           </span> -->
-                                          <div *ngFor="let phne1 of ph1_arr">
-                                            <span>{{phne1}} <i class="pointer-cursor icon-delete"
-                                                   (click)="removecanclChkinPh()"></i></span>
+                                          <div *ngFor="let phnecancel of ph1_arr">
+                                            <span>{{phnecancel}} <i class="pointer-cursor icon-delete"
+                                                   (click)="removecanclChkinPh(phnecancel)"></i></span>
                                        </div>
               
                                       </div>
@@ -144,9 +145,9 @@
                                           
                                               <button class="btn bt3 btn-default emadd" (click)="addCanclemil()" type="button">Add</button>
                                           </span> -->
-                                          <div *ngFor="let emil1 of em1_arr">
-                                            <span>{{emil1}} <i class="pointer-cursor icon-delete"
-                                                   (click)="removeCanclChkinEmil()"></i></span>
+                                          <div *ngFor="let emailcancl of em1_arr">
+                                            <span>{{emailcancl}} <i class="pointer-cursor icon-delete"
+                                                   (click)="removeCanclChkinEmil(emailcancl)"></i></span>
                                        </div>
                                       </div>
                                       </li>
@@ -155,7 +156,7 @@
                                       </li>
                                       </ul>
                                       </section>
-                                      <button (click)="saveNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
+                                      <button (click)="savechkinCnclNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
                                     </div> 
                                 </mat-expansion-panel>
                             </mat-accordion>
