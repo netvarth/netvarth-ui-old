@@ -271,13 +271,13 @@ export class ProviderbWizardComponent implements OnInit {
         this.loading_active = false;
         break;
       case 1:
-      if (!this.wizard_data_holder.name.replace(/\s/g, '').length) {
-        this.error_Exists = true;
-        this.bussnesnmerror = 'Please enter business name';
-        this.loading_active = false;
-      }else{
+      // if (!this.wizard_data_holder.name.replace(/\s/g, '').length) {
+      //   this.error_Exists = true;
+      //   this.bussnesnmerror = 'Please enter business name';
+      //   this.loading_active = false;
+      // }else{
         const post_itemdata1 = {
-          'businessName': this.wizard_data_holder.name || '',
+          'businessName': this.wizard_data_holder.name.trim() || '',
           'businessDesc': this.wizard_data_holder.summary || ''
         };
 
@@ -297,7 +297,8 @@ export class ProviderbWizardComponent implements OnInit {
               this.loading_active = false;
               this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
-          );}
+          );
+        //}
         break;
       case 2:
         this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
