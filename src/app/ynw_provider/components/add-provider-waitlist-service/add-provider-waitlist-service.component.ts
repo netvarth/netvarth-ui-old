@@ -12,6 +12,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Router } from '@angular/router';
 import { Image } from 'angular-modal-gallery';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../shared/services/shared-services';
 @Component({
   selector: 'app-addprovider-wailist-service',
   templateUrl: './add-provider-waitlist-service.component.html'
@@ -77,6 +78,20 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   isServiceBillable = false;
   isloading = false;
   disablebutton = false;
+  departmentlist: any = [];
+  filterDepart = false;
+  departments: any = [];
+  deptLength;
+  selected_dept;
+  businessjson: any = [];
+  provider_id;
+  s3url;
+  servicesjson: any = [];
+  serviceslist: any = [];
+  services: any = [];
+  sel_ser;
+  loading = true;
+  deptObj;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -85,13 +100,15 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     public router: Router,
-    private sharedfunctionObj: SharedFunctions
+    private sharedfunctionObj: SharedFunctions,
+    public shared_services: SharedServices,
   ) {
     this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
     this.getDomainSubdomainSettings();
+    this.getDepartments();
     this.api_loading = false;
     this.service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -149,8 +166,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
+        department: ['', Validators.compose([Validators.maxLength(500)])],
         // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
-         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
         // taxable: [false],
@@ -160,6 +178,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
+        department: ['', Validators.compose([Validators.maxLength(500)])],
         // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
@@ -175,6 +194,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.amForm.setValue({
         'name': data['name'] || this.amForm.get('name').value,
         'description': data['description'] || this.amForm.get('description').value,
+        'department': data['department'] || this.amForm.get('department').value,
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
         /*'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
         'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
@@ -187,6 +207,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       this.amForm.setValue({
         'name': data['name'] || this.amForm.get('name').value,
         'description': data['description'] || this.amForm.get('description').value,
+        'department': data['department'] || this.amForm.get('department').value,
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
         'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value || '0',
         'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
@@ -351,7 +372,28 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.uploadApi(submit_data, from);
 
   }
+  getDepartments() {
+    this.loading = false;
 
+    this.provider_services.getDepartments()
+      .subscribe(
+        data => {
+          this.deptObj = data;
+          // this.departments = data;
+          this.departments = this.deptObj.departments;
+          this.filterDepart = this.deptObj.filterByDept;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.shared_functions.apiErrorAutoHide(this, error);
+        }
+      );
+  }
+  handleDeptSelction(id) {
+    const deptId = id;
+
+  }
   uploadApi(submit_data, from) {
     this.savedisabled = true;
     const holdstat = this.button_title;

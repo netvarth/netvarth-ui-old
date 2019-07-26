@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from 'angular-modal-gallery';
+import { projectConstants } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
-import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
-import {
-    AdvancedLayout, ButtonEvent, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
-} from 'angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
+import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
 
 @Component({
     selector: 'app-provider-waitlist-service-detail',
@@ -92,6 +90,8 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
         ]
     };
     isCheckin;
+    departments: any = [];
+    departmentName;
 
     constructor(
         private provider_services: ProviderServices,
@@ -144,6 +144,7 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
             .subscribe(
                 data => {
                     this.service_data = data;
+                    this.getDepartments(this.service_data.department);
                     if (this.service_data.status === 'ACTIVE') {
                         this.servstatus = true;
                     } else {
@@ -361,4 +362,21 @@ export class ProviderWaitlistServiceDetailComponent implements OnInit, OnDestroy
             }
           );
       }
+
+      getDepartments(deptid) {
+        this.provider_services.getDepartments()
+            .subscribe(
+                data => {
+                    this.departments = data['departments'];
+                    for (let i = 0; i< this.departments.length; i++) {
+                        if (this.departments[i].departmentId === deptid) {
+                            this.departmentName = this.departments[i].departmentName;
+                        }
+                    }
+                },
+                error => {
+                    
+                }
+            );
+    }
 }

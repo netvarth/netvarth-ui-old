@@ -1,15 +1,12 @@
-
-
 <form *ngIf="isloading" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()"
-  class="ynw-common-form">
+onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
   <h1 class="mat-dialog-title">{{service_cap}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1" [disabled]="canceldisabled">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
-  <app-common-innerloading-spinner  *ngIf="api_loading1"> </app-common-innerloading-spinner>
+  <app-common-innerloading-spinner *ngIf="api_loading1"> </app-common-innerloading-spinner>
   <mat-dialog-content *ngIf="!api_loading1">
     <ng-container *ngIf="mode=='normal'">
       <div class="form-group">
@@ -30,8 +27,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     formControlName="description" autocomplete="off"> -->
         <mat-form-field>
           <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
-            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()" (blur)="lostDescFocus()"
-            maxlength="500"> </textarea>
+            formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()"
+            (blur)="lostDescFocus()" maxlength="500"> </textarea>
         </mat-form-field>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsg]="fed_service.getErrorMessage(amForm,'description',
@@ -43,10 +40,23 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
 
-      <div class="form-group" >
+      <div class="form-group" *ngIf="filterDepart">
+        <mat-form-field>
+          <mat-select formControlName="department" placeholder="Choose Department" #deptsel
+            (selectionChange)="handleDeptSelction(deptsel.value)">
+            <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
+              {{dept.departmentName | capitalizeFirst}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
         <mat-form-field>
           <input matInput type="text" class="form-control number-ip-sm" maxlength="10" (keypress)="isNumeric($event)"
-            id="estimated_duration" placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off">
+            id="estimated_duration" placeholder="{{est_duration_cap}}*" formControlName="serviceDuration"
+            autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
@@ -75,8 +85,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
       <div class="form-group" *ngIf="isServiceBillable">
         <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
         <mat-form-field>
-          <input matInput type="text" class="form-control number-ip-sm" id="price" maxlength="10" (keypress)="isNumeric($event)"
-            placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount" autocomplete="off">
+          <input matInput type="text" class="form-control number-ip-sm" id="price" maxlength="10"
+            (keypress)="isNumeric($event)" placeholder="{{service_price_cap}} ({{rupee_symbol}}) *"
+            formControlName="totalAmount" autocomplete="off">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
     {'required' : 'Please enter price',
@@ -94,8 +105,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
           <!-- <label class="col-form-label" for="prepayment_amount">{{prepayment_cap}}(<i class="fa fa-inr"></i>) *</label> -->
           <mat-form-field>
-            <input matInput type="text" (keypress)="isNumeric($event)" max="500" maxlength="3" class="form-control number-ip-sm" id="prepayment_amount"
-              placeholder="{{prepayment_cap}} ({{rupee_symbol}})*" formControlName="minPrePaymentAmount" autocomplete="off">
+            <input matInput type="text" (keypress)="isNumeric($event)" max="500" maxlength="3"
+              class="form-control number-ip-sm" id="prepayment_amount"
+              placeholder="{{prepayment_cap}} ({{rupee_symbol}})*" formControlName="minPrePaymentAmount"
+              autocomplete="off">
           </mat-form-field>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
       {'required' : 'Please enter prepayment amount',
@@ -157,8 +170,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             <li *ngFor="let file of item_pic.files;let i = index ">
               <div class="galimg_outer">
                 <div class="gal_img" *ngIf="item_pic.base64[i]"><img [src]="item_pic.base64[i]" alt=""></div>
-                <div class="gal_caption"><input matInput type="text" [(ngModel)]="item_pic.caption[i]" [ngModelOptions]="{standalone: true}"
-                    placeholder="Caption" autocomplete="off"></div>
+                <div class="gal_caption"><input matInput type="text" [(ngModel)]="item_pic.caption[i]"
+                    [ngModelOptions]="{standalone: true}" placeholder="Caption" autocomplete="off"></div>
                 <div class="gal_action" *ngIf="!canceldisabled">
                   <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
@@ -179,7 +192,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <div class="upload-doc" (click)="file.click()" *ngIf="!canceldisabled">
           <label class="col-form-label">{{select_image_cap}}</label>
           <span class="select-wrapper ">
-            <input type="file" multiple name="image_src" id="image_src" accept="image/*" #file (change)="imageSelect(file,$event)">
+            <input type="file" multiple name="image_src" id="image_src" accept="image/*" #file
+              (change)="imageSelect(file,$event)">
           </span>
         </div>
 
@@ -199,11 +213,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button *ngIf="mode=='normal' && !canceldisabled" type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disablebutton">{{cancel_btn}}</button>
-    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid || savedisabled || disablebutton" class="cs-btn bt1">{{button_title}}
+    <button *ngIf="mode=='normal' && !canceldisabled" type="button" mat-dialog-close class="cs-btn bt2"
+      [disabled]="disablebutton">{{cancel_btn}}</button>
+    <button *ngIf="mode=='normal'" type="submit" mat-button [disabled]="!amForm.valid || savedisabled || disablebutton"
+      class="cs-btn bt1">{{button_title}}
       <!-- <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner> -->
     </button>
-     
+
     <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
       <i class="icon-bell"></i>
       {{tooltip}}
@@ -215,5 +231,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
   <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+  </app-form-success-display>
 </form>
