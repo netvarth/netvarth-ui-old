@@ -249,7 +249,7 @@
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field> -->
-                                    <button style="display:flex;justify-content:center;align-items:center;" mat-icon-button [matMenuTriggerFor]="menu">
+                                    <button style="display:flex;justify-content:center;align-items:center;"[matTooltipClass]="tooltipcls" [matTooltip]="sortTooltip"  mat-icon-button [matMenuTriggerFor]="menu">
                                       <mat-icon>swap_vert</mat-icon>
                                     </button>
                                     <mat-menu class="sort-menu" #menu="matMenu">
