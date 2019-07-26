@@ -166,7 +166,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.payment_status = (data['onlinePayment']) || false;
           this.paytmVerified = (data['payTmVerified']) || false;
           this.payuVerified = (data['payUVerified']) || false;
-          this.isJaldeeAccount = (data['isJaldeeAccount'])|| false;
+          this.isJaldeeAccount = (data['isJaldeeAccount']) || false;
           this.payment_statusstr = (this.payment_status) ? 'On' : 'Off';
           if (this.payment_settings.isJaldeeAccount) {
             this.accountActiveMsg = 'You are using Jaldee bank account';
@@ -220,6 +220,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.getpaymentDetails();
+          if (!is_check) {
+            // this.shared_functions.openSnackBar('online payment is disabled', {'panelclass' : 'snackbarerror'});
+            this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
+          }
         },
         error => {
           this.getpaymentDetails();
@@ -421,3 +425,4 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
 }
+
