@@ -34,14 +34,14 @@
               </div>
             </li>
           </ul>
-          <div class="queue-body" *ngIf="show_small_device_queue_display">
+          <div class="queue-body" *ngIf="show_small_device_queue_display && queues.length !== 0 ">
             <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i
                 class="fa fa-angle-left"></i></span>
             <span class="leftarrow" *ngIf="queues.length > 1 && sel_queue_indx <= 0"><i
                 class="fa fa-angle-left disable"></i></span>
             <span class="sel-queue" *ngIf="selected_queue">{{selected_queue.name}}
               <span class="qtime"
-                *ngIf="selected_queue && selected_queue.queueSchedule && selected_queue.queueSchedule.timeSlots">
+                *ngIf="selected_queue && !selected_queue.instantQueue && selected_queue.queueSchedule && selected_queue.queueSchedule.timeSlots">
                 {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
                 {{selected_queue.queueSchedule.timeSlots[0].eTime }}
               </span></span>
