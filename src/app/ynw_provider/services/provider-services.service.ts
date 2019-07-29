@@ -665,9 +665,17 @@ export class ProviderServices {
     const url = 'provider/departments/count';
     return this.servicemeta.httpGet(url);
   }
-  addNotification(data) {
+  addNotificationList(data) {
     const url = 'provider/settings/notification';
     return this.servicemeta.httpPost(url, data);
+  }
+  getNotificationList(){
+    const url = 'provider/settings/notification';
+    return this.servicemeta.httpGet(url);
+  }
+  updateNotificationList(data){
+    const url = 'provider/settings/notification';
+    return this.servicemeta.httpPut(url, data);
   }
 }
 

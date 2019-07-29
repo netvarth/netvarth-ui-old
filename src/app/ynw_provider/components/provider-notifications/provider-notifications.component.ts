@@ -48,12 +48,31 @@ export class ProviderNotificationsComponent implements OnInit {
   savecancelNotification_json: any = [];
   saveNotification: any = [];
   saveCanclNotification: any = [];
+  notificationList: any = [];
+  savemode;
   constructor(private sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices) { }
 
   ngOnInit() {
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    // this.notificationList = this.provider_services.getNotificationList();
+    // if(this.notificationList.length == 0){
+    //   this.savemode = "ADD";
+    // }else{
+    //   this.savemode = "UPDATE";
+    // for(const notifyList of this.notificationList){
+    //   if(notifyList.eventType == "WAITLISTADD"){
+    //     this.em_arr = notifyList.email;
+    //     this.ph_arr = notifyList.sms;
+    //     this.cheknpush = notifyList.pushMessage;
+    //   }else{
+    //     this.em1_arr = notifyList.email;
+    //     this.ph1_arr = notifyList.sms;
+    //     this.cancelpush = notifyList.pushMessage;
+    //   }
+    // }
+    // }
   }
 
   selectChekinNotify() {
@@ -152,45 +171,43 @@ export class ProviderNotificationsComponent implements OnInit {
     this.api_success = null;
   }
 
-  savechkinNotifications(){
+  
+  
+  savechkinNotifications() {
+    this.savecancelNotification_json = [];
     this.savechekinNotification_json = [];
+    this.saveNotification = [];
+    if(this.SelchkinNotify){
+      this.em_arr = [];
+      this.ph_arr = [];
+      this.cheknpush = false;
+     }
+     if(this.SelchkincnclNotify){
+      this.em1_arr = [];
+      this.ph1_arr = [];
+      this.cancelpush = false;
+     }
     if(!this.email){
      this.em_arr = [];
     }
     if(!this.sms){
       this.ph_arr = [];
      }
-    this.savechekinNotification_json.push({
-      'resourceType': 'CHECKIN',
-      'eventType': 'WAITLISTADD',
-      'sms': this.ph_arr,
-      'email': this.em_arr,
-      'pushnotifications': this.cheknpush
-    });
-    alert(JSON.stringify(this.savechekinNotification_json))
-   // this.saveNotification.push(this.savechekinNotification_json);
-
-  //  this.provider_services.addNotification(this.savechekinNotification_json)
-  //  .subscribe(
-  //    () => {
-  //      this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS');
-  //    },
-  //    error => {
-  //      this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
-  
-  //    }
-  //  );
-    
-  }
-  
-  savechkinCnclNotifications() {
-    this.savecancelNotification_json = [];
     if(!this.cancelemail){
       this.em1_arr = [];
      }
      if(!this.cancelsms){
        this.ph1_arr = [];
       }
+
+      this.savechekinNotification_json.push({
+        'resourceType': 'CHECKIN',
+        'eventType': 'WAITLISTADD',
+        'sms': this.ph_arr,
+        'email': this.em_arr,
+        'pushnotifications': this.cheknpush
+      });
+    //  alert(JSON.stringify(this.savechekinNotification_json))
     
     this.savecancelNotification_json.push({
       'resourceType': 'CHECKIN',
@@ -200,9 +217,13 @@ export class ProviderNotificationsComponent implements OnInit {
       'pushnotifications': this.cancelpush
     });
  
- alert(JSON.stringify(this.savecancelNotification_json))
-    //this.saveCanclNotification.push(this.savecancelNotification_json);
-  //    this.provider_services.addNotification(this.savecancelNotification_json)
+// alert(JSON.stringify(this.savecancelNotification_json))
+    
+    this.saveNotification.push(this.savechekinNotification_json);
+    this.saveNotification.push(this.savecancelNotification_json);
+   // alert(JSON.stringify(this.saveNotification))
+    //if(this.savemode == "ADD"){
+  //    this.provider_services.addNotificationList(this.saveNotification)
   //  .subscribe(
   //    () => {
   //      this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS');
@@ -212,7 +233,19 @@ export class ProviderNotificationsComponent implements OnInit {
   
   //    }
   //  );
-   
+  //  }
+   // else{
+      //    this.provider_services.updateNotificationList(this.saveNotification)
+  //  .subscribe(
+  //    () => {
+  //      this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS');
+  //    },
+  //    error => {
+  //      this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+  
+  //    }
+  //  );
+  //  }
   }
   
   removeChkinPh(cheknphn) { 
