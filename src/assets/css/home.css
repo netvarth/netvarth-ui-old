@@ -730,7 +730,6 @@ figure:hover img {
   transition: all .3s ease !important;
   -webkit-transition: all .3s ease !important;
   -moz-transition: all .3s ease !important;
-  opacity: 0.15 !important;
   /*cursor:url("../../themes/jaldee/assets/images/icon-zoom-white.png"), pointer*/
 }
 
