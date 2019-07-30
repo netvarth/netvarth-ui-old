@@ -897,6 +897,16 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeWaitlistStatus(waitlist, action) {
+    document.location.reload();
+    if (action === 'DONE') {
+      waitlist.disableDonebtn = true;
+    }
+    if (action === 'STARTED') {
+      waitlist.disableStartbtn = true;
+    }
+    if (action === 'REPORT') {
+      waitlist.disableArrivedbtn = true;
+    }
     this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {

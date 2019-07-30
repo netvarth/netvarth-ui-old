@@ -97,7 +97,7 @@ export class ProviderbWizardComponent implements OnInit {
   rupee_symbol = '₹';
   @ViewChild('bnameId') bnameIdref: ElementRef;
   tbprof;
-  
+
 
   amForm: FormGroup;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
@@ -271,11 +271,11 @@ export class ProviderbWizardComponent implements OnInit {
         this.loading_active = false;
         break;
       case 1:
-      // if (!this.wizard_data_holder.name.replace(/\s/g, '').length) {
-      //   this.error_Exists = true;
-      //   this.bussnesnmerror = 'Please enter business name';
-      //   this.loading_active = false;
-      // }else{
+        // if (!this.wizard_data_holder.name.replace(/\s/g, '').length) {
+        //   this.error_Exists = true;
+        //   this.bussnesnmerror = 'Please enter business name';
+        //   this.loading_active = false;
+        // }else{
         const post_itemdata1 = {
           'businessName': this.wizard_data_holder.name.trim() || '',
           'businessDesc': this.wizard_data_holder.summary || ''
@@ -311,10 +311,10 @@ export class ProviderbWizardComponent implements OnInit {
         const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
         let latexists = false;
         let lonexists = false;
-        
-        
+
+
         // validating the fields if they are entered
-        if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined ) {
+        if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined) {
           latlon_Exists = true;
           const lon_validate = floatpattern.test(this.wizard_data_holder.lon);
           latexists = true;
@@ -323,7 +323,7 @@ export class ProviderbWizardComponent implements OnInit {
             this.coord_error = 'Only number are allowed for GPS Coordinate';
           }
         }
-        if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined ) {
+        if (this.wizard_data_holder.lat !== '' && this.wizard_data_holder.lat !== undefined) {
           latlon_Exists = true;
           lonexists = true;
           const lat_validate = floatpattern.test(this.wizard_data_holder.lat);
@@ -338,16 +338,16 @@ export class ProviderbWizardComponent implements OnInit {
             this.error_Exists = true;
             this.coord_error = 'Both coordinates are required';
           }
-          else{
-            if (this.wizard_data_holder['lon']&& this.wizard_data_holder['lon'] == 0) {
+          else {
+            if (this.wizard_data_holder['lon'] && this.wizard_data_holder['lon'] == 0) {
               this.longerror_Exists = true;
               this.longi_error = 'Longitude must be a valid number';
-              
+
             }
             if (this.wizard_data_holder['lat'] && this.wizard_data_holder['lat'] == 0) {
               this.laterror_Exists = true;
               this.lati_error = 'Latitude must be a valid number';
-              
+
             }
           }
           if (this.wizard_data_holder.location === undefined) {
@@ -380,7 +380,7 @@ export class ProviderbWizardComponent implements OnInit {
           this.loading_active = false;
           return;
         }
-        if (this.error_Exists === true ) {
+        if (this.error_Exists === true) {
           this.loading_active = false;
           return;
         }
@@ -518,6 +518,9 @@ export class ProviderbWizardComponent implements OnInit {
   onSubmit(form_data) {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
+    if (form_data.serviceDuration === '') {
+      form_data['serviceDuration'] = 0;
+    }
     if (!this.isServiceBillable) {
       form_data['totalAmount'] = 0;
       form_data['isPrePayment'] = false;
@@ -795,8 +798,8 @@ export class ProviderbWizardComponent implements OnInit {
     this.bussnesnmerror = '';
     this.address_error = '';
     this.gurl_error = '';
-    this.longi_error ='';
-    this.lati_error ='';
+    this.longi_error = '';
+    this.lati_error = '';
   }
 
   getgeneralBusinessSchedules() {
@@ -841,7 +844,7 @@ export class ProviderbWizardComponent implements OnInit {
       case 'coord_error':
         this.coord_error = '';
         break;
-        case 'bussnesnmerror':
+      case 'bussnesnmerror':
         this.bussnesnmerror = '';
         break;
     }
@@ -853,14 +856,14 @@ export class ProviderbWizardComponent implements OnInit {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: [0, Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         notification: [false]
       });
     } else {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: [0, Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
         taxable: [false],

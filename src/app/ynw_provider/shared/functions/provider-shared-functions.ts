@@ -214,6 +214,9 @@ export class ProviderSharedFuctions {
             this.shared_functions.openSnackBar(msg);
           },
           error => {
+            waitlist.disableDonebtn = false;
+            waitlist.disableStartbtn = false;
+            waitlist.disableArrivedbtn = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             reject();
           }

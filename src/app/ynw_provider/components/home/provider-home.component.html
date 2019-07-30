@@ -269,15 +269,26 @@
                   <td data-title="Actions" class="actions" *ngIf="time_type!=2">
                     <ng-container *ngIf="time_type == 1">
                       <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
-                        *ngIf="checkin.waitlistStatus == 'checkedIn'">
+                        *ngIf="checkin.waitlistStatus == 'checkedIn' && !checkin.disableArrivedbtn">
+                        <i class="icon-arrived"></i> {{arrived_upper}}
+                      </span>
+                      <span class="arrived cs-btn bt7"
+                        *ngIf="checkin.waitlistStatus == 'checkedIn' && checkin.disableArrivedbtn">
                         <i class="icon-arrived"></i> {{arrived_upper}}
                       </span>
                       <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="(checkin.waitlistStatus == 'checkedIn'
-                                          || checkin.waitlistStatus == 'arrived')">
+                                          || checkin.waitlistStatus == 'arrived') && !checkin.disableStartbtn">
+                        <i class="icon-play"></i>{{start_label |capitalizeFirst}}
+                      </span>
+                      <span class="start cs-btn bt7" *ngIf="(checkin.waitlistStatus == 'checkedIn'
+                      || checkin.waitlistStatus == 'arrived') && checkin.disableStartbtn">
                         <i class="icon-play"></i>{{start_label |capitalizeFirst}}
                       </span>
                       <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
-                        *ngIf="checkin.waitlistStatus == 'started'">
+                        *ngIf="checkin.waitlistStatus == 'started' && !checkin.disableDonebtn">
+                        <i class="icon-play"></i>{{done_cap}}
+                      </span>
+                      <span class="done cs-btn bt7" *ngIf="checkin.waitlistStatus == 'started' && checkin.disableDonebtn">
                         <i class="icon-play"></i>{{done_cap}}
                       </span>
                     </ng-container>
