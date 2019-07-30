@@ -4,6 +4,9 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+
 
 @Component({
   selector: 'app-provider-waitlist-online-checkin',
@@ -37,9 +40,11 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   customer_label = '';
   checkin_label = '';
   frm_wait_cal_cap = '';
-
+  removeitemdialogRef;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
+    private sharedfunctionObj: SharedFunctions,
+    private router: Router, private dialog: MatDialog,
     private shared_functions: SharedFunctions,
     private routerobj: Router) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -160,5 +165,33 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
         this.routerobj.navigate(['provider', 'settings', 'notifications']);
         break;
     }
+  }
+  doRemoveservice() {
+    if(this.form['filterByDept']){
+      this.form['filterByDept'] = true;
+      this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'All services are moved to Default Department'
+        }
+      });
+    }
+    else{
+      this.form['filterByDept'] = false;
+      this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Assigned services are removed from the departments'
+        }
+      });
+    }
+    
+    this.removeitemdialogRef.afterClosed().subscribe(result => {
+      this.OnSubmit()
+  });
   }
 }

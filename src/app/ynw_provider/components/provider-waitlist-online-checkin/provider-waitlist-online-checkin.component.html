@@ -55,7 +55,7 @@
       <label>Select services by department
         <!-- <span class="learnmore-pointer" (click)="redirecTo('notifications')">Send Notifications</span> -->
         <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['filterByDept']" [labelPosition]="'before'"
-          [(ngModel)]="form['filterByDept']" (change)="onFormChange()">
+          [(ngModel)]="form['filterByDept']" (change)="doRemoveservice()">
         </mat-slide-toggle>
       </label>
     </div>
@@ -88,11 +88,11 @@
                   </div>
               </div> -->
 </div>
-<button type="button" mat-button (click)="cancelChange()" [style.visibility]="formChange == 1 ? 'visible' : 'hidden'"
+<!-- <button type="button" mat-button (click)="cancelChange()" [style.visibility]="formChange == 1 ? 'visible' : 'hidden'"
   class="cs-btn bt2">{{cancel_btn}}</button>
 <button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
   [disabled]="form.calculationMode == 'Fixed' && form.trnArndTime == null"
-  [style.visibility]="formChange == 1 ? 'visible' : 'hidden'">{{save_btn}}</button>
+  [style.visibility]="formChange == 1 ? 'visible' : 'hidden'">{{save_btn}}</button> -->
 
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
 </app-form-success-display>
