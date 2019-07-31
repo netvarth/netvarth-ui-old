@@ -670,7 +670,7 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   getNotificationList(){
-    const url = 'provider/settings/notification';
+    const url = 'provider/settings/notification'; 
     return this.servicemeta.httpGet(url);
   }
   updateNotificationList(data){

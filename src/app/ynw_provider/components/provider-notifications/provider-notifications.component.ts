@@ -322,7 +322,7 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
 
-
+ 
 
   removePhEmail(phemail,array) {
     var index = array.indexOf(phemail);
