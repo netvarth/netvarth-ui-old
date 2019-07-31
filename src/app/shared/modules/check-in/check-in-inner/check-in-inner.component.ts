@@ -712,7 +712,8 @@ export class CheckInInnerComponent implements OnInit {
               'amount': this.prepaymentAmount,
               'paymentMode': this.paytype,
               'uuid': retUUID,
-              'accountId': this.account_id
+              'accountId': this.account_id,
+              'purpose': 'prePayment'
             };
             this.shared_services.consumerPayment(payData)
               .subscribe(pData => {

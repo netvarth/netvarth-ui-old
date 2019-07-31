@@ -8,39 +8,55 @@
     <div class="content comn-cls">
         <div class="container">
             <div class="row">
-                <div class="card p0 ynw-common-form-nm">
+                <div class="card p0 ynw-common-form-nm taxform">
                     <div class="paysettings-tab">
-                        <!-- Tax Settings -->
                         <span class="form-level-settings">{{tax_st_cap}}
-                            <a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('tax-settings', $event)">Learn More</a>
+                            <a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('tax-settings', $event)">Learn More</a>
                         </span>
-                        <div class="outermost" style="margin-top: 10px">
-                            <div class="taxouter">
+                        <div class="outermost cl1" style="margin-top: 20px">
+                            <div class="taxCaption">Tax details</div>
+                            <span class="editbt taxedit" *ngIf="allFieldsExists && !showEditSection"
+                                (click)="updateTax()" style="top: 60px;"></span>
+                            <div class="taxouter ot-it que">
                                 <div class="form-group gstval border-style">
-                                    <label class="caption" style="margin-bottom: -5px">Enter 15 digit GST number *</label>
-                                    <mat-form-field>
+                                    <label class="caption">Enter 15 digit GST number
+                                        *</label>
+                                    <mat-form-field *ngIf="showEditSection || !allFieldsExists">
                                         <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()"
                                             autocomplete="off" maxlength="15" tabindex="14">
                                     </mat-form-field>
+                                    <label *ngIf="!showEditSection && allFieldsExists"> {{gstnumber}}</label>
                                     <app-field-error-display [displayError]="showError['gstnumber']['status']"
                                         [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
                                 </div>
                                 <div class="form-group border-style">
-                                    <label class="caption" style="margin-bottom: -5px">{{tax_percentage_cap}}</label>
-                                    <mat-form-field>
+                                    <label class="caption">{{tax_percentage_cap}}</label>
+                                    <mat-form-field *ngIf="showEditSection || !allFieldsExists">
                                         <input matInput [(ngModel)]="taxpercentage" (keypress)="isNumeric($event)"
-                                            (keyup)="isvalid($event)" max="100" class="tax-per number-ip-sm" autocomplete="off"
-                                            tabindex="15">%
-                                        <!-- <span matSuffix>%</span> -->
+                                            (keyup)="isvalid($event)" max="100" class="tax-per number-ip-sm"
+                                            autocomplete="off" tabindex="15">%
                                     </mat-form-field>
+                                    <label *ngIf="!showEditSection && allFieldsExists"> {{taxpercentage}}%</label>
                                     <app-field-error-display [displayError]="showError['taxpercentage']['status']"
                                         [errorMsg]="showError['taxpercentage']['msg']"></app-field-error-display>
                                 </div>
                             </div>
                         </div>
-                        <div class="actiondiv" *ngIf="savetaxEnabled">
-                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()"
+                        <div class="actiondiv" *ngIf="showEditSection || !allFieldsExists">
+                            <button type="button" class="cs-btn bt2" (click)="cancelEdit()" style="margin-right: 10px"
+                                [disabled]="taxfieldValidation(false)" tabindex="16">Cancel</button>
+                            <button type="button" class="cs-btn bt1" (click)="saveTaxSettings()"
                                 [disabled]="taxfieldValidation(false)" tabindex="16">{{update_tax_cap}}</button>
+                        </div>
+                        <div class="taxstatus" *ngIf="allFieldsExists">
+                            <span class="ttle">Tax Settings</span>
+                            <span style="margin-left: 20px">
+                                <mat-slide-toggle [(ngModel)]="enabletax" (change)="changeTaxStatus($event)">
+                                </mat-slide-toggle>
+                            </span>
+                            <span class='enabled' *ngIf="enabletax">{{enable_cap}}</span>
+                            <span class='disabled' *ngIf="!enabletax">{{disable_cap}}</span>
                         </div>
                     </div>
                 </div>

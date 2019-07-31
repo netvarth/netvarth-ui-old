@@ -4129,3 +4129,47 @@ header .lgo img {
 .content .c-outer .c-body .srlst .bottom-sect {
   padding-bottom: 10px;
 }
+.taxedit {
+  right: 70% !important;
+  position: absolute !important;
+}
+.taxstatus {
+  font-size: .80rem !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 40px !important;
+  border-top: 1px solid #f2f2f2 !important;
+}
+@media only screen and (max-width: 991px) and (min-width: 767px){
+  .taxedit {
+  right: 60% !important;
+  }
+}
+@media only screen and (max-width: 767px) and (min-width: 440px) {
+  .taxedit {
+  right: 45% !important;
+  }
+}
+@media only screen and (max-width: 440px) {
+  .taxedit {
+  right: 20% !important;
+  }
+}
+.taxform .paysettings-tab {
+  box-shadow: none !important;
+  margin-bottom: 0px !important;
+}
+.taxstatus .enabled {
+  color: #00cc96 !important;
+  padding-left: 5px !important;
+}
+.taxstatus .disabled {
+  color: #999999 !important;
+  padding-left: 5px !important;
+}
+.taxform .paysettings-tab .outermost .taxCaption{
+  font-size: 1.140rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 15px !important;
+}

@@ -57,6 +57,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     paytmmobile;
     paytmMerchantKey;
     paytmMerchantId;
+    paytmWebsite;
+    paytmIndustryType;
     ccenabled;
     pannumber;
     panname;
@@ -171,6 +173,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 'paytmmobile': { status: false, msg: '' },
                 'paytmMerchantId': { status: false, msg: '' },
                 'paytmMerchantKey': { status: false, msg: '' },
+                'paytmIndustryType': { status: false, msg: '' },
+                'paytmWebsite': { status: false, msg: '' },
                 'pannumber': { status: false, msg: '' },
                 'panname': { status: false, msg: '' },
                 'bankacname': { status: false, msg: '' },
@@ -193,6 +197,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.paystatus = paySettings.onlinePayment || false;
         this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
         this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
+        this.paytmWebsite = paySettings.paytmWebsite || '';
+        this.paytmIndustryType = paySettings.paytmIndustryType || '';
         this.paytmMerchantId = paySettings.paytmMerchantId || '';
         this.pannumber = paySettings.panCardNumber || '';
         this.panname = paySettings.nameOnPanCard || '';
@@ -342,6 +348,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }
             postData['paytmMerchantId'] = this.paytmMerchantId;
             postData['paytmMerchantKey'] = this.paytmMerchantKey;
+            postData['paytmWebsite'] = this.paytmWebsite;
+            postData['paytmIndustryType'] = this.paytmIndustryType;
         } else {
             postData.payTm = false;
         }

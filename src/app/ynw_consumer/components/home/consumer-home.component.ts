@@ -855,7 +855,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 'amount': prepayamt,
                 'paymentMode': 'DC',
                 'uuid': waitlist.ynwUuid,
-                'account_id': waitlist.provider.id
+                'account_id': waitlist.provider.id,
+                'purpose': 'prePayment'
               };
               this.shared_services.consumerPayment(payData)
                 .subscribe(pData => {

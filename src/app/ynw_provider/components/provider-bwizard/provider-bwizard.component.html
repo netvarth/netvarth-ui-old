@@ -421,7 +421,7 @@
                                         <ng-container *ngSwitchCase="'Gender'">
                                             <div class="cont-btn" style="display: flex">
                                                 <p> {{fields.value | capitalizeFirst}}</p>
-                                                <span style="color: #00aef2; background: white" *ngIf="fields.value"
+                                                <span style="color: #00aef2; background: white" *ngIf="fields.value && !showAddSection1"
                                                     class="editbt"
                                                     (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                             </div>
@@ -434,8 +434,8 @@
                                                     [origin]="origins"
                                                     *ngIf="que_type=='subdomain_questions' && field.length > 0">
                                                 </app-dynamic-form>
-                                                <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display>
+                                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
                                             </div>
 
                                         </ng-container>
@@ -495,8 +495,8 @@
                                                     [origin]="origins"
                                                     *ngIf="que_type=='subdomain_questions' && field.length > 0">
                                                 </app-dynamic-form>
-                                                <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display>
+                                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
                                             </div>
 
 
@@ -519,7 +519,7 @@
                                         <ng-container *ngSwitchCase="'Gender'">
                                             <div class="cont-btn">
                                                 <p> {{fields.value | capitalizeFirst}}</p>
-                                                <span style="color: #00aef2; background: white" class="editbt"
+                                                <span style="color: #00aef2; background: white" class="editbt" *ngIf="fields.value && !showAddSection1"
                                                     (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                             </div>
 
@@ -529,8 +529,8 @@
                                                     [origin]="origins"
                                                     *ngIf="que_type=='domain_questions' && field.length > 0">
                                                 </app-dynamic-form>
-                                                <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display>
+                                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
                                             </div>
 
                                         </ng-container>
@@ -589,8 +589,8 @@
                                                         [origin]="origins"
                                                         *ngIf="que_type=='domain_questions' && field.length > 0">
                                                     </app-dynamic-form>
-                                                    <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                        errorMsg="{{api_error}}"></app-field-error-display>
+                                                    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                        errorMsg="{{api_error}}"></app-field-error-display> -->
                                                 </div>
 
                                             </div>

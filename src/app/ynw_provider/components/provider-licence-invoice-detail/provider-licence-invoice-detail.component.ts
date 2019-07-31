@@ -46,7 +46,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   pay_data = {
     amount: 0,
     paymentMode: 'DC', // 'null', changes as per request from Manikandan
-    uuid: null
+    uuid: null,
+    purpose: null
   };
   payment_popup = null;
   source = 'payment-history';
@@ -147,7 +148,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
 
   makePayment() {
     this.disablebutton = true;
-
+this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
 

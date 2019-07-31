@@ -73,7 +73,8 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     'uuid': null,
     'paymentMode': null,
     'amount': 0,
-    'accountId': null
+    'accountId': null,
+    'purpose': null
   };
   payment_popup = null;
   showPaidlist = false;
@@ -204,6 +205,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     this.pay_data.amount = this.bill_data.amountDue;
     this.pay_data.paymentMode = 'DC';
     this.pay_data.accountId = this.checkin.provider.id;
+    this.pay_data.purpose = 'billPayment';
     this.resetApiError();
     if (this.pay_data.uuid != null &&
       this.pay_data.paymentMode != null &&

@@ -63,7 +63,8 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   pay_data = {
     amount: 0,
     paymentMode: 'DC', // 'null', changes as per request from Manikandan
-    uuid: null
+    uuid: null,
+    purpose: null
   };
   payment_loading = false;
   payment_popup = null;
@@ -444,6 +445,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   makePayment(invoice) {
     this.pay_data.amount = invoice.amount;
     this.pay_data.uuid = invoice.ynwUuid;
+    this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
 

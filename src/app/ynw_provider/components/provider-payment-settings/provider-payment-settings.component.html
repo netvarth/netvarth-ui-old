@@ -122,6 +122,38 @@
                                                                         </app-field-error-display>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="caption">Website *</label>
+                                                                        <mat-form-field>
+                                                                            <input matInput #paytmWebsiteidref
+                                                                                [(ngModel)]="paytmWebsite"
+                                                                                (keypress)="resetApi('paytmWebsite')"
+                                                                                autocomplete="off"
+                                                                                [disabled]="!ineditMode" tabindex="3">
+                                                                        </mat-form-field>
+                                                                        <app-field-error-display
+                                                                            [displayError]="showError['paytmWebsite']['status']"
+                                                                            [errorMsg]="showError['paytmWebsite']['msg']">
+                                                                        </app-field-error-display>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="caption">Industry Type *</label>
+                                                                        <mat-form-field>
+                                                                            <input matInput #paytmIndustryTypeidref
+                                                                                [(ngModel)]="paytmIndustryType"
+                                                                                (keypress)="resetApi('paytmIndustryType')"
+                                                                                autocomplete="off"
+                                                                                [disabled]="!ineditMode" tabindex="3">
+                                                                        </mat-form-field>
+                                                                        <app-field-error-display
+                                                                            [displayError]="showError['paytmIndustryType']['status']"
+                                                                            [errorMsg]="showError['paytmIndustryType']['msg']">
+                                                                        </app-field-error-display>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class='cc-outer'>

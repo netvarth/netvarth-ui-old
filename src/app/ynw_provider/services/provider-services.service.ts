@@ -677,5 +677,9 @@ export class ProviderServices {
     const url = 'provider/settings/notification';
     return this.servicemeta.httpPut(url, data);
   }
+  updateTax(data){
+    const url = 'provider/payment/tax/' + data;
+    return this.servicemeta.httpPost(url);
+  }
 }
 

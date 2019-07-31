@@ -22,7 +22,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
         }
     ];
 
-    savetaxEnabled = true;
+    showEditSection = false;
     errorExist = false;
     taxpercentage;
     active_user;
@@ -32,20 +32,24 @@ export class ProvidertaxSettingsComponent implements OnInit {
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     tax_percentage_cap = Messages.PAY_SET_TAX_PER_CAP;
     update_tax_cap = Messages.PAY_SET_UPDATE_TAX_CAP;
+    enable_cap = Messages.ENABLE_CAP;
+    disable_cap = Messages.DISABLE_CAP;
     breadcrumb_moreoptions: any = [];
     isCheckin;
+    allFieldsExists = false;
+    enabletax = false;
 
     constructor(private shared_functions: SharedFunctions,
         private routerobj: Router,
-       private provider_services: ProviderServices ) {
+        private provider_services: ProviderServices) {
 
     }
     ngOnInit() {
         this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.resetApi();
-this.getTaxpercentage();
-this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->tax-settings' };
+        this.getTaxpercentage();
+        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->tax-settings' };
     }
 
     getTaxpercentage() {
@@ -54,6 +58,12 @@ this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->t
                 this.taxDetails = data;
                 this.taxpercentage = this.taxDetails.taxPercentage;
                 this.gstnumber = this.taxDetails.gstNumber || '';
+                if (this.taxDetails && this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
+                    this.allFieldsExists = true;
+                }
+                if (this.taxDetails && this.taxDetails.enableTax) {
+                    this.enabletax = true;
+                }
             },
                 () => {
                 });
@@ -87,7 +97,6 @@ this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->t
     saveTaxSettings() {
         this.taxfieldValidation(true);
         if (!this.errorExist) {
-            this.savetaxEnabled = false;
             const postData = {
                 'taxPercentage': this.taxpercentage,
                 'gstNumber': this.gstnumber || ''
@@ -95,11 +104,12 @@ this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->t
             this.provider_services.setTaxpercentage(postData)
                 .subscribe(() => {
                     this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
-                    this.savetaxEnabled = true;
+                    this.showEditSection = false;
+                    this.getTaxpercentage();
                 },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.savetaxEnabled = true;
+                        this.showEditSection = true;
                     });
         }
     }
@@ -122,16 +132,28 @@ this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->t
             };
         }
     }
-    // getMode(mod) {
-    //     let moreOptions = {};
-    //     moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-    //     return moreOptions;
-    // }
+
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/learnmore/billing->tax-settings']);
-        // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-        // this.shared_functions.sendMessage(pdata);
+    }
+    changeTaxStatus(event) {
+        const status = (event.checked) ? 'enable' : 'disable';
+        this.provider_services.updateTax(status)
+            .subscribe(
+                data => {
+                    this.getTaxpercentage();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            )
+    }
+    updateTax() {
+        this.showEditSection = true;
+    }
+    cancelEdit() {
+        this.showEditSection = false;
     }
 }
 
