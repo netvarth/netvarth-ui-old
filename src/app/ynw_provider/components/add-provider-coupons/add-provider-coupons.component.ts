@@ -90,6 +90,10 @@ export class AddProviderCouponsComponent implements OnInit {
         }
       }
     }
+    if (!isNaN(form_data.description.trim(' '))) {
+      this.api_error = 'Please enter a description';
+      return;
+    }
     const post_data = {
       'name': form_data.name,
       'description': form_data.description,

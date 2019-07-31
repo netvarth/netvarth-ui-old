@@ -61,7 +61,7 @@ export class AddProviderDiscountsComponent implements OnInit {
     if (this.data.type === 'edit') {
       this.updateForm();
     }
-   this.api_loading1 = false;
+    this.api_loading1 = false;
   }
   updateForm() {
     this.amForm.setValue({
@@ -107,6 +107,10 @@ export class AddProviderDiscountsComponent implements OnInit {
           return;
         }
       }
+    }
+    if (!isNaN(form_data.description.trim(' '))) {
+      this.api_error = 'Please enter a description';
+      return;
     }
     const post_data = {
       'name': form_data.name,
