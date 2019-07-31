@@ -20,7 +20,7 @@
                                         {{service_data.description | capitalizeFirst}}
                                     </div>
                                     <div class="c-ot">
-                                            <div class="item" >
+                                            <div class="item"  *ngIf="departmentName">
                                                     <span class="ttle">Department Name</span>
                                                     <span>{{departmentName}}</span>
                                                 </div>
