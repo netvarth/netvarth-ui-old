@@ -972,6 +972,8 @@ export const Messages = {
   'NON_WORKING_CAP': 'Non-working Days',
   'NOTIFICATION_CAP': 'Notifications',
   'DEPARTMENT_CAP': 'Department',
+  'ADD NOTIFICATIONS':'Notifications added successfully',
+  'UPDATED NOTIFICATIONS':'Notifications updated successfully',
 
   // App-ynw_provider-components-provider-system-auditlogs
   'AUDIT_CATEGORY_CAP': 'Category',

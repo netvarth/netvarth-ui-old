@@ -53,7 +53,7 @@
                             </span> -->
                             <div *ngFor="let phne of ph_arr">
                                  <span>{{phne}} <i class="pointer-cursor icon-delete"
-                                        (click)="removeChkinPh(phne)"></i></span>
+                                        (click)="removePhEmail(phne,ph_arr)"></i></span>
                             </div>
 
                         </div>
@@ -76,7 +76,7 @@
                             </span> -->
                             <div *ngFor="let emailval of em_arr">
                                 <span>{{emailval}} <i class="pointer-cursor icon-delete"
-                                       (click)="removeChkinEmail(emailval)"></i></span>
+                                       (click)="removePhEmail(emailval,em_arr)"></i></span>
                            </div>
 
 
@@ -87,7 +87,7 @@
                         </li>
                         </ul>
                         </section>
-                        <!-- <button (click)="savechkinNotifications()" type="button" mat-button class="cs-btn bt1">OK</button> -->
+                        <button (click)="chekinNotifications('checkin')" type="button" mat-button class="cs-btn bt1">OK</button>
                         </div>
                                 
 
@@ -125,7 +125,7 @@
                                           </span> -->
                                           <div *ngFor="let phnecancel of ph1_arr">
                                             <span>{{phnecancel}} <i class="pointer-cursor icon-delete"
-                                                   (click)="removecanclChkinPh(phnecancel)"></i></span>
+                                                   (click)="removePhEmail(phnecancel,ph1_arr)"></i></span>
                                        </div>
               
                                       </div>
@@ -147,7 +147,7 @@
                                           </span> -->
                                           <div *ngFor="let emailcancl of em1_arr">
                                             <span>{{emailcancl}} <i class="pointer-cursor icon-delete"
-                                                   (click)="removeCanclChkinEmil(emailcancl)"></i></span>
+                                                   (click)="removePhEmail(emailcancl,em1_arr)"></i></span>
                                        </div>
                                       </div>
                                       </li>
@@ -156,13 +156,14 @@
                                       </li>
                                       </ul>
                                       </section>
-                                      <button (click)="savechkinNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
+                                      <button (click)="checkinCancelNotifications('cancel')" type="button" mat-button class="cs-btn bt1">OK</button>
                                     </div> 
                                 </mat-expansion-panel>
+                                <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+                      <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
                             </mat-accordion>
                       <!-- </div> -->
-                      <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-                      <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+                      
                      
                     </div>
 
