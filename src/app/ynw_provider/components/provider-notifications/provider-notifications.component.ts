@@ -66,10 +66,9 @@ export class ProviderNotificationsComponent implements OnInit {
        data => {
          this.notificationList = data;
          this.setNotificationList(this.notificationList);
-        // this.api_success = this.sharedfunctionObj.getProjectMesssages('UPDATE NOTIFICATIONS');
        },
        error => {
-         this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error));
 
        }
      );
@@ -86,12 +85,12 @@ export class ProviderNotificationsComponent implements OnInit {
     for(const notifyList of notificationList){
       if(notifyList.eventType && notifyList.eventType == "WAITLISTADD" ){
         
-        if(notifyList.email){
+        if(notifyList.email && notifyList.email.length != 0){
           this.em_arr = notifyList.email;
           this.SelchkinNotify = false;
           this.email = true;
         }
-        if(notifyList.sms){
+        if(notifyList.sms && notifyList.sms.length != 0){
           this.ph_arr = notifyList.sms;
           this.SelchkinNotify = false;
           this.sms = true;
@@ -103,12 +102,12 @@ export class ProviderNotificationsComponent implements OnInit {
        
       }else if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL" ){
         
-        if(notifyList.email){
+        if(notifyList.email && notifyList.email.length != 0){
           this.em1_arr = notifyList.email;
           this.SelchkincnclNotify = false;
-          this. cancelemail = true;
+          this.cancelemail = true;
         }
-        if(notifyList.sms){
+        if(notifyList.sms && notifyList.sms.length != 0){
           this.ph1_arr = notifyList.sms;
           this.SelchkincnclNotify = false;
           this.cancelsms = true;
@@ -222,7 +221,7 @@ export class ProviderNotificationsComponent implements OnInit {
 
 
 
-  chekinNotifications(mode) {
+  chekinNotifications() {
     this.savechekinNotification_json = {};
     this.saveNotification = [];
     let chekinMode = 'ADD';
@@ -258,7 +257,7 @@ export class ProviderNotificationsComponent implements OnInit {
      this.saveNotifctnJson(this.savechekinNotification_json,chekinMode)
   }
 
-  checkinCancelNotifications(mode){
+  checkinCancelNotifications(){
     this.savecancelNotification_json = {};
     let chekincancelMode = 'ADD';
     if(this.notificationList.length == 0){
@@ -299,10 +298,11 @@ export class ProviderNotificationsComponent implements OnInit {
     .subscribe(
       () => {
         this.getNotificationList();
-        this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS');
+        this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
              },
       error => {
-        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error));
+        
 
       }
     );
@@ -312,10 +312,11 @@ export class ProviderNotificationsComponent implements OnInit {
     .subscribe(
       () => {
         this.getNotificationList();
-        this.api_success = this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS');
+        this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS'));
+        
       },
       error => {
-        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error));
 
       }
     );
