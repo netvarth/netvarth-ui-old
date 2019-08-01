@@ -4173,3 +4173,6 @@ header .lgo img {
   font-weight: 500 !important;
   margin-bottom: 15px !important;
 }
+.list-style .side-menu li {
+  display: flex !important;
+}

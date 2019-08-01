@@ -162,6 +162,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   branch_id;
   search_datas: any = [];
   provider_label = '';
+  showServices = false;
+  departServiceList: any = [];
+  selectedDepartment;
 
   constructor(private routerobj: Router,
     private location: Location,
@@ -1499,9 +1502,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
-        } else if (passParam['callback'] === 'servicedetail') {
-          this.serviceClicked(passParam['mname'], passParam['mobj']);
-        } else {
+        }
+        //  else if (passParam['callback'] === 'servicedetail') {
+        //   this.serviceClicked(passParam['mname'], passParam['mobj']);
+        // } 
+        else {
           this.showCheckin('consumer');
         }
       }
@@ -1539,9 +1544,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
-        } else if (passParam['callback'] === 'servicedetail') {
-          this.serviceClicked(passParam['mname'], passParam['mobj']);
-        } else {
+        }
+        // else if (passParam['callback'] === 'servicedetail') {
+        //   this.serviceClicked(passParam['mname'], passParam['mobj']);
+        // } 
+        else {
           this.showCheckin('consumer');
         }
       } else if (result === 'showsignup') {
@@ -1708,15 +1715,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       return this.shared_functions.firstToUpper(term);
     }
   }
-  checkserviceClicked(name, obj) {
+  checkserviceClicked(name, obj, origin) {
     this.btn_clicked = true;
-    this.serviceClicked(name, obj);
+    this.serviceClicked(name, obj, origin);
   }
   /* Service Clicked
     * name  Service Name
     * obj Search Result
     */
-  serviceClicked(name, obj) {
+  serviceClicked(name, obj, origin) {
     const s3id = obj.fields.unique_id;
     const busname = obj.fields.title;
     // get services details from s3
@@ -1730,16 +1737,49 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             .subscribe(services => {
               let servicesList: any = [];
               servicesList = services;
-              for (let i = 0; i < servicesList.length; i++) {
-                if (servicesList[i].name === name) {
-                  selected_service = servicesList[i];
-                  break;
+              if (origin === 'serviceClick') {
+                for (let i = 0; i < servicesList.length; i++) {
+                  if (servicesList[i].name === name) {
+                    selected_service = servicesList[i];
+                    break;
+                  }
+                }
+              }
+              if (origin === 'deptServiceClick') {
+                for (let i = 0; i < servicesList.length; i++) {
+                  for (let j = 0; j < servicesList[i].services.length; j++) {
+                    if (servicesList[i].services[j].name === name) {
+                      selected_service = servicesList[i].services[j];
+                      break;
+                    }
+                  }
                 }
               }
               if (selected_service !== null) {
                 this.showServiceDetail(selected_service, busname);
               } else {
                 this.btn_clicked = false;
+              }
+            });
+        });
+  }
+  departmentClicked(deptName, searchData) {
+    this.showServices = true;
+    const s3id = searchData.fields.unique_id;
+    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
+            .subscribe(services => {
+              let deptList: any = [];
+              deptList = services;
+              for (let i = 0; i < deptList.length; i++) {
+                if (deptList[i].departmentName === deptName) {
+                  this.departServiceList = deptList[i].services;
+                  this.selectedDepartment = deptName;
+                }
               }
             });
         });

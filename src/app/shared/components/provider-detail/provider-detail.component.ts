@@ -181,6 +181,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   newarr: any = [];
   groubedByTeam: any = [];
   showToken = false;
+  departServiceList: any = [];
+  showServices = false;
+  selectedDepartment;
+  showDepartments = false;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -243,6 +247,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('terminologies', true);
           this.getbusinessprofiledetails_json('virtualFields', true);
           this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('services', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -318,6 +323,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
+            for (let i = 0; i < this.servicesjson.length; i++) {
+              if (this.servicesjson[i].hasOwnProperty('departmentName')) {
+                this.showDepartments = true;
+              }
+            }
             this.service_exists = true;
             break;
           }
@@ -891,7 +901,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                     + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 this.locationjson[locindx]['estimatedtime_det']['nextAvailDate'] = this.locationjson[locindx]['estimatedtime_det']['date'] + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-             } else {
+              } else {
                 this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                   this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
@@ -936,6 +946,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  departmentClicked(department) {
+    this.showServices = true;
+    for (let i = 0; i < this.servicesjson.length; i++) {
+      if (this.servicesjson[i].departmentName === department) {
+        this.departServiceList = this.servicesjson[i].services;
+        this.selectedDepartment = department;
+      }
+    }
+  }
+
   showServiceDetail(serv, busname) {
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',

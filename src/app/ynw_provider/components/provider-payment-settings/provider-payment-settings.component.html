@@ -129,7 +129,7 @@
                                                                             <input matInput #paytmWebsiteidref
                                                                                 [(ngModel)]="paytmWebsite"
                                                                                 (keypress)="resetApi('paytmWebsite')"
-                                                                                autocomplete="off"
+                                                                                autocomplete="off" (blur)="paytmwebsiteBlur()"
                                                                                 [disabled]="!ineditMode" tabindex="3">
                                                                         </mat-form-field>
                                                                         <app-field-error-display
@@ -145,7 +145,7 @@
                                                                             <input matInput #paytmIndustryTypeidref
                                                                                 [(ngModel)]="paytmIndustryType"
                                                                                 (keypress)="resetApi('paytmIndustryType')"
-                                                                                autocomplete="off"
+                                                                                autocomplete="off" (blur)="paytmindustrytypeBlur()"
                                                                                 [disabled]="!ineditMode" tabindex="3">
                                                                         </mat-form-field>
                                                                         <app-field-error-display

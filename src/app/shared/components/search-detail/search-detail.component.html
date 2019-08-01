@@ -249,12 +249,17 @@
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field> -->
-                                    <button style="display:flex;justify-content:center;align-items:center;"[matTooltipClass]="tooltipcls" [matTooltip]="sortTooltip"  mat-icon-button [matMenuTriggerFor]="menu">
-                                      <mat-icon>swap_vert</mat-icon>
+                                    <button style="display:flex;justify-content:center;align-items:center;"
+                                        [matTooltipClass]="tooltipcls" [matTooltip]="sortTooltip" mat-icon-button
+                                        [matMenuTriggerFor]="menu">
+                                        <mat-icon>swap_vert</mat-icon>
                                     </button>
                                     <mat-menu class="sort-menu" #menu="matMenu">
-                                      <button class="sort-menu-item" [class.active]="activeDistanceSort==false" (click)="selected_sortfield(false)" mat-menu-item>{{jaldee_verified}}</button>
-                                      <button class="sort-menu-item" [class.active]="activeDistanceSort==true" (click)="selected_sortfield(true)" mat-menu-item>{{distance_cap}}</button>
+                                        <button class="sort-menu-item" [class.active]="activeDistanceSort==false"
+                                            (click)="selected_sortfield(false)"
+                                            mat-menu-item>{{jaldee_verified}}</button>
+                                        <button class="sort-menu-item" [class.active]="activeDistanceSort==true"
+                                            (click)="selected_sortfield(true)" mat-menu-item>{{distance_cap}}</button>
                                     </mat-menu>
                                 </div>
                             </div>
@@ -354,7 +359,8 @@
                                 <div class="tp2">
                                     <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="bNameTooltip">
-                                        {{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now" *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
+                                        {{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now"
+                                            *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
                                         </sup>
                                     </h3>
                                     <div
@@ -395,10 +401,29 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="services" *ngIf="search_result.fields.services">
+                                        <div class="services" *ngIf="search_result.fields.departments">
+                                            <ul>
+                                                <li *ngFor="let departments of search_result.fields.departments"
+                                                    (click)="departmentClicked(departments,search_result)">
+                                                    {{departments | capitalizeFirst}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="services"
+                                            *ngIf="search_result.fields.departments && showServices && departServiceList.length > 0">
+                                            <label *ngIf="departServiceList.length > 0"> Services under
+                                                {{selectedDepartment | capitalizeFirst}} department</label>
+                                            <ul>
+                                                <li *ngFor="let serv of departServiceList"
+                                                    (click)="checkserviceClicked(serv.name,search_result, 'deptServiceClick')">{{serv.name
+                                                    | capitalizeFirst}}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="services"
+                                            *ngIf="!search_result.fields.departments && search_result.fields.services">
                                             <ul>
                                                 <li *ngFor="let serv of search_result.fields.services"
-                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result)">{{serv
+                                                    (click)="!btn_clicked && checkserviceClicked(serv,search_result, 'serviceClick')">{{serv
                                                     | capitalizeFirst}}</li>
                                             </ul>
                                         </div>

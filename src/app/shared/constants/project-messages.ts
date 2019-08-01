@@ -141,6 +141,8 @@ export const Messages = {
   'PAYSETTING_BLANKNUM': 'Mobile number required',
   'PAYSETTING_BLANKMID': 'Merchant Id required',
   'PAYSETTING_BLANKMKEY': 'Merchant Key required',
+  'PAYSETTING_BLANKWEBSITE': 'Website required',
+  'PAYSETTING_BLANKINDUSTRYTYPE': 'Industry type required',
   'PAYSETTING_ONLYNUM': 'Only numbers are allowed in mobile field',
   'PAYSETTING_MOB10': 'Mobile number should have 10 digits',
   'PAYSETTING_PAN': 'Pan number is required',

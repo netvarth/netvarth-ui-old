@@ -108,7 +108,7 @@
                                             src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                                 </div>
                             </div>
-                            <div class="tp-r">
+                            <div class="tp-r list-style">
                                 <div class="gender" *ngIf="genderType=='male' || genderType=='female'">
                                     <span class="icon-male" *ngIf="genderType=='male'"
                                         [matTooltip]="maleTooltip"></span>
@@ -193,10 +193,12 @@
                                                 (click)="showExistingCheckin(loc)">{{you_have_cap}}
                                                 <span class="count">{{loc.checkins.length}}
                                                     {{getTerminologyTerm('waitlist')}}</span> {{at_this_loc_cap}}</span>
-                                            <h3 *ngIf="!isPlaceisSame">{{loc.place | capitalizeFirst}}<sup class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                            <h3 *ngIf="!isPlaceisSame">{{loc.place | capitalizeFirst}}<sup
+                                                    class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                 </sup></h3>
                                             <div *ngIf="!isPlaceisSame"> {{loc.address | capitalizeFirst}}</div>
-                                            <h3 *ngIf="isPlaceisSame">{{loc.address | capitalizeFirst}}<sup class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
+                                            <h3 *ngIf="isPlaceisSame">{{loc.address | capitalizeFirst}}<sup
+                                                    class="font-open-now" *ngIf="loc.opennow">&nbsp;{{open_now_cap}}
                                                 </sup></h3>
                                             <a rel="noopener" class="directions" [href]="loc.googleMapUrl"
                                                 target="_blank" *ngIf="loc.googleMapUrl!=''">{{get_directions_cap}}</a>
@@ -214,8 +216,27 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-
-                                                <div class="services" *ngIf="loc.services.length > 0">
+                                                <div class="services" style="margin-bottom: 10px"
+                                                    *ngIf="showDepartments && servicesjson.length > 0">
+                                                    <span class="sub-title">Departments</span>
+                                                    <ul>
+                                                        <li *ngFor="let department of servicesjson"
+                                                            (click)="departmentClicked(department.departmentName)">{{department.departmentName
+                                                                | capitalizeFirst}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="services"
+                                                    *ngIf="showServices && departServiceList.length > 0">
+                                                    <span class="sub-title">Services under
+                                                        {{selectedDepartment | capitalizeFirst}} department</span>
+                                                    <ul>
+                                                        <li *ngFor="let serv of departServiceList"
+                                                            (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
+                                                                    | capitalizeFirst}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="services"
+                                                    *ngIf="!showDepartments && loc.services.length > 0">
                                                     <span class="sub-title">{{services_offered}}</span>
                                                     <ul>
                                                         <li *ngFor="let serv of loc.services"
@@ -268,8 +289,8 @@
                                                         {{loc['personAhead']}} {{people_ahead}} </div>{{get_token_cap}}
                                                 </div>
                                             </div>
-                                            <div class="wt-tme notallowed" *ngIf="loc['estimatedtime_det']['message']">                                            
-                                                    {{loc['estimatedtime_det']['message']}}
+                                            <div class="wt-tme notallowed" *ngIf="loc['estimatedtime_det']['message']">
+                                                {{loc['estimatedtime_det']['message']}}
                                             </div>
                                         </div>
                                     </div>
@@ -303,21 +324,19 @@
                                             </ng-container>
                                         </ng-container>
                                         <div>
-                                        <span class="cust6 bt10"
-                                            *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
-                                            (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
-                                            <span
-                                                *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
-                                            <span
-                                                *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
-                                            {{for_cap}}
-                                            <span>{{different_date_cap}}</span></span>
+                                            <span class="cust6 bt10"
+                                                *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
+                                                (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
+                                                <span
+                                                    *ngIf="loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)">{{getTerminologyTerm('waitlist')}}</span>
+                                                <span
+                                                    *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
+                                                {{for_cap}}
+                                                <span>{{different_date_cap}}</span></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                             <div
                                 *ngIf="businessjson.accountType === 'BRANCH' && departmentlist && departmentlist.departments">
                                 <mat-accordion *ngFor="let dept of departmentlist.departments">
