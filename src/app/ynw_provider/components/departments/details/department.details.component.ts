@@ -6,6 +6,7 @@ import { ConfirmBoxComponent } from '../../../shared/component/confirm-box/confi
 import { Messages } from '../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 // import { SelectAutocompleteComponent } from 'mat-select-autocomplete';
 // import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 @Component({
@@ -36,6 +37,7 @@ export class DepartmentDetailComponent implements OnInit {
     isCheckin;
     add_it_now_show = false;
     dept_services: any = [];
+    defaultdepartmentservice: any = [];
     selected_services: any = [];
     services_all: any = [];
     deptServices = new FormControl();
@@ -45,7 +47,10 @@ export class DepartmentDetailComponent implements OnInit {
     srvcArry: any = [];
     showServc = true;
     loading = true;
+    departlist;
     removeitemdialogRef;
+    deptObj: ArrayBuffer;
+    departments: any;
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private dialog: MatDialog,
@@ -60,6 +65,7 @@ export class DepartmentDetailComponent implements OnInit {
     ngOnInit() {
         this.loading = true;
         this.getServices();
+        this.getDepartments();
         if (this.dept_id === 'add') {
             this.dept_id = null;
             this.showServc = false;
@@ -204,8 +210,9 @@ export class DepartmentDetailComponent implements OnInit {
     }
     editLocationServices() {
         this.srvcArry = [];
-        this.srvcArry = this.services_all.filter(item1 =>
-            !this.dept_services.some(item2 => (item2.id === item1.id)))
+        // this.srvcArry = this.services_all.filter(item1 =>
+        //     !this.defaultdepartmentservice.some(item2 => (item2.id === item1.id)))
+        this.srvcArry = this.defaultdepartmentservice;
         this.showAllServices = true;
     }
     getDepartmentDetails() {
@@ -243,9 +250,34 @@ export class DepartmentDetailComponent implements OnInit {
                             // this.goBack();
                         }
                     );
-
             });
     }
+
+    getDepartments() {
+        this.loading = false;
+        this.provider_services.getDepartments()
+            .subscribe(
+                data => {
+                    this.deptObj = data;
+                    this.departments = this.deptObj['departments'];
+                    for (let i = 0; i < this.servicesjson.length; i++) {
+                        for (let j = 0; j < this.departments.length; j++) {
+                            if (this.departments[j].isDefault) {
+                                for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+                                    if (this.departments[j].serviceIds[k] === this.servicesjson[i].id) {
+                                        this.defaultdepartmentservice.push(this.servicesjson[i]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                error => {
+                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                }
+            );
+    }
+
     updateDepartment(post_data) {
         this.provider_services.updateDepartment(post_data)
             .subscribe(

@@ -92,6 +92,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   sel_ser;
   loading = true;
   deptObj;
+  default: any;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -382,6 +383,10 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           // this.departments = data;
           this.departments = this.deptObj.departments;
           this.filterDepart = this.deptObj.filterByDept;
+            if (this.departments.length > 0) {
+              this.default = this.departments[0].departmentId;
+             
+            }
           this.loading = false;
         },
         error => {
@@ -392,7 +397,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
   handleDeptSelction(id) {
     const deptId = id;
-
   }
   uploadApi(submit_data, from) {
     this.savedisabled = true;

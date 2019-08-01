@@ -55,7 +55,6 @@ export class DepartmentsComponent implements OnInit {
             .subscribe(
                 data => {
                     this.deptObj = data;
-                    // this.departments = data;
                     this.departments = this.deptObj.departments;
                     this.loading = false;
                 },
