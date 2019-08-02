@@ -819,7 +819,7 @@
 													</div>
 												</div>
 											</ng-container>
-											<div class="col-12" style="display:flex" *ngIf="!showPayWorkBench">
+											<div class="col-12 button-group" *ngIf="!showPayWorkBench">
 												<button type="button" mat-button class="cs-btn bt1 settle"
 													*ngIf="bill_data.billStatus!='Settled'"
 													(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
