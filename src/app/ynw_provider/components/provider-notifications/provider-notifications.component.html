@@ -25,6 +25,7 @@
                           <div class="form-group">
                               
                               <div >
+                                  <!-- <mat-checkbox>Send sms</mat-checkbox> -->
                                   <i class="fa fa-square-o" *ngIf="SelchkinNotify" (click)="selectChekinNotify()">
                                       Notify me whenever new checkin</i>
                                   <i class="fa fa-check-square-o" *ngIf="!SelchkinNotify" (click)="unselectChekinNotify()">
@@ -35,7 +36,7 @@
                             <section class="leftselectAll" *ngIf="!SelchkinNotify">
                               <ul class ="notifications">
                                 <li>
-                          <mat-checkbox [(ngModel)] = "sms">Send sms</mat-checkbox>
+                          <mat-checkbox [(ngModel)] = "sms" class="fontNotify">Send sms</mat-checkbox>
 
                           <div class="form-group" *ngIf="sms">
 
@@ -59,7 +60,7 @@
                         </div>
                       </li>
                           <li>
-                          <mat-checkbox [(ngModel)] = "email">Send email</mat-checkbox>
+                          <mat-checkbox [(ngModel)] = "email" class="fontNotify">Send email</mat-checkbox>
                           <div class="form-group" *ngIf="email">
 
                                 <div class="input-group mb-3 emadd">
@@ -83,11 +84,11 @@
                         </div>
                         </li>
                         <li>
-                          <mat-checkbox [(ngModel)] = "cheknpush"  > Push notifications</mat-checkbox>
+                          <mat-checkbox [(ngModel)] = "cheknpush" class="fontNotify" > Push notifications</mat-checkbox>
                         </li>
                         </ul>
                         </section>
-                        <button (click)="chekinNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
+                        <button (click)="chekinNotifications()"  type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                         </div>
                                 
 
@@ -107,7 +108,7 @@
                                         <section class="leftselectAll" *ngIf="!SelchkincnclNotify">
                                             <ul class ="notifications">
                                               <li>
-                                        <mat-checkbox [(ngModel)] = "cancelsms">Send sms</mat-checkbox>
+                                        <mat-checkbox [(ngModel)] = "cancelsms" class="fontNotify">Send sms</mat-checkbox>
               
                                         <div class="form-group" *ngIf="cancelsms">
 
@@ -131,7 +132,7 @@
                                       </div>
                                     </li>
                                         <li>
-                                        <mat-checkbox [(ngModel)] = "cancelemail">Send email</mat-checkbox>
+                                        <mat-checkbox [(ngModel)] = "cancelemail" class="fontNotify">Send email</mat-checkbox>
                                         <div class="form-group" *ngIf="cancelemail">
                                                 <div class="input-group mb-3 emadd">
                                                         <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
@@ -152,11 +153,11 @@
                                       </div>
                                       </li>
                                       <li>
-                                        <mat-checkbox [(ngModel)] = "cancelpush"> Push notifications</mat-checkbox>
+                                        <mat-checkbox [(ngModel)] = "cancelpush" class="fontNotify"> Push notifications</mat-checkbox>
                                       </li>
                                       </ul>
                                       </section>
-                                      <button (click)="checkinCancelNotifications()" type="button" mat-button class="cs-btn bt1">OK</button>
+                                      <button (click)="checkinCancelNotifications()"  type="button" mat-button class="cs-btn bt1 notifyOk" >OK</button>
                                     </div> 
                                 </mat-expansion-panel>
                                 <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

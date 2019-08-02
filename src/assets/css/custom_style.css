@@ -4192,3 +4192,32 @@ header .lgo img {
   border: 1px solid #00aef2 !important;
   background: #00aef2ad !important;
 }
+.notifyOk {
+padding: 10px 10px !important;
+margin-bottom: 10px !important;
+}
+@media only screen and (max-width: 575px){
+  .leftselectAll {
+     margin-left: 0px!important;
+}
+.emadd{
+  width:100%!important;
+}
+.phadd{
+  width:100%!important;
+}
+.notifications{
+padding-left: 5px !important;
+}
+.notifyOk {
+  padding: 5px  !important;
+ }
+ 
+}
+.fontNotify{
+  font-size: small !important;
+}
+.fontNotify .mat-checkbox-layout .mat-checkbox-inner-container {
+  height: 13px !important;
+  width: 13px !important;
+}

@@ -51,6 +51,8 @@ export class ProviderNotificationsComponent implements OnInit {
   notificationList: any = [];
   saveCheckinMode;
   cancelCheckinMode;
+  okCheckinStatus = true;
+  okCancelStatus = true;
   constructor(private sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices) { }
 
@@ -75,8 +77,14 @@ export class ProviderNotificationsComponent implements OnInit {
      
   }
   setNotificationList(notificationList: any): any {
-
-    //alert(JSON.stringify(notificationList));
+   //alert(JSON.stringify(notificationList));
+    // if(notificationList.length == 0){
+    //   this.SelchkinNotify = true;
+    //   this.SelchkincnclNotify = true;
+      // this.okCheckinStatus = false;
+      // this.okCancelStatus = false;
+    //}
+    
     if(notificationList.length != 0){
       
     
@@ -84,7 +92,9 @@ export class ProviderNotificationsComponent implements OnInit {
      // alert(this.saveCheckinMode)
     for(const notifyList of notificationList){
       if(notifyList.eventType && notifyList.eventType == "WAITLISTADD" ){
-        
+        if(notifyList.email.length == 0 && notifyList.sms.length == 0 && notifyList.pushMessage){
+          this.SelchkinNotify = true;
+        }
         if(notifyList.email && notifyList.email.length != 0){
           this.em_arr = notifyList.email;
           this.SelchkinNotify = false;
@@ -105,6 +115,10 @@ export class ProviderNotificationsComponent implements OnInit {
         }
        
       }else if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL" ){
+        
+        if(notifyList.email.length == 0 && notifyList.sms.length == 0 && notifyList.pushMessage){
+          this.SelchkincnclNotify = true;
+        }
         
         if(notifyList.email && notifyList.email.length != 0){
           this.em1_arr = notifyList.email;
