@@ -3,12 +3,12 @@
     <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-<section >
+<section>
     <div class="content loc-list">
         <div class="container">
             <div class="row">
-                <div class="card p0" *ngIf="loading"> 
-                        <app-common-innerloading-spinner ></app-common-innerloading-spinner>
+                <div class="card p0" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <div class="card p0" *ngIf="!loading">
                     <div class="copy locd">
@@ -23,18 +23,20 @@
                                     <!-- Specilaizations -->
                                     <div style="margin-bottom: 20px">
                                         <div style="display:flex; margin-bottom: 10px; margin-top: 5px">
-                                            <b *ngIf="showServc"> Services Under Department </b>
-                                            <span
-                                                *ngIf="!showAllServices && dept_services && dept_services.length > 0"
+                                            <b *ngIf="showServc"> Services Under Department</b>
+                                            <span *ngIf="!showAllServices && dept_services && dept_services.length > 0"
                                                 style="color: #00aef2; background: white; padding-left:10px;float:right; margin-top:-3px; font-size:1.25rem"
-                                                (click)="editLocationServices()"><i *ngIf="services_all.length !== dept_services.length" class="fa fa-plus-circle"></i></span>
+                                                (click)="editLocationServices()"><i
+                                                    *ngIf="services_all.length !== dept_services.length && !dept_data.isDefault"
+                                                    class="fa fa-plus-circle"></i></span>
                                         </div>
                                         <div style="margin-bottom: 20px" *ngIf="services_all && showAllServices">
                                             <mat-form-field>
-                                                <mat-select (click)="deptclicked()" placeholder="Choose Services under Department"
+                                                <mat-select (click)="deptclicked()"
+                                                    placeholder="Choose Services under Department"
                                                     [formControl]="deptServices" multiple>
                                                     <div class="dept_position">
-                                                    <!-- <mat-select-trigger>
+                                                        <!-- <mat-select-trigger>
                                                         {{deptServices.value ? deptServices.value[0].name : ''}}
                                                         <span *ngIf="deptServices.value?.length > 1"
                                                             class="example-additional-selection">
@@ -42,31 +44,35 @@
                                                             {{deptServices.value?.length === 2 ? 'other' : 'others'}})
                                                         </span>
                                                     </mat-select-trigger> -->
-                                                    <mat-option  *ngFor="let service of srvcArry" [value]="service">
-                                                        {{service.name}}</mat-option>
+                                                        <mat-option *ngFor="let service of srvcArry" [value]="service">
+                                                            {{service.name}}</mat-option>
                                                     </div>
-                                                        <div class="actiondiv btn_align">
-                                                                <button class="cs-btn bt3" style="margin-right:10px" mat-button
-                                                                    (click)="cancelAssignServices()">Cancel</button>
-                                                                <button class="cs-btn bt3" mat-button
-                                                                    (click)="assignServices(deptServices.value)">Save</button>
-                                                            </div> 
+                                                    <div class="actiondiv btn_align">
+                                                        <button class="cs-btn bt3" style="margin-right:10px" mat-button
+                                                            (click)="cancelAssignServices()">Cancel</button>
+                                                        <button class="cs-btn bt3" mat-button
+                                                            (click)="assignServices(deptServices.value)">Save</button>
+                                                    </div>
                                                 </mat-select>
-                                               
+
                                             </mat-form-field>
-                                           
+
                                         </div>
                                         <div class="p0 w-dta active" *ngIf="dept_services">
                                             <div class="special-dta mgn-up-10">
-                                                <div class="j-special" *ngFor="let service of dept_services, index as i">                                                    
-                                                        {{service.name}}<i (click)="removeServiceFromDept(service, i)" class="close-icon-right fa fa-times"></i>
+                                                <div class="j-special"
+                                                    *ngFor="let service of dept_services, index as i">
+                                                    {{service.name}}<i *ngIf="!dept_data.isDefault"
+                                                        (click)="removeServiceFromDept(service, i)"
+                                                        class="close-icon-right fa fa-times"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div *ngIf="!showAllServices && dept_services && dept_services.length === 0 && showServc">
+                                        <div
+                                            *ngIf="!showAllServices && dept_services && dept_services.length === 0 && showServc">
                                             No Services assigned to department
-                                            <div *ngIf="add_it_now_show">
-                                                <span style="margin-top:10px" class="cs-btn bt3" 
+                                            <div *ngIf="add_it_now_show && !dept_data.isDefault && srvcArry.length!=0">
+                                                <span style="margin-top:10px" class="cs-btn bt3"
                                                     (click)="editLocationServices()">{{add_it_cap}}</span>
                                             </div>
                                         </div>

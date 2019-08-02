@@ -41,10 +41,11 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
       title: Messages.WAITLIST_MANAGE_CAP
     }
   ];
- 
+
   subscription: Subscription;
   isCheckin;
   futureDateWaitlist = false;
+  filterbydepartment = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private router: Router,
@@ -69,12 +70,12 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.getDepartmentsCount();
     this.getBusinessConfiguration();
     this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings'};
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings' };
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
         data => {
-          if (data.ttype === 'online_checkin_status') {
+          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment') {
             this.getWaitlistMgr();
           }
         });
@@ -94,6 +95,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
           this.online_checkin = data['onlineCheckIns'];
           this.futureDateWaitlist = data['futureDateWaitlist'];
           this.provider_datastorage.set('waitlistManage', data);
+          this.filterbydepartment = data['filterByDept'];
         });
     this.loading = false;
   }

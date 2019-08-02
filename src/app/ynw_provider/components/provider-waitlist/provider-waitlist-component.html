@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="filterbydepartment">
                 <div class="card p0">
                     <span class="b-link" (click)="goDepartments()">
                         <h2>Departments ({{departmentCount}})</h2>

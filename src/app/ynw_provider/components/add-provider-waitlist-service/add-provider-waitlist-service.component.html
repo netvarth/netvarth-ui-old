@@ -42,7 +42,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
       <div class="form-group" *ngIf="filterDepart">
         <mat-form-field>
-          <mat-select formControlName="department" placeholder="Choose Department *" [ngModel]="default" #deptsel
+          <mat-select formControlName="department" placeholder="Choose Department *" #deptsel
             (selectionChange)="handleDeptSelction(deptsel.value)">
             <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
               {{dept.departmentName | capitalizeFirst}}

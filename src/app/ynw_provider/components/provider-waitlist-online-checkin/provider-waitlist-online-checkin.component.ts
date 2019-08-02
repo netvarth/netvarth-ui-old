@@ -143,6 +143,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
           this.setValue(this.waitlist_manager);
           this.provider_datastorage.set('waitlistManage', data);
           this.formChange = 0;
+          this.shared_functions.sendMessage({ ttype: 'filterbyDepartment', action: this.waitlist_manager.filterByDept });
         },
         () => {
 
@@ -167,7 +168,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     }
   }
   doRemoveservice() {
-    if(this.form['filterByDept']){
+    if (this.form['filterByDept']) {
       this.form['filterByDept'] = true;
       this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -178,7 +179,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
         }
       });
     }
-    else{
+    else {
       this.form['filterByDept'] = false;
       this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -189,9 +190,9 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
         }
       });
     }
-    
+
     this.removeitemdialogRef.afterClosed().subscribe(result => {
       this.OnSubmit()
-  });
+    });
   }
 }

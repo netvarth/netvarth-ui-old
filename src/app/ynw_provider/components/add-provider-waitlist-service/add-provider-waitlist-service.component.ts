@@ -92,7 +92,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   sel_ser;
   loading = true;
   deptObj;
-  default: any;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -109,7 +108,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
   ngOnInit() {
     this.getDomainSubdomainSettings();
-    this.getDepartments();
+    // this.getDepartments();
     this.api_loading = false;
     this.service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -163,6 +162,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   createForm() {
+    this.getDepartments();
     if (!this.isServiceBillable) {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -263,7 +263,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
             // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
             this.mode = 'afteradd';
           }
-
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
@@ -315,7 +314,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         }
         const value = (this.data.type === 'edit' && this.service['minPrePaymentAmount']) ?
           this.service['minPrePaymentAmount'] : '';
-
         this.amForm.addControl('minPrePaymentAmount',
           new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
       }
@@ -323,7 +321,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   imageSelect(input) {
-
     this.success_error = null;
     this.error_list = [];
     if (input.files) {
@@ -344,9 +341,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
             this.error_msg = 'Please upload images with size < 5mb';
           }
         }
-
       }
-
     }
   }
 
@@ -375,18 +370,15 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
   getDepartments() {
     this.loading = false;
-
     this.provider_services.getDepartments()
       .subscribe(
         data => {
           this.deptObj = data;
-          // this.departments = data;
           this.departments = this.deptObj.departments;
           this.filterDepart = this.deptObj.filterByDept;
-            if (this.departments.length > 0) {
-              this.default = this.departments[0].departmentId;
-             
-            }
+          if (this.type === 'add') {
+            this.amForm.get('department').setValue(this.departments[0].departmentId);
+          }
           this.loading = false;
         },
         error => {
@@ -480,11 +472,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
 
   deleteTempImage(i) {
-
     this.item_pic.files.splice(i, 1);
     this.item_pic.base64.splice(i, 1);
     this.item_pic.caption.splice(i, 1);
-
   }
 
   resetApiErrors() {
