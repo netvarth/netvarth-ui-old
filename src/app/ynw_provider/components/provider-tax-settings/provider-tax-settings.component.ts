@@ -56,14 +56,16 @@ export class ProvidertaxSettingsComponent implements OnInit {
         this.provider_services.getTaxpercentage()
             .subscribe(data => {
                 this.taxDetails = data;
+                if (this.taxDetails) {
                 this.taxpercentage = this.taxDetails.taxPercentage;
                 this.gstnumber = this.taxDetails.gstNumber || '';
-                if (this.taxDetails && this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
+                if (this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
                     this.allFieldsExists = true;
                 }
-                if (this.taxDetails && this.taxDetails.enableTax) {
+                if (this.taxDetails.enableTax) {
                     this.enabletax = true;
                 }
+            }
             },
                 () => {
                 });

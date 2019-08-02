@@ -1166,7 +1166,9 @@ export class CheckInInnerComponent implements OnInit {
           }
         }
         this.deptLength = this.departments.length;
-        this.selected_dept = 'None';
+        // this.selected_dept = 'None';
+        this.selected_dept = this.departments[0].departmentId;
+        this.handleDeptSelction(this.selected_dept);
       });
   }
 
