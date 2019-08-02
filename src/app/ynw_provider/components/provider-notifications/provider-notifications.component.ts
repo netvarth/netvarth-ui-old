@@ -68,7 +68,7 @@ export class ProviderNotificationsComponent implements OnInit {
          this.setNotificationList(this.notificationList);
        },
        error => {
-         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error));
+         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error),{ 'panelClass': 'snackbarerror' });
 
        }
      );
@@ -89,11 +89,15 @@ export class ProviderNotificationsComponent implements OnInit {
           this.em_arr = notifyList.email;
           this.SelchkinNotify = false;
           this.email = true;
+        }else{
+          this.email = false;
         }
         if(notifyList.sms && notifyList.sms.length != 0){
           this.ph_arr = notifyList.sms;
           this.SelchkinNotify = false;
           this.sms = true;
+        }else{
+          this.sms = false;
         }
         if(notifyList.pushMessage){
           this.cheknpush = notifyList.pushMessage;
@@ -106,12 +110,15 @@ export class ProviderNotificationsComponent implements OnInit {
           this.em1_arr = notifyList.email;
           this.SelchkincnclNotify = false;
           this.cancelemail = true;
+        }else{
+          this.cancelemail = false;
         }
         if(notifyList.sms && notifyList.sms.length != 0){
           this.ph1_arr = notifyList.sms;
           this.SelchkincnclNotify = false;
           this.cancelsms = true;
- 
+        }else{
+          this.cancelsms = false;
         }
         if(notifyList.pushMessage){
           this.cancelpush = notifyList.pushMessage;
@@ -145,13 +152,13 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'),{ 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'),{ 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
         return;
       }
       this.ph_arr.push(curphone);
@@ -168,7 +175,7 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = Messages.BPROFILE_PRIVACY_EMAIL_INVALID; // 'Please enter a valid email id';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'),{ 'panelClass': 'snackbarerror' });// 'Please enter a valid email id';
         return;
       }
       this.em_arr.push(curemail);
@@ -183,13 +190,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'),{ 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
+       
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'),{ 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
         return;
       }
       this.ph1_arr.push(curphone1);
@@ -206,7 +214,7 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
-        this.api_error = Messages.BPROFILE_PRIVACY_EMAIL_INVALID; // 'Please enter a valid email id';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'),{ 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       this.em1_arr.push(curemail1);
@@ -301,7 +309,7 @@ export class ProviderNotificationsComponent implements OnInit {
         this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
              },
       error => {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error));
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error),{ 'panelClass': 'snackbarerror' });
         
 
       }
@@ -316,7 +324,7 @@ export class ProviderNotificationsComponent implements OnInit {
         
       },
       error => {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error));
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error),{ 'panelClass': 'snackbarerror' });
 
       }
     );
