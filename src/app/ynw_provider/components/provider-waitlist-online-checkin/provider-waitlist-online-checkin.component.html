@@ -40,20 +40,19 @@
   </div>
   <div class="row">
     <div class="lbl col-sm-12 col-md-12 col-lg-12 notify">
-      <label>Send Notifications
-        <!-- <span class="learnmore-pointer" (click)="redirecTo('notifications')">Send Notifications</span> -->
-        <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['providerNotification']"
+      
+        <span class="learnmore-pointer" (click)="redirecTo('notifications')">Send Notifications</span> 
+        <!-- <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['providerNotification']"
           [labelPosition]="'before'" [(ngModel)]="form['providerNotification']" (change)="onFormChange()"
           [disabled]="!waitlist_manager['onlineCheckIns']">
-        </mat-slide-toggle>
-      </label>
+        </mat-slide-toggle> -->
+      
     </div>
   </div>
 
   <div class="row">
     <div class="lbl col-sm-12 col-md-12 col-lg-12 notify">
       <label>Select services by department
-        <!-- <span class="learnmore-pointer" (click)="redirecTo('notifications')">Send Notifications</span> -->
         <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['filterByDept']" [labelPosition]="'before'"
           [(ngModel)]="form['filterByDept']" (change)="doRemoveservice()">
         </mat-slide-toggle>
