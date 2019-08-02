@@ -95,7 +95,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   socialMedialist: any = [];
   settings_exists = false;
   business_exists = false;
-  service_exists = false;
   gallery_exists = false;
   location_exists = false;
   isInFav;
@@ -328,7 +327,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 this.showDepartments = true;
               }
             }
-            this.service_exists = true;
             break;
           }
           case 'gallery': {

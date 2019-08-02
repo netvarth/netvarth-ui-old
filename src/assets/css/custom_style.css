@@ -4187,3 +4187,8 @@ header .lgo img {
 .list-style .side-menu li {
   display: flex !important;
 }
+.srlst .services .active {
+  color: white !important;
+  border: 1px solid #00aef2 !important;
+  background: #00aef2ad !important;
+}

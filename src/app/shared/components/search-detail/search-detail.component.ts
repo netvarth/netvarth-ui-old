@@ -1503,9 +1503,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
         }
-        //  else if (passParam['callback'] === 'servicedetail') {
-        //   this.serviceClicked(passParam['mname'], passParam['mobj']);
-        // } 
+         else if (passParam['callback'] === 'servicedetail') {
+          this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
+        } 
         else {
           this.showCheckin('consumer');
         }
@@ -1545,9 +1545,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
         }
-        // else if (passParam['callback'] === 'servicedetail') {
-        //   this.serviceClicked(passParam['mname'], passParam['mobj']);
-        // } 
+        else if (passParam['callback'] === 'servicedetail') {
+          this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
+        } 
         else {
           this.showCheckin('consumer');
         }

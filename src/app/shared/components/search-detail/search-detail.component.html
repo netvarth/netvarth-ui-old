@@ -403,7 +403,8 @@
                                         </div>
                                         <div class="services" *ngIf="search_result.fields.departments">
                                             <ul>
-                                                <li *ngFor="let departments of search_result.fields.departments"
+                                                <li [class.active]="selectedDepartment==departments"
+                                                *ngFor="let departments of search_result.fields.departments"
                                                     (click)="departmentClicked(departments,search_result)">
                                                     {{departments | capitalizeFirst}}
                                                 </li>
@@ -411,8 +412,7 @@
                                         </div>
                                         <div class="services"
                                             *ngIf="search_result.fields.departments && showServices && departServiceList.length > 0">
-                                            <label *ngIf="departServiceList.length > 0"> Services under
-                                                {{selectedDepartment | capitalizeFirst}} department</label>
+                                            <label *ngIf="departServiceList.length > 0"> Services</label>
                                             <ul>
                                                 <li *ngFor="let serv of departServiceList"
                                                     (click)="checkserviceClicked(serv.name,search_result, 'deptServiceClick')">{{serv.name

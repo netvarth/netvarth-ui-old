@@ -220,16 +220,17 @@
                                                     *ngIf="showDepartments && servicesjson.length > 0">
                                                     <span class="sub-title">Departments</span>
                                                     <ul>
-                                                        <li *ngFor="let department of servicesjson"
+                                                        <li [class.active]="selectedDepartment==department"
+                                                        *ngFor="let department of servicesjson"
                                                             (click)="departmentClicked(department.departmentName)">{{department.departmentName
                                                                 | capitalizeFirst}}</li>
                                                     </ul>
                                                 </div>
                                                 <div class="services"
-                                                    *ngIf="showServices && departServiceList.length > 0">
-                                                    <span class="sub-title">Services under
-                                                        {{selectedDepartment | capitalizeFirst}} department</span>
-                                                    <ul>
+                                                    *ngIf="showServices">
+                                                    <span class="sub-title" *ngIf="departServiceList.length > 0">{{services_offered}}</span>
+                                                    <span class="sub-title" *ngIf="departServiceList.length === 0">No services</span>
+                                                    <ul *ngIf="departServiceList.length > 0">
                                                         <li *ngFor="let serv of departServiceList"
                                                             (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
                                                                     | capitalizeFirst}}</li>
