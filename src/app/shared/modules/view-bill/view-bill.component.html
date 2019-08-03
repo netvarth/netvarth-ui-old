@@ -47,7 +47,7 @@
 											currency:'INR':'symbol':'.2-2'}}</div>
 									</div>
 								</div>
-								<div class="c-row three" *ngIf="service.discount.length > 0">
+								<div class="c-row three" *ngIf="service.discount && service.discount.length > 0">
 									<div class="name">{{sub_tot_cap}}</div>
 									<div class="price">{{service.netRate |
 										currency:'INR':'symbol':'.2-2'}}</div>
