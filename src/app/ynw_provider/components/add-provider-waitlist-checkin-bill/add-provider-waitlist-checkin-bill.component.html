@@ -592,7 +592,7 @@
 																			aria-hidden="true"></i></div>
 																</div>
 															</div>
-															<div class="c-row three" *ngIf="item.discount.length > 0">
+															<div class="c-row three" *ngIf="item.discount &&item.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price">{{item.netRate |
 																	currency:'INR':'symbol':'.2-2'}}</div>
