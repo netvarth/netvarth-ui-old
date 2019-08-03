@@ -38,18 +38,12 @@
       </mat-radio-group>
     </div>
   </div>
-  <div class="row">
-    <div class="lbl col-sm-12 col-md-12 col-lg-12 notify">
-      
-        <span class="learnmore-pointer" (click)="redirecTo('notifications')">Send Notifications</span> 
-        <!-- <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['providerNotification']"
-          [labelPosition]="'before'" [(ngModel)]="form['providerNotification']" (change)="onFormChange()"
-          [disabled]="!waitlist_manager['onlineCheckIns']">
-        </mat-slide-toggle> -->
-      
-    </div>
+<div *ngIf="formChange == 1">
+  <button type="button" mat-button (click)="cancelChange()"
+    class="cs-btn bt2">{{cancel_btn}}</button>
+  <button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
+    [disabled]="form.calculationMode == 'Fixed' && form.trnArndTime == null">{{save_btn}}</button>
   </div>
-
   <div class="row">
     <div class="lbl col-sm-12 col-md-12 col-lg-12 notify">
       <label>Select services by department
@@ -60,6 +54,15 @@
     </div>
   </div>
 
+  <div class="row" style="margin-left: 10px">
+    <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 notify"> -->
+      <span class="learnmore-pointer" (click)="redirecTo('notifications')">Send Notifications</span>
+      <!-- <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['providerNotification']"
+          [labelPosition]="'before'" [(ngModel)]="form['providerNotification']" (change)="onFormChange()"
+          [disabled]="!waitlist_manager['onlineCheckIns']">
+        </mat-slide-toggle> -->
+    <!-- </div> -->
+  </div>
   <!-- <div class="row">
     <div class="lbl col-sm-12 col-md-12 col-lg-12">
       <label>{{accept_future_cap}} {{checkin_label | capitalizeFirst}}
@@ -87,11 +90,7 @@
                   </div>
               </div> -->
 </div>
-<button type="button" mat-button (click)="cancelChange()" [style.visibility]="formChange == 1 ? 'visible' : 'hidden'"
-  class="cs-btn bt2">{{cancel_btn}}</button>
-<button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
-  [disabled]="form.calculationMode == 'Fixed' && form.trnArndTime == null"
-  [style.visibility]="formChange == 1 ? 'visible' : 'hidden'">{{save_btn}}</button>
+
 
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
 </app-form-success-display>
