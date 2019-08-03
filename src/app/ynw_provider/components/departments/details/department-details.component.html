@@ -12,7 +12,6 @@
                 </div>
                 <div class="card p0" *ngIf="!loading">
                     <div class="copy locd">
-                        <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
                         <div class="lbl col-sm-12 col-md-7 col-lg-7">
                             <app-jaldee-department [action]="selected_action" [department]="dept_data"
                                 (actionPerformed)="handleActionPerformed($event)"></app-jaldee-department>
@@ -20,14 +19,13 @@
                         <div class="lbr col-sm-12 col-md-5 col-lg-5">
                             <div class="col-md-12 ynw-common-form-nm wiz-service serviceform ">
                                 <div class="form-group">
-                                    <!-- Specilaizations -->
                                     <div style="margin-bottom: 20px">
                                         <div style="display:flex; margin-bottom: 10px; margin-top: 5px">
                                             <b *ngIf="showServc"> Services Under Department</b>
                                             <span *ngIf="!showAllServices && dept_services && dept_services.length > 0"
                                                 style="color: #00aef2; background: white; padding-left:10px;float:right; margin-top:-3px; font-size:1.25rem"
-                                                (click)="editLocationServices()"><i
-                                                    *ngIf="services_all.length !== dept_services.length && !dept_data.isDefault"
+                                                (click)="addnewClick()"><i
+                                                    *ngIf="srvcArry.length!=0 && !dept_data.isDefault"
                                                     class="fa fa-plus-circle"></i></span>
                                         </div>
                                         <div style="margin-bottom: 20px" *ngIf="services_all && showAllServices">
@@ -54,7 +52,6 @@
                                                             (click)="assignServices(deptServices.value)">Save</button>
                                                     </div>
                                                 </mat-select>
-
                                             </mat-form-field>
 
                                         </div>
@@ -73,7 +70,7 @@
                                             No Services assigned to department
                                             <div *ngIf="add_it_now_show && !dept_data.isDefault && srvcArry.length!=0">
                                                 <span style="margin-top:10px" class="cs-btn bt3"
-                                                    (click)="editLocationServices()">{{add_it_cap}}</span>
+                                                    (click)="addnewClick()">{{add_it_cap}}</span>
                                             </div>
                                         </div>
                                     </div>

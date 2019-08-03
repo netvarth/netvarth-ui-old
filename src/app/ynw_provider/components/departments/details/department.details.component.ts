@@ -116,6 +116,7 @@ export class DepartmentDetailComponent implements OnInit {
             if (result) {
                 this.provider_services.removeDeparmentService(this.dept_id, service.id).subscribe(
                     (data) => {
+                        this.getDepartments();
                         this.dept_services.splice(index, 1);
                     }
                 );
@@ -132,6 +133,7 @@ export class DepartmentDetailComponent implements OnInit {
         this.provider_services.addDepartmentServices(input, this.dept_id).subscribe(
             (data) => {
                 this.shared_Functionsobj.openSnackBar('Services added successfully', { 'panelClass': 'snackbarnormal' });
+                this.getDepartments();
                 this.getDepartmentDetails();
                 this.add_it_now_show = true;
                 this.showAllServices = false;
@@ -213,6 +215,9 @@ export class DepartmentDetailComponent implements OnInit {
         // this.srvcArry = this.services_all.filter(item1 =>
         //     !this.defaultdepartmentservice.some(item2 => (item2.id === item1.id)))
         this.srvcArry = this.defaultdepartmentservice;
+        // this.showAllServices = true;
+    }
+    addnewClick() {
         this.showAllServices = true;
     }
     getDepartmentDetails() {
@@ -260,17 +265,23 @@ export class DepartmentDetailComponent implements OnInit {
                 data => {
                     this.deptObj = data;
                     this.departments = this.deptObj['departments'];
+                    this.defaultdepartmentservice = [];
                     for (let i = 0; i < this.servicesjson.length; i++) {
                         for (let j = 0; j < this.departments.length; j++) {
                             if (this.departments[j].isDefault) {
-                                for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-                                    if (this.departments[j].serviceIds[k] === this.servicesjson[i].id) {
-                                        this.defaultdepartmentservice.push(this.servicesjson[i]);
+                                if (this.departments[j].serviceIds.length > 0) {
+                                    for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+                                        if (this.departments[j].serviceIds[k] === this.servicesjson[i].id) {
+                                            if (this.defaultdepartmentservice.indexOf(this.servicesjson[i]) == -1) {
+                                                this.defaultdepartmentservice.push(this.servicesjson[i]);
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    this.editLocationServices();
                 },
                 error => {
                     this.shared_Functionsobj.apiErrorAutoHide(this, error);
