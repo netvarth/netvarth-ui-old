@@ -102,6 +102,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   payuVerified = false;
   isJaldeeAccount = false;
   departmentCount: any = 0;
+  filterbydepartment = false;
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -126,7 +127,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
         data => {
-          if (data.ttype === 'online_checkin_status') {
+          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment') {
             this.getWaitlistMgr();
           }
         });
@@ -143,6 +144,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.waitlist_status = data['onlineCheckIns'] || false;
           this.futureDateWaitlist = data['futureDateWaitlist'] || false;
           this.waitlist_statusstr = (this.waitlist_status) ? 'On' : 'Off';
+          this.filterbydepartment = data['filterByDept'];
         });
   }
   handle_waitliststatus(event) {

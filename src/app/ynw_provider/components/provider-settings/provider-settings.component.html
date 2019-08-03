@@ -82,7 +82,7 @@
                                         ({{queues_count}})</span>
                                 </li>
                                 <li>
-                                    <span class="lnk" (click)="redirecTo('departments')">Departments
+                                    <span class="lnk" (click)="redirecTo('departments')" *ngIf="filterbydepartment">Departments
                                         ({{departmentCount}})</span>
                                 </li>
                             </ul>
