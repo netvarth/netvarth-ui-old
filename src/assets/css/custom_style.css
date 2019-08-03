@@ -3464,16 +3464,29 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
   display: block !important;
 }
 
-.notifications {
-  list-style: none !important;
+.notifications .icon-add,
+.notifications .icon-minus{
+  cursor: pointer;
+  color: #00aef2;
+  font-size: 1.2rem;
+}
+.notifications li {
+  margin-bottom: 10px !important;
+}
+
+.notification {
+  margin-right: 10px !important;
+  font-size: 1rem !important;
 }
 
 .phadd {
   width: 20% !important;
+  margin-top: 5px !important;
 }
 
 .emadd {
   width: 40% !important;
+  margin-top: 5px !important;
 }
 
 .timegap {
@@ -3606,13 +3619,11 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
   color: #999999 !important;
   font-size: .75rem !important;
   padding-left: 10px !important;
-
 }
 .paysettings .outermost .cc-outer .form-group .verified, .paysettings .outermost .paytm-outer .form-group .verified{
   color: #00cc96 !important;
   font-size: .75rem !important;
 }
-
 
 .paysettings .outermost .cc-outer .form-group .not-verified:before, .paysettings .outermost .paytm-outer .form-group .not-verified:before{
   font-family: "custom-ynw" !important;
@@ -4121,10 +4132,10 @@ i.notavail {color:grey !important}
   }
 }
 @media only screen and (max-width: 575px){
-header .lgo img {
-  width: 110px;
-  object-fit: scale-down
-}
+  header .lgo img {
+    width: 110px;
+    object-fit: scale-down
+  }
 }
 @media only screen and (max-width: 767px) {
   .bottom-sect .bt-l .o-now {
@@ -4193,26 +4204,25 @@ header .lgo img {
   background: #00aef2ad !important;
 }
 .notifyOk {
-padding: 10px 10px !important;
-margin-bottom: 10px !important;
+  padding: 10px 10px !important;
+  margin-bottom: 10px !important;
 }
 @media only screen and (max-width: 575px){
   .leftselectAll {
      margin-left: 0px!important;
-}
-.emadd{
-  width:100%!important;
-}
-.phadd{
-  width:100%!important;
-}
-.notifications{
-padding-left: 5px !important;
-}
-.notifyOk {
-  padding: 5px  !important;
- }
- 
+    }
+  .emadd{
+    width:100%!important;
+  }
+  .phadd{
+    width:100%!important;
+  }
+  .notifications{
+  padding-left: 5px !important;
+  }
+  .notifyOk {
+    padding: 5px  !important;
+  }
 }
 .fontNotify{
   font-size: small !important;

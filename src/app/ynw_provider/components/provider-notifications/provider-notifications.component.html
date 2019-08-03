@@ -1,177 +1,145 @@
 <section>
-  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+  <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+  <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
   <div class="content comn-cls lic-page">
-      <div class="container">
-          <div class="w-dta">
-              <div class="card">
-            <div class="row">
-
-                  <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
-                     
-                        
-                            <mat-accordion>
-                                <mat-expansion-panel [expanded]="true">
-                                    <mat-expansion-panel-header >
-                                        <mat-panel-title >    
-                         
-                            Online checkins
-                          
-                                        </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="rw">
-                          <div class="form-group">
-                              
-                              <div >
-                                  <!-- <mat-checkbox>Send sms</mat-checkbox> -->
-                                  <i class="fa fa-square-o" *ngIf="SelchkinNotify" (click)="selectChekinNotify()">
-                                      Notify me whenever new checkin</i>
-                                  <i class="fa fa-check-square-o" *ngIf="!SelchkinNotify" (click)="unselectChekinNotify()">
-                                      Notify me whenever new checkin</i>
+    <div class="container">
+      <div class="w-dta">
+        <div class="card">
+          <div class="row">
+            <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12">
+              <mat-accordion>
+                <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span style="font-weight: 600;
+                  font-size: 1.20rem;"> Online checkins </span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="rw">
+                    <div class="form-group">
+                      <div style="display: flex">
+                        <span class="notification"> Notify me whenever new checkin</span>
+                        <mat-slide-toggle class="example-margin" (change)="selectChekinNotify($event)"
+                          [(ngModel)]="SelchkinNotify">
+                        </mat-slide-toggle>
+                      </div>
+                    </div>
+                    <section class="leftselectAll" *ngIf="SelchkinNotify">
+                      <ul class="notifications">
+                        <li>
+                          <span class="notification"> via sms </span>
+                          <span [class.icon-add]="!sms" [class.icon-minus]="sms" (click)="smsAddClicked()"></span>
+                          <div class="form-group" *ngIf="sms">
+                            <div class="input-group mb-3 phadd">
+                              <input type="text" class="form-control" placeholder="Phonenumber"
+                                [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10" style="height: 30px">
+                              <div class="input-group-append" style="height: 30px">
+                                <button class="btn bt3 btn-default" (click)="addChkinPh()" type="button">Add</button>
                               </div>
                             </div>
-                          <!-- <div class="form-group"> -->
-                            <section class="leftselectAll" *ngIf="!SelchkinNotify">
-                              <ul class ="notifications">
-                                <li>
-                          <mat-checkbox [(ngModel)] = "sms" class="fontNotify">Send sms</mat-checkbox>
-
-                          <div class="form-group" *ngIf="sms">
-
-
-                                <div class="input-group mb-3 phadd">
-                                        <input type="text" class="form-control" placeholder="Phonenumber" [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10">
-                                        <div class="input-group-append ">
-                                          <button class="btn bt3 btn-default" (click)="addChkinPh()" type="button">Add</button>
-                                        </div>
-                                      </div>
-                              <!-- <span >
-                            <input type="text" placeholder="Phonenumber" [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10"class="form-control phoneField">
-                            
-                                <button class="btn bt3 btn-default phadd" (click)="addChkinPh()" type="button">Add</button>
-                            </span> -->
-                            <div *ngFor="let phne of ph_arr">
-                                 <span>{{phne}} <i class="pointer-cursor icon-delete"
-                                        (click)="removePhEmail(phne,ph_arr)"></i></span>
-                            </div>
-
-                        </div>
-                      </li>
-                          <li>
-                          <mat-checkbox [(ngModel)] = "email" class="fontNotify">Send email</mat-checkbox>
-                          <div class="form-group" *ngIf="email">
-
-                                <div class="input-group mb-3 emadd">
-                                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
-                                        <div class="input-group-append ">
-                                          <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Add</button>
-                                        </div>
-                                      </div>
-
-                              <!-- <span >
-                            <input type="text" placeholder="Email" [(ngModel)]="notifyemail" class="form-control emailField">
-                            
-                                <button class="btn bt3 btn-default emadd" (click)="addChkinemil()" type="button">Add</button>
-                            </span> -->
-                            <div *ngFor="let emailval of em_arr">
-                                <span>{{emailval}} <i class="pointer-cursor icon-delete"
-                                       (click)="removePhEmail(emailval,em_arr)"></i></span>
-                           </div>
-
-
-                        </div>
+                          </div>
+                          <div *ngFor="let phne of ph_arr">
+                            <span>{{phne}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne,ph_arr, 'newcheckin')"></i></span>
+                          </div>
                         </li>
                         <li>
-                          <mat-checkbox [(ngModel)] = "cheknpush" class="fontNotify" > Push notifications</mat-checkbox>
+                          <span class="notification"> via email</span>
+                          <span [class.icon-add]="!email" [class.icon-minus]="email" (click)="emailAddClicked()"></span>
+                          <div class="form-group" *ngIf="email">
+                            <div class="input-group mb-3 emadd">
+                              <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail"
+                                style="height: 30px">
+                              <div class="input-group-append" style="height: 30px">
+                                <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Add</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngFor="let emailval of em_arr">
+                            <span>{{emailval}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(emailval,em_arr, 'newcheckin')"></i></span>
+                          </div>
                         </li>
-                        </ul>
-                        </section>
-                        <button (click)="chekinNotifications()"  type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
-                        </div>
-                                
-
-
-                                <div class="rw">
-                                    
-                                      <div class="form-group">
-                                          
-                                          <div >
-                                              <i class="fa fa-square-o" *ngIf="SelchkincnclNotify" (click)="selectChekinCanclNotify()">
-                                                  Notify me whenever new checkin got cancel</i>
-                                              <i class="fa fa-check-square-o" *ngIf="!SelchkincnclNotify" (click)="unselectChekinCanclNotify()">
-                                                  Notify me whenever new checkin got cancel</i>
-                                          </div>
-                                        </div>
-            
-                                        <section class="leftselectAll" *ngIf="!SelchkincnclNotify">
-                                            <ul class ="notifications">
-                                              <li>
-                                        <mat-checkbox [(ngModel)] = "cancelsms" class="fontNotify">Send sms</mat-checkbox>
-              
-                                        <div class="form-group" *ngIf="cancelsms">
-
-                                                <div class="input-group mb-3 phadd">
-                                                        <input type="text" class="form-control" placeholder="Phonenumber" [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10">
-                                                        <div class="input-group-append ">
-                                                          <button class="btn bt3 btn-default" (click)="addCheknCanclph()" type="button">Add</button>
-                                                        </div>
-                                                      </div>
-
-                                            <!-- <span >
-                                          <input type="text" placeholder="Phonenumber" [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10"class="form-control phoneField">
-                                          
-                                              <button class="btn bt3 btn-default phadd" (click)="addCanclph()" type="button">Add</button>
-                                          </span> -->
-                                          <div *ngFor="let phnecancel of ph1_arr">
-                                            <span>{{phnecancel}} <i class="pointer-cursor icon-delete"
-                                                   (click)="removePhEmail(phnecancel,ph1_arr)"></i></span>
-                                       </div>
-              
-                                      </div>
-                                    </li>
-                                        <li>
-                                        <mat-checkbox [(ngModel)] = "cancelemail" class="fontNotify">Send email</mat-checkbox>
-                                        <div class="form-group" *ngIf="cancelemail">
-                                                <div class="input-group mb-3 emadd">
-                                                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
-                                                        <div class="input-group-append ">
-                                                          <button class="btn bt3 btn-default" (click)="addCheknCanclemil()" type="button">Add</button>
-                                                        </div>
-                                                      </div>
-
-                                            <!-- <span >
-                                          <input type="text" placeholder="Email" [(ngModel)]="notifycanclemail" class="form-control emailField">
-                                          
-                                              <button class="btn bt3 btn-default emadd" (click)="addCanclemil()" type="button">Add</button>
-                                          </span> -->
-                                          <div *ngFor="let emailcancl of em1_arr">
-                                            <span>{{emailcancl}} <i class="pointer-cursor icon-delete"
-                                                   (click)="removePhEmail(emailcancl,em1_arr)"></i></span>
-                                       </div>
-                                      </div>
-                                      </li>
-                                      <li>
-                                        <mat-checkbox [(ngModel)] = "cancelpush" class="fontNotify"> Push notifications</mat-checkbox>
-                                      </li>
-                                      </ul>
-                                      </section>
-                                      <button (click)="checkinCancelNotifications()"  type="button" mat-button class="cs-btn bt1 notifyOk" >OK</button>
-                                    </div> 
-                                </mat-expansion-panel>
-                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-                      <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display> -->
-                            </mat-accordion>
-                      <!-- </div> -->
-                      
-                     
-                    </div> 
-
+                        <li>
+                          <span class="notification">Push notifications</span>
+                          <mat-slide-toggle class="example-margin" [(ngModel)]="cheknpush"
+                            (change)="changePushMsgStatus('newcheckin')">
+                          </mat-slide-toggle>
+                        </li>
+                      </ul>
+                    </section>
+                    <button *ngIf="okCheckinStatus" (click)="chekinNotifications('newcheckin')" type="button" mat-button
+                      class="cs-btn bt1 notifyOk">OK</button>
                   </div>
-              </div>
+                  <div class="rw">
+                    <div class="form-group">
+                      <div style="display: flex">
+                        <span class="notification"> Notify me whenever new checkin got cancelled</span>
+                        <mat-slide-toggle class="example-margin" (change)="selectChekinCanclNotify($event)"
+                          [(ngModel)]="SelchkincnclNotify">
+                        </mat-slide-toggle>
+                      </div>
+                    </div>
+                    <section class="leftselectAll" *ngIf="SelchkincnclNotify">
+                      <ul class="notifications">
+                        <li>
+                          <span class="notification"> via sms</span>
+                          <span [class.icon-add]="!cancelsms" [class.icon-minus]="cancelsms"
+                            (click)="cancelledCheckinsmsAddClicked()"></span>
+                          <div class="form-group" *ngIf="cancelsms">
+                            <div class="input-group mb-3 phadd">
+                              <input type="text" class="form-control" placeholder="Phonenumber"
+                                [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10" style="height: 30px">
+                              <div class="input-group-append" style="height: 30px">
+                                <button class="btn bt3 btn-default" (click)="addCheknCanclph()"
+                                  type="button">Add</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngFor="let phnecancel of ph1_arr">
+                            <span>{{phnecancel}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phnecancel,ph1_arr, 'cancelcheckin')"></i></span>
+                          </div>
+                        </li>
+                        <li>
+                          <span class="notification"> via email </span>
+                          <span [class.icon-add]="!cancelemail" [class.icon-minus]="cancelemail"
+                            (click)="cancelledCheckinemailAddClicked()"></span>
+                          <div class="form-group" *ngIf="cancelemail">
+                            <div class="input-group mb-3 emadd">
+                              <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail"
+                                style="height: 30px">
+                              <div class="input-group-append" style="height: 30px">
+                                <button class="btn bt3 btn-default" (click)="addCheknCanclemil()"
+                                  type="button">Add</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngFor="let emailcancl of em1_arr">
+                            <span>{{emailcancl}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(emailcancl,em1_arr, 'cancelcheckin')"></i></span>
+                          </div>
+                        </li>
+                        <li>
+                          <span class="notification">Push notifications</span>
+                          <mat-slide-toggle class="example-margin" [(ngModel)]="cancelpush"
+                            (change)="changePushMsgStatus('cancelcheckin')">
+                          </mat-slide-toggle>
+                        </li>
+                      </ul>
+                    </section>
+                    <button *ngIf="okCancelStatus" (click)="checkinCancelNotifications('cancelcheckin')" type="button"
+                      mat-button class="cs-btn bt1 notifyOk">OK</button>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
             </div>
           </div>
         </div>
-        
-      </section> 
+      </div>
+    </div>
+  </div>
+</section>

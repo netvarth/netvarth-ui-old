@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -25,9 +23,8 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-  SelchkinNotify = true;
-  SelchkincnclNotify = true;
-  // pushNotification = false;
+  SelchkinNotify = false;
+  SelchkincnclNotify = false;
   sms = false;
   email = false;
   cheknpush = false;
@@ -46,13 +43,9 @@ export class ProviderNotificationsComponent implements OnInit {
   em1_arr: any = [];
   savechekinNotification_json: any = {};
   savecancelNotification_json: any = {};
-  saveNotification: any = [];
-  saveCanclNotification: any = [];
   notificationList: any = [];
-  saveCheckinMode;
-  cancelCheckinMode;
-  okCheckinStatus = true;
-  okCancelStatus = true;
+  okCheckinStatus = false;
+  okCancelStatus = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices) { }
 
@@ -60,105 +53,81 @@ export class ProviderNotificationsComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     this.getNotificationList();
-   }
-  getNotificationList(){
-   // alert("get")
+  }
+  getNotificationList() {
     this.provider_services.getNotificationList()
-     .subscribe(
-       data => {
-         this.notificationList = data;
-         this.setNotificationList(this.notificationList);
-       },
-       error => {
-         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error),{ 'panelClass': 'snackbarerror' });
-
-       }
-     );
-     
+      .subscribe(
+        data => {
+          this.notificationList = data;
+          this.setNotificationList(this.notificationList);
+        },
+        error => {
+          this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   setNotificationList(notificationList: any): any {
-   //alert(JSON.stringify(notificationList));
-    // if(notificationList.length == 0){
-    //   this.SelchkinNotify = true;
-    //   this.SelchkincnclNotify = true;
-      // this.okCheckinStatus = false;
-      // this.okCancelStatus = false;
-    //}
-    
-    if(notificationList.length != 0){
-      
-    
-     // this.saveCheckinMode = "UPDATE";
-     // alert(this.saveCheckinMode)
-    for(const notifyList of notificationList){
-      if(notifyList.eventType && notifyList.eventType == "WAITLISTADD" ){
-        if(notifyList.email.length == 0 && notifyList.sms.length == 0 && notifyList.pushMessage){
-          this.SelchkinNotify = true;
+    if (notificationList.length != 0) {
+      for (const notifyList of notificationList) {
+        if (notifyList.eventType && notifyList.eventType == "WAITLISTADD") {
+          if (notifyList.email.length == 0 && notifyList.sms.length == 0 && !notifyList.pushMessage) {
+            this.SelchkinNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length != 0) {
+            this.em_arr = notifyList.email;
+            this.SelchkinNotify = true;
+          } else {
+            this.SelchkinNotify = false;
+          }
+          if (notifyList.sms && notifyList.sms.length != 0) {
+            this.ph_arr = notifyList.sms;
+            this.SelchkinNotify = true;
+          } else {
+            this.SelchkinNotify = false;
+          }
+          notifyList.pushMessage
+          if (notifyList.pushMessage) {
+            this.cheknpush = notifyList.pushMessage;
+            this.SelchkinNotify = true;
+          }
+        } else if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL") {
+          if (notifyList.email.length == 0 && notifyList.sms.length == 0 && !notifyList.pushMessage) {
+            this.SelchkincnclNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length != 0) {
+            this.em1_arr = notifyList.email;
+            this.SelchkincnclNotify = true;
+          }
+          else {
+            this.SelchkincnclNotify = false;
+          }
+          if (notifyList.sms && notifyList.sms.length != 0) {
+            this.ph1_arr = notifyList.sms;
+            this.SelchkincnclNotify = true;
+          } else {
+            this.SelchkincnclNotify = false;
+          }
+          if (notifyList.pushMessage) {
+            this.cancelpush = notifyList.pushMessage;
+            this.SelchkincnclNotify = true;
+          }
         }
-        if(notifyList.email && notifyList.email.length != 0){
-          this.em_arr = notifyList.email;
-          this.SelchkinNotify = false;
-          this.email = true;
-        }else{
-          this.email = false;
-        }
-        if(notifyList.sms && notifyList.sms.length != 0){
-          this.ph_arr = notifyList.sms;
-          this.SelchkinNotify = false;
-          this.sms = true;
-        }else{
-          this.sms = false;
-        }
-        if(notifyList.pushMessage){
-          this.cheknpush = notifyList.pushMessage;
-          this.SelchkinNotify = false;
-        }
-       
-      }else if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL" ){
-        
-        if(notifyList.email.length == 0 && notifyList.sms.length == 0 && notifyList.pushMessage){
-          this.SelchkincnclNotify = true;
-        }
-        
-        if(notifyList.email && notifyList.email.length != 0){
-          this.em1_arr = notifyList.email;
-          this.SelchkincnclNotify = false;
-          this.cancelemail = true;
-        }else{
-          this.cancelemail = false;
-        }
-        if(notifyList.sms && notifyList.sms.length != 0){
-          this.ph1_arr = notifyList.sms;
-          this.SelchkincnclNotify = false;
-          this.cancelsms = true;
-        }else{
-          this.cancelsms = false;
-        }
-        if(notifyList.pushMessage){
-          this.cancelpush = notifyList.pushMessage;
-          this.SelchkincnclNotify = false;
-        }
-        
       }
     }
+  }
+  selectChekinNotify(event) {
+    this.SelchkinNotify = event.checked;
+    if (!this.SelchkinNotify) {
+      this.chekinNotifications('newcheckin');
+    }
+  }
+  selectChekinCanclNotify(event) {
+    this.SelchkincnclNotify = event.checked;
+    if (!this.SelchkincnclNotify) {
+      this.checkinCancelNotifications('cancelcheckin');
     }
   }
 
-  selectChekinNotify() {
-    this.SelchkinNotify = false;
-
-  }
-  selectChekinCanclNotify() {
-    this.SelchkincnclNotify = false;
-
-  }
-
-  unselectChekinNotify() {
-    this.SelchkinNotify = true;
-  }
-  unselectChekinCanclNotify() {
-    this.SelchkincnclNotify = true;
-  }
   addChkinPh() {
     this.resetApiErrors();
     if (this.notifyphonenumber !== '') {
@@ -166,22 +135,20 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'),{ 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'),{ 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
         return;
       }
       this.ph_arr.push(curphone);
+      this.okCheckinStatus = true;
       this.notifyphonenumber = '';
     }
-
-
   }
-
   addChkinemil() {
     this.resetApiErrors();
     if (this.notifyemail !== '') {
@@ -189,13 +156,13 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'),{ 'panelClass': 'snackbarerror' });// 'Please enter a valid email id';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid email id';
         return;
       }
       this.em_arr.push(curemail);
+      this.okCheckinStatus = true;
       this.notifyemail = '';
     }
-
   }
   addCheknCanclph() {
     this.resetApiErrors();
@@ -204,23 +171,20 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'),{ 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
-       
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'),{ 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
         return;
       }
       this.ph1_arr.push(curphone1);
+      this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
     }
-
-
   }
-
   addCheknCanclemil() {
     this.resetApiErrors();
     if (this.notifycanclemail !== '') {
@@ -228,131 +192,154 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'),{ 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       this.em1_arr.push(curemail1);
       this.notifycanclemail = '';
+      this.okCancelStatus = true;
     }
   }
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
-
-
-
-  chekinNotifications() {
+  chekinNotifications(source) {
     this.savechekinNotification_json = {};
-    this.saveNotification = [];
     let chekinMode = 'ADD';
-   // alert(JSON.stringify(this.notificationList));
-    if(this.notificationList.length == 0){
-        chekinMode = 'ADD';
+    if (this.notificationList.length == 0) {
+      chekinMode = 'ADD';
     }
-    for(const notifyList of this.notificationList){
-      if(notifyList.eventType && notifyList.eventType == "WAITLISTADD" ){
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType == "WAITLISTADD") {
         chekinMode = 'UPDATE';
       }
     }
-    if (this.SelchkinNotify) {
+    if (!this.SelchkinNotify) {
       this.em_arr = [];
       this.ph_arr = [];
       this.cheknpush = false;
     }
-    
-    if (!this.email) {
-      this.em_arr = [];
-    }
-    if (!this.sms) {
-      this.ph_arr = [];
-    }
-    
-
-    this.savechekinNotification_json.resourceType='CHECKIN';
-    this.savechekinNotification_json.eventType='WAITLISTADD';
-    this.savechekinNotification_json.sms=this.ph_arr;
-    this.savechekinNotification_json.email=this.em_arr;
-    this.savechekinNotification_json.pushMessage=this.cheknpush;
-     //alert(JSON.stringify(this.savechekinNotification_json))
-     this.saveNotifctnJson(this.savechekinNotification_json,chekinMode)
+    this.savechekinNotification_json.resourceType = 'CHECKIN';
+    this.savechekinNotification_json.eventType = 'WAITLISTADD';
+    this.savechekinNotification_json.sms = this.ph_arr;
+    this.savechekinNotification_json.email = this.em_arr;
+    this.savechekinNotification_json.pushMessage = this.cheknpush;
+    this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source)
   }
 
-  checkinCancelNotifications(){
+  checkinCancelNotifications(source) {
     this.savecancelNotification_json = {};
     let chekincancelMode = 'ADD';
-    if(this.notificationList.length == 0){
+    if (this.notificationList.length == 0) {
       chekincancelMode = 'ADD';
     }
-    for(const notifyList of this.notificationList){
-      if(notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL" ){
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL") {
         chekincancelMode = 'UPDATE';
       }
     }
-    if (this.SelchkincnclNotify) {
+    if (!this.SelchkincnclNotify) {
       this.em1_arr = [];
       this.ph1_arr = [];
       this.cancelpush = false;
     }
-    if (!this.cancelemail) {
-      this.em1_arr = [];
-    }
-    if (!this.cancelsms) {
-      this.ph1_arr = [];
-    }
-    this.savecancelNotification_json.resourceType='CHECKIN';
-    this.savecancelNotification_json.eventType='WAITLISTCANCEL';
-    this.savecancelNotification_json.sms=this.ph1_arr;
-    this.savecancelNotification_json.email=this.em1_arr;
-    this.savecancelNotification_json.pushMessage=this.cancelpush;
-    //alert(JSON.stringify(this.savecancelNotification_json))
-    this.saveNotifctnJson(this.savecancelNotification_json,chekincancelMode)
-    
-
+    this.savecancelNotification_json.resourceType = 'CHECKIN';
+    this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
+    this.savecancelNotification_json.sms = this.ph1_arr;
+    this.savecancelNotification_json.email = this.em1_arr;
+    this.savecancelNotification_json.pushMessage = this.cancelpush;
+    this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source)
   }
-  saveNotifctnJson(saveNotification_json,mode){
-   
-   // alert(mode)
-    if(mode == "ADD"){
-      
+  saveNotifctnJson(saveNotification_json, mode, source) {
+    this.sms = false;
+    this.email = false;
+    this.cancelemail = false;
+    this.cancelsms = false;
+    if (mode == "ADD") {
       this.provider_services.addNotificationList(saveNotification_json)
-    .subscribe(
-      () => {
-        this.getNotificationList();
-        this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
-             },
-      error => {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error),{ 'panelClass': 'snackbarerror' });
-        
-
-      }
-    );
+        .subscribe(
+          () => {
+            this.getNotificationList();
+            if (source === 'newcheckin') {
+              this.okCheckinStatus = false;
+            }
+            if (source === 'cancelcheckin') {
+              this.okCancelStatus = false;
+            }
+            this.okCancelStatus = false;
+            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
+          },
+          error => {
+            this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          }
+        );
     }
-   else{
+    else {
       this.provider_services.updateNotificationList(saveNotification_json)
-    .subscribe(
-      () => {
-        this.getNotificationList();
-        this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS'));
-        
-      },
-      error => {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error),{ 'panelClass': 'snackbarerror' });
-
-      }
-    );
+        .subscribe(
+          () => {
+            this.getNotificationList();
+            if (source === 'newcheckin') {
+              this.okCheckinStatus = false;
+            }
+            if (source === 'cancelcheckin') {
+              this.okCancelStatus = false;
+            }
+            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS'));
+          },
+          error => {
+            this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          }
+        );
     }
   }
-
- 
-
-  removePhEmail(phemail,array) {
+  removePhEmail(phemail, array, source) {
     var index = array.indexOf(phemail);
     if (index > -1) {
       array.splice(index, 1);
     }
+    if (source === 'newcheckin') {
+      this.okCheckinStatus = true;
+    }
+    if (source === 'cancelcheckin') {
+      this.okCancelStatus = true;
+    }
   }
- 
-
+  smsAddClicked() {
+    if (this.sms) {
+      this.sms = false;
+    } else {
+      this.sms = true;
+    }
+  }
+  cancelledCheckinsmsAddClicked() {
+    if (this.cancelsms) {
+      this.cancelsms = false;
+    } else {
+      this.cancelsms = true;
+    }
+  }
+  emailAddClicked() {
+    if (this.email) {
+      this.email = false;
+    } else {
+      this.email = true;
+    }
+  }
+  cancelledCheckinemailAddClicked() {
+    if (this.cancelemail) {
+      this.cancelemail = false;
+    } else {
+      this.cancelemail = true;
+    }
+  }
+  changePushMsgStatus(source) {
+    if (source === 'newcheckin') {
+      this.okCheckinStatus = true;
+    }
+    if (source === 'cancelcheckin') {
+      this.okCancelStatus = true;
+    }
+  }
 }
