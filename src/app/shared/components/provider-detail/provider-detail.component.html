@@ -221,15 +221,16 @@
                                                     <span class="sub-title">Departments</span>
                                                     <ul>
                                                         <li [class.active]="selectedDepartment==department"
-                                                        *ngFor="let department of servicesjson"
+                                                            *ngFor="let department of servicesjson"
                                                             (click)="departmentClicked(department.departmentName)">{{department.departmentName
                                                                 | capitalizeFirst}}</li>
                                                     </ul>
                                                 </div>
-                                                <div class="services"
-                                                    *ngIf="showServices">
-                                                    <span class="sub-title" *ngIf="departServiceList.length > 0">{{services_offered}}</span>
-                                                    <span class="sub-title" *ngIf="departServiceList.length === 0">No services</span>
+                                                <div class="services" *ngIf="showServices">
+                                                    <span class="sub-title"
+                                                        *ngIf="departServiceList.length > 0">{{services_offered}}</span>
+                                                    <span class="sub-title" *ngIf="departServiceList.length === 0">No
+                                                        services</span>
                                                     <ul *ngIf="departServiceList.length > 0">
                                                         <li *ngFor="let serv of departServiceList"
                                                             (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
@@ -290,9 +291,14 @@
                                                         {{loc['personAhead']}} {{people_ahead}} </div>{{get_token_cap}}
                                                 </div>
                                             </div>
-                                            <div class="wt-tme notallowed" *ngIf="loc['estimatedtime_det']['message']">
+                                            <div class="wt-tme notallowed"
+                                                *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
                                                 {{loc['estimatedtime_det']['message']}}
                                             </div>
+                                            <span class="claim-business" *ngIf="businessjson.claimStatus !== 'Claimed'"
+                                                (click)="claimBusiness()">
+                                                {{claim_my_business_cap}}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="cust1"

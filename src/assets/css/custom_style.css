@@ -4235,3 +4235,7 @@ i.notavail {color:grey !important}
   height: 13px !important;
   width: 13px !important;
 }
+.pdetail .claim-business {
+  color: #fda60d !important;
+  cursor: pointer !important;
+}

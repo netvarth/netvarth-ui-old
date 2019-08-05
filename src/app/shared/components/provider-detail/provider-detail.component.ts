@@ -18,6 +18,8 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { CouponsComponent } from '../coupons/coupons.component';
+import { SearchDetailServices } from '../search-detail/search-detail-services.service';
+import { SignUpComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-provider-detail',
@@ -69,6 +71,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
   one_person_ahead = Messages.ONE_PERSON_AHEAD;
   get_token_cap = Messages.GET_FIRST_TOKEN;
+  claim_my_business_cap = Messages.CLAIM_BUSINESS_CAP;
   small_device_display = false;
   screenHeight;
   screenWidth;
@@ -184,6 +187,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   showServices = false;
   selectedDepartment;
   showDepartments = false;
+  claimdialogRef;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -192,7 +196,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private locationobj: Location,
     private shared_services: SharedServices,
     private routerobj: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private searchdetailserviceobj: SearchDetailServices
   ) { }
 
   ngOnInit() {
@@ -403,7 +408,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
-              this.getProviderDepart(this.provider_bussiness_id);
+              if (this.businessjson.claimStatus === 'Claimed') {
+                this.getProviderDepart(this.provider_bussiness_id);
+              }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
@@ -1106,5 +1113,37 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }, {});
     };
     this.groubedByTeam = groupBy(this.newarr, 'department_code');
+  }
+
+  claimBusiness() {
+    const myidarr = this.businessjson.id;
+    if (myidarr) {
+      this.searchdetailserviceobj.getClaimmable(myidarr)
+        .subscribe(data => {
+          const claimdata = data;
+          const pass_data = {
+            accountId: myidarr,
+            sector: claimdata['sector'],
+            subSector: claimdata['subSector']
+          };
+          this.SignupforClaimmable(pass_data);
+        }, error => {
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+    } else {
+    }
+  }
+  SignupforClaimmable(passData) {
+    this.claimdialogRef = this.dialog.open(SignUpComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        is_provider: 'true',
+        claimData: passData
+      }
+    });
+    this.claimdialogRef.afterClosed().subscribe(result => {
+    });
   }
 }

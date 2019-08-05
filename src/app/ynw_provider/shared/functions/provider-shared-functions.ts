@@ -217,7 +217,8 @@ export class ProviderSharedFuctions {
             waitlist.disableDonebtn = false;
             waitlist.disableStartbtn = false;
             waitlist.disableArrivedbtn = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            const errMsg = error.error.replace('[checkedIn]', 'checked-in');
+            this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
             reject();
           }
         );

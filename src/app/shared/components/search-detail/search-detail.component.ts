@@ -970,7 +970,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date']
                     + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
@@ -1440,6 +1440,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.showrefinedsection = !this.showrefinedsection;
   }
   claimBusiness(obj) {
+    console.log(obj);
     const myidarr = obj.id.split('-');
     if (myidarr[0]) {
       this.searchdetailserviceobj.getClaimmable(myidarr[0])
@@ -1502,11 +1503,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
-        }
-         else if (passParam['callback'] === 'servicedetail') {
+        } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
-        } 
-        else {
+        } else {
           this.showCheckin('consumer');
         }
       }
@@ -1544,11 +1543,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
-        }
-        else if (passParam['callback'] === 'servicedetail') {
+        } else if (passParam['callback'] === 'servicedetail') {
           this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
-        } 
-        else {
+        } else {
           this.showCheckin('consumer');
         }
       } else if (result === 'showsignup') {
