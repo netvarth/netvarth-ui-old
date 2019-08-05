@@ -14,6 +14,7 @@ import { Subject } from 'rxjs/Subject';
 import { throwError } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -110,8 +111,18 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               this.router.navigate(['/maintenance']);
             } else if (error.status === 0) {
               // retry(2);
-              this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-              return next.handle(req);
+              // this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+              // return next.handle(req);
+              return next.handle(req).pipe(
+                retry(1),
+                catchError((errorn: HttpErrorResponse) => {
+                  // if (errorn.status !== 401) {
+                  // 401 handled in auth.interceptor
+                  this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+                  // }
+                  return throwError(error);
+                })
+              );
             } else if (error.status === 401 || error.status === 404) {
               return next.handle(req);
               // this.shared_functions.logout();
