@@ -3472,8 +3472,12 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 .notifications li {
   margin-bottom: 10px !important;
+  margin-top: 10px !important;
 }
 
+.notifications .icon-delete {
+  padding-left: 10px !important;
+}
 .notification {
   margin-right: 10px !important;
   font-size: 1rem !important;

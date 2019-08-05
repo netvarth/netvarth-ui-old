@@ -413,12 +413,12 @@
                                         <div class="services"
                                             *ngIf="search_result.fields.departments && showServices">
                                             <label *ngIf="departServiceList.length > 0"> Services</label>
-                                            <label *ngIf="departServiceList.length === 0"> No services</label>
                                             <ul *ngIf="departServiceList.length > 0">
                                                 <li *ngFor="let serv of departServiceList"
                                                     (click)="checkserviceClicked(serv.name,search_result, 'deptServiceClick')">{{serv.name
                                                     | capitalizeFirst}}</li>
                                             </ul>
+                                            <label *ngIf="departServiceList.length === 0"> No services</label>
                                         </div>
                                         <div class="services"
                                             *ngIf="!search_result.fields.departments && search_result.fields.services">

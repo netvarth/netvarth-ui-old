@@ -142,7 +142,9 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.provider_services.getTaxpercentage()
       .subscribe(data => {
         this.taxDetails = data;
-        this.taxpercentage = this.taxDetails.taxPercentage;
+        if (this.taxDetails) {
+          this.taxpercentage = this.taxDetails.taxPercentage;
+        }
       },
         () => {
 
