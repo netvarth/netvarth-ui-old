@@ -61,4 +61,10 @@ export class ReturnPaymentComponent implements OnInit {
     this.status = this.status.toLowerCase();*/
 
   }
+
+  goBacktoHome(source) {
+    setTimeout(() => {
+      this.route.navigate(['/', source]);
+    }, 2000);
+  }
 }

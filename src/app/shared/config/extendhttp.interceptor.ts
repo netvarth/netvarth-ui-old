@@ -123,9 +123,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                   return throwError(error);
                 })
               );
-            } else if (error.status === 401 || error.status === 404) {
+            } else if (error.status === 404) {
               return next.handle(req);
               // this.shared_functions.logout();
+            } else if (error.status === 401) {
+              this.shared_functions.logout();
             } else if (error.status === 301) {
               const dialogRef = this.dialog.open(ForceDialogComponent, {
                 width: '50%',

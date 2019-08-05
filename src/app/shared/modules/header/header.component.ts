@@ -424,7 +424,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
     const password = this.shared_service.get(enc_pwd, projectConstants.KEY);
-    this.shared_service.ProviderLogout()
+    setTimeout(() => {
+      this.shared_service.ProviderLogout()
       .subscribe(() => {
         this.shared_functions.clearLocalstorage();
         const post_data = {
@@ -438,6 +439,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         () => {
         }
       );
+    }, 2000);
+
   }
   switchtoProvider() {
     const pdata = { 'ttype': 'fromconsumer' };
