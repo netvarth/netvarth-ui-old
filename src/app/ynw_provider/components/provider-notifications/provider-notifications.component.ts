@@ -76,20 +76,25 @@ export class ProviderNotificationsComponent implements OnInit {
           if (notifyList.email && notifyList.email.length != 0) {
             this.em_arr = notifyList.email;
             this.SelchkinNotify = true;
-          } else {
-            this.SelchkinNotify = false;
-          }
+          } 
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
           if (notifyList.sms && notifyList.sms.length != 0) {
             this.ph_arr = notifyList.sms;
             this.SelchkinNotify = true;
-          } else {
-            this.SelchkinNotify = false;
-          }
-          notifyList.pushMessage
+          } 
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+         
           if (notifyList.pushMessage) {
             this.cheknpush = notifyList.pushMessage;
             this.SelchkinNotify = true;
           }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
         } else if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL") {
           if (notifyList.email.length == 0 && notifyList.sms.length == 0 && !notifyList.pushMessage) {
             this.SelchkincnclNotify = false;
@@ -98,19 +103,23 @@ export class ProviderNotificationsComponent implements OnInit {
             this.em1_arr = notifyList.email;
             this.SelchkincnclNotify = true;
           }
-          else {
-            this.SelchkincnclNotify = false;
-          }
+          //else {
+          //   this.SelchkincnclNotify = false;
+          // }
           if (notifyList.sms && notifyList.sms.length != 0) {
             this.ph1_arr = notifyList.sms;
             this.SelchkincnclNotify = true;
-          } else {
-            this.SelchkincnclNotify = false;
-          }
+          } 
+          // else {
+          //   this.SelchkincnclNotify = false;
+          // }
           if (notifyList.pushMessage) {
             this.cancelpush = notifyList.pushMessage;
             this.SelchkincnclNotify = true;
           }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
         }
       }
     }
@@ -130,6 +139,10 @@ export class ProviderNotificationsComponent implements OnInit {
 
   addChkinPh() {
     this.resetApiErrors();
+    if (this.notifyphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });// 'Please enter mobile phone number';
+      return;
+    }
     if (this.notifyphonenumber !== '') {
       const curphone = this.notifyphonenumber;
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
@@ -151,6 +164,10 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   addChkinemil() {
     this.resetApiErrors();
+    if (this.notifyemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid email id';
+      return;
+    }
     if (this.notifyemail !== '') {
       const curemail = this.notifyemail;
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
@@ -166,6 +183,10 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   addCheknCanclph() {
     this.resetApiErrors();
+    if (this.notifycanclphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });// 'Please enter mobile phone number';
+      return;
+    }
     if (this.notifycanclphonenumber !== '') {
       const curphone1 = this.notifycanclphonenumber;
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
@@ -187,6 +208,10 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   addCheknCanclemil() {
     this.resetApiErrors();
+    if (this.notifycanclemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+      return;
+    }
     if (this.notifycanclemail !== '') {
       const curemail1 = this.notifycanclemail;
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
