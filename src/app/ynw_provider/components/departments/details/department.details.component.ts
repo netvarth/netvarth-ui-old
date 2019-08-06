@@ -272,7 +272,7 @@ export class DepartmentDetailComponent implements OnInit {
                                 if (this.departments[j].serviceIds.length > 0) {
                                     for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
                                         if (this.departments[j].serviceIds[k] === this.servicesjson[i].id) {
-                                            if (this.defaultdepartmentservice.indexOf(this.servicesjson[i]) == -1) {
+                                            if (this.defaultdepartmentservice.indexOf(this.servicesjson[i]) === -1) {
                                                 this.defaultdepartmentservice.push(this.servicesjson[i]);
                                             }
                                         }

@@ -108,7 +108,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
   ngOnInit() {
     this.getDomainSubdomainSettings();
-    // this.getDepartments();
     this.api_loading = false;
     this.service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -352,7 +351,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     const propertiesDetob = {};
     let i = 0;
     for (const pic of this.item_pic.files) {
-
       submit_data.append('files', pic, pic['name']);
       const properties = {
         'caption': this.item_pic.caption[i] || ''
@@ -363,10 +361,8 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     const propertiesDet = {
       'propertiesMap': propertiesDetob
     };
-
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
-
     this.uploadApi(submit_data, from);
 
   }
@@ -376,8 +372,12 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       .subscribe(
         data => {
           this.deptObj = data;
-          this.departments = this.deptObj.departments;
           this.filterDepart = this.deptObj.filterByDept;
+          for (let i = 0; i < this.deptObj.departments.length; i++) {
+            if (this.deptObj.departments[i].departmentStatus === 'ACTIVE') {
+              this.departments.push(this.deptObj.departments[i]);
+            }
+          }
           if (this.type === 'add') {
             this.amForm.get('department').setValue(this.departments[0].departmentId);
           }
@@ -419,15 +419,12 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
         }
       );
-
   }
 
   loadGalleryImages(all_images) {
-
     const imagesArray = [];
     let i = 0;
     for (const image of all_images) {
-
       // const img =  new Image(
       //               image.url,
       //               image.thumbUrl, // no thumb
@@ -441,7 +438,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
       i++;
       imagesArray.push(img);
     }
-
     this.images = observableOf(imagesArray).pipe(delay(300));
   }
 
@@ -470,7 +466,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           this.shared_functions.apiErrorAutoHide(this, error);
         }
       );
-
   }
 
   deleteTempImage(i) {

@@ -51,7 +51,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     public routerobj: Router, private shared_services: SharedServices) {
-      var asyncLoadCount = 0;
+      let asyncLoadCount = 0;
       router.events.subscribe(
       (event: RouterEvent): void => {
       if (event instanceof RouteConfigLoadStart) {
@@ -63,7 +63,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       }
       );
      }
-   
+
   normal_profile_active = 1;
   normal_locationinfo_show = 1;
   normal_basicinfo_show = 1;
