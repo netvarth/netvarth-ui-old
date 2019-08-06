@@ -295,7 +295,7 @@
                                                 *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
                                                 {{loc['estimatedtime_det']['message']}}
                                             </div>
-                                            <span class="claim-business" *ngIf="businessjson.claimStatus !== 'Claimed'"
+                                            <span class="claim-business" *ngIf="businessjson.claimStatus === 'Unclaimed'"
                                                 (click)="claimBusiness()">
                                                 {{claim_my_business_cap}}
                                             </span>
