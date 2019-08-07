@@ -92,7 +92,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       } else {
       }
       if (this.searchResults[i].business_hours1) {
-        let schedule_arr = [];
+        const schedule_arr = [];
         const business_hours = JSON.parse(this.searchResults[i].business_hours1[0]);
         for (let j = 0; j < business_hours.length; j++) {
           const obt_sch = business_hours[j];
@@ -148,7 +148,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
           if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
             this.waitlisttime_arr = [];
           }
-          const today = new Date(this.server_date.split(' ')[0]);
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
@@ -196,7 +197,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.searchResults[srchindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
-                    this.searchResults[srchindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    this.searchResults[srchindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
                   }
                   this.searchResults[srchindx]['estimatedtime_det']['time'] = this.searchResults[srchindx]['estimatedtime_det']['date']
                     + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];

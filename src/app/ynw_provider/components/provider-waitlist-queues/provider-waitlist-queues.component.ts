@@ -293,7 +293,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
             const activeQs = [];
             allQs = data;
             const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
-            const today = new Date(server_date.split(' ')[0]);
+            const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            const today = new Date(todaydt);
             const dd = today.getDate();
             const mm = today.getMonth() + 1;
             const yyyy = today.getFullYear();
@@ -451,8 +452,9 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    * @param server_date for setting timings
    */
   createForm(server_date) {
-    const todaydt = new Date(server_date).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    // tslint:disable-next-line:radix
+    const today = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(today);
+   // tslint:disable-next-line:radix
     this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
     // tslint:disable-next-line:radix
     this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
@@ -529,15 +531,17 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
   onSubmit(instantQ) {
     this.resetApiErrors();
     const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
-    const today = new Date(server_date.split(' ')[0]);
+    const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
     const yyyy = today.getFullYear();
     let sTime = instantQ.dstart_time;
     if (isNaN(instantQ.dstart_time.hour)) {
       const curtime = {};
-      const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-      const today1 = moment(today).format();
+      const todaydt1 = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const toda = new Date(todaydt);
+      const today1 = moment(toda).format();
       curtime['hour'] = parseInt(moment(new Date(today1), ['hh:mm A']).format('HH'), 10);
       curtime['minutes'] = parseInt(moment(new Date(today1), ['hh:mm A']).format('mm'), 10);
       sTime = {
@@ -897,7 +901,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       this.todayQLoading[index] = true;
     }
     const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
-    const today = new Date(server_date.split(' ')[0]);
+    const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const today = new Date(todaydt);
     const dd = today.getDate() + 1;
     const mm = today.getMonth() + 1;
     const yyyy = today.getFullYear();

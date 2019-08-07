@@ -208,7 +208,8 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       account_id: this.bprofile.id,
       name: this.bprofile.businessName
     };
-    const cdate = new Date(this.server_date.split(' ')[0]);
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const cdate = new Date(todaydt);
     const mn = cdate.getMonth() + 1;
     const dy = cdate.getDate();
     let mon = '';
