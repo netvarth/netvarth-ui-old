@@ -4000,134 +4000,100 @@ i.notavail {color:grey !important}
   color: #f24949;
 }
 
-.cust1 {
-  margin: 15px 10px auto !important;
-}
-
-.cust2 {
-  -webkit-border-radius: 0px;
-  /* border-radius: 50px; */
-  background-clip: padding-box;
-  /* stops bg color from leaking outside the border: */
-  background: #00aef2;
-  /* Old browsers */
-  background: -moz-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00aef2), color-stop(100%, #1873f2));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #00aef2 0%, #1873f2 100%);
-  /* IE10+ */
-  background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2', GradientType=0);
-  /* IE6-9 */
-  height: 50px;
-  font-size: 1rem;
-  text-transform: uppercase;
-  color: #fff;
-  font-weight: 600;
-  float: right;
+.bottom-actions-root {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  max-width: 145px;
-  min-width: 140px;
-  ;
-  -moz-transition: all 300ms;
-  -o-transition: all 300ms;
-  -webkit-transition: all 300ms;
-  transition: all 300ms;
-  outline: none;
-  overflow: hidden;
+  width: 400px;
+  margin: 15px;
 }
 
-.cust2.disabled {
-  background: #bebebe !important;
-}
-
-.cust3 {
-  position: relative;
-  /* display: inline-block; */
-  margin-bottom: 0;
-  text-align: center;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  outline: 0;
-  padding: 10px 40px;
-  font-size: inherit;
-  line-height: 1.4;
-  -moz-user-select: none;
-  z-index: 2;
-  font-weight: 700 !important;
-  /* user-select: none; */
-}
-
-.cust4 {
-  position: relative;
-  /* display: inline-block; */
-  margin-bottom: 0;
-  text-align: center;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  outline: 0;
-  padding: 10px 40px;
-  font-size: inherit;
-  line-height: 1.4;
-  -moz-user-select: none;
-  z-index: 2;
-  /* user-select: none; */
-}
-
-.cust5 {
-  background: #ddd;
-  color: #2f2313;
-  max-width: 190px;
-  min-width: 185px;
-  float: right;
-  display: flex;
-  display: grid;
-  text-align: center;
+.checkin-btn{
+  flex: 1 0 100%;
+  background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
   height: 50px;
-  font-weight: 500;
-  padding-top: 5px;
+  text-transform: uppercase;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: white;
+  transition: all .3s ease;
+  cursor: pointer;
 }
 
-.cust6 {
-  float: right;
-  position: relative;
-  display: inline-block;
-  margin-bottom: 0;
-  text-align: right;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
+.checkin-btn.disabled {
+  flex: 1 0 100%;
+  background: lightgray;
+  height: 50px;
+  text-transform: uppercase;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: white;
+  transition: all .3s ease;
+  cursor:not-allowed;
+}
+
+.checkin-est {
+  flex: 1 0 100%;
+  background: #eee;
+  height: 50px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: black;
+  transition: all .3s ease;
+}
+
+.checkin-est .time-data{
+  margin-left: 20px;
+}
+
+.checkin-future {
+  flex: 1 0 100%;
   cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  outline: 0;
-  padding: 9px !important;
-  font-size: inherit;
-  line-height: 1.4;
-  -moz-user-select: none;
-  z-index: 2;
+  padding: 5px;
 }
 
 .font-open-now {
   display: none;
   font-size: xx-small;
   color: #22d21e !important;
+}
+@media only screen and (max-width: 575px) {
+  .bottom-actions-root {
+    width: 60%;
+    margin: 15px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .bottom-actions-root {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .bottom-actions-root {
+    width: 50%;
+  }
+}
+
+
+
+
+@media only screen and (max-width: 575px) and (min-width: 320px) {
+  .bottom-actions-root {
+    width: 90%;
+    margin: 15px auto;
+  }
 }
 
 @media only screen and (max-width: 767px) {
