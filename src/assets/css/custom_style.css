@@ -4001,17 +4001,19 @@ i.notavail {color:grey !important}
 }
 
 .bottom-actions-root {
+  flex-shrink: 0;
+  font-size: 14px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  max-width: 650px;
   margin: 15px;
 }
 
 .checkin-btn{
-  flex: 1 0 100%;
+  flex: 1 0 50%;
   background: linear-gradient(to right, #00aef2 0%, #1873f2 100%);
   height: 50px;
   text-transform: uppercase;
@@ -4026,7 +4028,7 @@ i.notavail {color:grey !important}
 }
 
 .checkin-btn.disabled {
-  flex: 1 0 100%;
+  flex: 1 0 50%;
   background: lightgray;
   height: 50px;
   text-transform: uppercase;
@@ -4041,7 +4043,7 @@ i.notavail {color:grey !important}
 }
 
 .checkin-est {
-  flex: 1 0 100%;
+  flex: 1 0 50%;
   background: #eee;
   height: 50px;
   overflow: hidden;
@@ -4051,10 +4053,11 @@ i.notavail {color:grey !important}
   box-sizing: border-box;
   color: black;
   transition: all .3s ease;
+  padding: 0 5px;
+  flex-direction: column;
 }
-
-.checkin-est .time-data{
-  margin-left: 20px;
+.checkin-est.nxt {
+  flex-direction: column;
 }
 
 .checkin-future {
@@ -4062,39 +4065,20 @@ i.notavail {color:grey !important}
   cursor: pointer;
   padding: 5px;
 }
-
+@media only screen and (max-width: 575px) and (min-width: 320px) {
+  .bottom-actions-root {
+    width: 90%;
+    margin: 15px auto;
+    font-size: 12px;
+  }
+}
 .font-open-now {
   display: none;
   font-size: xx-small;
   color: #22d21e !important;
 }
-@media only screen and (max-width: 575px) {
-  .bottom-actions-root {
-    width: 60%;
-    margin: 15px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .bottom-actions-root {
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 991px) {
-  .bottom-actions-root {
-    width: 50%;
-  }
-}
 
 
-
-
-@media only screen and (max-width: 575px) and (min-width: 320px) {
-  .bottom-actions-root {
-    width: 90%;
-    margin: 15px auto;
-  }
-}
 
 @media only screen and (max-width: 767px) {
   .font-open-now {

@@ -16515,14 +16515,10 @@ header.consumer {
             .content .c-outer .c-body .srlst .bottom-sect {
               flex-direction: column;justify-content: center;} }
           .content .c-outer .c-body .srlst .bottom-sect .bt-l {
-            flex-grow: 1;
             padding: 20px; }
             @media only screen and (max-width: 575px) {
               .content .c-outer .c-body .srlst .bottom-sect .bt-l {
                 width: 100%; } }
-            @media (min-width: 768px) and (max-width: 991px) {
-              .content .c-outer .c-body .srlst .bottom-sect .bt-l {
-                width: 60%; } }
             .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme {
               display: flex;
               align-items: center; }

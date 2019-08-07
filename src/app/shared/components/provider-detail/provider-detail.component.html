@@ -301,20 +301,9 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="cust1"
+                                    <div class="bottom-actions-root"
                                         *ngIf="loc['estimatedtime_det'] && (loc['onlineCheckIn'] || settingsjson['futureDateWaitlist'])">
-                                        <span class="cust2 cust3"
-                                            (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
-                                        <span class="cust2 cust3"
-                                            (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
-                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
-                                        <span class="cust2 cust3 disabled" style="cursor: auto"
-                                            *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
-                                        <span class="cust2 cust3 disabled" style="cursor: auto"
-                                            *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
-
-                                        <div class="cust5"
+                                        <div class="checkin-est"
                                             *ngIf="loc['estimatedtime_det']['caption'] && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                                             <span class="est-time">{{loc['estimatedtime_det']['caption']}}</span>
                                             <span class="time-data">{{loc['estimatedtime_det']['time']}}
@@ -324,14 +313,25 @@
                                         <ng-container
                                             *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
                                             <ng-container *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
-                                                <span class="cust5" style="margin-bottom: 5px" *ngIf="!loc.opennow">
+                                                <span class="checkin-est" style="margin-bottom: 5px" *ngIf="!loc.opennow">
                                                     <span class="est-time"> Next Available Time </span>
                                                     <span
                                                         class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
                                             </ng-container>
                                         </ng-container>
+                                        <span class="checkin-btn"
+                                            (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && (loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && loc['onlineCheckIn']">{{getTerminologyTerm('waitlist')}}</span>
+                                        <span class="checkin-btn"
+                                            (click)="checkinClicked(loc.id, loc.place,loc['estimatedtime_det']['cdate'], false)"
+                                            *ngIf="loc['isAvailableToday'] && loc['availableToday'] && loc['calculationMode']=='NoCalc' && showToken && loc['onlineCheckIn']">{{get_token_btn}}</span>
+                                        <span class="checkin-btn disabled" style="cursor: auto"
+                                            *ngIf="(loc['calculationMode']!='NoCalc' || (loc['calculationMode']=='NoCalc' && !showToken)) && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{getTerminologyTerm('waitlist')}}</span>
+                                        <span class="checkin-btn disabled" style="cursor: auto"
+                                            *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
+
                                         <div>
-                                            <span class="cust6 bt10"
+                                            <span class="checkin-future bt10"
                                                 *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
                                                 (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
                                                 <span
