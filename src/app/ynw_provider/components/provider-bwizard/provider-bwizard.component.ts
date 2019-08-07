@@ -186,6 +186,7 @@ export class ProviderbWizardComponent implements OnInit {
   bussnesnmerror = '';
   laterror_Exists = false;
   longerror_Exists = false;
+  qAvailability: any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -298,7 +299,7 @@ export class ProviderbWizardComponent implements OnInit {
               this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
-        //}
+        // }
         break;
       case 2:
         this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
@@ -337,14 +338,13 @@ export class ProviderbWizardComponent implements OnInit {
           if (!latexists || !lonexists) {
             this.error_Exists = true;
             this.coord_error = 'Both coordinates are required';
-          }
-          else {
-            if (this.wizard_data_holder['lon'] && this.wizard_data_holder['lon'] == 0) {
+          } else {
+            if (this.wizard_data_holder['lon'] && this.wizard_data_holder['lon'] === 0) {
               this.longerror_Exists = true;
               this.longi_error = 'Longitude must be a valid number';
 
             }
-            if (this.wizard_data_holder['lat'] && this.wizard_data_holder['lat'] == 0) {
+            if (this.wizard_data_holder['lat'] && this.wizard_data_holder['lat'] === 0) {
               this.laterror_Exists = true;
               this.lati_error = 'Latitude must be a valid number';
 
@@ -376,7 +376,7 @@ export class ProviderbWizardComponent implements OnInit {
           this.error_Exists = true;
           this.coord_error = 'Both coordinates are required';
         }
-        if (this.laterror_Exists === true || this.longerror_Exists == true) {
+        if (this.laterror_Exists === true || this.longerror_Exists === true) {
           this.loading_active = false;
           return;
         }
@@ -429,7 +429,6 @@ export class ProviderbWizardComponent implements OnInit {
         }
         // assiging the schedule json to the object to save it
         // post_itemdata2.baseLocation.bSchedule.timespec = this.schedule_json;
-        console.log(post_itemdata2)
         this.provider_services.patchbProfile(post_itemdata2)
           .subscribe(
             data => {
@@ -514,6 +513,19 @@ export class ProviderbWizardComponent implements OnInit {
         this.loading_active = false;
         break;
     }
+  }
+
+  isAvailableNow() {
+    this.provider_services.isAvailableNow()
+      .subscribe(data => {
+        this.qAvailability = data;
+        const message = {};
+        message['ttype'] = 'instant_q';
+        message['qAvailability'] = this.qAvailability;
+        this.shared_functions.sendMessage(message);
+      },
+        (error) => {
+        });
   }
   onSubmit(form_data) {
     this.resetApiErrors();
@@ -762,6 +774,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   checkClose() {
+    this.isAvailableNow();
     let show_incomplete = false;
     const bname = (this.wizard_data_holder.name) ? this.wizard_data_holder.name.trim() : '';
     const lat = (this.wizard_data_holder.lat) ? this.wizard_data_holder.lat : '';

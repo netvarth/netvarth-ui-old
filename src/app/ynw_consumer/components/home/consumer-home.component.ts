@@ -239,7 +239,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.waitlists = data;
-          const today = new Date(this.server_date.split(' ')[0]);
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
@@ -287,7 +288,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           appx_ret.time = waitlist.serviceTime;
         }
         const waitlist_date = new Date(waitlist.date);
-        const today = new Date(this.server_date.split(' ')[0]);
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const today = new Date(todaydt);
         today.setHours(0, 0, 0, 0);
         waitlist_date.setHours(0, 0, 0, 0);
         if (today.valueOf() < waitlist_date.valueOf()) {
@@ -319,7 +321,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       time = waitlist.statusUpdatedTime.split('-');
       time1 = time[2].trim();
       t2 = time1.slice(2);
-      console.log(t2);
       appx_ret.cancelled_time = t2;
       appx_ret.cancelled_caption = 'Cancelled at ';
     }
@@ -440,7 +441,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           if (waitlisttime_arr === '"Account doesn\'t exist"') {
             waitlisttime_arr = [];
           }
-          const today = new Date(this.server_date.split(' ')[0]);
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
           const yyyy = today.getFullYear();
