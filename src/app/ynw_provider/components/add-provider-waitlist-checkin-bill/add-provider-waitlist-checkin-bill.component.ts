@@ -333,7 +333,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
+          // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           if (this.showPayWorkBench) {
             this.showPayment();
           }
@@ -361,19 +361,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       );
   }
-  getJCMessages(jCoupon) {
-    const errMsgs = [];
-    Object.keys(jCoupon).forEach(key => {
-      const coupon = jCoupon[key];
-      for (const sysNote of coupon['systemNote']) {
-        if (errMsgs.indexOf(sysNote) === -1 && sysNote !== 'COUPON_APPLIED') {
-          errMsgs.push(sysNote);
-        }
-      }
-    });
+  // getJCMessages(jCoupon) {
+  //   const errMsgs = [];
+  //   Object.keys(jCoupon).forEach(key => {
+  //     const coupon = jCoupon[key];
+  //     for (const sysNote of coupon['systemNote']) {
+  //       if (errMsgs.indexOf(sysNote) === -1 && sysNote !== 'COUPON_APPLIED') {
+  //         errMsgs.push(sysNote);
+  //       }
+  //     }
+  //   });
 
-    return errMsgs;
-  }
+  //   return errMsgs;
+  // }
   getDomainSubdomainSettings() {
     const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
     const domain = user_data.sector || null;
@@ -1337,8 +1337,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     printWindow.close();
   }
   showJCCouponNote(coupon) {
-   // console.log(coupon);
-   // console.log(coupon.value.systemNote.length)
+    // console.log(coupon);
+    // console.log(coupon.value.systemNote.length)
     if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
       // alert('in if');
     } else {

@@ -592,7 +592,8 @@
 																			aria-hidden="true"></i></div>
 																</div>
 															</div>
-															<div class="c-row three" *ngIf="item.discount &&item.discount.length > 0">
+															<div class="c-row three"
+																*ngIf="item.discount &&item.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price">{{item.netRate |
 																	currency:'INR':'symbol':'.2-2'}}</div>
@@ -650,9 +651,12 @@
 																</tr>
 																<tr class="amt discount"
 																	*ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
-																	<td class="name">{{jcoupon.key}} (Jaldee Coupon)</td>
-																	<td class="price" (click)="showJCCouponNote(jcoupon)">(-)
-																		<span [class.couponAmt]="jcoupon.value.value === '0.0'" style="margin-right: 5px">{{jcoupon.value.value |
+																	<td class="name">{{jcoupon.key}} (Jaldee Coupon)
+																	</td>
+																	<td class="price">(-)
+																		<span (click)="showJCCouponNote(jcoupon)"
+																			[class.couponAmt]="jcoupon.value.value === '0.0'"
+																			style="margin-right: 5px">{{jcoupon.value.value |
 																		currency:'INR':'symbol':'.2-2'}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeJCoupon(jcoupon.key)"
 																			class="fa fa-window-close"
@@ -705,7 +709,7 @@
 															<span class="red">* {{coupon_notes[note]}}</span>
 														</div>
 													</div> -->
-														<!-- <div class="" *ngFor="let jcMsg of jcMessages">
+													<!-- <div class="" *ngFor="let jcMsg of jcMessages">
 															<span class="red">* {{coupon_notes[jcMsg]}}</span>
 														</div> -->
 												</div>
@@ -795,17 +799,16 @@
 																<span class="label">{{wbamount_cap}}</span> <span
 																	class="number">
 																	<mat-form-field class="example-full-width">
-																	<span matPrefix class='rupee'> ₹ &nbsp;</span>
-																	<mat-form-field>
-																			 <input
-																			type="text" matInput #payamounttxt
-																			aria-label="Number" matInput value="1"
-																			size="5" max="{{price_limit}}" min="0"
-																			[(ngModel)]="amountpay"
-																			(keypress)="isNumeric($event)"
-																			(keyup)="isvalid($event)"
-																			autocomplete="off">
-																	</mat-form-field>
+																		<span matPrefix class='rupee'> ₹ &nbsp;</span>
+																		<mat-form-field>
+																			<input type="text" matInput #payamounttxt
+																				aria-label="Number" matInput value="1"
+																				size="5" max="{{price_limit}}" min="0"
+																				[(ngModel)]="amountpay"
+																				(keypress)="isNumeric($event)"
+																				(keyup)="isvalid($event)"
+																				autocomplete="off">
+																		</mat-form-field>
 																	</mat-form-field>
 																</span>
 															</div>
@@ -830,7 +833,8 @@
 												<button type="button" mat-button class="cs-btn bt1 print"
 													*ngIf="bill_data.billStatus=='Settled'"
 													(click)="emailBill()">{{email_bill_cap}}</button>
-												<button type="button" mat-button class=" d-none d-lg-block cs-btn bt1 print"
+												<button type="button" mat-button
+													class=" d-none d-lg-block cs-btn bt1 print"
 													*ngIf="bill_data.billStatus=='Settled'"
 													(click)="printMe()">Print</button>
 												<button type="button" mat-button class="cs-btn bt1 accept"
