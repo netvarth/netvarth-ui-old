@@ -265,6 +265,10 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/';
     return this.servicemeta.httpPut(url, data);
   }
+  setDeptWaitlistMgr(status) {
+    const url = 'provider/settings/waitlistMgr/department/'+ status;
+    return this.servicemeta.httpPut(url);
+  }
   getServicesList(params?) {
     let stat = '';
     if (params !== undefined) {

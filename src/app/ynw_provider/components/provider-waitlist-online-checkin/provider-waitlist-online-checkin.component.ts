@@ -116,7 +116,6 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       trnArndTime: this.form.trnArndTime || null,
       providerNotification: this.form.providerNotification,
       futureDateWaitlist: this.form.futureDateWaitlist,
-      filterByDept: this.form.filterByDept,
       showTokenId: showToken,
     };
     // this.provider_services.setWaitlistMgr(this.form)
@@ -192,7 +191,24 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
     }
 
     this.removeitemdialogRef.afterClosed().subscribe(result => {
-      this.OnSubmit()
+      let status;
+      if(this.form.filterByDept == true){
+        status = "Enable";
+      }
+      else{
+        status = "Disable";
+      }
+      //this.OnSubmit()
+      this.provider_services.setDeptWaitlistMgr(status)
+      .subscribe(
+        () => {
+          this.getWaitlistMgr();
+          // this.shared_functions.apiSuccessAutoHide(this, Messages.ONLINE_CHECKIN_SAVED);
+         // this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
     });
   }
 }
