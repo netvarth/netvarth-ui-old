@@ -4194,3 +4194,13 @@ i.notavail {color:grey !important}
   color: #fda60d !important;
   cursor: pointer !important;
 }
+.jcouponmessagepopupclass .mat-dialog-title .modal_close{
+  color: black !important;
+}
+.jcouponmessagepopupclass .mat-dialog-title .modal_close i{
+  margin-top: 20px !important;
+}
+.couponAmt {
+  color: red !important; 
+  cursor: pointer !important;
+}
