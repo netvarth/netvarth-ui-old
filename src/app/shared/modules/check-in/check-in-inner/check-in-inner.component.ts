@@ -272,7 +272,7 @@ export class CheckInInnerComponent implements OnInit {
 
           this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
           this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });  // done to set the min date in the calendar view
-          this.minDate = new Date(this.minDate.replace(/-/g, "/"));
+          this.minDate = new Date(this.minDate.replace(/-/g, '/'));
         }
       }
 
@@ -1167,14 +1167,15 @@ export class CheckInInnerComponent implements OnInit {
         }
         this.deptLength = this.departments.length;
         // this.selected_dept = 'None';
-        if(this.deptLength != 0){
-        this.selected_dept = this.departments[0].departmentId;
-        this.handleDeptSelction(this.selected_dept);
-      }
+        if (this.deptLength !== 0) {
+          this.selected_dept = this.departments[0].departmentId;
+          this.handleDeptSelction(this.selected_dept);
+        }
       });
   }
 
   handleDeptSelction(obj) {
+    this.api_error = '';
     this.selected_dept = obj;
     if (obj === 'None') {
       this.servicesjson = this.serviceslist;
@@ -1200,6 +1201,8 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_ser = this.servicesjson[0].id;
       this.setServiceDetails(this.sel_ser);
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    } else {
+      this.api_error = this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT');
     }
   }
 

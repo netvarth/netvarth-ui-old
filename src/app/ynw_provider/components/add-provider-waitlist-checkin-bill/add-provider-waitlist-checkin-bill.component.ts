@@ -197,6 +197,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   disableCouponbtn = false;
   disableitembtn = false;
   disableJCouponbtn = false;
+  jcMessages: any[];
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -325,11 +326,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         () => {
         });
   }
+
   getWaitlistBill() {
     this.provider_services.getWaitlistBill(this.uuid)
       .subscribe(
         data => {
           this.bill_data = data;
+          this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           if (this.showPayWorkBench) {
             this.showPayment();
           }
@@ -356,6 +359,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.bill_load_complete = 1;
         }
       );
+  }
+  getJCMessages(jCoupon) {
+    const errMsgs = [];
+    Object.keys(jCoupon).forEach(key => {
+      const coupon = jCoupon[key];
+      for (const sysNote of coupon['systemNote']) {
+        if (errMsgs.indexOf(sysNote) === -1 && sysNote !== 'COUPON_APPLIED') {
+          errMsgs.push(sysNote);
+        }
+      }
+    });
+
+    return errMsgs;
   }
   getDomainSubdomainSettings() {
     const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');

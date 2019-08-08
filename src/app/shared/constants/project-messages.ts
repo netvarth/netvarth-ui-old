@@ -38,7 +38,7 @@ export const Messages = {
   'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
   'COUPON_DELETED': 'Coupon deleted successfully',
   'COUPON_LISTEMPTY': 'No Coupons found',
-  'APPLIED_INBILLTIME' :' Coupon will be applied on the final bill',
+  'APPLIED_INBILLTIME': ' Coupon will be applied on the final bill',
 
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
@@ -226,12 +226,12 @@ export const Messages = {
   'CHECKINS_TIME_CAPTION': 'Next Available Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
-  'PROFILE_TOOLTIP' : 'Profile & Search',
-  'SETTINGS_TOOLTIP' : 'Settings',
-  'LOCATION_TOOLTIP' : 'Location',
-  'WORKINGHOUR_TOOLTIP' : 'Working Hour',
-  'SEARCH_TOOLTIP' : 'Search',
-  'SORT_TOOLTIP' : 'Sort By',
+  'PROFILE_TOOLTIP': 'Profile & Search',
+  'SETTINGS_TOOLTIP': 'Settings',
+  'LOCATION_TOOLTIP': 'Location',
+  'WORKINGHOUR_TOOLTIP': 'Working Hour',
+  'SEARCH_TOOLTIP': 'Search',
+  'SORT_TOOLTIP': 'Sort By',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
@@ -281,8 +281,8 @@ export const Messages = {
   // Active Checkins
   'ACTIVE_CHECKINS_CAP': 'Active Checkins',
   'SEND_MSGS_CAP': 'Enquiry',
-  'SEND_MSG_CAP':'Send Message',
-  'SEND_MSG':'Enquiry',
+  'SEND_MSG_CAP': 'Send Message',
+  'SEND_MSG': 'Enquiry',
   'DELAY_SEND_MSG': 'Send message to my [customer] regarding the delay',
   'NO_CHECKINS_CAP': 'No current Check-Ins available',
   'MAKE_PAYMENT_CAP': 'Make Payment',
@@ -631,7 +631,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-bprofile-specializations
   'SPECIALIZATIONS_CAP': 'Specializations',
-  'SPECIALIZATIONS_CAPS':'Choose your specializations from the list below',
+  'SPECIALIZATIONS_CAPS': 'Choose your specializations from the list below',
   'NO_SPECI_FOUND_CAP': 'Sorry no specializations found.',
 
   // App-ynw_provider-components-add-provider-bprofile-spoken-languages
@@ -974,8 +974,8 @@ export const Messages = {
   'NON_WORKING_CAP': 'Non-working Days',
   'NOTIFICATION_CAP': 'Notifications',
   'DEPARTMENT_CAP': 'Department',
-  'ADD NOTIFICATIONS':'Notifications added successfully',
-  'UPDATED NOTIFICATIONS':'Notifications updated successfully', 
+  'ADD NOTIFICATIONS': 'Notifications added successfully',
+  'UPDATED NOTIFICATIONS': 'Notifications updated successfully',
 
   // App-ynw_provider-components-provider-system-auditlogs
   'AUDIT_CATEGORY_CAP': 'Category',
@@ -1363,6 +1363,7 @@ export const Messages = {
   'GET_FIRST_TOKEN': 'Get the 1st Token',
   'CHOOSE_LOCATION': 'Choose a different location to view it\'s dashboard.',
   'ENBALE_QUEUES': 'Make sure to set the respective working hours and services too for this location.',
-  'PLACE_ORDER_CLICK_HERE': 'To place your order, Click here'
+  'PLACE_ORDER_CLICK_HERE': 'To place your order, Click here',
+  'NO_SERVICE_IN_DEPARTMENT': 'The selected department doesn\'t contain any active services for this location'
 };
 

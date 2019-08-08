@@ -330,7 +330,8 @@ export const projectConstants = {
     COUPON_APPLIED: 'Coupon already applied',
     SELF_PAY_REQUIRED: 'Self pay required',
     NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed',
-    EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit'
+    EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit',
+    ONLY_WHEN_FITST_CHECKIN: 'Jaldee coupon can apply only for first check-in'
   },
   CHECK_IN_STATUSES: {
     Done: 'Completed',
