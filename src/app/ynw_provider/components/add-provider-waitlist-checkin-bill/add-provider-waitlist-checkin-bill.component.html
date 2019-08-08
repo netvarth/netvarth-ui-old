@@ -651,8 +651,9 @@
 																<tr class="amt discount"
 																	*ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
 																	<td class="name">{{jcoupon.key}} (Jaldee Coupon)</td>
-																	<td class="price">(-){{jcoupon.value.value |
-																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'"
+																	<td class="price" (click)="showJCCouponNote(jcoupon)">(-)
+																		<span [class.couponAmt]="jcoupon.value.value === '0.0'" style="margin-right: 5px">{{jcoupon.value.value |
+																		currency:'INR':'symbol':'.2-2'}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeJCoupon(jcoupon.key)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
@@ -704,9 +705,9 @@
 															<span class="red">* {{coupon_notes[note]}}</span>
 														</div>
 													</div> -->
-														<div class="" *ngFor="let jcMsg of jcMessages">
+														<!-- <div class="" *ngFor="let jcMsg of jcMessages">
 															<span class="red">* {{coupon_notes[jcMsg]}}</span>
-														</div>
+														</div> -->
 												</div>
 												<div class="section-three" *ngIf="bill_data">
 													<div

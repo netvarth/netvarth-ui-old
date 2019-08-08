@@ -14,6 +14,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
 import { ConfirmPaymentBoxComponent } from '../../shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ActivatedRoute } from '@angular/router';
+import { JcCouponNoteComponent } from '../jc-Coupon-note/jc-Coupon-note.component';
 
 export interface ItemServiceGroup {
   type: string;
@@ -1334,5 +1335,23 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     printWindow.document.close();
     printWindow.print();
     printWindow.close();
+  }
+  showJCCouponNote(coupon) {
+   // console.log(coupon);
+   // console.log(coupon.value.systemNote.length)
+    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+      // alert('in if');
+    } else {
+      if (coupon.value.value === '0.0') {
+        const dialogref = this.dialog.open(JcCouponNoteComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+          disableClose: true,
+          data: {
+            jCoupon: coupon
+          }
+        });
+      }
+    }
   }
 }

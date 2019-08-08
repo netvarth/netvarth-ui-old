@@ -326,12 +326,14 @@ export const projectConstants = {
     INACTIVE: 'Disabled'
   },
   COUPON_NOTES: {
-    MINIMUM_BILL_AMT_REQUIRED: 'Minimum bill amount required to apply Jaldee Coupon',
+    MINIMUM_BILL_AMT_REQUIRED: 'Minimum bill amount',
     COUPON_APPLIED: 'Coupon already applied',
     SELF_PAY_REQUIRED: 'Self pay required',
     NO_OTHER_COUPONS_ALLOWED: 'No other coupons allowed',
     EXCEEDS_APPLY_LIMIT: 'Exceeds apply limit',
-    ONLY_WHEN_FITST_CHECKIN: 'Jaldee coupon can apply only for first check-in'
+    ONLY_WHEN_FITST_CHECKIN: 'Only for first check-in',
+    ONLINE_CHECKIN_REQUIRED: 'Online check-in required',
+    CANT_COMBINE_WITH_OTHER_COUPONES: 'Can\'t combine with other coupons'
   },
   CHECK_IN_STATUSES: {
     Done: 'Completed',
