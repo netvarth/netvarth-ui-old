@@ -180,14 +180,14 @@
                             <span *ngIf="discount.displayNote && bill_data.billStatus!='Settled'">*
                                 {{discount.displayNote}}</span>
                         </div>
-                        <!-- <div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+                        <div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
                             <div class=""
                                 *ngIf="jcoupon.value['systemNote'].indexOf('COUPON_APPLIED')!=-1 && bill_data.billStatus!='Settled'">
                                 <div class="" *ngFor="let note of jcoupon.value['systemNote']">
                                     <span  class="red">* {{coupon_notes[note]}}</span>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
