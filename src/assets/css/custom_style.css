@@ -4204,3 +4204,7 @@ i.notavail {color:grey !important}
   color: red !important; 
   cursor: pointer !important;
 }
+.bill-notes {
+  margin-top: 10px !important;
+  margin-left: 5px !important;
+}

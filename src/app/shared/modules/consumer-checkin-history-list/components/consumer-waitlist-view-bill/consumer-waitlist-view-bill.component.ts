@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { SharedServices } from '../../../../../shared/services/shared-services';
+import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
@@ -83,6 +84,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   couponList: any = [];
   refund_value;
   constructor(
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public consumer_checkin_history_service: CheckInHistoryServices,
@@ -502,6 +504,22 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+  showJCCouponNote(coupon) {
+    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+      // alert('in if');
+    } else {
+      if (coupon.value.value === '0.0') {
+        const dialogref = this.dialog.open(JcCouponNoteComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+          disableClose: true,
+          data: {
+            jCoupon: coupon
+          }
+        });
+      }
     }
   }
 }

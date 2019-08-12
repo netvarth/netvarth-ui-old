@@ -54,7 +54,8 @@
                                                 currency:'INR':'symbol':'.2-2'}}</div>
                                         </div>
                                     </div>
-                                    <div class="c-row one three two-col" *ngIf="service.discount &&service.discount.length > 0">
+                                    <div class="c-row one three two-col"
+                                        *ngIf="service.discount &&service.discount.length > 0">
                                         <div class="name">
                                             {{sub_tot_cap}}
                                         </div>
@@ -83,7 +84,8 @@
                                                 currency:'INR':'symbol':'.2-2'}}</div>
                                         </div>
                                     </div>
-                                    <div class="c-row one three two-col" *ngIf="item.discount && item.discount.length > 0">
+                                    <div class="c-row one three two-col"
+                                        *ngIf="item.discount && item.discount.length > 0">
                                         <div class="name">
                                             {{sub_tot_cap}}
                                         </div>
@@ -124,8 +126,12 @@
                                             <div class="name">
                                                 {{jcoupon.key}}
                                             </div>
-                                            <div class="price">(-){{jcoupon.value.value |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                            <div class="price" style="display: flex">
+                                                <span>(-)</span>
+                                                <span (click)="showJCCouponNote(jcoupon)"
+                                                    [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
+																		currency:'INR':'symbol':'.2-2'}}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="c-row two section-two" *ngIf="bill_data.taxableTotal">
@@ -165,7 +171,7 @@
                                         <div class="price">{{bill_data.amountDue |
                                             currency:'INR':'symbol':'.2-2'}}</div>
                                     </div>
-                                    
+
                                     <!-- <div class="c-row one two-col" *ngIf="bill_data.amountDue < 0">
                                         <div class="name">Refundable Amount</div>
 										<div class="price">{{refund_value |

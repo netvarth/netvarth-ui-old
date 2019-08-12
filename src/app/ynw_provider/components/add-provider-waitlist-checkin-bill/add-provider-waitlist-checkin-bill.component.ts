@@ -199,6 +199,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   disableitembtn = false;
   disableJCouponbtn = false;
   jcMessages: any[];
+  showBillNotes = false;
+  billNotesExists = false;
+  discountPrivateNotes = false;
+  discountDisplayNotes = false;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -334,6 +338,20 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         data => {
           this.bill_data = data;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
+          for (let i = 0; i < this.bill_data.discount.length; i++) {
+            if (this.bill_data.discount[i].privateNote) {
+              this.discountPrivateNotes = true;
+            }
+            if (this.bill_data.discount[i].displayNote) {
+              this.discountDisplayNotes = true;
+            }
+          }
+          console.log(this.discountDisplayNotes);
+          console.log(this.discountPrivateNotes);
+          if (this.bill_data.displayNotes || this.bill_data.privateNotes || this.discountDisplayNotes || this.discountPrivateNotes) {
+            this.billNotesExists = true;
+          }
+          console.log(this.billNotesExists);
           if (this.showPayWorkBench) {
             this.showPayment();
           }
@@ -1352,6 +1370,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         });
       }
+    }
+  }
+  billNotesClicked() {
+    if (!this.showBillNotes) {
+      this.showBillNotes = true;
+    } else {
+      this.showBillNotes = false;
     }
   }
 }
