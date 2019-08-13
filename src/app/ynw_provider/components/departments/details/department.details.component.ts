@@ -303,3 +303,4 @@ export class DepartmentDetailComponent implements OnInit {
             );
     }
 }
+
