@@ -165,9 +165,9 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
           if (this.bill_data.displayNotes || this.discountDisplayNotes) {
             this.billNoteExists = true;
           }
-          // if (this.bill_data.amountDue < 0) {
-          //   this.refund_value = Math.abs(this.bill_data.amountDue);
-          // }
+          if (this.bill_data.amountDue < 0) {
+            this.refund_value = Math.abs(this.bill_data.amountDue);
+          }
           this.getBillDateandTime();
         },
         error => {

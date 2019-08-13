@@ -1182,8 +1182,8 @@
                                         </ng-container>
                                         <li *ngIf="image_list_popup.length>3">
                                             <div class="galbx">
-                                                <span class="mre"
-                                                    (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-3)}}</span>
+                                                <span class="mre" *ngIf="(image_list_popup.length-4)>0"
+                                                    (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-4)}}</span>
                                                 <div class="img-h"><img *ngIf="image_list_popup[3].modal.img"
                                                         [src]="image_list_popup[3].modal.img" alt=""/></div>
                                             </div>

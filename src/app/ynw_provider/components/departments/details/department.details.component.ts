@@ -102,6 +102,7 @@ export class DepartmentDetailComponent implements OnInit {
     }
     cancelAssignServices() {
         this.showAllServices = false;
+        this.deptServices.setValue('');
     }
     removeServiceFromDept(service, index, sel_service) {
         this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
