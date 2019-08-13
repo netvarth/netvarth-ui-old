@@ -59,7 +59,6 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   payment_options: any = [];
   close_msg = 'close';
   bname = '';
-  customer_label = '';
   billdate = '';
   billtime = '';
   gstnumber = '';
@@ -83,6 +82,9 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   jCoupon = '';
   couponList: any = [];
   refund_value;
+  discountDisplayNotes = false;
+  billNoteExists = false;
+  showBillNotes = false;
   constructor(
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
@@ -155,6 +157,14 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          for (let i = 0; i < this.bill_data.discount.length; i++) {
+            if (this.bill_data.discount[i].displayNote) {
+              this.discountDisplayNotes = true;
+            }
+          }
+          if (this.bill_data.displayNotes || this.discountDisplayNotes) {
+            this.billNoteExists = true;
+          }
           // if (this.bill_data.amountDue < 0) {
           //   this.refund_value = Math.abs(this.bill_data.amountDue);
           // }
@@ -165,6 +175,16 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         () => {
         }
       );
+  }
+  billNotesClicked() {
+    if (!this.showBillNotes) {
+      this.showBillNotes = true;
+    } else {
+      this.showBillNotes = false;
+    }
+  }
+  billNotesExists(billNotesExists: any) {
+    throw new Error('Method not implemented.');
   }
   getPrePaymentDetails() {
     this.consumer_checkin_history_service.getPaymentDetail(this.checkin.ynwUuid)

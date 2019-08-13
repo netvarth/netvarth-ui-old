@@ -181,12 +181,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="section-three" *ngIf="bill_data && bill_data.discount || bill_data.jCoupon">
+                    <div class="section-three" *ngIf="bill_data && billNoteExists">
+                        <a class="learnmore-pointer" id="customer-help" (click)="billNotesClicked()">Bill notes</a>
+                        <div class="bill-notes" *ngIf="showBillNotes && billNoteExists">
+                            <ul>
+                                <li *ngIf="bill_data.displayNotes">
+                                    {{bill_data.displayNotes.displayNotes}}</li>
+                                <div class *ngFor="let discount of bill_data.discount">
+                                    <li *ngIf="discount.displayNote">
+                                        <span style="font-weight: 600"> {{discount.name}} - </span>
+                                        {{discount.displayNote}}
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- <div class="section-three" *ngIf="bill_data && bill_data.discount">
                         <div class *ngFor="let discount of bill_data.discount">
                             <span *ngIf="discount.displayNote && bill_data.billStatus!='Settled'">*
                                 {{discount.displayNote}}</span>
-                        </div>
-                        <!-- <div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+                        </div> -->
+
+                    <!-- <div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
                             <div class=""
                                 *ngIf="jcoupon.value['systemNote'].indexOf('COUPON_APPLIED')!=-1 && bill_data.billStatus!='Settled'">
                                 <div class="" *ngFor="let note of jcoupon.value['systemNote']">
@@ -194,7 +211,8 @@
                                 </div>
                             </div>
                         </div> -->
-                    </div>
+
+                    <!-- </div> -->
                 </div>
             </div>
             <div class="section-three other-section">

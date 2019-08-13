@@ -797,31 +797,23 @@
 											</div>
 										</div>
 
-
-
-
-
-
-
 										<div class="section-three" *ngIf="bill_data && billNotesExists">
 											<a class="learnmore-pointer" id="customer-help"
 												(click)="billNotesClicked()">Bill notes</a>
-
 											<div class="bill-notes"
 												*ngIf="showBillNotes && (discountDisplayNotes || bill_data.displayNotes)">
-												<div>Notes for customer:</div>
+												<div>Notes for {{customer_label}}:</div>
 												<ul>
 													<li *ngIf="bill_data.displayNotes">
 														{{bill_data.displayNotes.displayNotes}}</li>
 													<div class *ngFor="let discount of bill_data.discount">
 														<li *ngIf="discount.displayNote">
-															<span style="font-weight: 600">* {{discount.name}} - </span>
+															<span style="font-weight: 600"> {{discount.name}} - </span>
 															{{discount.displayNote}}
 														</li>
 													</div>
 												</ul>
 											</div>
-
 											<div class="bill-notes"
 												*ngIf="showBillNotes && (discountPrivateNotes || bill_data.privateNotes)">
 												<div>Private note:</div>
@@ -830,13 +822,12 @@
 														{{bill_data.privateNotes.privateNotes}}</li>
 													<div class *ngFor="let discount of bill_data.discount">
 														<li *ngIf="discount.privateNote">
-																<span style="font-weight: 600">* {{discount.name}} - </span>
+															<span style="font-weight: 600"> {{discount.name}} - </span>
 															{{discount.privateNote}}</li>
 													</div>
 												</ul>
 											</div>
 										</div>
-
 
 										<div class="actiondiv bill_btns">
 											<ng-container *ngIf="showPayWorkBench">
@@ -893,57 +884,6 @@
 													(click)="showPayment()">{{paybycashothers_cap}}</button>
 											</div>
 										</div>
-
-
-
-
-
-										<!-- <div class="section-three"
-											*ngIf="bill_data && bill_data.discount || bill_data.jCoupon">
-											<div>Discount Notes</div>
-											Private note:
-											<div class *ngFor="let discount of bill_data.discount">
-
-												<ul *ngIf="discount.privateNote">
-													<ul>
-														<li>{{discount.name}}:
-															{{discount.privateNote}}</li>
-													</ul>
-												</ul>
-
-											</div>
-											Notes for customer:
-											<div class *ngFor="let discount of bill_data.discount">
-
-												<ul *ngIf="discount.displayNote">
-													<ul>
-														<li>{{discount.name}}:
-															{{discount.displayNote}}
-														</li>
-													</ul>
-												</ul>
-											</div>
-										</div>
-
-										<div class="section-three" *ngIf="bill_data">
-											<div>
-												Bill notes
-											</div>
-											<ul *ngIf="bill_data.displayNotes && bill_data.displayNotes.displayNotes">
-												<li>Notes for customer:</li>
-												<ul>
-													<li>{{bill_data.displayNotes.displayNotes}}</li>
-												</ul>
-											</ul>
-											<ul *ngIf="bill_data.privateNotes && bill_data.privateNotes.privateNotes">
-												<li>Private note:</li>
-												<ul>
-													<li>{{bill_data.privateNotes.privateNotes}}</li>
-												</ul>
-											</ul>
-										</div> -->
-
-
 									</div>
 								</div>
 							</div>

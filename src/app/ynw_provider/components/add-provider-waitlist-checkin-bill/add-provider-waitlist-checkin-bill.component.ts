@@ -346,12 +346,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
               this.discountDisplayNotes = true;
             }
           }
-          console.log(this.discountDisplayNotes);
-          console.log(this.discountPrivateNotes);
           if (this.bill_data.displayNotes || this.bill_data.privateNotes || this.discountDisplayNotes || this.discountPrivateNotes) {
             this.billNotesExists = true;
           }
-          console.log(this.billNotesExists);
           if (this.showPayWorkBench) {
             this.showPayment();
           }
