@@ -452,9 +452,8 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    * @param server_date for setting timings
    */
   createForm(server_date) {
-    const today = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    const todaydt = new Date(today);
-   // tslint:disable-next-line:radix
+    const todaydt = new Date(server_date);
+    // tslint:disable-next-line:radix
     this.start_hour = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('HH'));
     // tslint:disable-next-line:radix
     this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
