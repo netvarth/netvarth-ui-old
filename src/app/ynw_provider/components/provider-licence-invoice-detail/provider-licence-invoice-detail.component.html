@@ -6,37 +6,84 @@
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </mat-dialog-content>
 <mat-dialog-content *ngIf="!loading">
-    <div class="invoice">
-        <div class="outer">
-            <div class="ivc">
-                <span class="label">{{serv_period}}<span class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date:
-                    dateFormat}}</span></span>
-            </div>
+        <div class="card">
+                <div class="col-md-12 no-padding">
+                    <div class="row">
+                        <div class="col-md-6" *ngIf="!loading">
+                                <div class="label"><b>Jaldee Soft Pvt Ltd</b></div>
+                                <!-- <div class="label">[City]</div>
+                                <div class="label">[Email]</div> -->
+                                <div class="label">GSTIN: {{jaldeeegst_data}}</div>
+                        </div>
+                        <div class="col-md-6 rightalign invoice-cap">INVOICE</div>
+                    </div>
+                </div>
+        </div>
+        <div style="border-bottom:1px solid #ddd"></div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6" *ngIf="!loading" style="float: left">
+                    <div class="invoice">
+                        <div class="outer">
+                            <div class="ivc">
+                                <div class="label" style="margin-top: 8px">Bill To:</div>
+                                <div>{{bname | capitalizeFirst}}</div>
+                                <div *ngIf="showgst ==true">GSTIN: {{gstnumber}}</div>
+                                <div *ngIf="!showgst ==true">GSTIN:</div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
 
-            <div class="ivc" *ngIf="source != 'payment-history'">
-                <span class="label">Amount to pay<span
-                        class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
-            </div>
-
-            <div class="ivc" *ngIf="invoice.dueDate">
-                <span class="label">Due On<span class="result">{{invoice.dueDate | date: dateFormat}}</span></span>
-            </div>
-            <div class="container">
+                <div class="col-md-6 rightalign">
+                    <div class="invoice">
+                        <div class="outer">
+                            <div class="ivc">
+                                <div class="label" style="margin-top: 8px">{{serv_period}}</div>
+                                <div class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date:
+                                        dateFormat}}</div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="invoice">
+                            <div class="outer">
+                                <div class="ivc">
+                                    <div class="label" style="margin-top: 8px">Due On</div>
+                                    <div class="result">{{invoice.dueDate | date: dateFormat}}</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    </div>
+        </div>
+        <div class="col-md-12">
+                <div style="border-bottom:2px solid #ddd"></div>
+                <div class="invoice" style="margin: 5px">
+                
+                <span class="label" style="font-size: 20px; font-weight: 600">Amount to pay
+                <span class="result" style="float: right">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
+               
+                </div>
+                <div style="border-bottom:2px solid #ddd"></div>
+                </div>
+    
+            <div class="container invoice-deatil no-padding">
                 <table class="table .table-hover">
                     <thead>
                         <tr>
                             <th>Transaction Summary</th>
-                            <th>Amount</th>
+                            <th class="invoice-head">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngIf="invoice.licensePkgDetails">
                             <td>{{invoice.licensePkgDetails.licenseName}}</td>
-                            <td>{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                            <td class="invoice-head">{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</td>
                         </tr>
                         <tr *ngFor="let addon of invoice.addonDetails">
                             <td>{{addon.addonName}}</td>
-                            <td>{{addon.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                            <td class="invoice-head">{{addon.amount | currency:'INR':'symbol':'.2-2'}}</td>
                         </tr>
                         <tr *ngIf="invoice.creditDebitJson">
                             <td><b>License Adjustments</b></td>
@@ -53,15 +100,15 @@
                         </tr>
 
                         <tr class="invoice-discount" *ngFor="let discount of discounts">
-                            <td class="name" style="text-align: right">{{discount.name}} <span
+                            <td style="text-align: right">{{discount.name}} <span class="invoice-head"
                                     *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                             </td>
-                            <td class="price">(-){{discount.discountedAmt| currency: 'INR':'symbol':'.2-2'}}</td>
+                            <td class="price invoice-head">(-){{discount.discountedAmt| currency: 'INR':'symbol':'.2-2'}}</td>
                         </tr>
 
                         <tr>
                             <td class="invoiceTotal"><b>Total</b></td>
-                            <td>{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                            <td class="invoice-head">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -90,7 +137,7 @@
                     <span class="result">{{invoice.dueDate | date: dateFormat}}</span>
                 </div> -->
             <!-- </div> -->
-        </div>
+        
         <div class="" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
             <!-- <div class="pay-tbl table-outer"> -->
             <!-- <table class="table"> -->
@@ -180,7 +227,7 @@
             </div>
         </div>
         <!-- </div> -->
-    </div>
+    
     <!-- Commented as per request from Manikandan -->
     <!-- <div class="payment-option" *ngIf="payment_status === 'NotPaid' && source != 'payment-history'"> 
           <h4>Payment Options</h4>
@@ -202,6 +249,7 @@
     <button type="button" mat-button class="cs-btn bt1" [disabled]="!pay_data.amount || pay_data.amount == 0 ||
     !pay_data.uuid || !pay_data.paymentMode || payment_loading || disablebutton" (click)="makePayment()"
         *ngIf="source != 'payment-history'">{{make_payment}}</button>
+        <!-- <button type="button" mat-button class="cs-btn bt1" (click)="printMe()">Print</button> -->
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

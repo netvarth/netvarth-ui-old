@@ -685,5 +685,9 @@ export class ProviderServices {
     const url = 'provider/payment/tax/' + data;
     return this.servicemeta.httpPost(url);
   }
+  getgst(){
+    const url = 'provider/ynwConf/jaldeeGst';
+    return this.servicemeta.httpGet(url);
+  }
 }
 
