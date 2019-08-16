@@ -158,7 +158,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.payment_detail = data;
-          this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
+         // this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
