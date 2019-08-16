@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Input, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material';
@@ -327,11 +327,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
-            for (let i = 0; i < this.servicesjson.length; i++) {
-              if (this.servicesjson[i].hasOwnProperty('departmentName')) {
-                this.showDepartments = true;
-              }
-            }
+            // for (let i = 0; i < this.servicesjson.length; i++) {
+            //   if (this.servicesjson[i].hasOwnProperty('departmentName')) {
+            //     this.showDepartments = true;
+            //   }
+            // }
             break;
           }
           case 'gallery': {
@@ -408,9 +408,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
-              if (this.businessjson.claimStatus === 'Claimed') {
+              // if (this.businessjson.claimStatus === 'Claimed') {
                 this.getProviderDepart(this.provider_bussiness_id);
-              }
+              // }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
@@ -634,6 +634,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
+  }
+
+  getServicesByDepartment(location, deptid) {
+    const servicesByDept: any = [];
+    for (let i = 0; i < location['services'].length; i++) {
+      if (location['services'][i].department === deptid) {
+        servicesByDept.push(location['services'][i]);
+      }
+    }
+    return servicesByDept;
   }
 
   getExistingCheckinsByLocation(locid, passedIndx) {
@@ -1031,6 +1041,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.shared_services.getProviderDept(id).
       subscribe(data => {
         this.departmentlist = data;
+        this.showDepartments = this.departmentlist.filterByDept;
+        // if (this.departmentlist.filterByDept === true) {
+        //   this.showDepartments = true;
+        // }
         if (this.branch_id && this.account_Type === 'BRANCH') {
           this.getDoctors();
         }
@@ -1115,6 +1129,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }, {});
     };
     this.groubedByTeam = groupBy(this.newarr, 'department_code');
+  }
+
+  getJson(json) {
+    return JSON.stringify(json);
   }
 
   claimBusiness() {

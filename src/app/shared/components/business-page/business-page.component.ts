@@ -20,6 +20,7 @@ import { SignUpComponent } from '../signup/signup.component';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
+  styleUrls: ['./business-page.component.css'],
   animations: [
     trigger('search_data', [
       transition('* => *', [
@@ -109,7 +110,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   inboxCntFetched = false;
   inboxUnreadCnt;
   changedate_req = false;
-
+  showDepartments = false;
   gender = '';
   bLogo = '';
   orgsocial_list;
@@ -117,6 +118,20 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   phonelist: any = [];
   showEmailPhonediv = false;
   coupondialogRef;
+  departmentlist: any = [];
+  testuserQry;
+  latitude;
+  longitude;
+  loctype;
+  search_data;
+  searchCount;
+  search_return;
+  q_str;
+  loc_details;
+  account_Type;
+  newarr: any = [];
+  groubedByTeam: any = [];
+  branch_id;
   femaleTooltip = projectConstants.TOOLTIP_FEMALE;
   maleTooltip = projectConstants.TOOLTIP_MALE;
   virtualsectionHeader = 'Click here to View More Details';
@@ -363,6 +378,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
+              this.getProviderDepart(this.provider_bussiness_id);
               this.locationjson[i]['checkins'] = [];
               if (localStorage.getItem('ynw-user')) {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
@@ -604,6 +620,16 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     return str;
   }
+  getServicesByDepartment(location, deptid) {
+    const servicesByDept: any = [];
+    for (let i = 0; i < location['services'].length; i++) {
+      if (location['services'][i].department === deptid) {
+        servicesByDept.push(location['services'][i]);
+      }
+    }
+    return servicesByDept;
+  }
+
   getDateDisplay(dt) {
     let str = '';
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1005,5 +1031,100 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
     this.coupondialogRef.afterClosed().subscribe(() => {
     });
+  }
+
+
+  getProviderDepart(id) {
+    this.shared_services.getProviderDept(id).
+      subscribe(data => {
+        this.departmentlist = data;
+        this.showDepartments = this.departmentlist.filterByDept;
+        // if (this.departmentlist.filterByDept === true) {
+        //   this.showDepartments = true;
+        // }
+        if (this.branch_id && this.account_Type === 'BRANCH') {
+          this.getDoctors();
+        }
+      });
+  }
+
+  getCount(e) {
+    this.searchCount = e.leng;
+    for (let i = 0; i < this.departmentlist.departments.length; i++) {
+      if (e.depart === this.departmentlist.departments[i].departmentCode) {
+        this.departmentlist.departments[i].count = e.leng;
+      }
+      if (this.departmentlist.departments[i].count === 1) {
+        this.departmentlist.departments[i].name = 'Doctor';
+      } else {
+        this.departmentlist.departments[i].name = 'Doctors';
+      }
+    }
+  }
+
+  getDoctors() {
+    const userobj = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
+    this.latitude = loc_det.lat;
+    this.longitude = loc_det.lon;
+    this.loctype = loc_det.typ;
+    let q_str = '';
+    let locstr = '';
+    if (this.latitude) { // case of location is selected
+      const retcoordinates = this.sharedFunctionobj.getNearByLocation(this.latitude, this.longitude, this.loctype);
+      const coordinates = retcoordinates['locationRange'];
+      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
+      locstr = 'location1:' + coordinates;
+      q_str = q_str + locstr;
+    }
+    let testUser = false;
+    if (userobj !== null) {
+      const phno = (userobj.primaryPhoneNumber.toString());
+      if (phno.startsWith('55')) {
+        testUser = true;
+      }
+    }
+    if (!testUser) {
+      this.testuserQry = ' (not test_account:1) ';
+    } else {
+      this.testuserQry = ' test_account:1 ';
+    }
+    this.q_str = '(and ' + 'account_type:' + 1 + ' branch_id:' + this.branch_id + ')';
+    this.sharedFunctionobj.getCloudUrl()
+      .then(url => {
+        projectConstants.searchpass_criteria.fq = '(and ' + this.testuserQry + ')';
+        projectConstants.searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        projectConstants.searchpass_criteria.q = this.q_str;
+        this.search_return = this.shared_services.DocloudSearch(url, projectConstants.searchpass_criteria)
+          .subscribe(res => {
+            this.search_data = res;
+            this.getDoctorListbyDept(this.search_data);
+          }, error => {
+            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      });
+  }
+
+  getDoctorListbyDept(data) {
+    this.newarr = [];
+    this.groubedByTeam = [];
+    for (let i = 0; i < data.hits.hit.length; i++) {
+      this.newarr.push(data.hits.hit[i].fields);
+      this.newarr[i].id = data.hits.hit[i].id;
+    }
+    for (let i = 0; i < this.newarr.length; i++) {
+      for (let j = 0; j < this.departmentlist.departments.length; j++) {
+        if (this.departmentlist.departments[j].departmentCode === this.newarr[i].department_code) {
+          this.newarr[i].department_code = this.newarr[i].department_code.replace(this.newarr[i].department_code, this.departmentlist.departments[j].departmentName); // Replacing the domain name to it's display name
+        }
+      }
+    }
+    var groupBy = function (xs, key) {
+      return xs.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+      }, {});
+    };
+    this.groubedByTeam = groupBy(this.newarr, 'department_code');
   }
 }

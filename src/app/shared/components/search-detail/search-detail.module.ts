@@ -16,6 +16,7 @@ import { ModalGalleryModule } from 'angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { SearchProviderComponent } from '../search-provider/search-provider.component';
+import { SearchProviderModule } from '../search-provider/search-provider.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -30,12 +31,12 @@ import { SearchProviderComponent } from '../search-provider/search-provider.comp
         Nl2BrPipeModule,
         ConsumerCheckinHistoryListModule,
         SearchDetailRoutingModule,
+        SearchProviderModule,
         RouterModule
     ],
     declarations: [
         SearchDetailComponent,
         ProviderDetailComponent,
-        SearchProviderComponent,
         ConsumerWaitlistHistoryComponent
     ]
 })

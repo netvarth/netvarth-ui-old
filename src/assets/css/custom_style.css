@@ -4224,3 +4224,56 @@ border-bottom: none !important;
   font-size: 20px !important;
   text-shadow: 2px 2px #000000;
 }
+.content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .departments ul li {
+  list-style: none;
+  margin-right: 10px;
+  /* border: 1px solid #666; */
+  font-size: .80rem;
+   padding:5px 10px 5px 10px; 
+  /* -webkit-border-radius: 20px;*/
+  border-radius: 5px; 
+  background-clip: padding-box;
+  /* cursor: pointer; */
+  margin-bottom: 5px;
+  font-weight: 400;
+  background-color: #f0f0f5 !important;
+}
+.dept-services ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  /* margin-bottom: 5px; */
+}
+.dept-services ul li {
+  list-style: none;
+  border: 1px solid #666;
+  font-size: .75rem;
+   padding:0 5px; 
+  -webkit-border-radius: 20px;
+  border-radius: 20px; 
+  background-clip: padding-box;
+  cursor: pointer;
+  margin: 10px 10px 5px 0;
+  font-weight: 400;
+  /* background-color: #f0f0f5 !important; */
+}
+.content .c-outer .c-body .srlst .top-sect .tp-l .tp2 .clr .departments ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+.dept-services {
+  margin-top:10px;
+}
+.location .tp2 h3 {
+  cursor: pointer !important;
+}
+@media (max-width: 991px) and (min-width: 768px){
+  .content .c-outer .c-body .location .top-sect .tp-r{
+    width:100% !important;
+  }
+}
+.future-date-link {padding-top:10px !important}

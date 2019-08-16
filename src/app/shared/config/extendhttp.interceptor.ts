@@ -100,7 +100,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
-            console.log(error);
             if (this._checkSessionExpiryErr(error)) {
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
@@ -120,7 +119,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                   // 401 handled in auth.interceptor
                   this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
                   // }
-                  return throwError(error);
+                  return next.handle(req);
                 })
               );
             } else if (error.status === 404) {
@@ -128,6 +127,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // this.shared_functions.logout();
             } else if (error.status === 401) {
               this.shared_functions.logout();
+              // return next.handle(req);
             } else if (error.status === 301) {
               const dialogRef = this.dialog.open(ForceDialogComponent, {
                 width: '50%',

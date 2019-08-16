@@ -57,6 +57,8 @@ import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
+import { SearchProviderComponent } from './shared/components/search-provider/search-provider.component';
+import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,6 +119,7 @@ import { ForceDialogComponent } from './shared/components/force-dialog/force-dia
     ProviderAppModule,
     LoadingSpinnerModule,
     LazyModule,
+    SearchProviderModule,
     ScrollToModule.forRoot()
   ],
   providers: [

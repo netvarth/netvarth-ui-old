@@ -216,27 +216,6 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="services" style="margin-bottom: 10px"
-                                                    *ngIf="showDepartments && servicesjson.length > 0">
-                                                    <span class="sub-title">Departments</span>
-                                                    <ul>
-                                                        <li [class.active]="selectedDepartment==department"
-                                                            *ngFor="let department of servicesjson"
-                                                            (click)="departmentClicked(department.departmentName)">{{department.departmentName
-                                                                | capitalizeFirst}}</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="services" *ngIf="showServices">
-                                                    <span class="sub-title"
-                                                        *ngIf="departServiceList.length > 0">{{services_offered}}</span>
-                                                    <span class="sub-title" *ngIf="departServiceList.length === 0">No
-                                                        services</span>
-                                                    <ul *ngIf="departServiceList.length > 0">
-                                                        <li *ngFor="let serv of departServiceList"
-                                                            (click)="showServiceDetail(serv, businessjson.businessName)">{{serv.name
-                                                                    | capitalizeFirst}}</li>
-                                                    </ul>
-                                                </div>
                                                 <div class="services"
                                                     *ngIf="!showDepartments && loc.services.length > 0">
                                                     <span class="sub-title">{{services_offered}}</span>
@@ -295,7 +274,8 @@
                                                 *ngIf="businessjson.claimStatus === 'Claimed' && loc['estimatedtime_det']['message']">
                                                 {{loc['estimatedtime_det']['message']}}
                                             </div>
-                                            <span class="claim-business" *ngIf="businessjson.claimStatus === 'Unclaimed'"
+                                            <span class="claim-business"
+                                                *ngIf="businessjson.claimStatus === 'Unclaimed'"
                                                 (click)="claimBusiness()">
                                                 {{claim_my_business_cap}}
                                             </span>
@@ -313,7 +293,8 @@
                                         <ng-container
                                             *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
                                             <ng-container *ngIf="loc['personAhead'] || loc['personAhead'] === 0">
-                                                <span class="checkin-est" style="margin-bottom: 5px" *ngIf="!loc.opennow">
+                                                <span class="checkin-est" style="margin-bottom: 5px"
+                                                    *ngIf="!loc.opennow">
                                                     <span class="est-time"> Next Available Time </span>
                                                     <span
                                                         class="time-data">{{loc['estimatedtime_det']['nextAvailDate']}}</span></span>
@@ -330,7 +311,7 @@
                                         <span class="checkin-btn disabled" style="cursor: auto"
                                             *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
 
-                                        <div>
+                                        <div class="future-date-link">
                                             <span class="checkin-future bt10"
                                                 *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
                                                 (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
@@ -343,28 +324,39 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div
-                                *ngIf="businessjson.accountType === 'BRANCH' && departmentlist && departmentlist.departments">
-                                <mat-accordion *ngFor="let dept of departmentlist.departments">
-                                    <mat-expansion-panel [expanded]="false"
-                                        *ngIf="dept.count!=0 && groubedByTeam[dept.departmentName]">
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <span style="font-size: larger"> <b>{{dept.departmentName}}
-                                                        ({{groubedByTeam[dept.departmentName].length}})</b>
-                                                </span>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <ng-container>
-                                            <div class="location">
-                                                <app-search-provider *ngIf="groubedByTeam"
-                                                    [searchResult]="groubedByTeam[dept.departmentName]"
-                                                    (actionPerformed)="checkinClicked($event)"></app-search-provider>
-                                            </div>
-                                        </ng-container>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
+                                <div class="col-md-12 no-padding middle-sect" *ngIf="departmentlist && departmentlist.departments">
+                                    <mat-accordion *ngFor="let dept of departmentlist.departments">
+                                        <mat-expansion-panel [expanded]="false" *ngIf="(dept.count && dept.count!=0) || getServicesByDepartment(loc, dept.departmentId).length!=0">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <span style="font-size: normal">{{dept.departmentName}} 
+                                                            <span *ngIf="groubedByTeam[dept.departmentName] && groubedByTeam[dept.departmentName].length==1">(1 {{getTerminologyTerm("provider")}})</span> 
+                                                            <span *ngIf="groubedByTeam[dept.departmentName] && groubedByTeam[dept.departmentName].length>1">({{groubedByTeam[dept.departmentName].length}} {{getTerminologyTerm("provider")}}s)</span> 
+                                                    </span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>                                           
+                                            <ng-container class=" services-view" *ngIf="getServicesByDepartment(loc, dept.departmentId)">
+                                                <div class="dept-services" >
+                                                    <h6>Services</h6>
+                                                    <ul>
+                                                        <li *ngFor="let service of getServicesByDepartment(loc, dept.departmentId)" (click)="showServiceDetail(service, businessjson.businessName)">{{service.name}}</li>
+                                                    </ul>
+                                                </div>
+                                            </ng-container>
+                                            <hr/>
+                                            <ng-container *ngIf="groubedByTeam"> 
+                                                <h6 class="mgn-bt-10" *ngIf="groubedByTeam[dept.departmentName] && groubedByTeam[dept.departmentName].length==1">{{getTerminologyTerm('provider')}} (1)</h6>     
+                                                <h6 class="mgn-bt-10" *ngIf="groubedByTeam[dept.departmentName] && groubedByTeam[dept.departmentName].length!=1">{{getTerminologyTerm('provider')}}s ({{groubedByTeam[dept.departmentName].length}})</h6>                                          
+                                                <div class="location" *ngIf="businessjson.accountType === 'BRANCH'">
+                                                    <app-search-provider 
+                                                        [searchResult]="groubedByTeam[dept.departmentName]"
+                                                        (actionPerformed)="checkinClicked($event)">
+                                                    </app-search-provider> 
+                                                </div>
+                                            </ng-container>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
                             </div>
                         </div>
                     </ng-container>

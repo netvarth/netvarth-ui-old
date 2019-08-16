@@ -401,16 +401,16 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="services" *ngIf="search_result.fields.departments">
+                                        <div class="departments" *ngIf="search_result.fields.departments">
                                             <ul>
                                                 <li [class.active]="selectedDepartment==departments"
                                                 *ngFor="let departments of search_result.fields.departments"
-                                                    (click)="departmentClicked(departments,search_result)">
+                                                    >
                                                     {{departments | capitalizeFirst}}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="services"
+                                        <!-- <div class="services"
                                             *ngIf="search_result.fields.departments && showServices">
                                             <label *ngIf="departServiceList.length > 0"> Services</label>
                                             <ul *ngIf="departServiceList.length > 0">
@@ -419,7 +419,7 @@
                                                     | capitalizeFirst}}</li>
                                             </ul>
                                             <label *ngIf="departServiceList.length === 0"> No services</label>
-                                        </div>
+                                        </div> -->
                                         <div class="services"
                                             *ngIf="!search_result.fields.departments && search_result.fields.services">
                                             <ul>
@@ -540,7 +540,7 @@
                                 <span class="checkin-btn disabled"
                                     *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday'])">{{get_token_btn}}</span>
 
-                                <div class="checkin-future">
+                                <div class="future-date-link checkin-future">
                                     <span class="bt10" (click)="checkinClicked(search_result, true)"
                                         *ngIf="search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.hasOwnProperty('future_checkins') && search_result.fields.future_checkins==1">{{do_you_want_to_cap}}
                                         <span

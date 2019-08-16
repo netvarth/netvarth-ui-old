@@ -1760,27 +1760,27 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             });
         });
   }
-  departmentClicked(deptName, searchData) {
-    this.showServices = true;
-    const s3id = searchData.fields.unique_id;
-    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    this.shared_functions.getS3Url('provider')
-      .then(
-        res => {
-          const s3url = res;
-          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
-            .subscribe(services => {
-              let deptList: any = [];
-              deptList = services;
-              for (let i = 0; i < deptList.length; i++) {
-                if (deptList[i].departmentName === deptName) {
-                  this.departServiceList = deptList[i].services;
-                  this.selectedDepartment = deptName;
-                }
-              }
-            });
-        });
-  }
+  // departmentClicked(deptName, searchData) {
+  //   this.showServices = true;
+  //   const s3id = searchData.fields.unique_id;
+  //   const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   this.shared_functions.getS3Url('provider')
+  //     .then(
+  //       res => {
+  //         const s3url = res;
+  //         this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'services', UTCstring)
+  //           .subscribe(services => {
+  //             let deptList: any = [];
+  //             deptList = services;
+  //             for (let i = 0; i < deptList.length; i++) {
+  //               if (deptList[i].departmentName === deptName) {
+  //                 this.departServiceList = deptList[i].services;
+  //                 this.selectedDepartment = deptName;
+  //               }
+  //             }
+  //           });
+  //       });
+  // }
   showServiceDetail(serv, busname) {
     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '50%',
