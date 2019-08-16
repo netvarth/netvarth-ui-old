@@ -169,7 +169,7 @@ export class ProviderNotificationsComponent implements OnInit {
       return;
     }
     if (this.notifyemail !== '') {
-      const curemail = this.notifyemail;
+      const curemail = this.notifyemail.trim();
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
@@ -213,7 +213,7 @@ export class ProviderNotificationsComponent implements OnInit {
       return;
     }
     if (this.notifycanclemail !== '') {
-      const curemail1 = this.notifycanclemail;
+      const curemail1 = this.notifycanclemail.trim();
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
