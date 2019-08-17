@@ -57,11 +57,9 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   paymentDetlId;
   jaldeeegst_data: any = [];
   gstNumber = '';
-  gstnumber;
   ynwbp;
   bname;
   gstDetails: any = [];
-  showgst = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
@@ -145,9 +143,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     this.provider_services.getTaxpercentage()
       .subscribe(data => {
         this.gstDetails = data;
-        this.gstnumber = this.gstDetails.gstNumber || '';
-        if (this.gstDetails.gstNumber) {
-          this.showgst = true;
+        if (this.gstDetails && this.gstDetails.gstNumber) {
+          this.gstNumber = this.gstDetails.gstNumber || '';
         }
       },
         () => {
@@ -158,7 +155,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.payment_detail = data;
-         // this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
+          // this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
