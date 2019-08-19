@@ -5,6 +5,7 @@ import {Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SharedFunctions } from '../../functions/shared-functions';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { Messages } from '../../constants/project-messages';
 
@@ -51,7 +52,8 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public shared_services: SharedServices) { }
+    public shared_services: SharedServices,
+    public shared_functions: SharedFunctions) { }
 
   ngOnInit() {
     this.createForm();
@@ -156,6 +158,9 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
       const phonenumber = new Array(this.submitdata.userProfile.primaryMobileNo.length - 4).join('*') + this.submitdata.userProfile.primaryMobileNo.substr(this.submitdata.userProfile.primaryMobileNo.length - 4);
       this.otp_mobile = Messages.OTP_SENT_LABEL.replace('[your_mobile]', phonenumber);
     }
+  }
+  removSpecChar(evt) {
+    return this.shared_functions.removSpecChar(evt);
   }
 
   doshowOTPEmailContainer() {
