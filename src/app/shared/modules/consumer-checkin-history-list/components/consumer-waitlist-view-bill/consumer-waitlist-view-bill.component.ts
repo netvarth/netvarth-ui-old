@@ -343,6 +343,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	style="text-align:right">&#x20b9;' + (service.quantity * service.price).toFixed(2) + '</td>';
       bill_html += '	</tr>';
       // List<Discount> serviceDisounts = mapper.readValue(service.getDiscount().toString(), new TypeReference<List<Discount>>(){});
+      if (service.discount && service.discount.length > 0) {
       for (const serviceDiscount of service.discount) {
         bill_html += '	<tr style="color:#aaa">';
         bill_html += '<td style="text-align:right;"';
@@ -351,7 +352,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         bill_html += '</td>';
         bill_html += '	</tr>';
       }
-      if (service.discount && service.discount.length > 0) {
+    
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';

@@ -1209,8 +1209,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         bill_html += '</td>';
         bill_html += '	</tr>';
       }
-    }
-      if (service.discount && service.discount.length > 0) {
+    
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
