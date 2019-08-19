@@ -60,7 +60,9 @@
         <div style="border-bottom:2px solid #ddd"></div>
         <div class="invoice" style="margin: 5px">
 
-            <span class="label" style="font-size: 20px; font-weight: 600">Amount to pay
+            <span class="label" style="font-size: 20px; font-weight: 600">
+                <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
+                <span *ngIf="source === 'payment-history'"> Amount paid</span>
                 <span class="result"
                     style="float: right">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
 

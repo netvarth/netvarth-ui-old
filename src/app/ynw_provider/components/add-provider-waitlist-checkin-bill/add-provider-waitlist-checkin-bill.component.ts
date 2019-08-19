@@ -1209,7 +1209,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         bill_html += '</td>';
         bill_html += '	</tr>';
       }
-    
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
@@ -1321,7 +1320,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '</table>';
       bill_html += '	</td></tr>';
     }
-    if (this.bill_data.getTotalAmountPaid > 0) {
+    if (this.bill_data.totalAmountPaid > 0) {
       bill_html += '	<tr><td>';
       bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
       bill_html += '	<tr style="font-weight: bold;">';
@@ -1331,13 +1330,24 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '</table>';
       bill_html += '	</td></tr>';
     }
-    if (this.bill_data.amountDue > 0) {
-      bill_html += '	<tr><td style="border-bottom:1px solid #ddd;">';
+    if (this.bill_data.amountDue >= 0) {
+      bill_html += '	<tr><td>';
       bill_html += '<table width="100%"';
       bill_html += '	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
       bill_html += '	<tr style="font-weight: bold;"> ';
       bill_html += '<td width="70%" style="text-align:right">Amount Due</td>';
       bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.bill_data.amountDue).toFixed(2) + '</td>';
+      bill_html += '	</tr>                                                                           ';
+      bill_html += '</table>';
+      bill_html += '	</td></tr>';
+    }
+    if (this.bill_data.amountDue < 0) {
+      bill_html += '	<tr><td>';
+      bill_html += '<table width="100%"';
+      bill_html += '	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
+      bill_html += '	<tr style="font-weight: bold;"> ';
+      bill_html += '<td width="70%" style="text-align:right">Amount to refund</td>';
+      bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refund_value).toFixed(2) + '</td>';
       bill_html += '	</tr>                                                                           ';
       bill_html += '</table>';
       bill_html += '	</td></tr>';
