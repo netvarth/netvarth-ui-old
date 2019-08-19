@@ -463,11 +463,11 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
       if (this.qAvailability.timeRange) {
         this.toDateCaption = this.qAvailability.timeRange.eTime;
       } else {
-        this.toDateCaption = '11:30 PM';
+        this.toDateCaption = '11:59 PM';
       }
     } else {
       this.fromDateCaption = this.qAvailability.timeRange.eTime;
-      this.toDateCaption = '11:30 PM';
+      this.toDateCaption = '11:59 PM';
     }
     if (this.fromDateCaption === 'Now') {
       this.instantQForm = this.fb.group({
