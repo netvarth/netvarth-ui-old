@@ -162,7 +162,7 @@ export const Messages = {
   'PAYSETTING_SAV_TAXPER': 'Tax details updated successfully',
   'PAYSETTING_CONTACTADMIN': 'Contact Administrator to verify your payment modes',
   'PAYSETTING_MAXLEN': 'Only [maxlen] characters are allowed',
-  'PAYSETTING_PANMAXLEN10': 'Pancard should contain only 10 characters',
+  'PAYSETTING_PANMAXLEN15': 'Pancard should contain only 15 characters',
   'PAYSETTING_IFSCMAXLEN11': 'IFSC code should contain only 11 characters',
   'PAYSETTING_IFSCALPHANUMERIC': 'IFSC code should not contain special characters',
 

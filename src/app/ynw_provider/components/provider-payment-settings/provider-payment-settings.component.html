@@ -224,7 +224,7 @@
                                                                         <mat-form-field>
                                                                             <input matInput [(ngModel)]="bankacnumber"
                                                                                 (change)="resetApi('bankacnumber')"
-                                                                                maxlength="18" autocomplete="off"
+                                                                                maxlength="18" autocomplete="off"(keypress)="removSpace($event)"
                                                                                 (blur)="bankAcnumberBlur()"
                                                                                 tabindex="6">
                                                                         </mat-form-field>
@@ -336,9 +336,9 @@
                                                                         <mat-form-field>
                                                                             <input matInput [(ngModel)]="pannumber"
                                                                                 (change)="resetApi('pannumber')"
-                                                                                maxlength="10" autocomplete="off"
+                                                                                autocomplete="off"
                                                                                 [disabled]="!ineditMode"
-                                                                                (blur)="panCardBlur()" tabindex="7">
+                                                                                (blur)="panCardBlur()" (keypress)="removSpace($event)" tabindex="7">
                                                                         </mat-form-field>
                                                                         <app-field-error-display
                                                                             [displayError]="showError['pannumber']['status']"

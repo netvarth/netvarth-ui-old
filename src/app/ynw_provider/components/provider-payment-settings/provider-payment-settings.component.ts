@@ -87,7 +87,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     isJaldeeAccount: Boolean = true;
     optJaldeeAccount;
     maxcnt100 = projectConstants.VALIDATOR_MAX100;
-    maxcnt10 = 10;
+    maxcnt15 = 15;
     maxcnt11 = 11;
     activeLicPkg;
     disableMyAcc = false;
@@ -396,7 +396,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.getPaymentSettings(2);
+                        //this.getPaymentSettings(2);
                         this.saveEnabled = true;
                     });
         }
@@ -571,9 +571,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         } else if (!alphanumericpattern.test(this.pannumber)) {
             this.errorExist = true;
             this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANPHANUMERIC') };
-        } else if (this.pannumber.length > this.maxcnt10) {
+        } else if (this.pannumber.length > this.maxcnt15) {
             this.errorExist = true;
-            this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANMAXLEN10') };
+            this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANMAXLEN15') };
         }
     }
     ifscBlur() {
@@ -659,5 +659,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
     }
+    removSpace(evt) {
+        return this.shared_functions.removSpace(evt);
+      }
 
 }

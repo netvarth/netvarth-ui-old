@@ -1146,6 +1146,14 @@ export class SharedFunctions {
       return false;
     }
   }
+  removSpace(evt) {
+    const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
+    if (inputKeyCode === 32)
+    {
+      evt.preventDefault();
+        return false;
+    }   
+  }
 
   filterJson(jsonArray, key, value) {
     const newArray = jsonArray.filter(function (el) {
