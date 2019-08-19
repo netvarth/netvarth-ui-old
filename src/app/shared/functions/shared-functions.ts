@@ -1154,6 +1154,19 @@ export class SharedFunctions {
         return false;
     }   
   }
+  removSpecChar(evt) {
+    var s = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
+     for (var i = 0; i < evt.key.length; i++)
+     {
+        if (s.indexOf(evt.key.charAt(i)) != -1)
+      {
+         evt.preventDefault();
+         return false;
+      }
+    }
+    
+  }
+
 
   filterJson(jsonArray, key, value) {
     const newArray = jsonArray.filter(function (el) {

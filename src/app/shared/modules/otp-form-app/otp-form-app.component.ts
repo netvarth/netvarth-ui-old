@@ -113,8 +113,8 @@ export class OtpFormAppComponent implements OnInit, OnChanges, OnDestroy {
       this.setMessageType();
     }
   }
-  isNumeric(evt) {
-    return this.shared_functions.isNumeric(evt);
+  removSpecChar(evt) {
+    return this.shared_functions.removSpecChar(evt);
   }
   setResendViaEmail() {
     this.doshowOTPEmailContainer();
