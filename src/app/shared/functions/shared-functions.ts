@@ -409,7 +409,7 @@ export class SharedFunctions {
   }
 
   print_PricewithCurrency(price) {
-    return '₹' + price;
+    return '₹' +" "+ price;
   }
 
   imageValidation(file) {
