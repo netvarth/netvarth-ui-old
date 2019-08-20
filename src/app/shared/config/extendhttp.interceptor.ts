@@ -101,6 +101,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
+              window.location.reload();
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
                   return next.handle(this.updateHeader(req, url));

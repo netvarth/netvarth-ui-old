@@ -2,26 +2,28 @@
 <footer class="bg-light-gray2 hcode-main-footer" style="background:#000" [class.dashb]="ctype=='provider'"
     [class.consumer]="ctype!='provider'" [class.show]="showbottompopup">
 
-    <section class="footer-home" *ngIf="ctype!='provider' && (includedFrom == 'home' || includedFrom == 'phome')" >
-        <div class="container footer-middle hcode-footer-middle" style="">
+    <section class="footer-home" *ngIf="ctype!='provider' && (includedFrom == 'home' || includedFrom == 'phome')">
+        <div class="container footer-middle hcode-footer-middle">
             <div class="row no-margin-bottom">
                 <div class="col-md-8 col-sm-12 sm-text-center sm-margin-bottom-four hcode-footer-menu">
                     <ul id="menu-footer-menu" class="list-inline footer-link text-uppercase">
-                        <img alt="Jaldee" style="width:70px;" src="assets/images/home/logo-icon.png" class="logo" alt=""/>
+                        <img alt="Jaldee" style="width:70px;" src="assets/images/home/logo-icon.png" class="logo"
+                            alt="" />
                         <li id="menu-item-851"
                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-851"><a
-                                style="color:#fff;" [routerLink]="['/home/aboutus']" target="_blank">{{about_us}}</a></li>
+                                style="color:#fff;" [routerLink]="['/home/aboutus']" target="_blank">{{about_us}}</a>
+                        </li>
                         <li id="menu-item-852"
                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-852"><a
-                                style="color:#fff;" [routerLink]="['/home/contact']" target="_blank">{{contact_us}}</a></li>
+                                style="color:#fff;" [routerLink]="['/home/contact']" target="_blank">{{contact_us}}</a>
+                        </li>
                         <li id="menu-item-853"
-                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-853"><a  *ngIf="includedFrom =='phome'"
-                                style="color:#fff;" rel="noopener" [routerLink]="['terms']"
-                                target="_blank">{{legal_cap}}</a>
-                                <a  *ngIf="includedFrom !='phome'"
-                                style="color:#fff;" rel="noopener" [routerLink]="['/terms']"
-                                target="_blank">{{legal_cap}}</a>
-                            </li>
+                            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-853"><a
+                                *ngIf="includedFrom =='phome'" style="color:#fff;" rel="noopener"
+                                [routerLink]="['terms']" target="_blank">{{legal_cap}}</a>
+                            <a *ngIf="includedFrom !='phome'" style="color:#fff;" rel="noopener"
+                                [routerLink]="['/terms']" target="_blank">{{legal_cap}}</a>
+                        </li>
                         <!-- <li id="menu-item-854"
                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-854"><a
                                 style="color:#fff;" rel="noopener" [routerLink]="['/privacy']"
@@ -36,12 +38,13 @@
                 </div>
                 <div class="col-md-4 col-sm-12 footer-social text-right sm-text-center">
                     <div id="text-14" class="custom-widget widget_text">
-                        <div class="textwidget" style="">
-                            <a style="color:#fff;" href="https://www.facebook.com/Jaldee-1176319332515659/" target="_blank"
-                                class="black-text-link">
+                        <div class="textwidget">
+                            <a style="color:#fff;" href="https://www.facebook.com/Jaldee-1176319332515659/"
+                                target="_blank" class="black-text-link">
                                 <i style="color:#3b5998;" class="fa fa-facebook-f"></i>
                             </a>
-                            <a style="color:#fff;" href="https://twitter.com/jaldee6" target="_blank" class="black-text-link">
+                            <a style="color:#fff;" href="https://twitter.com/jaldee6" target="_blank"
+                                class="black-text-link">
                                 <i style="color:#00acee;" class="fa fa-twitter"></i>
                             </a>
                             <a style="color:#fff;" href="https://www.youtube.com/watch?v=qF4gLhQW2CE" target="_blank"
@@ -169,11 +172,11 @@
             <div class="container">
                 <div class="row">
                     <!-- <div class="table-outer stp-tbl"> -->
-                        <span class="loading" *ngIf="auditStatus==1">
-                            <app-common-innerloading-spinner spinnerParams="loadingParams">
-                            </app-common-innerloading-spinner>
-                        </span>
-                        <div class="table-responsive ">
+                    <span class="loading" *ngIf="auditStatus==1">
+                        <app-common-innerloading-spinner spinnerParams="loadingParams">
+                        </app-common-innerloading-spinner>
+                    </span>
+                    <div class="table-responsive ">
                         <table class="table" *ngIf="auditStatus==3">
                             <thead>
                                 <tr>
@@ -193,7 +196,7 @@
                             </tbody>
                         </table>
                     </div>
-                        <span class="no-info" *ngIf="auditStatus==2">{{no_audit_log_cap}}</span>
+                    <span class="no-info" *ngIf="auditStatus==2">{{no_audit_log_cap}}</span>
                     <!-- </div> -->
                 </div>
             </div>
@@ -206,30 +209,30 @@
             <div class="container">
                 <div class="row">
                     <!-- <div class="table-outer stp-tbl"> -->
-                        <span class="loading" *ngIf="alertStatus==1">
-                            <app-common-innerloading-spinner spinnerParams="loadingParams">
-                            </app-common-innerloading-spinner>
-                        </span>
-                        <div class="table-responsive stp-tbl">
+                    <span class="loading" *ngIf="alertStatus==1">
+                        <app-common-innerloading-spinner spinnerParams="loadingParams">
+                        </app-common-innerloading-spinner>
+                    </span>
+                    <div class="table-responsive stp-tbl">
                         <table class="table" *ngIf="alertStatus==3">
                             <tbody>
                                 <tr [class.info]="alert.severity.name=='Info'"
                                     [class.warning]="alert.severity.name=='Warning'"
                                     [class.high]="alert.severity.name=='High'"
                                     [class.error]="alert.severity.name=='Critical'" *ngFor="let alert of alerts">
-                                    <td class="td1"><span class="span1">{{alert.text}}</span></td><td><span
-                                            class="span2 fa fa-thumbs-o-up pointr" [matTooltip]="'Acknowledge'"
+                                    <td class="td1"><span class="span1">{{alert.text}}</span></td>
+                                    <td><span class="span2 fa fa-thumbs-o-up pointr" [matTooltip]="'Acknowledge'"
                                             *ngIf="alert.ackStatus==false && alert.ackRequired==true"
                                             (click)="alertAcknowlege(alert)"></span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                        <!-- <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
+                    <!-- <span *ngIf="alert_count > alertsCnt" class="alert-view-all"
                                   (click)="handleMaximize()"> View All</span> -->
-                        <span *ngIf="alert_count > alertsCnt" class="alert-view-all" (click)="handleMaximize()"> View
-                            All</span>
-                        <span class="no-info" *ngIf="alertStatus==2">{{no_alerts_cap}}</span>
+                    <span *ngIf="alert_count > alertsCnt" class="alert-view-all" (click)="handleMaximize()"> View
+                        All</span>
+                    <span class="no-info" *ngIf="alertStatus==2">{{no_alerts_cap}}</span>
                     <!-- </div> -->
                 </div>
             </div>
@@ -252,7 +255,7 @@
                             </div>
                             <div class="checkin-bx" *ngIf="checkinStatus==3">
                                 <span class="ttle">
-                                    Accept Online Check-in
+                                    Accept Same Day Check-in
                                     <span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)?
                                         'On': 'Off'}}</span>
                                 </span>
