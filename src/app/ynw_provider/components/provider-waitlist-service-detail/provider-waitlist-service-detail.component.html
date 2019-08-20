@@ -30,11 +30,11 @@
                                         </div>
                                         <div class="item" *ngIf="isServiceBillable && service_data.totalAmount!=0">
                                             <span class="ttle">{{price_cap}}</span>
-                                            <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                                            <span>{{service_data.totalAmount | currency:'&#8377; '}}</span>
                                         </div>
                                         <div class="item" *ngIf="service_data.isPrePayment && isServiceBillable">
                                             <span class="ttle">{{pre_pay_amt}}</span>
-                                            <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                                            <span>{{service_data.minPrePaymentAmount | currency:'&#8377; '}}</span>
                                         </div>
                                     </div>
                                     <div class="c-ot m0">

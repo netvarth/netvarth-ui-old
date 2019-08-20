@@ -419,7 +419,7 @@
 																<div class="quantity">{{qnty_cap}}
 																	{{service.quantity}}</div>
 																<div class="price">{{(service.quantity * service.price) |
-																	currency:'INR':'symbol':'.2-2'}}</div>
+																	currency:'&#8377; '}}</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -486,7 +486,7 @@
 																	*ngFor="let discount of service.discount">
 																	<div class="name">{{discount.name}}</div>
 																	<div class="price">(-){{discount.discountValue |
-																		currency:'INR':'symbol':'.2-2'}} <i (click)="removeServiceDiscount(service.serviceId, discount.id)"
+																		currency:'&#8377; '}} <i (click)="removeServiceDiscount(service.serviceId, discount.id)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></div>
 																</div>
@@ -495,7 +495,7 @@
 																*ngIf="service.discount && service.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price">{{service.netRate |
-																	currency:'INR':'symbol':'.2-2'}}</div>
+																	currency:'&#8377; '}}</div>
 															</div>
 														</div>
 														<div class="more" *ngIf="bill_data.billStatus!='Settled'">
@@ -532,7 +532,7 @@
 																<div class="quantity">{{qnty_cap}}
 																	{{item.quantity}}</div>
 																<div class="price">{{(item.quantity * item.price) |
-																		currency:'INR':'symbol':'.2-2'}}</div>
+																		currency:'&#8377; '}}</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -587,7 +587,7 @@
 																	*ngFor="let discount of item.discount">
 																	<div class="name">{{discount.name}}</div>
 																	<div class="price">(-){{discount.discountValue |
-																		currency:'INR':'symbol':'.2-2'}} <i (click)="removeItemDiscount(item.itemId, discount.id)"
+																		currency:'&#8377; '}} <i (click)="removeItemDiscount(item.itemId, discount.id)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></div>
 																</div>
@@ -596,7 +596,7 @@
 																*ngIf="item.discount &&item.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price">{{item.netRate |
-																	currency:'INR':'symbol':'.2-2'}}</div>
+																	currency:'&#8377; '}}</div>
 															</div>
 														</div>
 														<div class="more" *ngIf="bill_data.billStatus!='Settled'">
@@ -628,14 +628,14 @@
 																<tr class="amt gross">
 																	<td class="name">{{gross_amnt_cap}}</td>
 																	<td class="price">
-																		{{bill_data.netTotal | currency:'INR':'symbol':'.2-2'}}
+																		{{bill_data.netTotal | currency:'&#8377; '}}
 																	</td>
 																</tr>
 																<tr class="amt discount"
 																	*ngFor="let discount of bill_data.discount">
 																	<td class="name">{{discount.name}}</td>
 																	<td class="price">(-){{discount.discValue |
-																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'"
+																		currency:'&#8377; '}} <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeOrderDiscount(discount)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
@@ -644,7 +644,7 @@
 																	*ngFor="let coupon of bill_data.providerCoupon">
 																	<td class="name">{{coupon.name}}</td>
 																	<td class="price">(-){{coupon.couponValue |
-																		currency:'INR':'symbol':'.2-2'}} <i *ngIf="bill_data.billStatus!='Settled'"
+																		currency:'&#8377; '}} <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeProviderCoupon(coupon)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
@@ -657,7 +657,7 @@
 																		<span (click)="showJCCouponNote(jcoupon)"
 																			[class.couponAmt]="jcoupon.value.value === '0.0'"
 																			style="margin-right: 5px">{{jcoupon.value.value |
-																		currency:'INR':'symbol':'.2-2'}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
+																		currency:'&#8377; '}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeJCoupon(jcoupon.key)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
@@ -665,16 +665,16 @@
 																<tr class="amt tax" *ngIf="bill_data.taxableTotal">
 																	<td class="name"><span class="tax-top">Tax
 																			{{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
-																			currency:'INR':'symbol':'.2-2'}}</span><span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+																			currency:'&#8377; '}}</span><span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
 																			SGST-{{bill_data.taxPercentage/2}}%)</span>
 																	</td>
 																	<td class="price">(+){{bill_data.totalTaxAmount |
-																		currency:'INR':'symbol':'.2-2'}}</td>
+																		currency:'&#8377; '}}</td>
 																</tr>
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
 																	<td class="price">{{bill_data.netRate |
-																		currency:'INR':'symbol':'.2-2'}}</td>
+																		currency:'&#8377; '}}</td>
 																</tr>
 																<tr class="amt paid"
 																	*ngIf="bill_data.totalAmountPaid > 0">
@@ -682,17 +682,17 @@
 																			(click)="showpaidSection()">{{amount_paid_cap}}</span>
 																	</td>
 																	<td class="price">{{bill_data.totalAmountPaid |
-																		currency:'INR':'symbol':'.2-2'}}</td>
+																		currency:'&#8377; '}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue >= 0">
 																	<td class="name">{{amountdue_cap}}</td>
 																	<td class="price">{{bill_data.amountDue |
-																		currency:'INR':'symbol':'.2-2'}}</td>
+																		currency:'&#8377; '}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue < 0">
 																	<td class="name">Amount to refund</td>
 																	<td class="price">{{refund_value |
-																		currency:'INR':'symbol':'.2-2'}}</td>
+																		currency:'&#8377; '}}</td>
 																</tr>
 															</tbody>
 														</table>
@@ -752,7 +752,7 @@
 																</div>
 																<div class="td two">
 																	<span class="amt">{{payment.amount |
-																		currency:'INR':'symbol':'.2-2' }}</span> <span class="others"> <span class="status"> <span
+																		currency:'&#8377; ' }}</span> <span class="others"> <span class="status"> <span
 																				class="title">{{status_cap}}</span>
 																			<span><span
 																					[class]="payment.status | lowercase">{{payment.status
@@ -765,7 +765,7 @@
 																</div>
 																<!-- <div class="td three">
 																	<span class="amt">{{payment.refundableAmount |
-																		currency:'INR':'symbol':'.2-2'}}</span>
+																		currency:'&#8377; '}}</span>
 																	 <button class="cs-btn bt3" *ngIf="payment.status=='SUCCESS' && payment.refundableAmount > 0">Refund</button>
 																</div> -->
 															</div>
@@ -788,7 +788,7 @@
 																	<div class="td two">
 																		{{refund.refundBy | capitalizeFirst }}</div>
 																	<div class="td three">{{refund.amount |
-																		currency:'INR':'symbol':'.2-2' }}</div>
+																		currency:'&#8377; ' }}</div>
 																</div>
 															</div>
 														</div>

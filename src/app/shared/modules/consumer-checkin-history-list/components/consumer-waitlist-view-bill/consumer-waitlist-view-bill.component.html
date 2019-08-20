@@ -45,13 +45,13 @@
                                         <div class="quantity">{{qnty_cap}}
                                             {{service.quantity}}</div>
                                         <div class="price">{{(service.quantity * service.price) |
-                                            currency:'INR':'symbol':'.2-2'}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngFor="let discount of service.discount">
                                             <div class="name">{{discount.name}}</div>
                                             <div class="price">(-){{discount.discountValue |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                                currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
                                     <div class="c-row one three two-col"
@@ -60,7 +60,7 @@
                                             {{sub_tot_cap}}
                                         </div>
                                         <div class="price">{{service.netRate |
-                                            currency:'INR':'symbol':'.2-2'}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -75,13 +75,13 @@
                                         <div class="quantity">{{qnty_cap}}
                                             {{item.quantity}}</div>
                                         <div class="price">{{(item.quantity * item.price) |
-                                            currency:'INR':'symbol':'.2-2'}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngFor="let discount of item.discount">
                                             <div class="name">{{discount.name}}</div>
                                             <div class="price">(-){{discount.discountValue |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                                currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
                                     <div class="c-row one three two-col"
@@ -90,7 +90,7 @@
                                             {{sub_tot_cap}}
                                         </div>
                                         <div class="price">{{item.netRate |
-                                            currency:'INR':'symbol':'.2-2'}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                                         <div class="name">
                                             {{gross_amnt_cap}}
                                         </div>
-                                        <div class="price">{{bill_data.netTotal | currency:'INR':'symbol':'.2-2'}}</div>
+                                        <div class="price">{{bill_data.netTotal | currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two" *ngFor="let discount of bill_data.discount">
                                         <div class="discount-row two-col">
@@ -108,7 +108,7 @@
                                                 {{discount.name}}
                                             </div>
                                             <div class="price">(-){{discount.discValue |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                                currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
                                     <div class="c-row two section-two" *ngFor="let coupon of bill_data.providerCoupon">
@@ -117,7 +117,7 @@
                                                 {{coupon.name}}
                                             </div>
                                             <div class="price">(-){{coupon.couponValue |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                                currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
                                     <div class="c-row two section-two"
@@ -130,7 +130,7 @@
                                                 <span>(-)</span>
                                                 <span (click)="showJCCouponNote(jcoupon)"
                                                     [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
-																		currency:'INR':'symbol':'.2-2'}}</span>
+																		currency:'&#8377; '}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -139,12 +139,12 @@
                                             <div class="name">
                                                 <span class="tax-top">Tax
                                                     {{bill_data.taxPercentage}}% of {{bill_data.taxableTotal |
-                                                    currency:'INR':'symbol':'.2-2'}}</span><br /><span
+                                                    currency:'&#8377; '}}</span><br /><span
                                                     class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
                                                     SGST-{{bill_data.taxPercentage/2}}%)</span>
                                             </div>
                                             <div class="price">(+){{bill_data.totalTaxAmount |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                                currency:'&#8377; '}}</div>
                                         </div>
 
                                     </div>
@@ -153,7 +153,7 @@
                                             Net Total
                                         </div>
                                         <div class="price">{{bill_data.netRate |
-                                            currency:'INR':'symbol':'.2-2'}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two" *ngIf="bill_data.totalAmountPaid > 0">
                                         <div class="discount-row two-col">
@@ -161,7 +161,7 @@
                                                 Amount Paid
                                             </div>
                                             <div class="price">{{bill_data.totalAmountPaid |
-                                                currency:'INR':'symbol':'.2-2'}}</div>
+                                                currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
                                     <div class="c-row one two-col" *ngIf="bill_data.amountDue >= 0">
@@ -169,13 +169,13 @@
                                             Amount Due
                                         </div>
                                         <div class="price">{{bill_data.amountDue |
-                                            currency:'INR':'symbol':'.2-2'}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
 
                                     <div class="c-row one two-col" *ngIf="bill_data.amountDue < 0">
                                         <div class="name">Refundable Amount</div>
 										<div class="price">{{refund_value |
-											currency:'INR':'symbol':'.2-2'}}</div>
+											currency:'&#8377; '}}</div>
                                     </div>
                                 </div>
                             </div>

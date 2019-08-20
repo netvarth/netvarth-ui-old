@@ -9,7 +9,7 @@
     <div class="topay" *ngIf="!pay_data.acceptPaymentBy || pay_data.acceptPaymentBy == 'self_pay'">
       <span class="label">{{amt_to_pay_cap}}</span>
       <span class="label-valu">
-        {{pay_data.amount | currency:'INR':'symbol':'.2-2'}}
+        {{pay_data.amount | currency:'&#8377; '}}
       </span>
     </div>
     <div class="form-group" *ngIf="pay_data.acceptPaymentBy == 'cash' || pay_data.acceptPaymentBy == 'other'">

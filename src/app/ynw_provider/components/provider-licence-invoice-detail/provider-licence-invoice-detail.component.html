@@ -64,7 +64,7 @@
                 <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
                 <span *ngIf="source === 'payment-history'"> Amount paid</span>
                 <span class="result"
-                    style="float: right">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span></span>
+                    style="float: right">{{invoice.amount | currency:'&#8377; '}}</span></span>
 
         </div>
         <div style="border-bottom:2px solid #ddd"></div>
@@ -81,11 +81,11 @@
             <tbody>
                 <tr *ngIf="invoice.licensePkgDetails">
                     <td>{{invoice.licensePkgDetails.licenseName}}</td>
-                    <td class="invoice-head">{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                    <td class="invoice-head">{{invoice.licensePkgDetails.amount | currency:'&#8377; '}}</td>
                 </tr>
                 <tr *ngFor="let addon of invoice.addonDetails">
                     <td>{{addon.addonName}}</td>
-                    <td class="invoice-head">{{addon.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                    <td class="invoice-head">{{addon.amount | currency:'&#8377; '}}</td>
                 </tr>
                 <tr *ngIf="invoice.creditDebitJson">
                     <td><b>License Adjustments</b></td>
@@ -93,24 +93,24 @@
                 </tr>
                 <tr *ngFor="let crdt_debtJson of credt_debtDetls">
                     <!-- <td>{{crdt_debtJson.oldPkg}} to {{crdt_debtJson.newPkg}}</td>
-                          <td>{{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}</td> -->
+                          <td>{{crdt_debtJson.amount | currency:'&#8377; '}}</td> -->
                     <td>{{crdt_debtJson.publicNote}}</td>
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='debit'">
-                        {{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}(Dr)</td>
+                        {{crdt_debtJson.amount | currency:'&#8377; '}}(Dr)</td>
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='credit'">
-                        {{crdt_debtJson.amount | currency:'INR':'symbol':'.2-2'}}(Cr)</td>
+                        {{crdt_debtJson.amount | currency:'&#8377; '}}(Cr)</td>
                 </tr>
 
                 <tr class="invoice-discount" *ngFor="let discount of discounts">
                     <td style="text-align: right">{{discount.name}} <span class="invoice-head"
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
-                    <td class="price invoice-head">(-){{discount.discountedAmt| currency: 'INR':'symbol':'.2-2'}}</td>
+                    <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
                 </tr>
 
                 <tr>
                     <td class="invoiceTotal"><b>Total</b></td>
-                    <td class="invoice-head">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</td>
+                    <td class="invoice-head">{{invoice.amount | currency:'&#8377; '}}</td>
                 </tr>
             </tbody>
         </table>
@@ -121,18 +121,18 @@
                 <span class="label">{{subsc_pack_cap}}</span> -->
     <!-- <div class="ivc" *ngIf="invoice.licensePkgDetails">
                     <span class="label"><span>{{invoice.licensePkgDetails.licenseName}}
-                            {{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span></span> -->
-    <!-- <span class="result">{{invoice.licensePkgDetails.amount | currency:'INR':'symbol':'.2-2'}}</span> -->
+                            {{invoice.licensePkgDetails.amount | currency:'&#8377; '}}</span></span> -->
+    <!-- <span class="result">{{invoice.licensePkgDetails.amount | currency:'&#8377; '}}</span> -->
     <!-- </div> -->
 
     <!-- <div class="ivc" *ngFor="let addon of invoice.addonDetails">
                     <span class="label"><span>{{addon.addonName}}</span></span>
-                    <span class="result">{{addon.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span class="result">{{addon.amount | currency:'&#8377; '}}</span>
                 </div> -->
 
     <!-- <div class="ivc" *ngIf="source != 'payment-history'">
                     <span class="label">Amount to pay</span>
-                    <span class="result">{{invoice.amount | currency:'INR':'symbol':'.2-2'}}</span>
+                    <span class="result">{{invoice.amount | currency:'&#8377; '}}</span>
                 </div> -->
     <!-- <div class="ivc" *ngIf="invoice.dueDate">
                     <span class="label">Due On</span>
@@ -160,7 +160,7 @@
                             <td data-title="Payment Mode"> {{payment.paymentMode}}
                             </td>
                             <td data-title="Amount">
-                                {{payment.amount | currency:'INR':'symbol':'.2-2'}}
+                                {{payment.amount | currency:'&#8377; '}}
                             </td>
                             <td data-title="Payment Date">
                                 {{payment.paymentOn | date: dateFormat}}
@@ -184,7 +184,7 @@
                                 <div class="lt">
                                     <div>
                                         <span class="amount">Due Amount : <strong>{{currentlicense_details.dueAmount
-                                                | currency:'INR':'symbol':'.2-2'}}</strong>
+                                                | currency:'&#8377; '}}</strong>
                                         </span>
                                         <span class="cs-btn bt3" (click)="showUnpaidInvoice()" *ngIf="invoices.length != 0">{{pay_button}}</span>
                                     </div>
@@ -207,7 +207,7 @@
                 <div class="pay-det-row">
                     <span class="label">{{amount_cap}} :
                         <span class="result">
-                            <b>{{payment.amount | currency:'INR':'symbol':'.2-2'}}</b></span></span>
+                            <b>{{payment.amount | currency:'&#8377; '}}</b></span></span>
                 </div>
                 <div class="pay-det-row">
                     <span class="label">{{payment_cap}} {{date_cap}} :
