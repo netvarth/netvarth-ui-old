@@ -18,6 +18,7 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
   est_duration_cap = Messages.SER_EST_DURATION_CAP;
   min_cap = Messages.SER_MIN_CAP;
   price_cap = Messages.SER_PRICE_CAP;
+  pre_pay_amt = Messages.PREPAYMENT_CAP;
   isServiceBillable = false;
   api_loading = true;
   service_list: any = [];
