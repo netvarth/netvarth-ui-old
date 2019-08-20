@@ -116,6 +116,7 @@ export class OtpFormAppComponent implements OnInit, OnChanges, OnDestroy {
   removSpecChar(evt) {
     return this.shared_functions.removSpecChar(evt);
   }
+  
   setResendViaEmail() {
     this.doshowOTPEmailContainer();
     this.resetApiErrors.emit();

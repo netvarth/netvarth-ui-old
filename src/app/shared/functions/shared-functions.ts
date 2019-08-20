@@ -1166,7 +1166,7 @@ export class SharedFunctions {
     }
     
   }
-
+  
 
   filterJson(jsonArray, key, value) {
     const newArray = jsonArray.filter(function (el) {
