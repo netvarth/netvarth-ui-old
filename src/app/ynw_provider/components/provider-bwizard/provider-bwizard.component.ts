@@ -92,6 +92,7 @@ export class ProviderbWizardComponent implements OnInit {
   delete_btn = Messages.DELETE_BTN;
   cancel_btn = Messages.CANCEL_BTN;
   service_price_cap = Messages.SERVPRICE_CAP;
+  Amount_value_cap = Messages.AMOUNT_VALUE_CAP;
   foodServc_frmsentns = Messages.FOODSRVC_FORMLEVEL_CAP;
   remem_msg = Messages.REMEM_MSG_CAP;
   rupee_symbol = '₹';

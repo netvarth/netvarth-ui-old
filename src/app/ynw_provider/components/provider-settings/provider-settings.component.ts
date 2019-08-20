@@ -95,6 +95,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   nodiscountError = false;
   noitemError = false;
   miscellaneous = '';
+  frm_public_self_cap = '';
   itemError = '';
   discountError = '';
   waitlist_details;
@@ -111,6 +112,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
     this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]', this.customer_label);
     this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
+    this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();

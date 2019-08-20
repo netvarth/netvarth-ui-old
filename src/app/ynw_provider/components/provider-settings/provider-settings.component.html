@@ -137,11 +137,13 @@
                                         {{customer_label| capitalizeFirst}}s Self pay
                                         <!-- <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span> -->
                                     </span>
+                                  
                                     <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
                                         <mat-slide-toggle [(ngModel)]="payment_status"
                                             (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                     </span>
                                 </li>
+                                <li class="form-level-settings" *ngIf="!payment_status">{{frm_public_self_cap}}</li>
                                 <li style="margin-bottom: 0px">
                                     <span class="lnk"
                                         (click)="redirecTo('paymentsettings')">{{payment_setting_cap}}</span>

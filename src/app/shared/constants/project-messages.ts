@@ -401,6 +401,7 @@ export const Messages = {
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
   'SERVPRICE_CAP': 'Price ',
+  'AMOUNT_VALUE_CAP': 'Amount ',
   'FOODSRVC_FORMLEVEL_CAP': 'Upload  food menu in the gallery and let your customers order food in Jaldee.',
 
   // App-shared-components-return-payment
@@ -1262,6 +1263,7 @@ export const Messages = {
   'FRM_LEVEL_WAITLIST_MSG': 'Manage your waitlist and enable or disable check-ins for current day or for future.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
+  'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
   'FRM_LEVEL_MISC_MSG': 'Manage your non working days here',
