@@ -39,15 +39,15 @@
             </div>
             <div class="outer3" *ngIf="data.serdet.totalAmount != 0">
                 <div class="duration">
-                    <span>{{price_cap}} :&nbsp; </span><span style="font-weight: bold">
-                         {{ data.serdet.totalAmount | currency:'INR':'symbol':'.2-2'}}
+                    <span>{{price_cap}} : </span><span style="font-weight: bold">
+                        <span>&#8377; </span>{{ data.serdet.totalAmount}}
                     </span>
                 </div>
             </div>
             <div class="outer4" *ngIf="data.serdet.isPrePayment">
                 <div class="prepayment">
                     <span>{{prepayment_amount}} : </span><span style="font-weight: bold">
-                        {{data.serdet.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}
+                        <span>&#8377; </span>{{data.serdet.minPrePaymentAmount}}
                     </span>
                 </div>
             </div>

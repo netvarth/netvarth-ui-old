@@ -154,9 +154,7 @@
                 <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
                     <div class="prepay-dur-pr">
                         <div class="prepay-amt">{{service_needs_prepayment}} {{checkinLabel}}</div>
-                        <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls">{{prepaymentAmount
-                                |
-                                currency:'INR':'symbol':'.2-2'}}</span></div>
+                        <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls"><span>&#8377; </span>{{prepaymentAmount}}</span></div>
                         <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
                             <div class='prepay-head-sorry'> {{no_pay_modes_avail_cap}} </div>
                         </div>
