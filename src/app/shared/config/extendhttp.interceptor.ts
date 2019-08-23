@@ -189,7 +189,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
+    // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
     req = req.clone({ url: url, responseType: 'json' });
     return req;
   }

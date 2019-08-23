@@ -4277,3 +4277,16 @@ border-bottom: none !important;
   }
 }
 .future-date-link {padding-top:10px !important}
+.virtual-field-ul {
+  padding-left: 15px !important;
+  margin-bottom: 0px !important;
+}
+.cc-dc-nb .cs-btn {
+  height: 30px !important;
+  line-height: 12px !important;
+  padding: 6px 10px !important;
+  text-transform: none !important;
+  float: left !important;
+  font-size: .75rem !important;
+  margin-right: 10px !important;
+}

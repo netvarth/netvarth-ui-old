@@ -174,7 +174,7 @@
 
                                     <div class="c-row one two-col" *ngIf="bill_data.amountDue < 0">
                                         <div class="name">Refundable Amount</div>
-										<div class="price">{{refund_value |
+                                        <div class="price">{{refund_value |
 											currency:'&#8377; '}}</div>
                                     </div>
                                 </div>
@@ -245,10 +245,9 @@
                     <div class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                         <span class="">Payment Options</span>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                        <a class="cs-btn bt3 cust-btn" (click)="payuPayment()">Credit Card/Debit Card/Net
-                            Banking</a>
-                        <a class="cs-btn bt3 cust-btn" (click)="cashPayment()">Cash</a>
+                    <div class="cc-dc-nb" style="display: flex">
+                        <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button>
+                        <button class="cs-btn bt1" (click)="cashPayment()">Cash</button>
                     </div>
                 </div>
             </div>
@@ -256,4 +255,3 @@
     </div>
     <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
 </mat-dialog-content>
-

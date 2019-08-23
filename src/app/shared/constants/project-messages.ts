@@ -1292,7 +1292,7 @@ export const Messages = {
 
 
   // form-level-provider-payment-settings
-  'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking for transaction process.',
+  'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up your tax requirements here. Enable the \"Tax Settings\" toggle switch to apply taxes for your services.',
 
   // form-level-provider-license and invoice

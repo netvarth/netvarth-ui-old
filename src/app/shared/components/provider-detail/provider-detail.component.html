@@ -163,14 +163,14 @@
                                                                 </div>
                                                                 <div class="question-valuearr"
                                                                     *ngIf="vfield.type== 'object'">
-                                                                    <ng-container *ngFor="let vals of vfield.value">
-                                                                        <div class="vfield-row" *ngIf="vals.length">
+                                                                    <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
+                                                                        <li class="vfield-row" *ngIf="vals.length">
                                                                             <span *ngFor="let field of vals"
                                                                                 class="morevalspan">
                                                                                 {{field}}
                                                                             </span>
-                                                                        </div>
-                                                                    </ng-container>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
                                                             </ng-container>
                                                         </div>
