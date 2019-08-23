@@ -10,6 +10,9 @@ export class SharedServices {
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
   }
+  adminLogin(body) {
+    return this.servicemeta.httpPost('superadmin/login', body);
+  }
   ConsumerLogin(body) {
     return this.servicemeta.httpPost('consumer/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401

@@ -59,6 +59,7 @@ import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
 import { SearchProviderComponent } from './shared/components/search-provider/search-provider.component';
 import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
+import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +79,8 @@ import { SearchProviderModule } from './shared/components/search-provider/search
     CouponsComponent,
     RequestForComponent,
     BusinessPageComponent,
-    ForceDialogComponent
+    ForceDialogComponent,
+    AdminLoginComponent
     // PhomeComponent,
   ],
   entryComponents: [

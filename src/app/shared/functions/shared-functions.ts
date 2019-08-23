@@ -34,6 +34,16 @@ export class SharedFunctions {
       );
   }
 
+  logoutNoRedirect() {
+    this.doLogout()
+      .then(
+        data => {
+        },
+        error => {
+        }
+      );
+  }
+
   doLogout() {
     const promise = new Promise((resolve, reject) => {
       if (localStorage.getItem('isBusinessOwner') === 'true') {
@@ -148,7 +158,34 @@ export class SharedFunctions {
     return promise;
   }
 
+  adminLogin(post_data) {
+    console.log(post_data);
+    this.sendMessage({ ttype: 'main_loading', action: true });
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.adminLogin(post_data)
+        .subscribe(
+          data => {
+            alert('success');
+            resolve(data);
+            this.setLoginData(data, post_data, 'provider');
+            this.router.navigate(['/provider']);
 
+          },
+          error => {
+            this.sendMessage({ ttype: 'main_loading', action: false });
+            if (error.status === 401) {
+              reject(error);
+              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+            } else {
+              if (error.error && typeof (error.error) === 'object') {
+                error.error = Messages.API_ERROR;
+              }
+              reject(error);
+            }
+          });
+    });
+    return promise;
+  }
 
   public setLoginData(data, post_data, mod) {
     localStorage.setItem('ynw-user', JSON.stringify(data));
@@ -409,7 +446,7 @@ export class SharedFunctions {
   }
 
   print_PricewithCurrency(price) {
-    return '₹' +" "+ price;
+    return '₹' + ' ' + price;
   }
 
   imageValidation(file) {
@@ -1166,7 +1203,6 @@ export class SharedFunctions {
     }
     
   }
-  
 
   filterJson(jsonArray, key, value) {
     const newArray = jsonArray.filter(function (el) {

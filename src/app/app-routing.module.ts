@@ -7,7 +7,9 @@ import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider} from './shared/gua
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
+import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 const routes: Routes = [
+    { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent},
     { path: 'provider', loadChildren: './ynw_provider/provider.module#ProviderModule',
         canActivate: [AuthGuardProvider]},
     { path: 'consumer', loadChildren: './ynw_consumer/consumer.module#ConsumerModule',
