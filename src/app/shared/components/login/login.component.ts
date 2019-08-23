@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   show_error = false;
   test_provider = null;
   heading = '';
+  phOrem_error = '';
   signup_here = '';
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
@@ -61,8 +62,10 @@ export class LoginComponent implements OnInit {
     }
     if (this.data.type === 'provider') {
       this.heading = 'Service Provider Login';
+      this.phOrem_error = 'Invalid mobile number/email id';
     } else if (this.data.type === 'consumer') {
       this.heading = 'Jaldee Customer Login';
+      this.phOrem_error = 'Invalid mobile number';
     }
   }
   createForm() {

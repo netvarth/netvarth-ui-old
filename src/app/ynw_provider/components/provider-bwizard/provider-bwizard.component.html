@@ -242,7 +242,8 @@
                                 <textarea class="form-control"
                                     placeholder="This is what your {{customer_label}}s see when they search online"
                                     id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address"
-                                    #locaddress></textarea>
+                                    (keyup)="handlekeyup('address_error')"                               #locaddress></textarea>
+                                    <div class="sts-msg error" *ngIf="address_error!=''">{{address_error}}</div>
                             </div>
                             <div class="form-group">
                                 <label>{{loc_name_cap}} *</label>

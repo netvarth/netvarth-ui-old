@@ -746,8 +746,9 @@ export class CheckInInnerComponent implements OnInit {
             // this.dialogRef.close('reloadlist');
             this.returntoParent.emit('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
+          this.router.navigate(['/']);
         }
-        this.router.navigate(['/']);
+        
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

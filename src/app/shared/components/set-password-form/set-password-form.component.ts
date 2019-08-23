@@ -21,9 +21,11 @@ export class SetPasswordFormComponent implements OnInit {
   set_password_msg = '';
   passworddialogRef;
   isValidConfirm_pw = false;
+  customer ='';
 
   spForm;
   @Input() type;
+  @Input() checkConsumerOrProvider;
   @Output() retonPasswordSubmit: EventEmitter<any> = new EventEmitter();
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   // tslint:disable-next-line:no-output-on-prefix
@@ -41,6 +43,7 @@ export class SetPasswordFormComponent implements OnInit {
     if (this.type !== 'forgot_password') {
       this.set_password_msg = Messages.SET_PASSWORD_MSG;
     }
+    
   }
 
   createForm() {

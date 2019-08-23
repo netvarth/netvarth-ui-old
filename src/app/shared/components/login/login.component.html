@@ -29,16 +29,17 @@ onSubmit(loginForm.value)" *ngIf="step==1">
         <div class="form-group">
             <mat-form-field>
                 <input type="text" matInput class="form-control" id="emailId" maxlength="50"
-                        placeholder="Enter your 10 digit mobile number/email id" formControlName="emailId" autocomplete="off"
+                        placeholder="Enter your 10 digit mobile number" formControlName="emailId" autocomplete="off"
                         (keyup)="handlekeyup($event)">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
                 
   {
-    'pattern' : 'Invalid mobile number/email id'
+    'pattern' : phOrem_error
   })">
             </app-field-error-display>
+            <p  *ngIf="heading == 'Service Provider Login'"class="form-level-settings">Corporate account holders, sign in with email id</p>
         </div>
         <div class="form-group">
             <mat-form-field>
