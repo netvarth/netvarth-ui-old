@@ -11,7 +11,7 @@ import { Messages } from '../constants/project-messages';
 import { projectConstants } from '../constants/project-constants';
 import { SharedServices } from '../services/shared-services';
 import { Subject } from 'rxjs/Subject';
-import { throwError } from 'rxjs';
+import { throwError, observable, EMPTY } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
 import { retry } from 'rxjs/operators';
@@ -40,6 +40,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   loaderDisplayed = false;
   loginAttempted = false;
   loginCompleted = false;
+  forceUpdateCalled = false;
+  stopThisRequest = false;
+
   constructor(private slimLoadingBarService: SlimLoadingBarService,
     private router: Router, private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog) { }
@@ -85,13 +88,55 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     );
   }
 
+  private _handleErrors(error: HttpErrorResponse): boolean {
+    return;
+  }
+
+  private _forceUpdate() {
+    this.forceUpdateCalled = true;
+    this.stopThisRequest = true;
+    const dialogRef = this.dialog.open(ForceDialogComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'This version of Jaldee is no longer supported. Please update to the latest version',
+        'heading': 'Jaldee Update Required'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.stopThisRequest = false;
+      }
+    });
+  }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.stopThisRequest) {
+      return EMPTY;
+    }
     if (req.url.substr(0, 4) === 'http') {
       return next.handle(req);
     }
     const url = base_url + req.url;
     if (this.checkUrl(url)) {
-      return next.handle(this.updateHeader(req, url));
+      return next.handle(this.updateHeader(req, url)).pipe(
+        catchError((error, caught) => {
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 301) {
+              if (!this.forceUpdateCalled) {
+                this._forceUpdate();
+                return EMPTY;
+              } else {
+                return throwError(error);
+              }
+            } else {
+              return throwError(error);
+            }
+          }
+          return caught;
+        })
+      );
     } else {
       if (!this.checkLoaderHideUrl(url)) {
         this.loaderDisplayed = true;
@@ -99,9 +144,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       }
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
+          this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              window.location.reload();
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
                   return next.handle(this.updateHeader(req, url));
@@ -109,41 +154,30 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               );
             } else if (error.status === 405) {
               this.router.navigate(['/maintenance']);
+              return throwError(error);
             } else if (error.status === 0) {
-              // retry(2);
-              // this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-              // return next.handle(req);
+              // Network Error Handling
               return next.handle(req).pipe(
-                retry(1),
-                catchError((errorn: HttpErrorResponse) => {
-                  // if (errorn.status !== 401) {
-                  // 401 handled in auth.interceptor
+                retry(2),
+                catchError((errorN: HttpErrorResponse) => {
                   this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-                  // }
-                  return next.handle(req);
+                  return throwError(errorN);
                 })
               );
             } else if (error.status === 404) {
-              return next.handle(req);
-              // this.shared_functions.logout();
+              return throwError(error);
             } else if (error.status === 401) {
               this.shared_functions.logout();
-              // return next.handle(req);
+              return throwError(error);
             } else if (error.status === 301) {
-              const dialogRef = this.dialog.open(ForceDialogComponent, {
-                width: '50%',
-                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                disableClose: true,
-                data: {
-                  'message': 'This app version is not supported any longer. Please update your app from the Play Store',
-                  'heading': 'Confirm'
-                }
-              });
-              dialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                }
-              });
+              if (!this.forceUpdateCalled) {
+                this._forceUpdate();
+                return EMPTY;
+              } else {
+                return throwError(error);
+              }
             } else {
+              console.log(error.status);
               return throwError(error);
             }
           }
@@ -155,6 +189,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
+    req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
     req = req.clone({ url: url, responseType: 'json' });
     return req;
   }
