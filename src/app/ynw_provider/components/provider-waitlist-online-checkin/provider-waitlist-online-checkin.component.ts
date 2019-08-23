@@ -41,6 +41,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   checkin_label = '';
   frm_wait_cal_cap = '';
   removeitemdialogRef;
+  message;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions,
@@ -168,47 +169,32 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   }
   doRemoveservice() {
     if (this.form['filterByDept']) {
-      this.form['filterByDept'] = true;
-      this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'message': 'All services are moved to Default Department'
-        }
-      });
+      this.message = 'All services are moved to Default Department';
+    } else {
+      this.message = 'Assigned services are removed from the departments';
     }
-    else {
-      this.form['filterByDept'] = false;
-      this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'message': 'Assigned services are removed from the departments'
-        }
-      });
-    }
-
+    this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': this.message
+      }
+    });
     this.removeitemdialogRef.afterClosed().subscribe(result => {
-      let status;
-      if(this.form.filterByDept == true){
-        status = "Enable";
+      if (result) {
+        const status = (this.form.filterByDept === true) ? 'Enable' : 'Disable';
+        this.provider_services.setDeptWaitlistMgr(status)
+          .subscribe(
+            () => {
+              this.getWaitlistMgr();
+            },
+            error => {
+              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+      } else {
+        this.form['filterByDept'] = (this.form.filterByDept === true) ? false : true;
       }
-      else{
-        status = "Disable";
-      }
-      //this.OnSubmit()
-      this.provider_services.setDeptWaitlistMgr(status)
-      .subscribe(
-        () => {
-          this.getWaitlistMgr();
-          // this.shared_functions.apiSuccessAutoHide(this, Messages.ONLINE_CHECKIN_SAVED);
-         // this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
     });
   }
 }
