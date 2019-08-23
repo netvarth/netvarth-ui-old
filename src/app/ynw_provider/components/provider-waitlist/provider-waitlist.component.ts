@@ -46,6 +46,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   isCheckin;
   futureDateWaitlist = false;
   filterbydepartment = false;
+  locationExists = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private router: Router,
@@ -105,6 +106,11 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.bProfile = data;
+          if (this.bProfile.baseLocation) {
+            this.locationExists = true;
+          } else {
+            this.locationExists = false;
+          }
           this.provider_datastorage.set('bProfile', data);
 
         });

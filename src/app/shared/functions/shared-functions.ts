@@ -231,7 +231,9 @@ export class SharedFunctions {
   }
 
   public getitemfromLocalStorage(itemname) { // function to get local storage item value
-    return JSON.parse(localStorage.getItem(itemname));
+    if (localStorage.getItem(itemname) !== 'undefined') {
+      return JSON.parse(localStorage.getItem(itemname));
+    }
   }
   public setitemonLocalStorage(itemname, itemvalue) { // function to set local storage item value
     localStorage.setItem(itemname, JSON.stringify(itemvalue));
@@ -446,7 +448,7 @@ export class SharedFunctions {
   }
 
   print_PricewithCurrency(price) {
-    return '₹' + ' ' + price;
+    return 'â‚¹' + ' ' + price;
   }
 
   imageValidation(file) {
@@ -1185,23 +1187,19 @@ export class SharedFunctions {
   }
   removSpace(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
-    if (inputKeyCode === 32)
-    {
+    if (inputKeyCode === 32) {
       evt.preventDefault();
-        return false;
-    }   
+      return false;
+    }
   }
   removSpecChar(evt) {
-    var s = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
-     for (var i = 0; i < evt.key.length; i++)
-     {
-        if (s.indexOf(evt.key.charAt(i)) != -1)
-      {
-         evt.preventDefault();
-         return false;
+    const s = '!@#$%^&*()+=-[]\\\';,./{}|\":<>?';
+    for (let i = 0; i < evt.key.length; i++) {
+      if (s.indexOf(evt.key.charAt(i)) !== -1) {
+        evt.preventDefault();
+        return false;
       }
     }
-    
   }
 
   filterJson(jsonArray, key, value) {

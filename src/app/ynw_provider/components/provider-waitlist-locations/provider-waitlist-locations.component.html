@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card" *ngIf="api_loading && loc_list.length == 0">
+            <div class="card" *ngIf="!api_loading && loc_list.length === 0">
                 {{no_loc_add}}
             </div>
         </div>

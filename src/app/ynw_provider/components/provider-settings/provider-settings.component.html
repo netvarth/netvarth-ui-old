@@ -77,12 +77,12 @@
                                     <span class="lnk" (click)="redirecTo('services')">{{services_cap}}
                                         ({{service_count}})</span>
                                 </li>
-                                <li>
+                                <li *ngIf="locationExists">
                                     <span class="lnk" (click)="redirecTo('queues')">{{service_window_cap}}
                                         ({{queues_count}})</span>
                                 </li>
-                                <li>
-                                    <span class="lnk" (click)="redirecTo('departments')" *ngIf="filterbydepartment">Departments
+                                <li *ngIf="filterbydepartment">
+                                    <span class="lnk" (click)="redirecTo('departments')">Departments
                                         ({{departmentCount}})</span>
                                 </li>
                             </ul>

@@ -104,6 +104,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   isJaldeeAccount = false;
   departmentCount: any = 0;
   filterbydepartment = false;
+  locationExists = false;
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -385,6 +386,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        if (this.bProfile.baseLocation) {
+          this.locationExists = true;
+        } else {
+          this.locationExists = false;
+        }
         for (let i = 0; i < this.businessConfig.length; i++) {
           if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
             if (this.businessConfig[i].multipleLocation) {

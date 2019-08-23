@@ -140,6 +140,7 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.loc_list = data;
+        this.api_loading = false;
         if (this.multipeLocationAllowed) {
           this.show_addlocationButton = true;
         } else {
@@ -160,7 +161,6 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
         }
         this.query_executed = true;
       });
-      this.api_loading = false;
   }
 
   getLocationBadges() {
@@ -168,11 +168,11 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
     this.provider_services.getLocationBadges()
       .subscribe(data => {
         this.loc_badges = data;
+        this.api_loading = false;
         for (const badge of this.loc_badges) {
           this.badge_map_arr[badge.name] = badge.displayName;
         }
       });
-      this.api_loading = false;
   }
 
   changeProviderLocationStatus(obj) {

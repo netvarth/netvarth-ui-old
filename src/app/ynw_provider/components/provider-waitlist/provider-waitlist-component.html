@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="locationExists">
                 <div class="card p0">
                     <span class="b-link" (click)="goQueue()">
                         <h2>{{ser_time_windows_cap}} ({{queues_count}})</h2>
