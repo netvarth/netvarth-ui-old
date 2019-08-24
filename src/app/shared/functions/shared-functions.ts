@@ -165,7 +165,6 @@ export class SharedFunctions {
       this.shared_service.adminLogin(post_data)
         .subscribe(
           data => {
-            alert('success');
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
             this.router.navigate(['/provider']);

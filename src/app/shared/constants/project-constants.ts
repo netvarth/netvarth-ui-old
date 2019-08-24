@@ -157,7 +157,7 @@ export const projectConstants = {
     'name': 'Bengaluru',
     'lat': '12.971599',
     'lon': '77.594563',
-    'typ': 'state'
+    'typ': 'city'
   },
   MAP_ZOOM: 15,
   MAP_BASE_URL: 'https://www.google.com/maps/place/', // this is used to implement google map related API calls

@@ -140,7 +140,11 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
   }
   goQueue() {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+    if (this.locationExists) {
+      this.router.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+    } else {
+      this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+    }
   }
   goDepartments() {
     this.router.navigate(['provider', 'settings', 'waitlist-manager', 'departments']);

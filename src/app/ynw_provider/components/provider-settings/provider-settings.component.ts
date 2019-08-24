@@ -272,7 +272,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
         break;
       case 'queues':
-        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+        if (this.locationExists) {
+          this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+        } else {
+          this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+        }
         break;
       case 'discounts':
         if (this.nodiscountError) {
