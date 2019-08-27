@@ -188,6 +188,7 @@ export class ProviderbWizardComponent implements OnInit {
   laterror_Exists = false;
   longerror_Exists = false;
   qAvailability: any = [];
+  loadCompleted = false;
 
   constructor(
     private fb: FormBuilder,
@@ -582,8 +583,9 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        this.selspecialization_arr = this.bProfile.specialization;
+        this.loadCompleted = true;
         if (this.bProfile.specialization) {
-          this.selspecialization_arr = this.bProfile.specialization;
           if (this.bProfile.specialization.length > 0) {
             this.showAddbtn = false;
           } else {
@@ -1390,6 +1392,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   cancel() {
     this.showSpecial = true;
+    this.loadCompleted = false;
     this.getBusinessProfile();
   }
 

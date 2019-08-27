@@ -396,11 +396,13 @@
                                     </mat-dialog-actions>
                                 </div>
                                 <div class="p0 w-dta active">
-                                    <div class="special-dta" *ngIf="showSpecial">
+                                    <div class="special-dta" *ngIf="showSpecial && loadCompleted">
                                         <div class="special" *ngFor="let spec of bProfile.specialization">
                                             {{getSpecializationName(spec)}}
                                         </div>
                                     </div>
+                                    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="!loadCompleted">
+                                    </app-common-innerloading-spinner>
                                 </div>
                             </div>
 
