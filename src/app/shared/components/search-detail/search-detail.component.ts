@@ -1034,7 +1034,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let selorder = '';
     this.activeDistanceSort = boolDistance;
     if (boolDistance) {
-      selfield = 'distance asc, ynw_verified_level desc';
+      selfield = 'claimable asc, distance asc, ynw_verified_level desc';
       selorder = 'asc';
     }
     this.sortfield = selfield;

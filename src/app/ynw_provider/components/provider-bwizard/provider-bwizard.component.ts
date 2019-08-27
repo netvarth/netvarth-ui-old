@@ -583,6 +583,7 @@ export class ProviderbWizardComponent implements OnInit {
       .subscribe(data => {
         this.bProfile = data;
         if (this.bProfile.specialization) {
+          this.selspecialization_arr = this.bProfile.specialization;
           if (this.bProfile.specialization.length > 0) {
             this.showAddbtn = false;
           } else {
@@ -1116,7 +1117,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   specializationSel(sel) {
-    if (this.selspecialization_arr.length > 0) {
+    if (this.selspecialization_arr && this.selspecialization_arr.length > 0) {
       const existindx = this.selspecialization_arr.indexOf(sel);
       if (existindx === -1) {
         this.selspecialization_arr.push(sel);
@@ -1129,7 +1130,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   checkspecializationExists(lang) {
-    if (this.selspecialization_arr.length > 0) {
+    if (this.selspecialization_arr && this.selspecialization_arr.length > 0) {
       const existindx = this.selspecialization_arr.indexOf(lang);
       if (existindx !== -1) {
         return true;
@@ -1389,6 +1390,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   cancel() {
     this.showSpecial = true;
+    this.getBusinessProfile();
   }
 
   handleCancel(obj) {

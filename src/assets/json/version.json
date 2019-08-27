@@ -13,6 +13,7 @@
         "Message for provider when turn off customers self pay",
         "Alignment problem when user logouts from another tab",
         "Validations in payment settings",
-        "Pre-payment amount display in services list"
+        "Pre-payment amount display in services list",
+        "Login as provider issue"
     ]
 }
