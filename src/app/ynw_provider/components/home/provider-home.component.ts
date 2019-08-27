@@ -833,6 +833,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   showAdjustDelay() {
+    console.log(this.selected_queue);
     if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
       this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
@@ -845,6 +846,7 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
         queues: this.queues,
         queue_id: this.selected_queue.id,
         queue_name: this.selected_queue.name,
+        instant_queue: this.selected_queue.instantQueue,
         queue_schedule: this.selected_queue.queueSchedule.timeSlots[0].sTime + '-' + this.selected_queue.queueSchedule.timeSlots[0].eTime,
         checkedin_count: this.today_checkedin_count,
         arrived_count: this.today_arrived_count

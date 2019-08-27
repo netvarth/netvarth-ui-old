@@ -10,7 +10,10 @@ onSubmit(amForm.value)" class="ynw-common-form">
       <!-- <div class="form-group" *ngIf="queues.length>1"> -->
         <p class="form-level-settings">{{frm_adjust_del_cap}}</p>
           <div class="form-group">
-           <span class="no-padding mgn-bt-10 mgn-up-10">{{queue_name}} [{{queue_schedule}}]</span> 
+           <span class="no-padding mgn-bt-10 mgn-up-10">{{queue_name}}</span> 
+           <span *ngIf="!instantQueue">
+            {{queue_schedule}}
+          </span> 
         <!-- <mat-form-field>
           <mat-select placeholder="{{service_window_cap}}" [(ngModel)]="selected_queue" [ngModelOptions]="{standalone: true}"
             #selQueue (selectionChange)="handle_queue_sel(selQueue.value)">

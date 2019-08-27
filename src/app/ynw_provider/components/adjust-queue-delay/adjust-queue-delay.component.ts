@@ -37,6 +37,7 @@ export class AdjustQueueDelayComponent implements OnInit {
   customer_label = '';
   frm_adjust_del_cap = '';
   disableButton = false;
+  instantQueue;
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -54,6 +55,7 @@ export class AdjustQueueDelayComponent implements OnInit {
     this.tot_checkin_count = this.checkedin_cnt + this.arrived_cnt;
     this.queues = this.data.queues;
     this.queue_name = this.data.queue_name;
+    this.instantQueue = this.data.instant_queue;
     this.queue_schedule = this.data.queue_schedule;
     if (!this.data.queues || !this.data.queue_id) {
       this.closePopup('error');
