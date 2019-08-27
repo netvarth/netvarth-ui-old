@@ -111,7 +111,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   popularSearchList: any = [];
   paginationLimit = 6;
   startPage = 0;
-  domainSuggestionPlaceholder = "";
+  domainSuggestionPlaceholder = '';
 
   constructor(
     private shared_service: SharedServices,
@@ -150,7 +150,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         this.curlabel.typ = 'label';
         this.curlabel.query = this.passedkwdet.kwdomain;
       }
-    };
+    }
     if (this.domainlistpassed.length > 0) {
       this.domainlist_data = this.domainlistpassed;
     } else {
@@ -250,7 +250,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   handleNormalSearchClick() {
     this.moreoptions_arr = [];
     this.showmoreoptionsSec = false;
-    let srchtxt = this.kw_autoname;
+    const srchtxt = this.kw_autoname;
     if (!this.kw_autoname || this.kw_autoname.trim() === '') {
       this.do_search(null);
     } else if (this.holdisplaySearchlist['label'].length !== 0) {
@@ -344,7 +344,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           holdkeyword = label.displayname.toLowerCase();
           // if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
           const lbl = label.query.split('&');
-          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' , origin: 'popular'};
+          const labelspec = { autoname: label.displayname, name: label.name, subdomain: '', domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label', origin: 'popular' };
           this.holdisplaylist.push(labelspec);
           // }
         }
@@ -553,10 +553,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // if (this.kw_autoname) {
     //   this.filterKeywords();
     // }
+    if (kw.domain.match('sub_sector_displayname')) {
+      kw.typ = 'kwphrase';
+    }
     if (kw.origin === 'popular') {
       this.filterKeywords();
     }
-    
     let autoName;
     let query;
     let dom;
