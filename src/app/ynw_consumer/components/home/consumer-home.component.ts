@@ -389,13 +389,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   getFavouriteProvider() {
     this.loadcomplete.fav_provider = false;
+    let k = 0;
     this.shared_services.getFavProvider()
       .subscribe(
         data => {
           this.loadcomplete.fav_provider = true;
           this.fav_providers = data;
+          console.log(this.fav_providers);
           this.fav_providers_id_list = [];
-          this.setWaitlistTimeDetails();
+          // this.setWaitlistTimeDetails();
+          for (const x of this.fav_providers) {
+            this.fav_providers_id_list.push(x.id);
+            this.setWaitlistTimeDetailsProvider(x, k);
+            k++;
+          }
         },
         error => {
           this.loadcomplete.fav_provider = true;
@@ -407,6 +414,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let k = 0;
     for (const x of this.fav_providers) {
       this.fav_providers_id_list.push(x.id);
+      this.toogleDetail(x, k);
       k++;
     }
   }
@@ -536,6 +544,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   doDeleteFavProvider(fav) {
+    console.log(fav)
     if (!fav.id) {
       return false;
     }
