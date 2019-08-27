@@ -38,6 +38,7 @@ export class AdjustQueueDelayComponent implements OnInit {
   frm_adjust_del_cap = '';
   disableButton = false;
   instantQueue;
+
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

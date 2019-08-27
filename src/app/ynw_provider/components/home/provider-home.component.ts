@@ -833,7 +833,6 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   showAdjustDelay() {
-    console.log(this.selected_queue);
     if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
       this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
