@@ -29,9 +29,9 @@
                                             <span class="ttle">{{disc_value}}</span>
                                             <span> {{(jCoupon.discountType=='PERCENTAGE')?
                                                 jCoupon.discountValue+'%':
-                                                formatPrice(jCoupon.discountValue)}} <span *ngIf="jCoupon.maxDiscountValue">
+                                                '₹ '+(jCoupon.discountValue)}} <span *ngIf="jCoupon.maxDiscountValue">
                                                     (upto
-                                                    {{formatPrice(jCoupon.maxDiscountValue)}} Max)</span>
+                                                    {{'₹ '+(jCoupon.maxDiscountValue)}} Max)</span>
                                             </span>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                             <div class="c-ot" *ngIf="jCoupon.couponRules.minBillAmount || jCoupon.couponRules.maxReimbursePercentage">
                                                 <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12" *ngIf="jCoupon.couponRules.minBillAmount">
                                                     <span class="ttle">Minimum Bill Amount</span>
-                                                    <span> {{formatPrice(jCoupon.couponRules.minBillAmount)}}</span>
+                                                    <span> {{'₹ '+(jCoupon.couponRules.minBillAmount)}}</span>
                                                 </div>
 
                                             </div>

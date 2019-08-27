@@ -49,7 +49,7 @@ export const Messages = {
   'HOLIDAY_LISTEMPTY': 'No scheduled holidays',
 
   // Common
-  'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@netvarth.com',
+  'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
   'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
 
   // Business Profile
@@ -510,14 +510,14 @@ export const Messages = {
   // App-shared-modules-footer
   'ABOUT_CAP': 'About',
   'ABOUT_JALDEE_ONE': 'Jaldee is an all-in-one web portal integrated with mobile application. It manages service providers day to day operations like  waitlist, schedule, billing and payments. Customers can search service providers and book their time slots either from the portal or from the mobile app.',
-  'ABOUT_JALDEE_TWO': 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Netvarth technologies Pvt Ltd.',
+  'ABOUT_JALDEE_TWO': 'Jaldees cloud-based platform is scalable, secure, and ready for any size deployment. Jaldee is owned and operated by Jaldee Soft Pvt Ltd.',
   'CONTACT_CAP': 'Contact',
-  'NETVARTH_TECH_PVT_LTD': 'Netvarth Technologies Pvt Ltd',
+  'JALDEE_SOFT_PVT_LTD': 'Jaldee Soft Pvt Ltd',
   'ADDRESS_ONE': 'Museum cross lane',
   'ADDRESS_TWO': 'Chembukavu',
   'ADDRESS_THREE': 'Thrissur- 680020',
   'ADDRESS_FOUR': 'Kerala, India',
-  'SUPPORT_EMAIL': 'E-mail : support@netvarth.com',
+  'SUPPORT_EMAIL': 'E-mail : support@jaldee.com',
   'SUPPORT_PHONE': 'Phone : 0487-2325650',
   'TERMS_CAP': 'Terms',
   'CONTACT_US': 'Contact Us',

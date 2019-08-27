@@ -19,7 +19,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   about_jaldee_one = Messages.ABOUT_JALDEE_ONE;
   about_jaldee_two = Messages.ABOUT_JALDEE_TWO;
   contact_cap = Messages.CONTACT_CAP;
-  netvarth_tech_pvt_ltd = Messages.NETVARTH_TECH_PVT_LTD;
+  jaldee_soft_pvt_ltd = Messages.JALDEE_SOFT_PVT_LTD;
   addr_one = Messages.ADDRESS_ONE;
   addr_two = Messages.ADDRESS_TWO;
   addr_three = Messages.ADDRESS_THREE;
