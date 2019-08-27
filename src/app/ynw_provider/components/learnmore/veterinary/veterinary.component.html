@@ -863,7 +863,7 @@
             advisable that the doctor is equipped with enough resources. An additional option is
             available for doctors choosing “Manual” wait time calculation. He/She can edit
             individual
-            check-ins wait time from the check-in details in provider dashboard.</li>
+            check-ins wait time from the check-in details in doctor dashboard.</li>
         <li><strong>Token System(Do not show waiting time for customers) :</strong> If a doctor
             chooses
             this option, then all the customers will receive and see a token number instead of any
@@ -1828,7 +1828,7 @@
         <li>Click the <strong>“Save”</strong> button to confirm the adjustments.</li>
     </ol>
 </section>
-<section *ngIf="childContent =='miscellaneous' && parentContent == 'miscellaneous'">
+<section *ngIf="childContent =='nonworking' && parentContent == 'miscellaneous'">
     <h6>NON WORKING DAY</h6>
     <span>Non-Working Day allows the doctor to set up different Public holidays and other
         non-working
@@ -1854,6 +1854,28 @@
             menu given in the right corner.</li>
     </ol>
 </section>
+
+<section *ngIf="childContent =='notifications' && parentContent == 'miscellaneous'">
+    <h6>NOTIFICATIONS</h6>
+    <span>Notifications are important to get timely information about customer check-ins and cancellation of customer check-ins.</span>
+    <ol class="ol-normal">
+        <li><strong>Notify whenever check-in happens :</strong> When a customer checks-in with the doctor, the doctor can receive notifications in the following ways:
+            <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive SMS.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+               </ul></li>
+        <li><strong>Notify whenever check-in gets cancelled :</strong> When a customer checks-in gets cancelled with the doctor, the doctor
+             can receive notifications in the following ways:
+           <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive notification.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email  notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+                </ul></li>
+                <span>Choose convenient options from the above and click <strong>Ok</strong> to save the information.</span>
+                </ol>             
+</section>
+
 <section *ngIf="childContent =='dashboard' && parentContent == 'dashboard'">
     <h6>PROVIDER DASHBOARD</h6>
     <section>

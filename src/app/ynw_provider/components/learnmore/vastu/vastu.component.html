@@ -1907,7 +1907,7 @@
     </ol>
 </section>
 
-<section *ngIf="childContent =='miscellaneous' && parentContent == 'miscellaneous'">
+<section *ngIf="childContent =='nonworking' && parentContent == 'miscellaneous'">
 
     <h6>NON WORKING DAY</h6>
 
@@ -1936,6 +1936,26 @@
     </ol>
 </section>
 
+<section *ngIf="childContent =='notifications' && parentContent == 'miscellaneous'">
+    <h6>NOTIFICATIONS</h6>
+    <span>Notifications are important to get timely information about customer check-ins and cancellation of customer check-ins.</span>
+    <ol class="ol-normal">
+        <li><strong>Notify whenever check-in happens :</strong> When a customer checks-in with the provider, the provider can receive notifications in the following ways:
+            <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive SMS.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+               </ul></li>
+        <li><strong>Notify whenever check-in gets cancelled :</strong> When a customer checks-in gets cancelled with the provider, the provider
+             can receive notifications in the following ways:
+           <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive notification.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email  notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+                </ul></li>
+                <span>Choose convenient options from the above and click <strong>Ok</strong> to save the information.</span>
+                </ol>             
+</section>
 <section *ngIf="childContent =='dashboard' && parentContent == 'dashboard'">
 
     <h6>PROVIDER DASHBOARD</h6>

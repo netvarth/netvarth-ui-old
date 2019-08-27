@@ -1825,35 +1825,35 @@
     <span>The license change history shows the list of the changes applied in the license package.
         Here
         a
-        doctor can see the starting date of the current license package, it’s expiry date (only if
+        provider can see the starting date of the current license package, it’s expiry date (only if
         upgraded to higher grades), and the status of the license package either active or
         expired.</span>
-    <span>A doctor can also downgrade the license via Jaldee support. The effects of this on the
+    <span>A provider can also downgrade the license via Jaldee support. The effects of this on the
         bill is
         reflected from the next bill cycle (next month) onwards.</span>
 
     <h6>2. License Usage</h6>
-    <span>Here a doctor can track the license usage. This section shows the following
+    <span>Here a provider can track the license usage. This section shows the following
         information:</span>
     <ul class="ul-normal">
         <li><strong>Number of business profile views :</strong> This refers to the number of
             patients
-            who have clicked for a detailed view of the doctor.</li>
+            who have clicked for a detailed view of the provider.</li>
         <li><strong>Transactions :</strong> This refers to the number of check-ins.</li>
         <li><strong>Profile gallery storage :</strong> This shows the total storage space given to
             the
-            doctor under the availed license package.</li>
+            provider under the availed license package.</li>
         <li><strong>Jaldee-Keyords :</strong> This shows the total number of Jaldee-Keyords allowed
             for
             the availed package.</li>
     </ul>
-    <span>A doctor also gets to know whether the usages are in compliance with the current license
+    <span>A provider also gets to know whether the usages are in compliance with the current license
         package.
         The data until yesterday is updated here.</span>
 
     <h6>3. Payment History</h6>
 
-    <span>Here a doctor can view the entire history of the payments done to Jaldee so far.</span>
+    <span>Here a provider can view the entire history of the payments done to Jaldee so far.</span>
 </section>
 <section *ngIf="childContent =='addon'">
     <h6>Add-on</h6>
@@ -1981,7 +1981,7 @@
         <li>Click the <strong>“Save”</strong> button to confirm the adjustments.</li>
     </ol>
 </section>
-<section *ngIf="childContent =='miscellaneous' && parentContent == 'miscellaneous'">
+<section *ngIf="childContent =='nonworking' && parentContent == 'miscellaneous'">
     <h6>NON WORKING DAY</h6>
     <span>Non-Working Day allows the provider to set up different Public holidays and other
         non-working
@@ -2005,6 +2005,26 @@
         <li>A provider can edit or delete a particular non-working day. To do so, click on the three
             dots menu given in the right corner.</li>
     </ol>
+</section>
+
+<section *ngIf="childContent =='notifications' && parentContent == 'miscellaneous'">
+    <h6>NOTIFICATIONS</h6>
+    <span>Notifications are important to get timely information about customer check-ins and cancellation of customer check-ins.</span>
+    <ol class="ol-normal">
+        <li><strong>Notify whenever check-in happens :</strong> When a customer checks-in with the provider, the provider can receive notifications in the following ways:
+            <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive SMS.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+               </ul></li>
+        <li><strong>Notify whenever check-in gets cancelled :</strong> When a customer checks-in gets cancelled with the provider, the provider can receive notifications in the following ways:
+           <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive notification.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email  notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+                </ul></li>
+                <span>Choose convenient options from the above and click <strong>Ok</strong> to save the information.</span>
+                </ol>             
 </section>
 <section *ngIf="childContent =='dashboard' && parentContent == 'dashboard'">
     <h6>PROVIDER DASHBOARD</h6>
@@ -2233,7 +2253,7 @@
                                 <li><strong>Apply Order Discount :</strong> These discounts are
                                     offered
                                     by the provider.</li>
-                                <span>*The option to Add Private Note and Patient Note is available
+                                <span>*The option to Add Private Note and customer Note is available
                                     here.
                                 </span>
                                 <li>These coupons are applied to the total bill amount.</li>
@@ -2721,23 +2741,23 @@
 <section *ngIf="childContent =='downpanel' && parentContent == 'downpanel'">
     <h6>DOWN PANEL OPTIONS</h6>
     <ul class="ul-normal">
-        <li>Here the doctor can quickly access the following options:</li>
+        <li>Here the provider can quickly access the following options:</li>
         <ul class="normal-abc">
             <li><strong>Alerts :</strong> All the Jaldee Broadcasts are shown here. These are the
                 Jaldee
-                provided notifications. Here a doctor can learn about new coupons or any other such
+                provided notifications. Here a provider can learn about new coupons or any other such
                 information directly from Jaldee Super admin.</li>
-            <li><strong>Audit Log :</strong> Here the doctor can view the activities done by
+            <li><strong>Audit Log :</strong> Here the provider can view the activities done by
                 him/her.
                 The details appear with a date and time stamp. It also shows the actions completed
                 by
-                the doctor along with a little description.</li>
-            <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the doctor
+                the provider along with a little description.</li>
+            <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the provider
                 to
                 enable check-in, if disabled or to disable the check-in, if enabled.</li>
-            <li><strong>License Details :</strong>Here the doctor can see the current License
+            <li><strong>License Details :</strong>Here the provider can see the current License
                 version
-                he/she is using. This option directly leads to the license page, where the doctor
+                he/she is using. This option directly leads to the license page, where the provider
                 can
                 view the license history, its usage, payment history and upgrade the current License
                 package.</li>

@@ -21,12 +21,14 @@ export class ProviderLearnmoreComponent implements  OnInit {
   advancedlink = false;
   license = true;
   billing = true;
+  miscellaneous = true;
   activePrice = '';
   active_user;
   showprofile = false;
   showcheckinmanager = false;
   showlicense = false;
   showbill = false;
+  showmiscellaneous = false;
   parent;
   child;
   domain;
@@ -81,35 +83,44 @@ export class ProviderLearnmoreComponent implements  OnInit {
     this._location.back();
   }
   menu(parentContent){
-    if(parentContent === 'profile-search'){
+    if (parentContent === 'profile-search') {
       this.showprofile = true;
       this.showcheckinmanager = false;
       this.showlicense = false;
       this.showbill = false;
+      this.showmiscellaneous = false;
     }
-    if(parentContent === 'checkinmanager'){
+    if (parentContent === 'checkinmanager') {
       this.showprofile = false;
       this.showcheckinmanager = true;
       this.showlicense = false;
       this.showbill = false;
+      this.showmiscellaneous = false;
     }
-    if(parentContent === 'license'){
+    if (parentContent === 'license') {
       this.showlicense = true;
       this.showprofile = false;
       this.showcheckinmanager = false;
       this.showbill = false;
+      this.showmiscellaneous = false;
     }
-    if(parentContent === 'billing'){
+    if (parentContent === 'billing') {
       this.showbill = true;
       this.showlicense = false;
       this.showprofile = false;
       this.showcheckinmanager = false;
+      this.showmiscellaneous = false;
+    }
+    if (parentContent === 'miscellaneous') {
+      this.showbill = false;
+      this.showlicense = false;
+      this.showprofile = false;
+      this.showcheckinmanager = false;
+      this.showmiscellaneous = true;
     }
 
 
 
 
     }
- 
- 
 }

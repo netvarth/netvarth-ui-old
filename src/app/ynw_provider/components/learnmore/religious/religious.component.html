@@ -64,7 +64,7 @@
             <li>The verified priest in customer’s search results carries a flag with the profile
                 name.
                 Initially, the verification flag is set to none.</li>
-            <li>The priority of a priest in customer search results increases with the verification
+            <li>The priority of a priest in devotee search results increases with the verification
                 levels.</li>
             <li>Jaldee has 3 verified levels, namely- Basic, Basic Plus, and Advanced. Details of
                 each
@@ -253,7 +253,7 @@
         initial
         profile setup. The priest is allowed to edit each section under “Basic Information”.</span>
 
-    <span>To increase the customer acquisition fill this section with appropriate details.</span>
+    <span>To increase the devotee acquisition fill this section with appropriate details.</span>
 
     <ol class="ol-normal">
         <li>Click the edit button (pen symbol) to change the business name and description.</li>
@@ -393,7 +393,7 @@
                     <section>
                         <div class="fweight">SEARCHABLE - NO <span class="form-level-settings"><i>&nbsp;&nbsp;(The
                                     Searchable label
-                                    indicates that devotees can search for the doctor using
+                                    indicates that devotees can search for the priest using
                                     mentioned
                                     attributes.)</i></span></div>
                         <div class="fweight">VIEWABLE - YES <span class="form-level-settings"><i>&nbsp;&nbsp;(The
@@ -524,7 +524,7 @@
 <section *ngIf="childContent =='specialization'">
     <h6 id="specialization">SPECIALIZATION</h6>
 
-    <span>Specializations benefits both the priest and the customer. Here a priest can select
+    <span>Specializations benefits both the priest and the devotee. Here a priest can select
         his/her
         specialization from the given list. Below table shows the specialization list of the
         Religious/Priests sector.</span>
@@ -603,7 +603,7 @@
 <section *ngIf="childContent =='languages-known'">
     <h6 id="languages-known">LANGUAGES KNOWN</h6>
 
-    <span>A priest can add multiple languages known to him/her. This can widen the customer base and
+    <span>A priest can add multiple languages known to him/her. This can widen the devotee base and
         attract more devotees.</span>
 
     <ol class="ol-normal">
@@ -653,7 +653,7 @@
                         </mat-expansion-panel-header>
                         <div class="helpcontent">
 
-                            <span>Here the doctor needs to mention the
+                            <span>Here the priest needs to mention the
                                 educational
                                 qualification(Ex. MBBS/MS/MD). Also enter the name of board or
                                 university.</span><br>
@@ -1704,35 +1704,35 @@
     <span>The license change history shows the list of the changes applied in the license package.
         Here
         a
-        doctor can see the starting date of the current license package, it’s expiry date (only if
+        priest can see the starting date of the current license package, it’s expiry date (only if
         upgraded to higher grades), and the status of the license package either active or
         expired.</span>
-    <span>A doctor can also downgrade the license via Jaldee support. The effects of this on the
+    <span>A priest can also downgrade the license via Jaldee support. The effects of this on the
         bill is
         reflected from the next bill cycle (next month) onwards.</span>
 
     <h6>2. License Usage</h6>
-    <span>Here a doctor can track the license usage. This section shows the following
+    <span>Here a priest can track the license usage. This section shows the following
         information:</span>
     <ul class="ul-normal">
         <li><strong>Number of business profile views :</strong> This refers to the number of
             patients
-            who have clicked for a detailed view of the doctor.</li>
+            who have clicked for a detailed view of the priest.</li>
         <li><strong>Transactions :</strong> This refers to the number of check-ins.</li>
         <li><strong>Profile gallery storage :</strong> This shows the total storage space given to
             the
-            doctor under the availed license package.</li>
+            priest under the availed license package.</li>
         <li><strong>Jaldee-Keyords :</strong> This shows the total number of Jaldee-Keyords allowed
             for
             the availed package.</li>
     </ul>
-    <span>A doctor also gets to know whether the usages are in compliance with the current license
+    <span>A priest also gets to know whether the usages are in compliance with the current license
         package.
         The data until yesterday is updated here.</span>
 
     <h6>3. Payment History</h6>
 
-    <span>Here a doctor can view the entire history of the payments done to Jaldee so far.</span>
+    <span>Here a priest can view the entire history of the payments done to Jaldee so far.</span>
 </section>
 
 <section *ngIf="childContent =='addon'">
@@ -1900,16 +1900,37 @@
     </ol>
 </section>
 
+<section *ngIf="childContent =='notifications' && parentContent == 'miscellaneous'">
+    <h6>NOTIFICATIONS</h6>
+    <span>Notifications are important to get timely information about devotee check-ins and cancellation of devotee check-ins.</span>
+    <ol class="ol-normal">
+        <li><strong>Notify whenever check-in happens :</strong> When a devotee checks-in with the priest, the priest can receive notifications in the following ways:
+            <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive SMS.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+               </ul></li>
+        <li><strong>Notify whenever check-in gets cancelled :</strong> When a devotee checks-in gets cancelled with the priest, the priest
+             can receive notifications in the following ways:
+           <ul class="ul-normal">
+                <li><strong>Via SMS:</strong> Add phone number to which you wish to receive notification.</li>
+                <li><strong>Via Email:</strong> Add email id to which you wish to receive email  notification.</li>
+                <li><strong>Push Notification:</strong> Turn on this toggle button if you would like to receive information via push notification.</li>
+                </ul></li>
+                <span>Choose convenient options from the above and click <strong>Ok</strong> to save the information.</span>
+                </ol>             
+</section>
+
 <section *ngIf="childContent =='dashboard' && parentContent == 'dashboard'">
 
     <h6>PROVIDER DASHBOARD</h6>
     <section>
 
-        <span>he dashboard section lets the priest manage and monitor the check-ins of a customer.
+        <span>he dashboard section lets the priest manage and monitor the check-ins of a devotee.
             Here
             a priest can monitor the current check-ins <strong>(Today)</strong> and the future
             check-ins
-            <strong>(Future)</strong>. The customer's previous check-ins can be viewed in this
+            <strong>(Future)</strong>. The devotee's previous check-ins can be viewed in this
             section
             under the <strong>“History”</strong> tab. To view the details, click on the customer’s
             name.
@@ -1929,7 +1950,7 @@
         <li><strong>History</strong> - All of the customer’s previous check-ins until a day before
             are
             listed here. To view the details click on the “date of check-in” or on the “name of the
-            customer.”. Actions can also be changed from here.</li>
+            devotee.”. Actions can also be changed from here.</li>
     </ol>
     <section>
         <h6>Location Selection</h6>
@@ -1937,7 +1958,7 @@
             priest
             can check the details of a particular check-in for a specific location.</span><br>
         <span><strong>Note: A priest needs to select the location of service while he/she checks-in a
-                “walk-in” customer.</strong></span>
+                “walk-in” devotee.</strong></span>
     </section>
     <section>
         <mat-accordion>
@@ -1956,15 +1977,15 @@
                             or
                             Walk-in ).</li>
                         <li>In some cases, a “cloud symbol” is prefixed to a name, it means that the
-                            customer has checked in online.</li>
-                        <li>To view the check-in details of a customer, priest can click on the name
+                            devotee has checked in online.</li>
+                        <li>To view the check-in details of a devotee, priest can click on the name
                             of
-                            the customer. Check-in history, communication history, and history of
+                            the devotee. Check-in history, communication history, and history of
                             private notes are listed here. In addition to that, the user can cancel
                             a
                             customer’s check-in and inform this through <strong>Send
                                 Message</strong>. A
-                            priest can add a private note for a customer using <strong>Add private
+                            priest can add a private note for a devotee using <strong>Add private
                                 note</strong>.</li>
                         <li>For <strong>“Manual”</strong> wait time calculation, the priest can edit
                             individual check-ins wait time from the check-in details.</li>
@@ -1975,7 +1996,7 @@
                             <ol class="ol-normal">
                                 <li><strong>Send Message :</strong> Instantly type and send a
                                     message to
-                                    the customer here. These messages can be seen in communication
+                                    the devotee here. These messages can be seen in communication
                                     history anytime.</li>
                                 <li><strong>Cancel check-in :</strong>
                                     <ul class="ul-normal">
@@ -1992,7 +2013,7 @@
                                             select
                                             from the suggested reasons and then click
                                             <strong>“Save”</strong>.</li>
-                                        <li>The priest can inform the customer about the
+                                        <li>The priest can inform the devotee about the
                                             cancellation.
                                             To do this, click on the <strong>Send Message</strong>
                                             button. A text box will appear with a default message
@@ -2004,21 +2025,21 @@
                                 </li>
                                 <li><strong>Add private note :</strong> In case the priest wants to
                                     keep
-                                    a personal note about a particular customer, he/she can write
+                                    a personal note about a particular devotee, he/she can write
                                     and
-                                    add a note here. This note can be seen anytime the customer
+                                    add a note here. This note can be seen anytime the devotee
                                     checks-in again with the priest under <strong>“Private
                                         Notes”</strong>.</li>
                                 <li><strong>Change Status to Check-in :</strong>The option to
                                     check-in a
-                                    customer appears only when the customer’s status is
+                                    devotee appears only when the customer’s status is
                                     <strong>“Arrived”</strong>. The priest can change the status
                                     back to
                                     <strong>“Check-in”</strong> using this option. This can be used
                                     in
                                     the following circumstances:
                                     <ul class="ul-normal">
-                                        <li>When a customer gets cancelled for some reason and
+                                        <li>When a devotee gets cancelled for some reason and
                                             wanted to
                                             check-in again.</li>
                                         <li>When a customer’s check-in status has been mistakenly
@@ -2042,13 +2063,13 @@
 
                     <span>The following are the main actions the priest can perform:</span>
                     <ol class="ol-normal adjust-delay-num">
-                        <li><strong>Arrived :</strong> This button is used when a customer arrives
+                        <li><strong>Arrived :</strong> This button is used when a devotee arrives
                             at
                             the premise of the business location to avail the services. When a
                             priest
                             clicks this button, an <strong>“Arrived”</strong> label gets adjoined to
                             the
-                            name of the customer. In case of a walk-in or kiosk customer, the
+                            name of the devotee. In case of a walk-in or kiosk devotee, the
                             <strong>“Arrived”</strong> label is automatically adjoined as the
                             customers
                             are present at the premises. Service can now be started.</li>
@@ -2060,7 +2081,7 @@
                             <strong>“Bill”</strong>. Click on these buttons as and when required.
                         </li>
                         <li><strong>Complete :</strong>Click on the <strong>“Complete”</strong> tab
-                            after completion of the service. The check-in status of the customer
+                            after completion of the service. The check-in status of the devotee
                             changes
                             to complete. This will move the customer’s entry to the
                             <strong>“Completed”</strong> tab. The completed tab generates two
@@ -2082,7 +2103,7 @@
                                 Others.</strong></li>
                         <li><strong>Accept Payment :</strong>Click on <strong>“Accept
                                 Payment”</strong>“Accept Payment” tab to receive the payment for the
-                            services. This opens the generated Bill page. Once the customer pays the
+                            services. This opens the generated Bill page. Once the devotee pays the
                             bill, a priest can settle the bill by clicking on the
                             <strong>“Settle”</strong> tab.</li>
                     </ol>
@@ -2120,7 +2141,7 @@
                             enabled in
                             the <strong>“Add Service”</strong>, a push message or email will be sent
                             to
-                            the customer, thus informing them about the service completion.</li>
+                            the devotee, thus informing them about the service completion.</li>
                         <li><strong>Bill :</strong> A <strong>“Bill”</strong> button appears when a
                             service is started. This opens the bill generated for the service. Click
                             on
@@ -2170,21 +2191,21 @@
                             <ol class="ol-normal">
                                 <li><strong>Add Private Note :</strong> Write a note about a
                                     particular
-                                    customer here.</li>
-                                <li><strong>Send Message :</strong> Write text to the customer here
+                                    devotee here.</li>
+                                <li><strong>Send Message :</strong> Write text to the devotee here
                                     and
-                                    send it to the customer. All of the sent messages can be seen in
+                                    send it to the devotee. All of the sent messages can be seen in
                                     communication history anytime.</li>
                                 <li><strong>Change Status to check-in :</strong>The option to
                                     check-in a
-                                    customer appears only if the customer’s status is marked to
+                                    devotee appears only if the customer’s status is marked to
                                     <strong>“Arrived”</strong>. A priest can change the status back
                                     to
                                     <strong>“Check-in”</strong> using this option. This can be used
                                     in
                                     the following circumstances:
                                     <ul>
-                                        <li>When a customer gets cancelled for some reason and
+                                        <li>When a devotee gets cancelled for some reason and
                                             wanted to
                                             check-in again.</li>
                                         <li>When a customer’s check-in status has been mistakenly
@@ -2195,8 +2216,8 @@
                         </li>
                         <li><strong>Payment Status:</strong> This shows the payment status (not
                             paid,
-                            partially paid, or fully paid) of the customer.</li>
-                        <li><strong>Customer Note:</strong> When a customer adds any note while
+                            partially paid, or fully paid) of the devotee.</li>
+                        <li><strong>Devotee Note:</strong> When a devotee adds any note while
                             checking-in, it is displayed here.</li>
                     </ul>
 
@@ -2229,15 +2250,15 @@
                                         <li><strong>Settle Bill :</strong> Click on this button to
                                             settle the bill. The due amount in the bill is also
                                             visible
-                                            in the customer dashboard.</li>
-                                        <li><strong>Jaldee Pay :</strong> This enables the customer
+                                            in the devotee dashboard.</li>
+                                        <li><strong>Jaldee Pay :</strong> This enables the devotee
                                             to
-                                            pay online by generating the bill to the customer
+                                            pay online by generating the bill to the devotee
                                             dashboard
                                             also.</li>
                                         <li><strong>Pay by cash or others :</strong> This enables
                                             the
-                                            customer to complete the bill settlement either in cash
+                                            devotee to complete the bill settlement either in cash
                                             or
                                             by other means.</li>
                                     </ul>
@@ -2250,10 +2271,10 @@
                             <ol class="ol-normal">
                                 <li><strong>Add Private Note :</strong> Write a note about a
                                     particular
-                                    customer here.</li>
-                                <li><strong>Send Message :</strong> Write text to the customer here
+                                    devotee here.</li>
+                                <li><strong>Send Message :</strong> Write text to the devotee here
                                     and
-                                    send it to the customer. All of the sent messages can be seen in
+                                    send it to the devotee. All of the sent messages can be seen in
                                     communication history anytime.</li>
                             </ol>
                         </li>
@@ -2273,20 +2294,20 @@
                 <div class="helpcontent">
 
                     <ul class="ul-normal">
-                        <li>Here the priest can view the list of all cancelled customer check-ins.
+                        <li>Here the priest can view the list of all cancelled devotee check-ins.
                         </li>
                         <li>The three dot menu available has the following options:
                             <ul class="normal-abc">
                                 <li><strong>Add Private Note :</strong> Write a note about a
                                     particular
-                                    customer here.</li>
-                                <li><strong>Send Message :</strong> Write text to the customer here
+                                    devotee here.</li>
+                                <li><strong>Send Message :</strong> Write text to the devotee here
                                     and
-                                    send it to the customer. All of the sent messages can be seen in
+                                    send it to the devotee. All of the sent messages can be seen in
                                     communication history anytime.</li>
                                 <li><strong>Change Status to check-in :</strong> The option to
                                     check-in
-                                    a customer appears only if the customer’s status is marked to
+                                    a devotee appears only if the customer’s status is marked to
                                     <strong>“Arrived”</strong>. A priest can change the status back
                                     to
                                     <strong>Check-in”</strong>“ using this option.</li>

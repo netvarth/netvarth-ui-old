@@ -116,9 +116,15 @@
                         <li [ngClass]="{'helpcolor': (child =='adjustdelay' && parent == 'adjustdelay')}"><a
                                 (click)="handleScroll('adjustdelay', 'adjustdelay')" class="pointlist">Adjust
                                 Delay</a></li>
-                        <li [ngClass]="{'helpcolor': (child =='miscellaneous' && parent == 'miscellaneous')}"><a
-                                (click)="handleScroll('miscellaneous', 'miscellaneous')"
-                                class="pointlist">Miscellaneous</a>
+                        <li class="pointlist"><a (click)="menu('miscellaneous')">Miscellaneous</a>
+                            <ul *ngIf="miscellaneous && showmiscellaneous">
+                                <li [ngClass]="{'helpcolor': (child =='nonworking' && parent == 'miscellaneous')}"
+                                    (click)="handleScroll('nonworking', 'miscellaneous')"
+                                    class="pointlist">Non Working Day</li>
+                             <li [ngClass]="{'helpcolor': (child =='notifications' && parent == 'miscellaneous')}"
+                                    (click)="handleScroll('notifications', 'miscellaneous')"
+                                    class="pointlist">Notifications</li>
+                            </ul>
                         </li>
                         <li [ngClass]="{'helpcolor': (child =='dashboard' && parent == 'dashboard')}"><a
                                 (click)="handleScroll('dashboard', 'dashboard')" class="pointlist">Dashboard</a>
