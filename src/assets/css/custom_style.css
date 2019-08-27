@@ -4011,7 +4011,7 @@ i.notavail {color:grey !important}
   max-width: 650px;
   min-width: 200px;
   margin: 15px;
-  /* width: 100%; */
+  width: 50%; 
 }
 
 .checkin-btn{

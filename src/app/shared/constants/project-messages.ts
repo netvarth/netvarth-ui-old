@@ -309,7 +309,7 @@ export const Messages = {
   'CHECKIN_CAP': 'Check-in',
   'FOR_CAP': 'for',
   'DIFFERENT_DATE_CAP': 'different date?',
-  'YOU_HAVENT_ADDED_CAP': 'You havent added any favourite providers',
+  'YOU_HAVENT_ADDED_CAP': 'You haven\'t added any favourite providers',
 
   // History
   'HISTORY_CAP': 'History',
