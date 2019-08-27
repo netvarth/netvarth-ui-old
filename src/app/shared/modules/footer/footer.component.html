@@ -255,13 +255,25 @@
                             </div>
                             <div class="checkin-bx" *ngIf="checkinStatus==3">
                                 <span class="ttle">
-                                    Accept Same Day Online Check-in
+                                    Accept Same Day Online Check-Ins
                                     <span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)?
                                         'On': 'Off'}}</span>
                                 </span>
                                 <span class="ctrl">
                                     <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns"
                                         (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle>
+                                </span>
+                            </div>
+                          <div></div>
+                            <div class="checkin-bx" *ngIf="checkinStatus==3">
+                                <span class="ttle">
+                                    Accept Future Check-ins
+                                    <span class="sts" [class.active]="waitlistmgr.futureDateWaitlist">{{(waitlistmgr.futureDateWaitlist)?
+                                        'On': 'Off'}}</span>
+                                </span>
+                                <span class="ctrl">
+                                    <mat-slide-toggle [checked]="waitlistmgr.futureDateWaitlist"
+                                        (change)="changefutureOnlinestatus(waitlistmgr.futureDateWaitlist)"></mat-slide-toggle>
                                 </span>
                             </div>
                         </div>

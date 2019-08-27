@@ -19,6 +19,7 @@
             These attributes can include the business name, Jaldee verified levels,
             Jaldee-Keyword, Basic Information, Location, Location Amenities, Specialization, Languages Known, Additional
             Info.</li>
+            <li>Even if a doctor turns Public Search to off, patients can check-in with the same doctor from their “Favourites” (if already added doctor to Favourites List) list or using custom url.</li>
         <li>During the initial profile setup, a doctor can proceed with setting the Profile Name & Summary,
             Location, Working Hours, Service and Public Search status. The doctor can setup or update these
             informations here.
@@ -1283,10 +1284,12 @@
     </ul>
 </section>
 <section *ngIf="childContent =='settings'">
-    <h6><u>Send Notification</u></h6>
-    <span>If a doctor wants to receive notification in <strong>Jaldee Provider App,</strong> when a
-        check-in is done or when a check-in is cancelled, he/she needs to turn on this toggle
-        button.</span>
+    <h6><u>Send Notification to Patient</u></h6>
+    <span> If the doctor wants to send notification to patient, he/she needs to turn on this toggle button.</span>
+</section>
+<section *ngIf="childContent =='settings'">
+    <h6><u>Select Services by Department</u></h6>
+    <span> Doctors would need to turn this toggle button on to let patients check-in for services department wise.</span>
 </section>
 <section *ngIf="childContent =='settings'">
     <h6><u>Accept Future Check-In</u></h6>
@@ -1347,7 +1350,7 @@
     <span>This page lists all the services offered to the patients. While listing the services,
         please
         keep the name of services simple and comprehensible which will help the patients easily know
-        more about the services offered by the clinic.</span>
+        more about the services offered by the doctor.</span>
 
     <ul class="ul-normal">
         <li>When the doctor clicks on the <strong>“Services”</strong>, a page appears where one can
@@ -1374,6 +1377,7 @@
                 <li><strong>Service Name :</strong> Enter the name of the service.</li>
                 <li><strong>Briefly describe service :</strong> Provide a brief explanation of the
                     service that is being offered.</li>
+                    <li><strong>Choose Department :</strong> If already added departments to your profile, choose one from the drop down menu.</li>
                 <li><strong>Estimated Duration (min) :</strong> Enter the minimum time (in minutes)
                     required to complete the mentioned service.</li>
                 <li><strong>Price :</strong> Enter the price of the mentioned service.</li>
@@ -1484,7 +1488,8 @@
         add in departments and can allow patient check-ins department wise.</span><br>
     <span><strong>How to add a department?</strong></span>
     <ul class="ul-normal">
-        <li>Initially, click “Add Department” button.</li>
+        <li>Initially, a default department is added with all the services offered by the doctor which can be edited.</li>
+        <li>Click “Add Department” button to add new department.</li>
         <li>Enter the department name, department id and give a brief description.</li>
         <li>Click <strong>“Save”</strong> to add the department.</li>
         <li>Most importantly, add available services to each department.</li>
@@ -1517,7 +1522,7 @@
                 a patient wishes to avail. In case, the doctor has only one default service, then
                 there
                 will be no drop-down menu.</li>
-            <li>Check-in/Get Token window has a feature to add or change a family member whom the
+            <li>Check-in/Get Token/Order  window has a feature to add or change a family member whom the
                 patient wishes to do a check-in for. Click “Add/Change Member” to add a new member
                 with
                 the first name and the last name. In case the family member is already added, it can
@@ -2727,13 +2732,15 @@
                     <strong>“CC/DC/Net Banking/UPI”</strong> or both.
                     <ul class="ul-normal">
                         <li><strong>Paytm :</strong> This is an effortless mode of online payment
-                            commonly used these days. If the doctor has a Paytm account, he/she
+                            commonly used these days. If the doctor has a business Paytm account, he/she
                             needs to
-                            provide the following details:
+                            provide the following details (Login to Paytm to get these production keys):
                             <ul class="ul-normal">
                                 <li><strong>Mobile Number</strong></li>
                                 <li><strong>Merchant Id</strong></li>
                                 <li><strong>Merchant Key</strong></li>
+                                <li><strong>Website</strong></li>
+                                <li><strong>Industry Type</strong></li>
                             </ul>
                         </li>
                         <li><strong>CC/Dc/Net Banking/UPI :</strong> To settle the bill using this mode

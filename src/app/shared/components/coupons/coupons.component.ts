@@ -21,7 +21,6 @@ export class CouponsComponent implements OnInit {
     }
     this.showCoupons();
   }
-
   showCoupons() {
     this.couponsList = [];
     for (let index = 0; index < this.tempCouponList.length; index++) {

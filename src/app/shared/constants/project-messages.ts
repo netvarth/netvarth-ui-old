@@ -283,7 +283,7 @@ export const Messages = {
   'SEND_MSGS_CAP': 'Enquiry',
   'SEND_MSG_CAP': 'Send Message',
   'SEND_MSG': 'Enquiry',
-  'DELAY_SEND_MSG': 'Send message to my [customer] regarding the delay',
+  'DELAY_SEND_MSG': 'Send message to checked-in [customer]s about the delay',
   'NO_CHECKINS_CAP': 'No current Check-Ins available',
   'MAKE_PAYMENT_CAP': 'Make Payment',
   'TOKEN_NO': 'Token Number',
@@ -308,7 +308,7 @@ export const Messages = {
   'DO_YOU_WANT_TO_CAP': 'Do you want to',
   'CHECKIN_CAP': 'Check-in',
   'FOR_CAP': 'for',
-  'DIFFERENT_DATE_CAP': 'different date?',
+  'DIFFERENT_DATE_CAP': 'another day?',
   'YOU_HAVENT_ADDED_CAP': 'You haven\'t added any favourite providers',
 
   // History
@@ -436,7 +436,7 @@ export const Messages = {
   'DESCRIPTION_CAP': 'Description',
 
   // App-shared-components-set-password-form
-  'NEW_PASSWORD_CAP': 'New Password *',
+  'NEW_PASSWORD_CAP': 'Enter Password  *',
   'PASSWORD_VALID_CAP': 'Use minimum 8 characters with atleast one uppercase, lowercase and number',
   'RE_ENTER_PASSWORD_CAP': 'Re-enter Password *',
   'SUBMIT_CAP': 'Submit',
@@ -450,7 +450,7 @@ export const Messages = {
   'DMN_CAP': 'Service Domain *',
   'SB_DMN_CAP': 'Service specialization or Occupation *',
   'LIC_PACKAGE_CAP': 'License Package *',
-  'I_AGREE_CAP': 'I Agree',
+  'I_AGREE_CAP': 'I Agree With',
   'TERMS_CONDITIONS_CAP': 'Terms & Conditions',
   'SIGN_UP_CAP': 'Sign Up',
   'SIGNUPP_CAP': '"You get  Platinum - Free Trial for 60 days."',
@@ -1318,10 +1318,10 @@ export const Messages = {
   'SET_LOC_MSG': 'Please set location to make use of Dashboard',
 
   // form-level-provider-wizard
-  'FRM_LEVEL_PRO_WIZ_ONE_MSG': 'The Jaldee team takes pride in your decision of choosing its services.',
+  'FRM_LEVEL_PRO_WIZ_ONE_MSG': 'The Jaldee team takes pride in your decision of choosing our services',
   'FRM_LEVEL_PRO_WIZ_TWO_MSG': 'Let us quickly set up your basic profile and help you enable the Public Search to get you started!',
-  'FRM_LEVEL_PRO_WIZ_THREE_MSG': 'We wish you all the very best!',
-  'FRM_LEVEL_PRO_WIZ_FOUR_MSG': 'Be certain that this initial setup can be viewed, edited and managed, if and when required.',
+  'FRM_LEVEL_PRO_WIZ_THREE_MSG': 'Be certain that this initial setup can be viewed, edited and managed, if and when required.',
+  'FRM_LEVEL_PRO_WIZ_FOUR_MSG': 'We wish you all the best!',
   'FRM_LEVEL_PRO_WIZ_FIVE_MSG': 'Enter your business name here. ',
   'FRM_LEVEL_PRO_WIZ_FIVE1_MSG': '[customer]s will view this in Public Profile. ',
   'FRM_LEVEL_PRO_WIZ_FIVE2_MSG': ' Complete it by adding a brief introduction about you or your business to help [customer]s know you more.',

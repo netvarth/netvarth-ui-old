@@ -47,12 +47,22 @@
                                 <li class="form-level-settings">{{frm_waitlist_cap}}</li>
                                 <li>
                                     <span class="ttle">
-                                        Same Day Online {{checkin_label |capitalizeFirst}} <span class="sts"
+                                        Same Day Online {{checkin_label |capitalizeFirst}}s <span class="sts"
                                             [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
                                     </span>
                                     <span class="ctrl">
                                         <mat-slide-toggle [(ngModel)]="waitlist_status"
                                             (change)="handle_waitliststatus($event)"></mat-slide-toggle>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="ttle">
+                                       Future {{checkin_label |capitalizeFirst}}s <span class="sts"
+                                            [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}</span>
+                                    </span>
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                            (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>
                                     </span>
                                 </li>
                                 <!-- <li>

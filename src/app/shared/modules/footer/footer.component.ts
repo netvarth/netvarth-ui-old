@@ -306,6 +306,22 @@ legal_cap = Messages.LEGALCAP;
 
         });
   }
+   changefutureOnlinestatus(curstat) {
+    const changestatus = (curstat) ? 'Disable' : 'Enable';
+    this.shared_services.setFutureCheckinStatus(changestatus)
+      .subscribe(() => {
+        if (changestatus === 'Enable') {
+          this.waitlistmgr.futureDateWaitlist = true;
+        } else {
+          this.waitlistmgr.futureDateWaitlist = false;
+        }
+
+        this.shared_functions.sendMessage({ ttype: 'future_checkin_status', action: this.waitlistmgr.futureDateWaitlist });
+      },
+        () => {
+
+        });
+  }
   showStatic(mode) {
     switch (mode) {
       case 'terms':

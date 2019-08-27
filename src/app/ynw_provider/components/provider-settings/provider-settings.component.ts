@@ -47,6 +47,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   waitlist_status = false;
   futureDateWaitlist = false;
   waitlist_statusstr = 'Off';
+  futurewaitlist_statusstr = 'off';
   search_status = false;
   search_statusstr = 'Off';
   payment_settings: any = [];
@@ -130,7 +131,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
         data => {
-          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment') {
+          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment' || data.ttype === 'future_checkin_status') {
             this.getWaitlistMgr();
           }
         });
@@ -147,6 +148,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.waitlist_status = data['onlineCheckIns'] || false;
           this.futureDateWaitlist = data['futureDateWaitlist'] || false;
           this.waitlist_statusstr = (this.waitlist_status) ? 'On' : 'Off';
+          this.futurewaitlist_statusstr = (this.futureDateWaitlist) ? 'On' : 'Off';
           this.filterbydepartment = data['filterByDept'];
         });
   }
@@ -160,6 +162,19 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getWaitlistMgr();
+        }
+      );
+  }
+  handle_futurewaitliststatus(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setFutureCheckinStatus(is_check)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getWaitlistMgr();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -411,25 +426,25 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       });
   }
 
-  onFormChange(event) {
-    const is_check = event.checked;
-    const postData = {
-      calculationMode: this.waitlist_details.calculationMode,
-      trnArndTime: this.waitlist_details.trnArndTime || null,
-      providerNotification: this.waitlist_details.providerNotification,
-      futureDateWaitlist: is_check,
-      showTokenId: this.waitlist_details.showTokenId
-    };
-    this.provider_services.setWaitlistMgr(postData)
-      .subscribe(
-        () => {
-          this.getWaitlistMgr();
-          this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
-  }
+  // onFormChange(event) {
+  //   const is_check = event.checked;
+  //   const postData = {
+  //     calculationMode: this.waitlist_details.calculationMode,
+  //     trnArndTime: this.waitlist_details.trnArndTime || null,
+  //     providerNotification: this.waitlist_details.providerNotification,
+  //     futureDateWaitlist: is_check,
+  //     showTokenId: this.waitlist_details.showTokenId
+  //   };
+  //   this.provider_services.setWaitlistMgr(postData)
+  //     .subscribe(
+  //       () => {
+  //         this.getWaitlistMgr();
+  //         this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+  //       },
+  //       error => {
+  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       });
+  // }
 
   getDepartmentsCount() {
     this.provider_services.getDepartmentCount()

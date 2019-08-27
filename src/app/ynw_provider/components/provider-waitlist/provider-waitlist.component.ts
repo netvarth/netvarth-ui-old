@@ -76,7 +76,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
         data => {
-          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment') {
+          if (data.ttype === 'online_checkin_status' || data.ttype === 'filterbyDepartment'  || data.ttype === 'future_checkin_status') {
             this.getWaitlistMgr();
           }
         });

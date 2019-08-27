@@ -331,6 +331,10 @@ export class SharedServices {
     const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
     return this.servicemeta.httpPut(url);
   }
+  setFutureCheckinStatus(status) {
+    const url = 'provider/settings/waitlistMgr/futureCheckIns/' + status;
+    return this.servicemeta.httpPut(url);
+  }
   getWaitlistMgr() {
     const url = 'provider/settings/waitlistMgr/';
     return this.servicemeta.httpGet(url);
