@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -47,10 +48,11 @@ export class ProviderNotificationsComponent implements OnInit {
   okCheckinStatus = false;
   okCancelStatus = false;
   constructor(private sharedfunctionObj: SharedFunctions,
+    private routerobj: Router,
     public provider_services: ProviderServices) { }
 
   ngOnInit() {
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->notifications' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     this.getNotificationList();
   }
@@ -366,5 +368,11 @@ export class ProviderNotificationsComponent implements OnInit {
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
     }
+  }
+  learnmore_clicked(mod, e) {
+    e.stopPropagation();
+    this.routerobj.navigate(['/provider/learnmore/miscellaneous->notifications']);
+    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+    // this.sharedfunctionObj.sendMessage(pdata);
   }
 }

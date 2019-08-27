@@ -56,7 +56,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getNonworkingdays();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': 'services' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->nonworking' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
@@ -159,7 +159,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/miscellaneous']);
+    this.routerobj.navigate(['/provider/learnmore/miscellaneous->nonworking']);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionObj.sendMessage(pdata);
   }
