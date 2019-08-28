@@ -36,7 +36,8 @@
                             </div>
                             <div class="rt">
                                 <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">
-                                    <span class="icon-favourite-filled"></span>
+                                    <span class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.provider)"
+                                    matTooltip="{{remove_fav_cap}}" ></span>
                                 </div>
                                 <div class="favourite" *ngIf="!checkIfFav(waitlist.provider.id)">
                                     <span class="icon-favourite" matTooltip="Add to Favourite"

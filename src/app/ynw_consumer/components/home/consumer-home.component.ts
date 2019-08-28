@@ -328,13 +328,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   formatTime(time) {
-    var hours = time.getHours();
-    var minutes = time.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
+    let hours = time.getHours();
+    let minutes = time.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    const strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
   }
 
@@ -395,7 +395,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.loadcomplete.fav_provider = true;
           this.fav_providers = data;
-          console.log(this.fav_providers);
           this.fav_providers_id_list = [];
           // this.setWaitlistTimeDetails();
           for (const x of this.fav_providers) {
@@ -544,7 +543,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   doDeleteFavProvider(fav) {
-    console.log(fav)
     if (!fav.id) {
       return false;
     }

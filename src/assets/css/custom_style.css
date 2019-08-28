@@ -4071,6 +4071,14 @@ i.notavail {color:grey !important}
   text-align: right;
   padding: 5px;
 }
+.pdetailbt10{
+  color: #00aef2;
+  font-size: .75rem;
+  padding: 0;
+  white-space: pre-wrap;
+  text-align: right;
+  line-height: 1.8;
+}
 @media only screen and (max-width: 575px) and (min-width: 320px) {
   .bottom-actions-root {
     width: 90%;
