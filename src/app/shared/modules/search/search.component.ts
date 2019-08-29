@@ -112,6 +112,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   paginationLimit = 6;
   startPage = 0;
   domainSuggestionPlaceholder = '';
+  searchLabelList: any = [];
 
   constructor(
     private shared_service: SharedServices,
@@ -380,10 +381,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // Defining the types of details that will be displayed for keywords autocomplete
     const keywordgroup_val = [];
     // Check whether search labels exists
-    if (this.show_searchlabellist) {
+    // if (this.show_searchlabellist) {
+    if (this.searchLabelList) {
       this.holdisplaySearchlist['label'] = [];
       this.holdisplaySearchlist['special'] = [];
-      for (const label of this.show_searchlabellist) {
+      for (const label of this.searchLabelList) {
         let holdkeyword;
         if (label.displayname && label.displayname !== '') {
           holdkeyword = label.displayname.toLowerCase();
@@ -538,6 +540,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         );
     }
   }
+
+  // To get searchlabels for 3rd search box
+  getSearchLabels(selected_domain) {
+    this.searchLabelList = this.shared_functions.getSearchLabels(selected_domain);
+  }
+
   private setNulllocationvalues(loc?) {
     this.locationholder = {
       name: loc.name || null,
@@ -851,6 +859,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
     this.keyssearchcriteria = '';
     this.prov_name = '';
+    this.getSearchLabels(domain);
     this.getSearchlabelsbydomain(domain);
     if (avoidclear === undefined) {
       this.handleNormalSearchClick();
