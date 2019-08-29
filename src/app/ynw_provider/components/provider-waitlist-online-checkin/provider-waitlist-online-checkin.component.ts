@@ -169,7 +169,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   }
   doRemoveservice() {
     if (this.form['filterByDept']) {
-      this.message = 'All services are moved to Default Department';
+      this.message = 'All services created will be moved to the department named \'Default\'. You can either rename the department for customer visibility or add department and assign respective services';
     } else {
       this.message = 'Assigned services are removed from the departments';
     }

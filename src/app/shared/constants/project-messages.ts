@@ -1269,7 +1269,7 @@ export const Messages = {
   'FRM_LEVEL_MISC_MSG': 'Manage your non working days here',
 
   // form-level-provider-bprofile-search
-  'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. Unless you enable, the patients won\'t be able to view your profile in their search result.',
+  'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. Unless you enable, the patients won\'t be able to view your profile in their search result. Turning off Public Search will not restrict consumers from online check-ins.',
   'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',

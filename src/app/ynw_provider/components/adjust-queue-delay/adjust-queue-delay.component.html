@@ -38,7 +38,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
       </div>
       <div class="form-group">
         <label class="col-form-label">{{delay_cap}}</label>
-        <span><small>* Maximum 24 hours delay allowed</small></span>
+        <!-- <span><small>* Maximum 24 hours delay allowed</small></span> -->
         <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay"></ngb-timepicker>
       </div>
       <div class="form-group inline">
