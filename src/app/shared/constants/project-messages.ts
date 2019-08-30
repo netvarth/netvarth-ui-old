@@ -188,7 +188,8 @@ export const Messages = {
   // Consumer Dashboard
   'SERVICE_RATE_UPDATE': 'Thank you for your feedback',
   'Manage_Privacy': 'Manage privacy changed successfully',
-  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in 15 minutes to complete your check-in',
+  'DASHBOARD_PREPAY_MSG': 'Click "Make Payment" button in',
+  'DASHBOARD_PREPAY_MSG1': 'minutes to complete your check-in',
 
   // Dynamic Field
   'YEAR_MONTH_VALID': 'Future date not allowed',

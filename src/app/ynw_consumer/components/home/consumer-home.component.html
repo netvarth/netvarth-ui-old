@@ -13,7 +13,7 @@
                         <div class="header">
                             <div class="lt">
                                 <div class="title" (click)="providerDetail(waitlist.provider)">
-                                    <h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}</h3>
+                                    <h3>{{waitlist.provider.businessName || '' | capitalizeFirst}}{{waitlist.checkInTime}}</h3>
                                 </div>
                                 <div class="location consumr" *ngIf="waitlist.queue.location">
                                     {{waitlist.queue.location.place || '' | capitalizeFirst}}
@@ -131,7 +131,7 @@
                                     {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                                 </div>
                                 <div class="lt0 payment" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
-                                    <span class="paytext">{{checkindisablemsg}}</span>
+                                    <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}} {{checkindisablemsg1}}</span>
                                     <!-- <span class="buttonouter"> -->
                                     <!-- <span class="amount">Amount to Pay: $1000</span> -->
                                     <!-- <button class="cs-btn bt3" (click)="makeFailedPayment(waitlist)">Make Payment</button>

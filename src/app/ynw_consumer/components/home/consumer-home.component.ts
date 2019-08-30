@@ -55,6 +55,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   manage_privacy_cap = Messages.MANAGE_PRIVACY;
   open_now_cap = Messages.OPEN_NOW_CAP;
   checkindisablemsg = Messages.DASHBOARD_PREPAY_MSG;
+  checkindisablemsg1 = Messages.DASHBOARD_PREPAY_MSG1;
   do_you_want_to_cap = Messages.DO_YOU_WANT_TO_CAP;
   for_cap = Messages.FOR_CAP;
   different_date_cap = Messages.DIFFERENT_DATE_CAP;
@@ -126,6 +127,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   coupondialogRef: MatDialogRef<{}, any>;
   nextAvailDate;
   terminologiesJson: any = [];
+  mins;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -267,6 +269,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.waitlists[i].cancelled_caption = retval.cancelled_caption;
             this.waitlists[i].cancelled_date = retval.cancelled_date;
             this.waitlists[i].cancelled_time = retval.cancelled_time;
+            if (waitlist.waitlistStatus === 'prepaymentPending') {
+              this.waitlists[i].counter = this.prepaymentCounter(waitlist);
+            }
             i++;
           }
           this.loadcomplete.waitlist = true;
@@ -758,6 +763,27 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.getWaitlist();
     this.reload_history_api = { status: true };
   }
+
+  prepaymentCounter(list) {
+   // this.setSystemDate();
+   let server_time;
+   let checkinTime;
+   let currentTime;
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+           server_time = res;
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
+      checkinTime =  moment(list.checkInTime, ['h:mm A']).format('HH:mm:ss');
+      currentTime = moment(server_time).format('HH:mm:ss');
+     // console.log('checkinTime' + checkinTime);
+     // console.log('currentTime' + currentTime);
+     this.mins = moment.utc(moment(currentTime, 'HH:mm').diff(moment(checkinTime, 'HH:mm'))).format('mm');
+     this.mins = 15 - this.mins;
+     return this.mins;
+  }
+ 
   recheckwaitlistCounters() {
     for (let i = 0; i < this.waitlists.length; i++) {
       if (this.waitlists[i].estimated_autocounter) {
