@@ -81,9 +81,8 @@
                             </button>
                         </mat-menu>
                     </span>
-                    <span (click)="btnAvailableClicked()" class="membership"
-                        *ngIf="headercls!='itl-steps' && isprovider">
-                        <div class="col-md-12 no-padding">
+                    <span class="membership" *ngIf="headercls!='itl-steps' && isprovider">
+                        <div class="col-md-12 no-padding" (click)="btnAvailableClicked()">
                             <h6 class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
                                 I am available until {{qAvailability.timeRange.eTime}}
                             </h6>
@@ -95,6 +94,11 @@
                                 *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
                                 Today I'm available after {{qAvailability.timeRange.eTime}}
                             </h6>
+                        </div>
+                        <div (click)="holidaybtnClicked()">
+                            <span class="red" *ngIf="qAvailability && qAvailability.holiday">
+                                Holiday
+                            </span>
                         </div>
                     </span>
                 </div>
@@ -120,9 +124,8 @@
                                             class="fa fa-circle avail"></i><i
                                             *ngIf="qAvailability && !qAvailability.availableNow"
                                             class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}</span>
-                                    <span (click)="btnAvailableClicked()" class="membership"
-                                        *ngIf="headercls!='itl-steps' && isprovider">
-                                        <div class="col-md-12 no-padding">
+                                    <span class="membership" *ngIf="headercls!='itl-steps' && isprovider">
+                                        <div class="col-md-12 no-padding" (click)="btnAvailableClicked()">
                                             <h6 class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
                                                 I am available until {{qAvailability.timeRange.eTime}}
                                             </h6>
@@ -134,6 +137,11 @@
                                                 *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
                                                 Today I'm available after {{qAvailability.timeRange.eTime}}
                                             </h6>
+                                        </div>
+                                        <div (click)="holidaybtnClicked()">
+                                            <span class="red" *ngIf="qAvailability && qAvailability.holiday">
+                                                Holiday
+                                            </span>
                                         </div>
                                     </span>
                                 </div>

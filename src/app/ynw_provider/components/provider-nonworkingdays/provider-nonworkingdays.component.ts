@@ -45,6 +45,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   editholdialogRef;
   remholdialogRef;
   active_user;
+  qAvailability: any = [];
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
     private routerobj: Router,
@@ -77,6 +78,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.nonworking_list = data;
         this.query_executed = true;
+        this.isAvailableNow();
       });
   }
   addHolidays() {
@@ -168,4 +170,16 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous', 'subKey': mod };
   //   return moreOptions;
   // }
+  isAvailableNow() {
+    this.provider_servicesobj.isAvailableNow()
+      .subscribe(data => {
+        this.qAvailability = data;
+        const message = {};
+        message['ttype'] = 'instant_q';
+        message['qAvailability'] = this.qAvailability;
+        this.shared_functions.sendMessage(message);
+      },
+        (error) => {
+        });
+  }
 }

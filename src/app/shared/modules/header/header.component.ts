@@ -166,7 +166,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
           this.router.navigate(['/provider/learnmore/' + message.target.scrollKey]);
           break;
-          case 'faq':
+        case 'faq':
           // this.showLearnMore = true;
           // this.scrollhideclass.emit(false);
           // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
@@ -426,19 +426,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const password = this.shared_service.get(enc_pwd, projectConstants.KEY);
     setTimeout(() => {
       this.shared_service.ProviderLogout()
-      .subscribe(() => {
-        this.shared_functions.clearLocalstorage();
-        const post_data = {
-          'countryCode': '+91',
-          'loginId': ynw.loginId,
-          'password': password
-        };
-        this.shared_functions.consumerLogin(post_data);
-        this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
-      },
-        () => {
-        }
-      );
+        .subscribe(() => {
+          this.shared_functions.clearLocalstorage();
+          const post_data = {
+            'countryCode': '+91',
+            'loginId': ynw.loginId,
+            'password': password
+          };
+          this.shared_functions.consumerLogin(post_data);
+          this.shared_functions.setitemonLocalStorage('jld', enc_pwd);
+        },
+          () => {
+          }
+        );
     }, 2000);
 
   }
@@ -526,6 +526,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   btnAvailableClicked() {
     this.router.navigate(['provider/settings/waitlist-manager/queues']);
+  }
+  holidaybtnClicked() {
+    this.router.navigate(['provider/settings/holidays']);
   }
   isAvailableNow() {
     this.shared_service.isAvailableNow()

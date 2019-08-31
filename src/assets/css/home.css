@@ -772,8 +772,27 @@ figure:hover img {
   overflow: hidden !important;
 }
 
+.gallery-img p:hover {
+  height: 100% !important;
+}
+.gallery-img p {
+  background: rgb(0, 0, 0) !important;
+  background: rgba(66, 68, 151, 0.5) !important;
+  color: #f1f1f1 !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+.gallery-img p a:hover {
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
 .grid figure:hover .gallery-img {
   background-color: #1E4079 !important;
+}
+
+.grid figure:hover h4 {
+  color: white !important;
 }
 
 #packages, #about {
@@ -870,11 +889,11 @@ figure:hover img {
   } */
 }
 
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
   .sm-margin-bottom-ten {
     margin-bottom: 10% !important;
   }
-}
+} */
 
 #packages .grid img {
   max-width: 100% !important;
@@ -883,6 +902,7 @@ figure:hover img {
 
 #packages .grid img {
   vertical-align: middle !important;
+  margin-bottom: 10px !important;
 }
 
 #packages .owl-carousel .owl-item img {

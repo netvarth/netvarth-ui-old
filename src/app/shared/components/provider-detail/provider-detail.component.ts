@@ -188,6 +188,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   selectedDepartment;
   showDepartments = false;
   claimdialogRef;
+  services: any = [];
+  deptlist: any = [];
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -409,7 +411,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
               // if (this.businessjson.claimStatus === 'Claimed') {
-                this.getProviderDepart(this.provider_bussiness_id);
+              this.getProviderDepart(this.provider_bussiness_id);
               // }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
@@ -636,14 +638,26 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         });
   }
 
-  getServicesByDepartment(location, deptid) {
+  getServicesByDepartment(location, dept) {
     const servicesByDept: any = [];
     for (let i = 0; i < location['services'].length; i++) {
-      if (location['services'][i].department === deptid) {
+      if (location['services'][i].department === dept.departmentId) {
         servicesByDept.push(location['services'][i]);
       }
     }
-    return servicesByDept;
+    this.services = servicesByDept;
+    this.deptlist = this.groubedByTeam[dept.departmentName];
+    this.selectedDepartment = dept;
+    // if (this.deptlist) {
+    this.showServices = true;
+    // } else {
+    //   this.showServices = false;
+    // }
+    // return this.groubedByTeam[dept.departmentName];
+  }
+
+  backtoDetails() {
+    this.showServices = false;
   }
 
   getExistingCheckinsByLocation(locid, passedIndx) {
@@ -962,16 +976,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.getbusinessprofiledetails_json('location', true);
       }
     });
-  }
-
-  departmentClicked(department) {
-    this.showServices = true;
-    for (let i = 0; i < this.servicesjson.length; i++) {
-      if (this.servicesjson[i].departmentName === department) {
-        this.departServiceList = this.servicesjson[i].services;
-        this.selectedDepartment = department;
-      }
-    }
   }
 
   showServiceDetail(serv, busname) {

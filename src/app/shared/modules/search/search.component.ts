@@ -113,7 +113,16 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   startPage = 0;
   domainSuggestionPlaceholder = '';
   searchLabelList: any = [];
-
+  lng;
+  lat;
+  geoLocation;
+  // SEARCH_DEFAULT_GEOLOCATION: {
+  //   'autoname': '',
+  //   'name': '',
+  //   'lat': '',
+  //   'lon': '',
+  //   'typ': 'city'
+  // };
   constructor(
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
@@ -183,13 +192,29 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
         }
       } else {
-        this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
-        this.locationholder.autoname = this.location_name;
-        this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
-        this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
-        this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
-        this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
-        this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+        if (navigator) {
+          navigator.geolocation.getCurrentPosition(pos => {
+            const curLoc = {};
+            curLoc['autoname'] = 'Current Location';
+            curLoc['name'] = 'Current Location';
+            curLoc['lat'] = +pos.coords.latitude;
+            curLoc['lon'] = +pos.coords.longitude;
+            curLoc['rank'] = 4;
+            curLoc['typ'] = 'city';
+            this.setLocation(curLoc);
+            this.location_name = curLoc['autoname'];
+
+            // });
+          });
+        } else {
+          this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
+          this.locationholder.autoname = this.location_name;
+          this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
+          this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
+          this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+          this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
+          this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+        }
       }
     }
   }
