@@ -36,6 +36,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   pvt_notes_cap = Messages.CHECK_DET_PRVT_NOTES_CAP;
   cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;
   no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
+  no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   waitlist_id = null;
@@ -94,6 +95,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
     this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
+    this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
       'title': this.checkin_upper
     });
