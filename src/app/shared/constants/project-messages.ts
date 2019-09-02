@@ -1368,6 +1368,7 @@ export const Messages = {
   'CHOOSE_LOCATION': 'Choose a different location to view it\'s dashboard.',
   'ENBALE_QUEUES': 'Make sure to set the respective working hours and services too for this location.',
   'PLACE_ORDER_CLICK_HERE': 'To place your order, Click here',
-  'NO_SERVICE_IN_DEPARTMENT': 'The selected department doesn\'t contain any active services for this location'
+  'NO_SERVICE_IN_DEPARTMENT': 'The selected department doesn\'t contain any active services for this location',
+  'CHECK_DET_NO_CUS_NOTES_FOUND_CAP': 'No [customer] note found'
 };
 

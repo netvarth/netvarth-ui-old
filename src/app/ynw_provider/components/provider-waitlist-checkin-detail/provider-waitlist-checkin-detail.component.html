@@ -142,10 +142,10 @@
                       {{cust_notes_cap | capitalizeFirst}}
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <div class="pnotes" *ngIf="waitlist_data.consumerNote">
+                  <div class="pnotes" *ngIf="waitlist_data && waitlist_data.consumerNote !== ''">
                     <p>{{waitlist_data.consumerNote}}</p>
                   </div>
-                  <div *ngIf="!waitlist_data.consumerNote">
+                  <div *ngIf="waitlist_data && waitlist_data.consumerNote === ''">
                     <p>{{no_cus_notes_cap}}</p>
                   </div>
                 </mat-expansion-panel>
