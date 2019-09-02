@@ -9,7 +9,6 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import * as moment from 'moment';
-
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -35,6 +34,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   cancel_cap = Messages.CHECK_DET_CANCEL_CAP;
   communication_history_cap = Messages.CHECK_DET_COMM_HISTORY_CAP;
   pvt_notes_cap = Messages.CHECK_DET_PRVT_NOTES_CAP;
+  cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;
   no_pvt_notes_cap = Messages.CHECK_DET_NO_PVT_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
@@ -76,7 +76,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   showEditView = false;
   api_loading = true;
   pdtype;
-
+ 
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -93,7 +93,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
     this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
     this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
-
+    this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
       'title': this.checkin_upper
     });
@@ -172,7 +172,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
   }
-
   getCheckInHistory(uuid) {
     this.provider_services.getProviderWaitlistHistroy(uuid)
       .subscribe(

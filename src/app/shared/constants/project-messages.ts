@@ -1205,6 +1205,7 @@ export const Messages = {
   'CHECK_DET_CANCEL_CAP': 'Cancel',
   'CHECK_DET_COMM_HISTORY_CAP': 'Communication History',
   'CHECK_DET_PRVT_NOTES_CAP': 'Private Notes',
+  'CHECK_DET_CUST_NOTES_CAP': '[customer] Note',
   'CHECK_DET_NO_PVT_NOTES_FOUND_CAP': 'No private notes found',
   'CHECK_DET_HISTORY_CAP': 'History',
   'CHECK_DET_NO_HISTORY_FOUND_CAP': 'No history found',

@@ -132,6 +132,25 @@
               </mat-expansion-panel>
             </mat-accordion>
           </div>
+          
+          <div class="card p0">
+              <mat-accordion class="provider-notes">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <!-- {{provider_label |capitalizeFirst}} Notes -->
+                      {{cust_notes_cap | capitalizeFirst}}
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="pnotes" *ngIf="waitlist_data.consumerNote">
+                    <p>{{waitlist_data.consumerNote}}</p>
+                  </div>
+                  <div *ngIf="!waitlist_data.consumerNote">
+                    <p>No customer note</p>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
         </div>
         <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
           <div class="card">
