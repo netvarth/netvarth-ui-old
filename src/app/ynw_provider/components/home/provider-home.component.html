@@ -244,7 +244,7 @@
                     *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                     <span *ngIf="!showEditView"> {{getAppxTime(checkin)}}</span>
                   </td>
-                  <td data-title="Service" class="service">{{checkin.service.name}}({{checkin.service.deptName}})</td>
+                  <td data-title="Service" class="service">{{checkin.service.name}}<span *ngIf="checkin.service.deptName">({{checkin.service.deptName}})</span></td>
                   <td data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
                     <ng-container *ngIf="checkin.paymentStatus">
                       <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span
