@@ -100,6 +100,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   keywordholder: Keywordscls;
   showmoreoptionsSec = false;
   holdsrchlocname = '';
+  clearLocationCalled = false;
   @ViewChild('locrefrence') private locRef: ElementRef;
   @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
   moreoptionsTooltip = '';
@@ -116,6 +117,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   lng;
   lat;
   geoLocation;
+  isCurrentLocation = false;
   // SEARCH_DEFAULT_GEOLOCATION: {
   //   'autoname': '',
   //   'name': '',
@@ -182,6 +184,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         if (localloc.autoname !== '' && localloc.autoname !== undefined && localloc.autoname !== null) {
           this.locationholder = localloc;
           this.location_name = localloc.autoname;
+          if (this.location_name === 'Current Location') {
+            this.isCurrentLocation = true;
+          }
         } else { // case if details are not there in the local storage
           this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
           this.locationholder.autoname = this.location_name;
@@ -202,21 +207,28 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             curLoc['rank'] = 4;
             curLoc['typ'] = 'city';
             this.setLocation(curLoc);
+            this.isCurrentLocation = true;
             this.location_name = curLoc['autoname'];
 
             // });
+          },
+          error => {
+            this.setDefaultLocation();
           });
         } else {
-          this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
-          this.locationholder.autoname = this.location_name;
-          this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
-          this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
-          this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
-          this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
-          this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+         this.setDefaultLocation();
         }
       }
     }
+  }
+  private setDefaultLocation() {
+    this.location_name = projectConstants.SEARCH_DEFAULT_LOCATION.autoname;
+    this.locationholder.autoname = this.location_name;
+    this.locationholder.name = projectConstants.SEARCH_DEFAULT_LOCATION.name;
+    this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
+    this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
+    this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
+    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
   }
   private setLocation(loc) {
     this.locationholder = {
@@ -586,8 +598,23 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // if (this.kw_autoname) {
     //   this.filterKeywords();
     // }
-    if (kw.domain.match('sub_sector_displayname')) {
+    console.log(kw);
+    if (kw.query && kw.query.match('sub_sector_displayname')) {
+      // kw.typ = 'kwphrase';
+      // kw.autoname = kw.displayname;
+      this.kw_autoname = kw.displayname;
+      this.keywordholder.name = kw.displayname;
+        this.keywordholder.autoname = kw.displayname;
+        this.keywordholder.domain = '';
+        this.keywordholder.subdomain = '';
+        this.keywordholder.typ = 'kwphrase';
+      this.handleNormalSearchClick();
+      return;
+      // kw.autoname = kw.name;
+    }
+    if (kw.domain && kw.domain.match('sub_sector_displayname')) {
       kw.typ = 'kwphrase';
+      // kw.autoname = kw.name;
     }
     if (kw.origin === 'popular') {
       this.filterKeywords();
@@ -669,6 +696,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   selectedOption() {
   }
   do_search(labelqpassed?) {
+    console.log(labelqpassed);
     this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
     this.closeMoreoptions();
     // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
@@ -910,7 +938,32 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
   handle_returntochild() {
   }
+  setCurrentLocation(obj) {
+    if (this.clearLocationCalled) {
+      return false;
+    }
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const curLoc = {};
+          curLoc['autoname'] = 'Current Location';
+          curLoc['name'] = 'Current Location';
+          curLoc['lat'] = +pos.coords.latitude;
+          curLoc['lon'] = +pos.coords.longitude;
+          curLoc['rank'] = 4;
+          curLoc['typ'] = 'city';
+          this.setLocation(curLoc);
+          this.location_name = curLoc['autoname'];
+          obj.value = this.location_name;
+          this.isCurrentLocation = true;
+      },
+      error => {
+        this.setDefaultLocation();
+      });
+    }
+  }
   clearSearch(obj) {
+    this.clearLocationCalled = true;
+    this.isCurrentLocation = false;
     this.displaylocationList = [];
     obj.value = '';
   }
@@ -918,6 +971,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (obj.value === '') {
       obj.value = this.locationholder.autoname;
     }
+    if (obj.value === 'Current Location') {
+      this.isCurrentLocation = true;
+    }
+    this.clearLocationCalled = false;
   }
   deselect() {
     if (this.locRef.nativeElement) {

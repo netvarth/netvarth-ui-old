@@ -3,11 +3,13 @@
   (click)="closeMorepopularoptions()"></div>
 <ng-container>
   <div [class.sa-fld]="includedfrom=='home'" [class.tp-srch]="includedfrom=='consumer_header'">
-    <div class="sa-lc">
+    <div class="sa-lc" (click)="setCurrentLocation(locrefrence)">
       <mat-form-field class="search_location_class">
+        <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i> 
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name" matInput
           [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
           (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)">
+          
         <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
           <div *ngIf="locationList">
             <mat-option *ngFor="let loc of displaylocationList" [value]="loc.autoname"
