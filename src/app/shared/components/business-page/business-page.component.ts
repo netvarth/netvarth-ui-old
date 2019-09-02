@@ -169,6 +169,10 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   server_date;
   isLoggedIn = false;
   showToken = false;
+  services: any = [];
+  deptlist: any = [];
+  selectedDepartment;
+  showServices = false;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -620,14 +624,26 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     }
     return str;
   }
-  getServicesByDepartment(location, deptid) {
+  getServicesByDepartment(location, dept) {
     const servicesByDept: any = [];
     for (let i = 0; i < location['services'].length; i++) {
-      if (location['services'][i].department === deptid) {
+      if (location['services'][i].department === dept.departmentId) {
         servicesByDept.push(location['services'][i]);
       }
     }
-    return servicesByDept;
+    this.services = servicesByDept;
+    this.deptlist = this.groubedByTeam[dept.departmentName];
+    this.selectedDepartment = dept;
+    // if (this.deptlist) {
+    this.showServices = true;
+    // } else {
+    //   this.showServices = false;
+    // }
+    // return this.groubedByTeam[dept.departmentName];
+  }
+
+  backtoDetails() {
+    this.showServices = false;
   }
 
   getDateDisplay(dt) {
