@@ -383,11 +383,11 @@
 
                 <!-- Department wise doctors listing -->
                 <div class="c-body prov-detail-outer" *ngIf="showServices">
+                    <div class="bk-ctrl">
+                        <span class="backtoresults" (click)="backtoDetails()"><span
+                                class="strong">{{go_back_cap}}</span></span>
+                    </div>
                     <div class="card">
-                        <div class="bk-ctrl">
-                            <span class="backtoresults" (click)="backtoDetails()"><span
-                                    class="strong">{{go_back_cap}}</span></span>
-                        </div>
                         <div class="c-ot" style="display: flex; margin-bottom: 50px;
                         margin-top: 10px">
                             <div class="item" *ngIf="selectedDepartment.departmentName" style="font-weight: 600;

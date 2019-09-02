@@ -13,7 +13,6 @@ import { SharedFunctions } from '../../functions/shared-functions';
 })
 export class SetPasswordFormComponent implements OnInit {
 
-
   new_password_cap = Messages.NEW_PASSWORD_CAP;
   password_valid_cap = Messages.PASSWORD_VALID_CAP;
   re_enter_password_cap = Messages.RE_ENTER_PASSWORD_CAP;
@@ -21,7 +20,7 @@ export class SetPasswordFormComponent implements OnInit {
   set_password_msg = '';
   passworddialogRef;
   isValidConfirm_pw = false;
-  customer ='';
+  customer = '';
 
   spForm;
   @Input() type;
@@ -43,7 +42,6 @@ export class SetPasswordFormComponent implements OnInit {
     if (this.type !== 'forgot_password') {
       this.set_password_msg = Messages.SET_PASSWORD_MSG;
     }
-    
   }
 
   createForm() {
@@ -52,7 +50,6 @@ export class SetPasswordFormComponent implements OnInit {
         [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
       confirm_password: ['', Validators.compose(
         [Validators.required])],
-
     });
     setTimeout(() => {
       if (this.document.getElementById('newpassfield')) {
