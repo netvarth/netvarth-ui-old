@@ -263,6 +263,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   // gets the various json files based on the value of "section" parameter
   // Some of functions copied to Consumer Home also.
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    this.showServices = false;
     let UTCstring = null;
     if (modDateReq) {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
