@@ -34,7 +34,7 @@
                                             <td data-title="Name" class="td1">{{discount.name}}</td>
                                             <td data-title="Value" clas="td2">{{((discount.calculationType=='Percentage') ? 
                                                 ((discount.discValue > 0) ? discount.discValue+'%' : '--'): 
-                                                    ((discount.discValue > 0) ? formatPrice(discount.discValue) : '--')
+                                                    ((discount.discValue > 0) ?  '₹ '+(discount.discValue) : '--')
                                                     
                                                 )}}</td>
                                             <td data-title="Description" class="td1">{{discount.description}}</td>

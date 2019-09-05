@@ -910,7 +910,7 @@ export const Messages = {
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No Add-ons exist',
-  'PAY_BUTTON': 'Invoices to Pay',
+  'PAY_BUTTON': 'Invoice to Pay',
   'DUE_DATE_CAP': 'Due Date',
   'SUBSC_PACKAGE': 'Subscription/Package',
 
@@ -1298,8 +1298,8 @@ export const Messages = {
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up your tax requirements here. Enable the \"Tax Settings\" toggle switch to apply taxes for your services.',
 
   // form-level-provider-license and invoice
-  'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
-  'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'To avail the additional features of Jaldee.com, click here.',
+  'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage usage and payment history of your jaldee license, and upgrade license here.',
+  'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'Click here to avail additional features.',
   'FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG': 'Add relevant keywords to increase your visibility to your [customer].',
 
   // form-level-provider-coupons

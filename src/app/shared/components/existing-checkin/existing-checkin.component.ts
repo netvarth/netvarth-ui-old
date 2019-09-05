@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-existing-checkin',
@@ -150,7 +151,10 @@ export class ExistingCheckinComponent implements OnInit {
             // this.api_success = Messages.CHECKIN_CANCELLED;
             this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', this.checkinLabel);
             this.api_success =  this.api_success.replace('[cancelled]', this.cancelledlabel);
-           ;
+            setTimeout(() => {
+              this.api_success = null;
+              this.api_error = null;
+            }, projectConstants.TIMEOUT_DELAY);
             // this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', obj.place);;
             this.getExistingCheckinsByLocation(this.data.locdet.id);
           }
