@@ -1343,7 +1343,6 @@ export const Messages = {
   'VERIFIED_LEVEL_BASIC': 'Your verified level is Basic',
   'VERIFIED_LEVEL_BASICPLUS': 'Your verified level is Basic Plus',
   'VERIFIED_LEVEL_PREMIUM': 'Your verified level is Advanced',
-
   'ADD_DISPLAY_NOTE': 'Add Display Note',
   'ADD_PRIVATE_NOTE': 'Add Private Note',
   'UPDATE_DISPLAY_NOTE': 'Update Display Note',
