@@ -165,8 +165,8 @@
                                     </li>
                                     <!-- <li *ngIf="!checkIfFav(waitlist.provider.id)">
                                         <span class="add-fav" (click)="addFavProvider(waitlist.provider.id)">{{add_to_fav}}</span></li> -->
-                                    <li
-                                        *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived'">
+                                    <li class="cancelCheckinBtn"
+                                        *ngIf="waitlist.waitlistStatus == 'checkedIn' || waitlist.waitlistStatus == 'arrived' || waitlist.waitlistStatus=='prepaymentPending'">
                                         <span class="cancel"
                                             (click)="doCancelWaitlist(waitlist)">{{cancel_checkin_cap}}</span>
                                     </li>
