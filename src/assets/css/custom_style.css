@@ -4299,3 +4299,6 @@ border-bottom: none !important;
   font-size: .75rem !important;
   margin-right: 10px !important;
 }
+.cancelCheckinBtn{
+  width: 30% !important;
+}

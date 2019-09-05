@@ -337,6 +337,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           for (let i = 0; i < this.bill_data.discount.length; i++) {
             if (this.bill_data.discount[i].privateNote) {
@@ -348,7 +349,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
           if (this.bill_data.displayNotes || this.bill_data.privateNotes || this.discountDisplayNotes || this.discountPrivateNotes) {
             this.billNotesExists = true;
-          }
+            }
           if (this.showPayWorkBench) {
             this.showPayment();
           }
@@ -948,6 +949,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['id'] = this.bill_data.id;
     data['discounts'] = discountIds;
     this.applyAction(action, this.bill_data.uuid, data);
+    this.discountDisplayNotes = false;
+    this.discountPrivateNotes = false;
   }
   /**
    * Remove Provider Coupons
