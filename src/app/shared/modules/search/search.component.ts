@@ -118,13 +118,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   lat;
   geoLocation;
   isCurrentLocation = false;
-  // SEARCH_DEFAULT_GEOLOCATION: {
-  //   'autoname': '',
-  //   'name': '',
-  //   'lat': '',
-  //   'lon': '',
-  //   'typ': 'city'
-  // };
+  searchLength = 0;
+  showmoreSearch = false;
+
   constructor(
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
@@ -152,10 +148,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.selected_domain = this.passedDomain;
     }
     this.getAllsearchlabels();
-    const searchlabel = this.shared_functions.getitemfromLocalStorage('srchLabels');
-    if (searchlabel) {
-      this.jsonlist = searchlabel.popularSearchLabels.all.labels;
-    }
+    // const searchlabel = this.shared_functions.getitemfromLocalStorage('srchLabels');
+    // if (searchlabel) {
+    //   this.jsonlist = searchlabel.popularSearchLabels.all.labels;
+    // }
     this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
@@ -212,11 +208,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
 
             // });
           },
-          error => {
-            this.setDefaultLocation();
-          });
+            error => {
+              this.setDefaultLocation();
+            });
         } else {
-         this.setDefaultLocation();
+          this.setDefaultLocation();
         }
       }
     }
@@ -561,6 +557,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchdataserviceobj.set(this.searchlabels_data);
       this.handledomainchange(this.selected_domain, 1);
       this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
+      if (this.jsonlist) {
+        this.searchLength = this.jsonlist.length;
+        for (let i = 0; i < this.jsonlist.length; i++) {
+          if (i < this.paginationLimit) {
+            this.jsonlist[i].show = true;
+          }
+        }
+      }
     } else {
       this.shared_service.getAllSearchlabels()
         .subscribe(
@@ -568,6 +572,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
             this.shared_functions.setitemonLocalStorage('srchLabels', res);
             this.searchlabels_data = res || [];
             this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
+            if (this.jsonlist) {
+              this.searchLength = this.jsonlist.length;
+              for (let i = 0; i < this.jsonlist.length; i++) {
+                if (i < this.paginationLimit) {
+                  this.jsonlist[i].show = true;
+                }
+              }
+            }
             this.shared_functions.setitemonLocalStorage('popularSearch', this.jsonlist);
             const pdata = { 'ttype': 'popularSearchList', 'target': this.jsonlist };
             this.shared_functions.sendMessage(pdata);
@@ -598,16 +610,15 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     // if (this.kw_autoname) {
     //   this.filterKeywords();
     // }
-    console.log(kw);
     if (kw.query && kw.query.match('sub_sector_displayname')) {
       // kw.typ = 'kwphrase';
       // kw.autoname = kw.displayname;
       this.kw_autoname = kw.displayname;
       this.keywordholder.name = kw.displayname;
-        this.keywordholder.autoname = kw.displayname;
-        this.keywordholder.domain = '';
-        this.keywordholder.subdomain = '';
-        this.keywordholder.typ = 'kwphrase';
+      this.keywordholder.autoname = kw.displayname;
+      this.keywordholder.domain = '';
+      this.keywordholder.subdomain = '';
+      this.keywordholder.typ = 'kwphrase';
       this.handleNormalSearchClick();
       return;
       // kw.autoname = kw.name;
@@ -696,7 +707,6 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   selectedOption() {
   }
   do_search(labelqpassed?) {
-    console.log(labelqpassed);
     this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
     this.closeMoreoptions();
     // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
@@ -945,20 +955,20 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
         const curLoc = {};
-          curLoc['autoname'] = 'Current Location';
-          curLoc['name'] = 'Current Location';
-          curLoc['lat'] = +pos.coords.latitude;
-          curLoc['lon'] = +pos.coords.longitude;
-          curLoc['rank'] = 4;
-          curLoc['typ'] = 'city';
-          this.setLocation(curLoc);
-          this.location_name = curLoc['autoname'];
-          obj.value = this.location_name;
-          this.isCurrentLocation = true;
+        curLoc['autoname'] = 'Current Location';
+        curLoc['name'] = 'Current Location';
+        curLoc['lat'] = +pos.coords.latitude;
+        curLoc['lon'] = +pos.coords.longitude;
+        curLoc['rank'] = 4;
+        curLoc['typ'] = 'city';
+        this.setLocation(curLoc);
+        this.location_name = curLoc['autoname'];
+        obj.value = this.location_name;
+        this.isCurrentLocation = true;
       },
-      error => {
-        this.setDefaultLocation();
-      });
+        error => {
+          this.setDefaultLocation();
+        });
     }
   }
   clearSearch(obj) {
@@ -981,13 +991,30 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.locRef.nativeElement.value = this.locRef.nativeElement.value;
     }
   }
-  showMoreItems() {
-    if (this.showmorepopularoptions) {
-      this.showmorepopularoptions = false;
-      this.showMorepopularOptionsOverlay = false;
-    } else {
-      this.showmorepopularoptions = true;
-      this.showMorepopularOptionsOverlay = true;
+  showMoreItems(source) {
+    // if (this.showmorepopularoptions) {
+    //   this.showmorepopularoptions = false;
+    //   this.showMorepopularOptionsOverlay = false;
+    // } else {
+    //   this.showmorepopularoptions = true;
+    //   this.showMorepopularOptionsOverlay = true;
+    // }
+    this.showmoreSearch = false;
+    if (source === 'more' && this.jsonlist) {
+      for (let i = 0; i < this.jsonlist.length; i++) {
+        if (i >= this.paginationLimit) {
+          this.jsonlist[i].show = true;
+        }
+      }
+      this.showmoreSearch = true;
+    }
+    if (source === 'less') {
+      for (let i = 0; i < this.jsonlist.length; i++) {
+        if (i >= this.paginationLimit) {
+          this.jsonlist[i].show = false;
+        }
+      }
+      this.showmoreSearch = false;
     }
   }
   closeMorepopularoptions() {
