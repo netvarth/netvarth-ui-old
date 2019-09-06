@@ -986,7 +986,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 } else {
                   this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                  this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  // this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date'] = this.shared_functions.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['time'] = this.search_data.hits.hit[srchindx].fields['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 }
               }
             } else {

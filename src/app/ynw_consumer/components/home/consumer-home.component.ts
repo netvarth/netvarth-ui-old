@@ -513,8 +513,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               } else {
                 this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  if (dtoday === waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date'] = this.shared_functions.formatDate(waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['date']
+                    + ', ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-                  this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  // this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = 'Today, ' + waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 } else {
                   this.fav_providers[index]['locations'][locindx]['estimatedtime_det']['time'] = this.shared_functions.convertMinutesToHourMinute(waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
@@ -765,25 +772,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   prepaymentCounter(list) {
-   // this.setSystemDate();
-   let server_time;
-   let checkinTime;
-   let currentTime;
+    // this.setSystemDate();
+    let server_time;
+    let checkinTime;
+    let currentTime;
     this.shared_services.getSystemDate()
       .subscribe(
         res => {
-           server_time = res;
+          server_time = res;
           this.shared_functions.setitemonLocalStorage('sysdate', res);
         });
-      checkinTime =  moment(list.checkInTime, ['h:mm A']).format('HH:mm:ss');
-      currentTime = moment(server_time).format('HH:mm:ss');
-     // console.log('checkinTime' + checkinTime);
-     // console.log('currentTime' + currentTime);
-     this.mins = moment.utc(moment(currentTime, 'HH:mm').diff(moment(checkinTime, 'HH:mm'))).format('mm');
-     this.mins = 15 - this.mins;
-     return this.mins;
+    checkinTime = moment(list.checkInTime, ['h:mm A']).format('HH:mm:ss');
+    currentTime = moment(server_time).format('HH:mm:ss');
+    // console.log('checkinTime' + checkinTime);
+    // console.log('currentTime' + currentTime);
+    this.mins = moment.utc(moment(currentTime, 'HH:mm').diff(moment(checkinTime, 'HH:mm'))).format('mm');
+    this.mins = 15 - this.mins;
+    return this.mins;
   }
- 
+
   recheckwaitlistCounters() {
     for (let i = 0; i < this.waitlists.length; i++) {
       if (this.waitlists[i].estimated_autocounter) {
