@@ -301,18 +301,18 @@
                 style="color: red; width: 100%; text-align: left;">
                 Your 'Platinum - Free trial 60 days' license package will expire {{license_message}}.
                 <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
-                        </b></span>to Upgrade License.</span>
+                        </b></span><span style="color: red"> to Upgrade License.</span></span>
             </p>
             <p style="width: 100%; text-align: left;"
                 *ngIf="active_license!='Platinum - FREE Trial 60 days' && active_license!='Diamond'">
                 Your current license is
                 <i style="color:red">{{active_license}}.</i><span (click)="upgradeMembership()" style="color: #00aef2"
-                    class="pointer-cursor"> Upgrade license now </span>for more features.
+                    class="pointer-cursor"> <b> Upgrade license now</b> </span> for more features.
             </p>
-            <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
+            <!-- <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
                 license is
                 <i style="color:red">{{active_license}}</i>.
-            </p>
+            </p> -->
         </div>
     </div>
 </div>
