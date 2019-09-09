@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
@@ -7,6 +7,7 @@ import { CheckInHistoryServices } from '../../consumer-checkin-history-list.serv
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
@@ -85,6 +86,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
   discountDisplayNotes = false;
   billNoteExists = false;
   showBillNotes = false;
+  paytmEnabled = false;
   constructor(
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
@@ -201,10 +203,18 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    * To Get Payment Modes
    */
   getPaymentModes() {
+    this.paytmEnabled = false;
     this.sharedServices.getPaymentModesofProvider(this.checkin.provider.id)
       .subscribe(
         data => {
           this.payment_options = data;
+          this.payment_options.forEach(element => {
+            if (element.name === 'PPI') {
+              this.paytmEnabled = true;
+              return false;
+            }
+          });
+          console.log (this.payment_options);
           this.payModesQueried = true;
           if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
             this.payModesExists = false;
@@ -241,6 +251,35 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               this.document.getElementById('payuform').submit();
+            }, 2000);
+          },
+          error => {
+            this.resetApiError();
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    }
+  }
+  paytmPayment() {
+    this.pay_data.uuid = this.checkin.ynwUuid;
+    this.pay_data.amount = this.bill_data.amountDue;
+    this.pay_data.paymentMode = 'PPI';
+    this.pay_data.accountId = this.checkin.provider.id;
+    this.pay_data.purpose = 'billPayment';
+    this.resetApiError();
+    if (this.pay_data.uuid != null &&
+      this.pay_data.paymentMode != null &&
+      this.pay_data.amount !== 0) {
+      this.api_success = Messages.PAYMENT_REDIRECT;
+      this.gateway_redirection = true;
+      this.sharedServices.consumerPayment(this.pay_data)
+        .subscribe(
+          data => {
+            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+              console.log( this.payment_popup);
+            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            setTimeout(() => {
+              this.document.getElementById('paytmform').submit();
             }, 2000);
           },
           error => {
