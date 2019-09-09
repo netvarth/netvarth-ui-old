@@ -122,22 +122,43 @@
                                                                         </app-field-error-display>
                                                                     </div>
                                                                 </div>
+
+
+
                                                                 <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                     <div class="form-group">
-                                                                        <label class="caption">Website *</label>
+                                                                        <label class="caption">Website Web *</label>
                                                                         <mat-form-field>
-                                                                            <input matInput #paytmWebsiteidref
-                                                                                [(ngModel)]="paytmWebsite"
-                                                                                (keypress)="resetApi('paytmWebsite')"
-                                                                                autocomplete="off" (blur)="paytmwebsiteBlur()"
+                                                                            <input matInput #paytmWebsitewebref
+                                                                                [(ngModel)]="paytmWebsiteWeb"
+                                                                                (keypress)="resetApi('paytmWebsiteWeb')"
+                                                                                autocomplete="off" (blur)="paytmwebsitewebBlur()"
                                                                                 [disabled]="!ineditMode" tabindex="3">
                                                                         </mat-form-field>
                                                                         <app-field-error-display
-                                                                            [displayError]="showError['paytmWebsite']['status']"
-                                                                            [errorMsg]="showError['paytmWebsite']['msg']">
+                                                                            [displayError]="showError['paytmWebsiteWeb']['status']"
+                                                                            [errorMsg]="showError['paytmWebsiteWeb']['msg']">
                                                                         </app-field-error-display>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="caption">Website App *</label>
+                                                                            <mat-form-field>
+                                                                                <input matInput #paytmWebsiteappref
+                                                                                    [(ngModel)]="paytmWebsiteApp"
+                                                                                    (keypress)="resetApi('paytmWebsiteApp')"
+                                                                                    autocomplete="off" (blur)="paytmwebsiteAppBlur()"
+                                                                                    [disabled]="!ineditMode" tabindex="3">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                [displayError]="showError['paytmWebsiteApp']['status']"
+                                                                                [errorMsg]="showError['paytmWebsiteApp']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+
+
                                                                 <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                     <div class="form-group">
                                                                         <label class="caption">Industry Type *</label>

@@ -578,7 +578,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     instantQInput['location'] = this.locid;
     instantQInput['services'] = services;
     instantQInput['queueSchedule'] = instantScheduleJson;
-    instantQInput['name'] = 'Instant Queue ' + (moment(sTime).format('hh:mm A') || null) + '-' + (moment(instantQ.dend_time).format('hh:mm A') || null);
+    instantQInput['name'] = (moment(sTime).format('hh:mm A') || null) + '-' + (moment(instantQ.dend_time).format('hh:mm A') || null);
     instantQInput['onlineCheckin'] = true;
     instantQInput['futureWaitlist'] = false;
     instantQInput['parallelServing'] = instantQ.qserveonce;

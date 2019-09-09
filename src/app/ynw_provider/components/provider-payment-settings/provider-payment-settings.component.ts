@@ -57,7 +57,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     paytmmobile;
     paytmMerchantKey;
     paytmMerchantId;
-    paytmWebsite;
+    paytmWebsiteApp;
+    paytmWebsiteWeb;
     paytmIndustryType;
     ccenabled;
     pannumber;
@@ -174,7 +175,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 'paytmMerchantId': { status: false, msg: '' },
                 'paytmMerchantKey': { status: false, msg: '' },
                 'paytmIndustryType': { status: false, msg: '' },
-                'paytmWebsite': { status: false, msg: '' },
+                'paytmWebsiteWeb': { status: false, msg: '' },
+                'paytmWebsiteApp': { status: false, msg: '' },
                 'pannumber': { status: false, msg: '' },
                 'panname': { status: false, msg: '' },
                 'bankacname': { status: false, msg: '' },
@@ -197,7 +199,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.paystatus = paySettings.onlinePayment || false;
         this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
         this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
-        this.paytmWebsite = paySettings.paytmWebsite || '';
+        this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
+        this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
         this.paytmIndustryType = paySettings.paytmIndustryType || '';
         this.paytmMerchantId = paySettings.paytmMerchantId || '';
         this.pannumber = paySettings.panCardNumber || '';
@@ -337,7 +340,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             postData['payTm'] = true;
             this.paytmMidBlur();
             this.paytmMkeyBlur();
-            this.paytmwebsiteBlur();
+            this.paytmwebsitewebBlur();
+            this.paytmwebsiteAppBlur();
             this.paytmindustrytypeBlur();
             if (!numberpattern.test(this.paytmmobile)) {
                 this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ONLYNUM') };
@@ -352,7 +356,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }
             postData['paytmMerchantId'] = this.paytmMerchantId;
             postData['paytmMerchantKey'] = this.paytmMerchantKey;
-            postData['paytmWebsite'] = this.paytmWebsite;
+            // postData['paytmWebsite'] = this.paytmWebsite;
+            postData['paytmWebsiteWeb'] = this.paytmWebsiteWeb;
+            postData['paytmWebsiteApp'] = this.paytmWebsiteApp;
             postData['paytmIndustryType'] = this.paytmIndustryType;
         } else {
             postData.payTm = false;
@@ -546,15 +552,26 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }
         }
     }
-    paytmwebsiteBlur() {
+    paytmwebsitewebBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
-            if (blankpattern.test(this.paytmWebsite)) {
+            if (blankpattern.test(this.paytmWebsiteWeb)) {
                 this.errorExist = true;
-                this.showError['paytmWebsite'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKWEBSITE') };
+                this.showError['paytmWebsiteWeb'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKWEBSITE') };
             }
         }
     }
+
+    paytmwebsiteAppBlur() {
+        const blankpattern = projectConstants.VALIDATOR_BLANK;
+        if (this.paytmenabled === true) {
+            if (blankpattern.test(this.paytmWebsiteApp)) {
+                this.errorExist = true;
+                this.showError['paytmWebsiteApp'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKWEBSITEAPP') };
+            }
+        }
+    }
+
     paytmindustrytypeBlur() {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
