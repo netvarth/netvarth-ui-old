@@ -49,6 +49,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
   customernormal_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+  loadData: ArrayBuffer;
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofilePrivacysettingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -237,6 +238,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         data => {
+        this.loadData = data;
           this.api_success = Messages.BPROFILE_PRIVACY_SAVED;
           setTimeout(() => {
             this.dialogRef.close({ data: data, message: 'reloadlist' });
@@ -247,6 +249,9 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           this.disableButton = false;
         }
       );
+  }
+  loadDetails(){
+    this.dialogRef.close({data: this.loadData, message: 'reloadlist' });
   }
   // resets the error messages holders
   resetApiErrors() {

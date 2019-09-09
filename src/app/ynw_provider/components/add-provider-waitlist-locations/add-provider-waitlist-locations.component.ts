@@ -486,6 +486,9 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         }
       );
   }
+  loadDetails(){
+    this.dialogRef.close('reloadlist');
+  }
   editProviderLocation(post_data) {
     post_data.id = this.data.location.id;
     if (this.sel_badges.length > 0) {
@@ -511,7 +514,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   }
 
   getBusinessProfile() {
-
     this.provider_services.getBussinessProfile()
       .subscribe(
         data => {
@@ -524,6 +526,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       );
 
   }
+
+  
   handle_badge_click(obj) {
     const indx = this.sel_badges.indexOf(obj.name);
     if (indx !== -1) {

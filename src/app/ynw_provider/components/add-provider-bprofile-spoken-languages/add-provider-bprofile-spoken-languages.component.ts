@@ -22,6 +22,7 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
   query_done = false;
   sellanguage_arr: any = [];
   disableButton = false;
+  loadData: ArrayBuffer;
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofileSpokenLanguagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,9 +69,10 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
     };
     this.provider_services.updatePrimaryFields(postdata)
       .subscribe(data => {
+        this.loadData = data;
         this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_LANGUAGE_SAVED');
         setTimeout(() => {
-          this.dialogRef.close({ 'mod': 'reloadlist', 'data': data });
+          this.dialogRef.close({ 'mod': 'reloadlist', 'data': this.loadData });
         }, projectConstants.TIMEOUT_DELAY);
       },
         error => {
@@ -78,6 +80,9 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
           this.disableButton = false;
         }
       );
+  }
+  loadDetails(){
+    this.dialogRef.close({ 'mod': 'reloadlist', 'data': this.loadData });
   }
   resetApiErrors() {
     this.api_error = null;

@@ -1,5 +1,5 @@
 <h1 class="mat-dialog-title">{{priv_settings_cap}} {{curmod | capitalizeFirst}} {{curtype | capitalizeFirst}} <button
-                mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+                mat-dialog-close class="modal_close" (click)="loadDetails()" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
                  <app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
                 <mat-dialog-content class="ynw-common-form" *ngIf="!api_loading">
         <div class="phoneouter" *ngIf="curtype=='phone'">

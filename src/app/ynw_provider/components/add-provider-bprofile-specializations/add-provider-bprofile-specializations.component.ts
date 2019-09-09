@@ -24,6 +24,7 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
   query_done = false;
   selspecialization_arr: any = [];
   disableButton = false;
+  loadData: ArrayBuffer;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofileSpecializationsComponent>,
@@ -74,6 +75,7 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
     };
     this.provider_services.updatePrimaryFields(postdata)
       .subscribe(data => {
+        this.loadData = data;
         this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SPECIALIZATION_SAVED');
         setTimeout(() => {
           this.dialogRef.close({ 'mod': 'reloadlist', 'data': data });
@@ -85,7 +87,9 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
         }
       );
   }
-
+  loadDetails(){
+    this.dialogRef.close({ 'mod': 'reloadlist', 'data': this.loadData });
+  }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;

@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">{{specializations_cap}}<button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title">{{specializations_cap}}<button mat-dialog-close class="modal_close" (click)="loadDetails()" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
 <mat-dialog-content *ngIf="!api_loading">
     <div class="specializationouter" *ngIf="specialization_arr.length > 0" >

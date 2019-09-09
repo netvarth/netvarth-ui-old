@@ -2,7 +2,7 @@
 onSubmit(amForm.value)" (keyup)="resetApiErrors()"
     class="ynw-common-form">
     <h1 class="mat-dialog-title">{{location_cap}} <span *ngIf="forbadge">{{amenities_cap}}</span> <button #loc
-            mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+            mat-dialog-close  class="modal_close" (click)="loadDetails()" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
             <app-common-innerloading-spinner  *ngIf="api_loading1"> </app-common-innerloading-spinner>
             <mat-dialog-content *ngIf="!api_loading1">
         <ng-container *ngIf=" data && !forbadge">
