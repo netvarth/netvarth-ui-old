@@ -156,7 +156,7 @@
                                             *ngIf="waitlist.amountDue>0 && waitlist.waitlistStatus != 'cancelled'"
                                             (click)="viewBill(waitlist)">Bill</span>
                                     </li>
-                                    <li (click)="makeFailedPayment(waitlist)"
+                                    <li (click)="confirmSettleBill()"
                                         *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
                                         <span class="payment">{{make_pay_cap}}</span>
                                     </li>

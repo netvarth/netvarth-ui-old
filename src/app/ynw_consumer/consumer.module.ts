@@ -39,6 +39,9 @@ import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-m
 
 import { projectConstants } from '../shared/constants/project-constants';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
+import { ConsumerPaymentmodeComponent } from './components/consumer-paymentmode/consumer-paymentmode.component';
+
+
 
 @NgModule({
     imports: [
@@ -67,13 +70,15 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
       MembersComponent,
       AddMembersHolderComponent,
       AddManagePrivacyComponent,
+      ConsumerPaymentmodeComponent
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
       ConfirmBoxComponent,
       NotificationListBoxComponent,
       AddMembersHolderComponent,
-      AddManagePrivacyComponent
+      AddManagePrivacyComponent,
+      ConsumerPaymentmodeComponent
     ],
     providers: [
       SharedServices,

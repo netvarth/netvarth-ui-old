@@ -22,6 +22,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgxCarousel } from 'ngx-carousel';
+import { ConsumerPaymentmodeComponent } from '../../components/consumer-paymentmode/consumer-paymentmode.component';
 
 @Component({
   selector: 'app-consumer-home',
@@ -132,6 +133,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
+    public sharedfunctionObj: SharedFunctions,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer) { }
   public carouselOne: NgxCarousel;
@@ -356,6 +358,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     mom_date.set('hour', sHours);
     mom_date.set('minute', sMinutes);
     return mom_date;
+  }
+
+  confirmSettleBill() {
+    const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+    });
   }
 
   getHistroy() {
@@ -924,6 +939,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         error => {
         });
   }
+  
   getTerminologyTerm(term) {
     if (this.terminologiesJson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
