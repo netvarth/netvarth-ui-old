@@ -4302,3 +4302,6 @@ border-bottom: none !important;
 .cancelCheckinBtn{
   width: 30% !important;
 }
+.q-time h3 {
+  margin-bottom: 0px !important;
+}
