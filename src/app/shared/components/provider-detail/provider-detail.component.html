@@ -220,7 +220,7 @@
                                                 <div class="services" *ngIf="showDepartments">
                                                     <span class="sub-title">Departments</span>
                                                     <ul>
-                                                        <li *ngFor="let dept of departmentlist.departments"
+                                                        <li *ngFor="let dept of servicesjson"
                                                             (click)="getServicesByDepartment(loc, dept)">{{dept.departmentName
                                                         | capitalizeFirst}}</li>
                                                     </ul>

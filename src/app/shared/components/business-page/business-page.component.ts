@@ -242,6 +242,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('terminologies', true);
           this.getbusinessprofiledetails_json('virtualFields', true);
           this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('services', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -313,7 +314,11 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
-            this.service_exists = true;
+            for (let i = 0; i < this.servicesjson.length; i++) {
+              if (this.servicesjson[i].hasOwnProperty('departmentName')) {
+                this.showDepartments = true;
+              }
+            }
             break;
           }
           case 'gallery': {
@@ -382,7 +387,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
-              this.getProviderDepart(this.provider_bussiness_id);
+              // this.getProviderDepart(this.provider_bussiness_id);
               this.locationjson[i]['checkins'] = [];
               if (localStorage.getItem('ynw-user')) {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);

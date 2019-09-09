@@ -330,11 +330,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'services': {
             this.servicesjson = res;
-            // for (let i = 0; i < this.servicesjson.length; i++) {
-            //   if (this.servicesjson[i].hasOwnProperty('departmentName')) {
-            //     this.showDepartments = true;
-            //   }
-            // }
+            for (let i = 0; i < this.servicesjson.length; i++) {
+              if (this.servicesjson[i].hasOwnProperty('departmentName')) {
+                this.showDepartments = true;
+              }
+            }
             break;
           }
           case 'gallery': {
@@ -412,7 +412,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
               // if (this.businessjson.claimStatus === 'Claimed') {
-              this.getProviderDepart(this.provider_bussiness_id);
+              // this.getProviderDepart(this.provider_bussiness_id);
               // }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
