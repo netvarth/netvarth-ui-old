@@ -37,14 +37,7 @@
         </div>
       </mat-radio-group>
     </div>
-     <div class="lbl col-sm-12 col-md-12 col-lg-12 notify">
-      <label>Send notifications to {{customer_label}}
-      <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['sendNotification']"
-          [labelPosition]="'before'" [(ngModel)]="form['sendNotification']" (change)="onFormChange()"
-          [disabled]="!waitlist_manager['onlineCheckIns']">
-        </mat-slide-toggle>
-      </label>
-    </div>
+    
   </div>
 <div *ngIf="formChange == 1">
   <button type="button" mat-button (click)="cancelChange()"
@@ -53,7 +46,14 @@
     [disabled]="form.calculationMode == 'Fixed' && form.trnArndTime == null">{{save_btn}}</button>
   </div>
   <div class="row">
-    <div class="lbl col-sm-12 col-md-12 col-lg-12 notify">
+      <div class="lbl col-sm-12 col-md-12 col-lg-12 " style ="margin-bottom: 10px">
+          <label>Send notifications to {{customer_label}}
+          <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['sendNotification']"
+              [labelPosition]="'before'" [(ngModel)]="form['sendNotification']" (change)="OnSubmit()">
+            </mat-slide-toggle>
+          </label>
+        </div>
+    <div class="lbl col-sm-12 col-md-12 col-lg-12 ">
       <label>Select services by department
         <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['filterByDept']" [labelPosition]="'before'"
           [(ngModel)]="form['filterByDept']" (change)="doRemoveservice()">
