@@ -9,6 +9,8 @@ import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import * as moment from 'moment';
+import { ConsumerPaymentmodeComponent } from '../../../../ynw_consumer/components/consumer-paymentmode/consumer-paymentmode.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-check-in-inner',
@@ -153,8 +155,9 @@ export class CheckInInnerComponent implements OnInit {
     public sharedFunctionobj: SharedFunctions,
     public router: Router,
     public provider_datastorage: CommonDataStorageService,
-    // public dialogRef: MatDialogRef<CheckInInnerComponent>,
+    public dialogRef: MatDialogRef<CheckInInnerComponent>,
     public _sanitizer: DomSanitizer,
+    private dialog: MatDialog,
     @Inject(DOCUMENT) public document,
     // @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
@@ -707,31 +710,41 @@ export class CheckInInnerComponent implements OnInit {
         });
         if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
           if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+            this.dialogRef.close();
             // this.sel_ser_det.minPrePaymentAmount
             const payData = {
               'amount': this.prepaymentAmount,
-              'paymentMode': this.paytype,
+              //'paymentMode': this.paytype,
               'uuid': retUUID,
               'accountId': this.account_id,
               'purpose': 'prePayment'
             };
-            this.shared_services.consumerPayment(payData)
-              .subscribe(pData => {
-                if (pData['response']) {
-                  this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                  this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
-                  setTimeout(() => {
-                    this.document.getElementById('payuform').submit();
-                  }, 2000);
-                } else {
-                  this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
-                  this.api_loading = false;
-                }
-              },
-                error => {
-                  this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-                  this.api_loading = false;
-                });
+
+            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+              width: '50%',
+              panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+              disableClose: true,
+              data: {
+                'details': payData
+              }
+            });
+            // this.shared_services.consumerPayment(payData)
+            //   .subscribe(pData => {
+            //     if (pData['response']) {
+            //       this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+            //       this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
+            //       setTimeout(() => {
+            //         this.document.getElementById('payuform').submit();
+            //       }, 2000);
+            //     } else {
+            //       this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+            //       this.api_loading = false;
+            //     }
+            //   },
+            //     error => {
+            //       this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+            //       this.api_loading = false;
+            //     });
           } else {
             this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
             this.api_loading = false;

@@ -360,18 +360,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
 
-  confirmSettleBill() {
-    const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM')
-      }
-    });
-    dialogrefd.afterClosed().subscribe(result => {
-    });
-  }
+  
 
   getHistroy() {
     this.loadcomplete.history = false;
@@ -899,6 +888,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  confirmSettleBill(waitlist) {
+    const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'details': waitlist
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+    });
+  }
   makeFailedPayment(waitlist) {
     let prepayamt = 0;
     this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
@@ -910,26 +912,39 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (prepayamt > 0) {
               const payData = {
                 'amount': prepayamt,
-                'paymentMode': 'DC',
+                //'paymentMode': 'DC',
                 'uuid': waitlist.ynwUuid,
                 'account_id': waitlist.provider.id,
                 'purpose': 'prePayment'
               };
-              this.shared_services.consumerPayment(payData)
-                .subscribe(pData => {
-                  if (pData['response']) {
-                    this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                    setTimeout(() => {
-                      this.document.getElementById('payuform').submit();
-                    }, 2000);
-                  } else {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                  }
-                },
-                  error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                  });
+
+              const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                  'details': payData
+                }
+              });
+
+
+
+
+              // this.shared_services.consumerPayment(payData)
+              //   .subscribe(pData => {
+              //     if (pData['response']) {
+              //       this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+              //       this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+              //       setTimeout(() => {
+              //         this.document.getElementById('payuform').submit();
+              //       }, 2000);
+              //     } else {
+              //       this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+              //     }
+              //   },
+              //     error => {
+              //       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              //     });
             } else {
               this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
             }

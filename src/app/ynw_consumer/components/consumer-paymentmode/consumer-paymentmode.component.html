@@ -1,18 +1,18 @@
-<div class="ynw-common-form paymentmode">
-<h1 class="mat-dialog-title">Payment
-    <button mat-dialog-close class="modal_close" tabindex="-1">
+<div>
+<h4 class="mat-dialog-title">Payment
+    <button mat-dialog-close class="modal_close" tabindex="-1" style="color: black">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
-  </h1>
+  </h4>
 <mat-dialog-content>
+  <div >
+     <div style="padding-bottom: 10px">Prepayment Amount: <b>&#8377; {{prepayAmount}}</b></div> 
+      <div style="padding-bottom: 10px">Payment Options</div>
    
-  <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-    <div class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
-      <span class="">Payment Options</span>
-    </div>
     <div class="cc-dc-nb" style="display: flex">
       <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button>
       <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
     </div>
   </div>
 </mat-dialog-content></div>
+<div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
