@@ -3385,7 +3385,8 @@ figcaption {
 }
 
 .srch .sa .sa-ps p a:hover, .popular a:hover {
-  text-decoration: underline !important
+  text-decoration: underline !important;
+  color: #00aef2 !important;
 }
 
 .pop-search {
