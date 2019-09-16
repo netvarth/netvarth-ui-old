@@ -61,6 +61,7 @@ import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { ProviderBprofileSearchDynamicComponent } from './components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
+
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -79,7 +80,8 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderSubeaderModule,
     LoadingSpinnerModule,
     ProviderWaitlistOnlineCheckinModule,
-    AddProviderSchedulesModule
+    AddProviderSchedulesModule,
+    
   ],
   declarations: [
     ProviderComponent,
@@ -112,7 +114,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderWaitlistServiceComponent,
     GoogleMapComponent,
     ProviderBprofileSearchDynamicComponent,
-    VirtualFieldsComponent,
+    VirtualFieldsComponent
   ],
   exports: [ConfirmBoxComponent, ConfirmPaymentBoxComponent],
   entryComponents: [

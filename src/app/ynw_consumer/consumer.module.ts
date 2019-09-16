@@ -39,7 +39,7 @@ import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-m
 
 import { projectConstants } from '../shared/constants/project-constants';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
-import { ConsumerPaymentmodeComponent } from './components/consumer-paymentmode/consumer-paymentmode.component';
+
 
 
 
@@ -69,16 +69,16 @@ import { ConsumerPaymentmodeComponent } from './components/consumer-paymentmode/
       NotificationListBoxComponent,
       MembersComponent,
       AddMembersHolderComponent,
-      AddManagePrivacyComponent,
-      ConsumerPaymentmodeComponent
+      AddManagePrivacyComponent
+      
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
       ConfirmBoxComponent,
       NotificationListBoxComponent,
       AddMembersHolderComponent,
-      AddManagePrivacyComponent,
-      ConsumerPaymentmodeComponent
+      AddManagePrivacyComponent
+      
     ],
     providers: [
       SharedServices,

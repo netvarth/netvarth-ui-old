@@ -249,7 +249,7 @@
 <mat-dialog-actions *ngIf="payMentShow == 1 && !loading">
     <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disablebutton">{{cancel_btn}}</button>
     <button type="button" mat-button class="cs-btn bt1" [disabled]="!pay_data.amount || pay_data.amount == 0 ||
-    !pay_data.uuid || !pay_data.paymentMode || payment_loading || disablebutton" (click)="makePayment()"
+    !pay_data.uuid || payment_loading || disablebutton" (click)="makePayment()"
         *ngIf="source != 'payment-history'">{{make_payment}}</button>
     <!-- <button type="button" mat-button class="cs-btn bt1" (click)="printMe()">Print</button> -->
 </mat-dialog-actions>
