@@ -193,6 +193,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           },
           error => {
             this.payment_loading = false;
+            this.disablebutton = false;
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );

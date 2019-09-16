@@ -95,7 +95,7 @@ export class SharedServices {
     if (params.sort.trim() !== '') {
       sort_prefix = params.sort;
     } else {
-      sort_prefix = 'ynw_verified_level desc, distance asc';
+      sort_prefix = 'claimable asc, ynw_verified_level desc, distance asc';
     }
     url = url + '/search';
     // rebuilding the parameters to accomodate q.parser and q.options
