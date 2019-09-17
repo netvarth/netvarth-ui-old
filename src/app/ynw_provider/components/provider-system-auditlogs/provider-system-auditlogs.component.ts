@@ -59,7 +59,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
       url: '/provider'
     },
     {
-      title: 'System Audit Logs'
+      title: 'Activity Log'
     }
   ];
   isCheckin;

@@ -291,7 +291,7 @@
                 <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">
                     <ul class="list" *ngIf="show_prov_bottomicons">
                         <li [class.active]="selOpt=='Audit'" (click)="showAuditlog()"><span class="icon-audit"
-                                matTooltip="Audit Log"></span></li>
+                                matTooltip="Activity Log"></span></li>
                         <li [class.active]="selOpt=='Alert'" (click)="showAlert()"><span class="alert-count"
                                 *ngIf="alert_count>0">{{alert_count}}</span><span class="icon-bell"
                                 matTooltip="Alerts"></span></li>

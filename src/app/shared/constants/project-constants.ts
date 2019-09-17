@@ -384,15 +384,15 @@ export const projectConstants = {
     veterinaryPetcare: 'Eg:- Veterinary Clinic, Adat Veterinary Hospital, etc'
   },
   DOMAIN_SEARCH_SUGGESTIONS : {
-    all : 'Eg:- Herbal beauty parlour, Madurai Vegetarian, Bright Hospital, etc',
-    professionalconsulting: 'Eg:- Adv.Pranav, Ameya Professionals Private Limited, etc',
-    healthcare: 'Eg:- Seven Star Clinic, Dr. Mani, Bright Hospital, etc',
-    personalcare: 'Eg:- Herbal beauty parlour, Aloe Sita Beauty Salon & Spa, etc',
-    finance: 'Eg:- Manappuram Finance Limited, Bajaj Allianz Life Insurance Co. Ltd, etc',
-    foodjoints: 'Eg:- Pepper Restaurant, Madurai Vegetarian, etc',
-    vastuastrology: 'Eg:- Vastupeedam, Ambadi Jyothisham Center, etc',
-    religiouspriests: 'Eg:- Our Lady of Dolours Basilica Church, Sri Vadakkumnatha Temple, etc',
-    veterinarypetcare: 'Eg:- Veterinary Clinic, Adat Veterinary Hospital, etc'
+    all : 'Search for doctors, professionals, beauty saloons, ....',
+    professionalconsulting: 'Search for lawyers, civil architects, chartered accountants, ....',
+    healthcare: 'Search for hospitals, doctors, dentists,.....',
+    personalcare: 'Search for beauty saloons, fitness centers, massage centers, ......',
+    finance: 'Search for financial institutions, insurances, loans, ......',
+    foodjoints: 'Search for restaurants, caterers, home bakers, .....',
+    vastuastrology: ' Search for astrologers, vastu consultants, ......',
+    religiouspriests: 'Search for temples, poojas, ceremonies, .....',
+    veterinarypetcare: 'Search for veterinary doctors, pet grooming, pet training, ......'
   },
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',

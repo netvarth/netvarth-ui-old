@@ -146,7 +146,7 @@ legal_cap = Messages.LEGALCAP;
   }
 
   showAuditlog() {
-    this.maximizeTooltip = 'Go To System Audit Logs';
+    this.maximizeTooltip = 'Go To Activity Log';
     if (this.showAuditDiv === true) {
       this.showbottompopup = false;
       this.clearDivs();
@@ -156,7 +156,7 @@ legal_cap = Messages.LEGALCAP;
     this.auditStatus = 1;
     this.showbottompopup = true;
     this.showAuditDiv = true;
-    this.bottomdivHeader = 'Audit Logs';
+    this.bottomdivHeader = 'Activity Log';
     this.selOpt = 'Audit';
     this.auditlog = [];
     this.shared_services.getAuditLogs('', '', '', '', 0, this.auditCnt)
