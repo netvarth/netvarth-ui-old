@@ -2,7 +2,7 @@
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     <h1 class="mat-dialog-title">
         <ng-container *ngIf="data.type=='edit'">{{data.type | capitalizeFirst}}</ng-container> {{service_time_cap}}
-        <button #queue mat-dialog-close class="modal_close" tabindex="-1">
+        <button #queue mat-dialog-close class="modal_close" (click)="reload()" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
     </h1>

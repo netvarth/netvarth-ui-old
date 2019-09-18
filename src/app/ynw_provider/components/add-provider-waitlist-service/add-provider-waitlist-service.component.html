@@ -2,7 +2,7 @@
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
   <h1 class="mat-dialog-title">{{service_cap}}
-    <button #queue mat-dialog-close class="modal_close" tabindex="-1" [disabled]="canceldisabled">
+    <button #queue mat-dialog-close class="modal_close" tabindex="-1" (click)="reload()" [disabled]="canceldisabled">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>

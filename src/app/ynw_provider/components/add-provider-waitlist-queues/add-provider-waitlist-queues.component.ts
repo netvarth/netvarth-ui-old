@@ -505,7 +505,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
-
+  reload(){
+    this.dialogRef.close('reloadlist');
+  }
   handleselectall() {
     this.Selall = true;
     this.selday_arr = [];
