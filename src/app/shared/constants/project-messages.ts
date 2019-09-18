@@ -590,6 +590,7 @@ export const Messages = {
   // App-shared-modules-search
   'MORE_OPTIONS_CAP': 'More Options',
   'ALL_CAP': 'All',
+  'ALL_DOMAINSCAP':'All Domains',
 
   // App-shared-modules-search-moreoptiions
   'MORE_SEARCH_OPT_CAP': 'More Search Options ',
