@@ -8,7 +8,7 @@
         <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name" matInput
           [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
-          (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)">
+          (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
 
         <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
           <div *ngIf="locationList">

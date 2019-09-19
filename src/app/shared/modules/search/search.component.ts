@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteTrigger, MatSelect } from '@angular/material';
 import { Messages } from '../../constants/project-messages';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
@@ -102,6 +102,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   holdsrchlocname = '';
   clearLocationCalled = false;
   @ViewChild('locrefrence') private locRef: ElementRef;
+  @ViewChild('locrefrence', { read: MatAutocompleteTrigger }) locationRef: MatAutocompleteTrigger;
   @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
   moreoptionsTooltip = '';
   show = false;
@@ -120,6 +121,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   isCurrentLocation = false;
   searchLength = 0;
   showmoreSearch = false;
+  @ViewChild('seldomain') seldomain: MatSelect;
 
   constructor(
     private shared_service: SharedServices,
@@ -227,16 +229,30 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
   }
   private setLocation(loc) {
-    this.locationholder = {
-      name: loc.name,
-      autoname: loc.autoname,
-      lat: loc.lat,
-      lon: loc.lon,
-      typ: loc.typ,
-      rank: loc.rank
-    };
-    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
-    this.location_data = undefined;
+    if (loc) {
+      this.locationholder = {
+        name: loc.name,
+        autoname: loc.autoname,
+        lat: loc.lat,
+        lon: loc.lon,
+        typ: loc.typ,
+        rank: loc.rank
+      };
+      this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+      this.location_data = undefined;
+    }
+    setTimeout(() => {
+      this.locationRef.closePanel();
+      this.seldomain.focus();
+    }, 500);
+    this.handleNormalSearchClick();
+  }
+  locationClick(value) {
+    if (value.keyCode === 13) {
+      if (this.displaylocationList) {
+        this.setLocation(this.displaylocationList[0]);
+      }
+    }
   }
   ngDoCheck() {
   }

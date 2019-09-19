@@ -83,6 +83,8 @@
                         class="text">{{partially_paid_cap}}</span></span>
                     <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'FullyPaid'"><span
                         class="text">{{paid_cap}}</span></span>
+                        <span class="paid-f" *ngIf="waitlist_data.paymentStatus == 'Refund'"><span
+                          class="text">Refund</span></span>
                   </ng-container>
                 </div>
                 <div class="item" *ngIf="userDet['sector'] == 'foodJoints'"><span

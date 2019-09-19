@@ -44,7 +44,7 @@
                                   <span class="paid-n" *ngIf="waitlist_detail.paymentStatus == 'NotPaid'"><span class="text">{{not_paid_cap}}</span></span>
                                   <span class="paid-h" *ngIf="waitlist_detail.paymentStatus == 'PartiallyPaid'"><span class="text">{{partialy_paid_cap}}</span></span>
                                   <span class="paid-f" *ngIf="waitlist_detail.paymentStatus == 'FullyPaid'"><span class="text">{{paid_cap}}</span></span>
-
+                                  <span class="paid-f" *ngIf="waitlist_detail.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                               </ng-container>
                             </div>
                         </div>
