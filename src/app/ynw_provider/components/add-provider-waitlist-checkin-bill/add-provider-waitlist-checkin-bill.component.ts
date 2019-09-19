@@ -203,6 +203,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   billNotesExists = false;
   discountPrivateNotes = false;
   discountDisplayNotes = false;
+  changedDate;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -337,6 +338,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+        this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           for (let i = 0; i < this.bill_data.discount.length; i++) {
@@ -1143,6 +1145,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
 
+  changeDate(time) {
+    let r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
+    return r[3]+"-"+r[2]+"-"+r[1]+r[4];
+}
+
   emailBill() {
     this.provider_services.emailWaitlistBill(this.uuid)
       .subscribe(
@@ -1172,7 +1179,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '<table width="100%">';
     bill_html += '	<tr style="line-height:20px">';
     bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
-    bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.bill_data.createdDate + '</td>';
+    bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
     bill_html += '	</tr>';
     bill_html += '	<tr>';
     bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill #' + this.bill_data.billId + '</td>';

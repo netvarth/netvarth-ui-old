@@ -470,7 +470,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return 'â‚¹' + ' ' + price;
+    return '₹' + ' ' + price;
   }
 
   imageValidation(file) {
