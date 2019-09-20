@@ -61,7 +61,7 @@ import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
 import { ProviderBprofileSearchDynamicComponent } from './components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
-
+import { JaldeeSnackbarComponent } from './components/jaldee-snackbar/jaldee-snackbar.component';
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -81,7 +81,6 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     LoadingSpinnerModule,
     ProviderWaitlistOnlineCheckinModule,
     AddProviderSchedulesModule,
-    
   ],
   declarations: [
     ProviderComponent,
@@ -114,7 +113,8 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderWaitlistServiceComponent,
     GoogleMapComponent,
     ProviderBprofileSearchDynamicComponent,
-    VirtualFieldsComponent
+    VirtualFieldsComponent,
+    JaldeeSnackbarComponent
   ],
   exports: [ConfirmBoxComponent, ConfirmPaymentBoxComponent],
   entryComponents: [
@@ -136,7 +136,8 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderWaitlistQueuesComponent,
     AddProviderWaitlistServiceComponent,
     GoogleMapComponent,
-    ProviderBprofileSearchDynamicComponent
+    ProviderBprofileSearchDynamicComponent,
+    JaldeeSnackbarComponent
   ],
   providers: [
     AuthGuardProviderHome,

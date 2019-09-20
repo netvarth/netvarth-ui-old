@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
-
+import { JaldeeSnackbarComponent } from '../../ynw_provider/components/jaldee-snackbar/jaldee-snackbar.component';
 @Injectable()
 
 export class SharedFunctions {
@@ -822,15 +822,18 @@ export class SharedFunctions {
     if (params['panelClass'] === 'snackbarerror') {
       message = this.getApiError(message);
     }
-    let duration = projectConstants.TIMEOUT_DELAY_LARGE;
-    if (params['duration']) {
-      duration = params['duration'];
-    }
+    // let duration = projectConstants.TIMEOUT_DELAY_LARGE;
+    // if (params['duration']) {
+    //   duration = params['duration'];
+    //   console.log( duration);
+    // }
+    //   console.log( duration);
     const replaced_message = this.findTerminologyTerm(message);
-    const snackBarRef = this.snackBar.open(replaced_message, '', { duration: duration, panelClass: panelclass });
+    const snackBarRef = this.snackBar.openFromComponent(JaldeeSnackbarComponent, {
+      data: { duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass , message: message }
+    });
     return snackBarRef;
   }
-
   redirectto(mod) {
     const usertype = this.isBusinessOwner('returntyp');
     switch (mod) {
