@@ -92,7 +92,7 @@
                                                         <th class="th-lg">{{due_date_cap}}</th>
                                                         <th class="th-lg">{{amount_cap}}</th>
                                                         <th class="th-lg" *ngIf="!hide_invoiceperiod">{{period_cap}}</th>
-                                                        <th class="th-lg">{{invoice_cap}}</th>
+                                                        <th class="th-lg">{{statment_cap}}</th>
                                                         <th></th>
                                                         <th></th>
                                                     </tr>
@@ -121,7 +121,7 @@
                                                             <span *ngIf="(invoices.length-1) == i" class="cs-btn bt3" (click)="makePayment(invoice)">Pay {{invoice.amount | currency:'&#8377; '}}</span>
                                                         </td>
                                                         <td>
-                                                                <p *ngIf="invoice.isPeriodic" class="form-level-settings">Monthly generated invoice</p>
+                                                                <p *ngIf="invoice.isPeriodic" class="form-level-settings">Monthly generated statement</p>
                                                             <!-- <i *ngIf="invoice.isPeriodic" class="fa fa-calendar"
                                                                 aria-hidden="true" [matTooltipClass]="tooltipcls"
                                                                 [matTooltip]="'Monthly generated invoice'"></i> -->

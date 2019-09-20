@@ -23,6 +23,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   make_payment = Messages.MAKE_PAYMENT_CAP;
   invoice_cap = Messages.INVOICE_CAP;
+  statment_cap = Messages.STATMENT_CAP;
   invoice_summry_cap = Messages.INVOICE_SUMMRY_CAP;
   serv_period = Messages.SERV_PERIOD_CAP;
   gateway_cap = Messages.GATEWAY_CAP;

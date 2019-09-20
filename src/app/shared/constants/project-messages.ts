@@ -894,6 +894,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
+  'STATMENT_CAP':'Statment',
   'INVOICE_SUMMRY_CAP': 'Invoice Summary',
   'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',
@@ -912,7 +913,7 @@ export const Messages = {
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No Add-ons exist',
-  'PAY_BUTTON': 'Invoice to Pay',
+  'PAY_BUTTON': 'Statement to Pay',
   'DUE_DATE_CAP': 'Due Date',
   'SUBSC_PACKAGE': 'Subscription/Package',
 

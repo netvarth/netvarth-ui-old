@@ -26,6 +26,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   date_cap = Messages.DATE_COL_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   invoice_cap = Messages.INVOICE_CAP;
+  statment_cap = Messages.STATMENT_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
   payment_cap = Messages.PAYMENT_CAP;
   current_license = Messages.CURRENT_PACKAGE_CAP;

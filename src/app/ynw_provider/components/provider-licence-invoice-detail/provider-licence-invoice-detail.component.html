@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title"><span *ngIf="source !== 'payment-history'"> {{invoice_cap}}</span>
+<h1 class="mat-dialog-title"><span *ngIf="source !== 'payment-history'"> {{statment_cap}}</span>
     <span *ngIf="source === 'payment-history'"> Payment details</span>
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
@@ -15,7 +15,7 @@
                                 <div class="label">[Email]</div> -->
                     <div class="label">GSTIN: {{jaldeeegst_data}}</div>
                 </div>
-                <div class="col-md-6 rightalign invoice-cap">INVOICE</div>
+                <!-- <div class="col-md-6 rightalign invoice-cap">INVOICE</div> -->
             </div>
         </div>
     </div>
@@ -29,6 +29,11 @@
                             <div class="label" style="margin-top: 8px">Bill To:</div>
                             <div>{{bname | capitalizeFirst}}</div>
                             <div>GSTIN: {{gstNumber}}</div>
+                        </div>
+                        <div class="ivc">
+                            <div class="label" *ngIf="source !== 'payment-history'" style="margin-top: 8px">Statement Reference No:</div>
+                            <div class="label"  *ngIf="source === 'payment-history'" style="margin-top: 8px">Invoice Reference No:</div>
+                            <div class="result">{{invoice.invoiceRefNumber}}</div>
                         </div>
                     </div>
                 </div>
