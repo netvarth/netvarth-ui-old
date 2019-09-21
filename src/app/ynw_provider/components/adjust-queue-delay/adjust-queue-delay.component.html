@@ -41,7 +41,15 @@ onSubmit(amForm.value)" class="ynw-common-form">
         <!-- <span><small>* Maximum 24 hours delay allowed</small></span> -->
         <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay"></ngb-timepicker>
       </div>
-      <div class="form-group inline">
+
+      <div >
+        <!-- <p class="form-level-settings" >The following message will be send to customer by default</p> -->
+        <p class="info-lst form-level-settings">The following message will be send to customer by default.</p><p class="form-level-settings">Username,providername,service and mintues will be replaced while sending.</p>
+        <p class="justifyalign">{{msgforCalcuType}}</p>
+       
+        <p class="align"><B>OR</B></p>
+      </div>
+      <div class="form-group ">
         <!-- <label class="col-form-label"></label> -->
         <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
       </div>
