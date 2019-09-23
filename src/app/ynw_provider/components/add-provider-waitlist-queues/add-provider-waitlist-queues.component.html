@@ -66,6 +66,23 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 </div>
             </section>
         </div>
+        
+        <div class="form-group row" style="display: flex">
+                <div class="col-md-6">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker"[min]="minDate"  placeholder="Startdate" formControlName="startdate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker1" [min]="minDate"  placeholder="Enddate" formControlName="enddate">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                      </div>
+        </div>
         <div class="form-group">
             <label class="labelstyle">{{schedule_cap}}</label><a class="link exstschdlesze pointer-cursor"
                 (click)="existingScheduletoggle()">{{existing_schedules}}</a>
