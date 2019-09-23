@@ -4306,3 +4306,23 @@ border-bottom: none !important;
 .q-time h3 {
   margin-bottom: 0px !important;
 }
+.ratingSearch .ratingstar {
+  width: 15px !important;
+  margin-top: -3px !important;
+}
+.ratingSearch label{
+  margin-left: 10px !important;
+  margin-bottom: 1px !important;
+  font-size: 12px !important;
+}
+.ratingSearch label:hover,
+.ratingSearch .rating-clear:hover{
+  cursor: pointer !important;
+  color: #00aef2 !important;
+}
+.selectedVal {
+  font-weight: bold !important;
+}
+.ratingSearch .rating-clear {
+  margin-bottom: 5px !important;
+}

@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatAutocompleteTrigger, MatSelect } from '@angular/material';
+import { MatAutocompleteTrigger, MatSelect, MatInput } from '@angular/material';
 import { Messages } from '../../constants/project-messages';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDataStorageService } from '../../services/search-datastorage.services';
@@ -55,7 +55,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   public sortfield;
   public sortorder;
   public hide_location_div: boolean;
-  public kw_autoname;
+  public kw_autoname = '';
   public prov_subscription;
   public provider_data;
   public suggestions = [];
@@ -942,6 +942,13 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.getSearchlabelsbydomain(domain);
     if (avoidclear === undefined) {
       this.handleNormalSearchClick();
+      if (this.routerobj.url !== '/') {
+        setTimeout(() => {
+          this.seldomain.close();
+          this.filterKeywords();
+          document.getElementById('suggestSearch').focus();
+        }, 500);
+      }
     }
   }
   getSearchlabelsbydomain(domain) {
