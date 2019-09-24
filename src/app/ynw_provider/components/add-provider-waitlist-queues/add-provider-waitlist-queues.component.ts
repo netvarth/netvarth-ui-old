@@ -47,6 +47,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   selday_arr: any = [];
   api_loading = true;
   api_loading1 = true;
+  dateError ;
   weekdays = projectConstants.myweekdaysSchedule;
 
 
@@ -550,6 +551,18 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
 
   }
+
+  compareDate(){
+
+    let UserDate = this.amForm.get('startdate').value;
+     const ToDate = new Date();
+
+    if (new Date(UserDate).getTime() < ToDate.getTime()) {
+          return this.dateError = true;
+     }
+    return this.dateError = false;
+  }
+
   reload(){
     this.dialogRef.close('reloadlist');
   }
