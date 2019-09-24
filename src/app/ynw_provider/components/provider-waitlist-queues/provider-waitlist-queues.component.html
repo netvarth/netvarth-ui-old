@@ -236,7 +236,7 @@
                                                                                 [matTooltip]="tooltip_queueedit">
                                                                                 {{queue.name | capitalizeFirst}}
                                                                         </h3> -->
-                                                                <div style="display: flex" class="q-time">
+                                                                <div  class="q-time queuelist">
                                                                         <div class="col-md-4">
                                                                         <h3 class="pointer-cursor"
                                                                                 style="margin-right: 50px"
@@ -260,7 +260,7 @@
                                                                                 [checked]="queue.onlineCheckIn"
                                                                                 (change)="changeQSameDayOnlineStatus(queue, i, $event)">
                                                                         </mat-slide-toggle>
-                                                                        <label> {{queue.onlineCheckIn ? 'On' : 'Off'}}
+                                                                        <label>{{queue.onlineCheckIn ? 'On' : 'Off'}}
                                                                         </label>
                                                                 </div></div>
                                                                 <!-- <div class="c-ot m0"> -->

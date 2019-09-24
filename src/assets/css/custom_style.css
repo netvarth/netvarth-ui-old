@@ -4326,3 +4326,8 @@ border-bottom: none !important;
 .ratingSearch .rating-clear {
   margin-bottom: 5px !important;
 }
+@media only screen and (min-width: 767px) {
+  .queuelist {
+ display: flex!important;
+  }
+}
