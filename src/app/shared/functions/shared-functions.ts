@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
-import { JaldeeSnackbarComponent } from '../../ynw_provider/components/jaldee-snackbar/jaldee-snackbar.component';
+
 @Injectable()
 
 export class SharedFunctions {
@@ -159,7 +159,6 @@ export class SharedFunctions {
   }
 
   adminLogin(post_data) {
-    console.log(post_data);
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
       this.shared_service.adminLogin(post_data)
@@ -470,7 +469,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return '₹' + ' ' + price;
+    return 'â‚¹' + ' ' + price;
   }
 
   imageValidation(file) {
@@ -822,18 +821,15 @@ export class SharedFunctions {
     if (params['panelClass'] === 'snackbarerror') {
       message = this.getApiError(message);
     }
-    // let duration = projectConstants.TIMEOUT_DELAY_LARGE;
-    // if (params['duration']) {
-    //   duration = params['duration'];
-    //   console.log( duration);
-    // }
-    //   console.log( duration);
+    let duration = projectConstants.TIMEOUT_DELAY_LARGE;
+    if (params['duration']) {
+      duration = params['duration'];
+    }
     const replaced_message = this.findTerminologyTerm(message);
-    const snackBarRef = this.snackBar.openFromComponent(JaldeeSnackbarComponent, {
-      data: { duration: projectConstants.TIMEOUT_DELAY_LARGE, panelClass: panelclass , message: message }
-    });
+    const snackBarRef = this.snackBar.open(replaced_message, '', { duration: duration, panelClass: panelclass });
     return snackBarRef;
   }
+
   redirectto(mod) {
     const usertype = this.isBusinessOwner('returntyp');
     switch (mod) {

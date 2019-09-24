@@ -41,6 +41,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   schedule_json: any = [];
   general_scheduleholder: any = [];
   general_schedule: any = [];
+  active_schedule: any = [];
   bProfile: any = [];
   parking_list: any = [];
   schedule_alreadyexists_for_location = false;
@@ -55,6 +56,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   api_loading1 = true;
   parking_types = projectConstants.PARKING_TYPES;
   disableButton = false;
+  activescdule: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistLocationsComponent>,
@@ -106,15 +108,20 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   getProviderQueues() {
     this.api_loading1 = true;
     let queue_list: any = [];
+    this.activeSchedules = [];
     this.provider_services.getProviderQueues()
       .subscribe(data => {
         queue_list = data;
         for (let ii = 0; ii < queue_list.length; ii++) {
           let schedule_arr = [];
           // extracting the schedule intervals
-          if (queue_list[ii].queueSchedule) {
+          if (queue_list[ii].queueSchedule && queue_list[ii].queueState === 'ENABLED') {
             schedule_arr = this.sharedfunctionobj.queueSheduleLoop(queue_list[ii].queueSchedule);
           }
+          if (schedule_arr.length !== 0 ) {
+            this.activescdule.push(schedule_arr);
+          }
+          this.schedule_alreadyexists_for_location = false;
           let display_schedule = [];
           display_schedule = this.sharedfunctionobj.arrageScheduleforDisplay(schedule_arr);
           queue_list[ii]['displayschedule'] = display_schedule;
