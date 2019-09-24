@@ -74,6 +74,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
+              
               <app-field-error-display [displayError]= dateError
                 errorMsg="Please enter date greater or equal to today">
             </app-field-error-display>

@@ -553,7 +553,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
 
   compareDate(){
-
     let UserDate = this.amForm.get('startdate').value;
      const ToDate = new Date();
 
