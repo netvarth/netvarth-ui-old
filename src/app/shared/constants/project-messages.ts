@@ -1278,7 +1278,7 @@ export const Messages = {
   'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
-  'FRM_LEVEL_LOC_MSG': 'Manage your business Location details here.',
+  'FRM_LEVEL_LOC_MSG': 'Manage your business location details here.',
   'FRM_LEVEL_LOC_AMENITIES_MSG': 'Manage the location benefits that are offered to your [customer]s.',
   'FRM_LEVEL_WORKING_MSG': 'Details of your business hours are shown here.',
   'FRM_LEVEL_PRIVACY_MSG': 'Manage the privacy of your contact details here.',

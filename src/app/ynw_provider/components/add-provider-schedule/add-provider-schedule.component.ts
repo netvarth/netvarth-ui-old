@@ -49,7 +49,7 @@ export class AddProviderSchedulesComponent implements OnInit {
   show_savebutton = false;
   show_cancelbutton = false;
   Selall = false;
-  api_loading1 =true;
+  api_loading1 = true;
   constructor(
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
@@ -57,9 +57,6 @@ export class AddProviderSchedulesComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-
-   
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
@@ -79,7 +76,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     for (let i = 0; i < this.schedule_ar.length; i++) {
       this.display_schedule[i] = this.schedule_ar[i][0];
     }
-   this.api_loading1 = false;
+    this.api_loading1 = false;
   }
 
   handlechecbox(dayindx) {

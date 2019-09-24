@@ -116,9 +116,11 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           let schedule_arr = [];
           // extracting the schedule intervals
           if (queue_list[ii].queueSchedule && queue_list[ii].queueState === 'ENABLED') {
-            schedule_arr = this.sharedfunctionobj.queueSheduleLoop(queue_list[ii].queueSchedule);
+            if (this.data.location.id === queue_list[ii].location.id) {
+              schedule_arr = this.sharedfunctionobj.queueSheduleLoop(queue_list[ii].queueSchedule);
+            }
           }
-          if (schedule_arr.length !== 0 ) {
+          if (schedule_arr.length !== 0) {
             this.activescdule.push(schedule_arr);
           }
           this.schedule_alreadyexists_for_location = false;
@@ -201,7 +203,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     if (this.data.type === 'edit') {
       this.updateForm();
     }
-   this.api_loading1 = false;
+    this.api_loading1 = false;
   }
   updateForm() {
     if (this.forbadge === true) { // case if coming for add / edit badges
@@ -493,7 +495,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         }
       );
   }
-  loadDetails(){
+  loadDetails() {
     this.dialogRef.close('reloadlist');
   }
   editProviderLocation(post_data) {
@@ -534,7 +536,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
 
   }
 
-  
+
   handle_badge_click(obj) {
     const indx = this.sel_badges.indexOf(obj.name);
     if (indx !== -1) {
