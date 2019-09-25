@@ -953,5 +953,8 @@ export class SharedServices {
     return this.servicemeta.httpGet(path);
 
   }
-
+  
+  getBussinessProfile() {
+    return this.servicemeta.httpGet('provider/bProfile');
+  }
 }

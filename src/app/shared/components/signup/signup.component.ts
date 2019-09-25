@@ -351,7 +351,7 @@ export class SignUpComponent implements OnInit {
           subSector: this.subDomainList[this.activeSubDomainIndex].value,
           isAdmin: isAdmin, // checked this to find provider or customer
           // licPkgId: this.signupForm.get('package_id').value || null,
-          licPkgId: 7 || null,
+          licPkgId: 9 || null,
           accountId: this.data.claimData.accountId
         };
       } else {
@@ -362,7 +362,7 @@ export class SignUpComponent implements OnInit {
           subSector: sub_Sector,
           isAdmin: isAdmin, // checked this to find provider or customer
           // licPkgId: this.signupForm.get('package_id').value || null
-          licPkgId: 7 || null
+          licPkgId: 9 || null
         };
       }
       this.signUpApiProvider(this.user_details);

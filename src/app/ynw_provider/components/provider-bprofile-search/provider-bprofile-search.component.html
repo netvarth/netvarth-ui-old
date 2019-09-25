@@ -1275,13 +1275,18 @@
                                                 More</a></p>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                <div class="no-dta"
-                                    *ngIf="normal_customid_show==2 && current_license && (current_license=='Ruby' || current_license=='Diamond')">
+                                <!-- <div class="no-dta"
+                                    *ngIf="normal_customid_show==2 && current_license && (current_license=='Ruby' || current_license=='Diamond')"> -->
+                                    <div class="no-dta"
+                                    *ngIf="normal_customid_show==2 && current_license && current_license=='Diamond'">
                                     <span class="cs-btn bt3" (click)="editCustomId()">{{add_it_cap}}</span>
                                 </div>
-                                <div class="no-dta"
-                                    *ngIf="normal_customid_show==2 && current_license && (current_license!='Ruby' && current_license!='Diamond')">
-                                    Upgrade your license package to Ruby or higher to avail this feature.
+                                <!-- <div class="no-dta"
+                                    *ngIf="normal_customid_show==2 && current_license && (current_license!='Ruby' && current_license!='Diamond')"> -->
+                                    <div class="no-dta"
+                                    *ngIf="normal_customid_show==2 && current_license && current_license!='Diamond'">
+                                    <!-- Upgrade your license package to Ruby or higher to avail this feature. -->
+                                    Upgrade your license package to Diamond to avail this feature.
                                 </div>
 
                                 <div class="cd-t" *ngIf="normal_customid_show==3">
