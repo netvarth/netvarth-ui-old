@@ -57,25 +57,38 @@ export class AddProviderSchedulesComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.existingSchedules)
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
-    // this.schedule_arr = this.existingSchedules;
+    if(this.Isource ==='wizard'){
+ this.schedule_arr = this.existingSchedules;
+ this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+ this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    }
+    else{
+      console.log(this.active_Schedules)
+      for (let i = 0; i < this.active_Schedules.length; i++) {
+        this.schedule_ar.push(this.sharedfunctionObj.arrageScheduleforDisplay(this.active_Schedules[i]));
+        this.schedule_arr[i] = this.active_Schedules[i][0];
+      }
+      this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+      this.display_schedule = []
+      for (let i = 0; i < this.schedule_ar.length; i++) {
+        this.display_schedule[i] = this.schedule_ar[i][0];
+      }
+    }
+   console.log(this.display_schedule)
+
     if (this.schedule_arr.length === 0) {
       this.show_schedule_selection = true;
     }
-    this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-    // this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+  
+    
 
-    for (let i = 0; i < this.active_Schedules.length; i++) {
-      this.schedule_ar.push(this.sharedfunctionObj.arrageScheduleforDisplay(this.active_Schedules[i]));
-      this.schedule_arr[i] = this.active_Schedules[i][0];
-    }
-    this.display_schedule = []
-    for (let i = 0; i < this.schedule_ar.length; i++) {
-      this.display_schedule[i] = this.schedule_ar[i][0];
-    }
+
+ 
     this.api_loading1 = false;
   }
 

@@ -95,7 +95,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 </div> -->
             </div>
             <!-- <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule> -->
-            <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && proceedwithschedule" [Isource]="'wizard'"
+            <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && proceedwithschedule" [Isource]="'location'"
                 [existingSchedules]="schedule_arr" [active_Schedules]="activescdule" [hidecancelbutton]="'1'" providerStatus="INACTIVE"
                 (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
         </ng-container>

@@ -255,7 +255,7 @@
                             </div>
                             <div class="checkin-bx" *ngIf="checkinStatus==3">
                                 <span class="ttle">
-                                    Accept Same Day Online Check-Ins
+                                    Accept Same Day Online {{checkin_label| capitalizeFirst}}s
                                     <span class="sts" [class.active]="waitlistmgr.onlineCheckIns">{{(waitlistmgr.onlineCheckIns)?
                                         'On': 'Off'}}</span>
                                 </span>
@@ -267,7 +267,7 @@
                           <div></div>
                             <div class="checkin-bx" *ngIf="checkinStatus==3">
                                 <span class="ttle">
-                                    Accept Future Check-ins
+                                    Accept Future {{checkin_label| capitalizeFirst}}s
                                     <span class="sts" [class.active]="waitlistmgr.futureDateWaitlist">{{(waitlistmgr.futureDateWaitlist)?
                                         'On': 'Off'}}</span>
                                 </span>
@@ -296,7 +296,7 @@
                                 *ngIf="alert_count>0">{{alert_count}}</span><span class="icon-bell"
                                 matTooltip="Alerts"></span></li>
                         <li [class.active]="selOpt=='Checkin'" (click)="showCheckinED()"><span class="icon-checkin"
-                                matTooltip="Enable / Disable Check-in"></span></li>
+                                matTooltip="Enable / Disable {{checkin_label| capitalizeFirst}}s"></span></li>
                         <li [class.active]="selOpt=='License'" (click)="showLicense()"><span class="icon-license"
                                 matTooltip="License Details"></span></li>
                     </ul>

@@ -66,6 +66,7 @@ legal_cap = Messages.LEGALCAP;
   checkinStatus = 1;
   waitlistmgr: any = [];
   includedFrom;
+  checkin_label = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   alert_count = 0;
   subscription: Subscription;
@@ -77,7 +78,7 @@ legal_cap = Messages.LEGALCAP;
   constructor(
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
-    public router: Router) { }
+    public router: Router) {this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
 
   ngOnInit() {
     if (this.router.url.substr(-8) !== '/bwizard') {
@@ -235,7 +236,7 @@ legal_cap = Messages.LEGALCAP;
     this.clearDivs();
     this.showbottompopup = true;
     this.showCheckinDiv = true;
-    this.bottomdivHeader = 'Check-in Enable / Disable';
+    this.bottomdivHeader = this.checkin_label +  ' Enable / Disable';
     this.selOpt = 'Checkin';
     this.waitlistmgr = [];
     this.shared_services.getWaitlistMgr()
