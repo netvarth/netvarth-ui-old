@@ -658,7 +658,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     this.provider_services.changeSamedayCheckinStatus(qObj.id, !qObj.onlineCheckIn)
       .subscribe(() => {
-        this.shared_Functionsobj.openSnackBar('Same day Checkin ' + chstatusmsg + ' successfully');
+        this.shared_Functionsobj.openSnackBar('Same day online check-ins ' + chstatusmsg + ' successfully');
         this.initializeQs();
       },
         error => {

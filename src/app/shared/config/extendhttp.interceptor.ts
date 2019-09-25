@@ -71,8 +71,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'password': password,
         'mUniqueId': ynw_user.mUniqueId
       };
-      const activeuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
-      if (activeuser.isProvider) {
+      const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+      if (activeuser) {
         this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
       } else {
         this.shared_services.ConsumerLogin(post_data).subscribe(this._refreshSubject);

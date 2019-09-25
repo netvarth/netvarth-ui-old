@@ -106,6 +106,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   departmentCount: any = 0;
   filterbydepartment = false;
   locationExists = false;
+  account_type;
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -405,6 +406,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        this.account_type = this.bProfile.accountType;
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {

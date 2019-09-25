@@ -101,7 +101,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isprovider = false;
   ctype;
   active_license;
-  active_licenseId;
   public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
@@ -243,19 +242,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   setLicense() {
     const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    console.log(usertype);
-    console.log(cuser);
     if (cuser && usertype === 'provider') {
-      // if (cuser.new_lic) {
-      //   this.active_license = cuser.new_lic;
-      // } else {
-      if (cuser.accountLicenseDetails.accountLicense) {
+      if (cuser.new_lic) {
+        this.active_license = cuser.new_lic;
+      } else {
         this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
-        this.active_licenseId = cuser.accountLicenseDetails.accountLicense.licPkgOrAddonId;
       }
-      // }
-      console.log(this.active_license);
-      console.log(this.active_licenseId);
     }
   }
   showHidemobileSubMenu() {
@@ -337,7 +329,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.shared_service.getBussinessProfile()
       .subscribe(data => {
         this.account_type = data['accountType'];
-        console.log(this.account_type );
       });
   }
   handleHeaderclassbasedonURL() {
