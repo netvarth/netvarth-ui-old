@@ -11,7 +11,7 @@
         the
         consumer search results. Thus, your customers can order food with food name and quantity in
         the
-        check-in window from their dashboard.</span>
+        order window from their dashboard.</span>
 </section><br>
 <section *ngIf="childContent == 'public-search'">
     <h6>Public Search</h6>
@@ -28,7 +28,7 @@
             Jaldee-keyword, Basic Information, Location, Location Amenities, Specialization,
             Languages
             Known, Additional Info.</li>
-        <li>Even if a provider turns Public Search to off, customers can check-in with the same provider from their
+        <li>Even if a provider turns Public Search to off, customers can order with the same provider from their
             “Favourites” (if already added provider to Favourites List) list or using custom url.</li>
         <li>During the initial profile setup, a provider can proceed with setting the Profile Name &
             Summary, Location, Working Hours, Service and Public Search status. The provider can
@@ -983,7 +983,7 @@
         clean design can make your food more appetizing. Upload your food menu picture here in
         gallery.
         The uploaded menu can be seen in the detailed view of your profile in the consumer search
-        results. Thus, your customers can order food with food name and quantity in the check-in
+        results. Thus, your customers can order food with food name and quantity in the order
         window
         from their dashboard.</span>
     <div class="box-indent">
@@ -1080,25 +1080,25 @@
 <section *ngIf="parentContent == 'checkinmanager'">
     <h6 id="main-top">CHECK-IN MANAGER</h6>
     <span>The Check-in manager helps the provider in managing the working hours and ensuring the
-        seamless workflow from the point of the check-in to the completion of service.</span>
+        seamless workflow from the point of the order to the completion of service.</span>
 </section><br>
 <section *ngIf="childContent =='settings'">
-    <h6 id="settings"><u>Accept Online Check-in</u></h6>
+    <h6 id="settings"><u>Accept Online Order</u></h6>
     <ul class="ul-normal">
-        <li>Here, a provider gets full control over online customer check-in.</li>
+        <li>Here, a provider gets full control over online customer order.</li>
         <li>Complete the <strong>“Profile & Summary”</strong> section with details. To do so, click
             on
             the <strong>“Profile”</strong> under <strong>Settings</strong> and enter the details.
             Once
             done, set Public Search to <strong>“ON”.</strong></li>
-        <li>Afterwards, a provider can enable <strong>“Online Check-in”.</strong></li>
+        <li>Afterwards, a provider can enable <strong>“Online Order”.</strong></li>
         <li>Provider can choose two options:
             <ul class="ul-normal">
                 <li><strong>Same Day Online Orders :</strong> Turn on this toggle button to accept orders for the same day.</li>
                 <li><strong>Future Orders :</strong> Turn on this toggle button to accept orders for a future date.</li>
             </ul>
         </li>
-        <li>Walk-in check-ins are always enabled.</li>
+        <li>Walk-in Orders are always enabled.</li>
     </ul>
     <h6><u>Calculation of waiting time</u></h6>
     <span>Waiting time simply refers to the time a customer has to wait before he/she can avail the
@@ -1109,7 +1109,7 @@
             provider’s service history.</li>
         <li><strong>Manual :</strong> Using this option, a provider can fix a wait time which will
             be
-            applied to all the check-ins (for example, If a provider sets 10 minutes of manual time,
+            applied to all the orders (for example, If a provider sets 10 minutes of manual time,
             by
             default all the customers will get 10 minutes of waiting time.) Manual time should be
             used
@@ -1118,7 +1118,7 @@
             advisable that the service provider is equipped with enough resources. An additional
             option
             is available for providers choosing “Manual” wait time calculation. He/She can edit
-            individual check-ins wait time from the check-in details in provider dashboard.</li>
+            individual orders wait time from the order details in provider dashboard.</li>
         <li><strong>Token System(Do not show waiting time for customers) :</strong> If a service
             provider chooses this option, then all the customers will receive and see a token number
             instead of any waiting time.</li>
@@ -1134,18 +1134,18 @@
 </section>
 <section *ngIf="childContent =='settings'">
     <h6><u>Select Services by Department</u></h6>
-    <span>Providers would need to turn this toggle button on to let customers check-in for services department
+    <span>Providers would need to turn this toggle button on to let customers order for services department
         wise.</span>
 </section>
 <section *ngIf="childContent =='settings'">
-    <h6><u>Accept Future Check-In</u></h6>
+    <h6><u>Accept Future Order</u></h6>
     <ul class="ul-normal">
-        <li>This advanced feature of Jaldee.com helps a provider accept check-ins online for a service
+        <li>This advanced feature of Jaldee.com helps a provider accept orders online for a service
             that will be availed in a future date.</li>
-        <li>If a provider enables this button, online check-in customers can avail the services for a
+        <li>If a provider enables this button, online order customers can avail the services for a
             future date.</li>
-        <li>In case a provider disables<strong>“Accept Future Check-in”,</strong> customers can only
-            check-in for the current day’s working hours.</li>
+        <li>In case a provider disables<strong>“Accept Future Order”,</strong> customers can only
+            order for the current day’s working hours.</li>
     </ul>
 </section>
 <section *ngIf="childContent =='settings-locations'">
@@ -1210,7 +1210,7 @@
             Payments section in Settings.</li>
         <li>Service status is enabled by default. Only enabled services are available for customers
             to
-            proceed with the check-in process.</li>
+            proceed with the ordering process.</li>
         <li>The provider, at his/her convenience, can enable/disable the status of any service by
             clicking on the three dots menu.</li>
         <li>All the services created are displayed here.</li>
@@ -1296,34 +1296,21 @@
                 <li><strong>Start Time/End Time :</strong> Enter the start time and the end time for
                     a
                     particular working hour.</li>
-                <li><strong>Maximum patients served :</strong> Enter the maximum number of customers
+                <li><strong>Maximum customers served :</strong> Enter the maximum number of customers
                     the
-                    business can serve in particular schedule. No more check-ins will be accepted,
+                    business can serve in particular schedule. No more orders will be accepted,
                     once
-                    the limit is reached. If the limit is not set, then endless check-ins will be
+                    the limit is reached. If the limit is not set, then endless orders will be
                     accepted between the working hours.</li>
                 <li><strong>Customers served at a time :</strong> Here enter the number of customers
                     that can be served at the same time.</li>
-                <li><strong>Online check-ins :</strong> Enable this toggle button to make this
-                    particular working hours available for customers to check-in online for the same
-                    day.</li>
-                <li><strong>Future check-ins :</strong> Enable this toggle button to make this
-                    particular working hours available for customers to check-in online for a future
-                    date.</li>
             </ul>
         </li>
         <li>All added working hours are displayed here.</li>
         <li>The status of working hours can be enabled/disabled. The enabled working hours are open
             to
-            customers for the check-in process.</li>
-        <li>Providers can enable or disable <strong>same day online check-in</strong> or
-            <strong>future
-                check-in</strong> anytime from here.</li>
+            customers for the ordering process.</li>
         <li>To edit or to enable/disable any particular working hour, click on the three dots menu.
-        </li>
-        <li>Also <strong>“Show Checkins Count”</strong> is available in the three dots menu, to see
-            the
-            number of check-ins for <strong>Today, Future</strong> and <strong>Tomorrow</strong>.
         </li>
         <li>When the service provider clicks on the enabled working hours, it displays a brief
             outlook
@@ -1352,7 +1339,7 @@
         </li>
         <li>Finally, click <strong>“MAKE ME AVAILABLE”</strong> button to create an instant queue.
         </li>
-        <li>Now customer check-ins can be accepted for this instant queue.</li>
+        <li>Now customer orders can be accepted for this instant queue.</li>
     </ul>
 </section>
 <section *ngIf="childContent =='settings-departments'">
@@ -1361,7 +1348,7 @@
         while
         constantly collaborating with each other to achieve specific goals. In Jaldee, provider can
         add
-        in departments and can allow customer check-ins department wise.</span>
+        in departments and can allow customer  orders department wise.</span>
     <span><strong>How to add a department?</strong></span>
     <ul class="ul-normal">
         <li>Initially, a default department is added with all the services offered by the provider which can be edited..
@@ -1373,14 +1360,14 @@
         <li>The added departments are listed here. Provider can enable or disable added departments
             from three dots menu.</li>
         <li>To edit department details, click on the department name.</li>
-        <li>To allow customers to check-in department wise enable the toggle button <strong>“Select
+        <li>To allow customers to  orders department wise enable the toggle button <strong>“Select
                 services by department”</strong> from check-in manager.</li>
     </ul>
 </section>
 <section *ngIf="childContent =='checkin' && parentContent == 'checkin'">
-    <h6>CHECK IN</h6>
+    <h6>ORDER</h6>
     <ul class="ul-normal">
-        <li>A provider can create and check-in a customer for service.</li>
+        <li>A provider can create a customer and can place orders for customers.</li>
         <li>To search for a customer and to check whether he/she has already been registered with
             Jaldee, the provider can use the customer’s mobile number, his/her first name/last name.
         </li>
@@ -1390,29 +1377,20 @@
     </ul>
     <div class="box-indent">
         <ul class="ul-normal">
-            <li>In the check-in/get token window, first, select the service from the drop-down menu
+            <li>In the Order/Get token window, first, select the service from the drop-down menu
                 that
                 a customer wishes to avail. In case, the provider has only one default service, then
                 there will be no drop-down menu.</li>
-            <li>Check-in/Get Token/Order window has a feature to add or change a family member whom the
-                customer wishes to do a check-in for. Click “Add/Change Member” to add a new member
+            <li>Order/Get token window has a feature to add or change a family member whom the customer wishes to order for. Click “Add/Change Member” to add a new member
                 with
                 the first name and the last name. In case the family member is already added, it can
                 be
                 directly selected from the list of members.</li>
-            <li><strong>Enter the party size to proceed with check-in.</strong></li>
-            <li>To order food, click <strong>“If you have a note, Click here (+)” to write the
-                    message
-                    in the textbox.</strong></li>
-            <li>With all this information the provider can now proceed with the check-in process of
-                the
-                walk-in customer by clicking on <strong>“Confirm”.</strong></li>
+            <li>To order food, click <strong>“To place your order, Click here (+)” and enter item number, item name and item quantity in the textbox.</strong></li>
+            <li>With all this information the provider can now proceed with placing the order for the walk-in customer by clicking on <strong>“Confirm”.</strong></li>
             <li>Push message will be sent to the customer’s mobile and an email notification to the
                 registered email address regarding the information of check-in.</li>
-            <li>Future Check-in can be done in the same way as that of Check-in. The only difference
-                between these check-ins is that the provider needs to select a date of check-ins in
-                the
-                Future Check-in.</li>
+            <li>Future order can be done in the same way as that of ordering for the same day. The only difference is that the provider has to choose a date from the order window.</li>
         </ul>
     </div>
 </section>
@@ -1429,7 +1407,7 @@
             input the customer details and get him/her registered with Jaldee.</li>
     </ul>
 </section>
-<section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
+<!-- <section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
     <h6>KIOSK</h6>
     <span>The Jaldee Kiosk feature allows a provider to place a Tablet/PC/Laptop/Other Machines
         which is
@@ -1535,7 +1513,7 @@
             </ul>
         </ol>
     </div>
-</section>
+</section> -->
 <section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
     <h6>LICENSE</h6>
     <ul class="ul-normal">
@@ -1937,7 +1915,7 @@
         <li><strong>Number of business profile views :</strong> This refers to the number of
             patients
             who have clicked for a detailed view of the doctor.</li>
-        <li><strong>Transactions :</strong> This refers to the number of check-ins.</li>
+        <li><strong>Transactions :</strong> This refers to the number of orders.</li>
         <li><strong>Profile gallery storage :</strong> This shows the total storage space given to
             the
             doctor under the availed license package.</li>
@@ -2107,10 +2085,10 @@
 
 <section *ngIf="childContent =='notifications' && parentContent == 'miscellaneous'">
     <h6>NOTIFICATIONS</h6>
-    <span>Notifications are important to get timely information about customer check-ins and cancellation of customer
-        check-ins.</span>
+    <span>Notifications are important to get timely information about customer orders and cancellation of customer
+        orders.</span>
     <ol class="ol-normal">
-        <li><strong>Notify whenever check-in happens :</strong> When a customer checks-in with the provider, the
+        <li><strong>Notify whenever order happens :</strong> When a customer checks-in with the provider, the
             provider can receive notifications in the following ways:
             <ul class="ul-normal">
                 <li><strong>Via SMS:</strong> Add phone number to which you wish to receive SMS.</li>
@@ -2119,7 +2097,7 @@
                     information via push notification.</li>
             </ul>
         </li>
-        <li><strong>Notify whenever check-in gets cancelled :</strong> When a customer checks-in gets cancelled with the
+        <li><strong>Notify whenever order gets cancelled :</strong> When a customer checks-in gets cancelled with the
             provider, the provider can receive notifications in the following ways:
             <ul class="ul-normal">
                 <li><strong>Via SMS:</strong> Add phone number to which you wish to receive notification.</li>
@@ -2134,32 +2112,32 @@
 <section *ngIf="childContent =='dashboard' && parentContent == 'dashboard'">
     <h6>PROVIDER DASHBOARD</h6>
     <section>
-        <span>The dashboard section lets the provider manage and monitor the check-ins of a
+        <span>The dashboard section lets the provider manage and monitor the orders of a
             customer.
-            Here a provider can monitor the current check-ins <strong>(Today)</strong> and the
+            Here a provider can monitor the current orders <strong>(Today)</strong> and the
             future
-            check-ins <strong>(Future)</strong>. The customer's previous check-ins can be viewed in
+            orders <strong>(Future)</strong>. The customer's previous orders can be viewed in
             this
             section under the <strong>“History”</strong> tab. To view the details, click on the
             customer’s name. There are location and working hours to help the provider monitor the
-            details of check-ins in different windows.</span>
+            details of orders in different windows.</span>
     </section>
     <ol class="ol-normal adjust-delay-num">
-        <li><strong>Today ()</strong> - All the present day’s online and walk-in check-ins are
+        <li><strong>Today ()</strong> - All the present day’s online and walk-in orders are
             listed
-            here. The adjoined brackets display the number of check-ins.</li>
-        <li><strong>Future()</strong> - All the check-ins for future dates are listed here. The
+            here. The adjoined brackets display the number of orders.</li>
+        <li><strong>Future()</strong> - All the orders for future dates are listed here. The
             adjoined
-            brackets display the number of future check-ins.</li>
-        <li><strong>History</strong> - All of the customer’s previous check-ins until a day before
+            brackets display the number of future orders.</li>
+        <li><strong>History</strong> - All of the customer’s previous orders until a day before
             are
-            listed here. To view the details click on the “date of check-in” or on the “name of the
+            listed here. To view the details click on the “date of order” or on the “name of the
             customer.”. Actions can also be changed from here.</li>
     </ol>
     <section>
         <h6><u>Location Selection</u></h6>
         <span>Here a provider can select the exact location if multiple locations are available. The
-            provider can check the details of a particular check-in for a specific location.</span><br>
+            provider can check the details of a particular order for a specific location.</span><br>
         <span><strong>Note: A provider needs to select the location of service while he/she checks-in a
                 “walk-in” customer.</strong></span>
     </section>
@@ -2168,7 +2146,7 @@
             <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                     <mat-panel-title>
-                        <span class="helpcontent">Check-Ins</span>
+                        <span class="helpcontent">Orders</span>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
@@ -2176,44 +2154,44 @@
                         <li>If the business has multiple working hours, select the working hour from
                             the
                             dashboard.</li>
-                        <li>Here the provider can see a list of customers who have checked in
+                        <li>Here the provider can see a list of customers who have ordered in
                             (Online or
                             Walk-in ).</li>
                         <li>In some cases, a “cloud symbol” is prefixed to a name, it means that the
-                            customer has checked in online.</li>
-                        <li>To view the check-in details of a customer, provider can click on the
+                            customer has ordered in online.</li>
+                        <li>To view the order details of a customer, provider can click on the
                             name
-                            of the customer. Check-in history, communication history, and history of
+                            of the customer. Order history, communication history, and history of
                             private notes are listed here. In addition to that, the user can cancel
                             a
-                            customer’s check-in and inform this through <strong>Send
+                            customer’s order and inform this through <strong>Send
                                 Message</strong>. A
                             provider can add a private note for a customer using <strong>Add private
                                 note</strong>.</li>
                         <li>For <strong>“Manual”</strong> wait time calculation, the provider can
                             edit
-                            individual check-ins wait time from the check-in details.</li>
+                            individual orders wait time from the order details.</li>
                         <li>Each of the customer’s <strong>Name, Wait Time</strong> and
                             <strong>Service</strong> is displayed here.</li>
-                        <li>The three dots menu in the right side of check-in has the following
+                        <li>The three dots menu in the right side of order has the following
                             options:
                             <ol class="ol-normal">
                                 <li><strong>Send Message :</strong> Instantly type and send a
                                     message to
                                     the customer here. These messages can be seen in communication
                                     history anytime.</li>
-                                <li><strong>Cancel check-in :</strong>
+                                <li><strong>Cancel order :</strong>
                                     <ul class="ul-normal">
-                                        <li>To cancel a customer’s check-in, click on
+                                        <li>To cancel a customer’s order, click on
                                             <strong>“Cancel
-                                                Check-In”.</strong></li>
+                                                Order”.</strong></li>
                                         <li>customers are notified about the cancellation of
-                                            Check-in
+                                            order
                                             through push message/email.</li>
                                         <li>When a provider clicks on <strong>“Cancel
-                                                Check-In”</strong>
+                                            Order”</strong>
                                             a pop-up window appears which shows the reasons for
-                                            cancellation of the check-in. Use the checkboxes to
+                                            cancellation of the order. Use the checkboxes to
                                             select
                                             from the suggested reasons and then click
                                             <strong>“Save”</strong>.</li>
@@ -2234,19 +2212,19 @@
                                     and add a note here. This note can be seen anytime the customer
                                     checks-in again with the provider under <strong>“Private
                                         Notes”</strong>.</li>
-                                <li><strong>Change Status to Check-in :</strong>The option to
-                                    check-in a
+                                <li><strong>Change Status to Order :</strong>The option to
+                                    order a
                                     customer appears only when the customer’s status is
                                     <strong>“Arrived”</strong>. The provider can change the status
                                     back
-                                    to <strong>“Check-in”</strong> using this option. This can be
+                                    to <strong>“Order”</strong> using this option. This can be
                                     used
                                     in the following circumstances:
                                     <ul class="ul-normal">
                                         <li>When a customer gets cancelled for some reason and
                                             wanted to
-                                            check-in again.</li>
-                                        <li>When a customer’s check-in status has been mistakenly
+                                            order again.</li>
+                                        <li>When a customer’s order status has been mistakenly
                                             changed to <strong>“Arrived”</strong> status.</li>
                                     </ul>
                                 </li>
@@ -2285,7 +2263,7 @@
                             <strong>“Bill”</strong>. Click on these buttons as and when required.
                         </li>
                         <li><strong>Complete :</strong>Click on the <strong>“Complete”</strong> tab
-                            after completion of the service. The check-in status of the customer
+                            after completion of the service. The order status of the customer
                             changes
                             to complete. This will move the customer’s entry to the
                             <strong>“Completed”</strong> tab. The completed tab generates two
@@ -2294,7 +2272,7 @@
                         <li><strong>Cancel :</strong>If the service gets cancelled for some reason,
                             click on the <strong>“Cancel”</strong> tab. This will remove the
                             customer’s
-                            check-in entry from the list.</li>
+                            order entry from the list.</li>
                         <li><strong>Bill :</strong>After the completion of the service, a bill gets
                             generated. Click on the <strong>“Bill”</strong> tab to view the receipt.
                             Here a provider can add extra services or items in the bill. From the
@@ -2324,10 +2302,10 @@
                     <ul class="ul-normal">
                         <li>Under this tab, a provider can view the list of customers who have
                             already
-                            started availing the service. The check-in tab will no longer contain
+                            started availing the service. The order tab will no longer contain
                             these
                             customers entry. </li>
-                        <li>Name, Wait Time and Service will be the same as that in the check-ins
+                        <li>Name, Wait Time and Service will be the same as that in the orders
                             tab.
                         </li>
                         <li>Two actions are available here:</li>
@@ -2386,7 +2364,7 @@
                     <ul class="ul-normal">
                         <li>Additionally the option to <strong>“Add Private Note”, “Send Message”,
                                 and
-                                “Change Status to Check-in”</strong> is also available.
+                                “Change Status to Order”</strong> is also available.
                             <ol class="ol-normal">
                                 <li><strong>Add Private Note :</strong> Write a note about a
                                     particular
@@ -2395,19 +2373,19 @@
                                     and
                                     send it to the customer. All of the sent messages can be seen in
                                     communication history anytime.</li>
-                                <li><strong>Change Status to check-in :</strong>The option to
-                                    check-in a
+                                <li><strong>Change Status to order :</strong>The option to
+                                    order a
                                     customer appears only if the customer’s status is marked to
                                     <strong>“Arrived”</strong>. A provider can change the status
                                     back to
-                                    <strong>“Check-in”</strong> using this option. This can be used
+                                    <strong>“Order”</strong> using this option. This can be used
                                     in
                                     the following circumstances:
                                     <ul>
                                         <li>When a customer gets cancelled for some reason and
                                             wanted to
-                                            check-in again.</li>
-                                        <li>When a customer’s check-in status has been mistakenly
+                                            order again.</li>
+                                        <li>When a customer’s order status has been mistakenly
                                             changed to <strong>“Arrived”</strong> status.</li>
                                     </ul>
                                 </li>
@@ -2486,7 +2464,7 @@
                 </mat-expansion-panel-header>
                 <div class="helpcontent">
                     <ul class="ul-normal">
-                        <li>Here the provider can view the list of all cancelled customer check-ins.
+                        <li>Here the provider can view the list of all cancelled customer orders.
                         </li>
                         <li>The three dot menu available has the following options:
                             <ul class="normal-abc">
@@ -2497,12 +2475,12 @@
                                     and
                                     send it to the customer. All of the sent messages can be seen in
                                     communication history anytime.</li>
-                                <li><strong>Change Status to check-in :</strong> The option to
-                                    check-in
+                                <li><strong>Change Status to Order :</strong> The option to
+                                    order
                                     a customer appears only if the customer’s status is marked to
                                     <strong>“Arrived”</strong>. A provider can change the status
                                     back to
-                                    <strong>Check-in”</strong>“ using this option.</li>
+                                    <strong>"Order”</strong> using this option.</li>
                             </ul>
                         </li>
                     </ul>
@@ -2702,7 +2680,7 @@
                         <li><strong>Default Enabled :</strong> This coupon is enabled by default, but its
                             status
                             can be changed by the provider.</li>
-                        <li><strong>Online Check in Required :</strong> This coupon is available only for
+                        <li><strong>Online Order Required :</strong> This coupon is available only for
                             those
                             customers who order online.</li>
                         <li><strong>Self Payment Required :</strong> This coupon is available only for those
@@ -2711,7 +2689,7 @@
                             available coupons.</li>
                         <li><strong>First Order Only :</strong> This coupon is available only for those
                             customers who checks-in for the first time on Jaldee.</li>
-                        <li><strong>First Check-in Per Provider Only : </strong> This coupon is available
+                        <li><strong>First Order Per Provider Only : </strong> This coupon is available
                             only
                             for those customers who order for the first time for a particular provider.
                         </li>
@@ -2736,8 +2714,8 @@
                             enable/disable the coupon here (only if permitted).</li>
                         <li>In addition, a coupon stat section is given where the following is shown:</li>
                         <ol class="ol-normal adjust-delay-num">
-                            <li><strong>Check ins Applied :</strong> This shows the number of times
-                                check-ins
+                            <li><strong>Orders Applied :</strong> This shows the number of times
+                                orders
                                 applied for the coupon.</li>
                             <li><strong>Total Amount Discounted :</strong> This shows the total amount
                                 waived to
@@ -2852,9 +2830,9 @@
                 The details appear with a date and time stamp. It also shows the actions completed
                 by
                 the provider along with a little description.</li>
-            <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the
+            <li><strong>Enable/Disable Order :</strong> This is a quick tab that helps the
                 provider
-                to enable check-in, if disabled or to disable the check-in, if enabled.</li>
+                to enable order, if disabled or to disable the order, if enabled.</li>
             <li><strong>License Details :</strong> Here the provider can see the current License
                 version
                 he/she is using. This option directly leads to the license page, where the provider
