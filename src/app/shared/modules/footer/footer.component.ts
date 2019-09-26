@@ -236,7 +236,7 @@ legal_cap = Messages.LEGALCAP;
     this.clearDivs();
     this.showbottompopup = true;
     this.showCheckinDiv = true;
-    this.bottomdivHeader = this.checkin_label +  ' Enable / Disable';
+    this.bottomdivHeader = this.checkin_label.charAt(0).toUpperCase() + this.checkin_label.slice(1) +  ' Enable / Disable';
     this.selOpt = 'Checkin';
     this.waitlistmgr = [];
     this.shared_services.getWaitlistMgr()
