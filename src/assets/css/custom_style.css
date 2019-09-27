@@ -4331,3 +4331,15 @@ border-bottom: none !important;
  display: flex!important;
   }
 }
+.locSchedule ul {
+  padding: 0px !important;
+  margin-top: 10px !important;
+}
+.locSchedule ul li{
+  list-style: none !important;
+  display: flex !important;
+}
+.locSchedule ul li .day {
+  font-weight: 600 !important;
+  padding-right: 10px !important;
+}
