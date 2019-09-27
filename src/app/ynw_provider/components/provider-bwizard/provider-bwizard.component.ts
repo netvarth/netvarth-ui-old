@@ -636,7 +636,7 @@ export class ProviderbWizardComponent implements OnInit {
       if (this.wizard_data_holder.mapurl === '' && this.wizard_data_holder.lat.trim() !== '' && this.wizard_data_holder.lon.trim !== '') {
         this.wizard_data_holder.mapurl = projectConstants.MAP_BASE_URL + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + '/@' + this.wizard_data_holder.lat + ',' + this.wizard_data_holder.lon + ',15z';
       }
-      if (obj.baseLocation.bSchedule.timespec) {
+      if (obj.baseLocation.bSchedule && obj.baseLocation.bSchedule.timespec) {
         if (obj.baseLocation.bSchedule.timespec.length > 0) {
           this.schedule_arr = [];
         }

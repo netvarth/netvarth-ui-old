@@ -84,6 +84,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    let schedule_arr = [];
+    for (let i = 0; i < this.data.location.bSchedule.timespec.length; i++) {
+      schedule_arr = this.sharedfunctionobj.queueSheduleLoop(this.data.location.bSchedule.timespec[i]);
+      if (schedule_arr.length !== 0) {
+        this.activescdule.push(schedule_arr);
+      }
+    }
     this.getProviderQueues();
     this.api_loading = false;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
@@ -120,9 +127,9 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
               schedule_arr = this.sharedfunctionobj.queueSheduleLoop(queue_list[ii].queueSchedule);
             }
           }
-          if (schedule_arr.length !== 0) {
-            this.activescdule.push(schedule_arr);
-          }
+          // if (schedule_arr.length !== 0) {
+          //   this.activescdule.push(schedule_arr);
+          // }
           this.schedule_alreadyexists_for_location = false;
           let display_schedule = [];
           display_schedule = this.sharedfunctionobj.arrageScheduleforDisplay(schedule_arr);
