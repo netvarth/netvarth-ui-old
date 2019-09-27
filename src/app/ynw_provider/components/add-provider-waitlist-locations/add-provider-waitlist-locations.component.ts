@@ -85,12 +85,14 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
 
   ngOnInit() {
     let schedule_arr = [];
+    if (this.data && this.data.location && this.data.location.bSchedule) {
     for (let i = 0; i < this.data.location.bSchedule.timespec.length; i++) {
       schedule_arr = this.sharedfunctionobj.queueSheduleLoop(this.data.location.bSchedule.timespec[i]);
       if (schedule_arr.length !== 0) {
         this.activescdule.push(schedule_arr);
       }
     }
+  }
     this.getProviderQueues();
     this.api_loading = false;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
