@@ -100,10 +100,12 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
                     let schedule_arr = [];
                     this.active_Schedules = [];
                     this.schedule_ar = [];
-                    for (let i = 0; i < this.location_data.bSchedule.timespec.length; i++) {
-                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.location_data.bSchedule.timespec[i]);
-                        if (schedule_arr.length !== 0) {
-                            this.active_Schedules.push(schedule_arr);
+                    if (this.location_data.bSchedule) {
+                        for (let i = 0; i < this.location_data.bSchedule.timespec.length; i++) {
+                            schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.location_data.bSchedule.timespec[i]);
+                            if (schedule_arr.length !== 0) {
+                                this.active_Schedules.push(schedule_arr);
+                            }
                         }
                     }
                     for (let i = 0; i < this.active_Schedules.length; i++) {
