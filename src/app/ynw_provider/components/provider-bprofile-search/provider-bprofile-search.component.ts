@@ -951,7 +951,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
   handleSpecialization() {
     let holdselspec;
-    if (this.bProfile.specialization) {
+    if (this.bProfile && this.bProfile.specialization) {
       holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
     } else {
       holdselspec = [];
@@ -1031,7 +1031,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         if (result['mod'] === 'reloadlist') {
           // this.getBusinessProfile();
           this.bProfile = result['data'];
-          if (this.bProfile.languagesSpoken) {
+          if (this.bProfile && this.bProfile.languagesSpoken) {
             if (this.bProfile.languagesSpoken.length > 0) {
               this.normal_language_show = 3;
             } else {
