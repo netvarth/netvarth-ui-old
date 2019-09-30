@@ -1,0 +1,99 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="container">
+            <div class="row">
+                <div class="card pos">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>Billing/POS
+                            <mat-slide-toggle class="example-margin" [checked]="true" (change)="OnSubmit()">
+                            </mat-slide-toggle>
+                        </label>
+                    </div>
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                        <label>{{customer_label| capitalizeFirst}}s Self pay
+                            <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
+                                <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)">
+                                </mat-slide-toggle>
+                            </span>
+                        </label>
+                        <p class="form-level-settings" *ngIf="!payment_status">{{frm_public_self_cap}}</p>
+                        <div *ngIf="payment_status">
+                            <div class="payTypeVerify" *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active
+                                payment
+                                mode : PayTm </div>
+                            <div class="payTypeVerify" *ngIf="payuVerified && !paytmVerified && !isJaldeeAccount">Active
+                                payment
+                                mode : CC/DC/Netbanking</div>
+                            <div class="payTypeVerify" *ngIf="paytmVerified && payuVerified && !isJaldeeAccount">Active
+                                payment
+                                modes : CC/DC/Netbanking and PayTm</div>
+                            <div class="payTypeVerify" *ngIf="isJaldeeAccount">Active payment mode : Jaldee
+                                Bank</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoPaymentSettings()">
+                        <h2>Payment</h2>
+                        <span class="form-level-settings">Set up your Payment modes here. <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoTaxSettings()">
+                        <h2>Tax</h2>
+                        <span class="form-level-settings">Set up your tax requirements here. Enable the "Tax Settings"
+                            toggle switch to apply taxes for your services <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="gotoItems()" class="b-link">
+                        <h2>Items <p style="font-size: inherit; margin-bottom: 0px"
+                                *ngIf="multipeLocationAllowed == true"> (0)</p>
+                        </h2>
+                        <span class="form-level-settings">Create new items and related information here<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-locations', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoDiscounts()">
+                        <h2>Discounts (0)</h2>
+                        <span class="form-level-settings">Create your discounts here<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-services', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoCoupons()">
+                        <h2>Coupons (0)</h2>
+                        <span class="form-level-settings">Create your coupon and its details here.<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-time_windows', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

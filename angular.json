@@ -24,18 +24,27 @@
               "node_modules/ng2-slim-loading-bar/bundles/style.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/font-awesome/css/font-awesome.css",
-              "src/assets/css/bootstrap.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/owl.carousel/dist/assets/owl.carousel.css",
-              "node_modules/owl.carousel/dist/assets/owl.theme.default.css",
+              "node_modules/owl.carousel/dist/assets/owl.theme.default.css",         
+              "src/assets/third-party/Admin-LTE/css/AdminLTE.min.css",
+              "src/assets/third-party/Admin-LTE/css/_all-skins.css",
               "src/customTheme.scss",
-              "src/styles.css",
+              "src/assets/css/styles.css",
+              "src/assets/css/consumer.css",
+              "src/assets/css/modal_popups.css",
+              "src/assets/css/header_footer.css",
+              "src/assets/css/mat_form_style.css",
               "src/assets/css/custom_style.css",
               "src/assets/css/home.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/owl.carousel/dist/owl.carousel.js",
-              "node_modules/crypto-js/crypto-js.js"
+              "src/assets/third-party/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/owl.carousel/dist/owl.carousel.js",              
+              "node_modules/crypto-js/crypto-js.js",
+              "src/assets/third-party/Admin-LTE/js/app.min.js",
+              "src/assets/third-party/Admin-LTE/js/demo.js"
             ]
           },
           "configurations": {

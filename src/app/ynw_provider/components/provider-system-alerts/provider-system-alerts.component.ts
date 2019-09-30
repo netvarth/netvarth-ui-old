@@ -40,10 +40,6 @@ export class ProviderSystemAlertComponent implements OnInit {
   perPage = projectConstants.PERPAGING_LIMIT;
   breadcrumbs = [
     {
-      title: Messages.DASHBOARD_TITLE,
-      url: '/provider'
-    },
-    {
       title: 'System Alerts'
     }
   ];

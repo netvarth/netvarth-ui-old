@@ -33,8 +33,12 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
       title: 'Settings'
     },
     {
+      title: 'Billing/POS',
+      url: '/provider/settings/pos'
+  },
+    {
       title: 'Items',
-      url: '/provider/settings/items'
+      url: '/provider/settings/pos/items'
     }
   ];
   item_status = projectConstants.ITEM_STATUS;

@@ -1,0 +1,146 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager comn-cls">
+        <div class="container">
+            <div class="row">
+                <div class="p0">
+                    <div>
+                        <div class="card no-padding" *ngFor="let users of inboxUsersList, let parentIndex = index">
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel-header [collapsedHeight]="'75px'" [expandedHeight]="'75px'">
+                                        <mat-panel-title>
+                                            <!-- <span class="refine-head">
+                                                            <h4>{{users.userKey}}</h4>
+                                                    </span> -->
+                                            <div class="row col-md-12">
+                                                <div class="title-color">
+                                                    <h4>{{users.userKey}}</h4>
+                                                </div>
+                                                <div>
+                                                    {{ (users.latestMessage.length>30)? (shared_functions.firstToUpper(users.latestMessage) | slice:0:30)+'.....':shared_functions.firstToUpper(users.latestMessage) }}
+                                                    <span
+                                                        class="fl-right">{{formatDateDisplay(users.latestTime)}}</span>
+                                                </div>
+                                            </div>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <section>
+                                        <div class="box box-warning direct-chat direct-chat-warning">
+                                            <div class="box-body">
+                                                <!-- Conversations are loaded here -->
+                                                <div class="direct-chat-messages">
+                                                    <div class="direct-chat-msg" *ngFor="let inbox of users.inboxList, let childIndex = index"
+                                                        [class.right]="inbox.messagestatus=='in'">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <!-- <span class="direct-chat-name pull-right">Sarah Bullock</span> -->
+                                                            <span class="direct-chat-timestamp"
+                                                                [class.pull-left]="inbox.messagestatus=='in'"
+                                                                [class.pull-right]="inbox.messagestatus=='out'">{{formatDateDisplay(inbox.timestamp)}}</span>
+                                                        </div>
+                                                        <!-- /.direct-chat-info -->
+                                                        <!-- <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image"> -->
+                                                        <!-- /.direct-chat-img -->{{selectedIndex}}{{parentIndex}}{{childIndex}}
+                                                        <div class="direct-chat-text"
+                                                         [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex" [class.pointer-cursor]="inbox.messagestatus=='in'" (click)="setActiveMessage(inbox, parentIndex, childIndex)">
+                                                            {{inbox.message}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <div class="box-footer">
+                                                <form>
+                                                    <div class="input-group">
+                                                        <input type="text" name="message" placeholder="Type Message ..."
+                                                            class="form-control" [(ngModel)]="messageToSend">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" (click)="sendMessage(messageToSend, users.inboxList, parentIndex)"
+                                                                class="btn btn-warning btn-flat">Send</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.box-footer-->
+                                        </div>
+                                    </section>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+
+
+
+
+
+                            <!-- <ul class="inbox-table" *ngIf="inboxUsersList.length>0 && !loading">
+                                
+                                
+                                
+                                
+                                        <li class="card" [class.active]="selectedMsg==i" *ngFor="let users of inboxUsersList">
+                                            
+                                
+                                
+                                        </li> -->
+
+                            <!-- <li class="ttd" [class.active]="selectedMsg==i" [class.outer-received]="user_id != message.owner.id"
+                                            [class.outer-sent]="user_id == message.owner.id" *ngFor="let message of messages; let i = index">
+                                            <div class="outer" (click)="showMsg(i)">
+                                                <div class="td td0">
+                                                    <span class="icon-inbox-in" *ngIf="user_id != message.owner.id"></span>
+                                                    <span class="icon-inbox-out" *ngIf="user_id == message.owner.id"></span>
+                                                </div>
+                                
+                                                <div class="td td3">
+                                                    <div class="label">{{provider_consumer_cap}}</div>
+                                                    <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}
+                                                    </div>
+                                                    <div class="result" *ngIf="user_id != message.receiver.id">
+                                                        {{message.receiver.userName | capitalizeFirst}}</div>
+                                                </div>
+                                                <div class="td td2">
+                                                    <div class="label">{{service_cap}}</div>
+                                                    <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
+                                                </div>
+                                                <div class="td td4">
+                                                    <div class="label">{{message_cap}}</div>
+                                                    <div class="result">
+                                                        {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
+                                                    </div>
+                                                </div>
+                                                <div class="td td1">
+                                                    <div class="label">{{date_time_cap}}</div>
+                                                    <div class="result">{{formatDateDisplay(message.timeStamp)}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="details" [class.show]="selectedMsg==i">
+                                                <div class="result">
+                                                    <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
+                                                    </div>
+                                                    <div class="action">
+                                                        <span class="icon-reply" (click)="replyMessage(message)"
+                                                            *ngIf="user_id != message.owner.id && !hide_reply_button">
+                                                            {{reply_cap}}
+                                                        </span>
+                                                        <span class="icon-close" (click)="closeMsg()">
+                                                            {{close_cap}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="actions">
+                                                    <span class="icon-delete"> {{delete_msg_cap}}</span>
+                                                </div>
+                                            </div>
+                                        </li> -->
+                            <!-- </ul> -->
+                        </div>
+                        <div style="padding-left: 20px" *ngIf="this.messages.length == 0">
+                            <p>{{no_msg_exists_cap}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

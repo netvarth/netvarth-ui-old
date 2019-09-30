@@ -1,0 +1,627 @@
+.mat-menu-panel {
+    -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.mat-menu-panel .mat-menu-content {
+    padding: 0;
+}
+
+.mat-menu-panel .mat-menu-content .mat-menu-item {
+    display: flex;
+    font-size: .875rem;
+    font-weight: 500 !important;
+    height: 40px;
+    line-height: 40px;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.7);
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+@media only screen and (max-width: 767px) {
+    .mat-menu-panel .mat-menu-content .mat-menu-item {
+        color: black;
+    }
+    .mat-menu-panel .mat-menu-content .mat-menu-item i {
+        color: black;
+    }
+}
+
+.mat-menu-panel .mat-menu-content .mat-menu-item i {
+    margin-right: 15px;
+    font-size: 1rem;
+    display: flex;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.mat-menu-panel .mat-menu-content .mat-menu-item:focus {
+    outline: none;
+}
+
+.mat-menu-panel .mat-menu-content .mat-menu-item:hover {
+    color: black;
+}
+
+.mat-menu-panel .mat-menu-content .mat-menu-item:hover i {
+    color: black;
+}
+
+.mat-snack-bar-container {
+    color: #fff;
+    background: #00aef2;
+    padding: 15px 24px;
+    position: relative;
+    z-index: 1010;
+}
+
+.mat-snack-bar-container .mat-simple-snackbar {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.mat-snack-bar-container:before {
+    position: absolute;
+    width: 8000px;
+    margin-left: -4000px;
+    content: "";
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: -1;
+}
+
+.mat-snack-bar-container.snackbarnormal:before {
+    background: #00aef2;
+}
+
+.mat-snack-bar-container.snackbarerror:before {
+    background: #f24949;
+}
+
+.mat-checkbox, .mat-select, .mat-form-field {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.mat-button {
+    box-shadow: none;
+    background: #00aef2 !important;
+    outline: none !important;
+    color: #fff !important;
+    font-size: .875rem !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center !important;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer !important;
+    border: none !important;
+    white-space: nowrap !important;
+    padding: 10px 40px;
+    line-height: inherit !important;
+    -moz-user-select: none;
+    z-index: 2;
+    text-transform: uppercase;
+    -webkit-border-radius: 3px !important;
+    border-radius: 3px !important;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+@media only screen and (max-width: 767px) {
+    .mat-button {
+        padding: 5px 10px;
+        height: auto;
+    }
+}
+
+.mat-button:hover {
+    background: #1873f2 !important;
+}
+
+.mat-button.confirmbtn {
+    background: #1873f2 !important;
+    font-weight: 600;
+}
+
+.mat-button.billcancel {
+    background: #dbdbdb !important;
+    color: #666 !important;
+}
+
+.mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save, .mat-button.billcancel {
+    padding: 5px 15px !important;
+    margin-left: 0px !important;
+    margin-right: 10px !important;
+    height: auto;
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+.mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-group.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus, .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
+    background: transparent;
+}
+
+@media only screen and (max-width: 575px) {
+    .mat-button.update, .mat-button.settle, .mat-button.accept, .mat-button.makepayment, .mat-button.print, .mat-button.email, .mat-button.save, .mat-button.billcancel {
+        margin-bottom: 5px;
+    }
+}
+
+.mat-button.update, .mat-button.print {
+    background: #fda60d !important;
+}
+
+.mat-button.accept {
+    background: #00cc96 !important;
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.mat-button.makepayment {
+    background: #00cc96 !important;
+}
+
+.mat-button:disabled {
+    background: black !important;
+    opacity: .3;
+    cursor: default !important;
+}
+
+.form-group, .form-check {
+    font-size: .875rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-group input[type="file"], .form-group textarea, .form-group .form-control, .form-check input[type="text"], .form-check input[type="email"], .form-check input[type="password"], .form-check input[type="file"], .form-check textarea, .form-check .form-control {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    background: white;
+    /* border: 1px solid #b6cdd8; */
+    border-bottom: 1px solid #b6cdd8;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #222223;
+    text-overflow: ellipsis;
+    padding: 10px;
+}
+
+.form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="password"]:focus, .form-group input[type="file"]:focus, .form-group textarea:focus, .form-group .form-control:focus, .form-check input[type="text"]:focus, .form-check input[type="email"]:focus, .form-check input[type="password"]:focus, .form-check input[type="file"]:focus, .form-check textarea:focus, .form-check .form-control:focus {
+    background: #fff;
+}
+
+.form-group input[type="text"]:disabled, .form-group input[type="email"]:disabled, .form-group input[type="password"]:disabled, .form-group input[type="file"]:disabled, .form-group textarea:disabled, .form-group .form-control:disabled, .form-check input[type="text"]:disabled, .form-check input[type="email"]:disabled, .form-check input[type="password"]:disabled, .form-check input[type="file"]:disabled, .form-check textarea:disabled, .form-check .form-control:disabled {
+    background: #e6e6e6;
+    /* border: 1px solid transparent;  */
+    border-bottom: 1px solid transparent;
+}
+
+.form-group input[type="text"]::-moz-placeholder, .form-group input[type="email"]::-moz-placeholder, .form-group input[type="password"]::-moz-placeholder, .form-group input[type="file"]::-moz-placeholder, .form-group textarea::-moz-placeholder, .form-group .form-control::-moz-placeholder, .form-check input[type="text"]::-moz-placeholder, .form-check input[type="email"]::-moz-placeholder, .form-check input[type="password"]::-moz-placeholder, .form-check input[type="file"]::-moz-placeholder, .form-check textarea::-moz-placeholder, .form-check .form-control::-moz-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"]:-ms-input-placeholder, .form-group input[type="email"]:-ms-input-placeholder, .form-group input[type="password"]:-ms-input-placeholder, .form-group input[type="file"]:-ms-input-placeholder, .form-group textarea:-ms-input-placeholder, .form-group .form-control:-ms-input-placeholder, .form-check input[type="text"]:-ms-input-placeholder, .form-check input[type="email"]:-ms-input-placeholder, .form-check input[type="password"]:-ms-input-placeholder, .form-check input[type="file"]:-ms-input-placeholder, .form-check textarea:-ms-input-placeholder, .form-check .form-control:-ms-input-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"]:-moz-placeholder, .form-group input[type="email"]:-moz-placeholder, .form-group input[type="password"]:-moz-placeholder, .form-group input[type="file"]:-moz-placeholder, .form-group textarea:-moz-placeholder, .form-group .form-control:-moz-placeholder, .form-check input[type="text"]:-moz-placeholder, .form-check input[type="email"]:-moz-placeholder, .form-check input[type="password"]:-moz-placeholder, .form-check input[type="file"]:-moz-placeholder, .form-check textarea:-moz-placeholder, .form-check .form-control:-moz-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"]::-webkit-input-placeholder, .form-group input[type="email"]::-webkit-input-placeholder, .form-group input[type="password"]::-webkit-input-placeholder, .form-group input[type="file"]::-webkit-input-placeholder, .form-group textarea::-webkit-input-placeholder, .form-group .form-control::-webkit-input-placeholder, .form-check input[type="text"]::-webkit-input-placeholder, .form-check input[type="email"]::-webkit-input-placeholder, .form-check input[type="password"]::-webkit-input-placeholder, .form-check input[type="file"]::-webkit-input-placeholder, .form-check textarea::-webkit-input-placeholder, .form-check .form-control::-webkit-input-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.form-group input[type="text"].nofocus, .form-group input[type="email"].nofocus, .form-group input[type="password"].nofocus, .form-group input[type="file"].nofocus, .form-group textarea.nofocus, .form-group .form-control.nofocus, .form-check input[type="text"].nofocus, .form-check input[type="email"].nofocus, .form-check input[type="password"].nofocus, .form-check input[type="file"].nofocus, .form-check textarea.nofocus, .form-check .form-control.nofocus {
+    pointer-events: none;
+    cursor: default;
+    background: #f2f2f2;
+}
+
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-check input[type="text"], .form-check input[type="email"], .form-check input[type="password"] {
+    height: 40px;
+}
+
+.form-group textarea, .form-check textarea {
+    min-height: 100px;
+}
+
+.form-group .col-form-label, .form-check .col-form-label {
+    font-weight: 600;
+    font-size: .875rem;
+    display: block;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+.form-group .error-msg, .form-check .error-msg {
+    color: #f24949 !important;
+    font-size: .875rem;
+    font-weight: 500;
+}
+
+.form-group .pickerouter, .form-check .pickerouter {
+    display: flex;
+}
+
+.form-group .pickerouter input, .form-check .pickerouter input {
+    width: 100px;
+    padding: 10px;
+    border: 1px solid #b6cdd8;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #222223;
+    text-overflow: ellipsis;
+}
+
+.form-group .pickerouter input.nofocus, .form-check .pickerouter input.nofocus {
+    width: 100px;
+    pointer-events: none;
+    cursor: default;
+    background: #f2f2f2;
+    border: 1px solid #b6cdd8;
+}
+
+.form-group .pickerouter .mat-datepicker-toggle, .form-check .pickerouter .mat-datepicker-toggle {
+    margin-right: 15px;
+}
+
+.form-group .pickerouter .mat-datepicker-toggle button, .form-check .pickerouter .mat-datepicker-toggle button {
+    height: 38px;
+    background: #00aef2;
+}
+
+.form-group .pickerouter .mat-datepicker-toggle button svg, .form-check .pickerouter .mat-datepicker-toggle button svg {
+    fill: #fff;
+}
+
+.mat-form-field {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+    background: white;
+    border-bottom: 1px solid #b6cdd8;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #222223;
+    text-overflow: ellipsis;
+    padding: 10px;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element::-moz-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:-ms-input-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:-moz-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element::-webkit-input-placeholder {
+    color: #999999;
+    font-size: .75rem;
+    font-style: italic;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:disabled {
+    background: #e6e6e6;
+    border-bottom: 1px solid transparent;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
+    height: 40px;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    background: white;
+    border-bottom: 1px solid #b6cdd8;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select:focus {
+    background: #fff;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select.mat-select-disabled {
+    background: #e6e6e6;
+    border-bottom: 1px solid transparent;
+}
+
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select.mat-select-disabled .mat-select-value {
+    color: #4c4c4c;
+}
+
+/* Change Autocomplete styles in Chrome*/
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+    border: none;
+    -webkit-text-fill-color: #4c4c4c;
+    -webkit-box-shadow: 0 0 0px 1000px #e6e6e6 inset;
+    transition: background-color 5000s ease-in-out 0s;
+    background-color: #fff;
+}
+
+.card.w-dta .mat-accordion {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel {
+    box-shadow: none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+    /* background: transparent; */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding: 0 20px;
+    font-size: 1.25rem;
+    min-height: 60px;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .helprighticon {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    cursor: pointer;
+    -moz-transition: all 300ms;
+    -o-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .helprighticon i {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .helprighticon:hover {
+    color: #00aef2;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator {
+    -moz-transform: rotate(0deg) !important;
+    -o-transform: rotate(0deg) !important;
+    -ms-transform: rotate(0deg) !important;
+    -webkit-transform: rotate(0deg) !important;
+    transform: rotate(0deg) !important;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: .625rem;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-indicator:after {
+    color: #222223;
+    border: none;
+    content: "\72";
+    position: absolute;
+    font-family: "custom-ynw" !important;
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-expansion-indicator:after {
+    content: "\66";
+    color: #222223;
+}
+
+@media only screen and (max-width: 400px) {
+    .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+        font-size: 1rem;
+        align-items: center !important;
+    }
+    .card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-expansion-panel-header-title {
+        align-items: center;
+    }
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .no-dta {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card.w-dta .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .no-dta p {
+    font-size: 1rem;
+}
+
+
+.cdk-overlay-container .cdk-overlay-dark-backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  .cdk-overlay-container .mat-dialog-container {
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .cdk-overlay-container .mat-dialog-container form .form-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .cdk-overlay-container .mat-dialog-container form .form-group {
+    margin-bottom: 1.25em;
+  }
+  
+  .cdk-overlay-container .mat-dialog-container .mat-select-content {
+    background: red !important;
+  }
+  
+  .cdk-overlay-container .mat-dialog-container .mat-select-content .mat-option {
+    padding: 0 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: .875rem;
+    font-weight: 500;
+  }
+  
+  .cdk-overlay-container .mat-dialog-container .search_provider .create_new {
+    padding: 20px;
+    font-weight: 500;
+    color: #f24949;
+    padding-top: 0;
+  }
+  
+  .cdk-overlay-container .mat-dialog-container .search_provider .create_new .cs-btn {
+    margin-left: 10px;
+  }
+  
+  .cdk-overlay-container .mat-select-panel {
+    box-shadow: none !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: .875rem;
+    font-weight: 500;
+    border: 1px solid #e6e6e6;
+    /*max-height: 100%;*/
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-selected {
+    background: #00aef2 !important;
+    color: #fff !important;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-selected .mat-option-text .fb, .cdk-overlay-container .mat-select-panel .mat-selected .mat-option-text .tw, .cdk-overlay-container .mat-select-panel .mat-selected .mat-option-text .lkd, .cdk-overlay-container .mat-select-panel .mat-selected .mat-option-text .ytb, .cdk-overlay-container .mat-select-panel .mat-selected .mat-option-text .gpl, .cdk-overlay-container .mat-select-panel .mat-selected .mat-option-text .pntr {
+    color: #fff;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-weight: 500;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .fb, .cdk-overlay-container .mat-select-panel .mat-option-text .tw, .cdk-overlay-container .mat-select-panel .mat-option-text .lkd, .cdk-overlay-container .mat-select-panel .mat-option-text .ytb, .cdk-overlay-container .mat-select-panel .mat-option-text .gpl, .cdk-overlay-container .mat-select-panel .mat-option-text .pntr {
+    font-size: 1.25rem;
+    vertical-align: text-bottom;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .fb {
+    color: #627aac;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .tw {
+    color: #5eb0fb;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .lkd {
+    color: #02a2c2;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .ytb {
+    color: #ef452f;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .gpl {
+    color: #ef452f;
+  }
+  
+  .cdk-overlay-container .mat-select-panel .mat-option-text .pntr {
+    color: #ef452f;
+  }
+  
+  .cdk-overlay-container .mat-autocomplete-panel {
+    box-shadow: none !important;
+    border: 1px solid #e6e6e6;
+    max-height: 482px;
+  }
+  
+  .cdk-overlay-container .mat-autocomplete-panel .mat-option {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: .875rem;
+    font-weight: 500;
+    padding: 0 10px;
+  }
+  
+  .cdk-overlay-container .mat-autocomplete-panel .mat-optgroup .mat-optgroup-label {
+    background: #00aef2;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: .875rem;
+    font-weight: 600 !important;
+    margin-bottom: 0;
+  }
+  .mat-accordion .mat-expansion-panel:first-of-type, 
+  .mat-accordion .mat-expansion-panel:last-of-type,
+  .mat-accordion .mat-expansion-panel {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;; 
+    border-bottom-left-radius: 0px !important;; 
+  }

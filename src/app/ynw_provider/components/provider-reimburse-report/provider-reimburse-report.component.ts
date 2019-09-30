@@ -38,8 +38,12 @@ export class ProviderReimburseReportComponent implements OnInit {
       url: '/provider/settings'
     },
     {
+      title: 'Billing/POS',
+      url: '/provider/settings/pos'
+  },
+    {
       title: 'Coupons',
-      url: '/provider/settings/coupons'
+      url: '/provider/settings/pos/coupons'
     },
     {
       title: 'Reports'
@@ -282,7 +286,7 @@ export class ProviderReimburseReportComponent implements OnInit {
    * @param invoiceId Report/Invoice Id
    */
   reportView(invoiceId) {
-    this.router.navigate(['provider', 'settings', 'coupons', 'report', invoiceId]);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupons', 'report', invoiceId]);
   }
   /**
    * Format a Date to DD/MM/YYYY

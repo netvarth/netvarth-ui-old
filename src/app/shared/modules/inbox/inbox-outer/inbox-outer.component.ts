@@ -14,10 +14,6 @@ export class InboxOuterComponent implements OnInit {
   messages: any = [];
   breadcrumbs = [
     {
-      title: Messages.DASHBOARD_TITLE,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp')
-    },
-    {
       title: 'Inbox'
     }
   ];

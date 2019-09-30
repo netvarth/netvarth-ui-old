@@ -1,0 +1,58 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="container">
+            <div class="w-dta">
+                <div class="row">
+                    <div class="copy addons one col-xs-12 col-sm-12 card no-padding ">
+                        <div class="card no-padding">
+                            <div class="col-md-6 no-padding">
+                                <div class="pay-section left card">
+                                    <div class="lc22">
+                                        <div class="lc2-1 lcd custom-help">
+                                            <div class="ttle block-level">
+                                                <span [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">
+                                                    {{addon_cap}}<span class="addbt"
+                                                        (click)="showadd_addons()"></span></span>
+                                                <p class="form-level-settings">{{frm_addon_cap}}<a
+                                                        class="learnmore-pointer" id="customer-help"
+                                                        (click)="learnmore_clicked('addon', $event)">{{learn_more}}</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <ng-container
+                                            *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
+                                            <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
+                                                <div class="ttle">{{addon.name}}</div>
+                                                <div class="add-details">{{addon.description}}</div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
+                                            <div class="lc2-2 lcd">
+                                                <div class="ttle">{{no_addon_cap}}</div>
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+                                    <span class="mbt">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu1">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu1="matMenu">
+                                            <button type="button" (click)="goAddonHistory()" mat-menu-item>
+                                                <span>{{history_cap}}</span>
+                                            </button>
+                                        </mat-menu>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

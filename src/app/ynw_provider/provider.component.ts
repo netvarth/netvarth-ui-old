@@ -27,7 +27,7 @@ export class ProviderComponent {
                 // router.url === '\/provider' ||
                 if (router.url === '\/provider\/waitlist-manager' ||
                 router.url === '\/provider\/license' ) {
-                     router.navigate(['provider', 'settings', 'bprofile-search']);
+                     router.navigate(['provider', 'settings', 'bprofile']);
                 }
             }
           });

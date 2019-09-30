@@ -23,7 +23,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   api_loading = true;
   amForm: FormGroup;
   api_error = null;
-  api_success = null; 
+  api_success = null;
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofileSearchAdwordsComponent>,
@@ -47,13 +47,12 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
 
   onSubmit(form_data) {
     if (!form_data.adwordname.replace(/\s/g, '').length) {
-        const error = 'Please enter a keyword';
-        this.shared_functions.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
-      }
-    else{
-          this.resetApiErrors();
-          this.addAdword(form_data.adwordname);
-      }
+      const error = 'Please enter a keyword';
+      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    } else {
+      this.resetApiErrors();
+      this.addAdword(form_data.adwordname);
+    }
   }
 
   addAdword(post_data) {

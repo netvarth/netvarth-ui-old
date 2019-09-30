@@ -46,6 +46,10 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       url: '/provider/settings'
     },
     {
+      title: 'Billing/POS',
+      url: '/provider/settings/pos'
+  },
+    {
       title: 'Coupons'
     }
   ];
@@ -179,10 +183,10 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       );
   }
   reports() {
-    this.router.navigate(['provider', 'settings', 'coupons', 'report']);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupons', 'report']);
   }
   couponView(jcCode) {
-    this.router.navigate(['provider', 'settings', 'coupons', jcCode]);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupons', jcCode]);
   }
   formatPrice(price) {
     return this.sharedfunctionObj.print_PricewithCurrency(price);

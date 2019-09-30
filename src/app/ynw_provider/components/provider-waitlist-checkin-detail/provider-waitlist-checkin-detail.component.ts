@@ -77,7 +77,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   showEditView = false;
   api_loading = true;
   pdtype;
- 
+
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,

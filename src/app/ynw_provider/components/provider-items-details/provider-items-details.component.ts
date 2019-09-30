@@ -35,8 +35,12 @@ export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
       title: 'Settings'
     },
     {
+      title: 'Billing/POS',
+      url: '/provider/settings/pos'
+  },
+    {
       title: 'Items',
-      url: '/provider/settings/items'
+      url: '/provider/settings/pos/items'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

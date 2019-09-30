@@ -27,12 +27,8 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   isCheckin;
   breadcrumbs = [
     {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
       title: 'License & Invoice',
-      url: '/provider/settings/license'
+      url: '/provider/license'
     },
     {
       title: 'Payment History'

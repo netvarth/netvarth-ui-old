@@ -223,6 +223,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
+          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -238,6 +239,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
+          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

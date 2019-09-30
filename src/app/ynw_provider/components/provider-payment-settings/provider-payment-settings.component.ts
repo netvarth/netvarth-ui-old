@@ -105,7 +105,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Payment Settings'
+            title: 'Billing/POS',
+            url: '/provider/settings/pos'
+        },
+        {
+            title: 'Payment'
         }
     ];
     /**
@@ -260,10 +264,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getTaxpercentage()
             .subscribe(data => {
                 this.taxDetails = data;
-            if(this.taxDetails !=null){
-                this.taxpercentage = this.taxDetails.taxPercentage;
-                this.gstnumber = this.taxDetails.gstNumber || '';
-             }
+                if (this.taxDetails != null) {
+                    this.taxpercentage = this.taxDetails.taxPercentage;
+                    this.gstnumber = this.taxDetails.gstNumber || '';
+                }
             },
                 () => {
                 });
@@ -404,7 +408,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        //this.getPaymentSettings(2);
+                        // this.getPaymentSettings(2);
                         this.saveEnabled = true;
                     });
         }
@@ -680,6 +684,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     removSpace(evt) {
         return this.shared_functions.removSpace(evt);
-      }
+    }
 
 }

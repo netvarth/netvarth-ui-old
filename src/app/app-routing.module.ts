@@ -10,7 +10,7 @@ import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.c
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent},
-    { path: 'provider', loadChildren: './ynw_provider/provider.module#ProviderModule',
+    { path: 'provider', loadChildren: './business/business.module#BusinessModule',
         canActivate: [AuthGuardProvider]},
     { path: 'consumer', loadChildren: './ynw_consumer/consumer.module#ConsumerModule',
         canActivate: [AuthGuardConsumer]},
@@ -20,7 +20,7 @@ const routes: Routes = [
     { path: 'provider-home', loadChildren: './shared/components/phome/phome.module#PhomeModule'},
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
-    { path: 'not-found', loadChildren: './not-found/not-found.module#NotFoundModule' },
+    { path: 'not-found', loadChildren: './shared/modules/not-found/not-found.module#NotFoundModule' },
     { path: 'searchdetail', loadChildren: './shared/components/search-detail/search-detail.module#SearchDetailModule' },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
     { path: 'terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule'},
@@ -28,7 +28,7 @@ const routes: Routes = [
     { path: 'home/:id', loadChildren: './shared/modules/about-jaldee/about-jaldee.module#AboutJaldeeModule' },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent},
-    { path: '**', redirectTo: 'not-found' }
+    // { path: '**', redirectTo: 'not-found' }
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes, {

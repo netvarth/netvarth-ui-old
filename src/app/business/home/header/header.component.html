@@ -1,0 +1,194 @@
+<header class="main-header">
+  <!-- Logo -->
+  <a (click)="gotoActiveHome()" class="logo pointer-cursor">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini"><img src="assets/images/home/logo-icon.png" alt="Jaldee"></span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg"><img src="assets/images/jaldee-logo.png" alt="Jaldee"></span>
+  </a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-static-top" role="navigation">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- Messages: style can be found in dropdown.less-->
+        <li class="dropdown messages-menu">
+          <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+            <i class="fa fa-envelope-o"></i>
+            <span class="label label-success"
+              *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
+          </a>
+          <!-- <ul class="dropdown-menu" *ngIf="">
+            <li class="header" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">You have no new messages</li>
+
+            <li>
+              <ul class="menu">
+                <li>
+                  <a href="#">
+                    <div class="pull-left">
+                      <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div> 
+                    <h4>
+                      Support Team
+                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                    </h4>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul> -->
+        </li>
+        <li class="dropdown notifications-menu">
+          <a (click)="gotoAlerts()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+            <i class="fa fa-bell-o"></i>
+            <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
+          </a>
+          <ul class="dropdown-menu" *ngIf="alertCnt > 0">
+            <li>
+              <ul class="menu">
+                <li *ngFor="let alert of alerts">
+                  <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
+                    [class.high]="alert.severity.name=='High'" [class.error]="alert.severity.name=='Critical'"
+                    class="justify-alert">
+                    {{alert.text}} <i class="fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'"
+                      *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
+                  </p>
+                </li>
+              </ul>
+            </li>
+            <li class="footer"><a href="#" routerLink="alerts">View all</a></li>
+          </ul>
+        </li>
+        <li class="dropdown tasks-menu">
+          <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+            <i class="icon-license"></i>
+          </a>
+          <ul class="dropdown-menu" *ngIf="active_license!='Diamond'">
+            <li class="header">
+              <p *ngIf="active_license=='Platinum - FREE Trial 60 days' && license_message != ''"
+                style="color: red; width: 100%; text-align: left;">
+                Your 'Platinum - Free trial 60 days' license package will expire {{license_message}}.
+                <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
+                    </b></span><span style="color: red"> to Upgrade License.</span></span>
+              </p>
+              <p style="width: 100%; text-align: left;"
+                *ngIf="active_license!='Platinum - FREE Trial 60 days' && active_license!='Diamond'">
+                Your current license is
+                <i style="color:red">{{active_license}}.</i><span> Upgrade license </span> for more features.
+              </p>
+            </li>
+            <li>
+              <ul class="menu">
+                <li>
+                  <a (click)="upgradeMembership()">
+                    <h3 style="align-content: center">
+                      <span class="link"> <b> Upgrade license </b></span>
+                    </h3>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="footer">
+              <a class="pointer-cursor" routerLink="license">Go to license section</a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown tasks-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-checkin"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <ul class="menu">
+                <li>
+                  <!-- Task item -->
+                  <a>
+                    <h3>
+                      Same Day Online Check-Ins
+                      <small class="pull-right">
+                        <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns"
+                          (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle>
+                      </small>
+                    </h3>
+                  </a>
+                </li>
+                <li>
+                  <!-- Task item -->
+                  <a>
+                    <h3>
+                      Future Check-ins
+                      <small class="pull-right">
+                        <mat-slide-toggle [checked]="waitlistmgr.futureDateWaitlist"
+                          (change)="changefutureOnlinestatus(waitlistmgr.futureDateWaitlist)"></mat-slide-toggle>
+                      </small>
+                    </h3>
+                    <div>
+
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="footer">
+              <a class="pointer-cursor" (click)="gotoCheckinSettings()">View other settings</a>
+            </li>
+          </ul>
+        </li>
+        <!-- <div class="image centeralign" *ngIf="blogo!=''">
+          <img [src]="blogo" class="img-circle" alt="Business Image" *ngIf="blogo!='' && blogo!=null" alt="" />
+        </div>
+        <div class="centeralign ">
+          <p class="bus-name">{{bname}}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div> -->
+        <li class="dropdown user user-menu">
+          <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+            <img [src]="blogo" class="user-image" alt="User Image">
+            <span class="hidden-xs">{{bname}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header pointer-cursor" (click)="gotoProfile()">
+              <img [src]="blogo" class="img-circle" alt="User Image">
+
+              <p>
+                {{bname}}
+                <!-- <small>Member since Nov. 2012</small> -->
+              </p>
+            </li>
+            <!-- <li class="user-body">
+              <div class="row">
+                <div class="col-xs-4 text-center">
+                  <a href="#">Followers</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                  <a href="#">Sales</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                  <a href="#">Friends</a>
+                </div>
+              </div>
+            </li> -->
+            <!-- Menu Footer-->
+            <li class="user-footer">
+              <div class="pull-left">
+                <a (click)="redirectto('profile')" class="btn btn-default btn-flat pointer-cursor">Admin Profile</a>
+              </div>
+              <div class="pull-right">
+                <a (click)="doLogout()" class="btn btn-default btn-flat pointer-cursor">Sign out</a>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <!-- Control Sidebar Toggle Button -->
+        <li>
+          <a data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

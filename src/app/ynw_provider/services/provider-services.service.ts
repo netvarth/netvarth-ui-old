@@ -266,7 +266,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   setDeptWaitlistMgr(status) {
-    const url = 'provider/settings/waitlistMgr/department/'+ status;
+    const url = 'provider/settings/waitlistMgr/department/' + status;
     return this.servicemeta.httpPut(url);
   }
   getServicesList(params?) {
@@ -363,7 +363,7 @@ export class ProviderServices {
   editProviderQueue(data) {
     return this.servicemeta.httpPut('provider/waitlist/queues', data);
   }
-  changeSamedayCheckinStatus(queId, status ) {
+  changeSamedayCheckinStatus(queId, status) {
     const url = 'provider/waitlist/queues/onlineCheckIn/' + status + '/' + queId;
     return this.servicemeta.httpPatch(url);
   }
@@ -673,19 +673,19 @@ export class ProviderServices {
     const url = 'provider/settings/notification';
     return this.servicemeta.httpPost(url, data);
   }
-  getNotificationList(){
-    const url = 'provider/settings/notification'; 
+  getNotificationList() {
+    const url = 'provider/settings/notification';
     return this.servicemeta.httpGet(url);
   }
-  updateNotificationList(data){
+  updateNotificationList(data) {
     const url = 'provider/settings/notification';
     return this.servicemeta.httpPut(url, data);
   }
-  updateTax(data){
+  updateTax(data) {
     const url = 'provider/payment/tax/' + data;
     return this.servicemeta.httpPost(url);
   }
-  getgst(){
+  getgst() {
     const url = 'provider/ynwConf/jaldeeGst';
     return this.servicemeta.httpGet(url);
   }

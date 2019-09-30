@@ -40,12 +40,16 @@ export class ViewReportComponent implements OnInit {
       title: 'Settings'
     },
     {
+      title: 'Billing/POS',
+      url: '/provider/settings/pos'
+  },
+    {
       title: 'Coupons',
-      url: '/provider/settings/coupons'
+      url: '/provider/settings/pos/coupons'
     },
     {
       title: 'Report',
-      url: '/provider/settings/coupons/report'
+      url: '/provider/settings/pos/coupons/report'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

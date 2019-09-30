@@ -1,0 +1,1678 @@
+.ksk {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+}
+
+.ksk app-kioskheader {
+    position: absolute;
+    width: 100%;
+    padding-top: 30px;
+    top: 0;
+    left: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kioskheader {
+        position: relative;
+    }
+}
+
+.ksk app-kioskheader .ksk-hd {
+    display: flex;
+    padding: 0 20px;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kioskheader .ksk-hd {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kioskheader .ksk-hd {
+        position: relative;
+        margin-bottom: 50px;
+        flex-direction: column;
+    }
+}
+
+.ksk app-kioskheader .ksk-hd .ksk-ynw-logo {
+    flex-grow: 0;
+    width: 160px;
+    order: 2;
+    align-self: center;
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kioskheader .ksk-hd .ksk-ynw-logo {
+        order: 1;
+        margin-bottom: 30px;
+    }
+}
+
+.ksk app-kioskheader .ksk-hd .ksk-company-logo {
+    flex-grow: 1;
+    text-align: center;
+    display: flex;
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kioskheader .ksk-hd .ksk-company-logo {
+        order: 2;
+        justify-content: center;
+    }
+}
+
+.ksk app-kioskheader .ksk-hd .ksk-company-logo .logo {
+    margin: 0;
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    overflow: hidden;
+    -webkit-box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important;
+    -moz-box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 2px 3px 0px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #dbdbdb;
+    position: relative;
+}
+
+.ksk app-kioskheader .ksk-hd .ksk-company-logo .logo:after {
+    content: "";
+    background: url(../images/img-null.svg) no-repeat scroll 0 0;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: .3;
+    z-index: 10;
+    left: 0;
+    top: 0;
+}
+
+.ksk app-kioskheader .ksk-hd .ksk-company-logo .logo img {
+    width: 100%;
+    height: 100%;
+}
+
+.ksk app-kioskheader .ksk-hd .ksk-company-logo .title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    align-self: center;
+    margin-left: 15px;
+}
+
+.ksk app-kiosk-home h2 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.ksk app-kiosk-home h2 span {
+    font-weight: 700;
+}
+
+.ksk app-kiosk-home .ksk-cpy {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy {
+        height: auto;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy .nolist {
+    text-align: center;
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy .form-group .label {
+    font-size: 1.1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome, .ksk app-kiosk-home .ksk-cpy.navigation {
+    flex-direction: column;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome h2, .ksk app-kiosk-home .ksk-cpy.navigation h2 {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome h2 span, .ksk app-kiosk-home .ksk-cpy.navigation h2 span {
+    font-weight: 700;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer, .ksk app-kiosk-home .ksk-cpy.navigation .outer {
+    display: flex;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome .outer, .ksk app-kiosk-home .ksk-cpy.navigation .outer {
+        flex-direction: column;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 320px;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-around;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
+        width: 320px;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li {
+    list-style: none;
+    width: 100%;
+    align-self: center;
+    padding: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li {
+        width: 100%;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot {
+    width: 100%;
+    border: none;
+    padding: 20px;
+    height: auto;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important;
+    -moz-box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.03) !important;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-checkin, .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-home, .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-lookup, .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-rating, .ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-arrived, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-checkin, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-home, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-lookup, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-rating, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-arrived {
+    width: 60px;
+    height: 60px;
+    display: block;
+    background: url(../images/k-checkin.svg) no-repeat scroll 0 0;
+    margin-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-lookup, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-lookup {
+    background: url(../images/k-lookup.svg) no-repeat scroll 0 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-rating, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-rating {
+    background: url(../images/k-rating.svg) no-repeat scroll 0 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-arrived, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-arrived {
+    background: url(../images/k-arrived.svg) no-repeat scroll 0 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .icon-k-home, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-home {
+    background: url(../images/k-home.svg) no-repeat scroll 0 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .title, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .sub-title, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .sub-title {
+    color: #666;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot .sub-title .time, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .sub-title .time {
+    font-weight: 600;
+    color: #00cc96;
+    display: block;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot:focus, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot:focus {
+    background: transparent;
+    box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    -moz-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    -webkit-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    -o-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot:after, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(0, 0, 0, 0.03);
+    opacity: 0;
+    -webkit-border-radius: 200px;
+    border-radius: 200px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li .ot:focus:not(:active)::after, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li:nth-child(1), .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li:nth-child(1) {
+    opacity: 0;
+    animation: k1 600ms forwards 0s ease-in-out;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li:nth-child(2), .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li:nth-child(2) {
+    opacity: 0;
+    animation: k1 600ms forwards 300ms ease-in-out;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .controls li:nth-child(3), .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li:nth-child(3) {
+    opacity: 0;
+    animation: k1 600ms forwards 600ms ease-in-out;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion, .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion {
+    margin: 15px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    display: flex;
+    box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    -moz-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    -webkit-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    -o-box-shadow: inset 0px 0px 0px 5px #e9e9e9 !important;
+    cursor: pointer;
+    opacity: 0;
+    animation: k2 600ms forwards 600ms ease-in-out;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion, .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer, .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer [class^="icon-"], .ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer [class*=" icon-"], .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer [class^="icon-"], .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer [class*=" icon-"] {
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    background: #ffc107;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    margin-bottom: 10px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome .outer .signup-promotion .outer .title, .ksk app-kiosk-home .ksk-cpy.navigation .outer .signup-promotion .outer .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome.loggedin, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin {
+    padding-bottom: 50px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome.loggedin, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin {
+        padding-bottom: 50px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome.loggedin, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin {
+        padding-bottom: 20px;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome.loggedin .outer .controls, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin .outer .controls {
+    width: auto;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome.loggedin .outer .controls, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin .outer .controls {
+        width: auto;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.welcome.loggedin .outer .controls li, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin .outer .controls li {
+    width: 50%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome.loggedin .outer .controls li, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin .outer .controls li {
+        width: 50%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.welcome.loggedin .outer .controls li, .ksk app-kiosk-home .ksk-cpy.navigation.loggedin .outer .controls li {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.get-info {
+        align-items: flex-start;
+        order: 2;
+        height: auto;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer {
+    padding: 20px;
+    width: 480px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer h2 {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group {
+    margin-bottom: 30px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group input[type="text"], .ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group input[type="email"], .ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group input[type="password"], .ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group input[type="file"], .ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group textarea, .ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group .form-control {
+    background: #fff;
+    padding: 15px;
+    height: auto;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group button {
+    background: #f24949;
+    width: 100%;
+    margin-top: 30px;
+    border: none;
+    color: #fff;
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group button.disabled {
+    background: #dbdbdb !important;
+    pointer-events: none;
+    color: #999999 !important;
+    border: transparent;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group .label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group .label span {
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.get-info .outer .form-group:last-child {
+    margin-bottom: 0px;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.signup {
+        align-items: flex-start;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer {
+    padding: 20px;
+    width: 480px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer h3 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .notice {
+    margin-bottom: 30px;
+    display: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .notice.show {
+    display: block;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .notice.show .box {
+    display: flex;
+    animation: hola 1s ease-in-out;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .notice.show .box.error .label {
+    padding: 15px;
+    display: block;
+    background: #fff;
+    /*border: 2px solid $cc-red;*/
+    font-weight: 500;
+    font-size: 1rem;
+    color: #f24949;
+    width: 100%;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .notice.show .box.error .label span {
+    display: block;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group {
+    margin-bottom: 30px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group input[type="text"], .ksk app-kiosk-home .ksk-cpy.signup .outer .form-group input[type="email"], .ksk app-kiosk-home .ksk-cpy.signup .outer .form-group input[type="password"], .ksk app-kiosk-home .ksk-cpy.signup .outer .form-group input[type="file"], .ksk app-kiosk-home .ksk-cpy.signup .outer .form-group textarea, .ksk app-kiosk-home .ksk-cpy.signup .outer .form-group .form-control {
+    background: #fff;
+    padding: 15px;
+    height: auto;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group button {
+    background: #f24949;
+    width: 100%;
+    margin-top: 30px;
+    border: none;
+    color: #fff;
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group button.disabled {
+    background: #dbdbdb !important;
+    pointer-events: none;
+    color: #999999 !important;
+    border: transparent;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group .label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group .label span {
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .form-group:last-child {
+    margin-bottom: 0px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.signup .outer .goback button {
+    margin: 0 auto;
+    display: block;
+    font-weight: 600;
+    width: 100%;
+    height: 50px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin {
+    background: #fff;
+    padding: 20px;
+    padding-bottom: 75px;
+    -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+    -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin {
+        width: 80%;
+        margin: 0 auto;
+        align-items: flex-start;
+        padding-bottom: 30px;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin app-check-in-inner {
+        width: 100%;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskinnertitle {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #222223;
+    width: 580px;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter {
+        width: 420px;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter div, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter span, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter label, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter li, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .form-group, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .form-check {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .outer {
+    display: flex;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .outer .form-group {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .outer .form-group input[type="text"] {
+    height: 60px;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .outer .form-group:last-child {
+    margin-right: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer {
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head .selected-date, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head .prepaymin-cls, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .selected-date, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .prepaymin-cls, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .selected-date, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .prepaymin-cls, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .selected-date, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .prepaymin-cls, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .selected-date, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prepaymin-cls {
+    color: #222223;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .prov_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prov_name {
+    font-weight: 700;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .main-head .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .loc_name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .loc_name {
+    font-size: .875rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer {
+    border-bottom: 1px dashed #dbdbdb;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body {
+    display: flex;
+    align-items: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date {
+    display: flex;
+    align-items: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-add, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-minus {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 1.5rem;
+    color: #00aef2;
+    cursor: pointer;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-add:before, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-minus:before {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-add.disable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .date-body .selected-date .icon-minus.disable {
+    pointer-events: none;
+    color: #999999;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group {
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt {
+    width: 40px;
+    height: 40px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter {
+    display: flex;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter input[type="text"] {
+    height: 30px;
+    visibility: hidden;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle {
+    margin-right: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button {
+    width: 40px;
+    height: 40px;
+    line-height: 30px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button svg {
+    width: 30px;
+    height: 30px;
+    color: #00aef2;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.party-size {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.party-size .col-form-label {
+    margin: 0 15px 0 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .form-group.party-size .partysize-input {
+    width: 50px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-text {
+    display: table;
+    cursor: pointer;
+    color: #00aef2;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: .75rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-date-outer {
+    margin-top: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-date-outer .form-group {
+    margin-bottom: 0px;
+    display: flex;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-date-outer .form-group .col-form-label {
+    font-weight: 500;
+    margin-right: 10px;
+    align-self: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-date-outer .form-group .pickerouter .mat-datepicker-toggle {
+    margin-right: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .date-outer .future-date-outer .form-group .pickerouter .form-control {
+    background: #fff;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer {
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #dbdbdb;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-head, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .queue-head, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-head, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .queue-head {
+    margin-bottom: 5px;
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper {
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary {
+    font-weight: 600;
+    background: #00cc96;
+    color: #fff;
+    border: none;
+    border: 1px solid #00cc96;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-left: 0;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #999999;
+    display: inline-block;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname {
+    display: inline-block;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime {
+    display: inline-block;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus {
+    box-shadow: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr {
+    display: flex;
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr {
+        flex-direction: column;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr .service-duration, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr .service-duration {
+    width: 200px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr .service-duration .min-cls, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr .service-duration .min-cls {
+    font-weight: 600;
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr .service-price, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr .service-price, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+        margin-top: 10px;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr .service-price .price, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr .service-price .price {
+    font-weight: 600;
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-dur-pr .service-price .taxable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-dur-pr .service-price .taxable {
+    font-size: .75rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .service-details .service-desc, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .service-details .service-desc {
+    margin-top: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .selected-ser, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .selected-que, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .selected-ser, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .selected-que {
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .selected-ser .selected-ser-name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .selected-que .selected-ser-name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .selected-ser .selected-ser-name, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .selected-que .selected-ser-name {
+    font-weight: 600;
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .queue-waitingdiv .queue-head, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .queue-waitingdiv .queue-head {
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .queue-waitingdiv .queue-head .queue-avail-date, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .queue-waitingdiv .queue-head .queue-avail-date {
+    font-weight: 600;
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .no-queue-available, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .service-outer .no-service-available, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .no-queue-available, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .no-service-available {
+    color: #f24949;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+    border-color: #f2f2f2;
+    background: #f2f2f2;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #dbdbdb;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-head {
+    margin-bottom: 0px;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body {
+    display: flex;
+    align-items: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .sel-queue {
+    color: #222223;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .sel-queue .name {
+    color: #222223;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .sel-queue .name {
+        display: block;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .leftarrow, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .rightarrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i {
+    display: flex;
+    width: 26px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #00aef2;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    color: #00aef2;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i.disable, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i.disable {
+    pointer-events: none;
+    color: #999999;
+    border-color: #999999;
+    cursor: default;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-head {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .sel-queue {
+        text-align: center;
+        flex-grow: 1;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-head {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .queue-outer .q-list-outer .queue-body .sel-queue {
+        text-align: center;
+        flex-grow: 1;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer {
+    margin-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .availer-ul {
+    margin: 0px;
+    padding: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .availer-ul li {
+    list-style: none;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .availer-ul li .changemember {
+    margin-left: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .availer-ul li:before {
+    position: absolute;
+    content: "\67";
+    font-family: "custom-ynw" !important;
+    left: -14px;
+    top: 4px;
+    font-size: .50rem;
+    display: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .availer-ul li:last-child {
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .service-availer {
+    color: #222223;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .change-button {
+    cursor: pointer;
+    display: table;
+    color: #00aef2;
+    font-size: .75rem;
+    text-decoration: underline;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer .editbt {
+    margin-left: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .servicefor-outer.btborder {
+    border-bottom: 1px dashed #dbdbdb;
+    padding-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .revealdiv {
+    margin-top: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .revealdiv .form-group {
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .revealdiv .form-group .mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+    white-space: pre-wrap;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group {
+    margin-bottom: 0px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group .col-form-label {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group .col-form-label .icon-add, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group .col-form-label .icon-minus {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 1.5rem;
+    color: #00aef2;
+    cursor: pointer;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group .col-form-label .icon-add:before, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group .col-form-label .icon-minus:before {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .consumer-comment .form-group textarea {
+    margin-top: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer {
+    margin-bottom: 0;
+    margin-top: 15px;
+    padding: 20px 15px 15px;
+    background: #f8f8f8;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #fff));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f8f8f8 0%, #fff 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, #f8f8f8 0%, #fff 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1873f2', endColorstr='#00aef2', GradientType=0);
+    /* IE6-9 */
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prepay-amt {
+    margin-bottom: 15px;
+    font-size: .875rem;
+    font-weight: 600;
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prepay-amt .prepaymin-cls {
+    font-weight: 700;
+    color: #00cc96;
+    font-size: 1rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prepay-gateway-outer .prepay-head {
+    margin-bottom: 5px;
+    color: #222223;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .prepay-outer .prepay-gateway-outer .mat-radio-group .mat-radio-button {
+    color: #222223;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .member-outer .member-head {
+    margin-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .member-outer .member-list .member-ul {
+    margin: 0 0 30px 20px;
+    padding: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .member-outer .member-list .member-ul li {
+    list-style: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .member-outer .member-list .member-add {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: table;
+    color: #00aef2;
+    font-weight: 500;
+    border: 2px solid #00aef2;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .member-outer .member-list .member-add:hover {
+    color: #fff;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .addMemberHeader {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field {
+    width: 100%;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper {
+    padding: 0;
+    margin: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .error-msg, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .error-msg {
+    color: #f24949;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-form-field-label, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-form-field-label, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-form-field-label, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-form-field-label {
+    display: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element {
+    padding: 10px;
+    background: white;
+    height: 40px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-input-element:focus {
+    -webkit-box-shadow: 0 0 1px #00aef2 inset;
+    -moz-box-shadow: 0 0 1px #00aef2 inset;
+    box-shadow: 0 0 1px #00aef2 inset;
+    border: 1px solid #00aef2;
+    background: #fff;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select {
+    padding: 15px;
+    height: 50px;
+    background: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    border: 1px solid #b6cdd8;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select:focus, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select:focus {
+    -webkit-box-shadow: 0 0 1px #00aef2 inset;
+    -moz-box-shadow: 0 0 1px #00aef2 inset;
+    box-shadow: 0 0 1px #00aef2 inset;
+    border: 1px solid #00aef2;
+    background: #fff;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow {
+    color: #222223;
+    border: none;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    font-size: .65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow:after, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow:after, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow:after, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-infix .mat-select .mat-select-arrow:after {
+    font-family: "custom-ynw" !important;
+    content: "\72";
+    position: absolute;
+    right: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-underline, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-underline, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-subscript-wrapper, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-underline, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-underline, .ksk app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter .mat-form-field .mat-form-field-wrapper .mat-form-field-subscript-wrapper {
+    display: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter {
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .showDetService {
+    margin-bottom: 15px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .showDetService .selsername {
+    font-weight: 600;
+    color: #1873f2;
+    margin-left: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head {
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .waitlist-button-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date {
+    color: #1873f2;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions button {
+    height: 50px;
+    width: 100%;
+    font-size: 1rem !important;
+    letter-spacing: .5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.checkin .kioskactions .backbtn {
+    background: #dbdbdb !important;
+    color: #666 !important;
+    margin-top: 15px;
+    border: none !important;
+}
+
+.ksk app-kiosk-home .ksk-cpy app-field-error-display .sts-msg {
+    font-weight: 600;
+    font-size: .875rem;
+    padding: 5px;
+    background: transparent;
+    text-align: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy app-field-error-display .sts-msg.error {
+    color: #f24949;
+}
+
+.ksk app-kiosk-home .ksk-cpy app-form-success-display .sts-msg {
+    font-weight: 600;
+    font-size: .875rem;
+    padding: 5px;
+    background: transparent;
+    text-align: center;
+}
+
+.ksk app-kiosk-home .ksk-cpy app-form-success-display .sts-msg.success {
+    color: #00cc96;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived {
+    background: #fff;
+    padding: 20px;
+    padding-bottom: 50px;
+    -webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+    -moz-box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.03);
+    display: block;
+    width: 480px;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.arrived {
+        width: 80%;
+        padding-bottom: 20px;
+    }
+    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table td {
+        display: flex;
+        flex-direction: column;
+    }
+    .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table td:before {
+        display: none;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl {
+    padding: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .maindate {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter {
+    /*height: 50vh;*/
+    overflow: auto;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table {
+    border: none;
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .75rem;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td {
+    font-size: .875rem;
+    border: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskservicename {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
+    font-weight: 500;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kiosknameouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .kioskstatuscaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .kiosknamecaption, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .kioskstatuscaption {
+    margin-right: 10px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter {
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .arrived-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class, .ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
+    color: #79e688;
+    padding: 0;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .started-class {
+    color: #4de2ff;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .checkedin-class {
+    color: #5568ff;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .done-class {
+    color: #0edcb8;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskstatuouter .cancelled-class {
+    color: #f24949;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting {
+    margin-bottom: 0px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td .kioskwaiting .waitingtime {
+    color: #00cc96;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td:nth-child(2) {
+    padding-bottom: 1.5rem;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr td:nth-child(2) .bt1 {
+    width: 100%;
+}
+
+.ksk app-kiosk-home .ksk-cpy.arrived .q-tbl .table-subouter .table tbody tr:last-child {
+    border: none;
+    margin-bottom: 0;
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation {
+    position: fixed;
+    width: 20%;
+    height: auto;
+    bottom: 15%;
+    top: 20%;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation {
+        order: 1;
+        position: relative;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation .outer {
+        width: 100%;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
+    width: 100%;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls {
+        flex-direction: row;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li {
+    width: 100%;
+    padding: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li {
+        min-height: 215px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li {
+        width: 50%;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot {
+    background: transparent;
+    min-height: inherit;
+    margin-bottom: 0;
+    box-shadow: none;
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-checkin, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-home, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-lookup, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-rating, .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .icon-k-arrived {
+    height: 60px;
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .title {
+    font-size: 1.125rem;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot .title {
+        font-size: 1rem;
+    }
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li .ot:focus {
+    background: transparent;
+    box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+    -moz-box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+    -webkit-box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+    -o-box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.3) !important;
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li.k1 {
+    background: #ffa449;
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li.k2 {
+    background: #2ac59c;
+}
+
+.ksk app-kiosk-home .ksk-cpy.navigation .outer .controls li.k3 {
+    background: #42b9f3;
+}
+
+.ksk app-kiosk-home .ksk-exit {
+    margin-top: 20px;
+    top: 50%;
+    margin-top: 8px;
+    right: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk app-kiosk-home .ksk-exit {
+        margin-top: 0px;
+        padding-bottom: 30px;
+    }
+}
+
+.ksk app-kiosk-home .ksk-exit .exit {
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    border: none;
+    padding: 20px;
+    background: #f24949;
+    -webkit-border-radius: 150px;
+    border-radius: 150px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.ksk app-kiosk-home .ksk-exit .exit .icon-logout {
+    width: 24px;
+    height: 24px;
+    margin-right: 2px;
+}
+
+.ksk app-kiosk-home .ksk-exit .exit .icon-logout:before {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ksk app-kiosk-home .ksk-exit .exit:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    -webkit-border-radius: 200px;
+    border-radius: 200px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.ksk app-kiosk-home .ksk-exit .exit:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+.ksk.checkinspecial {
+    height: 100%;
+}
+
+.ksk.checkinspecial app-kiosk-home {
+    margin-top: 150px;
+}
+
+.ksk.checkstatspecial app-kiosk-home {
+    height: 60vh;
+}
+
+.ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
+    width: 580px;
+    overflow-y: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .ksk {
+        display: block;
+    }
+    .ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .ksk {
+        height: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .ksk.checkinspecial app-kiosk-home .ksk-cpy.checkin .kioskcontent .mainouter {
+        width: 420px;
+    }
+    .ksk.checkstatspecial app-kiosk-home .ksk-cpy.arrived {
+        width: 540px;
+    }
+}

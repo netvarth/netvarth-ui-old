@@ -83,7 +83,7 @@ export class AuthGuardProviderHome implements CanActivate {
           this.router.navigate(['/provider/bwizard']);
         } else {
           // this.router.navigate(['/provider/settings']);
-          this.router.navigate(['/provider/settings/bprofile-search']);
+          this.router.navigate(['/provider/settings/bprofile']);
         }
         return false;
       }

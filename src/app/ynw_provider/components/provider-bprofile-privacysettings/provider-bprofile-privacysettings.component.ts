@@ -44,7 +44,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   emailemailid = '';
   emailpermission;
   disableButton = false;
-  api_loading = true ;
+  api_loading = true;
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
@@ -238,7 +238,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         data => {
-        this.loadData = data;
+          this.loadData = data;
           this.api_success = Messages.BPROFILE_PRIVACY_SAVED;
           setTimeout(() => {
             this.dialogRef.close({ data: data, message: 'reloadlist' });
@@ -250,8 +250,8 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
         }
       );
   }
-  loadDetails(){
-    this.dialogRef.close({data: this.loadData, message: 'reloadlist' });
+  loadDetails() {
+    this.dialogRef.close({ data: this.loadData, message: 'reloadlist' });
   }
   // resets the error messages holders
   resetApiErrors() {

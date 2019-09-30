@@ -1,0 +1,161 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="container">
+            <div class="w-dta">
+                <div class="row">
+                    <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
+                        <div class="card p0 w-dta active">
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel-header class="min90">
+                                        <mat-panel-title class="block-level">
+                                            {{privacy_sett_cap}}
+                                            <p class="form-level-settings">{{frm_privacy_cap}}<a
+                                                    class="learnmore-pointer" id="customer-help"
+                                                    (click)="learnmore_clicked('privacy-settings', $event)">Learn
+                                                    More</a>
+                                            </p>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="no-dta" *ngIf="normal_privacy_settings_show==1">
+                                        <app-innerloading-spinner spinnerParams="loadingParams">
+                                        </app-innerloading-spinner>
+                                    </div>
+                                    <div class="no-dta" *ngIf="normal_privacy_settings_show==2">
+                                        <p>{{have_not_add_cap}} {{privacy_sett_cap}} {{info_cap}}.</p>
+                                        <span class="cs-btn bt3"
+                                            (click)="handlePrivacysettings('phone')">{{add_it_cap}}</span>
+                                    </div>
+
+                                    <div class="cd-t" *ngIf="normal_privacy_settings_show==3">
+                                        <div class="phtbl">
+                                            <ul class="tbl-list">
+                                                <li class="tth">
+                                                    <div class="otr">
+                                                        <div class="cth no-padding">{{phone_cap}} <span
+                                                                (click)="handlePrivacysettings('phone')"
+                                                                class="addbt" *ngIf="phonearr.length>0"></span>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                                <ng-container>
+                                                    <li class="ttd" *ngFor="let phone of phonearr; let i = index">
+                                                        <div class="otr">
+                                                            <div class="ctd">{{phone.label | capitalizeFirst}}</div>
+                                                            <div class="ctd">+91 {{phone.number}}</div>
+                                                            <div class="ctd"> {{show_privacyText(phone.permission)}}
+                                                            </div>
+                                                            <span class="mbt">
+                                                                <button type="button" mat-icon-button
+                                                                    [matMenuTriggerFor]="menu">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                    <button type="button"
+                                                                        (click)="handlePrivacysettings('phone', i)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-edit"></i>
+                                                                        <span>{{edit_cap}}</span>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        (click)="deletePrivacysettingsConfirm('phone', i)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-delete"></i>
+                                                                        <span>{{delete_btn}}</span>
+                                                                    </button>
+                                                                </mat-menu>
+                                                            </span>
+                                                            <div class="ctd">
+                                                                <span class="mbt-mobile-show">
+                                                                    <button class="editcls" type="button"
+                                                                        (click)="handlePrivacysettings('phone', i)">{{edit_cap}}</button>
+                                                                    <button class="deletecls" type="button"
+                                                                        (click)="deletePrivacysettingsConfirm('phone', i)">{{delete_btn}}</button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                                <ng-container *ngIf="phonearr.length==0">
+                                                    <div class="no-dta no-padding">
+                                                        <p>You haven't added any Phone</p>
+                                                        <span class="cs-btn bt3"
+                                                            (click)="handlePrivacysettings('phone')">{{add_it_cap}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="cd-b" *ngIf="normal_privacy_settings_show==3">
+                                        <div class="emltbl">
+                                            <ul class="tbl-list">
+                                                <li class="tth">
+                                                    <div class="otr">
+                                                        <div class="cth no-padding">{{email_cap}} <span
+                                                                (click)="handlePrivacysettings('email')"
+                                                                class="addbt" *ngIf="emailarr.length>0"></span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <ng-container>
+                                                    <li class="ttd" *ngFor="let email of emailarr; let i = index">
+                                                        <div class="otr">
+                                                            <div class="ctd">{{email.label | capitalizeFirst}}</div>
+                                                            <div class="ctd">{{email.emailid}}</div>
+                                                            <div class="ctd"> {{show_privacyText(email.permission)}}
+                                                            </div>
+                                                            <span class="mbt">
+                                                                <button type="button" mat-icon-button
+                                                                    [matMenuTriggerFor]="menu">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                    <button type="button"
+                                                                        (click)="handlePrivacysettings('email', i)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-edit"></i>
+                                                                        <span>{{edit_cap}}</span>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        (click)="deletePrivacysettingsConfirm('email', i)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-delete"></i>
+                                                                        <span>{{delete_btn}}</span>
+                                                                    </button>
+                                                                </mat-menu>
+
+                                                            </span>
+                                                            <div class="ctd">
+                                                                <span class="mbt-mobile-show">
+                                                                    <button class="editcls" type="button"
+                                                                        (click)="handlePrivacysettings('email', i)">{{edit_cap}}</button>
+                                                                    <button class="deletecls" type="button"
+                                                                        (click)="deletePrivacysettingsConfirm('email', i)">{{delete_btn}}</button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                                <ng-container *ngIf="emailarr.length==0">
+                                                    <div class="no-dta no-padding">
+                                                        <p>You haven't added any Email</p>
+                                                        <span class="cs-btn bt3"
+                                                            (click)="handlePrivacysettings('email')">{{add_it_cap}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -18,7 +18,11 @@ export class ProvidertaxSettingsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Tax Settings'
+            title: 'Billing/POS',
+            url: '/provider/settings/pos'
+        },
+        {
+            title: 'Tax'
         }
     ];
 
@@ -57,15 +61,15 @@ export class ProvidertaxSettingsComponent implements OnInit {
             .subscribe(data => {
                 this.taxDetails = data;
                 if (this.taxDetails) {
-                this.taxpercentage = this.taxDetails.taxPercentage;
-                this.gstnumber = this.taxDetails.gstNumber || '';
-                if (this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
-                    this.allFieldsExists = true;
+                    this.taxpercentage = this.taxDetails.taxPercentage;
+                    this.gstnumber = this.taxDetails.gstNumber || '';
+                    if (this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
+                        this.allFieldsExists = true;
+                    }
+                    if (this.taxDetails.enableTax) {
+                        this.enabletax = true;
+                    }
                 }
-                if (this.taxDetails.enableTax) {
-                    this.enabletax = true;
-                }
-            }
             },
                 () => {
                 });
@@ -149,7 +153,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
-            )
+            );
     }
     updateTax() {
         this.showEditSection = true;

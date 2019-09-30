@@ -36,8 +36,12 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
       title: 'Settings'
     },
     {
+      url: '/provider/settings/miscellaneous',
+      title: 'Miscellaneous'
+  },
+    {
       title: 'Non Working Days',
-      url: '/provider/settings/holidays'
+      url: '/provider/settings/miscellaneous/holidays'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

@@ -18,13 +18,12 @@
  }
 
  .pac-container{
-    z-index: 9999!important;
-
-    position: fixed!important;
+    z-index: 9999 !important;
+    position: fixed !important;
   }
 
   .pointer-cursor {
-    cursor: pointer;
+    cursor: pointer !important;
   }
 
  /* location detail page */

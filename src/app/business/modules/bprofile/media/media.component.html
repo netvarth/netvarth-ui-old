@@ -1,0 +1,161 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="container">
+            <div class="w-dta">
+                <div class="row no-padding">
+                    <div class="copy addons col-a col-b one col-xs-12 col-sm-12 col-md-12  no-padding ">
+                        <div class="card no-padding">
+                            <div class="row no-padding">
+                                <div class=" col-md-6 col-sm-6 col-xs-12">
+                                    <div class="card w-dta active no-padding">
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="true">
+                                                <mat-expansion-panel-header class="min100">
+                                                    <mat-panel-title class="block-level">
+                                                        {{gallery_cap}}
+                                                        <p class="form-level-settings">{{frm_gallery_cap}}<a
+                                                                class="learnmore-pointer" id="customer-help"
+                                                                (click)="learnmore_clicked('photo-gallery', $event)">Learn
+                                                                More</a></p>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="no-dta" *ngIf="normal_gallery_show==1">
+                                                    <app-innerloading-spinner spinnerParams="loadingParams">
+                                                    </app-innerloading-spinner>
+                                                </div>
+                                                <div class="no-dta" *ngIf="normal_gallery_show==2">
+                                                    <p>{{have_not_add_cap}} {{photos_to_cap}} {{gallery_cap}}</p>
+                                                    <span class="cs-btn bt3"
+                                                        (click)="handleGalleryImages()">{{add_it_cap}}</span>
+                                                </div>
+                                                <div class="ph-gal-bx" *ngIf="normal_gallery_show==3">
+                                                    <ul class="ph-gal" [class.ph-gal-2]="image_list_popup.length==2">
+                                                        <ng-container
+                                                            *ngFor="let file of image_list_popup;let i = index">
+                                                            <li *ngIf="i<3">
+                                                                <div class="galbx">
+                                                                    <span class="mbt">
+                                                                        <button type="button" mat-icon-button
+                                                                            [matMenuTriggerFor]="menu">
+                                                                            <mat-icon>more_vert</mat-icon>
+                                                                        </button>
+                                                                        <mat-menu #menu="matMenu">
+                                                                            <button type="button"
+                                                                                (click)="confirmDelete(file, i)"
+                                                                                mat-menu-item>
+                                                                                <i class="icon-delete"></i>
+                                                                                <span>{{delete_btn}}</span>
+                                                                            </button>
+                                                                        </mat-menu>
+                                                                    </span>
+                                                                    <div class="pop-mnu">
+                                                                        <ul>
+                                                                            <li><a href="#" class="dlt">{{delete_btn}}
+                                                                                    {{photo_cap}}</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="img-h"
+                                                                        (click)="openImageModalRow(file)">
+                                                                        <div class="overlay-y"></div><img
+                                                                            *ngIf="file.modal.img"
+                                                                            [src]="file.modal.img" alt="" />
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ng-container>
+                                                        <li *ngIf="image_list_popup.length>3">
+                                                            <div class="galbx">
+                                                                <span class="mre" *ngIf="(image_list_popup.length-4)>0"
+                                                                    (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-4)}}</span>
+                                                                <div class="img-h"><img
+                                                                        *ngIf="image_list_popup[3].modal.img"
+                                                                        [src]="image_list_popup[3].modal.img" alt="" />
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <span (click)="handleGalleryImages()" class="addbt"></span>
+                                                    <ks-modal-gallery [modalImages]="image_list_popup"
+                                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                                        (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                                        (buttonAfterHook)="onButtonAfterHook($event)">
+                                                    </ks-modal-gallery>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                                <div class=" col-md-6 col-xs-12 col-sm-6">
+                                    <div class="card w-dta active no-padding">
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="true">
+                                                <mat-expansion-panel-header class="min100">
+                                                    <mat-panel-title class="block-level">
+                                                        {{social_media_cap}}
+                                                        <p class="form-level-settings">{{frm_social_cap}}<a
+                                                                class="learnmore-pointer" id="customer-help"
+                                                                (click)="learnmore_clicked('your-social-media', $event)">Learn
+                                                                More</a></p>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="no-dta" *ngIf="normal_socialmedia_show==1">
+                                                    <app-innerloading-spinner spinnerParams="loadingParams">
+                                                    </app-innerloading-spinner>
+                                                </div>
+                                                <div class="no-dta" *ngIf="normal_socialmedia_show==2">
+                                                    <p>{{no_social_media}}</p>
+                                                    <span class="cs-btn bt3"
+                                                        (click)="handleSocialmedia()">{{add_it_cap}}</span>
+                                                </div>
+                                                <div class="cd-t" *ngIf="normal_socialmedia_show==3">
+                                                    <div class="sblinks">
+                                                        <ul class="sbl">
+                                                            <li *ngFor="let social of social_arr;let i = index"
+                                                                [class]="getSocialdet(social.Sockey, 'iconClass')">
+                                                                <!-- <a [href]="social.Socurl" class="mbt">222</a> -->
+                                                                <span class="mbt">
+                                                                    <button type="button" mat-icon-button
+                                                                        [matMenuTriggerFor]="menu">
+                                                                        <mat-icon>more_vert</mat-icon>
+                                                                    </button>
+                                                                    <mat-menu #menu="matMenu">
+                                                                        <button type="button"
+                                                                            (click)="editSocialmedia(social.Sockey)"
+                                                                            mat-menu-item>
+                                                                            <i class="icon-edit"></i>
+                                                                            <span>{{edit_cap}}</span>
+                                                                        </button>
+                                                                        <button type="button"
+                                                                            (click)="deleteSocialmedia(social.Sockey)"
+                                                                            mat-menu-item>
+                                                                            <i class="icon-delete"></i>
+                                                                            <span>{{delete_btn}}</span>
+                                                                        </button>
+                                                                    </mat-menu>
+                                                                </span>
+                                                                <a rel="noopener" [href]="social.Socurl"
+                                                                    target="_blank">{{getSocialdet(social.Sockey,
+                                                                                    'displayName')}} </a>
+                                                            </li>
+                                                        </ul>
+                                                        <span (click)="handleSocialmedia()" class="addbt"
+                                                            *ngIf="showaddsocialmedia"></span>
+                                                    </div>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
