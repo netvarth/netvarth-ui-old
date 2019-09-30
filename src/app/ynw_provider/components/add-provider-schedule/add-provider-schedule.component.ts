@@ -66,9 +66,11 @@ export class AddProviderSchedulesComponent implements OnInit {
       this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
       this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
     } else {
-      for (let i = 0; i < this.active_Schedules.length; i++) {
-        this.schedule_ar.push(this.sharedfunctionObj.arrageScheduleforDisplay(this.active_Schedules[i]));
-        this.schedule_arr[i] = this.active_Schedules[i][0];
+      if (this.active_Schedules) {
+        for (let i = 0; i < this.active_Schedules.length; i++) {
+          this.schedule_ar.push(this.sharedfunctionObj.arrageScheduleforDisplay(this.active_Schedules[i]));
+          this.schedule_arr[i] = this.active_Schedules[i][0];
+        }
       }
       this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
       this.display_schedule = [];

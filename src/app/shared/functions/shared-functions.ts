@@ -446,12 +446,12 @@ export class SharedFunctions {
   }
 
   getSearchLabels(selected_domain) {
-    let searchLabelsList = [];
+    const searchLabelsList = [];
     const ynw_conf = this.getitemfromLocalStorage('ynw-bconf');
     for (let i = 0; i < ynw_conf.bdata.length; i++) {
       if (ynw_conf.bdata[i].domain === selected_domain) {
         for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
-          searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain'  });
+          searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
           for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
             searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
           }
@@ -469,7 +469,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return 'â‚¹' + ' ' + price;
+    return 'Ã¢â€šÂ¹' + ' ' + price;
   }
 
   imageValidation(file) {

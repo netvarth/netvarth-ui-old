@@ -411,9 +411,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['display_schedule'] = display_schedule;
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
-              // if (this.businessjson.claimStatus === 'Claimed') {
-              // this.getProviderDepart(this.provider_bussiness_id);
-              // }
+              if (this.businessjson.claimStatus === 'Claimed') {
+              this.getProviderDepart(this.provider_bussiness_id);
+              }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
