@@ -1173,7 +1173,7 @@
     </ul>
 </section>
 
-<section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
+<!-- <section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
     <h6>KIOSK</h6>
     <span>The Jaldee Kiosk feature allows a doctor to place a Tablet/PC/Laptop/Other Machines which
         is
@@ -1281,7 +1281,7 @@
             </ul>
         </ol>
     </div>
-</section>
+</section> -->
 
 <section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
     <h6>LICENSE</h6>
@@ -2284,7 +2284,8 @@
                                 <li><strong>Mobile Number</strong></li>
                                 <li><strong>Merchant Id</strong></li>
                                 <li><strong>Merchant Key</strong></li>
-                                <li><strong>Website</strong></li>
+                                <li><strong>Website Web</strong></li>
+                                <li><strong>Website App</strong></li>
                                 <li><strong>Industry Type</strong></li>
                             </ul>
                         </li>
@@ -2530,7 +2531,7 @@
     </ul>
 </section>
 <section *ngIf="childContent =='profile' && parentContent == 'profile'">
-    <h6>DOCTOR’S PROFILE</h6>
+    <h6>DOCTOR PROFILE</h6>
     <span>The doctor profile is a collection of settings and information associated with a business
         owner. The system creates a doctor profile at the time of registration. The profile contains
         information such as name, mobile, email, etc. Jaldee doctor profile has the following

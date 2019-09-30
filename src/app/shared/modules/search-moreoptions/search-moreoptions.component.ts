@@ -68,6 +68,9 @@ export class SearchMoreOptionsComponent implements OnInit {
 
   // method which is invoked on clicking the checkboxes or boolean fields
   handle_optionclick(fieldname, fieldtype, selval) {
+    if (fieldtype === 'Rating' && selval) {
+      selval = '[' + selval + ',5]';
+    }
     if (this.searchrefineresult_arr.length) {
       const sec_indx = this.check_fieldexistsinArray(fieldname);
       if (sec_indx === -1) {

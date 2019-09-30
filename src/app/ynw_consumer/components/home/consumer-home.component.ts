@@ -22,7 +22,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgxCarousel } from 'ngx-carousel';
-import { ConsumerPaymentmodeComponent } from '../../components/consumer-paymentmode/consumer-paymentmode.component';
+import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 
 @Component({
   selector: 'app-consumer-home',
@@ -329,7 +329,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       time1 = time[2].trim();
       t2 = time1.slice(2);
       appx_ret.cancelled_time = t2;
-      appx_ret.cancelled_caption = 'Cancelled at ';
+      appx_ret.cancelled_caption = 'Cancelled on ';
     }
     return appx_ret;
   }
@@ -895,7 +895,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'details': waitlist
+        'details': waitlist,
+        'origin' : 'consumer'
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
@@ -914,7 +915,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 'amount': prepayamt,
                 //'paymentMode': 'DC',
                 'uuid': waitlist.ynwUuid,
-                'account_id': waitlist.provider.id,
+                'accountId': waitlist.provider.id,
                 'purpose': 'prePayment'
               };
 
@@ -923,7 +924,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
                 disableClose: true,
                 data: {
-                  'details': payData
+                  'details': payData,
+                  'origin' : 'consumer'
                 }
               });
 

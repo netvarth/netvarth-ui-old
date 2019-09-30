@@ -531,7 +531,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else if (fieldtype === 'TEXT_MED' || fieldtype === 'TEXT' || fieldtype === 'Rating') { // case of multiple selection of textbox
       let retval = '';
       if (this.querystringrefineretain_arr[fieldheader]) {
-        retval = this.querystringrefineretain_arr[fieldheader][0];
+        if (fieldtype === 'Rating' && this.querystringrefineretain_arr[fieldheader][0] === '[') {
+          retval = this.querystringrefineretain_arr[fieldheader][1];
+        } else {
+          retval = this.querystringrefineretain_arr[fieldheader][0];
+        }
       }
       return retval;
     }
@@ -1201,6 +1205,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // adding to the array which is used to tick the checkbox in refine search
     const checkExistence = this.check_QuerystrinfieldexistsinArray(fieldname);
     if (fieldname === 'rating') {
+      if (checkExistence === -1) {
+        selval = '[' + selval + ',5]';
+      }
       this.querystringrefineretain_arr[fieldname] = selval;
     } else {
       if (checkExistence === -1) {
@@ -1239,6 +1246,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const curindx = this.searchrefineresult_arr[sec_indx][fieldname].length;
           if (fieldtype === 'Rating') { // done to handle the case of rating cleared in refined search
             if (selval !== '') {
+              selval = '[' + selval + ',5]';
               this.searchrefineresult_arr[sec_indx][fieldname][curindx] = new Array(selval, fieldtype);
             }
           } else {
@@ -1383,6 +1391,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         } else {
           if (fieldname === 'coupon_enabled') {
             retstr += ' ' + fieldname + ':' + '\'' + 0 + '\'';
+          } else if (fieldname === 'rating') {
+            retstr += ' ' + fieldname + ':' + this.searchrefineresult_arr[indx][fieldname][i][0];
           } else {
             retstr += ' ' + fieldname + ':' + '\'' + this.searchrefineresult_arr[indx][fieldname][i][0] + '\'';
           }

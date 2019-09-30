@@ -781,12 +781,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           }
         });
         this.loceditdialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            if (result === 'reloadlist') {
+         if (result) {
+           if (result === 'reloadlist') {
               this.getBusinessProfile();
               this.getProviderLocations();
-            }
-          }
+           }
+         }
         });
       }
     } else {

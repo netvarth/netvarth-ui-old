@@ -12,6 +12,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class AddProviderSchedulesComponent implements OnInit {
   @Input() existingSchedules;
+  @Input() active_Schedules;
   @Input() providerStatus;
   @Input() showsavebutton;
   @Input() hidecancelbutton;
@@ -43,14 +44,15 @@ export class AddProviderSchedulesComponent implements OnInit {
   edit_heading = '';
   edit_index = '';
   schedule_arr: any = [];
+  schedule_ar: any = [];
   display_schedule: any = [];
   show_savebutton = false;
   show_cancelbutton = false;
   Selall = false;
-  api_loading1 =true;
+  api_loading1 = true;
   constructor(
     public provider_services: ProviderServices,
-    private sharedfunctionObj: SharedFunctions
+    private sharedfunctionObj: SharedFunctions,
   ) {
   }
 
@@ -59,13 +61,25 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
-    this.schedule_arr = this.existingSchedules;
+    if (this.Isource === 'wizard') {
+      this.schedule_arr = this.existingSchedules;
+      this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+      this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    } else {
+      for (let i = 0; i < this.active_Schedules.length; i++) {
+        this.schedule_ar.push(this.sharedfunctionObj.arrageScheduleforDisplay(this.active_Schedules[i]));
+        this.schedule_arr[i] = this.active_Schedules[i][0];
+      }
+      this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+      this.display_schedule = [];
+      for (let i = 0; i < this.schedule_ar.length; i++) {
+        this.display_schedule[i] = this.schedule_ar[i][0];
+      }
+    }
     if (this.schedule_arr.length === 0) {
       this.show_schedule_selection = true;
     }
-    this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
-   this.api_loading1 = false;
+    this.api_loading1 = false;
   }
 
   handlechecbox(dayindx) {
@@ -216,7 +230,6 @@ export class AddProviderSchedulesComponent implements OnInit {
 
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
-    // this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.saveScheduleClick.emit(this.schedule_arr);
     this.showScheduleselection();
   }
@@ -230,7 +243,6 @@ export class AddProviderSchedulesComponent implements OnInit {
         break;
     }
   }
-
   deleteSchedule(indx) {
     const holdarr = [];
     this.api_error = this.api_success = '';

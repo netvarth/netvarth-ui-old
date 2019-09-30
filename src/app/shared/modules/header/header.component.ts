@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs/Subscription';
-import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, HostListener, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import { SharedServices } from '../../services/shared-services';
@@ -13,6 +13,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-header',
@@ -125,6 +126,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showmoreSearch = false;
   maxCount = 5;
   searchLength = 0;
+  account_type;
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -311,6 +313,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         if (this.ctype === 'provider') {
           this.getUpgradablePackages();
+          this.getBusinessprofile();
         }
       }
     }
@@ -319,6 +322,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.shared_service.getUpgradableLicensePackages()
       .subscribe(data => {
         this.upgradablepackages = data;
+      });
+  }
+
+  getBusinessprofile() {
+    this.shared_service.getBussinessProfile()
+      .subscribe(data => {
+        this.account_type = data['accountType'];
       });
   }
   handleHeaderclassbasedonURL() {

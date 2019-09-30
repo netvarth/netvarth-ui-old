@@ -15,6 +15,7 @@ import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoi
 import { ProviderAddonAuditlogsComponent } from '../provider-addon-auditlogs/provider-addon-auditlogs.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 
 @Component({
   selector: 'app-provider-license',
@@ -25,6 +26,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   date_cap = Messages.DATE_COL_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   invoice_cap = Messages.INVOICE_CAP;
+  statment_cap = Messages.STATMENT_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
   payment_cap = Messages.PAYMENT_CAP;
   current_license = Messages.CURRENT_PACKAGE_CAP;
@@ -62,7 +64,7 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
   ];
   pay_data = {
     amount: 0,
-    paymentMode: 'DC', // 'null', changes as per request from Manikandan
+   // paymentMode: 'DC', // 'null', changes as per request from Manikandan
     uuid: null,
     purpose: null
   };
@@ -447,28 +449,39 @@ export class ProviderLicenseComponent implements OnInit, OnDestroy {
     this.pay_data.uuid = invoice.ynwUuid;
     this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
     if (this.pay_data.uuid && this.pay_data.amount &&
-      this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
+      this.pay_data.amount !== 0 ) {
 
       this.payment_loading = true;
 
-      this.provider_servicesobj.providerPayment(this.pay_data)
-        .subscribe(
-          data => {
-            if (data['response']) {
-              this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-              this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('PAYMENT_REDIRECT'));
-              setTimeout(() => {
-                this.document.getElementById('payuform').submit();
-              }, 2000);
-            } else {
-              this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-            }
-          },
-          error => {
-            this.payment_loading = false;
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
+
+      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'details': this.pay_data,
+          'origin' : 'provider'
+        }
+      });
+
+      // this.provider_servicesobj.providerPayment(this.pay_data)
+      //   .subscribe(
+      //     data => {
+      //       if (data['response']) {
+      //         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+      //         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('PAYMENT_REDIRECT'));
+      //         setTimeout(() => {
+      //           this.document.getElementById('payuform').submit();
+      //         }, 2000);
+      //       } else {
+      //         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+      //       }
+      //     },
+      //     error => {
+      //       this.payment_loading = false;
+      //       this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //     }
+      //   );
     }
   }
 }

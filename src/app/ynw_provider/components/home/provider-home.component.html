@@ -253,7 +253,8 @@
                           class="text">{{partially_paid_cap}}</span></span>
                       <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                           class="text">{{paid_cap}}</span></span>
-
+                          <span class="paid-f" *ngIf="checkin.paymentStatus == 'Refund'"><span
+                            class="text">Refund</span></span>
                     </ng-container>
                   </td>
                   <td data-title="{{checkin_label + ' Status'}}" class="checkin_status"

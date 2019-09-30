@@ -60,6 +60,7 @@ import { ForceDialogComponent } from './shared/components/force-dialog/force-dia
 import { SearchProviderComponent } from './shared/components/search-provider/search-provider.component';
 import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
+import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +81,8 @@ import { AdminLoginComponent } from './shared/components/admin/login/login.compo
     RequestForComponent,
     BusinessPageComponent,
     ForceDialogComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    ConsumerPaymentmodeComponent
     // PhomeComponent,
   ],
   entryComponents: [
@@ -93,7 +95,8 @@ import { AdminLoginComponent } from './shared/components/admin/login/login.compo
     ServiceDetailComponent,
     ConsumerRateServicePopupComponent,
     CouponsComponent,
-    RequestForComponent
+    RequestForComponent,
+    ConsumerPaymentmodeComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

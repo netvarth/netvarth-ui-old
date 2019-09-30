@@ -8,7 +8,7 @@
         <i class="fa fa-check icon" *ngIf="isCurrentLocation"></i>
         <input type="text" name="location_box" aria-label="locs" [ngModel]="location_name" matInput
           [formControl]="myControl_loc" [matAutocomplete]="autoloc" placeholder="" #locrefrence
-          (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)">
+          (click)="clearSearch(locrefrence)" (blur)="blurSearch(locrefrence)" (keyup)="locationClick($event)">
 
         <mat-autocomplete #autoloc="matAutocomplete" class="srch-auto-c">
           <div *ngIf="locationList">
@@ -38,7 +38,7 @@
     <div class="sa-src ml5">
       <mat-form-field floatLabel="never" class="search_keyword_class">
         <mat-label>{{domainSuggestionPlaceholder}}</mat-label>
-        <input name="provider_box" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname"
+        <input name="provider_box" id="suggestSearch" #provbox aria-label="provs" aria-label="Search here" [(ngModel)]="kw_autoname"
           matInput [formControl]="myControl_prov" [matAutocomplete]="autoprov" maxlength="50"
           (keyup)="kwtyping($event, $event.target.value)" (click)="filterKeywords($event.target.value)">
         <mat-autocomplete class="srch-auto-c" #autoprov="matAutocomplete" #autotest>

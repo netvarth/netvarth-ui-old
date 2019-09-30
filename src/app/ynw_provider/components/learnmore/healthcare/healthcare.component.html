@@ -462,7 +462,7 @@
                         </li>
                         <li>The doctor has an option to restrict the visibility of the email
                             address.
-                            Three options
+                            Two options
                             to filter
                             the visibility are:
                             <ul class="ul-normal abc">
@@ -814,7 +814,7 @@
 
 
         <div class="box">
-            <span style="font-size: 15px">Dentists/Alternate Medicine Practitioner</span>
+            <span style="font-size: 15px">Doctors/Dentists/Alternate Medicine Practitioner/Hospital</span>
         </div>
         <td>
 
@@ -1074,8 +1074,6 @@
                         <div class="helpcontent">
                             <span class="bord">Choose from the list of departments in your
                                 hospital.</span><br>
-                            <span class="brown-color">SEARCHABLE-NO</span>
-                            <span class="brown-color">VIEWABLE-YES</span>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -1090,8 +1088,6 @@
                         <div class="helpcontent">
                             <span class="bord">Enable the toggle button, if the hospital is
                                 government undertaking.</span>
-                            <span class="brown-color">SEARCHABLE-NO</span>
-                            <span class="brown-color">VIEWABLE-YES</span>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -1554,7 +1550,7 @@
     </ul>
 </section>
 
-<section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
+<!-- <section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
     <h6>KIOSK</h6>
     <span>The Jaldee Kiosk feature allows a doctor to place a Tablet/PC/Laptop/Other Machines which
         is
@@ -1665,7 +1661,7 @@
             </ul>
         </ol>
     </div>
-</section>
+</section> -->
 
 <section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
     <h6>LICENSE</h6>
@@ -2213,7 +2209,7 @@
         <li>Upon having all the information, click <strong>“Save”</strong> to add the holiday.</li>
         <li>Subsequently, to add more holidays, click <strong>“(+)”.</strong> </li>
         <li>The date, time, and reason for each non-working day are listed here.</li>
-        <li>A provider can edit or delete a particular non-working day. To do so, click on the three
+        <li>A doctor can edit or delete a particular non-working day. To do so, click on the three
             dots menu given in the right corner.</li>
     </ol>
 </section>
@@ -2755,7 +2751,8 @@
                                 <li><strong>Mobile Number</strong></li>
                                 <li><strong>Merchant Id</strong></li>
                                 <li><strong>Merchant Key</strong></li>
-                                <li><strong>Website</strong></li>
+                                <li><strong>Website Web</strong></li>
+                                <li><strong>Website App</strong></li>
                                 <li><strong>Industry Type</strong></li>
                             </ul>
                         </li>
@@ -3009,7 +3006,7 @@
 
 
 <section *ngIf="childContent =='profile' && parentContent == 'profile'">
-    <h6>DOCTOR’S PROFILE</h6>
+    <h6>DOCTOR PROFILE</h6>
     <span>The doctor profile is a collection of settings and information associated with a business
         owner.
         The system creates a doctor profile at the time of registration. The profile contains
@@ -3039,25 +3036,26 @@
 <section *ngIf="childContent =='downpanel' && parentContent == 'downpanel'">
     <h6>DOWN PANEL OPTIONS</h6>
     <ul class="ul-normal">
-        <li><strong>My Account :</strong> Here lies the personal data of the service doctor. Option
-            to
-            edit the data is also available.</li>
-        <li><strong>Change Password :</strong> Here the doctor can change the password keeping in
-            line
-            with the following guidelines:
-            <ul class="ul-normal">
-                <li>Minimum 8 characters</li>
-                <li>Maximum 32 characters</li>
-                <li>Must have at least one uppercase letter and one digit.</li>
-            </ul>
-        </li>
-        <li><strong>Change Mobile :</strong> Enter a new mobile number and click on Submit. To
-            verify
-            the mobile number, enter the OTP sent to the number.</li>
-        <li><strong>Switch to Consumer :</strong> When a doctor profile is created in Jaldee.com, a
-            corresponding client profile also gets created automatically for the same doctor. From
-            here,
-            the doctor can easily switch to the clients dashboard.</li>
-        <li><strong>Logout :</strong> One can log out of the account here.</li>
+        <li>Here the doctor can quickly access the following options:</li>
+        <ul class="normal-abc">
+            <li><strong>Alerts :</strong> All the Jaldee Broadcasts are shown here. These are the
+                Jaldee
+                provided notifications. Here a doctor can learn about new coupons or any other such
+                information directly from Jaldee Super admin.</li>
+            <li><strong>Audit Log :</strong> Here the doctor can view the activities done by
+                him/her.
+                The details appear with a date and time stamp. It also shows the actions completed
+                by
+                the doctor along with a little description.</li>
+            <li><strong>Enable/Disable Check-in :</strong> This is a quick tab that helps the doctor
+                to
+                enable check-in, if disabled or to disable the check-in, if enabled.</li>
+            <li><strong>License Details :</strong>Here the doctor can see the current License
+                version
+                he/she is using. This option directly leads to the license page, where the doctor
+                can
+                view the license history, its usage, payment history and upgrade the current License
+                package.</li>
+        </ul>
     </ul>
 </section>

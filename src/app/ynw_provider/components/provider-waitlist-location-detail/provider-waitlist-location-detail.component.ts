@@ -36,6 +36,8 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
     api_loading = true;
     loc_badges: any = [];
     badge_map_arr: any = [];
+    display_schedule: any = [];
+    schedule_ar: any = [];
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -56,6 +58,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
     editlocdialogRef;
     queuedialogRef;
     isCheckin;
+    active_Schedules: any = [];
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -70,7 +73,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         });
     }
     ngOnInit() {
-       this.api_loading = true;
+        this.api_loading = true;
         this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
         if (this.location_id) {
             this.getLocationBadges();
@@ -94,8 +97,25 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
             .subscribe(
                 data => {
                     this.location_data = data;
+                    let schedule_arr = [];
+                    this.active_Schedules = [];
+                    this.schedule_ar = [];
+                    if (this.location_data.bSchedule) {
+                        for (let i = 0; i < this.location_data.bSchedule.timespec.length; i++) {
+                            schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.location_data.bSchedule.timespec[i]);
+                            if (schedule_arr.length !== 0) {
+                                this.active_Schedules.push(schedule_arr);
+                            }
+                        }
+                    }
+                    for (let i = 0; i < this.active_Schedules.length; i++) {
+                        this.schedule_ar.push(this.shared_Functionsobj.arrageScheduleforDisplay(this.active_Schedules[i]));
+                    }
+                    this.display_schedule = [];
+                    for (let i = 0; i < this.schedule_ar.length; i++) {
+                        this.display_schedule[i] = this.schedule_ar[i][0];
+                    }
                     this.getQueueList(this.location_id);
-
                     // remove multiple end breadcrumb on edit function
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
@@ -191,7 +211,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
     goBack() {
         this.router.navigate(['provider', 'settings', 'waitlist-manager',
             'locations']);
-            this.api_loading = false;
+        this.api_loading = false;
     }
     editLocation(badge?) {
         this.editlocdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
@@ -224,7 +244,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
                     this.badge_map_arr[badge.name] = badge.displayName;
                 }
             });
-            this.api_loading = false;
+        this.api_loading = false;
     }
     objectKeys(obj) {
         return Object.keys(obj);

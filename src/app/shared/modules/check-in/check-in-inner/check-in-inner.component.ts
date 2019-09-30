@@ -9,7 +9,7 @@ import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import * as moment from 'moment';
-import { ConsumerPaymentmodeComponent } from '../../../../ynw_consumer/components/consumer-paymentmode/consumer-paymentmode.component';
+import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -725,7 +725,8 @@ export class CheckInInnerComponent implements OnInit {
               panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
               disableClose: true,
               data: {
-                'details': payData
+                'details': payData,
+                'origin' : 'consumer'
               }
             });
             // this.shared_services.consumerPayment(payData)

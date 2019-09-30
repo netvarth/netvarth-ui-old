@@ -235,11 +235,11 @@
                                             <i class="icon-switch"></i>
                                             <span>{{switch_to_provider}}</span>
                                         </button> -->
-                                        <button mat-menu-item (click)="createProviderAccount()"
+                                        <!-- <button mat-menu-item (click)="createProviderAccount()"
                                             *ngIf="!isprovider && consumer_loggedin">
                                             <i class="icon-createprovider"></i>
                                             <span>{{create_pro_accnt}}</span>
-                                        </button>
+                                        </button> -->
                                         <button mat-menu-item (click)="help()">
                                             <i data-icon="B"></i>
                                             <span>{{help_cap}}</span>
@@ -297,17 +297,19 @@
 <div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
     <div class="container">
         <div class="row">
-            <p *ngIf="active_license=='Platinum - FREE Trial 60 days' && license_message != ''"
+            <p *ngIf="active_license === 'Gold - FREE Trial 45 days' && license_message != ''"
                 style="color: red; width: 100%; text-align: left;">
-                Your 'Platinum - Free trial 60 days' license package will expire {{license_message}}.
-                <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
+                Your current plan is Gold. 45 days free trial package will expire {{license_message}}.
+                <span style="color: #00aef2" *ngIf="account_type === 'INDEPENDENT_SP'"> <span
+                        (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
                         </b></span><span style="color: red"> to Upgrade License.</span></span>
             </p>
             <p style="width: 100%; text-align: left;"
-                *ngIf="active_license!='Platinum - FREE Trial 60 days' && active_license!='Diamond'">
+                *ngIf="active_license !== 'Gold - FREE Trial 45 days' && active_license !== 'Diamond'">
                 Your current license is
-                <i style="color:red">{{active_license}}.</i><span (click)="upgradeMembership()" style="color: #00aef2"
-                    class="pointer-cursor"> <b> Upgrade license now</b> </span> for more features.
+                <i style="color:red">{{active_license}}.</i><span *ngIf="account_type === 'INDEPENDENT_SP'"><span
+                        (click)="upgradeMembership()" style="color: #00aef2" class="pointer-cursor"> <b> Upgrade license
+                            now</b> </span> for more features.</span>
             </p>
             <!-- <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
                 license is
