@@ -221,7 +221,8 @@ export class ProviderHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
-    { pk: 'FullyPaid', value: 'Fully Paid' }
+    { pk: 'FullyPaid', value: 'Fully Paid' },
+    { pk: 'Refund', value: 'Refund' }
   ];
   ngAfterViewInit(): void {
     setTimeout(() => { this.apis_loaded = true; });

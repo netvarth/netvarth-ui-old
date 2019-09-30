@@ -57,7 +57,7 @@
                                 </li>
                                 <li>
                                     <span class="ttle">
-                                       Future {{checkin_label |capitalizeFirst}}s <span class="sts"
+                                        Future {{checkin_label |capitalizeFirst}}s <span class="sts"
                                             [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}</span>
                                     </span>
                                     <span class="ctrl">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
 
-                <div class="card set05 p0">
+                <div class="card set03 p0">
                     <div class="copy">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">{{billing_cap}}</h2>
@@ -181,7 +181,7 @@
                     </div>
                 </div>
 
-                <div class="card set06 p0">
+                <div class="card set05 p0">
                     <div class="copy">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}</h2>
@@ -200,8 +200,8 @@
                     </div>
                 </div>
 
-                <div class="card set03 p0">
-                    <div class="copy">
+                <div class="card p0" [class.set06]="account_type === 'INDEPENDENT_SP'">
+                    <div class="copy" *ngIf="account_type === 'INDEPENDENT_SP'">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="licenseTooltip">{{license_cap}}</h2>
                         </div>

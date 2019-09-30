@@ -224,7 +224,7 @@
                                         <div class="row" *ngFor="let queue of todaysQs; index as i">
                                                 <div class="card">
                                                         <div class="copy">
-                                                                <span class="mbt">
+                                                                <span class="mbt" style="margin-top: 10px">
                                                                         <button type="button" mat-icon-button
                                                                                 [matMenuTriggerFor]="appMenu">
                                                                                 <mat-icon>more_vert</mat-icon>
@@ -236,7 +236,8 @@
                                                                                 [matTooltip]="tooltip_queueedit">
                                                                                 {{queue.name | capitalizeFirst}}
                                                                         </h3> -->
-                                                                <div style="display: flex" class="q-time">
+                                                                <div  class="q-time queuelist">
+                                                                        <div class="col-md-4">
                                                                         <h3 class="pointer-cursor"
                                                                                 style="margin-right: 50px"
                                                                                 *ngFor="let schedule of queue.displayschedule"
@@ -252,13 +253,16 @@
                                                                                                 *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
                                                                                 </div>
                                                                         </h3>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                        <label>Same day Online check-ins</label>
                                                                         <mat-slide-toggle class="example-margin"
                                                                                 [checked]="queue.onlineCheckIn"
                                                                                 (change)="changeQSameDayOnlineStatus(queue, i, $event)">
                                                                         </mat-slide-toggle>
-                                                                        <label> {{queue.onlineCheckIn ? 'On' : 'Off'}}
+                                                                        <label>{{queue.onlineCheckIn ? 'On' : 'Off'}}
                                                                         </label>
-                                                                </div>
+                                                                </div></div>
                                                                 <!-- <div class="c-ot m0"> -->
                                                                 <!-- <div class="loc-style item"
                                                                                 *ngIf="queue.location">

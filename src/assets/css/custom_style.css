@@ -3385,7 +3385,8 @@ figcaption {
 }
 
 .srch .sa .sa-ps p a:hover, .popular a:hover {
-  text-decoration: underline !important
+  text-decoration: underline !important;
+  color: #00aef2 !important;
 }
 
 .pop-search {
@@ -4304,4 +4305,41 @@ border-bottom: none !important;
 }
 .q-time h3 {
   margin-bottom: 0px !important;
+}
+.ratingSearch .ratingstar {
+  width: 15px !important;
+  margin-top: -3px !important;
+}
+.ratingSearch label{
+  margin-left: 10px !important;
+  margin-bottom: 1px !important;
+  font-size: 12px !important;
+}
+.ratingSearch label:hover,
+.ratingSearch .rating-clear:hover{
+  cursor: pointer !important;
+  color: #00aef2 !important;
+}
+.selectedVal {
+  font-weight: bold !important;
+}
+.ratingSearch .rating-clear {
+  margin-bottom: 5px !important;
+}
+@media only screen and (min-width: 767px) {
+  .queuelist {
+ display: flex!important;
+  }
+}
+.locSchedule ul {
+  padding: 0px !important;
+  margin-top: 10px !important;
+}
+.locSchedule ul li{
+  list-style: none !important;
+  display: flex !important;
+}
+.locSchedule ul li .day {
+  font-weight: 600 !important;
+  padding-right: 10px !important;
 }

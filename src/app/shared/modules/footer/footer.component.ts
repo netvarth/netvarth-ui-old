@@ -66,6 +66,7 @@ legal_cap = Messages.LEGALCAP;
   checkinStatus = 1;
   waitlistmgr: any = [];
   includedFrom;
+  checkin_label = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   alert_count = 0;
   subscription: Subscription;
@@ -77,7 +78,7 @@ legal_cap = Messages.LEGALCAP;
   constructor(
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
-    public router: Router) { }
+    public router: Router) {this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
 
   ngOnInit() {
     if (this.router.url.substr(-8) !== '/bwizard') {
@@ -146,7 +147,7 @@ legal_cap = Messages.LEGALCAP;
   }
 
   showAuditlog() {
-    this.maximizeTooltip = 'Go To System Audit Logs';
+    this.maximizeTooltip = 'Go To Activity Log';
     if (this.showAuditDiv === true) {
       this.showbottompopup = false;
       this.clearDivs();
@@ -156,7 +157,7 @@ legal_cap = Messages.LEGALCAP;
     this.auditStatus = 1;
     this.showbottompopup = true;
     this.showAuditDiv = true;
-    this.bottomdivHeader = 'Audit Logs';
+    this.bottomdivHeader = 'Activity Log';
     this.selOpt = 'Audit';
     this.auditlog = [];
     this.shared_services.getAuditLogs('', '', '', '', 0, this.auditCnt)
@@ -235,7 +236,7 @@ legal_cap = Messages.LEGALCAP;
     this.clearDivs();
     this.showbottompopup = true;
     this.showCheckinDiv = true;
-    this.bottomdivHeader = 'Check-in Enable / Disable';
+    this.bottomdivHeader = this.checkin_label.charAt(0).toUpperCase() + this.checkin_label.slice(1) +  ' Enable / Disable';
     this.selOpt = 'Checkin';
     this.waitlistmgr = [];
     this.shared_services.getWaitlistMgr()

@@ -79,7 +79,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderSubeaderModule,
     LoadingSpinnerModule,
     ProviderWaitlistOnlineCheckinModule,
-    AddProviderSchedulesModule
+    AddProviderSchedulesModule,
   ],
   declarations: [
     ProviderComponent,
@@ -134,7 +134,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderWaitlistQueuesComponent,
     AddProviderWaitlistServiceComponent,
     GoogleMapComponent,
-    ProviderBprofileSearchDynamicComponent
+    ProviderBprofileSearchDynamicComponent,
   ],
   providers: [
     AuthGuardProviderHome,

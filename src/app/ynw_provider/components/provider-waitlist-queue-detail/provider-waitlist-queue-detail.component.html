@@ -64,7 +64,7 @@
 												<span class="ttle">Online check-ins</span> <span *ngIf="queue_data.onlineCheckIn">On</span><span
 													*ngIf="!queue_data.onlineCheckIn">Off</span>
 											</div>
-											<div class="item">
+											<div class="item" *ngIf="!queue_data.instantQueue">
 												<span class="ttle">Future check-ins</span> <span
 													*ngIf="queue_data.futureWaitlist">On</span><span *ngIf="!queue_data.futureWaitlist">Off</span>
 											</div>

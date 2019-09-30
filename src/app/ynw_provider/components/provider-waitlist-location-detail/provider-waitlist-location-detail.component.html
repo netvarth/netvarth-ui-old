@@ -1,5 +1,6 @@
 <section>
-    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> <!-- Subheader section -->
+    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
@@ -7,21 +8,32 @@
     <div class="content loc-list">
         <div class="container" *ngIf="location_data">
             <div class="row">
-                    <div class="card p0" *ngIf="api_loading"> 
-                            <app-common-innerloading-spinner ></app-common-innerloading-spinner>
-                    </div>
+                <div class="card p0" *ngIf="api_loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <div class="cl1">
                                 <span class="editbt" (click)="editLocation()"></span>
                                 <div class="cop-l">
-                                    <span class="bse-lcn-label" *ngIf="location_data.baseLocation==true">{{base_loca_cap}}</span>
+                                    <span class="bse-lcn-label"
+                                        *ngIf="location_data.baseLocation==true">{{base_loca_cap}}</span>
                                     <h4>{{location_data.place | capitalizeFirst}}</h4>
                                     <span>{{location_data.address | capitalizeFirst}}</span>
                                     <!-- <span *ngIf="location_data.pinCode">
                                                 Pin : {{location_data.pinCode}}
                                             </span> -->
+                                    <div class="locSchedule" *ngIf="display_schedule.length > 0" style="margin-top: 20px">
+                                        <span class="sub-title">General location hours</span>
+                                        <ul>
+                                            <li *ngFor="let schedule of display_schedule">
+                                                <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
+                                                    class="time">{{schedule.time}}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="cop-r">
                                     <iframe width="100%" height="100%" frameborder="0" style="border:0" [src]="mapurl"
@@ -36,13 +48,19 @@
                                     <div class="ctrl enable-disable" *ngIf="location_data.baseLocation==false">
                                         <span class="ttle">{{loc_status_cap}}</span>
                                         <span>
-                                            <mat-slide-toggle [checked]="location_data.status=='ACTIVE'" (click)="changeProviderLocationStatus(location_data)"></mat-slide-toggle>
+                                            <mat-slide-toggle [checked]="location_data.status=='ACTIVE'"
+                                                (click)="changeProviderLocationStatus(location_data)">
+                                            </mat-slide-toggle>
                                         </span>
-                                        <span class='enabled' *ngIf="location_data.status=='ACTIVE'">{{enable_cap}}</span>
-                                        <span class='disabled' *ngIf="location_data.status=='INACTIVE'">{{disable_cap}}</span>
+                                        <span class='enabled'
+                                            *ngIf="location_data.status=='ACTIVE'">{{enable_cap}}</span>
+                                        <span class='disabled'
+                                            *ngIf="location_data.status=='INACTIVE'">{{disable_cap}}</span>
                                     </div>
-                                    <div class="ctrl bse-lcn" *ngIf="location_data.status=='ACTIVE' && location_data.baseLocation==false">
-                                        <span class="cs-btn bt8" (click)="changeProviderBaseLocationStatus(location_data)">
+                                    <div class="ctrl bse-lcn"
+                                        *ngIf="location_data.status=='ACTIVE' && location_data.baseLocation==false">
+                                        <span class="cs-btn bt8"
+                                            (click)="changeProviderBaseLocationStatus(location_data)">
                                             {{set_base_loc_cap}}
                                         </span>
                                     </div>
@@ -56,12 +74,17 @@
                                     location_data.parkingType"></span>
                                 <h5>{{loc_amenities_cap}}</h5>
                                 <ul class="amt-list">
-                                    <li [matTooltip]="'Parking Type: ' + location_data.parkingType" [class]="badgeIcons['parkingtype']['class']"
+                                    <li [matTooltip]="'Parking Type: ' + location_data.parkingType"
+                                        [class]="badgeIcons['parkingtype']['class']"
                                         *ngIf="location_data.parkingType && location_data.parkingType !='none'"></li>
-                                    <li [matTooltip]="'24 hours Open'" [class]="badgeIcons['24hour']['class']" *ngIf="location_data.open24hours"></li>
+                                    <li [matTooltip]="'24 hours Open'" [class]="badgeIcons['24hour']['class']"
+                                        *ngIf="location_data.open24hours"></li>
                                     <ng-container *ngIf="location_data.locationVirtualFields">
-                                        <ng-container *ngFor="let locvirtual of objectKeys(location_data.locationVirtualFields)">
-                                            <li [matTooltip]="badge_map_arr[locvirtual]" [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']"></li>
+                                        <ng-container
+                                            *ngFor="let locvirtual of objectKeys(location_data.locationVirtualFields)">
+                                            <li [matTooltip]="badge_map_arr[locvirtual]"
+                                                [class]="(badgeIcons[locvirtual]) ? badgeIcons[locvirtual]['class'] : badgeIcons['none']['class']">
+                                            </li>
                                         </ng-container>
                                     </ng-container>
 
@@ -73,7 +96,8 @@
                                     <div class="no-dta">
 
                                         <p>{{you_havent_cap}} {{loc_amenities_cap}}. </p>
-                                        <span class="cs-btn bt3" (click)="editLocation('badge')">{{add_it_now_cap}}</span>
+                                        <span class="cs-btn bt3"
+                                            (click)="editLocation('badge')">{{add_it_now_cap}}</span>
                                     </div>
                                 </ng-container>
                             </div>
@@ -83,7 +107,8 @@
             </div>
 
             <mat-accordion class="row cst-acc">
-                <mat-expansion-panel class="card p0" hideToggle="{{(queues.length == 0) ? true : false}}" disabled="{{(queues.length == 0) ? true : false}}"
+                <mat-expansion-panel class="card p0" hideToggle="{{(queues.length == 0) ? true : false}}"
+                    disabled="{{(queues.length == 0) ? true : false}}"
                     expanded="{{(queues.length == 0) ? false : true}}">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="lc-title">
@@ -106,7 +131,8 @@
                             <tbody>
                                 <tr *ngFor="let queue of queues">
                                     <td data-title="Working Hours" class="pointer-cursor" (click)="goQueueDetail(queue)"
-                                        [class.disabled]="queue.queueState=='DISABLED'" [matTooltip]="'Click here to view working hours'">
+                                        [class.disabled]="queue.queueState=='DISABLED'"
+                                        [matTooltip]="'Click here to view working hours'">
                                         {{queue.name | capitalizeFirst}}</td>
                                     <td data-title="Schedule">
                                         <div class="schtd">
@@ -114,12 +140,14 @@
                                                 <!-- <span class="sch">
                                                 Mon - Fri 09:00 AM - 06:00 PM
                                             </span> -->
-                                                <span class="day">{{schedule.dstr}}:</span> <span class="time">{{schedule.time}}</span>
+                                                <span class="day">{{schedule.dstr}}:</span> <span
+                                                    class="time">{{schedule.time}}</span>
                                             </ng-container>
                                         </div>
                                     </td>
                                     <td data-title="Status" class="status">
-                                        <span class="icon-enable" *ngIf="queue.queueState=='ENABLED'"> {{enable_cap}}</span>
+                                        <span class="icon-enable" *ngIf="queue.queueState=='ENABLED'">
+                                            {{enable_cap}}</span>
                                         <span class="icon-disable" *ngIf="queue.queueState=='DISABLED'">
                                             {{disable_cap}}</span>
                                     </td>
@@ -129,26 +157,32 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                             <mat-menu #appMenu="matMenu">
-                                                <button type="button" (click)="addEditProviderQueue('edit',queue)" *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
-                                                <i class="icon-edit"></i>
-                                                <span>Edit</span>
+                                                <button type="button" (click)="addEditProviderQueue('edit',queue)"
+                                                    *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
+                                                    <i class="icon-edit"></i>
+                                                    <span>Edit</span>
                                                 </button>
                                                 <button type="button" (click)="changeProviderQueueStatus(queue)"
-                                                mat-menu-item >
+                                                    mat-menu-item>
                                                     <i *ngIf="queue.queueState=='DISABLED'" class="icon-enable"></i>
                                                     <i *ngIf="queue.queueState=='ENABLED'" class="icon-disable"></i>
-                                                    <span> {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
+                                                    <span>
+                                                        {{(queue.queueState=='ENABLED') ? 'Disable' :' Enable'}}</span>
                                                 </button>
                                             </mat-menu>
                                         </span>
                                         <span class="mbt-mobile-show">
-                                                <button class="editcls editbutton" type="button" *ngIf="queue.queueState=='ENABLED'" (click)="addEditProviderQueue('edit',queue)"><i class="icon-edit"></i>&nbsp;Edit</button>
-                                                <!-- <button class="enableicon" type="button" (click)="addEditProviderQueue('edit',queue)" *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
+                                            <button class="editcls editbutton" type="button"
+                                                *ngIf="queue.queueState=='ENABLED'"
+                                                (click)="addEditProviderQueue('edit',queue)"><i
+                                                    class="icon-edit"></i>&nbsp;Edit</button>
+                                            <!-- <button class="enableicon" type="button" (click)="addEditProviderQueue('edit',queue)" *ngIf="queue.queueState=='ENABLED'" mat-menu-item>
                                                         <i class="icon-edit"></i>
                                                         <span>Edit</span>
                                                         </button> -->
                                             <button [class.enableicon]="queue.queueState=='DISABLED'"
-                                                [class.disableicon]="queue.queueState=='ENABLED'" type="button" (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED')
+                                                [class.disableicon]="queue.queueState=='ENABLED'" type="button"
+                                                (click)="changeProviderQueueStatus(queue)">{{(queue.queueState=='ENABLED')
                                                 ? 'Disable' :' Enable'}}</button>
                                         </span>
                                     </td>
@@ -160,7 +194,9 @@
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
-        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
+        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+        </app-form-success-display>
     </div>
 </section>

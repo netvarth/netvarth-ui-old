@@ -50,9 +50,12 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   breadcrumbs = this.breadcrumbs_init;
   jc_code;
   isCheckin;
+  checkin_label = '';
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
-    private router: ActivatedRoute, private route: Router) { }
+    public shared_functions: SharedFunctions,
+    private router: ActivatedRoute, private route: Router)
+    {this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
       .subscribe(params => {
