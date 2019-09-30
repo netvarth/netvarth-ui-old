@@ -455,7 +455,7 @@ export const Messages = {
   'I_AGREE_CAP': 'I Agree With',
   'TERMS_CONDITIONS_CAP': 'Terms & Conditions',
   'SIGN_UP_CAP': 'Sign Up',
-  'SIGNUPP_CAP': '"You get  Platinum - Free Trial for 60 days."',
+  'SIGNUPP_CAP': '"You get  Gold - Free Trial for 45 days."',
   'MORE_SIGNUP': ' Once the trial period ends it automatically switches to basic free version. You can explore various Licence subscription packages under provider settings section. ',
   // App-shared-modules-add-member
   'FILL_FOLL_DETAILS_CAP': 'Please fill in the following details',
@@ -590,6 +590,7 @@ export const Messages = {
   // App-shared-modules-search
   'MORE_OPTIONS_CAP': 'More Options',
   'ALL_CAP': 'All',
+  'ALL_DOMAINSCAP':'All Domains',
 
   // App-shared-modules-search-moreoptiions
   'MORE_SEARCH_OPT_CAP': 'More Search Options ',
@@ -893,6 +894,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
+  'STATMENT_CAP':'Statment',
   'INVOICE_SUMMRY_CAP': 'Invoice Summary',
   'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',
@@ -911,7 +913,7 @@ export const Messages = {
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No Add-ons exist',
-  'PAY_BUTTON': 'Invoice to Pay',
+  'PAY_BUTTON': 'Statement to Pay',
   'DUE_DATE_CAP': 'Due Date',
   'SUBSC_PACKAGE': 'Subscription/Package',
 
@@ -1131,7 +1133,7 @@ export const Messages = {
   'PAY_SET_VERIFIED_CAP': '(Verified)',
   'PAY_SET_NOT_VERIFIED_CAP': '(Not Verified)',
   'PAY_SET_ENTER_MOB_NO_CAP': 'Enter Mobile Number *',
-  'PAY_SET_CC_DC_NETBANKING_CAP': 'CC / DC / Netbanking',
+  'PAY_SET_CC_DC_NETBANKING_CAP': 'CC / DC / Netbanking/ UPI',
   'PAY_SET_PAN_CARD_NO_CAP': 'Pan Card Number *',
   'PAY_SET_NAME_ON_PAN_CAP': 'Name on Pan Card *',
   'PAY_SET_ACCNT_HOLDER_NAME_CAP': 'Account Holder Name *',
@@ -1276,7 +1278,7 @@ export const Messages = {
   'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
-  'FRM_LEVEL_LOC_MSG': 'Manage your business Location details here.',
+  'FRM_LEVEL_LOC_MSG': 'Manage your business location details here.',
   'FRM_LEVEL_LOC_AMENITIES_MSG': 'Manage the location benefits that are offered to your [customer]s.',
   'FRM_LEVEL_WORKING_MSG': 'Details of your business hours are shown here.',
   'FRM_LEVEL_PRIVACY_MSG': 'Manage the privacy of your contact details here.',
