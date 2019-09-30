@@ -55,10 +55,6 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   minday = new Date(2015, 0, 1);
   breadcrumbs = [
     {
-      title: Messages.DASHBOARD_TITLE,
-      url: '/provider'
-    },
-    {
       title: 'Activity Log'
     }
   ];

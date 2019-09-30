@@ -106,7 +106,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   departmentCount: any = 0;
   filterbydepartment = false;
   locationExists = false;
-  account_type;
   ngOnInit() {
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
@@ -158,7 +157,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.setAcceptOnlineCheckin(is_check)
       .subscribe(
         () => {
+          this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
+          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -173,6 +174,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
+          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -279,7 +281,22 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   redirecTo(mod) {
     switch (mod) {
       case 'bprofile':
-        this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
+        this.routerobj.navigate(['provider', 'settings', 'bprofile']);
+        break;
+      case 'specializations':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'specializations']);
+        break;
+      case 'languages':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'languages']);
+        break;
+      case 'additionalinfo':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
+        break;
+      case 'privacy':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'privacy']);
+        break;
+      case 'media':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
         break;
       case 'locations':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
@@ -296,13 +313,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'discounts':
         if (this.nodiscountError) {
-          this.routerobj.navigate(['provider', 'settings', 'discounts']);
+          this.routerobj.navigate(['provider', 'settings', 'pos', 'discounts']);
         } else {
           this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
         }
         break;
       case 'coupons':
-        this.routerobj.navigate(['provider', 'settings', 'coupons']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupons']);
         break;
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'holidays']);
@@ -312,7 +329,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'items':
         if (this.noitemError) {
-          this.routerobj.navigate(['provider', 'settings', 'items']);
+          this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);
         } else {
           this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
         }
@@ -320,14 +337,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'waitlistmanager':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager']);
         break;
-      case 'license':
-        this.routerobj.navigate(['provider', 'settings', 'license']);
-        break;
+      // case 'license':
+      //   this.routerobj.navigate(['provider', 'license']);
+      //   break;
       case 'paymentsettings':
-        this.routerobj.navigate(['provider', 'settings', 'paymentsettings']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'paymentsettings']);
         break;
       case 'taxsettings':
-        this.routerobj.navigate(['provider', 'settings', 'taxsettings']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'taxsettings']);
         break;
       case 'departments':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'departments']);
@@ -406,7 +423,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
-        this.account_type = this.bProfile.accountType;
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {

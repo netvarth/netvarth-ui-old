@@ -24,7 +24,7 @@ import { ProviderbWizardComponent } from './components/provider-bwizard/provider
 import { AuthGuardProviderHome, AuthGuardNewProviderHome } from '../shared/guard/auth.guard';
 import { ProviderWaitlistCheckInCancelPopupComponent } from './components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './components/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
-import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+// import { ProviderWaitlistCheckInDetailComponent } from './components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ViewProviderWaitlistCheckInBillComponent } from './components/view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
@@ -79,7 +79,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderSubeaderModule,
     LoadingSpinnerModule,
     ProviderWaitlistOnlineCheckinModule,
-    AddProviderSchedulesModule,
+    AddProviderSchedulesModule
   ],
   declarations: [
     ProviderComponent,
@@ -97,9 +97,9 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     DynamicFormQuestionComponent,
     ProviderWaitlistCheckInCancelPopupComponent,
     ProviderWaitlistCheckInConsumerNoteComponent,
-    ProviderWaitlistCheckInDetailComponent,
+    // ProviderWaitlistCheckInDetailComponent,
     AddProviderWaitlistCheckInProviderNoteComponent,
-    AddProviderWaitlistCheckInBillComponent,
+    // AddProviderWaitlistCheckInBillComponent,
     ViewProviderWaitlistCheckInBillComponent,
     ProviderWaitlistCheckInPaymentComponent,
     ProviderSystemAuditLogComponent,
@@ -124,7 +124,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderWaitlistCheckInCancelPopupComponent,
     ProviderWaitlistCheckInConsumerNoteComponent,
     AddProviderWaitlistCheckInProviderNoteComponent,
-    AddProviderWaitlistCheckInBillComponent,
+    // AddProviderWaitlistCheckInBillComponent,
     ViewProviderWaitlistCheckInBillComponent,
     ProviderWaitlistCheckInPaymentComponent,
     AddProviderCustomerComponent,
@@ -134,7 +134,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderWaitlistQueuesComponent,
     AddProviderWaitlistServiceComponent,
     GoogleMapComponent,
-    ProviderBprofileSearchDynamicComponent,
+    ProviderBprofileSearchDynamicComponent
   ],
   providers: [
     AuthGuardProviderHome,

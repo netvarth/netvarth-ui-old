@@ -43,8 +43,12 @@ export class ProviderJcouponDetailsComponent implements OnInit {
       title: 'Settings'
     },
     {
+      title: 'Billing/POS',
+      url: '/provider/settings/pos'
+  },
+    {
       title: 'Coupons',
-      url: '/provider/settings/coupons'
+      url: '/provider/settings/pos/coupons'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -52,7 +56,6 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   isCheckin;
   checkin_label = '';
   constructor(private provider_servicesobj: ProviderServices,
-    private sharedfunctionObj: SharedFunctions,
     public shared_functions: SharedFunctions,
     private router: ActivatedRoute, private route: Router)
     {this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }

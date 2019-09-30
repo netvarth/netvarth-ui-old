@@ -1,5 +1,5 @@
 <section>
-        <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+        <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
         <app-breadcrumb (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
                 [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
@@ -221,7 +221,7 @@
                                                         </form>
                                                 </div>
                                         </div>
-                                        <div class="row" *ngFor="let queue of todaysQs; index as i">
+                                        <div class="row col-md-6 col-xs-12" *ngFor="let queue of todaysQs; index as i">
                                                 <div class="card">
                                                         <div class="copy">
                                                                 <span class="mbt" style="margin-top: 10px">

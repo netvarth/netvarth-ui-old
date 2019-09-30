@@ -775,7 +775,8 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   redirecttoProfile() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
+    // this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
+    this.routerobj.navigate(['provider', 'settings', 'bprofile']);
   }
 
   checkClose() {

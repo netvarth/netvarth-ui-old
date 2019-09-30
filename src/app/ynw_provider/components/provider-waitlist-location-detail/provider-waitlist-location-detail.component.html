@@ -1,5 +1,5 @@
 <section>
-    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>  -->
     <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
@@ -172,7 +172,7 @@
                                             </mat-menu>
                                         </span>
                                         <span class="mbt-mobile-show">
-                                            <button class="editcls editbutton" type="button"
+                                                <button class="editcls editbutton" type="button"
                                                 *ngIf="queue.queueState=='ENABLED'"
                                                 (click)="addEditProviderQueue('edit',queue)"><i
                                                     class="icon-edit"></i>&nbsp;Edit</button>

@@ -1,5 +1,5 @@
 <section>
-    <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader>
+    <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
     <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
@@ -28,7 +28,27 @@
                                     </span>
                                 </li>
                                 <li class="block-level">
-                                    <span class="lnk" (click)="redirecTo('bprofile')">{{profile_cap}}</span>
+                                    <span class="lnk" (click)="redirecTo('bprofile')">Basic Profile</span>
+                                    <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
+                                </li>
+                                <li class="block-level">
+                                    <span class="lnk" (click)="redirecTo('additionalinfo')">Additional Info</span>
+                                    <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
+                                </li>
+                                <li class="block-level">
+                                    <span class="lnk" (click)="redirecTo('privacy')">Privacy</span>
+                                    <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
+                                </li>
+                                <li class="block-level">
+                                    <span class="lnk" (click)="redirecTo('specializations')">Specializations</span>
+                                    <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
+                                </li>
+                                <li class="block-level">
+                                    <span class="lnk" (click)="redirecTo('languages')">Languages Known</span>
+                                    <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
+                                </li>
+                                <li class="block-level">
+                                    <span class="lnk" (click)="redirecTo('media')">Gallery & Social Media</span>
                                     <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
                                 </li>
                             </ul>
@@ -100,52 +120,18 @@
                     </div>
                 </div>
 
-                <div class="card set03 p0">
+                <div class="card set05 p0">
                     <div class="copy">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">{{billing_cap}}</h2>
                         </div>
                         <div class="ct">
                             <ul>
-                                <li class="form-level-settings">{{frm_bill_cap}}</li>
-                                <li>
-                                    <span class="lnk" (click)="redirecTo('items')">{{items_cap}} ({{item_count}})</span>
-                                </li>
-                                <li>
-                                    <span class="lnk" (click)="redirecTo('discounts')">{{discount_cap}}
-                                        ({{discount_count}})</span>
-                                </li>
-                                <li class="block-level">
-                                    <!-- <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}} ({{coupon_count}})</span> -->
-                                    <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
-                                    <!-- <p class="form-level-settings">{{frm_coupon_cap}}</p> -->
-                                </li>
-
-                                <li>
-                                    <span class="lnk" (click)="redirecTo('taxsettings')">{{tax_setting_cap}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card set04 p0">
-                    <div class="copy">
-                        <div class="hd">
-                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="paymentTooltip">{{payment_cap}}</h2>
-                        </div>
-                        <div class="ct">
-                            <ul>
-                                <li class="form-level-settings">{{frm_pay_cap}}</li>
-                                <li>
-                                    <!-- <span class="ttle">
-                                        {{accept_payments_cap}} <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span>
-                                        <span class="acc-msg">({{accountActiveMsg}})</span> -->
-
-                                    <!--    </span> -->
+                                <li class="form-level-settings">{{frm_bill_cap}}. {{frm_pay_cap}}</li>
+                                <li class="m0">
                                     <span class="ttle">
-                                        {{customer_label| capitalizeFirst}}s Self pay
-                                        <!-- <span class="sts" [class.active]="payment_status">{{payment_statusstr}}</span> -->
+                                        {{customer_label| capitalizeFirst}}s Self pay <span class="sts"
+                                            [class.active]="payment_status">{{payment_statusstr}}</span>
                                     </span>
 
                                     <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
@@ -153,14 +139,12 @@
                                             (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                     </span>
                                 </li>
+                                <li *ngIf="payment_status"></li>
                                 <li class="form-level-settings" *ngIf="!payment_status">{{frm_public_self_cap}}</li>
-                                <li style="margin-bottom: 0px">
+                                <li class="m0">
                                     <span class="lnk"
                                         (click)="redirecTo('paymentsettings')">{{payment_setting_cap}}</span>
                                 </li>
-                                <!-- <li>
-                                    <span class="lnk" (click)="redirecTo('taxsettings')">{{tax_setting_cap}}</span>
-                                </li> -->
                                 <li>
                                     <div>
                                         <div class="payTypeVerify"
@@ -176,12 +160,27 @@
                                             Bank</div>
                                     </div>
                                 </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('taxsettings')">{{tax_setting_cap}}</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('items')">{{items_cap}} ({{item_count}})</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('discounts')">{{discount_cap}}
+                                        ({{discount_count}})</span>
+                                </li>
+                                <li class="block-level">
+                                    <!-- <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}} ({{coupon_count}})</span> -->
+                                    <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
+                                    <!-- <p class="form-level-settings">{{frm_coupon_cap}}</p> -->
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="card set05 p0">
+                <div class="card set06 p0">
                     <div class="copy">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}</h2>
@@ -200,8 +199,8 @@
                     </div>
                 </div>
 
-                <div class="card p0" [class.set06]="account_type === 'INDEPENDENT_SP'">
-                    <div class="copy" *ngIf="account_type === 'INDEPENDENT_SP'">
+                <!-- <div class="card set03 p0">
+                    <div class="copy">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="licenseTooltip">{{license_cap}}</h2>
                         </div>
@@ -218,23 +217,8 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </section>
-
-
-<!-- <h1>Settings</h1>
-<button [routerLink]="['/provider/settings/bprofile-search']">Profile & Search</button>
-<button [routerLink]="['/provider/settings/waitlist-manager']">Check-In Manager</button>
-<mat-slide-toggle
-class="example-margin"
-[checked]="waitlist_status"
-[labelPosition]="'before'"
-(change)="changeWaitlist($event)"
-[(ngModel)]="waitlist_status">
-Waitlist
-</mat-slide-toggle>
-
-<button [routerLink]="['/provider/settings/license']">License</button> -->

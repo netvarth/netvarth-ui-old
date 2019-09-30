@@ -4343,3 +4343,10 @@ border-bottom: none !important;
   font-weight: 600 !important;
   padding-right: 10px !important;
 }
+
+.b-home header {
+  padding: 0px !important
+}
+.bold {
+  font-weight: 700
+}
