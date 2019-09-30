@@ -70,21 +70,24 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         <div class="form-group row" style="display: flex">
                 <div class="col-md-6">
             <mat-form-field>
-                <input matInput [matDatepicker]="picker"[min]="minDate"  (dateChange)="compareDate()" placeholder="Start Date" formControlName="startdate">
+                <input matInput [matDatepicker]="picker"[min]="minDate"  (dateChange)="compareDate($event.value,0)" placeholder="Start Date" formControlName="startdate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               
-              <app-field-error-display [displayError]= dateError
+              <app-field-error-display [displayError]= startdateError
                 errorMsg="Please enter date greater or equal to today">
             </app-field-error-display>
               </div>
               <div class="col-md-6">
                     <mat-form-field>
-                        <input matInput [matDatepicker]="picker1" [min]="minDate"  placeholder="End Date" formControlName="enddate">
+                        <input matInput [matDatepicker]="picker1" [min]="minDate" (dateChange)="compareDate($event.value,1)" placeholder="End Date" formControlName="enddate">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker  #picker1></mat-datepicker>
                       </mat-form-field>
+                      <app-field-error-display [displayError]= enddateError
+                      errorMsg="Please enter date greater or equal to startdate">
+                  </app-field-error-display>
                       </div>
         </div>
         
