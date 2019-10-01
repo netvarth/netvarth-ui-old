@@ -66,41 +66,16 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 </div>
             </section>
         </div>
-        
-        <div class="form-group row" style="display: flex">
-                <div class="col-md-6">
-            <mat-form-field>
-                <input matInput [matDatepicker]="picker"[min]="minDate"  (dateChange)="compareDate($event.value,0)" placeholder="Start Date" formControlName="startdate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-              
-              <app-field-error-display [displayError]= startdateError
-                errorMsg="Please enter date greater or equal to today">
-            </app-field-error-display>
-              </div>
-              <div class="col-md-6">
-                    <mat-form-field>
-                        <input matInput [matDatepicker]="picker1" [min]="minDate" (dateChange)="compareDate($event.value,1)" placeholder="End Date" formControlName="enddate">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker  #picker1></mat-datepicker>
-                      </mat-form-field>
-                      <app-field-error-display [displayError]= enddateError
-                      errorMsg="Please enter date greater or equal to startdate">
-                  </app-field-error-display>
-                      </div>
-        </div>
-        
         <div class="form-group">
             <label class="labelstyle">{{schedule_cap}}</label><a class="link exstschdlesze pointer-cursor"
-                (click)="existingScheduletoggle()"> {{existing_schedules}}</a>
+                (click)="existingScheduletoggle()">{{existing_schedules}}</a>
 
             <!-- WANT TO SHOW THIS WHEN ABOVE SECTION ELEMENT IS CLICKED -->
             <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
 
                 <ul class="item">
                     <li *ngFor="let schedule of this.activeQueues"><span class="day">{{schedule.dstr}}</span><span
-                            class="time"> : {{schedule.time}}</span></li>
+                            class="time">{{schedule.time}}</span></li>
                 </ul>
 
             </div>
