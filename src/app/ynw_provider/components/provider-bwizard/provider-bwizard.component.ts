@@ -406,13 +406,14 @@ export class ProviderbWizardComponent implements OnInit {
 
         // Preparing the respective json variable with the schedule details
         this.schedule_json = [];
+        let mon2;
         const cdate2 = new Date();
-        const mon2 = (cdate2.getMonth() + 1);
-        let month2 = '';
+       mon2 = (cdate2.getMonth() + 1);
+       
         if (mon2 < 10) {
-          month2 = '0' + mon2;
+          mon2 = '0' + mon2;
         }
-        const today2 = cdate2.getFullYear() + '-' + month2 + '-' + cdate2.getDate();
+        const today2 = cdate2.getFullYear() + '-' + mon2 + '-' + cdate2.getDate();
         const save_schedule2 = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
         for (const schedule of save_schedule2) {
           this.schedule_json.push({
@@ -452,13 +453,14 @@ export class ProviderbWizardComponent implements OnInit {
           this.schedule_json = [];
         } else {
           this.schedule_json = [];
+          let mon ;
           const cdate = new Date();
-          const mon = (cdate.getMonth() + 1);
-          let month = '';
+           mon = (cdate.getMonth() + 1);
+         
           if (mon < 10) {
-            month = '0' + mon;
+            mon = '0' + mon;
           }
-          const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
+          const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
           const save_schedule = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
           for (const schedule of save_schedule) {
             this.schedule_json.push({
