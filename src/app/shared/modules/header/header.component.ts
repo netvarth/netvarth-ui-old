@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() passedRefine: any = [];
   @Output() searchclick = new EventEmitter<any>();
   @Output() scrollhideclass = new EventEmitter<any>();
+  @Input() source;
   sign_in_cap = Messages.SIGN_IN_CAP;
   join_cap = Messages.JOIN_CAP;
   are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
@@ -196,6 +197,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
+    console.log(this.source);
     this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
