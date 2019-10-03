@@ -1326,7 +1326,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.currentlicense_details = data;
         this.license_details = this.currentlicense_details;
-        this.current_license = this.currentlicense_details.accountLicense.name;
+        this.current_license = this.currentlicense_details.accountLicense.licPkgOrAddonId;
       });
   }
   getTotalAllowedAdwordsCnt() {
