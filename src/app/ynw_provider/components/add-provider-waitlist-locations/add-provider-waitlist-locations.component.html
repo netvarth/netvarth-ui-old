@@ -1,13 +1,14 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()"
-    class="ynw-common-form">
+onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     <h1 class="mat-dialog-title">{{location_cap}} <span *ngIf="forbadge">{{amenities_cap}}</span> <button #loc
-            mat-dialog-close  class="modal_close" (click)="loadDetails()" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-            <app-common-innerloading-spinner  *ngIf="api_loading1"> </app-common-innerloading-spinner>
-            <mat-dialog-content *ngIf="!api_loading1">
+            mat-dialog-close class="modal_close" (click)="loadDetails()" tabindex="-1"><i class="fa fa-window-close"
+                aria-hidden="true"></i></button></h1>
+    <app-common-innerloading-spinner *ngIf="api_loading1"> </app-common-innerloading-spinner>
+    <mat-dialog-content *ngIf="!api_loading1">
         <ng-container *ngIf=" data && !forbadge">
             <div class="form-group mapselection">
-                <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1"><i data-icon="j"></i>{{location_map_cap}}</button>
+                <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1"><i
+                        data-icon="j"></i>{{location_map_cap}}</button>
                 <span class="expl">{{location_map_message}}</span>
             </div>
             <div class="form-group">
@@ -51,14 +52,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                     'pattern' : 'Please enter a valid longitude'
                     })">
                         </app-field-error-display>
-                        <!-- <button (click)="showGooglemap()" type="button" mat-button>Show Map</button> -->
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <mat-form-field class="example-full-width">
-                    <!-- <input matInput type="text" placeholder="Address" formControlName="locaddress"> -->
                     <textarea matInput placeholder="{{address_cap}}" formControlName="locaddress" row="4"></textarea>
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locaddress')" [errorMsgs]="fed_service.getErrorMessage(amForm,'locaddress',
@@ -67,37 +66,19 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             'maxlength' : 'Please enter less than 200 characters'
             })">
                 </app-field-error-display>
-                <!-- <button mat-button (click)="getCoordinatesFromAddress()" type="button" [disabled]="checkAddressExists()">Get Map Coordinates</button> -->
             </div>
-            <!-- <div class="form-group">
-            <mat-form-field class="example-full-width">
-                <label class="col-form-label">Pincode</label>
-                <input matInput type="text" placeholder="Pincode" formControlName="locpincode">
-        </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'locpincode')"
-            errorMsg="Please enter the pincode">
-            </app-field-error-display>
-        </div> -->
             <div class="form-group">
                 <mat-form-field class="example-full-width">
                     <label class="labelstyle">{{map_url_cap}}</label>
-                    <input class="nofocus" matInput type="text" formControlName="locmapurl" autocomplete="off" tabindex="-1">
+                    <input class="nofocus" matInput type="text" formControlName="locmapurl" autocomplete="off"
+                        tabindex="-1">
                 </mat-form-field>
             </div>
-            <!-- <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">  -->
-            <div class="form-group mb0" *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'">
+            <div class="form-group mb0">
                 <label class="labelstyle">{{schedule_cap}}</label>
-                <!-- <div class="jd_stw " *ngIf="this.activeSchedules.length>0">
-                    {{existing_schedule_cap}}
-                    <span class="loc_queue" *ngFor="let schedule of this.activeSchedules">
-                        <span class="day">{{schedule.dstr}}</span>&nbsp;<span class="time">{{schedule.time}}</span>
-                    </span>]
-                </div> -->
             </div>
-            <!-- <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && data_source != 'bprofile'" [existingSchedules] = "schedule_arr" [hidecancelbutton]="'1'" providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule> -->
-            <app-provider-schedule *ngIf="schedule_alreadyexists_for_location==false && proceedwithschedule" [Isource]="'location'"
-                [existingSchedules]="schedule_arr" [active_Schedules]="activescdule" [hidecancelbutton]="'1'" providerStatus="INACTIVE"
-                (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
+            <app-provider-schedule [Isource]="'location'" [existingSchedules]="schedule_arr" [hidecancelbutton]="'1'"
+                providerStatus="INACTIVE" (saveScheduleClick)="handlesSaveschedule($event)"></app-provider-schedule>
         </ng-container>
         <ng-container *ngIf="forbadge">
             <div class="form-group">
@@ -106,7 +87,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
             <div *ngIf="data.type=='edit'">
                 <div class="form-group" *ngFor="let badge of loc_badges">
-                    <mat-checkbox (change)="handle_badge_click(badge)" [checked]="checkbadgealreadyselected(badge)">{{badge.displayName}}</mat-checkbox>
+                    <mat-checkbox (change)="handle_badge_click(badge)" [checked]="checkbadgealreadyselected(badge)">
+                        {{badge.displayName}}</mat-checkbox>
                 </div>
             </div>
             <div class="form-group" #badgediv>
@@ -125,9 +107,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>
         <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}
         </button>
-        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">  </app-common-innerloading-spinner>
+        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+        </app-common-innerloading-spinner>
     </mat-dialog-actions>
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display>
 </form>
