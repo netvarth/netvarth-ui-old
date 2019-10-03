@@ -20,7 +20,7 @@
         </li>
     </ul>      -->
     <div (click)="addScheduleSelection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'"  class="loc-add-btn"
-                 ><i class="fa fa-plus-circle"></i></div>
+                 ><i class="fa fa-plus-circle pointlist"></i></div>
     <ul class="whrs">            
         <li *ngFor="let schedule of display_schedule; let i = index" [class.beingedited]="isbeingEdited(schedule.indx)">
             <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
