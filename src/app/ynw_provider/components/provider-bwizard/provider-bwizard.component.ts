@@ -386,30 +386,15 @@ export class ProviderbWizardComponent implements OnInit {
           this.loading_active = false;
           return;
         }
-        const post_itemdata2 = {
-          'baseLocation': {
-            'place': this.wizard_data_holder.location || '',
-            'longitude': this.wizard_data_holder.lon || '',
-            'lattitude': this.wizard_data_holder.lat || '',
-            'googleMapUrl': this.wizard_data_holder.mapurl || '',
-            'address': this.wizard_data_holder.address || '',
-            'bSchedule': {
-              'timespec': []
-            }
-          }
-        };
-
         // Check whether atleast one schedule is added. If not setting the base schedule from constants to save it as the schedule for base location
         if (this.schedule_arr.length === 0) {
           this.setDefaultSchedules();
         }
-
         // Preparing the respective json variable with the schedule details
         this.schedule_json = [];
         let mon2;
         const cdate2 = new Date();
-       mon2 = (cdate2.getMonth() + 1);
-       
+        mon2 = (cdate2.getMonth() + 1);
         if (mon2 < 10) {
           mon2 = '0' + mon2;
         }
@@ -430,6 +415,18 @@ export class ProviderbWizardComponent implements OnInit {
             }]
           });
         }
+        const post_itemdata2 = {
+          'baseLocation': {
+            'place': this.wizard_data_holder.location || '',
+            'longitude': this.wizard_data_holder.lon || '',
+            'lattitude': this.wizard_data_holder.lat || '',
+            'googleMapUrl': this.wizard_data_holder.mapurl || '',
+            'address': this.wizard_data_holder.address || '',
+            'bSchedule': {
+              'timespec': this.schedule_json
+            }
+          }
+        };
         // assiging the schedule json to the object to save it
         // post_itemdata2.baseLocation.bSchedule.timespec = this.schedule_json;
         this.provider_services.patchbProfile(post_itemdata2)
@@ -453,10 +450,9 @@ export class ProviderbWizardComponent implements OnInit {
           this.schedule_json = [];
         } else {
           this.schedule_json = [];
-          let mon ;
+          let mon;
           const cdate = new Date();
-           mon = (cdate.getMonth() + 1);
-         
+          mon = (cdate.getMonth() + 1);
           if (mon < 10) {
             mon = '0' + mon;
           }
@@ -644,13 +640,15 @@ export class ProviderbWizardComponent implements OnInit {
         }
         // extracting the schedule intervals
         for (let i = 0; i < obj.baseLocation.bSchedule.timespec.length; i++) {
-          for (let j = 0; j < obj.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
-            // pushing the schedule details to the respective array to show it in the page
-            this.schedule_arr.push({
-              day: obj.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
-              sTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
-              eTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
-            });
+          if (obj.baseLocation.bSchedule.timespec[i].repeatIntervals) {
+            for (let j = 0; j < obj.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
+              // pushing the schedule details to the respective array to show it in the page
+              this.schedule_arr.push({
+                day: obj.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
+                sTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
+                eTime: obj.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
+              });
+            }
           }
         }
       }
