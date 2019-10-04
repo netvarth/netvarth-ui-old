@@ -776,7 +776,7 @@
         Jaldee . You can add a custom URL based on things like your business name, username used in
         Jaldee or anything of your choice. You can share this custom URL to your customers in your
         website or any other portal.<strong> To add a custom url, make sure your license package is
-            upgraded to Ruby.</strong></span><br>
+            upgraded to Diamond.</strong></span><br>
     <span style="font-size: 15px">How to add a custom business id in Jaldee?</span>
     <div class="box-indent">
 
@@ -1180,13 +1180,13 @@
     </ul>
 </section>
 
-<!-- <section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
+<section *ngIf="childContent =='kiosk' && parentContent == 'kiosk'">
     <h6>KIOSK</h6>
     <span>The Jaldee Kiosk feature allows a doctor to place a Tablet/PC/Laptop/Other Machines which
         is
         self-operated. This provides the customers an easier and more interactive way to check-in
         themselves for the services offered by the business. KIOSK is available to doctors who has
-        chosen license packages <strong>Ruby</strong> or <strong>Diamond</strong>.</span><br>
+        chosen license package <strong>Diamond</strong>.</span><br>
         <mat-accordion>
             <mat-expansion-panel [expanded]="false">
                 <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
@@ -1200,7 +1200,7 @@
             <li>Silver - No</li>
             <li>Gold - No</li>
             <li>Platinum - No</li>
-            <li>Ruby - Included</li>
+            <!-- <li>Ruby - Included</li> -->
             <li>Diamond - Included</li>
         </ul>
     </div>
@@ -1288,7 +1288,7 @@
             </ul>
         </ol>
     </div>
-</section> -->
+</section>
 
 <section *ngIf="parentContent == 'license' && childContent =='upgradelicense'">
     <h6>LICENSE</h6>
@@ -1373,8 +1373,8 @@
                         payment
                         date.
                     </li>
-                    <li>An invoice is generated on a monthly basis.</li>
-                    <li>For example, if a doctor has created a profile on 10th January then all invoices will be
+                    <li>An statement is generated on a monthly basis.</li>
+                    <li>For example, if a doctor has created a profile on 10th January then all statements will be
                         generated
                         on a monthly basis i.e. on 10th of each month. In case, the doctor buys add-on and
                         Jaldee-Keywords on a
@@ -1383,7 +1383,7 @@
                         will be
                         calculated from 20 January - 10 February. After that, the same “10↔10” bill cycle will
                         continue from
-                        next month. This billing cycle will include License and Addon amount in a single invoice
+                        next month. This billing cycle will include License and Addon amount in a single statement
                         until the
                         license or Add-on gets upgraded/downgraded.<br><br>
                         <p><strong>*To downgrade the existing license package, a doctor needs to contact the
@@ -1392,10 +1392,10 @@
                                 call us on 0487-2325650 or you can send us an email at <span
                                     class="linkb">support@jaldee.com</span>.</strong></p>
                     </li>
-                    <li>An invoice is generated when an addon is included in a subscription using
+                    <li>An statement is generated when an addon is included in a subscription using
                         <strong>“ADD-ON(+)”</strong> option.</li>
                     <li>When a doctor click on the <strong>“Pay”</strong> button <strong>(Silver and Higher
-                            grades),</strong> he/she can see the generated invoices. To proceed with payment
+                            grades),</strong> he/she can see the generated statements. To proceed with payment
                         from
                         here,
                         click on <strong>“Make Payment”</strong>. This redirects the page to PayU interface and
@@ -1406,19 +1406,19 @@
                     <li>A doctor can see all the payments completed so far in the <strong>“Payments
                             History”</strong>
                         section.</li>
-                    <li>Providers using Jaldee Provider App, kindly visit <span class="linkb">www.jaldee.com</span> to
-                        complete the invoice payment.</li>
-                    <li>The invoice is generated every month on the same date of profile creation, whether or
+                        <li>Doctors using Jaldee Provider App, kindly visit <span class="linkb">www.jaldee.com</span> to
+                            complete the invoice payment.</li>
+                    <li>The statement is generated every month on the same date of profile creation, whether or
                         not
                         the
                         previous payment is made.</li>
-                    <li>The license gets upgraded as soon as a doctor clicks on license upgrade button, but the
-                        invoice
+                    <li>The statement gets upgraded as soon as a doctor clicks on license upgrade button, but the
+                        statement
                         gets generated from the next month and the amount is calculated based on the daily usage
                         of
                         the
                         license package.</li>
-                    <li>An email will be sent to the doctor upon each invoice generation.</li>
+                    <li>An email will be sent to the doctor upon each statement generation.</li>
                 </ul>
             </div>
         </mat-expansion-panel>
@@ -1430,170 +1430,162 @@
                 <h6>Jaldee Pricing</h6>
                 <div class="row" *ngIf="activePrice == ''">
                     <!-- <div class="scroll"> -->
-                    <div class="jd-pricing">
-                        <table align="center">
-                            <tr>
+                        <div class="jd-pricing">
+                            <table align="center">
+                              <tr>
                                 <th class="th1 headcol lic_metric">Licensable metrics</th>
                                 <td class="th2 long head_bg">FREE</td>
                                 <td class="long head_bg">Silver</td>
-                                <td class="th3 long head_bg">Gold <br /><span style="font-size:0.8px">(Free 45 days tria)(Best value)</span></td>
-                                <td class="th4 long head_bg">Platinum </td>
+                                <td class="th3 long head_bg">Gold</td>
+                                <td class="th4 long head_bg">Platinum <br/><span style="font-size:0.8px">(Free 60 days trial)</span></td>
+                                <!-- <td class="th5 long head_bg">Ruby</td> -->
                                 <td class="th6 long head_bg">Diamond</td>
-                            </tr>
-                            <tr>
+                              </tr>
+                              <tr>
                                 <th class="th3 headcol">Price(Rs/Month)</th>
                                 <td class="th2 light-col long">FREE</td>
                                 <td class="brozelicensecol long">499 Rs</td>
                                 <td class="th3 light-col long">1499 Rs</td>
                                 <td class="th4 brozelicensecol long">2999 Rs</td>
-                               <td class="th6 brozelicensecol long">7999 Rs</td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                <td class="th6 light-col long">7999 Rs</td>
+                              </tr>
+                              <tr>
                                 <th class="td1  headcol">Jaldee Business Listing</th>
                                 <td class="td2 light-col long"><i class="fa fa-check"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                 <td class="td3 light-col long"><i class="fa fa-check"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                                <th class="td1  headcol">Public searches <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'[Business name, domain, subdomain, specializations,
-                                  keywords etc..]'"></i></th>
+                                <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                              </tr>
+                              <tr>
+                                <th class="td1  headcol">Public searches <div style="font-size: 10px"><i>(Business name, domain, subdomain, specializations,
+                                    keywords etc..)</i></div></th>
                                 <td class="td2 light-col long">Unlimited</td>
                                 <td class="brozelicensecol long">Unlimited</td>
                                 <td class="td3 light-col long">Unlimited</td>
                                 <td class="td4 brozelicensecol long">Unlimited</td>
-                                <td class="td6 brozelicensecol long">Unlimited</td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="td5 light-col long">Unlimited</td> -->
+                                <td class="td6 light-col long">Unlimited</td>
+                              </tr>
+                              <tr>
                                 <th class="td1  headcol">Business profile detailed views</th>
-                                <td class="td2 light-col long">10 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i></td>
-                                <td class="brozelicensecol long">20 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i></td>
-                                <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month'"></i></td>
-                                <td class="td4 brozelicensecol long">125 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'2000 per month'"></i></td>
-                                <td class="td6 brozelicensecol long">Unlimited</td>
-                            </tr>
-                            <tr>
-                                <th class="td1  headcol">Number of Transactions <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'(check ins/get token/ request for
-                                  appointment-
-                                  both online and walk-ins together)'"></i></th>
-                                <td class="td2 light-col long">20 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'30 per month'"></i></td>
-                                <td class="brozelicensecol long">30 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'300 per month'"></i></td>
-                                <td class="td3 light-col long">50 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'500 per month, Unlimited for 2019'"></i>
-                                </td>
-                                <td class="td4 brozelicensecol long">100 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'1000 per month, Unlimited for 2019'"></i>
-                                </td>
-                                <td class="td6 brozelicensecol long">1000 per day <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'10,000 per month, Unlimited for 2019'"></i></td>
-                            </tr>
-                            <tr>
+                                <td class="td2 light-col long">30/month <div style="font-size: 10px"><i>(10/day)</i></div></td>
+                                <td class="brozelicensecol long">300/month <div style="font-size: 10px"><i>(20/day)</i></div></td>
+                                <td class="td3 light-col long">1000/month <div style="font-size: 10px"><i>(50/day)</i></div></td>
+                                <td class="td4 brozelicensecol long">2000/month <div style="font-size: 10px"><i>(125/day)</i></div></td>
+                                <!-- <td class="td5 light-col long">300 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'5000 per month'"></i></td> -->
+                                <td class="td6 light-col long">Unlimited</td>
+                              </tr>
+                              <tr>
+                                <th class="td1  headcol">Number of Transactions <div style="font-size: 10px"><i>(check ins/get token/ request for
+                                    appointment-
+                                    both online and walk-ins together)</i></div></th>
+                                <td class="td2 light-col long">30/month <div style="font-size: 10px"><i>(10/day)</i></div></td>
+                                <td class="brozelicensecol long">300/month <div style="font-size: 10px"><i>(30/day)</i></div></td>
+                                <td class="td3 light-col long">500/month <div style="font-size: 10px"><i>(50/day,  Unlimited for 2019)</i></div></td>
+                                <td class="td4 brozelicensecol long">1000/month <div style="font-size: 10px"><i>(100/day, Unlimited for 2019)</i></div></td>
+                                <!-- <td class="td5 light-col long">250 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'2500 per month, Unlimited for 2019'"></i></td> -->
+                                <td class="td6 light-col long">10000/month <div style="font-size: 10px"><i>(10,00/day, Unlimited for 2019))</i></div></td>
+                              </tr>
+                              <tr>
                                 <th class="td1  headcol">Jaldee coupons</th>
-                                <td class="td2 light-col long">Only sign up coupons</td>
+                                <td class="td2 light-col long">Option not available</td>
                                 <td class="brozelicensecol long">Only sign up coupons</td>
-                                <td class="td3 light-col long">Sign up coupons +1 <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                                <td class="td4 brozelicensecol long">Sign up coupons +2 <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                                <td class="td6 brozelicensecol long">Sign up coupons +5 <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(business promotion coupon) per month'"></i></td>
-                            </tr>
-                            <tr>
+                                <td class="td3 light-col long">Sign up coupons +1 <div style="font-size: 10px"><i>(business promotion coupon/month)</i></div></td>
+                                <td class="td4 brozelicensecol long">Sign up coupons +2 <div style="font-size: 10px"><i>(business promotion coupon/month)</i></div></td>
+                                <!-- <td class="td5 light-col long">Sign up coupons +3 <i class="fa fa-info-circle"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td> -->
+                                <td class="td6 light-col long">Sign up coupons +5 <div style="font-size: 10px"><i>(business promotion coupon/month)</i></div></td>
+                              </tr>
+                              <!-- <tr>
                                 <th class="td1  headcol">Customised coupons</th>
                                 <td class="td2 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
                                 <td class="td3 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                                <td class="td6 brozelicensecol long">2 per month</td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="td5 light-col long">1 per month</td> -->
+                                <!-- <td class="td6 light-col long">2 per month</td>
+                              </tr> --> 
+                              <tr>
                                 <th class="td1 headcol">Jaldee POS</th>
                                 <td class="td2 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                <td class="td3 light-col long"><i class="fa fa-times"></i></td>
+                                <td class="td3 light-col long"><i class="fa fa-check"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                              </tr>
+                              <tr>
                                 <th class="td1 headcol">Jaldee pay / Billing</th>
                                 <td class="td2 light-col long"><i class="fa fa-check"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                 <td class="td3 light-col long"><i class="fa fa-check"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                              </tr>
+                              <tr>
                                 <th class="td1 headcol">Custom URL</th>
                                 <td class="td2 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                                <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
+                                <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                              </tr>
+                              <tr>
                                 <th class="td1 headcol">Storage (image upload)</th>
-                                <td class="td2 light-col long">10 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(eg.10 images - 1mb)'"></i></td>
-                                <td class="brozelicensecol long">20 mb <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.20 images - 1mb)'"></i></td>
-                                <td class="td3 light-col long">40 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(eg.40 images - 1mb)'"></i></td>
-                                <td class="td4 brozelicensecol long">100 mb <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.100 images - 1mb)'"></i></td>
-                                <td class="td6 brozelicensecol long">1 gb <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'(eg.1000 images - 1mb)'"></i></td>
-                            </tr>
-                            <tr>
+                                <td class="td2 light-col long">10 mb <div style="font-size: 10px"><i>(eg.10 images - 1mb)</i></div></td>
+                                <td class="brozelicensecol long">25 mb <div style="font-size: 10px"><i>(eg.20 images - 1mb)</i></div></td>
+                                <td class="td3 light-col long">60 mb <div style="font-size: 10px"><i>(eg.40 images - 1mb)</i></div></td>
+                                <td class="td4 brozelicensecol long">100 mb <div style="font-size: 10px"><i>(eg.100 images - 1mb)</i></div></td>
+                                <!-- <td class="td5 light-col long">250 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'(eg.250 images - 1mb)'"></i></td> -->
+                                <td class="td6 light-col long">1 gb <div style="font-size: 10px"><i>(eg.1000 images - 1mb)</i></div></td>
+                              </tr>
+                              <tr>
                                 <th class="td1 headcol">Jaldee Keywords</th>
                                 <td class="td2 light-col long">0</td>
                                 <td class="brozelicensecol long">0</td>
                                 <td class="td3 light-col long">2</td>
                                 <td class="td4 brozelicensecol long">5</td>
-                                <td class="td6 brozelicensecol long">25</td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="td5 light-col long">10</td> -->
+                                <td class="td6 light-col long">25</td>
+                              </tr>
+                              <tr>
                                 <th class="td1 headcol">Kiosk</th>
                                 <td class="td2 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
                                 <td class="td3 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
-                                <th class="td1 headcol">Corporate integration <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(manage and monitor multiple branches)'"></i></th>
+                                <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <!-- <td class="td6 light-col long"><i class="fa fa-check"></i></td> -->
+                              </tr>
+                              <tr>
+                                <th class="td1 headcol">Corporate integration <div style="font-size: 10px"><i>(manage and monitor multiple branches)</i></div></th>
                                 <td class="td2 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
                                 <td class="td3 light-col long"><i class="fa fa-times"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                            <tr>
+                                <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                              </tr>
+                              <!-- <tr>
                                 <th class="td1 headcol">Number of users</th>
                                 <td class="td2 light-col long">1</td>
                                 <td class="brozelicensecol long">1</td>
                                 <td class="td3 light-col long">1</td>
                                 <td class="td4 brozelicensecol long">upto 5</td>
-                                <td class="td6 brozelicensecol long">upto 100</td>
-                            </tr>
-                            <tr>
+                                <td class="td5 light-col long">upto 20</td> -->
+                                <!-- <td class="td6 light-col long">upto 100</td>
+                              </tr> -->
+                              <!-- <tr>
                                 <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'(pay only 99 Rs for the
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="'(pay only 99 Rs for the
                                   current
                                   billing month if all below three are true 1) In last 90 days no transactions made 2) In
                                   last
@@ -1602,28 +1594,31 @@
                                 <td class="td2 light-col long">NA</td>
                                 <td class="brozelicensecol long">NA</td>
                                 <td class="td3 light-col long">Yes</td>
-                                <td class="td4 brozelicensecol long">Yes</td>
-                                <td class="td6 brozelicensecol long">Yes</td>
-                            </tr>
-                            <tr>
+                                <td class="td4 brozelicensecol long">Yes</td> -->
+                                <!-- <td class="td5 light-col long">Yes</td> -->
+                                <!-- <td class="td6 light-col long">Yes</td>
+                              </tr> -->
+                              <!-- <tr>
                                 <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
-                                        [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
-                                <td class="td2 light-col long">Option not available</td>
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
+                                <td class="td2 light-col long">3 Rs</td>
                                 <td class="brozelicensecol long">3 Rs</td>
                                 <td class="td3 light-col long">3 Rs</td>
-                                <td class="td4 brozelicensecol long">2 Rs</td>
-                                <td class="td6 brozelicensecol long">1 Rs</td>
-                            </tr>
-                            <tr>
+                                <td class="td4 brozelicensecol long">3 Rs</td> -->
+                                <!-- <td class="td5 light-col long">1.5 Rs</td> -->
+                                <!-- <td class="td6 light-col long">3 Rs</td>
+                              </tr> -->
+                              <tr>
                                 <th class="td1 headcol">Jaldee verification</th>
-                                <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                <td class="td2 light-col long">Option not available </td>
                                 <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                 <td class="td3 light-col long"><i class="fa fa-check"></i></td>
                                 <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                <td class="td6 brozelicensecol long"><i class="fa fa-check"></i></td>
-                            </tr>
-                        </table>
-                    </div>
+                                <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                              </tr>
+                            </table>
+                          </div>
                 </div>
             </div>
     <ul class="ul-normal">Guaranteed business value protection (pay only 99 Rs for the current billing month if all

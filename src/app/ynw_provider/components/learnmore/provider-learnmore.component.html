@@ -89,9 +89,9 @@
                         <li [ngClass]="{'helpcolor': (child =='customer' && parent == 'customer')}"><a
                                 (click)="handleScroll('customer', 'customer')" class="pointlist">Customer</a>
                         </li>
-                        <!-- <li [ngClass]="{'helpcolor': (child =='kiosk' && parent == 'kiosk')}"><a
+                        <li [ngClass]="{'helpcolor': (child =='kiosk' && parent == 'kiosk')}"><a
                                 (click)="handleScroll('kiosk', 'kiosk')" class="pointlist">Kiosk</a>
-                        </li> -->
+                        </li>
                         <li class="pointlist"><a (click)="menu('license')">License</a>
                             <ul *ngIf="license && showlicense">
                                 <li (click)="handleScroll('upgradelicense', 'license')"
