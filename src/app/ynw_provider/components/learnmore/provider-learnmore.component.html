@@ -132,7 +132,6 @@
                         <li [ngClass]="{'helpcolor': (child =='payment' && parent == 'payment')}"><a
                                 (click)="handleScroll('payment', 'payment')" class="pointlist">Payment
                                 Settings</a></li>
-
                         <li class="pointlist"><a (click)="menu('billing')">Billing/POS</a>
                             <ul *ngIf="billing && showbill">
                                 <li (click)="handleScroll('items', 'billing')"
