@@ -51,18 +51,18 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     public routerobj: Router, private shared_services: SharedServices) {
-      let asyncLoadCount = 0;
-      router.events.subscribe(
+    let asyncLoadCount = 0;
+    router.events.subscribe(
       (event: RouterEvent): void => {
-      if (event instanceof RouteConfigLoadStart) {
-      asyncLoadCount++;
-      } else if (event instanceof RouteConfigLoadEnd) {
-      asyncLoadCount--;
+        if (event instanceof RouteConfigLoadStart) {
+          asyncLoadCount++;
+        } else if (event instanceof RouteConfigLoadEnd) {
+          asyncLoadCount--;
+        }
+        this.isShowingRouteLoadIndicator.emit(!!asyncLoadCount);
       }
-      this.isShowingRouteLoadIndicator.emit(!!asyncLoadCount);
-      }
-      );
-     }
+    );
+  }
 
   normal_profile_active = 1;
   normal_locationinfo_show = 1;
@@ -75,7 +75,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   calculationmode;
   showToken = false;
   ngOnInit() {
-     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getLocationList();
     // this.getProviderLocationQueues();
     this.selected_location = this.shared_functions.getitemfromLocalStorage('loc_id');
@@ -86,7 +86,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.getWaitlistMgr(); // hide becuause it called on every page change
-    this.setLicense();
   }
   ngOnDestroy() {
     if (this.srchcustdialogRef) {
@@ -107,26 +106,15 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
           this.shared_functions.setitemonLocalStorage('sysdate', res);
         });
   }
-  setLicense() {
-    const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    if (cuser && usertype === 'provider') {
-      if (cuser.new_lic) {
-        this.active_license = cuser.new_lic;
-        if (this.active_license === 'Ruby' || this.active_license === 'Diamond') {
-          this.kiosk_active = true;
-        }
-      } else {
-        this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
-        const license = cuser.accountLicenseDetails;
-        if (this.active_license === 'Ruby' || this.active_license === 'Diamond') {
-          this.kiosk_active = true;
+
+  kioskClick() {
+    const licenseMetrics = this.shared_services.getSelectedLicenseMetrics();
+    for (let i = 0; i < licenseMetrics.length; i++) {
+      if (licenseMetrics[i].id === 9) {
+        if (licenseMetrics[i].anyTimeValue === 'true') {
+          this.routerobj.navigate(['/kiosk']);
         } else {
-          for (let i = 0; i < license.addons.length; i++) {
-            if (license.addons[i].name === 'Kiosk') {
-              this.kiosk_active = true;
-            }
-          }
+          this.shared_functions.openSnackBar('You are not allowed to do this operation. Please upgrade license package', { 'panelClass': 'snackbarerror' });
         }
       }
     }
@@ -363,38 +351,35 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         selected_location = location;
       }
     }
-
     return (selected_location !== null) ? selected_location : this.locations[0];
-
   }
 
 
   learnmore_clicked(mod) {
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     this.router.navigate(['/learnmore']);
-    // this.shared_functions.sendMessage(pdata);
   }
 
   getMode(mod) {
     switch (mod) {
       case 'checkin':
-      this.router.navigate(['/provider/learnmore/checkin']);
+        this.router.navigate(['/provider/learnmore/checkin']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
         break;
       case 'customer':
-      this.router.navigate(['/provider/learnmore/customer']);
+        this.router.navigate(['/provider/learnmore/customer']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
         break;
       case 'kiosk':
-      this.router.navigate(['/provider/learnmore/kiosk']);
+
+        this.router.navigate(['/provider/learnmore/kiosk']);
         // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
         break;
       case 'help':
-      this.router.navigate(['/provider/learnmore/profile-search->public-search']);
+        this.router.navigate(['/provider/learnmore/profile-search->public-search']);
         break;
-        case 'faq':
-          this.router.navigate(['/provider/faq']);
-            break;
+      case 'faq':
+        this.router.navigate(['/provider/faq']);
+        break;
     }
     return this.moreOptions;
   }
@@ -445,25 +430,5 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         }
       );
   }
-  // getProviderLocationQueues() {
-  //   this.getProviderLocations()
-  //     .then(
-  //       () => {
-  //         for (const loc of this.locations) {
-  //           const locid = loc.id;
-  //           this.provider_services.getProviderLocationQueues(locid).subscribe(
-  //             (data) => {
-  //               this.queues = data;
-  //               for (const que of this.queues) {
-  //                 this.calculationmode = que.calculationMode;
-  //               }
-  //             }
-  //           );
-  //         }
-  //       },
-  //       () => {
-  //       }
-  //     );
-  // }
 }
 

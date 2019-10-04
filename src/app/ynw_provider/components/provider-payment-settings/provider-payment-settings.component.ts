@@ -4,6 +4,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-provider-paymentsettings',
@@ -98,6 +99,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     isCheckin;
     active_user;
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
+    jPay_Billing = false;
+    upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
 
     breadcrumbs = [
         {
@@ -119,7 +122,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
         private router: Router,
-        private activated_route: ActivatedRoute
+        private activated_route: ActivatedRoute,
+        private shared_services: SharedServices
 
     ) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -140,6 +144,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // }
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.getLicenseMetrics();
     }
     /**
      * Function to call the Learn More Page
@@ -260,10 +265,10 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getTaxpercentage()
             .subscribe(data => {
                 this.taxDetails = data;
-            if(this.taxDetails !=null){
-                this.taxpercentage = this.taxDetails.taxPercentage;
-                this.gstnumber = this.taxDetails.gstNumber || '';
-             }
+                if (this.taxDetails != null) {
+                    this.taxpercentage = this.taxDetails.taxPercentage;
+                    this.gstnumber = this.taxDetails.gstNumber || '';
+                }
             },
                 () => {
                 });
@@ -404,7 +409,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        //this.getPaymentSettings(2);
+                        // this.getPaymentSettings(2);
                         this.saveEnabled = true;
                     });
         }
@@ -680,6 +685,17 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     removSpace(evt) {
         return this.shared_functions.removSpace(evt);
-      }
-
+    }
+    getLicenseMetrics() {
+        const licenseMetrics = this.shared_services.getSelectedLicenseMetrics();
+        for (let i = 0; i < licenseMetrics.length; i++) {
+            if (licenseMetrics[i].id === 6) {
+                if (licenseMetrics[i].anyTimeValue === 'true') {
+                    this.jPay_Billing = true;
+                } else {
+                    this.jPay_Billing = false;
+                }
+            }
+        }
+    }
 }

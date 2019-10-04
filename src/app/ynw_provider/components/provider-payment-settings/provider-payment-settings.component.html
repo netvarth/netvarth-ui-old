@@ -32,7 +32,7 @@
                                             </mat-radio-button>
                                             <label for="">{{my_own_account_cap}}</label>
                                             <div *ngIf="optJaldeeAccount!='enable'">
-                                                <div class="outermost">
+                                                <div class="outermost" *ngIf="jPay_Billing">
                                                     <!-- <div class='pay-outer'>
                                                 <span class="ttle">
                                                     Online Payment Enabled? <span class="sts" [class.active]="paystatus==true">{{(paystatus==true)?'Yes':'No'}}</span>
@@ -122,9 +122,6 @@
                                                                         </app-field-error-display>
                                                                     </div>
                                                                 </div>
-
-
-
                                                                 <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                     <div class="form-group">
                                                                         <label class="caption">Website Web *</label>
@@ -132,7 +129,8 @@
                                                                             <input matInput #paytmWebsitewebref
                                                                                 [(ngModel)]="paytmWebsiteWeb"
                                                                                 (keypress)="resetApi('paytmWebsiteWeb')"
-                                                                                autocomplete="off" (blur)="paytmwebsitewebBlur()"
+                                                                                autocomplete="off"
+                                                                                (blur)="paytmwebsitewebBlur()"
                                                                                 [disabled]="!ineditMode" tabindex="3">
                                                                         </mat-form-field>
                                                                         <app-field-error-display
@@ -142,21 +140,22 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="caption">Website App *</label>
-                                                                            <mat-form-field>
-                                                                                <input matInput #paytmWebsiteappref
-                                                                                    [(ngModel)]="paytmWebsiteApp"
-                                                                                    (keypress)="resetApi('paytmWebsiteApp')"
-                                                                                    autocomplete="off" (blur)="paytmwebsiteAppBlur()"
-                                                                                    [disabled]="!ineditMode" tabindex="3">
-                                                                            </mat-form-field>
-                                                                            <app-field-error-display
-                                                                                [displayError]="showError['paytmWebsiteApp']['status']"
-                                                                                [errorMsg]="showError['paytmWebsiteApp']['msg']">
-                                                                            </app-field-error-display>
-                                                                        </div>
+                                                                    <div class="form-group">
+                                                                        <label class="caption">Website App *</label>
+                                                                        <mat-form-field>
+                                                                            <input matInput #paytmWebsiteappref
+                                                                                [(ngModel)]="paytmWebsiteApp"
+                                                                                (keypress)="resetApi('paytmWebsiteApp')"
+                                                                                autocomplete="off"
+                                                                                (blur)="paytmwebsiteAppBlur()"
+                                                                                [disabled]="!ineditMode" tabindex="3">
+                                                                        </mat-form-field>
+                                                                        <app-field-error-display
+                                                                            [displayError]="showError['paytmWebsiteApp']['status']"
+                                                                            [errorMsg]="showError['paytmWebsiteApp']['msg']">
+                                                                        </app-field-error-display>
                                                                     </div>
+                                                                </div>
 
 
                                                                 <div class="col-sm-6 col-md-4 col-lg-4 col-12">
@@ -166,7 +165,8 @@
                                                                             <input matInput #paytmIndustryTypeidref
                                                                                 [(ngModel)]="paytmIndustryType"
                                                                                 (keypress)="resetApi('paytmIndustryType')"
-                                                                                autocomplete="off" (blur)="paytmindustrytypeBlur()"
+                                                                                autocomplete="off"
+                                                                                (blur)="paytmindustrytypeBlur()"
                                                                                 [disabled]="!ineditMode" tabindex="3">
                                                                         </mat-form-field>
                                                                         <app-field-error-display
@@ -245,7 +245,8 @@
                                                                         <mat-form-field>
                                                                             <input matInput [(ngModel)]="bankacnumber"
                                                                                 (change)="resetApi('bankacnumber')"
-                                                                                maxlength="18" autocomplete="off"(keypress)="removSpace($event)"
+                                                                                maxlength="18" autocomplete="off"
+                                                                                (keypress)="removSpace($event)"
                                                                                 (blur)="bankAcnumberBlur()"
                                                                                 tabindex="6">
                                                                         </mat-form-field>
@@ -359,7 +360,9 @@
                                                                                 (change)="resetApi('pannumber')"
                                                                                 autocomplete="off"
                                                                                 [disabled]="!ineditMode"
-                                                                                (blur)="panCardBlur()" (keypress)="removSpace($event)" tabindex="7">
+                                                                                (blur)="panCardBlur()"
+                                                                                (keypress)="removSpace($event)"
+                                                                                tabindex="7">
                                                                         </mat-form-field>
                                                                         <app-field-error-display
                                                                             [displayError]="showError['pannumber']['status']"
@@ -395,6 +398,9 @@
                                                         <!-- <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)"
                                                         *ngIf="!ineditMode" tabindex="13">{{change_pay_settings_cap}}</button> -->
                                                     </div>
+                                                </div>
+                                                <div class="no-dta" *ngIf="!jPay_Billing">
+                                                    {{upgrade_license}}
                                                 </div>
                                             </div>
                                         </div>
