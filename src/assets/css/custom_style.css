@@ -4360,3 +4360,8 @@ border-bottom: none !important;
     color: #00aef2; background: white; padding-left:10px; margin-top: -46px; margin-left: 125px;font-size:1.5rem !important
   }
 }
+.previousDue {
+  color: #00aef2 ;
+  text-align: right;
+  cursor: pointer;
+}

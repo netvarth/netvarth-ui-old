@@ -105,13 +105,39 @@
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='credit'">
                         {{crdt_debtJson.amount | currency:'&#8377; '}}(Cr)</td>
                 </tr>
+                <tr *ngIf="licenseDiscounts">
 
-                <tr class="invoice-discount" *ngFor="let discount of discounts">
+                    <td ><strong>Discount Details</strong></td>
+                    <td ><strong></strong></td>
+
+                  </tr>
+                <tr class="invoice-discount" *ngFor="let discount of latestInvoiceDiscount">
                     <td style="text-align: right">{{discount.name}} <span class="invoice-head"
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
                     <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
                 </tr>
+
+
+                <tr>
+                    <td ><strong>Previous Balance Due</strong></td>
+                    <td class="previousDue" (click)="togglePreviousDue();">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}  </td>
+
+                  </tr> 
+              
+    
+                      <tr [hidden]="previousStatements.addonDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let addon of previousStatements.addonDetailsArray">
+                        <td >{{addon.addonName}}</td>
+                        <td style="text-align: right">{{addon.amount| currency: 'INR':'symbol':'.2-2' }} <sub *ngIf="addon.discountTotal"> <a> (-  {{addon.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</a></sub></td>
+                      
+    
+                      </tr>
+                      <tr [hidden]="previousStatements.licensePkgDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let license of previousStatements.licensePkgDetailsArray">
+                        <td >{{license.licenseName}}</td>
+                        <td style="text-align: right">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal"> <a> (- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</a></sub></td>                      </tr>
+                    
+              
+                  <tr>
 
                 <tr>
                     <td class="invoiceTotal"><b>Total</b></td>
@@ -120,7 +146,47 @@
             </tbody>
         </table>
     </div>
-
+    <div *ngIf="licenseDiscounts">
+        <a (click)="toggleDiscountDetails();">
+          <span> {{discountDetailsTxt}}</span>
+        </a>
+        <div *ngIf="show">
+          <div class="form-row">
+  
+            <div class="form-group col-md-12">
+              <table class="table table-striped">
+                <thead>
+                  <th>Applied Date </th>
+                  <th>Name </th>
+                  <th>Description</th>
+                  <th>Type</th>
+                  <th>Discount Value</th>
+                  <th>Discounted Amount</th>
+  
+                </thead>
+                <tr *ngFor="let discount of discounts">
+                  <td> {{discount.appliedDate}} </td>
+                  <td> {{discount.name}} </td>
+                  <td> {{discount.description}} </td>
+                  <td> {{discount.calculationType }} </td>
+                  <td *ngIf="discount.calculationType==='Fixed'"> {{discount.discountValue |
+                    currency:'INR':'symbol':'.2-2'}} </td>
+                  <td *ngIf="discount.calculationType==='Percentage'"> {{discount.discountValue}} % </td>
+                  <td>{{discount.discountedAmt | currency:'INR':'symbol':'.2-2'}}</td>
+  
+  
+                </tr>
+  
+  
+  
+  
+              </table>
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
 
     <!-- <div class="ivc">
                 <span class="label">{{subsc_pack_cap}}</span> -->
