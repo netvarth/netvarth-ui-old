@@ -726,7 +726,8 @@
                                                 <mat-expansion-panel-header [collapsedHeight]="'40px'"
                                                     [expandedHeight]="'40px'">
                                                     <mat-panel-title>
-                                                        {{fields.displayName}}<span *ngIf="fields.mandatory == true" class="red">&nbsp;*</span>
+                                                        {{fields.displayName}}<span *ngIf="fields.mandatory == true"
+                                                            class="red">&nbsp;*</span>
                                                     </mat-panel-title>
                                                     <mat-panel-description class="acc-plus-btn">
                                                         <button mat-icon-button *ngIf="!fields['value']"
@@ -863,7 +864,8 @@
                                                                     <tr *ngFor="let row of fields.value;let i = index">
                                                                         <td *ngFor="let column of fields.Columns;let j = index"
                                                                             [attr.data-title]="fields.Columns[j].displayName">
-                                                                            {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}</td>
+                                                                            {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}
+                                                                        </td>
                                                                         <td class="action"><span class="mbt">
                                                                                 <button type="button" mat-icon-button
                                                                                     [matMenuTriggerFor]="menu">
@@ -914,7 +916,8 @@
                                                 <mat-expansion-panel-header [collapsedHeight]="'40px'"
                                                     [expandedHeight]="'40px'">
                                                     <mat-panel-title>
-                                                        {{fields.displayName}}<span *ngIf="fields.mandatory == true"class="red">&nbsp;*</span>
+                                                        {{fields.displayName}}<span *ngIf="fields.mandatory == true"
+                                                            class="red">&nbsp;*</span>
                                                     </mat-panel-title>
                                                     <mat-panel-description class="acc-plus-btn">
                                                         <button mat-icon-button *ngIf="!fields['value']"
@@ -1175,7 +1178,7 @@
                                                     </div>
                                                     <div class="img-h" (click)="openImageModalRow(file)">
                                                         <div class="overlay-y"></div><img *ngIf="file.modal.img"
-                                                            [src]="file.modal.img" alt=""/>
+                                                            [src]="file.modal.img" alt="" />
                                                     </div>
                                                 </div>
                                             </li>
@@ -1185,7 +1188,7 @@
                                                 <span class="mre" *ngIf="(image_list_popup.length-4)>0"
                                                     (click)="openImageModalRow(image_list_popup[3])">+{{(image_list_popup.length-4)}}</span>
                                                 <div class="img-h"><img *ngIf="image_list_popup[3].modal.img"
-                                                        [src]="image_list_popup[3].modal.img" alt=""/></div>
+                                                        [src]="image_list_popup[3].modal.img" alt="" /></div>
                                             </div>
                                         </li>
                                     </ul>
@@ -1275,18 +1278,13 @@
                                                 More</a></p>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
-                                 <!-- <div class="no-dta"
-                                    *ngIf="normal_customid_show==2 && current_license && (current_license=='Ruby' || current_license=='Diamond')"> -->
-                                    <div class="no-dta"
-                                    *ngIf="normal_customid_show==2 && current_license && current_license=='Diamond'">
+                                  <div class="no-dta"
+                                    *ngIf="normal_customid_show==2 && current_license && (current_license=='9' || current_license=='6' || current_license=='4' || current_license=='3')">
                                     <span class="cs-btn bt3" (click)="editCustomId()">{{add_it_cap}}</span>
                                 </div>
-                                <!-- <div class="no-dta"
-                                    *ngIf="normal_customid_show==2 && current_license && (current_license!='Ruby' && current_license!='Diamond')"> -->
-                                    <div class="no-dta"
-                                    *ngIf="normal_customid_show==2 && current_license && current_license!='Diamond'">
-                                    <!-- Upgrade your license package to Ruby or higher to avail this feature. -->
-                                    Upgrade your license package to Diamond to avail this feature.
+                                <div class="no-dta"
+                                    *ngIf="normal_customid_show==2 && current_license && (current_license!='9' && current_license!='6' && current_license!='4' && current_license!='3')">
+                                    Upgrade your license package to Gold or higher to avail this feature.
                                 </div>
 
                                 <div class="cd-t" *ngIf="normal_customid_show==3">

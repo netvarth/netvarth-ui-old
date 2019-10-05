@@ -469,7 +469,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return 'â‚¹' + ' ' + price;
+    return 'Ã¢â€šÂ¹' + ' ' + price;
   }
 
   imageValidation(file) {
@@ -609,7 +609,7 @@ export class SharedFunctions {
   queueSheduleLoop(queueSchedule) {
     const schedule_arr = [];
     // extracting the schedule intervals
-    if (queueSchedule) {
+    if (queueSchedule && Object.keys(queueSchedule).length > 0 && queueSchedule.repeatIntervals) {
       for (let j = 0; j < queueSchedule.repeatIntervals.length; j++) {
         // pushing the schedule details to the respective array to show it in the page
         schedule_arr.push({
