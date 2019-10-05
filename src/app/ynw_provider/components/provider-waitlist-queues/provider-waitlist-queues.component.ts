@@ -514,7 +514,7 @@ export class ProviderWaitlistQueuesComponent implements OnInit, OnDestroy {
    */
   goQueueDetail(queue) {
     this.router.navigate(['provider', 'settings', 'waitlist-manager',
-      'queue-detail', queue.id]);
+      'queues', queue.id]);
   }
   /**
    * For clearing api errors

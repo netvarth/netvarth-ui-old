@@ -12,7 +12,7 @@
                     <div class="copy">
                         <div class="hd">
                             <h2 [matTooltipClass]="tooltipcls" [matTooltip]="bprofileTooltip">{{profile_cap}} &amp;
-                                {{search_cap}}</h2>
+                                {{search_cap}} <i (click)="redirecTo('bprofile')" class="fa fa-gears fl-right pointer-cursor lnk"></i></h2>
                         </div>
                         <div class="ct">
                             <ul>
@@ -60,7 +60,7 @@
                     <div class="copy">
                         <div class="hd">
                             <!-- <h2 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">{{waitlist_manage_cap}}</h2> -->
-                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Check-in Manager</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Check-in <i (click)="redirecTo('waitlistmanager')" class="fa fa-gears fl-right pointer-cursor lnk"></i></h2>
                         </div>
                         <div class="ct">
                             <ul>
@@ -86,19 +86,8 @@
                                     </span>
                                 </li>
                                 <!-- <li>
-                                        <div style="margin-left: 10px; display: grid">
-                                            <mat-checkbox style="font-size: small" [checked]="waitlist_status"
-                                                [(ngModel)]="waitlist_status" (change)="handle_waitliststatus($event)">Same
-                                                Day</mat-checkbox>
-                                            <mat-checkbox style="font-size: small" [checked]="futureDateWaitlist"
-                                                [(ngModel)]="futureDateWaitlist" (change)="onFormChange($event)">Future
-                                                Check-in</mat-checkbox>
-                                        </div>
-                                    </li> -->
-
-                                <li>
                                     <span class="lnk" (click)="redirecTo('waitlistmanager')">{{settings_cap}}</span>
-                                </li>
+                                </li> -->
                                 <li>
                                     <span class="lnk" (click)="redirecTo('locations')">{{locName}}
                                         <span *ngIf="multipeLocationAllowed == true"> ({{location_count}})</span></span>
@@ -119,11 +108,54 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="card set05 p0">
+                <div class="card set02 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">{{billing_cap}}</h2>
+                            <!-- <h2 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">{{waitlist_manage_cap}}</h2> -->
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">{{homeservice_cap}} <i (click)="redirecTo('homeservice')" class="fa fa-gears fl-right pointer-cursor lnk"></i></h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li class="form-level-settings">{{frm_waitlist_cap}}</li>
+                                <li>
+                                    <span class="ttle">
+                                        Same Day Online Home Service <span class="sts"
+                                            [class.active]="waitlist_status">{{waitlist_statusstr}}</span>
+                                    </span>
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                            (change)="handle_waitliststatus($event)"></mat-slide-toggle>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="ttle">
+                                        Future Home Service <span class="sts"
+                                            [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}</span>
+                                    </span>
+                                    <span class="ctrl">
+                                        <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                            (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>
+                                    </span>
+                                </li>                              
+                                <!-- <li>
+                                    <span class="lnk" >{{settings_cap}}</span>
+                                </li> -->
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('homeservice-services')">{{services_cap}}
+                                        ({{service_count}})</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('homeservice-queues')">{{service_window_cap}}
+                                        ({{queues_count}})</span>
+                                </li>                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card set04 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="billposTooltip">{{billing_cap}} <i (click)="redirecTo('pos')" class="fa fa-gears fl-right pointer-cursor lnk"></i></h2>
                         </div>
                         <div class="ct">
                             <ul>
@@ -175,15 +207,38 @@
                                     <span class="lnk" (click)="redirecTo('coupons')">{{coupons_cap}}</span>
                                     <!-- <p class="form-level-settings">{{frm_coupon_cap}}</p> -->
                                 </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('jdn')">{{frm_jdn_short_cap}}</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
+                <div class="card set05 p0">
+                    <div class="copy">
+                        <div class="hd">
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{displayboard_heading}} <i class="fa fa-gears fl-right pointer-cursor lnk" ></i></h2>
+                        </div>
+                        <div class="ct">
+                            <ul>
+                                <li class="form-level-settings">{{frm_displayboard_inhelp}}</li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('customfields')">{{customfields_cap}}</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('displayboards')">{{displayboards_cap}}</span>
+                                </li>
+                                <li>
+                                    <span class="lnk" (click)="redirecTo('layout')">{{displayboards_layout_cap}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="card set06 p0">
                     <div class="copy">
                         <div class="hd">
-                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}</h2>
+                            <h2 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}} <i (click)="redirecTo('miscellaneous')" class="fa fa-gears fl-right pointer-cursor lnk"></i></h2>
                         </div>
                         <div class="ct">
                             <ul>

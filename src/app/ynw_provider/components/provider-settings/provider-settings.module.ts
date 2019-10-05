@@ -5,11 +5,6 @@ import { ProviderSettingsRoutingModule } from './provider-settings-routing.modul
 import { ProviderSettingsComponent } from './provider-settings.component';
 import { ProviderBprofileSearchComponent } from '../provider-bprofile-search/provider-bprofile-search.component';
 import { ProviderWaitlistComponent } from '../provider-waitlist/provider-waitlist.component';
-import { ProviderWaitlistLocationDetailComponent } from '../provider-waitlist-location-detail/provider-waitlist-location-detail.component';
-import { ProviderWaitlistServicesComponent } from '../provider-waitlist-services/provider-waitlist-services.component';
-import { ProviderWaitlistServiceDetailComponent } from '../provider-waitlist-service-detail/provider-waitlist-service-detail.component';
-import { ProviderWaitlistQueuesComponent } from '../provider-waitlist-queues/provider-waitlist-queues.component';
-import { ProviderWaitlistQueueDetailComponent } from '../provider-waitlist-queue-detail/provder-waitlist-queue-detail.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { CheckInModule } from '../../../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
@@ -26,10 +21,8 @@ import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-
 import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
 import { AddProviderBprofilePrivacysettingsComponent } from '../provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { ProviderBprofileSearchSchedulepopupComponent } from '../provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
-import { AddProviderBprofileSpokenLanguagesComponent } from '../add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
 import { AddProviderBprofileSpecializationsComponent } from '../add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
-import { UpgradeLicenseComponent } from '../upgrade-license/upgrade-license.component';
 import { ProviderBprofileSearchGalleryComponent } from '../provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { ProviderBprofileSearchSocialMediaComponent } from '../provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
@@ -68,11 +61,9 @@ import { DepartmentDetailComponent } from '../departments/details/department.det
         ProviderSettingsComponent,
         ProviderBprofileSearchComponent,
         ProviderWaitlistComponent,
-        ProviderWaitlistLocationDetailComponent,
-        ProviderWaitlistServicesComponent,
-        ProviderWaitlistServiceDetailComponent,
-        ProviderWaitlistQueuesComponent,
-        ProviderWaitlistQueueDetailComponent,
+        // ProviderWaitlistServicesComponent,
+        // ProviderWaitlistServiceDetailComponent,
+
         AddProviderWaitlistLocationsComponent,
         ProviderLicenseUsageComponent,
         AddProviderBprofilePrivacysettingsComponent,
@@ -90,9 +81,7 @@ import { DepartmentDetailComponent } from '../departments/details/department.det
         // VirtualFieldsComponent,
         // DynamicFormQuestionComponent,
         // DynamicFormComponent,
-        ProviderLicenceInvoiceDetailComponent,
-        DepartmentsComponent,
-        DepartmentDetailComponent
+        ProviderLicenceInvoiceDetailComponent
     ],
     entryComponents: [
         // UpgradeLicenseComponent,

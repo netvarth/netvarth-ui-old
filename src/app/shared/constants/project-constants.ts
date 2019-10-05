@@ -204,7 +204,7 @@ export const projectConstants = {
   VALIDATOR_ALPHANUMERIC: /^[a-zA-Z0-9\s]+$/,
   VALIDATOR_ALPHANUMERIC_HYPHEN: /^[a-zA-Z0-9-]*$/,
   // VALIDATOR_CHARONLY: /^[a-zA-Z][a-zA-Z ]+$/,
-  //VALIDATOR_EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$/,
+  // VALIDATOR_EMAIL: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$/,
   VALIDATOR_EMAIL: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
   VALIDATOR_MAX6: 6, // max char count
   VALIDATOR_MAX9: 9, // max char count

@@ -363,31 +363,21 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         selected_location = location;
       }
     }
-
     return (selected_location !== null) ? selected_location : this.locations[0];
-
   }
-
-
   learnmore_clicked(mod) {
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     this.router.navigate(['/learnmore']);
-    // this.shared_functions.sendMessage(pdata);
   }
-
   getMode(mod) {
     switch (mod) {
       case 'checkin':
       this.router.navigate(['/provider/learnmore/checkin']);
-        // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'checkin' };
         break;
       case 'customer':
       this.router.navigate(['/provider/learnmore/customer']);
-        // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'customer' };
         break;
       case 'kiosk':
       this.router.navigate(['/provider/learnmore/kiosk']);
-        // this.moreOptions = { 'show_learnmore': true, 'scrollKey': 'kiosk' };
         break;
       case 'help':
       this.router.navigate(['/provider/learnmore/profile-search->public-search']);
@@ -445,25 +435,5 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         }
       );
   }
-  // getProviderLocationQueues() {
-  //   this.getProviderLocations()
-  //     .then(
-  //       () => {
-  //         for (const loc of this.locations) {
-  //           const locid = loc.id;
-  //           this.provider_services.getProviderLocationQueues(locid).subscribe(
-  //             (data) => {
-  //               this.queues = data;
-  //               for (const que of this.queues) {
-  //                 this.calculationmode = que.calculationMode;
-  //               }
-  //             }
-  //           );
-  //         }
-  //       },
-  //       () => {
-  //       }
-  //     );
-  // }
 }
 

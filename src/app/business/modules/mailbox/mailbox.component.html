@@ -42,7 +42,7 @@
                                                         </div>
                                                         <!-- /.direct-chat-info -->
                                                         <!-- <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image"> -->
-                                                        <!-- /.direct-chat-img -->{{selectedIndex}}{{parentIndex}}{{childIndex}}
+                                                        <!-- /.direct-chat-img -->
                                                         <div class="direct-chat-text"
                                                          [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex" [class.pointer-cursor]="inbox.messagestatus=='in'" (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
@@ -53,12 +53,13 @@
                                             <!-- /.box-body -->
                                             <div class="box-footer">
                                                 <form>
+                                                    <div class="reply-shade"  *ngIf="selectedMessage[parentIndex]"><i class="fa fa-reply"></i> {{selectedMessage[parentIndex].message}}</div>
                                                     <div class="input-group">
                                                         <input type="text" name="message" placeholder="Type Message ..."
                                                             class="form-control" [(ngModel)]="messageToSend">
                                                         <span class="input-group-btn">
                                                             <button type="button" (click)="sendMessage(messageToSend, users.inboxList, parentIndex)"
-                                                                class="btn btn-warning btn-flat">Send</button>
+                                                                class="btn btn-warning btn-flat"><span *ngIf="!selectedMessage[parentIndex]">Send</span><span *ngIf="selectedMessage[parentIndex]">Reply</span></button>
                                                         </span>
                                                     </div>
                                                 </form>

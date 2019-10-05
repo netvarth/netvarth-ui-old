@@ -267,6 +267,6 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         this.provider_shared_functions.addEditQueuePopup(this, type, 'location_detail', queue, this.provider_shared_functions.getActiveQueues());
     }
     goQueueDetail(queue) {
-        this.router.navigate(['provider/settings/waitlist-manager/', 'queue-detail', queue.id]);
+        this.router.navigate(['provider/settings/waitlist-manager/', 'queues', queue.id]);
     }
 }

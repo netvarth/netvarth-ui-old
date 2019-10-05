@@ -10,6 +10,7 @@ import { ProviderItemsComponent } from '../../../ynw_provider/components/provide
 import { ProviderItemsDetailsComponent } from '../../../ynw_provider/components/provider-items-details/provider-items-details.component';
 import { ProvidertaxSettingsComponent } from '../../../ynw_provider/components/provider-tax-settings/provider-tax-settings.component';
 import { ProviderPaymentSettingsComponent } from '../../../ynw_provider/components/provider-payment-settings/provider-payment-settings.component';
+import { JDNComponent } from './jdn/jdn.component';
 
 const routes: Routes = [
     { path: '', component: POSComponent },
@@ -54,6 +55,10 @@ const routes: Routes = [
         path: 'paymentsettings',
         component: ProviderPaymentSettingsComponent
       },
+      {
+          path: 'jdn',
+          component: JDNComponent
+      }
 ];
 
 @NgModule({

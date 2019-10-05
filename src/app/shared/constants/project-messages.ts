@@ -590,7 +590,7 @@ export const Messages = {
   // App-shared-modules-search
   'MORE_OPTIONS_CAP': 'More Options',
   'ALL_CAP': 'All',
-  'ALL_DOMAINSCAP':'All Domains',
+  'ALL_DOMAINSCAP': 'All Domains',
 
   // App-shared-modules-search-moreoptiions
   'MORE_SEARCH_OPT_CAP': 'More Search Options ',
@@ -894,7 +894,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
-  'STATMENT_CAP':'Statment',
+  'STATMENT_CAP': 'Statment',
   'INVOICE_SUMMRY_CAP': 'Invoice Summary',
   'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',
@@ -961,7 +961,7 @@ export const Messages = {
   'DATE_TO_CAP': 'Date To',
 
   // App-ynw_provider-components-provider-settings
-  'WAITLIST_MANAGE_CAP': 'Check-In Manager',
+  'WAITLIST_MANAGE_CAP': 'Check-in',
   'ACCEPT_ONLINE_CAP': 'Accept Online',
   'SETTINGS_CAP': 'Settings',
   'LOCATIONS_CAP': 'Locations',
@@ -1088,7 +1088,7 @@ export const Messages = {
   'WIZ_VIEW_IN_PUBLIC_SEARCH_CAP': 's will view this in Jaldee Online',
   'WIZ_PROFILE_SUMMARY_CAP': 'Profile Summary',
   'WIZ_NEXT_CAP': 'Next',
-  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP': 'A default service has been created for your convenience which can be edited here. You can also add more services or edit your existing services and also set up your tax and prepayment options for the service in Settings > Check-In Manager > Services, anytime after you complete the wizard.',
+  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP': 'A default service has been created for your convenience which can be edited here. You can also add more services or edit your existing services and also set up your tax and prepayment options for the service in Settings > Check-in > Services, anytime after you complete the wizard.',
   'WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP': 'Enter your business hours and add the schedule here.',
   'WIZ_LOCATION_CAP': 'Location',
   'WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP': 'You can add more locations in the Settings -> Location, after you create your profile.',
@@ -1371,6 +1371,16 @@ export const Messages = {
   'ENBALE_QUEUES': 'Make sure to set the respective working hours and services too for this location.',
   'PLACE_ORDER_CLICK_HERE': 'To place your order, Click here',
   'NO_SERVICE_IN_DEPARTMENT': 'The selected department doesn\'t contain any active services for this location',
-  'CHECK_DET_NO_CUS_NOTES_FOUND_CAP': 'No [customer] note found'
+  'CHECK_DET_NO_CUS_NOTES_FOUND_CAP': 'No [customer] note found',
+
+  // Home Service
+  'HOME_SERVICE_HEADING': 'Home Service',
+  'JDN_FUL_CAP': 'Jaldee Discount Network',
+  'JDN_CAP': 'JDN',
+  'DISPLAYBOARD_HEADING': 'Displayboard',
+  'DISPLAYBOARD__INHELP': 'display help',
+  'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
+  'DISPLAYBOARDS': 'Displayboards',
+  'DISPLAYBOARDLAYOUT_CAP' : 'Layout'
 };
 

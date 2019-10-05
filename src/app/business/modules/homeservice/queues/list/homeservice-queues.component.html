@@ -1,0 +1,597 @@
+<section>
+        <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
+        <app-breadcrumb (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
+                [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section style="margin-bottom: 20px" class="q-list">
+        <div class="content instant loc-list">
+                <div class="container">
+                        <p class="form-level-settings">{{waitlist_cap}}</p>
+                        <div class="card" *ngIf="api_loading">
+                                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                        </div>
+                        <div class="card" *ngIf="!api_loading">
+                                <div class="copy">
+                                        <div class="col-md-12" style="display: flex">
+                                                <label style="color: #222223!important">
+                                                        <b>My Availability Today
+                                                        </b>
+                                                </label>
+                                                <mat-panel-description class="acc-plus-btn pointer-cursor"
+                                                        *ngIf="showAddInstantQBtn">
+                                                        <button mat-icon-button (click)="addInstantQBtnClicked()"
+                                                                [matTooltipClass]="tooltipcls"
+                                                                [matTooltip]="add_button">
+                                                                <mat-icon style="color: #00aef2">{{add_circle_outline}}
+                                                                </mat-icon>
+                                                        </button>
+                                                </mat-panel-description>
+                                        </div>
+                                        <div class="row" *ngIf="showInstantQFlag">
+                                                <div class="col-md-12 card">
+                                                        <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
+                        onSubmit(instantQForm.value)" (keyup)="resetApiErrors()">
+                                                                <div class="instant-ed">
+                                                                        <span [class.label-margin]="true">
+                                                                                <strong>I am available
+                                                                                </strong>&nbsp;from</span>
+                                                                        <span class="learnmore-pointer"
+                                                                                (click)="editStartTime()"
+                                                                                [class.label-margin]="true"
+                                                                                *ngIf="!sTimeEditable">
+                                                                                {{fromDateCaption}}
+                                                                        </span>
+                                                                        <div class="form-group" *ngIf="sTimeEditable">
+                                                                                <div class="startendtime">
+                                                                                        <div class="starttimediv">
+                                                                                                <ngb-timepicker
+                                                                                                        formControlName="dstart_time"
+                                                                                                        meridian="true">
+                                                                                                </ngb-timepicker>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                                        <span [class.label-margin]="true">&nbsp;through&nbsp;
+                                                                        </span>
+                                                                        <span class="learnmore-pointer"
+                                                                                (click)="editEndTime()"
+                                                                                [class.label-margin]="true"
+                                                                                *ngIf="!eTimeEditable">
+                                                                                {{toDateCaption}}
+                                                                        </span>
+                                                                        <div class="form-group" *ngIf="eTimeEditable">
+                                                                                <div class="startendtime">
+                                                                                        <div class="endtimediv">
+                                                                                                <ngb-timepicker
+                                                                                                        formControlName="dend_time"
+                                                                                                        meridian="true">
+                                                                                                </ngb-timepicker>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="lgmem"
+                                                                        style="margin-bottom: 10px; margin-top: 15px; display: flex;">
+                                                                        <label class="new_locStyle"
+                                                                                style="font-weight: 500">Location &nbsp;
+                                                                        </label>
+                                                                        <div *ngIf="action!='edit'">
+                                                                                <span class="loc-name"
+                                                                                        *ngIf="locations && locations.length == 1">
+                                                                                        <span
+                                                                                                *ngIf="selected_location">{{selected_location.place | capitalizeFirst}}</span>
+                                                                                        <span
+                                                                                                class="icon-location dash"></span>
+                                                                                </span>
+                                                                                <span class="lgin">
+                                                                                        <span class="loc-name"
+                                                                                                mat-icon-button
+                                                                                                [matMenuTriggerFor]="menu"
+                                                                                                *ngIf="locations && locations.length > 1">
+                                                                                                <span class="selct-loctin pointer-cursor"
+                                                                                                        *ngIf="selected_location">
+                                                                                                        {{selected_location.place | capitalizeFirst}}</span>
+                                                                                                <span
+                                                                                                        class="icon-location dash link"></span>
+                                                                                        </span>
+                                                                                        <mat-menu #menu="matMenu">
+                                                                                                <button mat-menu-item
+                                                                                                        *ngFor="let location of locations;let i = index"
+                                                                                                        [(value)]="i"
+                                                                                                        (click)="onChangeLocationSelect(i)">
+                                                                                                        <strong>
+                                                                                                                {{ location.place | capitalizeFirst }}</strong>
+                                                                                                </button>
+                                                                                        </mat-menu>
+                                                                                </span>
+                                                                        </div>
+                                                                        <div *ngIf="action=='edit'"
+                                                                                style="margin-top: -23px">
+                                                                                <label class="labelstyle">{{location_cap}}
+                                                                                        : </label>
+                                                                                <div>
+                                                                                        {{loc_name}}
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                        <div class="schselectall">
+                                                                                <label>All Services</label>
+                                                                                &nbsp;&nbsp;
+                                                                                <i class="fa fa-square-o"
+                                                                                        *ngIf="!isAllServicesSelected"
+                                                                                        (click)="selectAllService()">
+                                                                                        {{select_All}}</i>
+                                                                                <i class="fa fa-check-square-o"
+                                                                                        *ngIf="isAllServicesSelected"
+                                                                                        (click)="deselectAllService()">
+                                                                                        {{select_All}}</i>
+                                                                        </div>
+                                                                        <section class="service-section check-horiz leftselectAll"
+                                                                                *ngIf="!isAllServicesSelected">
+                                                                                <div
+                                                                                        *ngFor="let service of services_list; index as i ">
+                                                                                        <mat-checkbox
+                                                                                                [checked]="services_list[i].checked === true"
+                                                                                                class="example-margin"
+                                                                                                [value]="service.id"
+                                                                                                (change)="handleServicechecbox(i)">
+                                                                                                {{service.name | capitalizeFirst}}
+                                                                                        </mat-checkbox>
+                                                                                </div>
+                                                                        </section>
+                                                                </div>
+                                                                <div class="c-ot row col-sm-12"
+                                                                        style="margin-top: 10px">
+                                                                        <div class="item">
+                                                                                <span class="ttle">Maximum
+                                                                                        {{customer_label}}s served
+                                                                                </span>
+                                                                                <span *ngIf="!capacityEditable"
+                                                                                        class="icon-customer-line pointer-cursor"
+                                                                                        (click)="capacityClick()">
+                                                                                        <span style="color: #00aef2">
+                                                                                                10</span>
+                                                                                </span>
+                                                                                <div class="form-group num qerrmsg"
+                                                                                        *ngIf="capacityEditable">
+                                                                                        <mat-form-field>
+                                                                                                <input matInput min="0"
+                                                                                                        max="{{capacitylimit}}"
+                                                                                                        maxlength="4"
+                                                                                                        type="text"
+                                                                                                        class="form-control number-ip-sm"
+                                                                                                        formControlName="qcapacity"
+                                                                                                        autocomplete="off"
+                                                                                                        (keypress)="isNumeric($event)"
+                                                                                                        (keyup)="isvalid($event)">
+                                                                                        </mat-form-field>
+                                                                                        <app-field-error-display
+                                                                                                [displayError]="fed_service.isFieldValid(instantQForm,'qcapacity')"
+                                                                                                [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qcapacity',
+                                                                                                {
+                                                                                                  'required' : 'Please enter the capacity',
+                                                                                                  'maxlength' : 'Only 4 digits are allowed'
+                                                                                                })">
+                                                                                        </app-field-error-display>
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="item">
+                                                                                <span class="ttle">{{customer_label | capitalizeFirst}}s
+                                                                                        served
+                                                                                        at a time</span>
+                                                                                <span *ngIf="!parallelServeEditable"
+                                                                                        class="icon-customer-served pointer-cursor"
+                                                                                        (click)="servedClick()">
+                                                                                        <span
+                                                                                                style="color: #00aef2">1</span>
+                                                                                </span>
+                                                                                <div class="form-group num qerrmsg"
+                                                                                        *ngIf="parallelServeEditable">
+                                                                                        <mat-form-field
+                                                                                                class="example-full-width">
+                                                                                                <input matInput min="0"
+                                                                                                        max="{{parallellimit}}"
+                                                                                                        type="text"
+                                                                                                        class="number-ip-sm"
+                                                                                                        formControlName="qserveonce"
+                                                                                                        autocomplete="off"
+                                                                                                        (keypress)="isNumeric($event)"
+                                                                                                        (keyup)="isvalid($event)">
+                                                                                        </mat-form-field>
+                                                                                        <app-field-error-display
+                                                                                                [displayError]="fed_service.isFieldValid(instantQForm,'qserveonce')"
+                                                                                                [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qserveonce',
+                                                                                                        {
+                                                                                                        'required' : 'Please enter the ' + customer_label + 's served at a time' ,
+                                                                                                        'maxlength' : 'Only 4 digits are allowed'
+                                                                                                        })">
+                                                                                        </app-field-error-display>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="actiondiv" style="display: flex">
+                                                                        <button type="button" class="cs-btn bt3"
+                                                                                *ngIf="todaysQs.length > 0"
+                                                                                (click)="hideInstantQ()"
+                                                                                style="margin-right:10px">Cancel</button>
+                                                                        <button class="cs-btn bt3">Make Me Available
+                                                                        </button>
+                                                                </div>
+                                                        </form>
+                                                </div>
+                                        </div>
+                                        <div class="row col-md-6 col-xs-12" *ngFor="let queue of todaysQs; index as i">
+                                                <div class="card">
+                                                        <div class="copy">
+                                                                <span class="mbt" style="margin-top: 10px">
+                                                                        <button type="button" mat-icon-button
+                                                                                [matMenuTriggerFor]="appMenu">
+                                                                                <mat-icon>more_vert</mat-icon>
+                                                                        </button>
+                                                                </span>
+                                                                <!-- <h3 class="pointer-cursor"
+                                                                                (click)="goQueueDetail(queue)"
+                                                                                [matTooltipClass]="tooltipcls"
+                                                                                [matTooltip]="tooltip_queueedit">
+                                                                                {{queue.name | capitalizeFirst}}
+                                                                        </h3> -->
+                                                                <div  class="q-time queuelist">
+                                                                        <div class="col-md-4">
+                                                                        <h3 class="pointer-cursor"
+                                                                                style="margin-right: 50px"
+                                                                                *ngFor="let schedule of queue.displayschedule"
+                                                                                (click)="goQueueDetail(queue)"
+                                                                                [matTooltipClass]="tooltipcls"
+                                                                                [matTooltip]="tooltip_queueedit">
+                                                                                {{schedule.time}}
+                                                                                <div style="font-size: small;
+                                                                              color: black; margin-top: 2px;
+                                                                              display: block;"> [<span
+                                                                                                *ngIf="!queue.instantQueue">{{queue.name}}
+                                                                                                - </span><span
+                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                </div>
+                                                                        </h3>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                        <label>Same day Online check-ins</label>
+                                                                        <mat-slide-toggle class="example-margin"
+                                                                                [checked]="queue.onlineCheckIn"
+                                                                                (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                        </mat-slide-toggle>
+                                                                        <label>{{queue.onlineCheckIn ? 'On' : 'Off'}}
+                                                                        </label>
+                                                                </div></div>
+                                                                <!-- <div class="c-ot m0"> -->
+                                                                <!-- <div class="loc-style item"
+                                                                                *ngIf="queue.location">
+                                                                                <span class="ttle">{{loc_cap}}</span>
+                                                                                <span
+                                                                                        class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
+                                                                        </div> -->
+                                                                <!-- <div class="item" *ngIf="queue.capacity">
+                                                                                        <span class="ttle">Maximum
+                                                                                                {{customer_label}}s served
+                                                                                        </span>
+                                                                                        <span
+                                                                                                class="icon-customer-line">{{queue.capacity}}</span>
+                                                                                </div> -->
+                                                                <!-- <div class="item"
+                                                                                        *ngIf="!queue.instantQueue && queue.displayschedule">
+                                                                                        <span
+                                                                                                class="ttle">{{schedule_cap}}</span>
+                                                                                        <span>
+                                                                                                <ng-container
+                                                                                                        *ngFor="let schedule of queue.displayschedule">
+                                                                                                        <span
+                                                                                                                class="day">{{schedule.dstr}}</span>&nbsp;:&nbsp;
+                                                                                                        <span
+                                                                                                                class="time">{{schedule.time}}</span>
+                                                                                                </ng-container>
+                                                                                        </span>
+                                                                                </div> -->
+                                                                <!-- </div> -->
+                                                                <!-- <div class="c-ot" style="margin-top: 10px"> -->
+                                                                <!-- <div class="item">
+                                                                                        <label style="display: flex">Same day
+                                                                                                Online check-ins
+                                                                                                <mat-slide-toggle
+                                                                                                        class="example-margin"
+                                                                                                        [checked]="queue.onlineCheckIn"
+                                                                                                        (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                                </mat-slide-toggle>
+                                                                                        </label>
+                                                                                </div> -->
+                                                                <!-- <div class="item" *ngIf="!queue.instantQueue">
+                                                                                <label>Future check-ins
+                                                                                        <mat-slide-toggle
+                                                                                                class="example-margin"
+                                                                                                [checked]="queue.futureWaitlist"
+                                                                                                (change)="changeQFutureStatus(queue, i, $event)">
+                                                                                        </mat-slide-toggle>
+                                                                                </label>
+                                                                        </div>
+                                                                </div> -->
+                                                                <div class="card"
+                                                                        *ngIf="sqShowActiveQTodayCount[i] || sqShowActiveQFutureCount[i]">
+                                                                        <h5>Check-ins</h5>
+                                                                        <div class="c-ot m0">
+                                                                                <div class="container"
+                                                                                        *ngIf="todayQLoading[i]">
+                                                                                        <app-common-innerloading-spinner>
+                                                                                        </app-common-innerloading-spinner>
+                                                                                </div>
+                                                                                <div class="item"
+                                                                                        *ngIf="sqShowActiveQTodayCount[i] && !todayQLoading[i]">
+                                                                                        <span class="ttle">Today</span>
+                                                                                        <span>{{TodayCheckinsCount[i]}}</span>
+                                                                                </div>
+                                                                                <div class="item"
+                                                                                        *ngIf="sqShowActiveQFutureCount[i] && !todayQLoading[i]">
+                                                                                        <span class="ttle">Future</span>
+                                                                                        <span>{{FutureCheckinsCount[i]}}</span>
+                                                                                </div>
+                                                                                <div class="item"
+                                                                                        *ngIf="sqShowActiveQFutureCount[i] && !todayQLoading[i]">
+                                                                                        <span
+                                                                                                class="ttle">Tomorrow</span>
+                                                                                        <span>{{TomorrowCheckinsCount[i]}}</span>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <mat-menu #appMenu="matMenu">
+                                                                        <button mat-menu-item
+                                                                                (click)="viewDashboard(queue,i,'todayQ')"
+                                                                                *ngIf="queue.queueState=='ENABLED' && todayQcountCaption[i]">
+                                                                                <i *ngIf="sqShowTodayCount[i] || sqShowActiveQTodayCount[i]"
+                                                                                        class="fa fa-minus"></i>
+                                                                                <i *ngIf=" !sqShowTodayCount[i] && !sqShowActiveQTodayCount[i]"
+                                                                                        class="fa fa-plus"></i>
+                                                                                {{todayQcountCaption[i]}}
+                                                                        </button>
+                                                                        <button mat-menu-item
+                                                                                (click)="viewDashboard(queue,i,'todayQ')"
+                                                                                *ngIf="queue.queueState=='ENABLED' && !todayQcountCaption[i]">
+                                                                                <i class="fa fa-plus"></i>Checkins Count
+                                                                        </button>
+                                                                        <button mat-menu-item
+                                                                                (click)="editInstantQueue(queue)">
+                                                                                <i class="icon-edit"></i>
+                                                                                Edit
+                                                                        </button>
+                                                                        <button mat-menu-item
+                                                                                (click)="changeProviderQueueStatus(queue)">
+                                                                                <i class="icon-disable"></i>
+                                                                                Disable
+                                                                        </button>
+                                                                </mat-menu>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</section>
+
+<section style="margin-bottom: 20px">
+        <div class="content loc-list">
+                <div class="container" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="container" *ngIf="!api_loading">
+                        <mat-accordion>
+                                <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                        Scheduled Working Hours
+                                                </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row" *ngFor="let queue of scheduledQs; index as i">
+                                                <div class="card">
+                                                        <div class="copy">
+                                                                <span class="mbt">
+                                                                        <button type="button" mat-icon-button
+                                                                                [matMenuTriggerFor]="appMenu">
+                                                                                <mat-icon>more_vert</mat-icon>
+                                                                        </button>
+                                                                </span>
+                                                                <h3 class="pointer-cursor"
+                                                                        (click)="goQueueDetail(queue)"
+                                                                        [matTooltipClass]="tooltipcls"
+                                                                        [matTooltip]="tooltip_queueedit">
+                                                                        {{queue.name | capitalizeFirst}}
+                                                                </h3>
+                                                                <div class="c-ot m0">
+                                                                        <div class="loc-style item"
+                                                                                *ngIf="queue.location">
+                                                                                <span class="ttle">{{loc_cap}}</span>
+                                                                                <span
+                                                                                        class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
+                                                                        </div>
+                                                                        <div class="item" *ngIf="queue.capacity">
+                                                                                <span class="ttle">Maximum
+                                                                                        {{customer_label}}s served
+                                                                                </span>
+                                                                                <span
+                                                                                        class="icon-customer-line">{{queue.capacity}}</span>
+                                                                        </div>
+                                                                        <div class="item" *ngIf="queue.displayschedule">
+                                                                                <span
+                                                                                        class="ttle">{{schedule_cap}}</span>
+                                                                                <span>
+                                                                                        <ng-container
+                                                                                                *ngFor="let schedule of queue.displayschedule">
+                                                                                                <span
+                                                                                                        class="day">{{schedule.dstr}}</span>&nbsp;:&nbsp;
+                                                                                                <span
+                                                                                                        class="time">{{schedule.time}}</span>
+                                                                                        </ng-container>
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="c-ot mt mgn-up-20">
+                                                                        <div class="item">
+                                                                                <label style="display: flex">Same day
+                                                                                        Online check-ins
+                                                                                        <mat-slide-toggle
+                                                                                                class="example-margin"
+                                                                                                [checked]="queue.onlineCheckIn"
+                                                                                                (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                        </mat-slide-toggle>
+                                                                                </label>
+                                                                        </div>
+                                                                        <div class="item">
+                                                                                <label>Future check-ins
+                                                                                        <mat-slide-toggle
+                                                                                                class="example-margin"
+                                                                                                [checked]="queue.futureWaitlist"
+                                                                                                (change)="changeQFutureStatus(queue, i, $event)">
+                                                                                        </mat-slide-toggle>
+                                                                                </label>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="card"
+                                                                        *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
+                                                                        <h5>Check-ins</h5>
+                                                                        <div class="c-ot m0">
+                                                                                <div class="container"
+                                                                                        *ngIf="scheduleLoading[i]">
+                                                                                        <app-common-innerloading-spinner>
+                                                                                        </app-common-innerloading-spinner>
+                                                                                </div>
+                                                                                <div class="item"
+                                                                                        *ngIf="sqShowTodayCount[i] && !scheduleLoading[i]">
+                                                                                        <span class="ttle">Today</span>
+                                                                                        <span>{{sqTodayCheckinsCount[i]}}</span>
+                                                                                </div>
+                                                                                <div class="item"
+                                                                                        *ngIf="sqShowFutureCount[i] && !scheduleLoading[i]">
+                                                                                        <span class="ttle">Future</span>
+                                                                                        <span>{{sqFutureCheckinsCount[i]}}</span>
+                                                                                </div>
+                                                                                <div class="item"
+                                                                                        *ngIf="sqShowFutureCount[i] && !scheduleLoading[i]">
+                                                                                        <span
+                                                                                                class="ttle">Tomorrow</span>
+                                                                                        <span>{{sqTomorrowCheckinsCount[i]}}</span>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                                <mat-menu #appMenu="matMenu">
+                                                                        <button mat-menu-item
+                                                                                (click)="viewDashboard(queue,i,'scheduleQ')"
+                                                                                *ngIf="queue.queueState=='ENABLED' && futureQcountCaption[i]">
+                                                                                <i *ngIf="sqShowFutureCount[i] || sqShowActiveQFutureCount[i]"
+                                                                                        class="fa fa-minus"></i>
+                                                                                <i *ngIf=" !sqShowFutureCount[i] && !sqShowActiveQFutureCount[i]"
+                                                                                        class="fa fa-plus"></i>
+                                                                                {{futureQcountCaption[i]}}
+                                                                        </button>
+                                                                        <button mat-menu-item
+                                                                                (click)="viewDashboard(queue,i,'scheduleQ')"
+                                                                                *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i]">
+                                                                                <i class="fa fa-plus"></i>Checkins Count
+                                                                        </button>
+                                                                        <button mat-menu-item
+                                                                                (click)="addEditProviderQueue('edit', queue)"
+                                                                                *ngIf="queue.queueState=='ENABLED'">
+                                                                                <i class="icon-edit"></i>
+                                                                                Edit
+                                                                        </button>
+                                                                        <button mat-menu-item
+                                                                                (click)="changeProviderQueueStatus(queue)">
+                                                                                <i class="icon-disable"></i>
+                                                                                Disable
+                                                                        </button>
+                                                                </mat-menu>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="card" *ngIf="scheduledQs.length==0">
+                                                No Scheduled Working Hours
+                                        </div>
+                                </mat-expansion-panel>
+                        </mat-accordion>
+                </div>
+        </div>
+</section>
+<!--Disabled Qs Listing-->
+<section style="margin-bottom: 20px">
+        <div class="content loc-list">
+                <div class="container" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="container" *ngIf="!api_loading">
+                        <mat-accordion>
+                                <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                        Disabled Working Hours
+                                                </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row" *ngFor="let queue of disabledQs">
+                                                <div class="card disabled">
+                                                        <div class="copy">
+                                                                <span class="mbt" *ngIf="queue.showDisableBtn">
+                                                                        <button type="button" mat-icon-button
+                                                                                [matMenuTriggerFor]="appMenu">
+                                                                                <mat-icon>more_vert</mat-icon>
+                                                                        </button>
+                                                                </span>
+                                                                <h3 style="color: black">
+                                                                        {{queue.name | capitalizeFirst}}
+                                                                </h3>
+                                                                <div class="c-ot m0">
+                                                                        <div class="loc-style item"
+                                                                                [class.disabled-style]="queue.queueState=='DISABLED'"
+                                                                                *ngIf="queue.location">
+                                                                                <span class="ttle">{{loc_cap}}</span>
+                                                                                <span
+                                                                                        class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
+                                                                        </div>
+                                                                        <div class="item"
+                                                                                [class.disabled-style]="queue.queueState=='DISABLED'"
+                                                                                *ngIf="queue.capacity">
+                                                                                <span class="ttle">Maximum
+                                                                                        {{customer_label}}s served
+                                                                                </span>
+                                                                                <span
+                                                                                        class="icon-customer-line">{{queue.capacity}}</span>
+                                                                        </div>
+                                                                        <div class="item"
+                                                                                [class.disabled-style]="queue.queueState=='DISABLED'"
+                                                                                *ngIf="queue.displayschedule && !queue.instantQueue">
+                                                                                <span
+                                                                                        class="ttle">{{schedule_cap}}</span>
+                                                                                <span>
+                                                                                        <ng-container
+                                                                                                *ngFor="let schedule of queue.displayschedule">
+                                                                                                <span
+                                                                                                        class="day">{{schedule.dstr}}</span>&nbsp;:&nbsp;
+                                                                                                <span
+                                                                                                        class="time">{{schedule.time}}</span>
+                                                                                        </ng-container>
+                                                                                </span>
+                                                                        </div>
+                                                                </div>
+                                                                <mat-menu #appMenu="matMenu">
+                                                                        <button mat-menu-item
+                                                                                *ngIf="queue.showDisableBtn"
+                                                                                (click)="changeProviderQueueStatus(queue)">
+                                                                                <i class="icon-enable"></i>
+                                                                                Enable
+                                                                        </button>
+                                                                </mat-menu>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="card" *ngIf="disabledQs.length==0">
+                                                No Disabled Working Hours
+                                        </div>
+                                </mat-expansion-panel>
+                        </mat-accordion>
+                </div>
+        </div>
+</section>

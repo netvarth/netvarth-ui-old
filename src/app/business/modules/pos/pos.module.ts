@@ -20,6 +20,7 @@ import { AddProviderDiscountsComponent } from '../../../ynw_provider/components/
 import { AddProviderItemImageComponent } from '../../../ynw_provider/components/add-provider-item-image/add-provider-item-image.component';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ProviderPaymentSettingsComponent } from '../../../ynw_provider/components/provider-payment-settings/provider-payment-settings.component';
+import { JDNComponent } from './jdn/jdn.component';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { ProviderPaymentSettingsComponent } from '../../../ynw_provider/componen
         AddProviderItemComponent,
         AddProviderDiscountsComponent,
         AddProviderItemImageComponent,
-        ProviderPaymentSettingsComponent
+        ProviderPaymentSettingsComponent,
+        JDNComponent
 
     ],
     entryComponents: [

@@ -77,7 +77,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
         // });
     }
     setActiveMessage(message, parentIndex, childIndex) {
-        if (this.selectedMessage && this.selectedMessage[parentIndex] && childIndex === this.selectedChildIndex) {
+        if (message.messagestatus === 'out' || this.selectedMessage && this.selectedMessage[parentIndex] && childIndex === this.selectedChildIndex) {
             delete this.selectedMessage[parentIndex];
             this.selectedParentIndex = null;
             this.selectedChildIndex = null;
@@ -98,13 +98,16 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     this.generateCustomInbox(data);
                     this.groupMessages = this.shared_functions.groupBy(this.inboxList, 'username');
                     this.inboxUsersList = [];
-                    console.log(this.groupMessages);
                     Object.keys(this.groupMessages).forEach(key => {
+                        const inboxList = this.groupMessages[key];
+                        const timestamp = this.groupMessages[key][0]['timestamp'];
+                        const lastmessage = this.groupMessages[key][0]['message'];
+                        console.log(inboxList);
                         const inboxUserList = {
                             userKey: key,
-                            inboxList: this.groupMessages[key].reverse(),
-                            latestTime: this.groupMessages[key][0]['timestamp'],
-                            latestMessage: this.groupMessages[key][0]['message']
+                            inboxList: inboxList.reverse(),
+                            latestTime: timestamp,
+                            latestMessage: lastmessage
                         };
                         this.inboxUsersList.push(inboxUserList);
                         console.log(this.inboxUsersList);

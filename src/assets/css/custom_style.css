@@ -4350,3 +4350,14 @@ border-bottom: none !important;
 .bold {
   font-weight: 700
 }
+.user-panel>.image>img {
+  max-height: 45px;
+}
+.settings .hd h2{
+  width: 100% !important;
+}
+.settings .hd h2 i {
+  line-height: 60px;
+  font-size: 1.4rem;
+}
+.q-time.queuelist>h3 { margin-right: 50px; margin-bottom: 10px}

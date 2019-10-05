@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Messages } from '../../../shared/constants/project-messages';
-import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-provider-settings',
@@ -14,6 +13,7 @@ import { HttpResponse } from '@angular/common/http';
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
+  homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
   search_cap = Messages.SEARCH_CAP;
   public_search_cap = Messages.BPROFILE_PUBLIC_SEARCH_CAP;
@@ -44,6 +44,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
   frm_coupon_cap = Messages.FRM_LEVEL_COUPON_MSG;
   frm_mis_cap = Messages.FRM_LEVEL_MISC_MSG;
+  frm_jdn_short_cap = Messages.JDN_CAP;
+  displayboard_heading = Messages.DISPLAYBOARD_HEADING;
+  frm_displayboard_inhelp = Messages.DISPLAYBOARD__INHELP;
+  customfields_cap = Messages.CUSTOMFIELDS_CAPTION;
+  displayboards_cap = Messages.DISPLAYBOARDS;
+  displayboards_layout_cap = Messages.DISPLAYBOARDLAYOUT_CAP;
   waitlist_status = false;
   futureDateWaitlist = false;
   waitlist_statusstr = 'Off';
@@ -159,7 +165,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
-          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
+          this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -174,7 +180,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         () => {
           this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
-          this.shared_functions.sendMessage({ttype: 'checkin-settings-changed'});
+          this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -322,10 +328,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'pos', 'coupons']);
         break;
       case 'nonworking':
-        this.routerobj.navigate(['provider', 'settings', 'holidays']);
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
         break;
       case 'notifications':
-        this.routerobj.navigate(['provider', 'settings', 'notifications']);
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
         break;
       case 'items':
         if (this.noitemError) {
@@ -348,6 +354,25 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'departments':
         this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'departments']);
+        break;
+      case 'homeservice':
+        this.routerobj.navigate(['provider', 'settings', 'home-service']);
+        break;
+      case 'homeservice-services':
+        this.routerobj.navigate(['provider', 'settings', 'home-service', 'services']);
+        break;
+      case 'homeservice-queues':
+          this.routerobj.navigate(['provider', 'settings', 'home-service', 'queues']);
+          break;
+      case 'jdn':
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'jdn']);
+        break;
+      case 'pos':
+        this.routerobj.navigate(['provider', 'settings', 'pos']);
+        break;
+      case 'miscellaneous':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
+        break;
     }
   }
   getLocationCount() {

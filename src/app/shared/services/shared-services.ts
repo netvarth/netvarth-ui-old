@@ -17,9 +17,7 @@ export class SharedServices {
   }
 
   getSystemDate() {
-
     return this.servicemeta.httpGet('provider/server/date');
-
   }
 
   adminLogin(body) {

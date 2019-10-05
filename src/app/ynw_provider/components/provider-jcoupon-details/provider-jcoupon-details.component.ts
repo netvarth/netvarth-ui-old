@@ -45,7 +45,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     {
       title: 'Billing/POS',
       url: '/provider/settings/pos'
-  },
+    },
     {
       title: 'Coupons',
       url: '/provider/settings/pos/coupons'
@@ -57,8 +57,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   checkin_label = '';
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
-    private router: ActivatedRoute, private route: Router)
-    {this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
+    private router: ActivatedRoute, private route: Router) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
       .subscribe(params => {
@@ -66,7 +65,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
         this.getCouponview();
         this.getJaldeeCouponStatistic();
       });
-      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    // this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   getCouponview() {
     this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(
@@ -85,7 +84,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   }
 
   formatPrice(price) {
-    return this.sharedfunctionObj.print_PricewithCurrency(price);
+    return this.shared_functions.print_PricewithCurrency(price);
   }
 
   getJaldeeCouponStatistic() {
@@ -96,7 +95,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     );
   }
   formatDateDisplay(dateStr) {
-    return this.sharedfunctionObj.formatDateDisplay(dateStr);
+    return this.shared_functions.formatDateDisplay(dateStr);
   }
   changecouponStatus(jcCoupon) {
     const jc_coupon_status = (jcCoupon.couponState === 'ENABLED') ? 'disable' : 'enable';
@@ -104,7 +103,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
       data => {
         this.getCouponview();
       }, error => {
-        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }

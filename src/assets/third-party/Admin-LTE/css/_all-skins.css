@@ -11,6 +11,9 @@
 .skin-blue .title-color {
   color: #00aef2;
 }
+.skin-blue .settings .hd h2 i { color : #00aef2}
+.skin-blue .available .text-success { color: #3c763d !important }
+.skin-blue .available .disabled { color: #dddd !important }
 .skin-blue .bus-name {color: white}
 .skin-blue .main-header.dash .navbar {
   margin-left: 0px !important;
@@ -21,6 +24,9 @@
 }
 .skin-blue .main-header.dash .navbar .navbar-item-color {
   color: #3c8dbc;
+}
+.skin-blue .reply-shade {
+  background: #ddd;
 }
 .skin-blue .main-header.dash .navbar .icon-color {
   color: #3c8dbc;

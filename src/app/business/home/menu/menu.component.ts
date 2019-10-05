@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-menu',
@@ -19,8 +20,10 @@ export class MenuComponent implements OnInit, OnDestroy {
   bsector = '';
   bsubsector = '';
   blogo = '';
+  qAvailability;
   constructor(
     private shared_functions: SharedFunctions,
+    public shared_service: SharedServices,
     private router: Router
   ) {
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -62,9 +65,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         // this.passedDet = { 'mainKey': message.target.scrollKey, 'subKey': message.target.subKey };
         // this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
         // break;
-        // case 'instant_q':
-        //   this.qAvailability = message.qAvailability;
-        //   break;
+        case 'instant_q':
+           this.qAvailability = message.qAvailability;
+           break;
         // case 'popularList':
         //   this.jsonlist = message.target;
         //   if (this.jsonlist) {
@@ -91,11 +94,17 @@ export class MenuComponent implements OnInit, OnDestroy {
   gotoHelp() {
     this.router.navigate(['/provider/' + this.domain + '/help']);
   }
-
+  btnAvailableClicked() {
+    this.router.navigate(['provider/settings/waitlist-manager/queues']);
+  }
+  holidaybtnClicked() {
+    this.router.navigate(['provider/settings/miscellaneous/holidays']);
+  }
   ngOnInit() {
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
+    this.isAvailableNow();
   }
 
   ngOnDestroy() {
@@ -103,5 +112,13 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
+  isAvailableNow() {
+    this.shared_service.isAvailableNow()
+      .subscribe(data => {
+        this.qAvailability = data;
+        console.log(data);
+      },
+        () => {
+        });
+  }
 }

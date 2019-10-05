@@ -39,7 +39,6 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
     }
   ];
   addservicedialogRef;
-  isCheckin;
 
   constructor(private provider_services: ProviderServices,
     private dialog: MatDialog,
@@ -55,8 +54,6 @@ export class ProviderWaitlistServicesComponent implements OnInit, OnDestroy {
       'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
       'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' }]
     };
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
-    
   }
 
   ngOnDestroy() {

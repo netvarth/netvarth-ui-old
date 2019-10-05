@@ -10,6 +10,7 @@ import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.
 import { MailboxRoutingModule } from './mailbox.routing.module';
 import { MailboxComponent } from './mailbox.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
+import { SharedModule } from '../../../shared/modules/common/shared.module';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
         FormsModule,
         BreadCrumbModule,
         MailboxRoutingModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        SharedModule
     ],
     exports: [MailboxComponent],
     entryComponents: [],

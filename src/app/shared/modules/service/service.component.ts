@@ -1,0 +1,251 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+// import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+// import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+// import { projectConstants } from '../../../../shared/constants/project-constants';
+// import { Messages } from '../../../../shared/constants/project-messages';
+// import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ServicesService } from './services.service';
+import { Subscription } from 'rxjs/Subscription';
+import { projectConstants } from '../../constants/project-constants';
+import { Messages } from '../../constants/project-messages';
+import { FormMessageDisplayService } from '../form-message-display/form-message-display.service';
+import { SharedFunctions } from '../../functions/shared-functions';
+
+@Component({
+    selector: 'app-jaldee-service',
+    templateUrl: './service.component.html'
+})
+
+export class ServiceComponent implements OnInit, OnDestroy {
+    number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
+    number_pattern = projectConstants.VALIDATOR_NUMBERONLY;
+    end_service_notify_cap = '';
+    service_cap = Messages.PRO_SERVICE_CAP;
+    description_cap = Messages.DESCRIPTION_CAP;
+    price_cap = Messages.PRICE_CAP;
+    service_name_cap = Messages.SERVICE_NAME_CAP;
+    est_duration_cap = Messages.SERVICE_DURATION_CAP;
+    enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
+    prepayment_cap = Messages.PREPAYMENT_CAP;
+    tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
+    service_notify_cap = '';
+    push_message_cap = Messages.PUSH_MESSAGE_CAP;
+    service_email_cap = Messages.SERVICE_EMAIL_CAP;
+    gallery_cap = Messages.GALLERY_CAP;
+    select_image_cap = Messages.SELECT_IMAGE_CAP;
+    go_to_service_cap = Messages.GO_TO_SERVICE_CAP;
+    delete_btn = Messages.DELETE_BTN;
+    cancel_btn = Messages.CANCEL_BTN;
+    service_price_cap = Messages.SERVPRICE_CAP;
+    end_of_service_notify = projectConstants.PROFILE_ERROR_STACK;
+    pre_pay_amt = Messages.PREPAYMENT_CAP;
+    enable_cap = Messages.ENABLE_CAP;
+    disbale_cap = Messages.DISABLE_CAP;
+    serv_gallery = Messages.SERVICE_GALLERY_CAP;
+    havent_added_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+    add_now_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+    serv_status = Messages.SERVICE_STATUS_CAP;
+    photo_cap = Messages.SERVICE_PHOTO_CAP;
+    rupee_symbol = '₹';
+    base_licence = false;
+    button_title = 'Save';
+    customer_label = '';
+    char_count = 0;
+    max_char_count = 500;
+    isfocused = false;
+    servstatus = false;
+    maxlimit = projectConstants.PRICE_MAX_VALUE;
+    serviceForm: FormGroup;
+    serviceSubscription: Subscription;
+    action = 'show';
+    service;
+    service_data;
+    paymentsettings;
+    taxsettings;
+    subdomainsettings;
+    showService = false;
+    constructor(private fb: FormBuilder,
+        public fed_service: FormMessageDisplayService,
+        public sharedFunctons: SharedFunctions,
+        public servicesService: ServicesService) {
+        this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
+        this.serviceSubscription = this.servicesService.initService.subscribe(
+            (serviceParams: any) => {
+                if (serviceParams) {
+                    this.showService = true;
+                    this.action = serviceParams.action;
+                    this.service = serviceParams.service;
+                    this.paymentsettings = serviceParams.paymentsettings;
+                    this.taxsettings = serviceParams.taxsettings;
+                    this.subdomainsettings = serviceParams.subdomainsettings;
+                    if (this.action === 'add') {
+                        this.service = null;
+                        this.createForm();
+                    } else {
+                        this.service_data = this.service;
+                        if (this.service_data) {
+                            if (this.service_data.status === 'ACTIVE') {
+                                this.servstatus = true;
+                            } else {
+                                this.servstatus = false;
+                            }
+                            if (this.action === 'edit') {
+                                this.createForm();
+                                if (!this.subdomainsettings.serviceBillable) {
+                                    this.serviceForm.setValue({
+                                        'name': this.service_data['name'] || this.serviceForm.get('name').value,
+                                        'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                        'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                        'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                    });
+                                } else {
+                                    this.serviceForm.setValue({
+                                        'name': this.service_data['name'] || this.serviceForm.get('name').value,
+                                        'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                        'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
+                                        'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
+                                        'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
+                                            this.service_data['minPrePaymentAmount'] !== 0
+                                        ) ? true : false,
+                                        'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
+                                        'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
+                                    });
+                                }
+                                this.changeNotification();
+                                this.changePrepayment();
+                            }
+                        }
+                    }
+                }
+            }
+        );
+    }
+    setDescFocus() {
+        this.isfocused = true;
+        this.char_count = this.max_char_count - this.serviceForm.get('description').value.length;
+    }
+    lostDescFocus() {
+        this.isfocused = false;
+    }
+    setCharCount() {
+        this.char_count = this.max_char_count - this.serviceForm.get('description').value.length;
+    }
+    isNumeric(evt) {
+        return this.sharedFunctons.isNumeric(evt);
+    }
+    isvalid(evt) {
+        return this.sharedFunctons.isValid(evt);
+    }
+    changeNotification() {
+        if (this.serviceForm.get('notification').value === false) {
+            this.serviceForm.removeControl('notificationType');
+        } else {
+            let value = 'email';
+            if (this.service) {
+                value = (this.service['notificationType']) ?
+                    this.service['notificationType'] : 'email';
+            }
+            this.serviceForm.addControl('notificationType',
+                new FormControl(value));
+        }
+    }
+    ngOnInit() {
+        this.end_service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
+    }
+    ngOnDestroy() {
+        this.serviceSubscription.unsubscribe();
+    }
+    editService() {
+        const serviceActionModel = {};
+        serviceActionModel['action'] = 'edit';
+        this.servicesService.actionPerformed(serviceActionModel);
+    }
+    onSubmit(form_data) {
+        if (!this.subdomainsettings.serviceBillable) {
+            form_data.bType = 'Waitlist';
+            form_data['totalAmount'] = 0;
+            form_data['isPrePayment'] = false;
+            form_data['taxable'] = false;
+        } else {
+            form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
+            0 : form_data.minPrePaymentAmount;
+          form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+        }
+        const serviceActionModel = {};
+        serviceActionModel['action'] = this.action;
+        serviceActionModel['service'] = form_data;
+        console.log(serviceActionModel);
+        this.servicesService.actionPerformed(serviceActionModel);
+    }
+    onCancel() {
+        let source;
+        if (this.action === 'add') {
+            source = 'add';
+        } else {
+            source = 'edit';
+        }
+        const serviceActionModel = {};
+        serviceActionModel['action'] = 'close';
+        serviceActionModel['source'] = source;
+        this.servicesService.actionPerformed(serviceActionModel);
+    }
+    changeServiceStatus(form_data) {
+        const serviceActionModel = {};
+        serviceActionModel['action'] = 'changestatus';
+        serviceActionModel['service'] = form_data;
+        this.servicesService.actionPerformed(serviceActionModel);
+    }
+    taxapplicableChange() {
+        if (!this.taxsettings || (this.taxsettings && this.taxsettings.taxPercentage <= 0)) {
+            this.sharedFunctons.openSnackBar(this.sharedFunctons.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.serviceForm.get('taxable').setValue(false);
+        }
+    }
+    changePrepayment() {
+        if (this.serviceForm.get('isPrePayment').value === false) {
+            this.serviceForm.removeControl('minPrePaymentAmount');
+        } else {
+            if (this.serviceForm.get('isPrePayment').value === true) {
+                if (!this.paymentsettings.onlinePayment) {
+                    this.sharedFunctons.openSnackBar(Messages.SERVICE_PRE_PAY_ERROR, { 'panelClass': 'snackbarerror' });
+                    this.serviceForm.get('isPrePayment').setValue(false);
+                    return false;
+                }
+                let value = '0';
+                if (this.service && this.service['minPrePaymentAmount']) {
+                    value = this.service['minPrePaymentAmount'];
+                }
+                this.serviceForm.addControl('minPrePaymentAmount',
+                    new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+            }
+
+        }
+    }
+    createForm() {
+        if (this.subdomainsettings.serviceBillable) {
+            this.serviceForm = this.fb.group({
+                name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                description: ['', Validators.compose([Validators.maxLength(500)])],
+                serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+                totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
+                isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
+                taxable: [false],
+                notification: [false]
+            });
+        } else {
+            this.serviceForm = this.fb.group({
+                name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                description: ['', Validators.compose([Validators.maxLength(500)])],
+                notification: [false],
+                notificationType: ['email']
+            });
+        }
+        if (this.action === 'add') {
+            if (this.subdomainsettings.serviceBillable) { this.changePrepayment(); }
+            this.changeNotification();
+        }
+    }
+    resetApiErrors() {
+    }
+}

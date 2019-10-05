@@ -1,0 +1,51 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content comn-cls">
+        <div class="container">
+            <div class="row">
+                <div class="card p0 ynw-common-form-nm taxform">
+                    <div class="paysettings-tab">
+                        <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})</span>&nbsp;
+                        <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
+                            <mat-slide-toggle [(ngModel)]="jdn_status"></mat-slide-toggle>
+                        </span>
+                        <div *ngIf="this.domain==='finance'; else elseBlock">
+                            <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
+                                <label class="col-form-label">Enter Custom Text</label>
+                                <textarea matInput class="form-control" id="jdn custom text" maxlength="500"
+                                    style="width: 500px;">
+                                </textarea>
+                            </div>
+                            <mat-dialog-actions *ngIf="jdn_status">
+                                <button type="submit" mat-button [disabled] class="cs-btn bt1">save
+                                </button> &nbsp;
+                                <button type="button" mat-dialog-close class="cs-btn bt2"
+                                    [disabled]="disableButton">cancel</button>
+                            </mat-dialog-actions>
+                        </div>
+                        <div>
+                            <ng-template #elseBlock>
+                                <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
+                                    <label class="col-form-label">Choose Jaldee Discount</label>
+                                    <mat-radio-group>
+                                        <mat-radio-button value="5">5%</mat-radio-button>&nbsp;
+                                        <mat-radio-button value="10">10%</mat-radio-button>&nbsp;
+                                        <mat-radio-button value="20">20%</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <mat-dialog-actions *ngIf="jdn_status">
+                                    <button type="submit" mat-button class="cs-btn bt1">save
+                                    </button> &nbsp;
+                                    <button type="button" mat-dialog-close class="cs-btn bt2"
+                                        [disabled]="disableButton">cancel</button>
+                                </mat-dialog-actions>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

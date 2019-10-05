@@ -10,9 +10,28 @@
           <!-- </div> -->
         <!-- <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="Business Image"> -->
       </div>
-      <div class="centeralign ">
+      <div class="centeralign col-md-12">
         <p class="bus-name">{{bname}}</p>
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          
+            <!-- <div (click)="holidaybtnClicked()">
+                <span class="red" *ngIf="qAvailability && qAvailability.holiday">
+                    Holiday
+                </span>
+            </div> -->
+
+        <div (click)="btnAvailableClicked()" class="pointer-cursor available">
+          <div class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
+              <i class="fa fa-circle text-success"></i> I am available online <br/>
+              until {{qAvailability.timeRange.eTime}}
+          </div>
+          <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
+            <i class="fa fa-circle disabled"></i> I am not available now
+          </div>
+          <!-- <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
+              Today I'm available <br/>
+              after {{qAvailability.timeRange.eTime}} 
+          </div>  -->
+        </div>
       </div>
     </div>
     <!-- search form -->
