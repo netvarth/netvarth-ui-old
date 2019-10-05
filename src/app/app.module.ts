@@ -36,7 +36,7 @@ import { ConsumerRateServicePopupComponent } from './shared/components/consumer-
 import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EqualValidator } from './shared/directives/equal-validator.directive';
 import { FormMessageDisplayModule } from './shared/modules/form-message-display/form-message-display.module';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
@@ -146,7 +146,9 @@ import { ConsumerPaymentmodeComponent } from './shared/components/consumer-payme
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: [] }
   ],
   bootstrap: [AppComponent]
 })
