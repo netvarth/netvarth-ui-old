@@ -62,6 +62,14 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   ynwbp;
   bname;
   gstDetails: any = [];
+  latestInvoiceDiscount: any = [];
+  previousStatements: any = {
+    addonDetailsArray: [],
+    licensePkgDetailsArray: []
+  };
+  showPreviousDue = false;
+  show = false; 
+  discountDetailsTxt = 'Show discount details';
 
   constructor(
     public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
@@ -121,6 +129,11 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           if (this.invoice.discount) {
             this.licenseDiscounts = JSON.parse(this.invoice.discount);
             this.discounts = this.licenseDiscounts.discount;
+            this.latestInvoiceDiscount =this.licenseDiscounts.discount;
+          }
+          if (this.invoice.mergedStatements) {
+            this.checkPreviousStatements(this.invoice.mergedStatements);
+            console.log('old statements.........' + JSON.stringify(this.previousStatements));
           }
         },
         error => {
@@ -130,6 +143,47 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       );
   }
 
+  checkPreviousStatements(mergedStatements) {
+    if (mergedStatements.statements.length !== 0) {
+      mergedStatements.statements.forEach(object => {
+        if (object.addonDetails) {
+          object.addonDetails.forEach(addon => {
+            if (object.discountTotal) {
+              addon['discountTotal'] = object.discountTotal;
+            }
+            this.previousStatements.addonDetailsArray.push(addon);
+          });
+        }
+        if (object.discount) {
+          const licenseDiscounts = JSON.parse(object.discount);
+          licenseDiscounts.discount.forEach(discountObj => {
+            this.discounts.push(discountObj);
+          });
+        }
+        if (object.licensePkgDetails) {
+          if (object.discountTotal) {
+            object.licensePkgDetails['discountTotal'] = object.discountTotal;
+          }
+          this.previousStatements.licensePkgDetailsArray.push(object.licensePkgDetails);
+        }
+        this.checkPreviousStatements(object.mergedStatements);
+      });
+    }
+
+  }
+  togglePreviousDue() {
+    this.showPreviousDue = !this.showPreviousDue;
+  }
+
+  toggleDiscountDetails() {
+    this.show = !this.show;
+    if (this.show) {
+      this.discountDetailsTxt = 'Hide discount details';
+    } else {
+      this.discountDetailsTxt = 'Show discount details';
+    }
+
+  }
   getPaymentModes() {
     this.provider_services.getPaymentModes()
       .subscribe(
