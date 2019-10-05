@@ -506,13 +506,15 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
                   this.schedule_arr = [];
                   // extracting the schedule intervals
                   for (let i = 0; i < this.bProfile.baseLocation.bSchedule.timespec.length; i++) {
-                    for (let j = 0; j < this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
-                      // pushing the schedule details to the respective array to show it in the page
-                      this.schedule_arr.push({
-                        day: this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
-                        sTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
-                        eTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
-                      });
+                    if (this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals) {
+                      for (let j = 0; j < this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals.length; j++) {
+                        // pushing the schedule details to the respective array to show it in the page
+                        this.schedule_arr.push({
+                          day: this.bProfile.baseLocation.bSchedule.timespec[i].repeatIntervals[j],
+                          sTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].sTime,
+                          eTime: this.bProfile.baseLocation.bSchedule.timespec[i].timeSlots[0].eTime
+                        });
+                      }
                     }
                   }
                 }
@@ -781,12 +783,12 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           }
         });
         this.loceditdialogRef.afterClosed().subscribe(result => {
-         if (result) {
-           if (result === 'reloadlist') {
+          if (result) {
+            if (result === 'reloadlist') {
               this.getBusinessProfile();
               this.getProviderLocations();
-           }
-         }
+            }
+          }
         });
       }
     } else {
@@ -1324,7 +1326,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.currentlicense_details = data;
         this.license_details = this.currentlicense_details;
-        this.current_license = this.currentlicense_details.accountLicense.name;
+        this.current_license = this.currentlicense_details.accountLicense.licPkgOrAddonId;
       });
   }
   getTotalAllowedAdwordsCnt() {
@@ -1486,7 +1488,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     });
   }
 
-   getSubDomainVirtualFields() {
+  getSubDomainVirtualFields() {
     this.getVirtualFields(this.bProfile['serviceSector']['domain'],
       this.bProfile['serviceSubSector']['subDomain']).then(
         data => {
@@ -1642,7 +1644,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -1658,7 +1660,7 @@ this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
+          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -1727,7 +1729,7 @@ this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
         delete this.bProfile['customId'];
         this.normal_customid_show = 2;
       });
-      this.customForm.setValue({ 'customid': '' });
+    this.customForm.setValue({ 'customid': '' });
   }
   cancelCusUpdt() {
     this.customForm.setValue({ 'customid': '' });
@@ -1740,7 +1742,7 @@ this.sharedfunctionobj.openSnackBar(error, { 'panelClass' : 'snackbarerror' });
   }
   add_updateCustomId(submit_data) {
     const customId = submit_data.customid;
-       if (this.editMode === 0) {
+    if (this.editMode === 0) {
       this.provider_services.addCustomId(customId).subscribe(
         data => {
           this.bProfile.customId = customId;

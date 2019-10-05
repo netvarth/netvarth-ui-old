@@ -47,7 +47,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   selday_arr: any = [];
   api_loading = true;
   api_loading1 = true;
-  dateError ;
   weekdays = projectConstants.myweekdaysSchedule;
 
 
@@ -66,12 +65,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   loc_name;
   capacitylimit = projectConstants.QTY_MAX_VALUE;
   parallellimit = projectConstants.VALIDATOR_MAX150;
-  //const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  //        const today = new Date(todaydt);
-  //today = new Date();
-  minDate ;
-  maxDate ;
-  server_date;
   show_dialog = false;
   disableButton = false;
   constructor(
@@ -89,7 +82,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   ngOnInit() {
     this.activeSchedules = this.data.schedules;
-      this.minDate = this.convertDate();
     // this.activeSchedules = this.data.queue.displayschedule;
     // alert(JSON.stringify(this.data))
     this.api_loading = false;
@@ -112,8 +104,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.amForm = this.fb.group({
       qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
       qlocation: ['', Validators.compose([Validators.required])],
-      startdate: [''],
-      enddate: [''],
       qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
       qendtime: [this.dend_time, Validators.compose([Validators.required])],
       qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
@@ -121,12 +111,10 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       futureWaitlist: [false ],
       onlineCheckIn: [false]
     });
-    
 
-    if (this.data.type === 'add') {
-      console.log(this.minDate);
-      this.amForm.get('startdate').setValue(this.minDate);
-    }
+    // if (this.data.type === 'edit') {
+    //     this.updateForm();
+    // }
 
     // if (this.data.source === 'location_detail' &&
     //   this.data.type === 'add' &&
@@ -139,14 +127,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
-  }
-  setSystemDate() {
-    this.shared_services.getSystemDate()
-      .subscribe(
-        res => {
-          this.server_date = res;
-          this.sharedfunctionObj.setitemonLocalStorage('sysdate', res);
-        });
   }
   existingScheduletoggle() {
     this.show_dialog = !this.show_dialog;
@@ -188,8 +168,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.amForm.setValue({
       qname: this.data.queue.name || null,
       qlocation: this.data.queue.location.id || null,
-      startdate: this.data.queue.queueSchedule.startDate || null,
-      enddate: this.data.queue.queueSchedule.terminator.endDate,
       qstarttime: sttime || null,
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
@@ -333,8 +311,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // handles the submit button click for add and edit
   onSubmit(form_data) {
     this.resetApiErrors();
-   const startDate = this.convertDate(form_data.startdate);
-   const endDate = this.convertDate(form_data.enddate);
 
     if (!form_data.qname.replace(/\s/g, '').length) {
       const error = 'Please enter working hours name';
@@ -404,13 +380,14 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
       // start and end date validations
       const cdate = new Date();
-      const mon = (cdate.getMonth() + 1);
-      let month = '';
+      let mon;
+       mon = (cdate.getMonth() + 1);
+
       if (mon < 10) {
-        month = '0' + mon;
+        mon = '0' + mon;
       }
       const daystr: any = [];
-      const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
+      const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
       for (const cday of this.selday_arr) {
         daystr.push(cday);
       }
@@ -445,18 +422,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       // const endtime = new Date(today_date + ' ' + this.dend_time + ':00');
       // const endtime = new Date(today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00');
       const endtime_format = moment(enddate).format('hh:mm A') || null;
-      // if (this.data.type === 'edit') {
-      //   this.editProviderQueue(post_data);
-      // } else if (this.data.type === 'add') {
-      //   this.addProviderQueue(post_data);
-      // }
       // building the schedule json section
       schedulejson = {
         'recurringType': 'Weekly',
         'repeatIntervals': daystr,
-        'startDate': startDate,
+        'startDate': today,
         'terminator': {
-          'endDate': endDate,
+          'endDate': '',
           'noOfOccurance': ''
         },
         'timeSlots': [{
@@ -465,7 +437,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         }]
       };
       // generating the data to be posted
-     
       const post_data = {
         'name': form_data.qname,
         'queueSchedule': schedulejson,
@@ -478,6 +449,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         },
         'services': selser
       };
+
       if (this.data.type === 'edit') {
         this.editProviderQueue(post_data);
       } else if (this.data.type === 'add') {
@@ -534,34 +506,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.api_error = null;
     this.api_success = null;
   }
-  convertDate(date?){
-    let today ;
-    let mon ;
-    let cdate ;
-      if(date){
-        cdate = new Date(date);
-      }
-      else {
-      cdate = new Date();
-    }
-       mon = (cdate.getMonth() + 1);
-      if (mon < 10) {
-        mon = '0' + mon;
-      }
-      return today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
-
-  }
-
-  compareDate(){
-    let UserDate = this.amForm.get('startdate').value;
-     const ToDate = new Date();
-
-    if (new Date(UserDate).getTime() < ToDate.getTime()) {
-          return this.dateError = true;
-     }
-    return this.dateError = false;
-  }
-
   reload(){
     this.dialogRef.close('reloadlist');
   }

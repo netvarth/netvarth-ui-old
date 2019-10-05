@@ -12,7 +12,6 @@ import { Messages } from '../../../shared/constants/project-messages';
 })
 export class AddProviderSchedulesComponent implements OnInit {
   @Input() existingSchedules;
-  @Input() active_Schedules;
   @Input() providerStatus;
   @Input() showsavebutton;
   @Input() hidecancelbutton;
@@ -44,12 +43,12 @@ export class AddProviderSchedulesComponent implements OnInit {
   edit_heading = '';
   edit_index = '';
   schedule_arr: any = [];
-  schedule_ar: any = [];
   display_schedule: any = [];
   show_savebutton = false;
   show_cancelbutton = false;
   Selall = false;
   api_loading1 = true;
+  showMenu = false;
   constructor(
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
@@ -61,20 +60,13 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
-    if (this.Isource === 'wizard') {
-      this.schedule_arr = this.existingSchedules;
-      this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-      this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    this.schedule_arr = this.existingSchedules;
+    this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
+    this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    if (this.display_schedule.length > 1) {
+      this.showMenu = true;
     } else {
-      for (let i = 0; i < this.active_Schedules.length; i++) {
-        this.schedule_ar.push(this.sharedfunctionObj.arrageScheduleforDisplay(this.active_Schedules[i]));
-        this.schedule_arr[i] = this.active_Schedules[i][0];
-      }
-      this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
-      this.display_schedule = [];
-      for (let i = 0; i < this.schedule_ar.length; i++) {
-        this.display_schedule[i] = this.schedule_ar[i][0];
-      }
+      this.showMenu = false;
     }
     if (this.schedule_arr.length === 0) {
       this.show_schedule_selection = true;
@@ -136,24 +128,20 @@ export class AddProviderSchedulesComponent implements OnInit {
     // today
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
-
     if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_STIMEERROR');
       return;
     }
     // convert start time to 12 hour format
     // const starttime = new Date(today_date + ' ' + this.dstart_time + ':00');
-
     const starttime = today_date + ' ' + this.dstart_time.hour + ':' + this.dstart_time.minute + ':00';
     const starttime_format = moment(starttime, 'YYYY-MM-DD hh:mm A').format('hh:mm A');
     // convert end time to 12 hour format
     // const endtime = new Date(today_date + ' ' + this.dend_time + ':00');
     const endtime = today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00';
     const endtime_format = moment(endtime, 'YYYY-MM-DD hh:mm A').format('hh:mm A');
-
     // const starttime = new Date(today_date + ' ' + this.dstart_time.hour + ':' + this.dstart_time.minute + ':00');
     // const starttime_format = moment(starttime,).format('hh:mm A');
-
     // convert end time to 12 hour format
     // const endtime = new Date(today_date + ' ' + this.dend_time + ':00');
     // const endtime = new Date(today_date + ' ' + this.dend_time.hour + ':' + this.dend_time.minute + ':00');
@@ -227,9 +215,13 @@ export class AddProviderSchedulesComponent implements OnInit {
         this.schedule_arr.push(addsch);
       }
     }
-
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    if (this.display_schedule.length > 1) {
+      this.showMenu = true;
+    } else {
+      this.showMenu = false;
+    }
     this.saveScheduleClick.emit(this.schedule_arr);
     this.showScheduleselection();
   }
@@ -255,6 +247,11 @@ export class AddProviderSchedulesComponent implements OnInit {
     }
     this.schedule_arr = holdarr;
     this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);
+    if (this.display_schedule.length > 1) {
+      this.showMenu = true;
+    } else {
+      this.showMenu = false;
+    }
     this.saveScheduleClick.emit(this.schedule_arr);
   }
   addScheduleSelection() {
@@ -298,16 +295,13 @@ export class AddProviderSchedulesComponent implements OnInit {
       }
       this.dstart_time = { hour: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['sTime'], ['h:mm A']).format('mm'), 10) };
       this.dend_time = { hour: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('HH'), 10), minute: parseInt(moment(this.schedule_arr[sindx]['eTime'], ['h:mm A']).format('mm'), 10) };
-
       this.show_schedule_selection = true;
       if (this.showsavebutton === '1') {
         this.show_savebutton = false;
       }
     } else {
-
       this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
       this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
-
       this.edit_mode = false;
       this.api_error = this.api_success = '';
       if (this.show_schedule_selection) {

@@ -44,7 +44,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   active_schedule: any = [];
   bProfile: any = [];
   parking_list: any = [];
-  schedule_alreadyexists_for_location = false;
   activeSchedules: any = [];
   loc_badges: any = [];
   sel_badges: any = [];
@@ -56,7 +55,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   api_loading1 = true;
   parking_types = projectConstants.PARKING_TYPES;
   disableButton = false;
-  activescdule: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistLocationsComponent>,
@@ -84,66 +82,15 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    let schedule_arr = [];
-    for (let i = 0; i < this.data.location.bSchedule.timespec.length; i++) {
-      schedule_arr = this.sharedfunctionobj.queueSheduleLoop(this.data.location.bSchedule.timespec[i]);
-      if (schedule_arr.length !== 0) {
-        this.activescdule.push(schedule_arr);
-      }
-    }
-    this.getProviderQueues();
     this.api_loading = false;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
-    // Get the parking types
-    // this.getParkingtypes();
-    // get location badges
-    // this.getLocationBadges();
-    // if (this.data_source !== 'bprofile') {
-    // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
-    // }
     if (this.data_source === 'bprofile') {
-      // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
       this.getgeneralBusinessSchedules();
-    } else {
-      this.proceedwithschedule = true;
     }
-
     this.createForm();
     this.elementRef.nativeElement.focus();
   }
-  // get the list of locations added for the current provider
-  getProviderQueues() {
-    this.api_loading1 = true;
-    let queue_list: any = [];
-    this.activeSchedules = [];
-    this.provider_services.getProviderQueues()
-      .subscribe(data => {
-        queue_list = data;
-        for (let ii = 0; ii < queue_list.length; ii++) {
-          let schedule_arr = [];
-          // extracting the schedule intervals
-          if (queue_list[ii].queueSchedule && queue_list[ii].queueState === 'ENABLED') {
-            if (this.data.location.id === queue_list[ii].location.id) {
-              schedule_arr = this.sharedfunctionobj.queueSheduleLoop(queue_list[ii].queueSchedule);
-            }
-          }
-          // if (schedule_arr.length !== 0) {
-          //   this.activescdule.push(schedule_arr);
-          // }
-          this.schedule_alreadyexists_for_location = false;
-          let display_schedule = [];
-          display_schedule = this.sharedfunctionobj.arrageScheduleforDisplay(schedule_arr);
-          queue_list[ii]['displayschedule'] = display_schedule;
-          if (queue_list[ii].queueState === 'ENABLED') {
-            this.activeSchedules.push(display_schedule[0]);
-          }
-        }
-        this.api_loading1 = false;
-      },
-        () => {
-          this.api_loading1 = false;
-        });
-  }
+
   getgeneralBusinessSchedules() {
     this.api_loading1 = true;
     this.provider_services.getgeneralBusinessSchedules()
@@ -183,10 +130,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
         loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
         loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-        locmapurl: [{ value: '', disabled: true }],
-        /* locparkingtype: [''],*/
-        /* locpincode: [''] ,
-         loct24hour: ['']*/
+        locmapurl: [{ value: '', disabled: true }]
       });
     } else {
       if (this.forbadge === true) {
@@ -200,13 +144,10 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           locaddress: ['', Validators.compose([Validators.required, Validators.maxLength(200)])],
           loclattitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
           loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
-          locmapurl: [{ value: '', disabled: true }]/*,
-          locpincode: ['']*/
+          locmapurl: [{ value: '', disabled: true }]
         });
       }
     }
-
-
     if (this.data.type === 'edit') {
       this.updateForm();
     }
@@ -220,13 +161,11 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       });
     } else {
       this.amForm.setValue({
-        // locstatus: this.data.location.status || null,
         locname: this.data.location.place || null,
         locaddress: this.data.location.address || null,
         loclattitude: this.data.location.lattitude || null,
         loclongitude: this.data.location.longitude || null,
-        locmapurl: this.data.location.googleMapUrl || null/*,
-        locpincode: this.data.location.pinCode || null,*/
+        locmapurl: this.data.location.googleMapUrl || null
       });
       this.schedule_arr = [];
       // extracting the schedule intervals
@@ -242,26 +181,8 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           }
         }
       }
-      if (this.data.source !== 'bprofile') {
-        if (this.schedule_arr.length > 0) {
-          this.schedule_arr = [];
-          this.schedule_alreadyexists_for_location = true; // this field decided whether schedule already exists for the location being edited
-        } else {
-          if (this.data.type !== 'edit') {
-            this.schedule_arr = projectConstants.BASE_SCHEDULE;
-          }
-        }
-      }
     }
   }
-
-  // gets the parking types
-  // getParkingtypes() {
-  //   this.provider_services.getParkingtypes()
-  //     .subscribe(data => {
-  //       this.parking_list = data;
-  //     });
-  // }
 
   // Save schedule to arr
   handlesSaveschedule(obj) {
@@ -273,39 +194,35 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   savelocation_fromWaitlistmanager(form_data) {
     this.disableButton = true;
     let post_itemdata2;
-    if (this.schedule_alreadyexists_for_location === false) {
-      // Check whether atleast one schedule is added
-      if (this.schedule_arr.length === 0) {
-        this.schedule_json = [];
-      } else {
-        this.schedule_json = [];
-        const cdate = new Date();
-        const mon = (cdate.getMonth() + 1);
-        let month = '';
-        if (mon < 10) {
-          month = '0' + mon;
-        }
-        const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
-        const save_schedule = this.sharedfunctionobj.prepareScheduleforSaving(this.schedule_arr);
-        for (const schedule of save_schedule) {
-          // const savstr = schedule.daystr.split(',');
-          this.schedule_json.push({
-            'recurringType': 'Weekly',
-            'repeatIntervals': schedule.daystr,
-            'startDate': today,
-            'terminator': {
-              'endDate': '',
-              'noOfOccurance': ''
-            },
-            'timeSlots': [{
-              'sTime': schedule.stime,
-              'eTime': schedule.etime
-            }]
-          });
-        }
+    // Check whether atleast one schedule is added
+    if (this.schedule_arr.length === 0) {
+      this.schedule_json = [];
+    } else {
+      this.schedule_json = [];
+      let mon;
+      const cdate = new Date();
+      mon = (cdate.getMonth() + 1);
+      if (mon < 10) {
+        mon = '0' + mon;
+      }
+      const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+      const save_schedule = this.sharedfunctionobj.prepareScheduleforSaving(this.schedule_arr);
+      for (const schedule of save_schedule) {
+        this.schedule_json.push({
+          'recurringType': 'Weekly',
+          'repeatIntervals': schedule.daystr,
+          'startDate': today,
+          'terminator': {
+            'endDate': '',
+            'noOfOccurance': ''
+          },
+          'timeSlots': [{
+            'sTime': schedule.stime,
+            'eTime': schedule.etime
+          }]
+        });
       }
     }
-
     if (this.forbadge === true) {
       post_itemdata2 = {
         'open24hours': (form_data.loct24hour) ? true : false
@@ -320,7 +237,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         }
       }
     } else {
-
       const curlabel = form_data.locname;
       const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
@@ -334,7 +250,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         'longitude': form_data.loclongitude || '',
         'lattitude': form_data.loclattitude || '',
         'googleMapUrl': form_data.locmapurl || '',
-        // 'pinCode': form_data.locpincode || '',
         'address': form_data.locaddress || ''
       };
       if (this.schedule_json.length > 0) {
@@ -383,39 +298,35 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   savelocation_fromBprofile(form_data) {
     this.disableButton = true;
     let post_itemdata2;
-    if (this.schedule_alreadyexists_for_location === false) {
-      // Check whether atleast one schedule is added
-      if (this.schedule_arr.length === 0) {
-        this.schedule_json = [];
-      } else {
-        this.schedule_json = [];
-        const cdate = new Date();
-        const mon = (cdate.getMonth() + 1);
-        let month = '';
-        if (mon < 10) {
-          month = '0' + mon;
-        }
-        const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
-        const save_schedule = this.sharedfunctionobj.prepareScheduleforSaving(this.schedule_arr);
-        // for (const schedule of this.schedule_arr) {
-        for (const schedule of save_schedule) {
-          this.schedule_json.push({
-            'recurringType': 'Weekly',
-            'repeatIntervals': schedule.daystr,
-            'startDate': today,
-            'terminator': {
-              'endDate': '',
-              'noOfOccurance': ''
-            },
-            'timeSlots': [{
-              'sTime': schedule.stime,
-              'eTime': schedule.etime
-            }]
-          });
-        }
+    // Check whether atleast one schedule is added
+    if (this.schedule_arr.length === 0) {
+      this.schedule_json = [];
+    } else {
+      this.schedule_json = [];
+      let mon;
+      const cdate = new Date();
+      mon = (cdate.getMonth() + 1);
+      if (mon < 10) {
+        mon = '0' + mon;
+      }
+      const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+      const save_schedule = this.sharedfunctionobj.prepareScheduleforSaving(this.schedule_arr);
+      for (const schedule of save_schedule) {
+        this.schedule_json.push({
+          'recurringType': 'Weekly',
+          'repeatIntervals': schedule.daystr,
+          'startDate': today,
+          'terminator': {
+            'endDate': '',
+            'noOfOccurance': ''
+          },
+          'timeSlots': [{
+            'sTime': schedule.stime,
+            'eTime': schedule.etime
+          }]
+        });
       }
     }
-
     if (this.forbadge === true) {
       post_itemdata2 = {
         'baseLocation': {
@@ -446,7 +357,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           'longitude': form_data.loclongitude || '',
           'lattitude': form_data.loclattitude || '',
           'googleMapUrl': form_data.locmapurl || '',
-          // 'pinCode': form_data.locpincode || '',
           'address': form_data.locaddress || ''
         }
       };
@@ -471,7 +381,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         },
         () => {
-          // this.loading_active = false;
         }
       );
   }
@@ -540,9 +449,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
 
         }
       );
-
   }
-
 
   handle_badge_click(obj) {
     const indx = this.sel_badges.indexOf(obj.name);
@@ -553,7 +460,6 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     }
   }
   checkbadgealreadyselected(obj) {
-
     if (this.sel_badges.indexOf(obj.name) !== -1) {
       return true;
     }
@@ -583,8 +489,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
             });
           }
           this.amForm.patchValue({
-            locaddress: result['address'] || null/*,
-          locpincode: result['pincode'] || null*/
+            locaddress: result['address'] || null
           });
           const addr = result['address'] || null;
           if (addr) {

@@ -7,6 +7,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MessageService } from '../../services/provider-message.service';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
   selector: 'app-upgrade-license',
@@ -32,6 +33,8 @@ export class UpgradeLicenseComponent implements OnInit {
   file_error_msg = '';
   api_loading = true;
   loadingVal = true;
+  licenseMetrics: any = [];
+  selectedpkgMetrics: any = [];
   constructor(
     public dialogRef: MatDialogRef<UpgradeLicenseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,7 +42,8 @@ export class UpgradeLicenseComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    public message_service: MessageService
+    public message_service: MessageService,
+    public shared_service: SharedServices
   ) {
   }
   ngOnInit() {
@@ -67,6 +71,7 @@ export class UpgradeLicenseComponent implements OnInit {
       this.api_loading = true;
       this.provider_services.upgradeLicensePackage(this.selected_pac.pkgId)
         .subscribe(data => {
+          this.getLicenseMetrics(this.selected_pac.pkgId);
           const loginuserdata = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata['new_lic'] = this.selected_pac.displayName;
@@ -86,6 +91,25 @@ export class UpgradeLicenseComponent implements OnInit {
         );
     }
   }
+
+  getLicenseMetrics(pkgId) {
+    this.selectedpkgMetrics = [];
+    this.shared_service.getLicenseMetadata().subscribe(data => {
+      this.licenseMetrics = data;
+      for (let i = 0; i < this.licenseMetrics.length; i++) {
+        if (pkgId === this.licenseMetrics[i].pkgId) {
+          for (let j = 0; j < this.licenseMetrics[i].metrics.length; j++) {
+            if (this.licenseMetrics[i].metrics[j].type === 'Boolean') {
+              this.selectedpkgMetrics.push(this.licenseMetrics[i].metrics[j]);
+            }
+          }
+        }
+      }
+      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
+    });
+
+  }
+
   licensepackage_Select(val) {
     this.selected_pac = val;
   }

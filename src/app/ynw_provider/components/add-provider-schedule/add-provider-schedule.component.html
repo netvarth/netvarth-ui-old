@@ -1,79 +1,67 @@
 <div class="schedule_outer">
-        <app-common-innerloading-spinner  *ngIf="api_loading1"></app-common-innerloading-spinner>
-   
-   <div *ngIf="!api_loading1">     <!-- <ul class="whrs">
-        <li *ngFor="let schedule of schedule_arr; let i = index" [class.beingedited]="isbeingEdited(i)">
-                <span class="day">{{getDay(schedule.day)}}</span> <span class="time">{{schedule.sTime}} - {{schedule.eTime}}</span>
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="providerStatus==='INACTIVE'" [disabled]="isbeingEdited(i)">
+    <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
+
+    <div *ngIf="!api_loading1">
+        <div (click)="addScheduleSelection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'"
+            class="loc-add-btn"><i class="fa fa-plus-circle pointlist"></i></div>
+        <ul class="whrs">
+            <li *ngFor="let schedule of display_schedule; let i = index"
+                [class.beingedited]="isbeingEdited(schedule.indx)">
+                <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu"
+                    *ngIf="providerStatus==='INACTIVE' && !isbeingEdited(schedule.indx)"
+                    [disabled]="isbeingEdited(schedule.indx)">
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                  <mat-menu #menu="matMenu">
-                    <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'" (click)="showScheduleselection(i)">
-                      <i class="icon-edit"></i>
-                      <span>Edit</span>
+                <mat-menu #menu="matMenu">
+                    <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'"
+                        (click)="editwScheduleselection(schedule.indx, schedule)">
+                        <i class="icon-edit"></i>
+                        <span>{{edit_btn}}</span>
                     </button>
-                    <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'" (click)="deleteSchedule(i)">
+                    <button type="button" mat-menu-item *ngIf="showMenu && providerStatus==='INACTIVE'"
+                        (click)="deleteSchedule(schedule.indx)">
                         <i class="icon-delete"></i>
-                        <span >Delete</span>
-                      </button>
-                  </mat-menu>
-        </li>
-    </ul>      -->
-    <ul class="whrs">
-        <li *ngFor="let schedule of display_schedule; let i = index" [class.beingedited]="isbeingEdited(schedule.indx)">
-            <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
-            <button type="button" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="providerStatus==='INACTIVE' && !isbeingEdited(schedule.indx)" [disabled]="isbeingEdited(schedule.indx)">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-            <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'" (click)="editwScheduleselection(schedule.indx, schedule)">
-                <i class="icon-edit"></i>
-                <span>{{edit_btn}}</span>
-            </button>
-            <button type="button" mat-menu-item *ngIf="providerStatus==='INACTIVE'" (click)="deleteSchedule(schedule.indx)">
-                <i class="icon-delete"></i>
-                <span >{{delete_btn}}</span>
+                        <span>{{delete_btn}}</span>
+                    </button>
+                </mat-menu>
+            </li>
+        </ul>
+        <div class="schedulesub_outer" *ngIf="show_schedule_selection">
+            <div class="sch_sel_head" *ngIf="edit_mode">{{edit_heading}}</div>
+            <div class="schselectall">
+                <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">{{select_days_cap}}</i>
+                <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()"> {{select_days_cap}}</i>
+            </div>
+            <section class="chk-section">
+                <div *ngFor="let day of weekdays_arr; let i = index" class='chk-margin'>
+                    <mat-checkbox *ngIf="day" [checked]="check_daychecked(i)" (change)=handlechecbox(i)>{{day}}
+                    </mat-checkbox>
+                </div>
+            </section>
+            <div class="startendtime">
+                <div class="starttimediv">
+                    <label for="changeHourStep">{{start_time_cap}}</label>
+                    <ngb-timepicker [(ngModel)]="dstart_time" meridian="true" #sch_start_time
+                        (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
+                </div>
+                <div class="endtimediv">
+                    <label for="changeHourStep">{{end_time_cap}}</label>
+                    <ngb-timepicker [(ngModel)]="dend_time" meridian="true" #sch_end_time
+                        (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
+                </div>
+            </div>
+            <div class="savecancel">
+                <button type="button" (click)="cancelscheduleClicked()" class="cs-btn bt7">{{cancel_btn}}</button>
+                <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3">
+                    <ng-container *ngIf="!edit_mode">{{add_schedule}}</ng-container>
+                    <ng-container *ngIf="edit_mode">{{update_btn}}</ng-container>
                 </button>
-            </mat-menu>
-        </li>
-    </ul>  
-    <button (click)="addScheduleSelection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'" class="cs-btn bt3"> {{add_schedule}}</button>
-    <!-- <button (click)="cancel_schedule_button_clicked()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE' && show_cancelbutton" class="cs-btn bt7"> Cancel</button> -->
-    <!-- <div *ngIf="show_savebutton"><button type="button" class="cs-btn bt3" (click)="save_schedule_button_clicked()">Save Schedule Changes</button></div> -->
-    <div class="schedulesub_outer" *ngIf="show_schedule_selection">
-        <div class="sch_sel_head" *ngIf="edit_mode">{{edit_heading}}</div>
-        <div class="sch_sel_head" *ngIf="!edit_mode"> {{add_schedule}}</div>
-        <!-- <div class="schselectall" *ngIf="Isource=='wizard'"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
-        <!-- <div class="schselectall"><i class="fa fa-check" (click)="handleselectall()"> Select All Days</i></div> -->
-        <div class="schselectall">
-            <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">{{select_days_cap}}</i>
-            <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()"> {{select_days_cap}}</i>
+            </div>
+            <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+            </app-field-error-display>
+            <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+            </app-form-success-display>
         </div>
-        <section class="chk-section">
-            <div *ngFor="let day of weekdays_arr; let i = index" class='chk-margin'>
-            <mat-checkbox *ngIf="day" [checked]="check_daychecked(i)" (change)=handlechecbox(i)>{{day}}</mat-checkbox>
-            </div>           
-        </section>
-       <div class="startendtime">
-        <div class="starttimediv">
-            <label for="changeHourStep">{{start_time_cap}}</label>
-          <ngb-timepicker [(ngModel)]="dstart_time" meridian="true" #sch_start_time (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
-        </div>    
-        <div class="endtimediv">
-            <label for="changeHourStep">{{end_time_cap}}</label>
-            <ngb-timepicker [(ngModel)]="dend_time" meridian="true" #sch_end_time (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
-        </div>    
-       </div>
-       <div class="savecancel">
-           <button type="button" (click)="cancelscheduleClicked()" class="cs-btn bt7">{{cancel_btn}}</button>
-           <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3"><ng-container *ngIf="!edit_mode">{{save_schedule_cap}}</ng-container><ng-container *ngIf="edit_mode">{{update_btn}}</ng-container></button>       
-       </div>
-       <app-field-error-display [displayError]="true" *ngIf="api_error"
-       errorMsg="{{api_error}}"></app-field-error-display> 
-       <app-form-success-display [displayMsg]="true" *ngIf="api_success"
-       successMsg="{{api_success}}"></app-form-success-display>
     </div>
 </div>
-</div>
-
-

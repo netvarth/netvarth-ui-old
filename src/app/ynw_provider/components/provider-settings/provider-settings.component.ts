@@ -255,6 +255,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           }
         },
         error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getpaymentDetails();
         }
       );

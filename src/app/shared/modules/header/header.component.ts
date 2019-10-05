@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Input() passedRefine: any = [];
   @Output() searchclick = new EventEmitter<any>();
   @Output() scrollhideclass = new EventEmitter<any>();
+  @Input() source;
   sign_in_cap = Messages.SIGN_IN_CAP;
   join_cap = Messages.JOIN_CAP;
   are_you_ser_pro = Messages.ARE_YOU_SER_PRO_CAP;
@@ -127,6 +128,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   maxCount = 5;
   searchLength = 0;
   account_type;
+  licenseMetrics: any = [];
+  selectedpkgMetrics: any = [];
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -201,6 +204,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.setLicense();
+
+    const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const usertype = this.shared_functions.isBusinessOwner('returntyp');
+    if (cuser && usertype === 'provider') {
+      this.getLicenseMetrics(cuser.accountLicenseDetails.accountLicense.licPkgOrAddonId);
+    }
+
     this.getBusinessdetFromLocalstorage();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -222,6 +232,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.jsonlist && this.ctype !== 'provider') {
       this.popular_search(this.jsonlist);
     }
+  }
+  getLicenseMetrics(pkgId) {
+    this.selectedpkgMetrics = [];
+    this.shared_service.getLicenseMetadata().subscribe(data => {
+      this.licenseMetrics = data;
+      for (let i = 0; i < this.licenseMetrics.length; i++) {
+        if (pkgId === this.licenseMetrics[i].pkgId) {
+          for (let j = 0; j < this.licenseMetrics[i].metrics.length; j++) {
+            if (this.licenseMetrics[i].metrics[j].type === 'Boolean') {
+              this.selectedpkgMetrics.push(this.licenseMetrics[i].metrics[j]);
+            }
+          }
+        }
+      }
+      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
+    });
   }
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';

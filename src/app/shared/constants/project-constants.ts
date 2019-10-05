@@ -383,8 +383,8 @@ export const projectConstants = {
     religiousPriests: 'Eg:- Our Lady of Dolours Basilica Church, Sri Vadakkumnatha Temple, etc',
     veterinaryPetcare: 'Eg:- Veterinary Clinic, Adat Veterinary Hospital, etc'
   },
-  DOMAIN_SEARCH_SUGGESTIONS : {
-    all : 'Search for doctors, professionals, beauty saloons, ....',
+  DOMAIN_SEARCH_SUGGESTIONS: {
+    all: 'Search for doctors, professionals, beauty saloons, ....',
     professionalconsulting: 'Search for lawyers, civil architects, chartered accountants, ....',
     healthcare: 'Search for hospitals, doctors, dentists,.....',
     personalcare: 'Search for beauty saloons, fitness centers, massage centers, ......',
@@ -393,6 +393,25 @@ export const projectConstants = {
     vastuastrology: ' Search for astrologers, vastu consultants, ......',
     religiouspriests: 'Search for temples, poojas, ceremonies, .....',
     veterinarypetcare: 'Search for veterinary doctors, pet grooming, pet training, ......'
+  },
+
+  LICENSE_METRIC: {
+    1: 'Jaldee_Business_Listing',
+    2: 'Search',
+    3: 'Business_Profile_View',
+    4: 'Number_Of_Provider',
+    5: 'Transactions',
+    6: 'Jaldee_Pay/Billing',
+    7: 'Storage',
+    8: 'Jaldee_Keywords',
+    9: 'Kiosk',
+    10: 'Jaldee_POS',
+    11: 'Corporate_Integration',
+    12: 'Jaldee_Coupon',
+    13: 'Custom_URL',
+    14: 'Guaranteed_Business_Value_Protection',
+    15: 'Additional_Transation_Charges'
+
   },
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',

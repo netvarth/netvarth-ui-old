@@ -38,9 +38,7 @@ export class AdjustQueueDelayComponent implements OnInit {
   frm_adjust_del_cap = '';
   disableButton = false;
   instantQueue;
-  default_messageNocalc = '';
-  calcuType = '';
-  msgforCalcuType = '';
+
   constructor(
     public dialogRef: MatDialogRef<AdjustQueueDelayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -53,7 +51,6 @@ export class AdjustQueueDelayComponent implements OnInit {
   }
   ngOnInit() {
     this.send_message_cap = Messages.DELAY_SEND_MSG.replace('[customer]', this.customer_label);
-    this.getDefaultMessages();
     this.arrived_cnt = this.data.arrived_count;
     this.checkedin_cnt = this.data.checkedin_count;
     this.tot_checkin_count = this.checkedin_cnt + this.arrived_cnt;
@@ -64,20 +61,14 @@ export class AdjustQueueDelayComponent implements OnInit {
     if (!this.data.queues || !this.data.queue_id) {
       this.closePopup('error');
     }
-   
-    for(let que of this.queues){
-      this.calcuType = que.calculationMode;
-    }
-    
-     this.amForm = this.fb.group({
+    this.getDefaultMessages();
+    this.amForm = this.fb.group({
       // queue_id: ['', Validators.compose([Validators.required])],
       delay: ['', Validators.compose([Validators.required])],
       send_message: [false],
-     // send_message: [{value: false, disabled: true}],
       // message: ['', Validators.compose([Validators.required])],
       message: [''],
     });
-   
     /*this.amForm.get('queue_id').valueChanges
     .subscribe(
       data => {
@@ -85,12 +76,12 @@ export class AdjustQueueDelayComponent implements OnInit {
       }
     );*/
     this.getQueueDelay(this.data.queue_id);
-    // this.amForm.get('send_message').valueChanges
-    //   .subscribe(
-    //     data => {
-    //       this.changeCheckbox(data);
-    //     }
-    //   );
+    this.amForm.get('send_message').valueChanges
+      .subscribe(
+        data => {
+          this.changeCheckbox(data);
+        }
+      );
     // this.amForm.get('queue_id').setValue(this.data.queue_id);
     this.selected_queue = this.data.queue_id;
     this.frm_adjust_del_cap = Messages.FRM_LEVEL_ADJ_DELAY_MSG.replace('[customer]', this.customer_label);
@@ -108,31 +99,16 @@ export class AdjustQueueDelayComponent implements OnInit {
   getDefaultMessages() {
     this.provider_services.getProviderMessages()
       .subscribe(
-        (data: any) => {
-          this.default_message = data.delay || '';
-          this.default_messageNocalc = data.delayNOCALC || '';
-              if(this.calcuType == 'NoCalc')
-              {
-              this.msgforCalcuType = this.default_messageNocalc;
-              }else{
-              this.msgforCalcuType = this.default_message;
-            }
+        () => {
+          // this.default_message = data.delay || '';
         },
         () => {
         }
       );
   }
   onSubmit(form_data) {
-    let msg ='';
     this.resetApiErrors();
-    if(form_data.send_message)
-      {
-        msg = form_data.message;
-      }
-    // else
-    //   {
-    //     msg = this.msgforCalcuType;
-    //   }
+
     // if(form_data.send_message){
     //   if (!form_data.message.replace(/\s/g, '').length) {
     //     this.api_error = 'Message cannot be empty';
@@ -144,8 +120,8 @@ export class AdjustQueueDelayComponent implements OnInit {
        // if (time !== 0) {
     const post_data = {
       'delayDuration': time,
-      'sendMsg': true,
-      'message': msg || '',
+      'sendMsg': form_data.send_message,
+      'message': form_data.message || '',
     };
     // this.provider_services.addQueueDelay(form_data.queue_id, post_data)
     this.provider_services.addQueueDelay(this.selected_queue, post_data)

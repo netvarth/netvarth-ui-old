@@ -37,13 +37,13 @@ export class ProviderBprofileSearchSchedulepopupComponent implements OnInit {
       this.schedule_json = [];
     } else {
       this.schedule_json = [];
+      let mon;
       const cdate = new Date();
-      const mon = (cdate.getMonth() + 1);
-      let month = '';
+      mon = (cdate.getMonth() + 1);
       if (mon < 10) {
-        month = '0' + mon;
+        mon = '0' + mon;
       }
-      const today = cdate.getFullYear() + '-' + month + '-' + cdate.getDate();
+      const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
       const save_schedule = this.shared_functions.prepareScheduleforSaving(this.schedule_arr);
       for (const schedule of save_schedule) {
         this.schedule_json.push({

@@ -11,7 +11,7 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 
 export class SharedServices {
-
+  licenseMetrics: any = [];
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
 
   }
@@ -942,7 +942,17 @@ export class SharedServices {
 
   }
 
+  getLicenseMetadata() {
+    return this.servicemeta.httpGet('provider/license/licensemetadata');
+  }
 
+  setSelectedLicenseMetrics(metrics) {
+    this.licenseMetrics = metrics;
+  }
+
+  getSelectedLicenseMetrics() {
+    return this.licenseMetrics;
+  }
 
   getProviderDept(id) {
 
@@ -951,7 +961,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(path);
 
   }
-  
+
   getBussinessProfile() {
     return this.servicemeta.httpGet('provider/bProfile');
   }
