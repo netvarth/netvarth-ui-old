@@ -1,19 +1,19 @@
- <!-- Left side column. contains the logo and sidebar -->
- <aside class="main-sidebar">
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <!-- Sidebar user panel -->
     <div class="user-panel">
-      <div class="image centeralign"  *ngIf="blogo!=''">
-          <!-- <div class="pro-pic"> -->
-              <img [src]="blogo" class="img-circle" alt="Business Image" *ngIf="blogo!='' && blogo!=null" alt="" />
-          <!-- </div> -->
+      <div class="image centeralign" *ngIf="blogo!=''">
+        <!-- <div class="pro-pic"> -->
+        <img [src]="blogo" class="img-circle" alt="Business Image" *ngIf="blogo!='' && blogo!=null" alt="" />
+        <!-- </div> -->
         <!-- <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="Business Image"> -->
       </div>
       <div class="centeralign col-md-12">
         <p class="bus-name">{{bname}}</p>
-          
-            <!-- <div (click)="holidaybtnClicked()">
+
+        <!-- <div (click)="holidaybtnClicked()">
                 <span class="red" *ngIf="qAvailability && qAvailability.holiday">
                     Holiday
                 </span>
@@ -21,8 +21,8 @@
 
         <div (click)="btnAvailableClicked()" class="pointer-cursor available">
           <div class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
-              <i class="fa fa-circle text-success"></i> I am available online <br/>
-              until {{qAvailability.timeRange.eTime}}
+            <i class="fa fa-circle text-success"></i> I am available online <br />
+            until {{qAvailability.timeRange.eTime}}
           </div>
           <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
             <i class="fa fa-circle disabled"></i> I am not available now
@@ -53,43 +53,47 @@
           <i class="header fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li class="active"><a href="#" routerLink="dashboard/check-ins"><i class="fa fa-circle-o"></i> Checkins</a></li>
+          <li class="active"><a href="#" routerLink="dashboard/check-ins"><i class="fa fa-circle-o"></i> Checkins</a>
+          </li>
           <!-- <li><a href="index2.html"><i class="fa fa-circle-o"></i> Appointments</a></li>
           <li><a href="index2.html"><i class="fa fa-circle-o"></i> Orders</a></li> -->
         </ul>
       </li>
+      <li>
+        <a class="pointer-cursor" routerLink="settings">
+          <i class="fa fa-gears"></i> <span>Settings</span>
+        </a>
+      </li>
       <li class="treeview">
-        <a routerLink="customers">
+        <a class="pointer-cursor" routerLink="customers">
           <i class="fa fa-user"></i>
           <span>Customers</span>
-          <!-- <span class="label label-primary pull-right">4</span> -->
         </a>
       </li>
-      <!-- <li class="treeview">
-        <a href="#" routerLink="settings">
-          <i class="header fa fa-dashboard"></i> <span>Settings</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="#" routerLink="settings/bprofile-search"><i class="fa fa-circle-o"></i>Profile</a></li>
-          <li><a href="#" routerLink="settings/waitlist-manager"><i class="fa fa-circle-o"></i>Check-In Manager</a></li>
-          <li><a href="#" routerLink="settings/pos"><i class="fa fa-circle-o"></i>Billing/POS</a></li>
-          <li><a href="#" routerLink="settings/miscellaneous"><i class="fa fa-circle-o"></i>Miscellaneous</a></li>
-        </ul>
-      </li> -->
       <li>
-        <a href="#" routerLink="inbox">
-          <i class="fa fa-envelope"></i> <span>Inbox</span>
-          <small class="label pull-right bg-green"  *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
+        <a class="pointer-cursor" routerLink="license">
+          <i class="fa fa-gavel"></i> <span>License</span>
         </a>
       </li>
-      <li><a href="#" routerLink="settings"><i class="fa fa-gears"></i>Settings</a></li>
-      <li><a href="#" routerLink="license"><i class="fa fa-gavel"></i>License</a></li>
-      <li><a href="#" routerLink="auditlog"><i class="fa fa-list"></i>Auditlogs</a></li>
-      <li><a href="#" routerLink="alerts">
-        <i class="fa fa-bell-o"></i>Alerts
-        <small class="label pull-right bg-orange"  *ngIf="alertCnt>0">{{alertCnt}}</small>
-      </a>
-    </li>
+      <li>
+        <a class="pointer-cursor" routerLink="inbox">
+          <i class="fa fa-envelope"></i> <span>Inbox</span>
+          <small class="label pull-right bg-green"
+            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
+        </a>
+      </li>
+      <li>
+          <a class="pointer-cursor" routerLink="alerts">
+            <i class="fa fa-bell-o"></i> <span>Alerts</span>
+            <small class="label pull-right bg-orange"
+            *ngIf="alertCnt>0">{{alertCnt}}</small>
+          </a>
+        </li>
+      <li>
+        <a class="pointer-cursor" routerLink="auditlog">
+          <i class="fa fa-list"></i> <span>Auditlogs</span>
+        </a>
+      </li>
       <li><a class="pointer-cursor" (click)="gotoHelp()"><i class="fa fa-book"></i> <span>Help</span></a></li>
       <li><a routerLink="faq"><i class="fa fa-book"></i> <span>FAQ</span></a></li>
     </ul>

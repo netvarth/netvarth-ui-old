@@ -341,7 +341,6 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   changeSelectedLocation(location) {
     this.selected_location = location;
     if (this.selected_location) {
-      alert(this.selected_location);
       this.shared_functions.setItemOnCookie('provider_selected_location', this.selected_location.id);
     }
     this.shared_functions.setitemonLocalStorage('loc_id', this.selected_location);

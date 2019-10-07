@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MenuComponent } from './home/menu/menu.component';
-import { FooterComponent } from './home/footer/footer.component';
+import { FooterNewComponent } from './home/footer/footer.component';
 import { SettingsComponent } from './home/settings/settings.component';
 import { BusinessHeaderComponent } from './home/header/header.component';
 import { BusinessHomeComponent } from './home/business-home.component';
@@ -39,12 +39,15 @@ import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
 import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlemap.component';
+import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
+import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
+import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
 
 @NgModule({
     declarations: [
         MenuComponent,
         BusinessHeaderComponent,
-        FooterComponent,
+        FooterNewComponent,
         SettingsComponent,
         BusinessHomeComponent,
         BusinessComponent,
@@ -57,7 +60,8 @@ import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlem
         AddProviderWaitlistCheckInBillComponent,
         ProviderWaitlistCheckInDetailComponent,
         ProviderMembersComponent,
-        GoogleMapComponent
+        GoogleMapComponent,
+        ProviderbWizardComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -71,7 +75,9 @@ import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlem
         PagerModule,
         LoadingSpinnerModule,
         InboxModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        AddProviderSchedulesModule,
+        DynamicFormModule
     ],
     entryComponents: [
         AddProviderWaitlistServiceComponent,

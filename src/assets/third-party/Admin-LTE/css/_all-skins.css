@@ -14,6 +14,10 @@
 .skin-blue .settings .hd h2 i { color : #00aef2}
 .skin-blue .available .text-success { color: #3c763d !important }
 .skin-blue .available .disabled { color: #dddd !important }
+.skin-blue .q-time.queuelist label.tstat {color: #999999 !important; font-weight: normal}
+
+.skin-blue .req-flds-cap {color: red; font-size: 9px;margin-left: 5px}
+
 .skin-blue .bus-name {color: white}
 .skin-blue .main-header.dash .navbar {
   margin-left: 0px !important;
