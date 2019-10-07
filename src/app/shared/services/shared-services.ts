@@ -957,4 +957,12 @@ export class SharedServices {
   getBussinessProfile() {
     return this.servicemeta.httpGet('provider/bProfile');
   }
+
+  setSelectedLicenseMetrics(metrics) {
+    this.licenseMetrics = metrics;
+  }
+
+  getSelectedLicenseMetrics() {
+    return this.licenseMetrics;
+  }
 }

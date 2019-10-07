@@ -244,7 +244,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           }
         }
       }
-      this.shared_functions.sendMessage({ 'ttype': 'license-metrics', 'data': this.selectedpkgMetrics });
+      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
     });
   }
   getLicenseDetails(call_type = 'init') {

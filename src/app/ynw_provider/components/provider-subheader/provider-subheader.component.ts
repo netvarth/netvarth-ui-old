@@ -48,6 +48,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
+    private shared_service: SharedServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     public routerobj: Router, private shared_services: SharedServices) {
@@ -62,12 +63,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         this.isShowingRouteLoadIndicator.emit(!!asyncLoadCount);
       }
     );
-    this.shared_functions.getMessage().subscribe(message => {
-      switch (message.ttype) {
-        case 'license-metrics': this.kioskClick(message.data);
-          break;
-      }
-    });
   }
 
   normal_profile_active = 1;
@@ -113,6 +108,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   }
 
   kioskClick(licenseMetrics) {
+    licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
     for (let i = 0; i < licenseMetrics.length; i++) {
       if (licenseMetrics[i].id === 9) {
         if (licenseMetrics[i].anyTimeValue === 'true') {

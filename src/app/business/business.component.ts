@@ -110,7 +110,6 @@ export class BusinessComponent implements OnInit {
   }
 
   getLicenseMetrics(pkgId) {
-    console.log(pkgId);
     this.selectedpkgMetrics = [];
     this.shared_service.getLicenseMetadata().subscribe(data => {
       this.licenseMetrics = data;
@@ -123,7 +122,7 @@ export class BusinessComponent implements OnInit {
           }
         }
       }
-      this.shared_functions.sendMessage({ 'ttype': 'license-metrics', 'data': this.selectedpkgMetrics });
+      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
     });
   }
 }

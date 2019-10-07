@@ -4,6 +4,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-provider-paymentsettings',
@@ -124,18 +125,13 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
         private router: Router,
+        private shared_service: SharedServices,
         private activated_route: ActivatedRoute
 
     ) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(params => {
             this.tabid = (params.id) ? params.id : 0;
-        });
-        this.shared_functions.getMessage().subscribe(message => {
-            switch (message.ttype) {
-                case 'license-metrics': this.getLicenseMetrics(message.data);
-                    break;
-            }
         });
     }
     ngOnInit() {
@@ -148,6 +144,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.name;
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.getLicenseMetrics();
     }
     /**
      * Function to call the Learn More Page
@@ -590,8 +587,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         return this.shared_functions.removSpace(evt);
     }
 
-    getLicenseMetrics(licenseMetrics) {
-        console.log(licenseMetrics);
+    getLicenseMetrics() {
+        const licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
         for (let i = 0; i < licenseMetrics.length; i++) {
             if (licenseMetrics[i].id === 6) {
                 if (licenseMetrics[i].anyTimeValue === 'true') {
@@ -601,6 +598,5 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 }
             }
         }
-        console.log(this.jPay_Billing);
     }
 }
