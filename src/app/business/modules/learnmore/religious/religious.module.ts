@@ -6,11 +6,13 @@ import { HeaderModule } from '../../../../shared/modules/header/header.module';
 
 import { ReligiousComponent } from './religious.component';
 import { ReligiousRoutingModule } from './religious.routing.module';
+import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 // import { HttpCommonService } from '../../services/http-common.service';
 @NgModule({
     imports: [ 
       SharedModule,
       HeaderModule,
+      BreadCrumbModule,
       ReligiousRoutingModule
     ],
     declarations: [ReligiousComponent],

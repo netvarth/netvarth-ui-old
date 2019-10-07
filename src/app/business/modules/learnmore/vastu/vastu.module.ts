@@ -6,11 +6,13 @@ import { HeaderModule } from '../../../../shared/modules/header/header.module';
 
 import { VastuComponent } from './vastu.component';
 import { VastuRoutingModule } from './vastu.routing.module';
+import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 // import { HttpCommonService } from '../../services/http-common.service';
 @NgModule({
     imports: [ 
       SharedModule,
       HeaderModule,
+      BreadCrumbModule,
       VastuRoutingModule
     ],
     declarations: [VastuComponent],
