@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, ButtonEvent } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -104,6 +104,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   schedule_arr: any = [];
   display_schedule: any = [];
+  reqFields = {};
 
 
   currentlicense_details: any = [];
@@ -285,12 +286,21 @@ export class BProfileComponent implements OnInit, OnDestroy {
         this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
   getBusinessProfile() {
     this.bProfile = [];
     this.getBussinessProfileApi()
       .then(
         data => {
           this.bProfile = data;
+          this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+            domainfields => {
+              console.log(domainfields);
+              this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+                subdomainfields => {
+                  this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
+                });
+          });
           this.provider_datastorage.set('bProfile', data);
           for (let i = 0; i < this.businessConfig.length; i++) {
             if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {
@@ -564,10 +574,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
           this.error_list.push(this.success_error);
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
+          } else if (this.error_list[0].size) {
+            this.error_msg = 'Please upload images with size less than 5mb';
           }
-          // else if (this.error_list[0].size) {
-          //   this.error_msg = 'Please upload images with size less than 5mb';
-          // }
           // this.error_msg = 'Please upload images with size < 5mb';
           this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
         }
