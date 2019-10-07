@@ -23,12 +23,15 @@ export class POSComponent implements OnInit {
   payment_settings: any = [];
   breadcrumbs = this.breadcrumbs_init;
   payment_status = false;
+  pos_status = false;
   paytmVerified = false;
   payuVerified = false;
   isJaldeeAccount = false;
   payment_statusstr = 'Off';
+  pos_statusstr = 'Off';
   frm_public_self_cap = '';
   accountActiveMsg = '';
+
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
     private provider_services: ProviderServices) {
@@ -38,7 +41,9 @@ export class POSComponent implements OnInit {
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     this.getpaymentDetails();
+    this.getPOSSettings();
   }
+
   getpaymentDetails() {
     this.provider_services.getPaymentSettings()
       .subscribe(
@@ -101,10 +106,8 @@ export class POSComponent implements OnInit {
       .subscribe(
         () => {
           this.getpaymentDetails();
-          if (!is_check) {
-            // this.shared_functions.openSnackBar('online payment is disabled', {'panelclass' : 'snackbarerror'});
-            this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
-          }
+          const status = (is_check) ? 'enabled' : 'disabled';
+          this.shared_functions.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         },
         error => {
           this.getpaymentDetails();
@@ -131,8 +134,17 @@ export class POSComponent implements OnInit {
     const status = (value) ? 'enabled' : 'disabled';
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
       this.shared_functions.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.getPOSSettings();
     }, (error) => {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.getPOSSettings();
     });
+  }
+  getPOSSettings() {
+    // this.provider_services.getProviderPOSStatus().subscribe(data => {
+    //   console.log(data);
+    //   // this.pos_status = data;
+    //   this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
+    // });
   }
 }

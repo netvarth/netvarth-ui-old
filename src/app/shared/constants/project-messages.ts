@@ -1133,7 +1133,7 @@ export const Messages = {
   'PAY_SET_VERIFIED_CAP': '(Verified)',
   'PAY_SET_NOT_VERIFIED_CAP': '(Not Verified)',
   'PAY_SET_ENTER_MOB_NO_CAP': 'Enter Mobile Number *',
-  'PAY_SET_CC_DC_NETBANKING_CAP': 'CC / DC / Netbanking/ UPI',
+  'PAY_SET_CC_DC_NETBANKING_CAP': 'CC / DC / Netbanking / UPI',
   'PAY_SET_PAN_CARD_NO_CAP': 'Pan Card Number *',
   'PAY_SET_NAME_ON_PAN_CAP': 'Name on Pan Card *',
   'PAY_SET_ACCNT_HOLDER_NAME_CAP': 'Account Holder Name *',
@@ -1381,6 +1381,6 @@ export const Messages = {
   'DISPLAYBOARD__INHELP': 'display help',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDS': 'Displayboards',
-  'DISPLAYBOARDLAYOUT_CAP' : 'Layout'
+  'DISPLAYBOARDLAYOUT_CAP': 'Layout'
 };
 

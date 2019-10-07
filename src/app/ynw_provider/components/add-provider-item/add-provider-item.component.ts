@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit,  } from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Component, Inject, OnInit, } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewChild, ElementRef } from '@angular/core';
-import {FormMessageDisplayService} from '../../../shared//modules/form-message-display/form-message-display.service';
-import {Messages} from '../../../shared/constants/project-messages';
+import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
+import { Messages } from '../../../shared/constants/project-messages';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -28,7 +28,7 @@ export class AddProviderItemComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  parent_id ;
+  parent_id;
   selitem_pic = '';
   char_count = 0;
   max_char_count = 500;
@@ -58,13 +58,13 @@ export class AddProviderItemComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions
-    ) {
-     }
-     taxDetails: any = [];
+  ) {
+  }
+  taxDetails: any = [];
   ngOnInit() {
     this.api_loading = false;
-     this.createForm();
-     this.getTaxpercentage();
+    this.createForm();
+    this.getTaxpercentage();
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
@@ -94,7 +94,6 @@ export class AddProviderItemComponent implements OnInit {
         price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
       });
     }
-
     if (this.data.type === 'edit') {
       this.updateForm();
     }
@@ -126,69 +125,62 @@ export class AddProviderItemComponent implements OnInit {
   }
   showimg() {
     if (this.item_pic.base64) {
-        return this.item_pic.base64;
+      return this.item_pic.base64;
     } else {
       return this.sharedfunctionObj.showitemimg('');
     }
   }
-  onSubmit (form_data) {
-   // }
-   let imgcaption = '';
-       const iprice = parseFloat(form_data.price);
+  onSubmit(form_data) {
+    // }
+    let imgcaption = '';
+    const iprice = parseFloat(form_data.price);
     if (!iprice || iprice === 0) {
-          this.api_error = 'Please enter the price';
-          return;
+      this.api_error = 'Please enter the price';
+      return;
     }
     if (iprice < 0) {
       this.api_error = 'Price should not be a negative value';
       return;
-}
+    }
     if (this.data.type === 'add') {
-        /*if (!this.selitem_pic) {
-          this.api_error = 'Please select the file';
-          return;
-        }*/
-        if (this.selitem_pic) {
-          if (this.captionRef.nativeElement) {
-            imgcaption = this.captionRef.nativeElement.value || '';
-          }
-          imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
+      /*if (!this.selitem_pic) {
+        this.api_error = 'Please select the file';
+        return;
+      }*/
+      if (this.selitem_pic) {
+        if (this.captionRef.nativeElement) {
+          imgcaption = this.captionRef.nativeElement.value || '';
         }
-
-        const submit_data: FormData = new FormData();
-
-        const post_itemdata = {
-                                'displayName': form_data.displayName,
-                                'shortDesc': form_data.shortDesc,
-                                'displayDesc': form_data.displayDesc,
-                                'taxable': form_data.taxable,
-                                'price': form_data.price
+        imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
+      }
+      const submit_data: FormData = new FormData();
+      const post_itemdata = {
+        'displayName': form_data.displayName,
+        'shortDesc': form_data.shortDesc,
+        'displayDesc': form_data.displayDesc,
+        'taxable': form_data.taxable,
+        'price': form_data.price
+      };
+      const blob_itemdata = new Blob([JSON.stringify(post_itemdata)], { type: 'application/json' });
+      submit_data.append('item', blob_itemdata);
+      if (this.selitem_pic) {
+        submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+        const propertiesDet = {
+          'caption': imgcaption // form_data.caption
         };
-
-        const blob_itemdata = new Blob([JSON.stringify(post_itemdata)], { type: 'application/json' });
-
-        submit_data.append('item', blob_itemdata);
-
-        if (this.selitem_pic) {
-          submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-          const propertiesDet = {
-                                  'caption' : imgcaption // form_data.caption
-          };
-          const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-          submit_data.append('properties', blobPropdata);
-        }
-
-        this.addItem(submit_data);
-
+        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        submit_data.append('properties', blobPropdata);
+      }
+      this.addItem(submit_data);
     } else {
-          const post_itemdata = {
-            'displayName': form_data.displayName,
-            'shortDesc': form_data.shortDesc,
-            'displayDesc': form_data.displayDesc,
-            'taxable': form_data.taxable,
-            'price': form_data.price
-          };
-          this.editItem(post_itemdata);
+      const post_itemdata = {
+        'displayName': form_data.displayName,
+        'shortDesc': form_data.shortDesc,
+        'displayDesc': form_data.displayDesc,
+        'taxable': form_data.taxable,
+        'price': form_data.price
+      };
+      this.editItem(post_itemdata);
     }
   }
 
@@ -197,42 +189,42 @@ export class AddProviderItemComponent implements OnInit {
     this.resetApiErrors();
     this.api_loading = true;
     this.provider_services.addItem(post_data)
-        .subscribe(
-          () => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
-            setTimeout(() => {
+      .subscribe(
+        () => {
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
-            this.api_loading = false;
-            this.disableButton = false;
-          }
-    );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_loading = false;
+          this.disableButton = false;
+        }
+      );
   }
   editItem(post_itemdata) {
     this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
-    post_itemdata.itemId =  this.data.item.itemId;
+    post_itemdata.itemId = this.data.item.itemId;
     this.provider_services.editItem(post_itemdata)
-        .subscribe(
-          () => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
-            setTimeout(() => {
+      .subscribe(
+        () => {
+          this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
+          setTimeout(() => {
             this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-          error => {
-            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
-            this.api_loading = false;
-            this.disableButton = false;
-          }
-    );
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        error => {
+          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_loading = false;
+          this.disableButton = false;
+        }
+      );
   }
 
-  resetApiErrors () {
+  resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
@@ -244,12 +236,11 @@ export class AddProviderItemComponent implements OnInit {
       const reader = new FileReader();
       this.item_pic.files = input.files[0];
       this.selitem_pic = input.files[0];
-
       const fileobj = input.files[0];
       reader.onload = (e) => {
-        this.item_pic.base64 =  e.target['result'];
+        this.item_pic.base64 = e.target['result'];
       };
-     reader.readAsDataURL(fileobj);
+      reader.readAsDataURL(fileobj);
     }
     this.file_error_msg = '';
   }
@@ -264,25 +255,25 @@ export class AddProviderItemComponent implements OnInit {
   handleTaxablechange() {
     // this.holdtaxable = !this.holdtaxable;
     this.resetApiErrors();
-      if (this.taxpercentage <= 0) {
-        this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
-        setTimeout(() => {
-          this.api_error = null;
-        }, projectConstants.TIMEOUT_DELAY_LARGE);
-        this.amForm.get('taxable').setValue(false);
-      } else {
+    if (this.taxpercentage <= 0) {
+      this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+      setTimeout(() => {
         this.api_error = null;
-      }
+      }, projectConstants.TIMEOUT_DELAY_LARGE);
+      this.amForm.get('taxable').setValue(false);
+    } else {
+      this.api_error = null;
+    }
   }
 
   getTaxpercentage() {
     this.provider_services.getTaxpercentage()
-        .subscribe (data => {
-            this.taxDetails = data;
-            this.taxpercentage = this.taxDetails.taxPercentage;
-        },
-    () => {
-    });
+      .subscribe(data => {
+        this.taxDetails = data;
+        this.taxpercentage = this.taxDetails.taxPercentage;
+      },
+        () => {
+        });
     this.api_loading1 = false;
   }
 }

@@ -8,23 +8,28 @@
                 <div class="card pos">
                     <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
                         <label>Billing/POS
-                            <mat-slide-toggle class="example-margin" [checked]="true" (change)="handle_posStatus($event)">
+                            <mat-slide-toggle [(ngModel)]="pos_status" (change)="handle_posStatus($event)">
                             </mat-slide-toggle>
+                            <div class="onoff">{{pos_statusstr}}</div>
                         </label>
-
-
-                        <span class="form-level-settings">Set up your Payment modes here. <a class="learnmore-pointer"
-                            id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
-                            More</a></span>
+                        <div class="form-level-settings">Billing/pos hints <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                More</a></div>
                     </div>
-                    <div class="lbl col-sm-12 col-md-12 col-lg-12 " style="margin-bottom: 10px">
+                    <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
                         <label>Jaldee Pay
                             <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
                                 <mat-slide-toggle [(ngModel)]="payment_status" (change)="handle_paymentstatus($event)">
                                 </mat-slide-toggle>
                             </span>
+                            <div class="onoff">{{payment_statusstr}}</div>
                         </label>
-                        <p class="form-level-settings" *ngIf="!payment_status">{{frm_public_self_cap}}</p>
+                        <div class="form-level-settings" style="padding-bottom: 10px">Jaldee pay hints <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                More</a></div>
+                        <p class="form-level-settings" *ngIf="!payment_status" style="margin-bottom: 0px">
+                            {{frm_public_self_cap}}</p>
                         <div *ngIf="payment_status">
                             <div class="payTypeVerify" *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active
                                 payment
@@ -39,10 +44,8 @@
                                 Bank</div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoPaymentSettings()">
@@ -64,7 +67,6 @@
                     </span>
                 </div>
             </div>
-
             <div class="row">
                 <div class="card p0">
                     <span (click)="gotoItems()" class="b-link">

@@ -4,7 +4,6 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-provider-paymentsettings',
@@ -13,7 +12,6 @@ import { SharedServices } from '../../../shared/services/shared-services';
 })
 
 export class ProviderPaymentSettingsComponent implements OnInit {
-
 
     jaldee_account_cap = Messages.PAY_SET_JALDEE_ACCOUNT_CAP;
     my_own_account_cap = Messages.PAY_SET_MY_OWN_ACCOUNT_CAP;
@@ -126,13 +124,18 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
         private router: Router,
-        private activated_route: ActivatedRoute,
-        private shared_services: SharedServices
+        private activated_route: ActivatedRoute
 
     ) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(params => {
             this.tabid = (params.id) ? params.id : 0;
+        });
+        this.shared_functions.getMessage().subscribe(message => {
+            switch (message.ttype) {
+                case 'license-metrics': this.getLicenseMetrics(message.data);
+                    break;
+            }
         });
     }
     ngOnInit() {
@@ -143,12 +146,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.getProviderProfile();
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'payment' };
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.name;
-        // if (this.activeLicPkg === 'Basic' || this.activeLicPkg === 'Bronze' || this.activeLicPkg === 'Silver') {
-        //     this.disableMyAcc = true;
-        // }
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
-        this.getLicenseMetrics();
     }
     /**
      * Function to call the Learn More Page
@@ -158,18 +157,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.router.navigate(['/provider/learnmore/payment']);
-        // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-        // this.shared_functions.sendMessage(pdata);
     }
-    /**
-     * Get target for the learnmore
-     * @param mod id of the section
-     */
-    // getMode(mod) {
-    //     let moreOptions = {};
-    //     moreOptions = { 'show_learnmore': true, 'scrollKey': 'paymentsettings', 'subKey': mod };
-    //     return moreOptions;
-    // }
+
     /**
     * Clear all fields
     * @param code field name
@@ -277,26 +266,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 () => {
                 });
     }
-    // showhidepaytype() {
-    //     this.saveEnabled = true;
-    //     if (this.paystatus) {
-    //         this.paystatus = false;
-    //     } else {
-    //         this.paystatus = true;
-    //     }
-    //     this.savePaySettings(true);
-    //     /*const postData = {
-    //         onlinePayment: this.paystatus
-    //     };
-    //     this.provider_services.setPaymentSettings(postData)
-    //         .subscribe(data => {
-    //            this.provider_shared_functions.openSnackBar(Messages.PAYSETTING_SAV_SUCC);
-    //         },
-    //     error => {
-    //             this.provider_shared_functions.openSnackBar (error.error, {'panelClass': 'snackbarerror'});
-    //             this.paystatus = this.paySettings.onlinePayment || false; // setting the old status
-    //     });*/
-    // }
+
     /**
      * toggle PayTm/PayU On/Off
      * @param obj selected option PayTm/PayU
@@ -327,7 +297,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             .subscribe(() => {
                 this.getPaymentSettings(1);
                 this.saveEnabled = true;
-                // this.handleEditPaySettings(false);
             },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -365,7 +334,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             }
             postData['paytmMerchantId'] = this.paytmMerchantId;
             postData['paytmMerchantKey'] = this.paytmMerchantKey;
-            // postData['paytmWebsite'] = this.paytmWebsite;
             postData['paytmWebsiteWeb'] = this.paytmWebsiteWeb;
             postData['paytmWebsiteApp'] = this.paytmWebsiteApp;
             postData['paytmIndustryType'] = this.paytmIndustryType;
@@ -413,40 +381,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 },
                     error => {
                         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        // this.getPaymentSettings(2);
                         this.saveEnabled = true;
                     });
         }
     }
-    /**
-     * funtion to validate tax, return error messages if any
-     * @param setmsgs true/false
-     */
-    // taxfieldValidation(setmsgs?) {
-    //     const floatpattern = projectConstants.VALIDATOR_FLOAT;
-    //     const blankpattern = projectConstants.VALIDATOR_BLANK;
-    //     this.errorExist = false;
-    //     if (!floatpattern.test(this.taxpercentage)) {
-    //         this.errorExist = true;
-    //         if (setmsgs) {
-    //             this.showError['taxpercentage'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_TAXPER') };
-    //         }
-    //     } else if (this.taxpercentage < 0 || this.taxpercentage > 100) {
-    //         this.errorExist = true;
-    //         if (setmsgs) {
-    //             this.showError['taxpercentage'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_TAXPER') };
-    //         }
-    //     }
-    //     if (blankpattern.test(this.gstnumber)) {
-    //         this.errorExist = true;
-    //         if (setmsgs) {
-    //             this.showError['gstnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_GSTNUM') };
-    //         }
-    //     }
-    //     if (!setmsgs) {
-    //         return this.errorExist;
-    //     }
-    // }
+
     isNumeric(evt) {
         this.resetApi();
         return this.shared_functions.isNumeric(evt);
@@ -454,28 +393,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     isvalid(evt) {
         return this.shared_functions.isValid(evt);
     }
-    /**
-     * function to update tax settings
-     */
-    // saveTaxSettings() {
-    //     this.taxfieldValidation(true);
-    //     if (!this.errorExist) {
-    //         this.savetaxEnabled = false;
-    //         const postData = {
-    //             'taxPercentage': this.taxpercentage,
-    //             'gstNumber': this.gstnumber || ''
-    //         };
-    //         this.provider_services.setTaxpercentage(postData)
-    //             .subscribe(() => {
-    //                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
-    //                 this.savetaxEnabled = true;
-    //             },
-    //                 error => {
-    //                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //                     this.savetaxEnabled = true;
-    //                 });
-    //     }
-    // }
+
     /**
      * function to get user profile for checking email id verified or not
      */
@@ -499,25 +417,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.router.navigate(['provider', 'profile']);
     }
 
-    // handleEditPaySettings(mod) {
-    //     if (this.ineditMode && mod === false) {
-    //         this.getPaymentSettings(2);
-    //     }
-    //     this.ineditMode = mod;
-    //     if (mod === true) {
-    //         setTimeout(() => {
-    //             if (this.paymobrefRef) {
-    //                 if (this.paymobrefRef.nativeElement) { // adding a small delay to field disabled get off before setting the focus
-    //                     this.paymobrefRef.nativeElement.focus();
-    //                 }
-    //             } else if (this.acholdernameRef) {
-    //                 if (this.acholdernameRef.nativeElement) {
-    //                     this.acholdernameRef.nativeElement.focus();
-    //                 }
-    //             }
-    //         }, 50);
-    //     }
-    // }
     checkTaxbuttonDisabled() {
         return true;
     }
@@ -691,8 +590,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         return this.shared_functions.removSpace(evt);
     }
 
-    getLicenseMetrics() {
-        const licenseMetrics = this.shared_services.getSelectedLicenseMetrics();
+    getLicenseMetrics(licenseMetrics) {
+        console.log(licenseMetrics);
         for (let i = 0; i < licenseMetrics.length; i++) {
             if (licenseMetrics[i].id === 6) {
                 if (licenseMetrics[i].anyTimeValue === 'true') {
@@ -702,5 +601,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 }
             }
         }
+        console.log(this.jPay_Billing);
     }
 }

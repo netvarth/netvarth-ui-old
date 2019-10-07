@@ -44,7 +44,6 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
     public dialogRef: MatDialogRef<ProviderBprofileSearchGalleryComponent>) { }
 
   ngOnInit() {
-    // this.getGalleryImages();
   }
   resetVariables() {
     this.item_pic = {
@@ -73,7 +72,6 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         () => {
           this.shared_functions.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
           this.dialogRef.close('reloadlist');
-          // this.getGalleryImages();
         },
         error => {
           this.error_list.push(this.shared_functions.getApiError(error));
@@ -97,9 +95,10 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
           this.error_list.push(this.success_error);
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
-          } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size less than 5mb';
           }
+          // else if (this.error_list[0].size) {
+          //   this.error_msg = 'Please upload images with size less than 5mb';
+          // }
         }
       }
     }
@@ -181,6 +180,5 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
   }
   onCloseImageModal() {
     this.openModalWindow = false;
-    // this.openModalWindowObservable = false;
   }
 }

@@ -1,6 +1,4 @@
 <section>
-    <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
-    <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 
@@ -10,9 +8,6 @@
             <div class="row">
                 <div class="card p0">
                     <div class="paysettings-tab">
-                        <!-- <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid"
-                    (selectedIndexChange)="selectedIndexChange($event)">
-                   <mat-tab > -->
                         <div class="paysettings ynw-common-form-nm">
                             <span class="form-level-settings">{{payment_set_cap}}<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('payment-settings', $event)">Learn
@@ -33,12 +28,6 @@
                                             <label for="">{{my_own_account_cap}}</label>
                                             <div *ngIf="optJaldeeAccount!='enable'">
                                                 <div class="outermost" *ngIf="jPay_Billing">
-                                                    <!-- <div class='pay-outer'>
-                                                <span class="ttle">
-                                                    Online Payment Enabled? <span class="sts" [class.active]="paystatus==true">{{(paystatus==true)?'Yes':'No'}}</span>
-                                                </span>
-                                                <span class="ctrl"><mat-slide-toggle [checked]="paystatus" (change)="showhidepaytype()"></mat-slide-toggle></span>
-                                            </div> -->
                                                     <div class="no-dta"
                                                         *ngIf="!emailidVerified && profileQueryExecuted">
                                                         <p>{{pay_if_mail_verified_cap}}</p>
@@ -189,38 +178,6 @@
                                                                     class="not-verified">{{not_verified_cap}}</span>
                                                             </div>
                                                             <div class='cc-det' *ngIf="ccenabled">
-                                                                <!-- <div class='pan-outer'>
-                                                                <div class="form-group">
-                                                                    <label
-                                                                        class="caption">{{pan_card_number_cap}}</label>
-                                                                    <mat-form-field>
-                                                                        <input matInput [(ngModel)]="pannumber"
-                                                                            (change)="resetApi('pannumber')"
-                                                                            maxlength="10" autocomplete="off"
-                                                                            [disabled]="!ineditMode"
-                                                                            (blur)="panCardBlur()" tabindex="7">
-                                                                    </mat-form-field>
-                                                                    <app-field-error-display
-                                                                        [displayError]="showError['pannumber']['status']"
-                                                                        [errorMsg]="showError['pannumber']['msg']">
-                                                                    </app-field-error-display>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label
-                                                                        class="caption">{{name_on_pan_card_cap}}</label>
-                                                                    <mat-form-field>
-                                                                        <input matInput [(ngModel)]="panname"
-                                                                            (change)="resetApi('panname')"
-                                                                            autocomplete="off" [disabled]="!ineditMode"
-                                                                            maxlength="50" (blur)="panNameBlur()"
-                                                                            tabindex="10">
-                                                                    </mat-form-field>
-                                                                    <app-field-error-display
-                                                                        [displayError]="showError['panname']['status']"
-                                                                        [errorMsg]="showError['panname']['msg']">
-                                                                    </app-field-error-display>
-                                                                </div>
-                                                            </div> -->
                                                                 <div class='bank-outer'>
                                                                     <div class="form-group">
                                                                         <label
@@ -395,8 +352,6 @@
                                                         <button type="button" mat-button class="cs-btn bt1"
                                                             (click)="savePaySettings()" *ngIf="ineditMode"
                                                             tabindex="14">Save</button>
-                                                        <!-- <button type="button" mat-button class="cs-btn bt1" (click)="handleEditPaySettings(true)"
-                                                        *ngIf="!ineditMode" tabindex="13">{{change_pay_settings_cap}}</button> -->
                                                     </div>
                                                 </div>
                                                 <div class="no-dta" *ngIf="!jPay_Billing">
@@ -415,43 +370,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- </mat-tab> -->
-                <!-- <mat-tab label="Tax Settings">
-                            <span class="form-level-settings">{{tax_st_cap}}<a class="learnmore-pointer" id="customer-help" (click)="learnmore_clicked('tax-settings', $event)">Learn More</a></span>
-
-                        <div class="outermost">
-                            <div class="taxouter">
-
-                                <div class="form-group gstval">
-                                    <label class="caption">Enter 15 digit GST number *</label>
-                                    <mat-form-field>
-                                        <input matInput [(ngModel)]="gstnumber" id="gstno" (keypress)="resetApi()"
-                                            autocomplete="off" maxlength="15" tabindex="14">
-                                    </mat-form-field>
-                                    <app-field-error-display [displayError]="showError['gstnumber']['status']"
-                                        [errorMsg]="showError['gstnumber']['msg']"></app-field-error-display>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="caption">{{tax_percentage_cap}}</label>
-                                    <mat-form-field>
-                                        <input matInput [(ngModel)]="taxpercentage" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"  max="100" class="tax-per"
-                                            autocomplete="off" tabindex="15">
-                                        <span matSuffix>%</span>
-                                    </mat-form-field>
-                                    <app-field-error-display [displayError]="showError['taxpercentage']['status']"
-                                        [errorMsg]="showError['taxpercentage']['msg']"></app-field-error-display>
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <div class="actiondiv" *ngIf="savetaxEnabled">
-                            <button type="button" mat-button class="cs-btn bt1" (click)="saveTaxSettings()" [disabled]="taxfieldValidation(false)"
-                                tabindex="16">{{update_tax_cap}}</button>
-                        </div>
-                    </mat-tab> -->
-                <!-- </mat-tab-group> -->
             </div>
         </div>
     </div>

@@ -1,23 +1,22 @@
 <section>
     <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
-     <!-- Subheader section -->
+    <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
     <div class="content comn-cls">
         <div class="container no-padding">
-                <div class="card">
-                        <p class="form-level-settings">{{frm_dicounts_cap}}<a class="learnmore-pointer"
-                            id="customer-help" (click)="learnmore_clicked('discount', $event)">Learn
-                            More</a></p>
-                
-            <div class="no-dta" *ngIf="discount_list.length ==0 && query_executed == true">
-                <p>{{emptyMsg}}</p>
-                <span class="cs-btn bt3" (click)="addDiscounts()">{{add_disc_cap}}</span>
-            </div>
-            <div class="w-dta" *ngIf="discount_list.length>0">
-                <div class="row">
-                    
+            <div class="card">
+                <p class="form-level-settings">{{frm_dicounts_cap}}<a class="learnmore-pointer" id="customer-help"
+                        (click)="learnmore_clicked('discount', $event)">Learn
+                        More</a></p>
+
+                <div class="no-dta" *ngIf="discount_list.length ==0 && query_executed == true">
+                    <p>{{emptyMsg}}</p>
+                    <span class="cs-btn bt3" (click)="addDiscounts()">{{add_disc_cap}}</span>
+                </div>
+                <div class="w-dta" *ngIf="discount_list.length>0">
+                    <div class="row">
                         <div class="copy">
                             <div class="table-outer q-tbl">
                                 <table class="table">
@@ -26,7 +25,7 @@
                                             <th>{{name_cap}}</th>
                                             <th>{{value_cap}}</th>
                                             <th>{{desc_cap}}</th>
-                                            <th><span class="addbt" (click)="addDiscounts()"></span></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -58,8 +57,10 @@
                                                 </span>
 
                                                 <span class="mbt-mobile-show">
-                                                    <button class="editcls" type="button" (click)="editDiscounts(discount)">{{edit_btn}}</button>
-                                                    <button class="deletecls" type="button" (click)="doRemoveDiscounts(discount)">{{delete_btn}}</button>
+                                                    <button class="editcls" type="button"
+                                                        (click)="editDiscounts(discount)">{{edit_btn}}</button>
+                                                    <button class="deletecls" type="button"
+                                                        (click)="doRemoveDiscounts(discount)">{{delete_btn}}</button>
                                                 </span>
                                             </td>
                                         </tr>

@@ -693,5 +693,9 @@ export class ProviderServices {
     const url = 'provider/bill/settings/' + status;
     return this.servicemeta.httpPut(url);
   }
+  getProviderPOSStatus() {
+    const url = 'provider/bill/settings/pos';
+    return this.servicemeta.httpGet(url);
+  }
 }
 

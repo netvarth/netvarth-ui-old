@@ -946,14 +946,6 @@ export class SharedServices {
     return this.servicemeta.httpGet('provider/license/licensemetadata');
   }
 
-  setSelectedLicenseMetrics(metrics) {
-    this.licenseMetrics = metrics;
-  }
-
-  getSelectedLicenseMetrics() {
-    return this.licenseMetrics;
-  }
-
   getProviderDept(id) {
 
     const path = 'consumer/waitlist/department/services?account=' + id;

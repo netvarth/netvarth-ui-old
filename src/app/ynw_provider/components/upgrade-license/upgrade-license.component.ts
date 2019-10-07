@@ -105,9 +105,8 @@ export class UpgradeLicenseComponent implements OnInit {
           }
         }
       }
-      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
+      this.sharedfunctionObj.sendMessage({ 'ttype': 'license-metrics', 'data': this.selectedpkgMetrics });
     });
-
   }
 
   licensepackage_Select(val) {

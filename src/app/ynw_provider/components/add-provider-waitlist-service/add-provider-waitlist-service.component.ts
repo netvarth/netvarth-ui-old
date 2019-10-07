@@ -112,7 +112,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.type = this.data.type;
-    //  this.base_licence = (package_id === 1) ? true : false;
   }
   setDescFocus() {
     this.isfocused = true;
@@ -169,11 +168,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
         department: ['', Validators.compose([Validators.maxLength(500)])],
-        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
-        // totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
-        // isPrePayment: [{'value': false , 'disabled': this.base_licence }],
-        // taxable: [false],
         notification: [false]
       });
     } else {
@@ -181,7 +176,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
         department: ['', Validators.compose([Validators.maxLength(500)])],
-        // serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])],
         serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
@@ -198,11 +192,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
         'description': data['description'] || this.amForm.get('description').value,
         'department': data['department'] || this.amForm.get('department').value,
         'serviceDuration': data['serviceDuration'] || this.amForm.get('serviceDuration').value,
-        /*'totalAmount': data['totalAmount'] || this.amForm.get('totalAmount').value,
-        'isPrePayment': (!this.base_licence && data['minPrePaymentAmount'] &&
-                                data['minPrePaymentAmount'] !== 0
-                                ) ? true : false,
-        'taxable': data['taxable'] || this.amForm.get('taxable').value,*/
         'notification': data['notification'] || this.amForm.get('notification').value,
       });
     } else {
@@ -240,7 +229,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     } else if (this.data.type === 'edit') {
       form_data.id = this.service.id;
       this.updateService(form_data);
-      // this.saveImages();
     }
   }
 
@@ -261,7 +249,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           if (this.item_pic.files.length > 0) {
             this.saveImages('add');
           } else {
-            // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
             this.mode = 'afteradd';
           }
         },
@@ -338,9 +325,10 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           this.error_list.push(this.success_error);
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
-          } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size < 5mb';
           }
+          //  else if (this.error_list[0].size) {
+          //   this.error_msg = 'Please upload images with size < 5mb';
+          // }
         }
       }
     }
@@ -406,7 +394,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           this.getGalleryImages();
           this.resetVariables();
           if (from === 'add') {
-            // this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_ADDED'));
             this.mode = 'afteradd';
           } else if (from === 'edit') {
             this.closePopup(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
@@ -425,12 +412,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     const imagesArray = [];
     let i = 0;
     for (const image of all_images) {
-      // const img =  new Image(
-      //               image.url,
-      //               image.thumbUrl, // no thumb
-      //               image.caption, // no description
-      //               null
-      //             );
       const img = new Image(i, {
         img: image.url,
         description: ''
@@ -448,7 +429,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
   onCloseImageModal() {
     this.openModalWindow = false;
-    // this.openModalWindowObservable = false;
   }
 
   confirmDelete(file) {
@@ -514,8 +494,6 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
           }
         },
         () => {
-          // this.shared_functions.apiErrorAutoHide(this, error);
-          // this.amForm.get('isPrePayment').setValue(false);
         }
       );
   }
@@ -523,7 +501,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.dialogRef.close('reloadlist');
     this.router.navigate(['/provider/settings/waitlist-manager/queues']);
   }
-  reload(){
+  reload() {
     this.dialogRef.close('reloadlist');
   }
   isNumeric(evt) {

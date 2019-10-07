@@ -103,7 +103,7 @@ import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-bo
         { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS }
-      ]
+    ]
 })
 
 export class BusinessModule {

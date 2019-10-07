@@ -5,7 +5,7 @@
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
     </h1>
-    <app-common-innerloading-spinner  *ngIf="api_loading1">
+    <app-common-innerloading-spinner *ngIf="api_loading1">
     </app-common-innerloading-spinner>
     <mat-dialog-content *ngIf="!api_loading1">
         <!-- <div class="form-group" *ngIf="data.type=='add'">
@@ -80,8 +80,8 @@
         <div class="form-group">
             <mat-form-field>
                 <textarea matInput class="form-control" id="shortDesc" placeholder="{{detailed_dec_cap}} "
-                    formControlName="displayDesc" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
-                    maxlength="500"></textarea>
+                    formControlName="displayDesc" (keyup)="setCharCount()" (focus)="setDescFocus()"
+                    (blur)="lostDescFocus()" maxlength="500"></textarea>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
     {
@@ -95,9 +95,9 @@
         <div class="form-group">
             <!-- <label class="col-form-label" for="price">{{price_cap}} (<i class="fa fa-inr"></i>) *</label> -->
             <mat-form-field>
-            <input matInput type="text" min="0" max="100000"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" 
-                class="form-control number-ip-sm" formControlName="price"
-                 id="price" placeholder="{{price_cap}} ({{rupee_symbol}}) *" autocomplete="off">
+                <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                    (keyup)="isvalid($event)" class="form-control number-ip-sm" formControlName="price" id="price"
+                    placeholder="{{price_cap}} ({{rupee_symbol}}) *" autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
     {
@@ -110,10 +110,12 @@
 
         <div class="form-group">
             <label class="col-form-label" for="taxable">{{taxable_cap}} </label>
-            <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()" [checked]="holdtaxable"></mat-slide-toggle>
+            <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()" [checked]="holdtaxable">
+            </mat-slide-toggle>
             <!-- <input type="radio" class="form-control" id="taxable" value="1" formControlName="taxable"> Yes<br/>
     <input type="radio" class="form-control" id="taxable" value="0" formControlName="taxable"> No -->
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')" errorMsg="Please select taxable">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"
+                errorMsg="Please select taxable">
             </app-field-error-display>
         </div>
     </mat-dialog-content>
@@ -121,9 +123,11 @@
         <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
         <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}
         </button>
-        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"> </app-common-innerloading-spinner>
+        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+        </app-common-innerloading-spinner>
     </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

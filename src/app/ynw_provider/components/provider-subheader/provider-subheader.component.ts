@@ -62,6 +62,12 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         this.isShowingRouteLoadIndicator.emit(!!asyncLoadCount);
       }
     );
+    this.shared_functions.getMessage().subscribe(message => {
+      switch (message.ttype) {
+        case 'license-metrics': this.kioskClick(message.data);
+          break;
+      }
+    });
   }
 
   normal_profile_active = 1;
@@ -77,7 +83,6 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getLocationList();
-    // this.getProviderLocationQueues();
     this.selected_location = this.shared_functions.getitemfromLocalStorage('loc_id');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     if (!this.server_date) {
@@ -107,8 +112,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         });
   }
 
-  kioskClick() {
-    const licenseMetrics = this.shared_services.getSelectedLicenseMetrics();
+  kioskClick(licenseMetrics) {
     for (let i = 0; i < licenseMetrics.length; i++) {
       if (licenseMetrics[i].id === 9) {
         if (licenseMetrics[i].anyTimeValue === 'true') {

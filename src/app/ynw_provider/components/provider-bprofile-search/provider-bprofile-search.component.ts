@@ -1173,9 +1173,10 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           this.error_list.push(this.success_error);
           if (this.error_list[0].type) {
             this.error_msg = 'Selected image type not supported';
-          } else if (this.error_list[0].size) {
-            this.error_msg = 'Please upload images with size less than 5mb';
           }
+          // else if (this.error_list[0].size) {
+          //   this.error_msg = 'Please upload images with size less than 5mb';
+          // }
           // this.error_msg = 'Please upload images with size < 5mb';
           this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
         }
