@@ -313,7 +313,7 @@
                                 ? 'Change Schedule': 'Add Schedule'}}</span>
                         </div>
                         <app-provider-schedule [Isource]="'wizard'" *ngIf="ischange_schedule_clicked == true"
-                            [existingSchedules]="schedule_arr" providerStatus="INACTIVE"
+                            providerStatus="INACTIVE"
                             (saveScheduleClick)="handlesSaveschedule($event)"
                             (cancelScheduleClick)="handleCancelschedule($event)"
                             (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>

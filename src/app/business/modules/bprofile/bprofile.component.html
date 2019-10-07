@@ -195,46 +195,13 @@
 
                                 </div>
                             </div>
-                            <!-- <div class=" card p0 w-dta active">
-                                <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true"> -->
-                            <!-- <mat-expansion-panel-header class="min100">
-                                            <mat-panel-title class="block-level">
-                                                {{verified_level}}
-                                                <p class="form-level-settings">{{frm_verified_cap}}<a
-                                                        class="learnmore-pointer" id="verified-levels"
-                                                        (click)="learnmore_clicked('verified-levels', $event)">Learn
-                                                        More</a></p>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header> -->
-                            <!-- <div class="cd-b veifyLevel">
-                                            <span
-                                                *ngIf="bProfile && bProfile.verifyLevel =='NONE'">{{verified_level_change}}</span>
-                                            <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'"><img height="80"
-                                                    width="70" src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                            <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'"><img
-                                                    height="80" width="70" src="./assets/images/BasicPlsOrg.png"
-                                                    alt="Basic Plus"></span>
-                                            <span *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'"><img
-                                                    height="80" width="70" src="./assets/images/PremiumOrg.png"
-                                                    alt="Advanced"></span></div>
-                                        <div class="cd-b veifyLevel">
-                                            <span
-                                                *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'">{{verified_level_basic}}</span>
-                                            <span
-                                                *ngIf="bProfile && bProfile.verifyLevel == 'BASIC_PLUS'">{{verified_level_basicplus}}</span>
-                                            <span
-                                                *ngIf="bProfile && bProfile.verifyLevel == 'ADVANCED'">{{verified_level_premium}}</span>
-                                        </div> -->
-                            <!-- </mat-expansion-panel>
-                                </mat-accordion>
-                            </div> -->
                             <div class="card p0 w-dta active">
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header class="min100">
                                             <mat-panel-title class="block-level">
-                                                {{profile_summary_cap}}
+                                                
+                                                {{profile_summary_cap}} <i *ngIf="bProfile && (!bProfile.0businessName || bProfile.businessName=='' || !bProfile.baseLocation || (bProfile.baseLocation && !bProfile.baseLocation.bSchedule))" class="req-flds-cap">*required fields missing</i>
                                                 <p class="form-level-settings">{{frm_profile_name_cap}}<a
                                                         class="learnmore-pointer" id="customer-help"
                                                         (click)="learnmore_clicked('basic-information', $event)">Learn
@@ -438,7 +405,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoSpecializations()">
-                        <h2>Specializations</h2>
+                        <h2>Specializations <i class="req-flds-cap">*required fields missing</i></h2>
                         <span class="form-level-settings">Here you can see your past payments. <a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('settings-departments', $event)">Learn
@@ -450,7 +417,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLanguages()">
                         <h2>Languages Known</h2>
-                        <span class="form-level-settings">Here you can see your past payments. <a
+                        <span class="form-level-settings">Here you can see your known languages. <a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('settings-departments', $event)">Learn
                                 More</a></span>
@@ -472,7 +439,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoAdditionalInfo()">
                         <h2>
-                            Additional Info
+                            Additional Info <i class="req-flds-cap">*required fields missing</i>
                         </h2>
                         <span class="form-level-settings">Click here to avail additional features. <a
                                 class="learnmore-pointer" id="customer-help"

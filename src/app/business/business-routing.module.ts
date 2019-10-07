@@ -12,6 +12,7 @@ import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/componen
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
+import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
       { path: 'license', loadChildren: '../business/modules/license/license.module#LicenseModule' },
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
-      { path: 'dashboard', loadChildren: '../business/modules/dashboard/dashboard.module#DashboardModule'}
+      { path: 'dashboard', loadChildren: '../business/modules/dashboard/dashboard.module#DashboardModule'},
+      { path: 'bwizard', component: ProviderbWizardComponent }
     ]
   }
 ];

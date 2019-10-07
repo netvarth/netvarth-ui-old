@@ -15,9 +15,7 @@ import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.compone
 import { SpecializationsComponent } from './specializations/specializations.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ProviderBprofileSearchDynamicComponent } from '../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
-import { DynamicFormComponent } from '../../../ynw_provider/components/dynamicforms/dynamic-form.component';
-import { DynamicFormQuestionComponent } from '../../../ynw_provider/components/dynamicforms/dynamic-form-question.component';
-import { AddProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
+import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 
 @NgModule({
     imports: [
@@ -28,7 +26,8 @@ import { AddProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider
         SharedModule,
         CapitalizeFirstPipeModule,
         ModalGalleryModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        DynamicFormModule
     ],
     declarations: [
         BProfileComponent,
@@ -38,9 +37,7 @@ import { AddProviderBprofileSearchAdwordsComponent } from '../../../ynw_provider
         LanguagesComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
-        PrivacyComponent,
-        DynamicFormComponent,
-        DynamicFormQuestionComponent,
+        PrivacyComponent
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,
