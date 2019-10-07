@@ -20,7 +20,7 @@ import { ConfirmPaymentBoxComponent } from './shared/component/confirm-paymentbo
 import { NotificationListBoxComponent } from './shared/component/notification-list-box/notification-list-box.component';
 import { AddProviderMemberComponent } from './components/add-provider-member/add-provider-member.component';
 import { AdjustQueueDelayComponent } from './components/adjust-queue-delay/adjust-queue-delay.component';
-import { ProviderbWizardComponent } from './components/provider-bwizard/provider-bwizard.component';
+// import { ProviderbWizardComponent } from './components/provider-bwizard/provider-bwizard.component';
 import { AuthGuardProviderHome, AuthGuardNewProviderHome } from '../shared/guard/auth.guard';
 import { ProviderWaitlistCheckInCancelPopupComponent } from './components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './components/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -29,9 +29,9 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from './components/ad
 import { AddProviderWaitlistCheckInBillComponent } from './components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { ViewProviderWaitlistCheckInBillComponent } from './components/view-provider-waitlist-checkin-bill/view-provider-waitlist-checkin-bill.component';
 import { ProviderWaitlistCheckInPaymentComponent } from './components/provider-waitlist-checkin-payment/provider-waitlist-checkin-payment.component';
-import { ProviderSystemAuditLogComponent } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
-import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
-import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
+// import { ProviderSystemAuditLogComponent } from './components/provider-system-auditlogs/provider-system-auditlogs.component';
+// import { ProviderSystemAlertComponent } from './components/provider-system-alerts/provider-system-alerts.component';
+// import { ProviderCustomersComponent } from './components/provider-customers/provider-customers.component';
 import { AddProviderCustomerComponent } from './components/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from './components/search-provider-customer/search-provider-customer.component';
 import { ProviderRefundComponent } from './components/provider-refund/provider-refund.component';
@@ -54,13 +54,12 @@ import { ProviderSubeaderModule } from './components/provider-subheader/provider
 import { LoadingSpinnerModule } from './components/loading-spinner/loading-spinner.module';
 import { ProviderWaitlistOnlineCheckinModule } from './components/provider-waitlist-online-checkin/provider-waitlist-online-checkin.module';
 import { AddProviderSchedulesModule } from './components/add-provider-schedule/add-provider-schedule.module';
-import { AddProviderWaitlistQueuesComponent } from './components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
-import { AddProviderWaitlistServiceComponent } from './components/add-provider-waitlist-service/add-provider-waitlist-service.component';
-import { GoogleMapComponent } from './components/googlemap/googlemap.component';
-import { DynamicFormComponent } from './components/dynamicforms/dynamic-form.component';
-import { DynamicFormQuestionComponent } from './components/dynamicforms/dynamic-form-question.component';
+// import { AddProviderWaitlistQueuesComponent } from './components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
+// import { AddProviderWaitlistServiceComponent } from './components/add-provider-waitlist-service/add-provider-waitlist-service.component';
+// import { GoogleMapComponent } from './components/googlemap/googlemap.component';
 import { ProviderBprofileSearchDynamicComponent } from './components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fields.component';
+import { DynamicFormModule } from '../business/modules/dynamic-form/dynamic-form.module';
 @NgModule({
   imports: [
     CapitalizeFirstPipeModule,
@@ -79,7 +78,8 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ProviderSubeaderModule,
     LoadingSpinnerModule,
     ProviderWaitlistOnlineCheckinModule,
-    AddProviderSchedulesModule
+    AddProviderSchedulesModule,
+    DynamicFormModule
   ],
   declarations: [
     ProviderComponent,
@@ -92,9 +92,7 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     ConfirmPaymentBoxComponent,
     NotificationListBoxComponent,
     AdjustQueueDelayComponent,
-    ProviderbWizardComponent,
-    DynamicFormComponent,
-    DynamicFormQuestionComponent,
+    // ProviderbWizardComponent,
     ProviderWaitlistCheckInCancelPopupComponent,
     ProviderWaitlistCheckInConsumerNoteComponent,
     // ProviderWaitlistCheckInDetailComponent,
@@ -102,15 +100,15 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     // AddProviderWaitlistCheckInBillComponent,
     ViewProviderWaitlistCheckInBillComponent,
     ProviderWaitlistCheckInPaymentComponent,
-    ProviderSystemAuditLogComponent,
-    ProviderSystemAlertComponent,
-    ProviderCustomersComponent,
+    // ProviderSystemAuditLogComponent,
+    // ProviderSystemAlertComponent,
+    // ProviderCustomersComponent,
     AddProviderCustomerComponent,
     SearchProviderCustomerComponent,
     ProviderRefundComponent,
-    AddProviderWaitlistQueuesComponent,
-    AddProviderWaitlistServiceComponent,
-    GoogleMapComponent,
+    // AddProviderWaitlistQueuesComponent,
+    // AddProviderWaitlistServiceComponent,
+    // GoogleMapComponent,
     ProviderBprofileSearchDynamicComponent,
     VirtualFieldsComponent,
   ],
@@ -130,10 +128,10 @@ import { VirtualFieldsComponent } from './components/virtual-fields/virtual-fiel
     AddProviderCustomerComponent,
     SearchProviderCustomerComponent,
     ProviderRefundComponent,
-    ProviderbWizardComponent,
-    AddProviderWaitlistQueuesComponent,
-    AddProviderWaitlistServiceComponent,
-    GoogleMapComponent,
+    // ProviderbWizardComponent,
+    // AddProviderWaitlistQueuesComponent,
+    // AddProviderWaitlistServiceComponent,
+    // GoogleMapComponent,
     ProviderBprofileSearchDynamicComponent
   ],
   providers: [

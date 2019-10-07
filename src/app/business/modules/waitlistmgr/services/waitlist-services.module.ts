@@ -12,8 +12,8 @@ import { MaterialModule } from '../../../../shared/modules/common/material.modul
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module';
-import { ServiceComponent } from '../../../../shared/modules/service/service.component';
 import { ServicesService } from '../../../../shared/modules/service/services.service';
+import { ServiceModule } from '../../../../shared/modules/service/service.module';
 
 @NgModule({
     imports: [
@@ -28,12 +28,12 @@ import { ServicesService } from '../../../../shared/modules/service/services.ser
         FormsModule,
         ReactiveFormsModule,
         ModalGalleryModule,
-        GalleryModule
+        GalleryModule,
+        ServiceModule
     ],
     declarations: [
         WaitlistServicesComponent,
-        WaitlistServiceDetailComponent,
-        ServiceComponent
+        WaitlistServiceDetailComponent
     ],
     exports: [
         WaitlistServicesComponent
