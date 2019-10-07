@@ -18,6 +18,7 @@ import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrad
 import { ProviderLicenseUsageComponent } from '../../../ynw_provider/components/provider-license-usage/provider-license-usage.component';
 import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
 import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
+import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 @NgModule({
     imports: [
         SharedModule,
@@ -25,7 +26,8 @@ import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/com
         LoadingSpinnerModule,
         BreadCrumbModule,
         LicenseRoutingModule,
-        PagerModule
+        PagerModule,
+        CapitalizeFirstPipeModule
     ],
     declarations: [
         ProviderBprofileSearchAdwordsComponent,
@@ -35,7 +37,6 @@ import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/com
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
-        ConfirmBoxComponent,
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
@@ -44,7 +45,6 @@ import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/com
     entryComponents: [
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
-        ConfirmBoxComponent,
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,

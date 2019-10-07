@@ -21,6 +21,8 @@ import { AddProviderItemImageComponent } from '../../../ynw_provider/components/
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { ProviderPaymentSettingsComponent } from '../../../ynw_provider/components/provider-payment-settings/provider-payment-settings.component';
 import { JDNComponent } from './jdn/jdn.component';
+import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+
 
 @NgModule({
     imports: [
@@ -48,7 +50,6 @@ import { JDNComponent } from './jdn/jdn.component';
         AddProviderItemImageComponent,
         ProviderPaymentSettingsComponent,
         JDNComponent
-
     ],
     entryComponents: [
         AddProviderCouponsComponent,

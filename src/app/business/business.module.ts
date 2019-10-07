@@ -42,6 +42,7 @@ import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlem
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
 import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
 import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
+import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @NgModule({
     declarations: [
@@ -61,7 +62,8 @@ import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
         ProviderWaitlistCheckInDetailComponent,
         ProviderMembersComponent,
         GoogleMapComponent,
-        ProviderbWizardComponent
+        ProviderbWizardComponent,
+        ConfirmBoxComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -84,7 +86,8 @@ import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
         AddProviderWaitlistQueuesComponent,
         AddProviderWaitlistCheckInBillComponent,
         AddProviderBprofileSearchAdwordsComponent,
-        GoogleMapComponent
+        GoogleMapComponent,
+        ConfirmBoxComponent
     ],
     providers: [
         AuthGuardProviderHome,

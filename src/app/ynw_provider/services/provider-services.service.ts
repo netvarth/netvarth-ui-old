@@ -689,5 +689,9 @@ export class ProviderServices {
     const url = 'provider/ynwConf/jaldeeGst';
     return this.servicemeta.httpGet(url);
   }
+  setProviderPOSStatus(status) {
+    const url = 'provider/bill/settings/' + status;
+    return this.servicemeta.httpPut(url);
+  }
 }
 

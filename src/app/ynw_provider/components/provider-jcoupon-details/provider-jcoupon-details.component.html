@@ -11,7 +11,7 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
                             <div class="cl1">
-                                <div class="ot-it" *ngIf="jCoupon">
+                                <div class="ot-it jcoupondetail" *ngIf="jCoupon">
                                     <h4>{{jCoupon.couponName | capitalizeFirst}}</h4>
                                     <div class="it-des">
                                         {{jCoupon.couponDescription | capitalizeFirst}}
@@ -163,7 +163,7 @@
                                             <span *ngIf="jCoupon.couponRules.alwaysEnabled!=true && jCoupon.couponState!='EXPIRED' && jCoupon.couponState!='DISABLED_BY_JALDEE' && jCoupon.couponState!='DISABLED_PROVIDER_LIMIT_REACHED'">
                                                 <mat-slide-toggle [checked]="jCoupon.couponState=='ENABLED'" (change)="changecouponStatus(jCoupon)"></mat-slide-toggle>
                                             </span>
-                                            <span class='blue-text' *ngIf="jCoupon.couponState=='NEW'">New - Available
+                                            <span class='blue-text' *ngIf="jCoupon.couponState=='NEW'" style="padding-left: 5px">New - Available
                                                 for Use</span>
                                             <span class='enabled' *ngIf="jCoupon.couponState=='ENABLED'">{{enable_cap}}</span>
                                             <span class='disabled' *ngIf="jCoupon.couponState=='DISABLED'">{{disbale_cap}}</span>

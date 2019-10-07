@@ -4147,7 +4147,7 @@ i.notavail {color:grey !important}
   right: 20% !important;
   }
 }
-.taxform .paysettings-tab {
+.paysettings-tab {
   box-shadow: none !important;
   margin-bottom: 0px !important;
 }
@@ -4382,4 +4382,7 @@ border-bottom: none !important;
   .mg-small-10 {
     margin-top: 10px
   }
+}
+.content.loc-list .card .copy .jcoupondetail .c-ot .item {
+  width: 100% !important;
 }
