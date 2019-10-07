@@ -19,8 +19,11 @@ export class ProviderNotificationsComponent implements OnInit {
       title: 'Settings'
     },
     {
-      title: 'Notifications',
-      url: '/provider/settings/holidays'
+      url: '/provider/settings/miscellaneous',
+      title: 'Miscellaneous'
+    },
+    {
+      title: 'Notifications'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

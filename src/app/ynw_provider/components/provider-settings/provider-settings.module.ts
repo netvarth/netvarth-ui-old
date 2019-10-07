@@ -18,7 +18,7 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { ProviderWaitlistOnlineCheckinModule } from '../provider-waitlist-online-checkin/provider-waitlist-online-checkin.module';
 import { ProviderWaitlistLocationsModule } from '../provider-waitlist-locations/provider-waitlist-locations.module';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
-import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
+// import { ProviderLicenseUsageComponent } from '../provider-license-usage/provider-license-usage.component';
 import { AddProviderBprofilePrivacysettingsComponent } from '../provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { ProviderBprofileSearchSchedulepopupComponent } from '../provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSpecializationsComponent } from '../add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
@@ -26,7 +26,7 @@ import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-wait
 import { ProviderBprofileSearchGalleryComponent } from '../provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { ProviderBprofileSearchSocialMediaComponent } from '../provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
-import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
+// import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
 import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { AddProviderSchedulesModule } from '../add-provider-schedule/add-provider-schedule.module';
@@ -65,14 +65,14 @@ import { DepartmentDetailComponent } from '../departments/details/department.det
         // ProviderWaitlistServiceDetailComponent,
 
         AddProviderWaitlistLocationsComponent,
-        ProviderLicenseUsageComponent,
+        // ProviderLicenseUsageComponent,
         AddProviderBprofilePrivacysettingsComponent,
         ProviderBprofileSearchSchedulepopupComponent,
         // AddProviderBprofileSpokenLanguagesComponent,
         AddProviderBprofileSpecializationsComponent,
         AddProviderWaitlistServiceGalleryComponent,
         // UpgradeLicenseComponent,
-        ProviderAuditLogComponent,
+        // ProviderAuditLogComponent,
         ProviderBprofileSearchPrimaryComponent,
         // ProviderBprofileSearchDynamicComponent,
         ProviderBprofileSearchGalleryComponent,
@@ -81,12 +81,12 @@ import { DepartmentDetailComponent } from '../departments/details/department.det
         // VirtualFieldsComponent,
         // DynamicFormQuestionComponent,
         // DynamicFormComponent,
-        ProviderLicenceInvoiceDetailComponent
+        // ProviderLicenceInvoiceDetailComponent
     ],
     entryComponents: [
         // UpgradeLicenseComponent,
         AddProviderWaitlistLocationsComponent,
-        ProviderLicenseUsageComponent,
+        // ProviderLicenseUsageComponent,
         AddProviderBprofilePrivacysettingsComponent,
         ProviderBprofileSearchPrimaryComponent,
         ProviderBprofileSearchSocialMediaComponent,
@@ -96,8 +96,8 @@ import { DepartmentDetailComponent } from '../departments/details/department.det
         AddProviderBprofileSpecializationsComponent,
         // ProviderBprofileSearchDynamicComponent,
         AddProviderWaitlistServiceGalleryComponent,
-        ProviderLicenceInvoiceDetailComponent,
-        ProviderAuditLogComponent
+        // ProviderLicenceInvoiceDetailComponent,
+        // ProviderAuditLogComponent
     ]
 })
 
