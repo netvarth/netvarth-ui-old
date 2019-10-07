@@ -8,7 +8,7 @@ header.consumer .tp-1 {
     position: relative;
     /* More Options Dropdown */
 }
-
+.ml-auto, .mx-auto { margin-left: auto!important;}
 header.consumer .tp-1 .tp-l {
     margin-right: 20px;
 }
@@ -2185,6 +2185,7 @@ header {
     margin-top: 10px;
     align-self: flex-end;
     text-align: right;
+    float: right;
   }
   
   header .tc1 .topsignouter {

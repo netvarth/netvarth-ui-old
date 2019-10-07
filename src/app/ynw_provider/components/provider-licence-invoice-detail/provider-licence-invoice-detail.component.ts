@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef,MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -47,7 +47,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
     amount: 0,
-   // paymentMode: 'DC', // 'null', changes as per request from Manikandan
+    // paymentMode: 'DC', // 'null', changes as per request from Manikandan
     uuid: null,
     purpose: null
   };
@@ -68,7 +68,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     licensePkgDetailsArray: []
   };
   showPreviousDue = false;
-  show = false; 
+  show = false;
   discountDetailsTxt = 'Show discount details';
 
   constructor(
@@ -129,7 +129,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           if (this.invoice.discount) {
             this.licenseDiscounts = JSON.parse(this.invoice.discount);
             this.discounts = this.licenseDiscounts.discount;
-            this.latestInvoiceDiscount =this.licenseDiscounts.discount;
+            this.latestInvoiceDiscount = this.licenseDiscounts.discount;
           }
           if (this.invoice.mergedStatements) {
             this.checkPreviousStatements(this.invoice.mergedStatements);
@@ -232,7 +232,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     this.disablebutton = true;
     this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
     if (this.pay_data.uuid && this.pay_data.amount &&
-      this.pay_data.amount !== 0 ) {
+      this.pay_data.amount !== 0) {
 
       this.payment_loading = true;
 
@@ -242,7 +242,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
         disableClose: true,
         data: {
           'details': this.pay_data,
-          'origin' : 'provider'
+          'origin': 'provider'
         }
       });
 

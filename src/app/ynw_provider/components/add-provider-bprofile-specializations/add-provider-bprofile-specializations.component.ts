@@ -17,9 +17,9 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
   no_speci_found_cap = Messages.NO_SPECI_FOUND_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-  api_loading =true ;
+  api_loading = true;
   api_error = null;
-  api_success = null; 
+  api_success = null;
   specialization_arr: any = [];
   query_done = false;
   selspecialization_arr: any = [];
@@ -35,12 +35,12 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.api_loading = true ;
+    this.api_loading = true;
     this.specialization_arr = this.data.specializations;
     if (this.data.selspecializations) {
       this.selspecialization_arr = this.data.selspecializations;
     }
-    this.api_loading =false ;
+    this.api_loading = false;
   }
 
   specializationSel(sel) {
@@ -87,7 +87,7 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
         }
       );
   }
-  loadDetails(){
+  loadDetails() {
     this.dialogRef.close({ 'mod': 'reloadlist', 'data': this.loadData });
   }
   resetApiErrors() {

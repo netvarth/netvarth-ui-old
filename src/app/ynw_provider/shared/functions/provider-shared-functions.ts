@@ -96,6 +96,45 @@ export class ProviderSharedFuctions {
     });
   }
 
+  /**
+   * Funtion will return the required fields set
+   */
+  getProfileRequiredFields(profile, domainMandatoryFields, subdomainMandatoryFields) {
+    const reqFields = {};
+    if (!profile.specialization) {
+      reqFields['specialization'] = true;
+    }
+    if (!profile.businessName || profile.businessName === '') {
+      reqFields['name'] = true;
+    }
+    if (!profile.baseLocation) {
+      reqFields['location'] = true;
+      reqFields['schedule'] = true;
+    }
+    if (profile.baseLocation && profile.baseLocation.bSchedule) {
+      reqFields['schedule'] = true;
+    }
+    if (domainMandatoryFields) {
+      for (const domainfield of domainMandatoryFields) {
+        if (domainfield.mandatory) {
+          if (!profile['domainVirtualFields'][domainfield]) {
+            reqFields['domainvirtual'] = true;
+          }
+        }
+      }
+    }
+    if (domainMandatoryFields) {
+      for (const domainfield of subdomainMandatoryFields) {
+        if (domainfield.mandatory) {
+          if (!profile['domainVirtualFields'][domainfield]) {
+            reqFields['subdomainvirtual'] = true;
+          }
+        }
+      }
+    }
+    return reqFields;
+  }
+
   serviceReloadApi(ob, source = 'service_list') {
     if (source === 'service_list') {
       ob.getServices();

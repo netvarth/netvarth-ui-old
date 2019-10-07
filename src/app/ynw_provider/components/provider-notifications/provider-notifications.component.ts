@@ -72,27 +72,27 @@ export class ProviderNotificationsComponent implements OnInit {
       );
   }
   setNotificationList(notificationList: any): any {
-    if (notificationList.length != 0) {
+    if (notificationList.length !== 0) {
       for (const notifyList of notificationList) {
-        if (notifyList.eventType && notifyList.eventType == "WAITLISTADD") {
-          if (notifyList.email.length == 0 && notifyList.sms.length == 0 && !notifyList.pushMessage) {
+        if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
             this.SelchkinNotify = false;
           }
-          if (notifyList.email && notifyList.email.length != 0) {
+          if (notifyList.email && notifyList.email.length !== 0) {
             this.em_arr = notifyList.email;
             this.SelchkinNotify = true;
-          } 
+          }
           // else {
           //   this.SelchkinNotify = false;
           // }
-          if (notifyList.sms && notifyList.sms.length != 0) {
+          if (notifyList.sms && notifyList.sms.length !== 0) {
             this.ph_arr = notifyList.sms;
             this.SelchkinNotify = true;
-          } 
+          }
           // else {
           //   this.SelchkinNotify = false;
           // }
-         
+
           if (notifyList.pushMessage) {
             this.cheknpush = notifyList.pushMessage;
             this.SelchkinNotify = true;
@@ -100,21 +100,21 @@ export class ProviderNotificationsComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
-        } else if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL") {
-          if (notifyList.email.length == 0 && notifyList.sms.length == 0 && !notifyList.pushMessage) {
+        } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && !notifyList.pushMessage) {
             this.SelchkincnclNotify = false;
           }
-          if (notifyList.email && notifyList.email.length != 0) {
+          if (notifyList.email && notifyList.email.length !== 0) {
             this.em1_arr = notifyList.email;
             this.SelchkincnclNotify = true;
           }
-          //else {
+          // else {
           //   this.SelchkincnclNotify = false;
           // }
-          if (notifyList.sms && notifyList.sms.length != 0) {
+          if (notifyList.sms && notifyList.sms.length !== 0) {
             this.ph1_arr = notifyList.sms;
             this.SelchkincnclNotify = true;
-          } 
+          }
           // else {
           //   this.SelchkincnclNotify = false;
           // }
@@ -145,7 +145,8 @@ export class ProviderNotificationsComponent implements OnInit {
   addChkinPh() {
     this.resetApiErrors();
     if (this.notifyphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });// 'Please enter mobile phone number';
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
       return;
     }
     if (this.notifyphonenumber !== '') {
@@ -153,13 +154,15 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
         return;
       }
       this.ph_arr.push(curphone);
@@ -170,7 +173,8 @@ export class ProviderNotificationsComponent implements OnInit {
   addChkinemil() {
     this.resetApiErrors();
     if (this.notifyemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid email id';
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter a valid email id';
       return;
     }
     if (this.notifyemail !== '') {
@@ -178,7 +182,8 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid email id';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid email id';
         return;
       }
       this.em_arr.push(curemail);
@@ -189,7 +194,8 @@ export class ProviderNotificationsComponent implements OnInit {
   addCheknCanclph() {
     this.resetApiErrors();
     if (this.notifycanclphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });// 'Please enter mobile phone number';
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
       return;
     }
     if (this.notifycanclphonenumber !== '') {
@@ -197,13 +203,15 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });// 'Mobile number should have 10 digits';
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
         return;
       }
       this.ph1_arr.push(curphone1);
@@ -237,11 +245,11 @@ export class ProviderNotificationsComponent implements OnInit {
   chekinNotifications(source) {
     this.savechekinNotification_json = {};
     let chekinMode = 'ADD';
-    if (this.notificationList.length == 0) {
+    if (this.notificationList.length === 0) {
       chekinMode = 'ADD';
     }
     for (const notifyList of this.notificationList) {
-      if (notifyList.eventType && notifyList.eventType == "WAITLISTADD") {
+      if (notifyList.eventType && notifyList.eventType === 'WAITLISTADD') {
         chekinMode = 'UPDATE';
       }
     }
@@ -255,17 +263,17 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMessage = this.cheknpush;
-    this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source)
+    this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
   checkinCancelNotifications(source) {
     this.savecancelNotification_json = {};
     let chekincancelMode = 'ADD';
-    if (this.notificationList.length == 0) {
+    if (this.notificationList.length === 0) {
       chekincancelMode = 'ADD';
     }
     for (const notifyList of this.notificationList) {
-      if (notifyList.eventType && notifyList.eventType == "WAITLISTCANCEL") {
+      if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
         chekincancelMode = 'UPDATE';
       }
     }
@@ -279,14 +287,14 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMessage = this.cancelpush;
-    this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source)
+    this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
   saveNotifctnJson(saveNotification_json, mode, source) {
     this.sms = false;
     this.email = false;
     this.cancelemail = false;
     this.cancelsms = false;
-    if (mode == "ADD") {
+    if (mode === 'ADD') {
       this.provider_services.addNotificationList(saveNotification_json)
         .subscribe(
           () => {
@@ -304,8 +312,7 @@ export class ProviderNotificationsComponent implements OnInit {
             this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           }
         );
-    }
-    else {
+    } else {
       this.provider_services.updateNotificationList(saveNotification_json)
         .subscribe(
           () => {
@@ -325,7 +332,7 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
   removePhEmail(phemail, array, source) {
-    var index = array.indexOf(phemail);
+    const index = array.indexOf(phemail);
     if (index > -1) {
       array.splice(index, 1);
     }

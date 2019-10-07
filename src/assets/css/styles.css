@@ -467,7 +467,10 @@
 .content.settings .set-otr .card.set06 .copy h2:before {
     content: "\34";
 }
-
+.h5, h5 {
+    font-size: 1.25rem;
+}
+body { font-size: 1rem !important}
 .card {
     padding: 20px;
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) !important;

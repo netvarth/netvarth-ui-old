@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-provider-settings',
@@ -85,10 +86,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   customer_label = '';
   isCheckin;
+  reqFields: {};
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
-    private shared_services: SharedServices) {
+    private shared_services: SharedServices,
+    private provider_shared_functions: ProviderSharedFuctions) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
@@ -449,6 +452,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.provider_services.getBussinessProfile()
       .subscribe(data => {
         this.bProfile = data;
+        this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+          domainfields => {
+            console.log(domainfields);
+            this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+              subdomainfields => {
+                this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
+              });
+        });
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {

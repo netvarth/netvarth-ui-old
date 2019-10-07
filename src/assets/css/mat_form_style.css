@@ -108,7 +108,7 @@
     cursor: pointer !important;
     border: none !important;
     white-space: nowrap !important;
-    padding: 10px 40px;
+    padding: 10px 40px !important;
     line-height: inherit !important;
     -moz-user-select: none;
     z-index: 2;

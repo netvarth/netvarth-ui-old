@@ -29,10 +29,12 @@
                                 </li>
                                 <li class="block-level">
                                     <span class="lnk" (click)="redirecTo('bprofile')">Basic Profile</span>
+                                    <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">required fields missing</p>
                                     <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
                                 </li>
                                 <li class="block-level">
                                     <span class="lnk" (click)="redirecTo('additionalinfo')">Additional Info</span>
+                                    <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual" class="req-flds-cap">required fields missing</p>
                                     <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
                                 </li>
                                 <li class="block-level">
@@ -41,6 +43,7 @@
                                 </li>
                                 <li class="block-level">
                                     <span class="lnk" (click)="redirecTo('specializations')">Specializations</span>
+                                    <p *ngIf="reqFields.specialization" class="req-flds-cap">required fields missing</p>
                                     <!-- <p class="form-level-settings">{{frm_profile_cap}}</p> -->
                                 </li>
                                 <li class="block-level">

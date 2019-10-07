@@ -27,8 +27,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/owl.carousel/dist/assets/owl.carousel.css",
               "node_modules/owl.carousel/dist/assets/owl.theme.default.css",         
-              "src/assets/third-party/Admin-LTE/css/AdminLTE.min.css",
-              "src/assets/third-party/Admin-LTE/css/_all-skins.css",
+              "src/assets/third-party/Admin-LTE/css/AdminLTE.min.css",             
               "src/customTheme.scss",
               "src/assets/css/styles.css",
               "src/assets/css/consumer.css",
@@ -36,7 +35,8 @@
               "src/assets/css/header_footer.css",
               "src/assets/css/mat_form_style.css",
               "src/assets/css/custom_style.css",
-              "src/assets/css/home.css"
+              "src/assets/css/home.css",
+              "src/assets/third-party/Admin-LTE/css/_all-skins.css"
             ],
             "scripts": [
               "src/assets/third-party/jquery/dist/jquery.min.js",

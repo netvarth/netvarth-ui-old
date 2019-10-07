@@ -333,6 +333,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             _this.provider_services.getVirtualFields(domain, subdomin)
                 .subscribe(
                     data => {
+                        console.log(data);
                         const set_data = [];
                         set_data['fields'] = _this.setFieldValue(data, subdomin);
                         set_data['questions'] = _this.service.getQuestions(set_data['fields']);
