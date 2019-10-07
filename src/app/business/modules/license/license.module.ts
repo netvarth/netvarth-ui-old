@@ -15,6 +15,9 @@ import { ProviderAddonAuditlogsComponent } from '../../../ynw_provider/component
 import { KeywordsComponent } from './keywords/keywords.component';
 import { ConfirmBoxComponent } from '../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrade-license/upgrade-license.component';
+import { ProviderLicenseUsageComponent } from '../../../ynw_provider/components/provider-license-usage/provider-license-usage.component';
+import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
+import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 @NgModule({
     imports: [
         SharedModule,
@@ -33,13 +36,19 @@ import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrad
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
         ConfirmBoxComponent,
-        UpgradeLicenseComponent
+        UpgradeLicenseComponent,
+        ProviderLicenseUsageComponent,
+        ProviderAuditLogComponent,
+        ProviderLicenceInvoiceDetailComponent
     ],
     entryComponents: [
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         ConfirmBoxComponent,
-        UpgradeLicenseComponent
+        UpgradeLicenseComponent,
+        ProviderLicenseUsageComponent,
+        ProviderAuditLogComponent,
+        ProviderLicenceInvoiceDetailComponent
     ],
     exports: [LicenseComponent]
 })

@@ -201,7 +201,7 @@
                                         <mat-expansion-panel-header class="min100">
                                             <mat-panel-title class="block-level">
                                                 
-                                                {{profile_summary_cap}} <i *ngIf="bProfile && (!bProfile.0businessName || bProfile.businessName=='' || !bProfile.baseLocation || (bProfile.baseLocation && !bProfile.baseLocation.bSchedule))" class="req-flds-cap">*required fields missing</i>
+                                                {{profile_summary_cap}} <i *ngIf="bProfile && (!bProfile.businessName || bProfile.businessName=='' || !bProfile.baseLocation || (bProfile.baseLocation && !bProfile.baseLocation.bSchedule))" class="req-flds-cap">*required fields missing</i>
                                                 <p class="form-level-settings">{{frm_profile_name_cap}}<a
                                                         class="learnmore-pointer" id="customer-help"
                                                         (click)="learnmore_clicked('basic-information', $event)">Learn
