@@ -6,11 +6,13 @@ import { HeaderModule } from '../../../../shared/modules/header/header.module';
 
 import { FinanceComponent } from './finance.component';
 import { FinanceRoutingModule } from './finance.routing.module';
+import { BreadCrumbModule } from '../../../../shared/modules/breadcrumb/breadcrumb.module';
 // import { HttpCommonService } from '../../services/http-common.service';
 @NgModule({
   imports: [
     SharedModule,
     HeaderModule,
+    BreadCrumbModule,
     FinanceRoutingModule
   ],
   declarations: [FinanceComponent],
