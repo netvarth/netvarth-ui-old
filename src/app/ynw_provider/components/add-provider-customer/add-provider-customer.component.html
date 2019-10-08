@@ -1,21 +1,21 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" (keyup)="resetApiErrors()"
-    class="ynw-common-form">
+onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     <h1 class="mat-dialog-title">{{create_cap}} {{customer_label | capitalizeFirst}}
         <button #queue mat-dialog-close class="modal_close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
     </h1>
-    <app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     <mat-dialog-content>
-        <div class="form-group"> 
+        <div class="form-group mobile-field">
             <mat-form-field>
                 <div class="input-group">
                     <div class="input-group-prepend mob-prefix">
                         <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
-                    <input matInput type="text" matInput class="form-control" (keypress)="isNumeric($event)" id="mobile_number" placeholder="{{mobile_cap}} *"
-                        formControlName="mobile_number" autocomplete="off" maxlength=10>
+                    <input matInput type="text" matInput class="form-control" (keypress)="isNumeric($event)"
+                        id="mobile_number" placeholder="{{mobile_cap}} *" formControlName="mobile_number"
+                        autocomplete="off" maxlength=10>
                 </div>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
@@ -44,8 +44,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control" id="last_name" placeholder="{{l_name_cap}}" formControlName="last_name"
-                    autocomplete="off" (blur)="onFieldBlur('last_name')">
+                <input matInput type="text" class="form-control" id="last_name" placeholder="{{l_name_cap}}"
+                    formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
     {
@@ -57,10 +57,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
 
         <div class="form-group">
             <mat-form-field>
-                <input matInput type="text" class="form-control" id="email_id" placeholder="Email(user@xyz.com)" formControlName="email_id"
-                    autocomplete="off">
+                <input matInput type="text" class="form-control" id="email_id" placeholder="Email(user@xyz.com)"
+                    formControlName="email_id" autocomplete="off">
             </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')" errorMsg="Please enter valid email.">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')"
+                errorMsg="Please enter valid email.">
             </app-field-error-display>
         </div>
 
@@ -70,7 +71,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                 <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
                 <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
             </mat-radio-group>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')" errorMsg="Please select the gender.">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'gender')"
+                errorMsg="Please select the gender.">
             </app-field-error-display>
         </div>
 
@@ -80,27 +82,31 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()"
             <div class="pickerouter">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <input class="form-control dtepicker" type="text" matInput [matDatepicker]="picker" formControlName="dob" [max]="tday"
-                  [min]="minday"   placeholder="DD/MM/YYYY">
+                <input class="form-control dtepicker" type="text" matInput [matDatepicker]="picker"
+                    formControlName="dob" [max]="tday" [min]="minday" placeholder="DD/MM/YYYY">
             </div>
 
 
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')" errorMsg="Please select the date of birth.">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                errorMsg="Please select the date of birth.">
             </app-field-error-display>
         </div>
 
         <div class="form-group">
             <mat-form-field>
-                <textarea class="form-control" matInput id="address" placeholder="Address" formControlName="address"></textarea>
+                <textarea class="form-control" matInput id="address" placeholder="Address"
+                    formControlName="address"></textarea>
             </mat-form-field>
         </div>
 
     </mat-dialog-content>
     <mat-dialog-actions>
         <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>
-        <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}</button>
+        <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+            class="cs-btn bt1">{{save_btn}}</button>
     </mat-dialog-actions>
 </form>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

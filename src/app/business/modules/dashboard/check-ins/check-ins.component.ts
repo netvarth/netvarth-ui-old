@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../../../ynw_provider/components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../../../ynw_provider/components/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -14,14 +14,18 @@ import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { filter, pairwise } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
+import { AddProviderCustomerComponent } from '../../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
+import { CheckInComponent } from '../../../../shared/modules/check-in/check-in.component';
 @Component({
-    selector: 'app-checkins',
-    templateUrl: './check-ins.component.html'
+  selector: 'app-checkins',
+  templateUrl: './check-ins.component.html'
 })
 export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewInit {
-    // pdtyp  --- 0-History, 1-Future, 2-Today
+  // pdtyp  --- 0-History, 1-Future, 2-Today
   // pdStyp --- 'all' -- Checkins, 'started' - Started, 'done' - Complete, 'cancelled' - Cancelled
   // pdq --- selected queue id
+  @Output() reloadActionSubheader = new EventEmitter<any>();
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
@@ -167,8 +171,8 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       url: 'provider/dashboard'
     },
     {
-        title: 'Check-Ins'
-      }
+      title: 'Check-Ins'
+    }
   ];
   noFilter = true;
   arr: any = [];
@@ -184,6 +188,10 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   active_user;
   showToken = false;
   apiloading = false;
+  srchcustdialogRef;
+  crtCustdialogRef;
+  ChkindialogRef;
+  bprofile: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -420,6 +428,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       .then(
         data => {
           bProfile = data;
+          this.bprofile = bProfile;
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
@@ -1113,7 +1122,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
         () => { }
       );
   }
-  reloadActionSubheader() { this.reloadAPIs(); }
+  // reloadActionSubheader() { this.reloadAPIs(); }
   getStatusLabel(status) {
     const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
     return label_status;
@@ -1181,5 +1190,165 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   }
   isvalid(evt) {
     return this.shared_functions.isValid(evt);
+  }
+
+  isCheckinActive() {
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
+      if (this.isCheckin === 0 || this.isCheckin > 3) {
+        return true;
+      } else {
+        this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+        return false;
+      }
+    } else {
+      this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
+            this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+            if (this.isCheckin === 0) {
+              return true;
+            } else {
+              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              return false;
+            }
+          },
+          () => {
+          }
+        );
+    }
+  }
+
+  checkinClicked() {
+    if (this.isCheckinActive()) {
+      this.provider_services.getServicesList()
+        .subscribe(
+          data => {
+            if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
+              this.isCheckin = 4;
+              this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              return false;
+            } else {
+              this.provider_services.getProviderQueues()
+                .subscribe(
+                  data1 => {
+                    if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
+                      this.isCheckin = 5;
+                      this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+                      this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+                      return false;
+                    } else {
+                      this.searchCustomer('providerCheckin');
+                      return true;
+                    }
+                  },
+                  () => {
+                  });
+            }
+          },
+          () => {
+          }
+        );
+    }
+  }
+  searchCustomer(source) {
+    this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+      disableClose: true,
+      data: {
+        source: source,
+        calc_mode: this.calculationmode,
+        showToken: this.showToken
+      }
+    });
+    this.srchcustdialogRef.afterClosed().subscribe(result => {
+      if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
+        this.createCheckin(result.data);
+      } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
+        this.createCustomer(result.data, source);
+      }
+    });
+  }
+  createCustomer(search_data, next_page = null) {
+    this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+      disableClose: true,
+      data: {
+        search_data: search_data
+      }
+    });
+    this.crtCustdialogRef.afterClosed().subscribe(result => {
+      if (next_page && result.message === 'reloadlist') {
+        this.createCheckin(result.data);
+      }
+    });
+  }
+
+  createCheckin(user_data) {
+    const post_data = {};
+    let selected_location = null;
+    const cookie_location_id = this.shared_functions.getItemOnCookie('provider_selected_location'); // same in provider home page
+    if (cookie_location_id === '') {
+      if (this.locations[0]) {
+        selected_location = this.locations[0];
+      }
+    } else {
+      selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
+    }
+    if (selected_location != null) {
+      post_data['location'] = {
+        'id': selected_location['id'],
+        'name': selected_location['place']
+      };
+    }
+    post_data['provider'] = {
+      unique_id: this.bprofile.uniqueId,
+      account_id: this.bprofile.id,
+      name: this.bprofile.businessName
+    };
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const cdate = new Date(todaydt);
+    const mn = cdate.getMonth() + 1;
+    const dy = cdate.getDate();
+    let mon = '';
+    let day = '';
+    if (mn < 10) {
+      mon = '0' + mn;
+    } else {
+      mon = '' + mn;
+    }
+    if (dy < 10) {
+      day = '0' + dy;
+    } else {
+      day = '' + dy;
+    }
+    const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
+    this.ChkindialogRef = this.dialog.open(CheckInComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+      disableClose: true,
+      data: {
+        type: 'provider',
+        is_provider: 'true',
+        customer_data: user_data,
+        moreparams: {
+          source: 'provider_checkin',
+          bypassDefaultredirection: 1,
+          provider: post_data['provider'],
+          location: post_data['location'],
+          sel_date: curdate
+        },
+        datechangereq: true
+      }
+    });
+    this.ChkindialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.reloadActionSubheader.emit(result);
+      }
+    });
   }
 }

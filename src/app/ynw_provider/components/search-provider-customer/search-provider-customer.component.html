@@ -1,11 +1,13 @@
 <div class="search_provider">
-    <form [formGroup]="amForm"  class = "ynw-common-form" novalidate (ngSubmit)="amForm.valid &&
+    <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid &&
 searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
         <h1 class="mat-dialog-title">
-            <ng-container *ngIf="source=='createCustomer'">{{create_cap}} {{customer_label | capitalizeFirst}}</ng-container>
+            <ng-container *ngIf="source=='createCustomer'">{{create_cap}} {{customer_label | capitalizeFirst}}
+            </ng-container>
             <ng-container *ngIf="source=='providerCheckin'">
-               <span *ngIf="calculationMode!='NoCalc' || (calculationMode=='NoCalc' && !showToken)"> {{checkin_label | capitalizeFirst}}</span>
-               <span *ngIf="calculationMode=='NoCalc' && showToken">Get Token </span>
+                <span *ngIf="calculationMode!='NoCalc' || (calculationMode=='NoCalc' && !showToken)">
+                    {{checkin_label | capitalizeFirst}}</span>
+                <span *ngIf="calculationMode=='NoCalc' && showToken">Get Token </span>
             </ng-container>
             <button #queue mat-dialog-close class="modal_close" tabindex="-1">
                 <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -22,18 +24,20 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                 First step for {{checkin_label}} is searching for {{customer_label  | capitalizeFirst}}.
         </span>
     </div> -->
-            <div class="form-group">
-                    <p class="form-level-settings" *ngIf="source=='createCustomer'">{{frm_create_customer_cap_one}}{{frm_create_customer_cap_two}}{{frm_create_customer_cap_three}}</p>
+            <div class="form-group mobile-field">
+                <p class="form-level-settings" *ngIf="source=='createCustomer'">
+                    {{frm_create_customer_cap_one}}{{frm_create_customer_cap_two}}{{frm_create_customer_cap_three}}</p>
                 <mat-form-field>
 
-                <div class="input-group">
-                    <div class="input-group-prepend mob-prefix">
-                        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                    <div class="input-group">
+                        <div class="input-group-prepend mob-prefix">
+                            <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                        </div>
+                        <input matInput type="text" class="form-control" id="mobile_number"
+                            (keypress)="isNumeric($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
+                            autocomplete="off" maxlength=10>
                     </div>
-                    <input matInput type="text" class="form-control" id="mobile_number" (keypress)="isNumeric($event)" placeholder="{{mob_cap}}"
-                        formControlName="mobile_number" autocomplete="off" maxlength=10>
-                </div>
-            </mat-form-field>
+                </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
             'required' : 'Mobile number is required',
@@ -59,19 +63,21 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
             </div> -->
 
             <div class="form-group">
-                    <mat-form-field>
-                <input matInput type="text" class="form-control" id="first_last_name" placeholder="Enter atleast first 3 letters of First / Last Name *"
-                    formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')" 
-                [errorMsgs]="fed_service.getErrorMessage(amForm,'first_last_name',
+                <mat-form-field>
+                    <input matInput type="text" class="form-control" id="first_last_name"
+                        placeholder="Enter atleast first 3 letters of First / Last Name *"
+                        formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;"
+                        (blur)="onFieldBlur('first_last_name')">
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
+                        [errorMsgs]="fed_service.getErrorMessage(amForm,'first_last_name',
                 {
                     'required' : 'Please enter First Name / Last Name.',
                     'pattern' : 'Only alphabets are allowed'
                   })">
-                </app-field-error-display>
+                    </app-field-error-display>
                 </mat-form-field>
             </div>
-           
+
         </mat-dialog-content>
         <mat-dialog-actions>
             <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
@@ -90,4 +96,5 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
 
 </div>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

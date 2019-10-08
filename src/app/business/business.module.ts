@@ -43,6 +43,8 @@ import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provi
 import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
 import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
+import { SearchProviderCustomerComponent } from '../ynw_provider/components/search-provider-customer/search-provider-customer.component';
+import { AddProviderCustomerComponent } from '../ynw_provider/components/add-provider-customer/add-provider-customer.component';
 
 @NgModule({
     declarations: [
@@ -63,7 +65,9 @@ import { ProviderMembersComponent } from '../ynw_provider/components/provider-me
         GoogleMapComponent,
         ProviderbWizardComponent,
         ConfirmBoxComponent,
-        ProviderMembersComponent
+        ProviderMembersComponent,
+        SearchProviderCustomerComponent,
+        AddProviderCustomerComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -87,7 +91,9 @@ import { ProviderMembersComponent } from '../ynw_provider/components/provider-me
         AddProviderWaitlistCheckInBillComponent,
         AddProviderBprofileSearchAdwordsComponent,
         GoogleMapComponent,
-        ConfirmBoxComponent
+        ConfirmBoxComponent,
+        SearchProviderCustomerComponent,
+        AddProviderCustomerComponent
     ],
     providers: [
         AuthGuardProviderHome,

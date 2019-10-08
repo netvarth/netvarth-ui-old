@@ -169,7 +169,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       });
       this.schedule_arr = [];
       // extracting the schedule intervals
-      if (this.data.location.bSchedule.timespec) {
+      if (this.data.location.bSchedule && this.data.location.bSchedule.timespec) {
         for (let i = 0; i < this.data.location.bSchedule.timespec.length; i++) {
           for (let j = 0; j < this.data.location.bSchedule.timespec[i].repeatIntervals.length; j++) {
             // pushing the schedule details to the respective array to show it in the page

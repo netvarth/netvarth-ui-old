@@ -4414,3 +4414,20 @@ justify-content: center;
 border-radius: 30px;
 margin-bottom: 0;
 }
+
+.mobile-field .input-group-append, .input-group-prepend {
+  display: flex;
+}
+.mobile-field .input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control {
+  flex: 1 1 auto;
+}
+.mobile-field .input-group {
+  display: flex;
+}
+.mobile-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+  background: transparent !important;
+}
+.customers .right-aligned{
+  right: 0;
+  position: absolute;
+}

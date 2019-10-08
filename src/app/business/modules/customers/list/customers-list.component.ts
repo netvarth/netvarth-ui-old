@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { AddProviderCustomerComponent } from '../../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
+import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-customers-list',
@@ -52,7 +55,12 @@ export class CustomersListComponent implements OnInit {
     filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     tooltipcls = projectConstants.TOOLTIP_CLS;
     apiloading = false;
+    srchcustdialogRef;
+    crtCustdialogRef;
+    calculationmode;
+    showToken = false;
     constructor(private provider_services: ProviderServices,
+        public dialog: MatDialog,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
@@ -197,6 +205,37 @@ export class CustomersListComponent implements OnInit {
         if (kCode === 13) {
             input.focus();
         }
+    }
+
+    searchCustomer(source) {
+        this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+            disableClose: true,
+            data: {
+                source: source,
+                calc_mode: this.calculationmode,
+                showToken: this.showToken
+            }
+        });
+        this.srchcustdialogRef.afterClosed().subscribe(result => {
+            if (result && result.message) {
+                this.createCustomer(result.data);
+            }
+        });
+    }
+    createCustomer(search_data) {
+        this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
+            disableClose: true,
+            data: {
+                search_data: search_data
+            }
+        });
+        this.crtCustdialogRef.afterClosed().subscribe(result => {
+
+        });
     }
 }
 

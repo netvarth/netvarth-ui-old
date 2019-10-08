@@ -83,15 +83,19 @@
         </a>
       </li>
       <li>
-          <a class="pointer-cursor" routerLink="alerts">
-            <i class="fa fa-bell-o"></i> <span>Alerts</span>
-            <small class="label pull-right bg-orange"
-            *ngIf="alertCnt>0">{{alertCnt}}</small>
-          </a>
-        </li>
+        <a class="pointer-cursor" routerLink="alerts">
+          <i class="fa fa-bell-o"></i> <span>Alerts</span>
+          <small class="label pull-right bg-orange" *ngIf="alertCnt>0">{{alertCnt}}</small>
+        </a>
+      </li>
       <li>
         <a class="pointer-cursor" routerLink="auditlog">
           <i class="fa fa-list"></i> <span>Auditlogs</span>
+        </a>
+      </li>
+      <li>
+        <a class="pointer-cursor" routerLink="/kiosk">
+          <i class="fa fa-tablet"></i><span>Kiosk</span>
         </a>
       </li>
       <li><a class="pointer-cursor" (click)="gotoHelp()"><i class="fa fa-book"></i> <span>Help</span></a></li>

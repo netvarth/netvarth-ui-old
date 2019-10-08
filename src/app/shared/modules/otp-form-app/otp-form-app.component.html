@@ -1,13 +1,13 @@
 <ng-container *ngIf="showOTPContainer">
-  <form [formGroup]="otp_form" novalidate (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)"
-    class="otp_scr" (keyup)="doResetApiErrors()">
+  <form [formGroup]="otp_form" novalidate (ngSubmit)="otp_form.valid && doOnOtpSubmit(otp_form.value)" class="otp_scr"
+    (keyup)="doResetApiErrors()">
     <mat-dialog-content>
       <p class="col-form-label col-md-12 no-padding" for="otp"><b>{{otp_mobile}}</b></p>
-      <div class="col-md-12 no-padding otp_box">
+      <div class="no-padding otp_box">
         <div class="form-group ">
           <mat-form-field>
-            <input type="text" (keypress)="removSpecChar($event)"  class="form-control number-ip-sm" matInput placeholder="Enter OTP"
-              [formControl]="otp_form.controls['phone_otp']" autocomplete="off" maxlength="5">
+            <input type="text" (keypress)="removSpecChar($event)" class="form-control number-ip-sm" matInput
+              placeholder="Enter OTP" [formControl]="otp_form.controls['phone_otp']" autocomplete="off" maxlength="5">
             <button type="submit" mat-button class="cs-btn bt1" [disabled]="!otp_form.valid">{{ok_btn_cap}}</button>
             <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(otp_form,'phone_otp')"
             errorMsg="Please enter a valid OTP.">
@@ -24,9 +24,10 @@
     </mat-dialog-content>
     <mat-dialog-actions>
       <div class="resendouter" *ngIf="resetCounterVal==0">
-        <span class="link" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container *ngIf="type=='change_email'">
+        <span class="link" (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
+            *ngIf="type=='change_email'">
             Email</ng-container></span>
-        <ul class="info-lst" *ngIf="type=='signup'" >
+        <ul class="info-lst" *ngIf="type=='signup'">
           <span class="black">Having a problem with your phone? &nbsp;<span class="link" (click)="setResendViaEmail()"
               mat-button>{{resend_otp_email}}</span></span>
         </ul>
