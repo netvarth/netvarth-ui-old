@@ -26,14 +26,10 @@ import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-wait
 import { ProviderBprofileSearchGalleryComponent } from '../provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { ProviderBprofileSearchSocialMediaComponent } from '../provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
-// import { ProviderAuditLogComponent } from '../provider-auditlogs/provider-auditlogs.component';
-import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { AddProviderSchedulesModule } from '../add-provider-schedule/add-provider-schedule.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentModule } from '../../shared/modules/department/department.module';
-import { DepartmentsComponent } from '../departments/departments.component';
-import { DepartmentDetailComponent } from '../departments/details/department.details.component';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -61,8 +57,6 @@ import { DepartmentDetailComponent } from '../departments/details/department.det
         ProviderSettingsComponent,
         ProviderBprofileSearchComponent,
         ProviderWaitlistComponent,
-        // ProviderWaitlistServicesComponent,
-        // ProviderWaitlistServiceDetailComponent,
 
         AddProviderWaitlistLocationsComponent,
         // ProviderLicenseUsageComponent,

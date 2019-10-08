@@ -104,7 +104,14 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   schedule_arr: any = [];
   display_schedule: any = [];
-  reqFields = {};
+  reqFields: any = {
+    name : false,
+    location: false,
+    schedule: false,
+    domainvirtual: false,
+    subdomainvirtual: false,
+    specialization: false
+  };
 
 
   currentlicense_details: any = [];

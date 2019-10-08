@@ -49,6 +49,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.initSpecializations();
     }
+    learnmore_clicked(parent, child) {}
     initSpecializations() {
         this.bProfile = [];
         this.getBussinessProfileApi()

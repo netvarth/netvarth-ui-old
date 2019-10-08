@@ -31,6 +31,9 @@ export class KioskServices {
     }
 
     getEstimatedWaitingTime(prov_loc_id) {
+        if (!prov_loc_id || prov_loc_id === '') {
+            return null;
+          }
         const path = 'provider/waitlist/queues/waitingTime/' + prov_loc_id;
         return this.servicemeta.httpGet(path);
       }

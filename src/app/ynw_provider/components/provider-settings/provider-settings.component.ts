@@ -86,7 +86,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   customer_label = '';
   isCheckin;
-  reqFields: {};
+  reqFields: any = {};
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,

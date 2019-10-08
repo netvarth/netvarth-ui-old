@@ -147,4 +147,7 @@ export class POSComponent implements OnInit {
     //   this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
     // });
   }
+  learnmore_clicked(parent, child) {
+
+  }
 }

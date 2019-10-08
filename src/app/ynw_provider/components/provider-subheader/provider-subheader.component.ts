@@ -107,8 +107,8 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         });
   }
 
-  kioskClick(licenseMetrics) {
-    licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
+  kioskClick() {
+    const licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
     for (let i = 0; i < licenseMetrics.length; i++) {
       if (licenseMetrics[i].id === 9) {
         if (licenseMetrics[i].anyTimeValue === 'true') {

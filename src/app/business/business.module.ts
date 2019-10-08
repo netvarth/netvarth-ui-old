@@ -42,7 +42,7 @@ import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bw
 import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provider-schedule/add-provider-schedule.module';
 import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
 import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-box/confirm-box.component';
-import { ProviderModule } from '../ynw_provider/provider.module';
+import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
 
 @NgModule({
     declarations: [
@@ -62,7 +62,8 @@ import { ProviderModule } from '../ynw_provider/provider.module';
         ProviderWaitlistCheckInDetailComponent,
         GoogleMapComponent,
         ProviderbWizardComponent,
-        ConfirmBoxComponent
+        ConfirmBoxComponent,
+        ProviderMembersComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -78,8 +79,7 @@ import { ProviderModule } from '../ynw_provider/provider.module';
         InboxModule,
         Nl2BrPipeModule,
         AddProviderSchedulesModule,
-        DynamicFormModule,
-        ProviderModule
+        DynamicFormModule
     ],
     entryComponents: [
         AddProviderWaitlistServiceComponent,

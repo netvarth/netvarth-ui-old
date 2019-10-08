@@ -32,4 +32,7 @@ export class MiscellaneousComponent implements OnInit {
     gotoNotifications() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
     }
+    learnmore_clicked(parent, child) {
+
+    }
 }

@@ -8,10 +8,10 @@
                 <div class="card p0 ynw-common-form-nm taxform">
                     <div class="paysettings-tab">
                         <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})</span>&nbsp;
-                        <span class="ctrl" [matTooltipClass]="tooltipcls" [matTooltip]="accountActiveMsg">
+                        <span class="ctrl">
                             <mat-slide-toggle [(ngModel)]="jdn_status"></mat-slide-toggle>
                         </span>
-                        <div *ngIf="this.domain==='finance'; else elseBlock">
+                        <div *ngIf="domain==='finance'; else elseBlock">
                             <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
                                 <label class="col-form-label">Enter Custom Text</label>
                                 <textarea matInput class="form-control" id="jdn custom text" maxlength="500"

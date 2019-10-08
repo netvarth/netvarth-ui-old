@@ -48,6 +48,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         this.getSpokenLanguages();
         this.setLanguages();
     }
+    learnmore_clicked(parent, child) {}
     setLanguages() {
         this.bProfile = [];
         this.getBussinessProfileApi()

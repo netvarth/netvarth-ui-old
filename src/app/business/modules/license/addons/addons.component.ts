@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-addons',
@@ -19,6 +20,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     addonhistorydialogRef;
     license_message = '';
     currentlicense_details: any = [];
+    tooltipcls = projectConstants.TOOLTIP_CLS;
     current_lic;
     addonTooltip = '';
     learn_more = Messages.LEARN_MORE_CAP;
@@ -60,6 +62,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
             this.addonhistorydialogRef.close();
         }
     }
+    learnmore_clicked(parent, child) {}
     goAddonHistory() {
         this.addonhistorydialogRef = this.dialog.open(ProviderAddonAuditlogsComponent, {
             width: '50%',

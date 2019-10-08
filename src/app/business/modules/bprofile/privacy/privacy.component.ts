@@ -71,6 +71,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    learnmore_clicked (parent, child) {}
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {

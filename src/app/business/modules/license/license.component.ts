@@ -16,7 +16,8 @@ import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 @Component({
     selector: 'app-license',
-    templateUrl: './license.component.html'
+    templateUrl: './license.component.html',
+    styleUrls: ['./license.component.css']
 })
 
 export class LicenseComponent implements OnInit, OnDestroy {

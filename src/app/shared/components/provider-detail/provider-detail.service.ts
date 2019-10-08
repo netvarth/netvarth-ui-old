@@ -16,6 +16,10 @@ export class ProviderDetailService {
       }
       str += prov_arr[i];
     }
+    if (str === '') {
+      return null;
+    }
+
     const path = 'provider/waitlist/queues/waitingTime/' + str;
     return this.servicemetaobj.httpGet(path);
   }

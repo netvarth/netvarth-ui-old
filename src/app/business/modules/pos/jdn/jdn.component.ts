@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 })
 export class JDNComponent implements OnInit {
     jdn_full_cap = Messages.JDN_FUL_CAP;
+    jdn_status = true;
+    domain;
     breadcrumbs = [
         {
             title: 'Settings',

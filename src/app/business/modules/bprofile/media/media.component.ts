@@ -79,7 +79,9 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.getGalleryImages();
         this.getBusinessProfile();
     }
+    learnmore_clicked(parent, child) {
 
+    }
     ngOnDestroy() {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();

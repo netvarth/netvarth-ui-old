@@ -58,7 +58,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
         this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     }
-
+    learnmore_clicked(parent, child) {}
     ngOnInit() {
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
