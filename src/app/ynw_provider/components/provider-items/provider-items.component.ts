@@ -25,6 +25,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   item_list: any = [];
   query_executed = false;
   emptyMsg = '';
+  domain;
   breadcrumb_moreoptions: any = [];
   frm_items_cap = Messages.FRM_LEVEL_ITEMS_MSG;
   breadcrumbs_init = [
@@ -59,8 +60,10 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.getitems();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->items' };
+    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': '/provider' + this.domain + '/help' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {
@@ -199,7 +202,8 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/learnmore/billing->items']);
+    this.router.navigate(['/provider/' + this.domain + '/help']);
+    // this.router.navigate(['/provider/' + this.domain + '/help/billing->items']);
     // this.sharedfunctionObj.sendMessage(pdata);
   }
   // getMode(mod) {
