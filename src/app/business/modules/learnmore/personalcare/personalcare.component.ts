@@ -1,4 +1,3 @@
-//import { Component, Input, OnChanges } from '@angular/core';
 import { Component, Input, OnChanges,OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
@@ -16,9 +15,7 @@ export class PersonalCareComponent implements OnChanges {
       title: 'Help'
     }
   ];
-  // here..
   activePrice = '';
-  // here code
   active_user;
   parent;
   child;
@@ -32,7 +29,6 @@ export class PersonalCareComponent implements OnChanges {
   showlicense = false;
   showbill = false;
   showmiscellaneous = false;
-  //  menu: any;
   domain;
   show = 'false';
   constructor(
@@ -41,7 +37,6 @@ export class PersonalCareComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  /////here..
   ngOnChanges() {
     // this.parentContent = this.parent;
     // this.childContent = this.child;
