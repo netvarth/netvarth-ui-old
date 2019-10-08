@@ -163,6 +163,31 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     resetApi(code?) {
         this.errorExist = false;
         if (code !== undefined) {
+            if(code == 'paytm'){
+                this.showError = {
+                    'paytmmobile': { status: false, msg: '' },
+                    'paytmMerchantId': { status: false, msg: '' },
+                    'paytmMerchantKey': { status: false, msg: '' },
+                    'paytmIndustryType': { status: false, msg: '' },
+                    'paytmWebsiteWeb': { status: false, msg: '' },
+                    'paytmWebsiteApp': { status: false, msg: '' },
+                };
+            }
+            else if(code == 'cc'){
+                this.showError = {
+                    'pannumber': { status: false, msg: '' },
+                    'panname': { status: false, msg: '' },
+                    'bankacname': { status: false, msg: '' },
+                    'bankacnumber': { status: false, msg: '' },
+                    'bankname': { status: false, msg: '' },
+                    'bankifsc': { status: false, msg: '' },
+                    'bankbranch': { status: false, msg: '' },
+                    'bankfiling': { status: false, msg: '' },
+                    'bankactype': { status: false, msg: '' },
+                    'taxpercentage': { status: false, msg: '' },
+                    'gstnumber': { status: false, msg: '' }
+                };
+            }
             this.showError[code] = { status: false, msg: '' };
         } else {
             this.showError = {
@@ -186,11 +211,33 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             };
         }
     }
-    resetInfo() {
-        this.resetApi();
-        this.initPaymentSettings(this.paySettings, 1);
+    resetInfo(paymenttype) {
+        this.resetApi(paymenttype);
+        this.initPaymentSettings(this.paySettings, 1, paymenttype);
     }
-    initPaymentSettings(paySettings, type) {
+    initPaymentSettings(paySettings, type ,mode?) {
+        if (mode !== undefined) {
+            if(mode == 'paytm'){this.paystatus = paySettings.onlinePayment || false;
+                this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
+                this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
+                this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
+                this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
+                this.paytmIndustryType = paySettings.paytmIndustryType || '';
+                this.paytmMerchantId = paySettings.paytmMerchantId || '';
+            }
+            else{   
+                this.pannumber = paySettings.panCardNumber || '';
+                this.panname = paySettings.nameOnPanCard || '';
+                this.bankacname = paySettings.accountHolderName || '';
+                this.bankacnumber = paySettings.bankAccountNumber || '';
+                this.bankname = paySettings.bankName || '';
+                this.bankifsc = paySettings.ifscCode || '';
+                this.bankbranch = paySettings.branchCity || '';
+                this.bankfiling = paySettings.businessFilingStatus || '';
+                this.bankactype = paySettings.accountType || '';
+            }
+        }
+        else{
         this.paystatus = paySettings.onlinePayment || false;
         this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
         this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
@@ -215,6 +262,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.isJaldeeAccount = paySettings.isJaldeeAccount;
             this.optJaldeeAccount = (this.isJaldeeAccount) ? 'enable' : 'disable';
         }
+    }
     }
     /**
      * Get Payment Settings
