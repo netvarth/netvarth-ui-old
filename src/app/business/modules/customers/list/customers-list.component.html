@@ -46,8 +46,12 @@
                 </th>
               </tr>
             </thead>
-
             <tbody>
+              <tr><td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
+                <app-jaldee-filter *ngIf="filters" [fields]="filters"></app-jaldee-filter>
+              </td></tr>
+            </tbody>
+            <!-- <tbody>
               <tr>
                 <td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
                   <mat-accordion>
@@ -87,7 +91,7 @@
                   </mat-accordion>
                 </td>
               </tr>
-            </tbody>
+            </tbody> -->
             <tbody>
               <tr *ngFor="let customer of customers">
                 <td data-title="Name" class="name">

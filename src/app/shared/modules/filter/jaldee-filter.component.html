@@ -1,0 +1,17 @@
+<div *ngIf="fields && fields.parent" id="{{fields.parent}}-filter-cont">
+    <div id="{{fields.parent}}-filter-toolbar" class="box-content">
+        <div>
+            <ng-container *ngFor="let field of fields.buttons">
+            <a  class="anchorbutton remMarginRight genMarginLeft"
+                name="{{field.name}}" id="btn_{{field.name}}_filter_id"><span>{{field.title}}</span></a>
+            <input type="text" id="txt_{{field.name}}" class="genTextHeight" style="display:none">
+            </ng-container>
+        </div>        
+    </div>
+    <div id="{{fields.parent}}-filter-wb" style="display:none;padding:0 0 0 0px">
+        <div id="{{fields.parent}}-filter-wb-inner" style="float:left; width:40%">
+
+        </div>
+        <input type="button" value=" Go " id="btnGo" class="genMarginLeft stdbtn btn_black">
+    </div>
+</div>

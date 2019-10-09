@@ -25,6 +25,9 @@ export class BusinessComponent implements OnInit {
     private provider_shared_functions: ProviderSharedFuctions) {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+        if (router.url === '\/provider') {
+              router.navigate(['provider', 'dashboard', 'check-ins']);
+        }
       }
     });
 

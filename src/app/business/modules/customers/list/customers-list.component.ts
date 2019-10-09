@@ -23,6 +23,15 @@ export class CustomersListComponent implements OnInit {
     customer_count: any = 0;
     filterapplied = false;
     open_filter = false;
+    filters = {
+        'parent': 'customers',
+        'buttons': [
+            { 'name': 'first_name', 'title': 'First Name' },
+            { 'name': 'date', 'title': 'Date' },
+            { 'name': 'mobile', 'title': 'Mobile' },
+            { 'name': 'email', 'title': 'Email' }
+        ]
+    }
     filter = {
         first_name: '',
         date: null,

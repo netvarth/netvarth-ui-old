@@ -3,7 +3,7 @@
         <app-breadcrumb (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
                 [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
-<section style="margin-bottom: 20px" class="q-list">
+<section class="q-list">
         <div class="content instant loc-list">
                 <div class="container">
                         <p class="form-level-settings">{{waitlist_cap}}</p>
@@ -210,6 +210,7 @@
                                                                                 </div>
                                                                         </div>
                                                                 </div>
+                                                                <div style="clear:both"></div>
                                                                 <div class="actiondiv" style="display: flex">
                                                                         <button type="button" class="cs-btn bt3"
                                                                                 *ngIf="todaysQs.length > 0"
@@ -319,7 +320,7 @@
         </div>
 </section>
 
-<section style="margin-bottom: 20px">
+<section>
         <div class="content loc-list">
                 <div class="container" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -462,7 +463,7 @@
         </div>
 </section>
 <!--Disabled Qs Listing-->
-<section style="margin-bottom: 20px">
+<section>
         <div class="content loc-list">
                 <div class="container" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
