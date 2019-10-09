@@ -7,6 +7,7 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { CapitalizeFirstPipeModule  } from '../../../shared/pipes/capitalize.module';
 
 import { ViewBillComponent } from './view-bill.component';
+import { ProviderRefundComponent } from '../../../ynw_provider/components/provider-refund/provider-refund.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,11 @@ import { ViewBillComponent } from './view-bill.component';
       FormMessageDisplayModule
     ],
     declarations: [
-      ViewBillComponent
+      ViewBillComponent,
+      ProviderRefundComponent
+    ],
+    entryComponents: [
+      ProviderRefundComponent
     ],
     exports: [
       ViewBillComponent

@@ -111,7 +111,7 @@ export class ProviderSharedFuctions {
       reqFields['location'] = true;
       reqFields['schedule'] = true;
     }
-    if (profile.baseLocation && profile.baseLocation.bSchedule) {
+    if (profile.baseLocation && !profile.baseLocation.bSchedule) {
       reqFields['schedule'] = true;
     }
     if (domainMandatoryFields) {

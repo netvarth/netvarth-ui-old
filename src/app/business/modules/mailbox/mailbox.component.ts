@@ -37,6 +37,9 @@ export class MailboxComponent implements OnInit, OnDestroy {
     messages: any = [];
     inboxList: any = [];
     groupMessages: any = [];
+    showCaptionBox: any = {};
+    activeImageCaption: any = [];
+    itemCaption: any = [];
     breadcrumbs = [
         {
             title: 'Inbox'
@@ -82,11 +85,12 @@ export class MailboxComponent implements OnInit, OnDestroy {
             this.selectedParentIndex = null;
             this.selectedChildIndex = null;
         } else {
-            this.selectedMessage[parentIndex] = message;
+            this.selectedMessage[parentIndex] = {};
+            this.selectedMessage[parentIndex]['message'] = message;
             this.selectedParentIndex = parentIndex;
             this.selectedChildIndex = childIndex;
+            console.log(this.selectedMessage);
         }
-        console.log(this.selectedMessage);
     }
     getInboxMessages() {
         const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -122,19 +126,31 @@ export class MailboxComponent implements OnInit, OnDestroy {
     sendMessage(messageToSend, inboxList, parentIndex) {
         const userId = this.getReceiverId(inboxList);
         console.log('userid:' + userId);
+        alert(messageToSend);
         let uuid = null;
+
+        const dataToSend: FormData = new FormData();
+        if (this.selectedMessage && this.selectedMessage[parentIndex] && this.selectedMessage[parentIndex]['pics']) {
+            dataToSend.append('attachments', this.selectedMessage[parentIndex]['pics']);
+        }
+        const blob = new Blob([messageToSend], {type: 'application/json'});
+        // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        // submit_data.append('properties', blobPropdata);
+        dataToSend.append('message', blob);
+
+
         if (this.selectedMessage && this.selectedMessage[parentIndex]) {
-            if (this.selectedMessage[parentIndex].waitlistId) {
-                uuid = 'h_' + this.selectedMessage[parentIndex].waitlistId;
+            if (this.selectedMessage[parentIndex].message.waitlistId) {
+                uuid = 'h_' + this.selectedMessage[parentIndex].message.waitlistId;
             }
         }
-        const post_data = {
-            communicationMessage: messageToSend
-        };
+        // const post_data = {
+        //     communicationMessage: messageToSend
+        // };
         if (uuid) {
-            this.providerToConsumerWaitlistNote(post_data, uuid);
+            this.providerToConsumerWaitlistNote(dataToSend, uuid);
         } else {
-            this.providerToConsumerNoteAdd(post_data, userId);
+            this.providerToConsumerNoteAdd(dataToSend, userId);
         }
     }
     getReceiverId(inboxList) {
@@ -262,5 +278,87 @@ export class MailboxComponent implements OnInit, OnDestroy {
             retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
         }
         return retdate;
+    }
+
+    filesSelected(event, parentIndex) {
+        const input = event.target.files;
+        if (input) {
+            if (this.selectedMessage && this.selectedMessage[parentIndex] && this.selectedMessage[parentIndex]['pics']) {
+                alert('in');
+            } else {
+                if (!this.selectedMessage[parentIndex]) {
+                    this.selectedMessage[parentIndex] = {};
+                }
+                if (!this.selectedMessage[parentIndex]['pics']) {
+                    this.selectedMessage[parentIndex]['pics'] = {
+                        files: [],
+                        caption: []
+                    };
+                }
+            }
+            for (const file of input) {
+                this.selectedMessage[parentIndex]['pics'].files.push(file);
+            }
+        }
+        // if (this.selectedMessage && this.selectedMessage[parentIndex]) {
+        // const submit_data: FormData = new FormData();
+        // const propertiesDetob = {};
+        // let i = 0;
+        // for (const pic of this.selectedMessage[parentIndex]['pics'].files) {
+        //     console.log(pic);
+        //     //  this.submit_data.append('files', pic, pic['name']);
+        //     const properties = {
+        //         'caption': this.selectedMessage[parentIndex]['pics'].caption[i] || ''
+        //     };
+        //     propertiesDetob[i] = properties;
+        //     i++;
+        // }
+        // this.selectedMessage[parentIndex]['properties'] = propertiesDetob;
+        // // const propertiesDet = {
+        //     'propertiesMap': propertiesDetob
+        // };
+        // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        // this.submit_data.append('properties', blobPropdata);
+        // console.log(this.submit_data);
+        console.log(this.selectedMessage[parentIndex]);
+    }
+    addCaption(caption, parentIndex, index) {
+        console.log(caption);
+        console.log(this.activeImageCaption[parentIndex][index]);
+        // this.pics.caption[index] = e;
+        // const caption = {
+        //  index : e
+        // };
+        // console.log(caption);
+        // const blobPropdata = new Blob([JSON.stringify(caption)], { type: 'application/json' });
+        // console.log(blobPropdata);
+        // this.showCaptionBox[index] = false;
+        // console.log(this.pics);
+        this.showCaptionBox[parentIndex][index] = false;
+    }
+    deleteTempImage(index, parentIndex) {
+        this.selectedMessage[parentIndex]['pics'].files.splice(index, 1);
+        if (this.showCaptionBox[parentIndex] && this.showCaptionBox[parentIndex][index]) {
+            delete this.showCaptionBox[parentIndex][index];
+            delete this.activeImageCaption[parentIndex][index];
+        }
+    }
+    captionMenuClicked(index, parentIndex) {
+        if (!this.activeImageCaption[parentIndex]) {
+            this.activeImageCaption[parentIndex] = {};
+            this.activeImageCaption[parentIndex][index] = '';
+        }
+        console.log(index + ' : ' + parentIndex);
+        console.log(this.showCaptionBox);
+        if (!this.showCaptionBox[parentIndex]) {
+            this.showCaptionBox[parentIndex] = {};
+        }
+        this.showCaptionBox[parentIndex][index] = true;
+    }
+    closeCaptionMenu(index, parentIndex) {
+        if (this.showCaptionBox[parentIndex] && this.showCaptionBox[parentIndex][index]) {
+            delete this.activeImageCaption[parentIndex][index];
+            this.showCaptionBox[parentIndex][index] = false;
+        }
     }
 }

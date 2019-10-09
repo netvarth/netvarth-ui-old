@@ -32,7 +32,8 @@
                                             <div class="box-body">
                                                 <!-- Conversations are loaded here -->
                                                 <div class="direct-chat-messages">
-                                                    <div class="direct-chat-msg" *ngFor="let inbox of users.inboxList, let childIndex = index"
+                                                    <div class="direct-chat-msg"
+                                                        *ngFor="let inbox of users.inboxList, let childIndex = index"
                                                         [class.right]="inbox.messagestatus=='in'">
                                                         <div class="direct-chat-info clearfix">
                                                             <!-- <span class="direct-chat-name pull-right">Sarah Bullock</span> -->
@@ -44,7 +45,9 @@
                                                         <!-- <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image"> -->
                                                         <!-- /.direct-chat-img -->
                                                         <div class="direct-chat-text"
-                                                         [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex" [class.pointer-cursor]="inbox.messagestatus=='in'" (click)="setActiveMessage(inbox, parentIndex, childIndex)">
+                                                            [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
+                                                            [class.pointer-cursor]="inbox.messagestatus=='in'"
+                                                            (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
                                                         </div>
                                                     </div>
@@ -53,15 +56,75 @@
                                             <!-- /.box-body -->
                                             <div class="box-footer">
                                                 <form>
-                                                    <div class="reply-shade"  *ngIf="selectedMessage[parentIndex]"><i class="fa fa-reply"></i> {{selectedMessage[parentIndex].message}}</div>
+                                                    <div class="reply-shade" *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message"><i
+                                                            class="fa fa-reply"></i>
+                                                        {{selectedMessage[parentIndex].message.message}}</div>
                                                     <div class="input-group">
                                                         <input type="text" name="message" placeholder="Type Message ..."
                                                             class="form-control" [(ngModel)]="messageToSend">
                                                         <span class="input-group-btn">
-                                                            <button type="button" (click)="sendMessage(messageToSend, users.inboxList, parentIndex)"
-                                                                class="btn btn-warning btn-flat"><span *ngIf="!selectedMessage[parentIndex]">Send</span><span *ngIf="selectedMessage[parentIndex]">Reply</span></button>
+                                                            <button class="btn btn-warning btn-flat" (click)="logofile.click()">
+                                                                <input #logofile type="file" accept="image/*" style="display:none;" multiple
+                                                                    (change)="filesSelected($event, parentIndex)">
+                                                                <span><i class="fa fa-paperclip"></i></span>
+                                                            </button>
+                                                            <button type="button"
+                                                                (click)="sendMessage(messageToSend, users.inboxList, parentIndex)"
+                                                                class="btn btn-warning btn-flat">
+                                                                <span *ngIf="!selectedMessage[parentIndex]">Send</span>
+                                                                <span *ngIf="selectedMessage[parentIndex]">Reply</span>
+                                                            </button>
                                                         </span>
                                                     </div>
+                                                    <ng-container
+                                                        *ngIf="selectedMessage && selectedMessage[parentIndex] && selectedMessage[parentIndex]['pics']">
+                                                        <div
+                                                            *ngFor="let item of selectedMessage[parentIndex]['pics'].files; let i = index">
+                                                            <div class="col-md-7">
+                                                                <span class="ln-hgt-40">{{item.name}}</span>                                                                
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <span class="mbt">
+                                                                    <button type="button"
+                                                                        mat-icon-button
+                                                                        [matMenuTriggerFor]="menu">
+                                                                        <mat-icon>more_vert</mat-icon>
+                                                                    </button>
+                                                                    <mat-menu #menu="matMenu">
+                                                                        <button type="button"
+                                                                            mat-menu-item
+                                                                            (click)="captionMenuClicked(i, parentIndex)">
+                                                                            <i class="icon-edit"></i>
+                                                                            <span>Add caption</span>
+                                                                        </button>
+                                                                        <button type="button"
+                                                                        (click)="deleteTempImage(i, parentIndex)" mat-menu-item>
+                                                                            <i class="icon-delete"></i>
+                                                                            <span>delete</span>
+                                                                        </button>
+                                                                    </mat-menu>
+                                                                </span>
+                                                            </div>
+                                                             <div style="margin-top: 15px"
+                                                                    class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
+                                                                    *ngIf="showCaptionBox && showCaptionBox[parentIndex] && showCaptionBox[parentIndex][i]">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Enter image caption" type="text" class="form-control"
+                                                                        [(ngModel)]="activeImageCaption[parentIndex][i]" [ngModelOptions]="{standalone: true}" >
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                class="btn bt3 btn-default coupon-apply-btn"
+                                                                                (click)="addCaption(activeImageCaption, parentIndex, i)"
+                                                                                type="button">Add</button>&nbsp;
+                                                                            <button
+                                                                                class="btn bt3 btn-default coupon-apply-btn"
+                                                                                (click)="closeCaptionMenu(i, parentIndex)"
+                                                                                type="button">Cancel</button>                                                                            
+                                                                        </span>
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                    </ng-container>
                                                 </form>
                                             </div>
                                             <!-- /.box-footer-->

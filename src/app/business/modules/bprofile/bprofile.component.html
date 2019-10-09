@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="card p0" *ngIf="normal_profile_active==3 && normal_locationinfo_show==3">
-                                <div class="pubs w-dta">
+                                <div class="pubs w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
                                             <h2>{{public_search_cap}}
@@ -199,8 +199,7 @@
                                 <mat-accordion>
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header class="min100">
-                                            <mat-panel-title class="block-level">
-                                                
+                                            <mat-panel-title class="block-level">                                                
                                                 {{profile_summary_cap}} <i *ngIf="reqFields.name || reqFields.location || reqFields.schedule" class="req-flds-cap">*required fields missing</i>
                                                 <p class="form-level-settings">{{frm_profile_name_cap}}<a
                                                         class="learnmore-pointer" id="customer-help"

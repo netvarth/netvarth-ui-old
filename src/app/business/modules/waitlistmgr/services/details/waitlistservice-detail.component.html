@@ -14,8 +14,7 @@
                                 </app-jaldee-service>
                             </div>
                             <div class="lbr col-sm-12 col-md-4 col-lg-4" >
-                                    <!-- *ngIf="selected_action != 'add'" -->
-                                <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list" >
+                                <app-jaldee-gallery [source_id]="service_id" [status]="status" [images]="image_list" *ngIf="service_id">
                                 </app-jaldee-gallery>
                             </div>
                         </div>

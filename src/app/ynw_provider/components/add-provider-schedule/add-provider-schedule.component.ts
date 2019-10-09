@@ -60,6 +60,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
     this.show_savebutton = (this.showsavebutton === '1') ? true : false;
     this.show_cancelbutton = (this.hidecancelbutton === '1') ? false : true;
+    console.log(this.existingSchedules);
     this.schedule_arr = this.existingSchedules;
     this.sharedfunctionObj.orderChangeWorkingHours(this.schedule_arr);
     this.display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(this.schedule_arr);

@@ -12,6 +12,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 // import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 
 @NgModule({
@@ -31,11 +32,13 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         // ProviderWaitlistCheckInDetailComponent,
-        AdjustQueueDelayComponent
+        AdjustQueueDelayComponent,
+        ProviderWaitlistCheckInCancelPopupComponent
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,
-        AdjustQueueDelayComponent
+        AdjustQueueDelayComponent,
+        ProviderWaitlistCheckInCancelPopupComponent
     ],
     exports: [DashboardComponent]
 })

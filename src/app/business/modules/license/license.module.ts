@@ -53,6 +53,6 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 
 export class LicenseModule implements OnInit {
     ngOnInit() {
-        alert('hei');
+
     }
 }

@@ -306,6 +306,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
+                  console.log(this.reqFields);
                 });
           });
           this.provider_datastorage.set('bProfile', data);

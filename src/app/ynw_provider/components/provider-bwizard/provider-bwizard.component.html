@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <!-- Step 0 -->
-            <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="pt-top">
                     <h1>{{congradulations_cap}} {{userdet.userName}}!</h1>
@@ -29,13 +29,13 @@
             </div>
 
             <!-- Step 1 -->
-            <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <form action="">
                     <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                     <div class="header">
                         <h1>{{profile_name_summary_cap}}</h1>
                     </div>
-                    <div class="content">
+                    <div class="content row">
                         <div class="form-group">
                             <P class="form-level-settings">
                                 {{frm_wiz_five_cap}}{{frm_wiz_five1_cap |  capitalizeFirst}}{{frm_wiz_five2_cap}} </P>
@@ -56,7 +56,7 @@
                     
                     <div class="footer">
                         <div class="row">
-                            <div class="col-6 status">
+                            <div class="col-md-6 col-12 status">
                                 <ul class="status-pnt">
                                     <li class="active"></li>
                                     <li></li>
@@ -66,7 +66,7 @@
                                     <li></li>
                                 </ul>
                             </div>
-                            <div class="col-6 control">
+                            <div class="col-md-6 col-12 control">
                                 <button type="button" (click)="showStep(2)" class="cs-btn bt1"
                                     *ngIf="!loading_active">{{next_cap}}</button>
                                 <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
@@ -77,12 +77,12 @@
             </div>
             <!-- Step 2 -->
             <div *ngIf="active_step==2"
-                class="is-bx step2 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto wiz-service">
+                class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto wiz-service">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
                     <h1>Service</h1>
                 </div>
-                <div class="content">
+                <div class="content row">
                     <div class="flds col-12 col-sm-12">
                         <ng-container>
                             <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
@@ -175,7 +175,7 @@
                 </div>
                 <div class="footer">
                     <div class="row">
-                        <div class="col-6 status">
+                        <div class="col-md-6 col-12 status">
                             <ul class="status-pnt">
                                 <li></li>
                                 <li class="active"></li>
@@ -185,7 +185,7 @@
                                 <li></li>
                             </ul>
                         </div>
-                        <div class="col-6 control">
+                        <div class="col-md-6 col-12 control">
                             <button (click)="showStep(1) " type="button" class="cs-btn bt2"
                                 *ngIf="!loading_active">{{back_cap}}</button>
                             <button (click)="onSubmit(amForm.value)" type="button" class="cs-btn bt1"
@@ -196,13 +196,13 @@
                 </div>
             </div>
             <!-- Step 3 -->
-            <div *ngIf="active_step==3" class="is-bx step2 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <div *ngIf="active_step==3" class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <form action="">
                     <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                     <div class="header">
                         <h1>{{location_cap}}</h1>
                     </div>
-                    <div class="content ynw-common-form-nm">
+                    <div class="content row ynw-common-form-nm">
                         <div class="flds col-12 col-sm-12">
                             <div class="form-group mapselection">
                                 <p class="form-level-settings">{{frm_wiz_six_cap}}<span
@@ -217,7 +217,7 @@
                                 <span class="expl">{{gps_coordinated_needeed_cap}}
                                     {{customer_label}}{{mob_for_loc_proximity_cap}}</span>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-md-6 col-12">
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="blatId"
                                                 [(ngModel)]="wizard_data_holder['lat']" name="lat"
@@ -225,7 +225,7 @@
                                                 (keyup)="handlekeyup('coord_error')"></mat-form-field>
                                                 <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-md-6 col-12">
                                         <mat-form-field><input matInput type="text" class="form-control" id=""
                                                 [(ngModel)]="wizard_data_holder['lon']" name="lon"
                                                 placeholder="Longitude" autocomplete="off"
@@ -268,7 +268,7 @@
                     </div>
                     <div class="footer">
                         <div class="row">
-                            <div class="col-6 status">
+                            <div class="col-md-6 col-12 status">
                                 <ul class="status-pnt">
                                     <li></li>
                                     <li></li>
@@ -278,7 +278,7 @@
                                     <li></li>
                                 </ul>
                             </div>
-                            <div class="col-6 control">
+                            <div class="col-md-6 col-12 control">
                                 <button type="button" (click)="showStep(2)" class="cs-btn bt2"
                                     *ngIf="!loading_active">{{back_cap}}</button>
                                 <button type="button" (click)="showStep(4)" class="cs-btn bt1"
@@ -290,12 +290,12 @@
                 </form>
             </div>
             <!-- Step 4 -->
-            <div *ngIf="active_step==4" class="is-bx step3 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <div *ngIf="active_step==4" class="is-bx step3 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
                     <h1>{{working_hrs_cap}}</h1>
                 </div>
-                <div class="content">
+                <div class="content row">
                     <div class="flds">
                         <p class="form-level-settings">{{add_more_queue_in_set_cap}} for {{bProfile.baseLocation.place}}</p>
                         <div class="form-group">
@@ -313,16 +313,15 @@
                                 ? 'Change Schedule': 'Add Schedule'}}</span>
                         </div>
                         <app-provider-schedule [Isource]="'wizard'" *ngIf="ischange_schedule_clicked == true"
-                            providerStatus="INACTIVE"
+                            [existingSchedules]="schedule_arr" providerStatus="INACTIVE"
                             (saveScheduleClick)="handlesSaveschedule($event)"
                             (cancelScheduleClick)="handleCancelschedule($event)"
                             (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>
                     </div>
-                </div>
-
+                </div>     
                 <div class="footer">
                     <div class="row">
-                        <div class="col-6 status">
+                        <div class="col-md-6 col-12 status">
                             <ul class="status-pnt">
                                 <li></li>
                                 <li></li>
@@ -332,7 +331,7 @@
                                 <li></li>
                             </ul>
                         </div>
-                        <div class="col-6 control">
+                        <div class="col-md-6 col-12 control">
                             <button (click)="showStep(3) " type="button" class="cs-btn bt2"
                                 *ngIf="!loading_active && !disablebuttonsInSchedule">{{back_cap}}</button>
                             <button (click)="showStep(5) " type="button" class="cs-btn bt1"
@@ -340,16 +339,16 @@
                             <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                         </div>
                     </div>
-                </div>
+                </div>           
             </div>
 
             <!-- Step 5 -->
-            <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
                     <h1>Additional info</h1>
                 </div>
-                <div class="content">
+                <div class="content row">
                     <div class="flds col-12">
                         <p class="form-level-settings">Additional information required to enable public search for your
                             profile visibility to every one.
@@ -606,7 +605,7 @@
                 </div>
                 <div class="footer">
                     <div class="row">
-                        <div class="col-6 status">
+                        <div class="col-md-6 col-12 status">
                             <ul class="status-pnt">
                                 <li></li>
                                 <li></li>
@@ -616,7 +615,7 @@
                                 <li></li>
                             </ul>
                         </div>
-                        <div class="col-6 control">
+                        <div class="col-md-6 col-12 control">
                             <button type="button" (click)="showStep(4)" class="cs-btn bt2"
                                 *ngIf="!loading_active">{{back_cap}}</button>
                             <button type="button" (click)="showStep(6)" class="cs-btn bt1"
@@ -628,12 +627,12 @@
             </div>
 
             <!-- Step 6 -->
-            <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+            <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
                     <h1>{{public_search_cap}}</h1>
                 </div>
-                <div class="content">
+                <div class="content row">
                     <div class="flds col-12">
                         <p class="form-level-settings">{{turn_on_off_cap}} {{turn_on_of}}</p>
                         <div class="form-group">
@@ -664,7 +663,7 @@
                 </div>
                 <div class="footer">
                     <div class="row">
-                        <div class="col-6 status">
+                        <div class="col-md-6 col-12 status">
                             <ul class="status-pnt">
                                 <li></li>
                                 <li></li>
@@ -674,7 +673,7 @@
                                 <li class="active"></li>
                             </ul>
                         </div>
-                        <div class="col-6 control">
+                        <div class="col-md-6 col-12 control">
                             <button type="button" (click)="showStep(5)" class="cs-btn bt2"
                                 *ngIf="!loading_active">{{back_cap}}</button>
                             <button type="button" (click)="checkClose()" class="cs-btn bt1"
@@ -691,7 +690,7 @@
                     <div class="header">
                         <h1>{{public_search_cap}}</h1>
                     </div>
-                    <div class="content">
+                    <div class="content row">
                         <div class="flds col-12">
                             <div class="wbox">
                                 <div class="bx-ico"><i data-icon="m"></i></div>
@@ -703,7 +702,7 @@
                     </div>
                     <div class="footer">
                         <div class="row">
-                            <div class="col-6 status">
+                            <div class="col-md-6 col-12 status">
                                 <ul class="status-pnt">
                                     <li></li>
                                     <li></li>
@@ -711,7 +710,7 @@
                                     <li class="active"></li>
                                 </ul>
                             </div>
-                            <div class="col-6 control">
+                            <div class="col-md-6 col-12 control">
                                 <button type="button" (click)="showStep(6)" class="cs-btn bt2"
                                     *ngIf="!loading_active">{{back_cap}}</button>
                                 <button type="button" (click)="redirecttoProfile()" class="cs-btn bt1"
