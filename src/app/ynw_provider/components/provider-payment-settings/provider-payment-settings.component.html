@@ -12,7 +12,7 @@
                         <!-- <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid"
                     (selectedIndexChange)="selectedIndexChange($event)">
                    <mat-tab > -->
-                        <div class="paysettings ynw-common-form-nm">
+                        <div class="paysettings ">
                             <span class="form-level-settings">{{payment_set_cap}}<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('payment-settings', $event)">Learn
                                     More</a></span>
@@ -30,7 +30,7 @@
                                             <mat-radio-button [disabled]="disableMyAcc" [value]="'disable'">
                                             </mat-radio-button>
                                             <label for="">{{my_own_account_cap}}</label>
-                                            <div *ngIf="optJaldeeAccount!='enable'">
+                                            <div class="payment-smalldevice"*ngIf="optJaldeeAccount!='enable'">
                                                    
                                                 <div class="outermost" *ngIf="jPay_Billing">
                                                    
@@ -53,7 +53,7 @@
                                                                     class="not-verified">{{not_verified_cap}}</span></span>
                                                                         </mat-panel-title>
                                                                       </mat-expansion-panel-header>
-                                                                      <div class='paytm-det row' >
+                                                                      <div class='paytm-det row ynw-common-form-nm' >
                                                                             <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                                 <div class="form-group mobile-field">
                                                                                     <!-- <label class="caption">Enter 10 digits mobile
@@ -69,14 +69,14 @@
                                                                                             <input class="form-control"
                                                                                                 maxlength="10" matInput #paymobref
                                                                                                 [(ngModel)]="paytmmobile" placeholder="Enter 10 digits mobile
-                                                                                                number"
+                                                                                                number(+91)"
                                                                                                 (keypress)="resetApi('paytmmobile')"
                                                                                                 autocomplete="off"
                                                                                                 [disabled]="!ineditMode"
                                                                                                 (blur)="paytmBlur()" tabindex="2">
                                                                                         </div>
                                                                                     </mat-form-field>
-                                                                                    <app-field-error-display
+                                                                                    <app-field-error-display *ngIf= "showError['paytmmobile']"
                                                                                         [displayError]="showError['paytmmobile']['status']"
                                                                                         [errorMsg]="showError['paytmmobile']['msg']">
                                                                                     </app-field-error-display>
@@ -94,7 +94,7 @@
                                                                                             [disabled]="!ineditMode"
                                                                                             (blur)="paytmMidBlur()" tabindex="3">
                                                                                     </mat-form-field>
-                                                                                    <app-field-error-display
+                                                                                    <app-field-error-display *ngIf= "showError['paytmMerchantId']"
                                                                                         [displayError]="showError['paytmMerchantId']['status']"
                                                                                         [errorMsg]="showError['paytmMerchantId']['msg']">
                                                                                     </app-field-error-display>
@@ -111,7 +111,7 @@
                                                                                             [disabled]="!ineditMode"
                                                                                             (blur)="paytmMkeyBlur()" tabindex="4">
                                                                                     </mat-form-field>
-                                                                                    <app-field-error-display
+                                                                                    <app-field-error-display *ngIf= "showError['paytmMerchantKey']"
                                                                                         [displayError]="showError['paytmMerchantKey']['status']"
                                                                                         [errorMsg]="showError['paytmMerchantKey']['msg']">
                                                                                     </app-field-error-display>
@@ -128,7 +128,7 @@
                                                                                             (blur)="paytmwebsitewebBlur()"
                                                                                             [disabled]="!ineditMode" tabindex="3">
                                                                                     </mat-form-field>
-                                                                                    <app-field-error-display
+                                                                                    <app-field-error-display  *ngIf= "showError['paytmWebsiteWeb']"
                                                                                         [displayError]="showError['paytmWebsiteWeb']['status']"
                                                                                         [errorMsg]="showError['paytmWebsiteWeb']['msg']">
                                                                                     </app-field-error-display>
@@ -145,7 +145,7 @@
                                                                                             (blur)="paytmwebsiteAppBlur()"
                                                                                             [disabled]="!ineditMode" tabindex="3">
                                                                                     </mat-form-field>
-                                                                                    <app-field-error-display
+                                                                                    <app-field-error-display *ngIf= "showError['paytmWebsiteApp']"
                                                                                         [displayError]="showError['paytmWebsiteApp']['status']"
                                                                                         [errorMsg]="showError['paytmWebsiteApp']['msg']">
                                                                                     </app-field-error-display>
@@ -164,16 +164,18 @@
                                                                                             (blur)="paytmindustrytypeBlur()"
                                                                                             [disabled]="!ineditMode" tabindex="3">
                                                                                     </mat-form-field>
-                                                                                    <app-field-error-display
+                                                                                    <app-field-error-display *ngIf= "showError['paytmIndustryType']"
                                                                                         [displayError]="showError['paytmIndustryType']['status']"
                                                                                         [errorMsg]="showError['paytmIndustryType']['msg']">
                                                                                     </app-field-error-display>
                                                                                 </div>
+                                                                            </div>
+                                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-12">
                                                                                 <div class="actiondiv"
                                                         *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
                                                         <button type="button" class="cs-btn bt2" (click)="resetInfo ('paytm')"
                                                             *ngIf="ineditMode" tabindex="15">Reset</button>&nbsp;
-                                                        <button type="button" mat-button class="cs-btn bt1"
+                                                        <button type="button"  class="cs-btn bt1"
                                                             (click)="savePaySettings()" *ngIf="ineditMode"
                                                             tabindex="14">Save</button>
                                                        
@@ -193,7 +195,7 @@
                                                                     class="not-verified">{{not_verified_cap}}</span> </span>
                                                                             </mat-panel-title>
                                                                           </mat-expansion-panel-header>
-                                                                          <div class='cc-det'>
+                                                                          <div class='cc-det ynw-common-form-nm'>
                                                                
                                                                                 <div class='bank-outer'>
                                                                                     <div class="form-group">
@@ -208,7 +210,7 @@
                                                                                                 (blur)="acholderNameBlur()"
                                                                                                 tabindex="5">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankacname']"
                                                                                             [displayError]="showError['bankacname']['status']"
                                                                                             [errorMsg]="showError['bankacname']['msg']">
                                                                                         </app-field-error-display>
@@ -224,7 +226,7 @@
                                                                                                 (blur)="bankAcnumberBlur()"
                                                                                                 tabindex="6">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankacnumber']"
                                                                                             [displayError]="showError['bankacnumber']['status']"
                                                                                             [errorMsg]="showError['bankacnumber']['msg']">
                                                                                         </app-field-error-display>
@@ -238,7 +240,7 @@
                                                                                                 [disabled]="!ineditMode" maxlength="50"
                                                                                                 (blur)="bankNameBlur()" tabindex="8">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankname']"
                                                                                             [displayError]="showError['bankname']['status']"
                                                                                             [errorMsg]="showError['bankname']['msg']">
                                                                                         </app-field-error-display>
@@ -252,7 +254,7 @@
                                                                                                 [disabled]="!ineditMode" maxlength="11"
                                                                                                 (blur)="ifscBlur()" tabindex="9">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankifsc']"
                                                                                             [displayError]="showError['bankifsc']['status']"
                                                                                             [errorMsg]="showError['bankifsc']['msg']">
                                                                                         </app-field-error-display>
@@ -267,7 +269,7 @@
                                                                                                 [disabled]="!ineditMode"
                                                                                                 (blur)="bankBranchBlur()" tabindex="11">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankbranch']"
                                                                                             [displayError]="showError['bankbranch']['status']"
                                                                                             [errorMsg]="showError['bankbranch']['msg']">
                                                                                         </app-field-error-display>
@@ -299,7 +301,7 @@
                                                                                                     {{societies_cap}}</mat-option>
                                                                                             </mat-select>
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankfiling']"
                                                                                             [displayError]="showError['bankfiling']['status']"
                                                                                             [errorMsg]="showError['bankfiling']['msg']">
                                                                                         </app-field-error-display>
@@ -321,7 +323,7 @@
                                                                                                 </mat-option>
                                                                                             </mat-select>
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['bankactype']"
                                                                                             [displayError]="showError['bankactype']['status']"
                                                                                             [errorMsg]="showError['bankactype']['msg']">
                                                                                         </app-field-error-display>
@@ -338,7 +340,7 @@
                                                                                                 (keypress)="removSpace($event)"
                                                                                                 tabindex="7">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['pannumber']"
                                                                                             [displayError]="showError['pannumber']['status']"
                                                                                             [errorMsg]="showError['pannumber']['msg']">
                                                                                         </app-field-error-display>
@@ -353,19 +355,21 @@
                                                                                                 [disabled]="!ineditMode" maxlength="50"
                                                                                                 (blur)="panNameBlur()" tabindex="10">
                                                                                         </mat-form-field>
-                                                                                        <app-field-error-display
+                                                                                        <app-field-error-display *ngIf= "showError['panname']"
                                                                                             [displayError]="showError['panname']['status']"
                                                                                             [errorMsg]="showError['panname']['msg']">
                                                                                         </app-field-error-display>
                                                                                     </div>
+                                                                                    <div class="form-group"></div>
+                                                                                    <div class="form-group">
                                                                                     <div class="actiondiv"
                                                         *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
                                                         <button type="button" class="cs-btn bt2" (click)="resetInfo ('cc')"
                                                             *ngIf="ineditMode" tabindex="15">Reset</button>&nbsp;
-                                                        <button type="button" mat-button class="cs-btn bt1"
+                                                        <button type="button"  class="cs-btn bt1"
                                                             (click)="savePaySettings()" *ngIf="ineditMode"
                                                             tabindex="14">Save</button>
-                                                       
+                                                        </div>
                                                     </div>
                                                                                 </div>
                                                                             </div>

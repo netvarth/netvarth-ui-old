@@ -4568,3 +4568,9 @@ margin-bottom: 0;
   text-align: left !important;
   padding: 0 !important;
 }
+@media only screen and (max-width: 575px) {
+.payment-smalldevice{
+ width: 270px !important;
+ float: right !important;
+  }
+}

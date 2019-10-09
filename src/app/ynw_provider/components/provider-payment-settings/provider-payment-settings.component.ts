@@ -188,7 +188,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     'gstnumber': { status: false, msg: '' }
                 };
             }
+            else {
             this.showError[code] = { status: false, msg: '' };
+            }
         } else {
             this.showError = {
                 'paytmmobile': { status: false, msg: '' },
@@ -217,7 +219,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     initPaymentSettings(paySettings, type ,mode?) {
         if (mode !== undefined) {
-            if(mode == 'paytm'){this.paystatus = paySettings.onlinePayment || false;
+            if(mode == 'paytm'){
+                this.paystatus = paySettings.onlinePayment || false;
                 this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
                 this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
                 this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
@@ -225,7 +228,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.paytmIndustryType = paySettings.paytmIndustryType || '';
                 this.paytmMerchantId = paySettings.paytmMerchantId || '';
             }
-            else{   
+            else{ 
+                this.paystatus = paySettings.onlinePayment || false;  
                 this.pannumber = paySettings.panCardNumber || '';
                 this.panname = paySettings.nameOnPanCard || '';
                 this.bankacname = paySettings.accountHolderName || '';
@@ -361,6 +365,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         const blankpattern = projectConstants.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             postData['payTm'] = true;
+           // this.paytmBlur();
             this.paytmMidBlur();
             this.paytmMkeyBlur();
             this.paytmwebsitewebBlur();
@@ -637,6 +642,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
 
     getLicenseMetrics() {
         const licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
+        console.log(licenseMetrics);
         for (let i = 0; i < licenseMetrics.length; i++) {
             if (licenseMetrics[i].id === 6) {
                 if (licenseMetrics[i].anyTimeValue === 'true') {
