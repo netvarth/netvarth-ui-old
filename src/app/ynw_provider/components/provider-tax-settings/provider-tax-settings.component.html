@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="actiondiv" *ngIf="showEditSection || !allFieldsExists">
-                            <button type="button" class="cs-btn bt2" (click)="cancelEdit()" style="margin-right: 10px"
+                            <button *ngIf="taxSettings" type="button" class="cs-btn bt2" (click)="cancelEdit()" style="margin-right: 10px"
                                 [disabled]="taxfieldValidation(false)" tabindex="16">Cancel</button>
                             <button type="button" class="cs-btn bt1" (click)="saveTaxSettings()"
                                 [disabled]="taxfieldValidation(false)" tabindex="16">{{update_tax_cap}}</button>

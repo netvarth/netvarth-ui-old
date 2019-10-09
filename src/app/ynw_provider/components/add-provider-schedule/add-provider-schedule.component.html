@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="savecancel">
-                <button type="button" (click)="cancelscheduleClicked()" class="cs-btn bt7">{{cancel_btn}}</button>
+                <button *ngIf="display_schedule.length > 0" type="button" (click)="cancelscheduleClicked()" class="cs-btn bt7">{{cancel_btn}}</button>
                 <button type="button" (click)="onsaveScheduleClick()" class="cs-btn bt3">
                     <ng-container *ngIf="!edit_mode">{{add_schedule}}</ng-container>
                     <ng-container *ngIf="edit_mode">{{update_btn}}</ng-container>

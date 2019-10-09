@@ -42,6 +42,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
     isCheckin;
     allFieldsExists = false;
     enabletax = false;
+    taxSettings = false;
 
     constructor(private shared_functions: SharedFunctions,
         private routerobj: Router,
@@ -69,6 +70,9 @@ export class ProvidertaxSettingsComponent implements OnInit {
                     if (this.taxDetails.enableTax) {
                         this.enabletax = true;
                     }
+                    this.taxSettings = true;
+                } else {
+                    this.taxSettings = false;
                 }
             },
                 () => {

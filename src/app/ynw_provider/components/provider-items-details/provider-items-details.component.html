@@ -25,7 +25,7 @@
                                         <span class="cs-btn bt7" (click)="doremoveImage()" *ngIf="image_exists">Remove Image</span>
                                     </div>
                                 </div> -->
-                                <div class="itm-r">
+                                <div class="itm-r item-detail">
                                     <span class="editbt" (click)="editItem()" *ngIf="item_list.status=='ACTIVE'">
 
                                     </span>
@@ -36,13 +36,13 @@
                                             {{item_list.displayName}}
                                         </span>
                                     </div>
-                                    <div class="dtls">
+                                    <div class="dtls" *ngIf="item_list.shortDesc">
                                         <span class="label">{{short_desc_cap}}</span>
                                         <span class="ttle">
                                             {{item_list.shortDesc}}
                                         </span>
                                     </div>
-                                    <div class="dtls">
+                                    <div class="dtls" *ngIf="item_list.displayDesc">
                                         <span class="label">{{detail_desc_cap}}</span>
                                         <span class="ttle">
                                             {{item_list.displayDesc}}

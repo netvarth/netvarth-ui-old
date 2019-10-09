@@ -166,7 +166,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
     if (!id) {
       return;
     }
-    this.router.navigate(['provider', 'settings', 'items', id]);
+    this.router.navigate(['provider', 'settings', 'pos', 'items', id]);
   }
 
   doRemoveItem(item) {

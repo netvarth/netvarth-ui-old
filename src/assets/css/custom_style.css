@@ -4562,3 +4562,9 @@ margin-bottom: 0;
 #filterToolBar-Container .genTextHeight {height:33px;}
 #filterToolBar-Container .genTextwidth {width:50px}
 #horizmaskContentDiv .genTextHeight {height:33px;}
+
+.item-detail .dtls .label {
+  font-size: .875rem !important;
+  text-align: left !important;
+  padding: 0 !important;
+}
