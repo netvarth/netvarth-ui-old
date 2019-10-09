@@ -31,7 +31,7 @@ export class CustomersListComponent implements OnInit {
             { 'name': 'mobile', 'title': 'Mobile' },
             { 'name': 'email', 'title': 'Email' }
         ]
-    }
+    };
     filter = {
         first_name: '',
         date: null,

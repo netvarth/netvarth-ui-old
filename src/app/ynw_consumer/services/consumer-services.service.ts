@@ -62,7 +62,7 @@ export class ConsumerServices {
 
   addConsumertoProviderNote(uuid, message) {
     const url = 'consumer/communications?account=' + uuid;
-    return this.servicemeta.httpPost(url, message.communicationMessage);
+    return this.servicemeta.httpPost(url, message);
   }
 
   addConsumerWaitlistNote(accountid, uuid, body) {
