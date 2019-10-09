@@ -4447,7 +4447,7 @@ margin-bottom: 0;
   text-align: left !important;
 }
 
-.b-home .content {background: transparent !important;}
+/* .b-home .content {background: transparent !important;} */
 .b-home .content.loc-list {min-height: 10px !important}
 .instant .label-margin {margin-top: 0px !important}
 
