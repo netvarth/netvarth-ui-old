@@ -141,11 +141,10 @@ export class POSComponent implements OnInit {
     });
   }
   getPOSSettings() {
-    // this.provider_services.getProviderPOSStatus().subscribe(data => {
-    //   console.log(data);
-    //   // this.pos_status = data;
-    //   this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
-    // });
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos_status = data['enablepos'];
+      this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
+    });
   }
   learnmore_clicked(parent, child) {
 
