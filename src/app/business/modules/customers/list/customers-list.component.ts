@@ -23,15 +23,6 @@ export class CustomersListComponent implements OnInit {
     customer_count: any = 0;
     filterapplied = false;
     open_filter = false;
-    filters = {
-        'parent': 'customers',
-        'buttons': [
-            { 'name': 'first_name', 'title': 'First Name' },
-            { 'name': 'date', 'title': 'Date' },
-            { 'name': 'mobile', 'title': 'Mobile' },
-            { 'name': 'email', 'title': 'Email' }
-        ]
-    };
     filter = {
         first_name: '',
         date: null,
@@ -68,6 +59,15 @@ export class CustomersListComponent implements OnInit {
     crtCustdialogRef;
     calculationmode;
     showToken = false;
+
+    filters: any = {
+        'first_name': false,
+        'date': false,
+        'mobile': false,
+        'email': false
+    };
+
+
     constructor(private provider_services: ProviderServices,
         public dialog: MatDialog,
         private shared_functions: SharedFunctions) {
@@ -83,27 +83,31 @@ export class CustomersListComponent implements OnInit {
         // this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
         this.checkedin_label = Messages.CHECKED_IN_LABEL;
     }
-
     ngOnInit() {
         this.getCustomersList(true);
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     }
-
+    filterClicked(type) {
+        this.filters[type] = !this.filters[type];
+        if (!this.filters[type]) {
+            if (type === 'date') {
+                this.filter[type] = null;
+            } else {
+                this.filter[type] = '';
+            }
+            this.doSearch();
+        }
+    }
     routeLoadIndicator(e) {
         this.apiloading = e;
     }
-
     getCustomersList(from_oninit = false) {
-
         let filter = this.setFilterForApi();
-
         this.getCustomersListCount(filter)
             .then(
                 result => {
-
                     if (from_oninit) { this.customer_count = result; }
-
                     filter = this.setPaginationFilter(filter);
                     this.provider_services.getProviderCustomers(filter)
                         .subscribe(
@@ -140,20 +144,15 @@ export class CustomersListComponent implements OnInit {
                     }
                 );
         });
-
     }
-
-
     toggleFilter() {
         this.open_filter = !this.open_filter;
     }
-
     handle_pageclick(pg) {
         this.pagination.startpageval = pg;
         this.filter.page = pg;
         this.doSearch();
     }
-
     doSearch() {
         this.getCustomersList();
         if (this.filter.first_name || this.filter.date || this.filter.mobile || this.filter.email) {
@@ -162,8 +161,13 @@ export class CustomersListComponent implements OnInit {
             this.filterapplied = false;
         }
     }
-
     resetFilter() {
+        this.filters = {
+            'first_name': false,
+            'date': false,
+            'mobile': false,
+            'email': false
+        };
         this.filter = {
             first_name: '',
             date: null,
@@ -173,29 +177,23 @@ export class CustomersListComponent implements OnInit {
             page: 1
         };
     }
-
     setPaginationFilter(api_filter) {
 
         api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
         api_filter['count'] = this.filter.page_count;
-
         return api_filter;
     }
-
     setFilterForApi() {
         const api_filter = {};
         if (this.filter.first_name !== '') {
             api_filter['firstName-eq'] = this.filter.first_name;
         }
-
         if (this.filter.date != null) {
             api_filter['date-eq'] = this.filter.date.format('YYYY-MM-DD');
         }
-
         if (this.filter.email !== '') {
             api_filter['email-eq'] = this.filter.email;
         }
-
         if (this.filter.mobile !== '') {
             const pattern = projectConstants.VALIDATOR_NUMBERONLY;
             const mval = pattern.test(this.filter.mobile);
@@ -204,9 +202,7 @@ export class CustomersListComponent implements OnInit {
             } else {
                 this.filter.mobile = '';
             }
-
         }
-
         return api_filter;
     }
     focusInput(ev, input) {
@@ -215,7 +211,6 @@ export class CustomersListComponent implements OnInit {
             input.focus();
         }
     }
-
     searchCustomer(source) {
         this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
             width: '50%',

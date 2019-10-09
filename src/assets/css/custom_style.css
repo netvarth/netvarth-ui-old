@@ -4557,12 +4557,10 @@ margin-bottom: 0;
 
 .remMarginRight {margin-right:0px;}
 .genMarginLeft {margin-left:10px;}
-#filterContentDiv .genTextHeight {height:33px;}
-#filterContentDiv .genTextwidth {width:50px;}
-#filterToolBar-Container .genTextHeight {height:33px;}
-#filterToolBar-Container .genTextwidth {width:50px}
-#horizmaskContentDiv .genTextHeight {height:33px;}
-
+.genTextHeight {height:32px;}
+.genTextwidth {width:50px;}
+.filter-toolbar {margin-top: 10px;}
+.button_filter { background-image: url(../images/filter.png); }
 .item-detail .dtls .label {
   font-size: .875rem !important;
   text-align: left !important;

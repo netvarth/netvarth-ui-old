@@ -17,11 +17,59 @@
                     <i class="fa fa-plus"></i> Create {{customer_label}}
                   </a>
                 </li>
+                <li *ngIf="filterapplied === true" class="cl-fltr fltr-tbl dropdown notifications-menu">
+                  <a class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                    [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
+                    <img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" />
+                  </a>
+                </li>
+                <li class="dropdown notifications-menu">
+                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                    <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                    <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+                  </a>
+                </li>
               </ul>
             </div>
           </nav>
         </div>
         <div class="table-responsive dash-list">
+          <div id="customers-filter-cont" *ngIf="open_filter === true">
+            <div id="customers-filter-toolbar" class="box-content filter-toolbar">
+              <div>
+                <a [class.button_filter]="filters['first_name']" (click)="filterClicked('first_name')"
+                  class="anchorbutton remMarginRight genMarginLeft" name="first_name"
+                  id="btn_first_name_filter_id"><span>First Name</span></a>
+                <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                  class="genTextHeight" [(ngModel)]="filter.first_name" [hidden]="!filters['first_name']">
+
+                <a [class.button_filter]="filters['date']" (click)="filterClicked('date')"
+                  class="anchorbutton remMarginRight genMarginLeft" name="date"
+                  id="btn_date_filter_id"><span>Date</span></a>
+                <input type="text"  [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
+                  class="genTextHeight" [hidden]="!filters['date']">
+                <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!filters['date']"></mat-datepicker-toggle>
+                <mat-datepicker #picker [hidden]="!filters['date']"></mat-datepicker>
+                <a [class.button_filter]="filters['mobile']" (click)="filterClicked('mobile')"
+                  class="anchorbutton remMarginRight genMarginLeft" name="mobile"
+                  id="btn_mobile_filter_id"><span>Mobile</span></a>
+                <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                  (keyup)="focusInput($event, Femail)" maxlength="10" class="genTextHeight"
+                  [hidden]="!filters['mobile']">
+
+                <a [class.button_filter]="filters['email']" (click)="filterClicked('email')"
+                  class="anchorbutton remMarginRight genMarginLeft" name="email"
+                  id="btn_email_filter_id"><span>Email</span></a>
+                <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                  (keyup)="focusInput($event, Fdate)" class="genTextHeight" [hidden]="!filters['email']">
+                <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
+                  class="genMarginLeft genTextHeight stdbtn btn_black">
+              </div>
+
+            </div>
+          </div>
           <table class="table">
             <thead>
               <tr class="tble-filtr-tr">
@@ -31,7 +79,7 @@
                 <th [matTooltipClass]="tooltipcls"
                   [matTooltip]="'Date shown only for '+customer_label+'s who have availed the service'">
                   {{last_visit_cap}}</th>
-                <th>
+                <!-- <th>
                   <table class="fltr-tbl">
                     <tr>
                       <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
@@ -43,14 +91,14 @@
                           [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i></td>
                     </tr>
                   </table>
-                </th>
+                </th> -->
               </tr>
             </thead>
-            <tbody>
+            <!-- <tbody>
               <tr><td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
                 <app-jaldee-filter *ngIf="filters" [fields]="filters"></app-jaldee-filter>
               </td></tr>
-            </tbody>
+            </tbody> -->
             <!-- <tbody>
               <tr>
                 <td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
@@ -103,7 +151,7 @@
                 <td data-title="Last Visit" class="lastvisit">
                   {{customer.lastVisitedDate | date: dateFormat }}
                 </td>
-                <td></td>
+                <!-- <td></td> -->
               </tr>
             </tbody>
           </table>
@@ -121,7 +169,6 @@
     </div>
   </div>
 </section>
-
 <div *ngIf="apiloading" style="margin-top: 100px">
   <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
