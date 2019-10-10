@@ -48,10 +48,11 @@
                 <a [class.button_filter]="filters['date']" (click)="filterClicked('date')"
                   class="anchorbutton remMarginRight genMarginLeft" name="date"
                   id="btn_date_filter_id"><span>Date</span></a>
-                <input type="text"  [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate (dateChange)="doSearch()"
-                  class="genTextHeight" [hidden]="!filters['date']">
+                <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+                  (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['date']" (blur)="doSearch()">
                 <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!filters['date']"></mat-datepicker-toggle>
                 <mat-datepicker #picker [hidden]="!filters['date']"></mat-datepicker>
+
                 <a [class.button_filter]="filters['mobile']" (click)="filterClicked('mobile')"
                   class="anchorbutton remMarginRight genMarginLeft" name="mobile"
                   id="btn_mobile_filter_id"><span>Mobile</span></a>
@@ -79,67 +80,8 @@
                 <th [matTooltipClass]="tooltipcls"
                   [matTooltip]="'Date shown only for '+customer_label+'s who have availed the service'">
                   {{last_visit_cap}}</th>
-                <!-- <th>
-                  <table class="fltr-tbl">
-                    <tr>
-                      <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
-                        [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img
-                          src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /></td>
-                      <td> <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                        <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i></td>
-                    </tr>
-                  </table>
-                </th> -->
               </tr>
             </thead>
-            <!-- <tbody>
-              <tr><td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
-                <app-jaldee-filter *ngIf="filters" [fields]="filters"></app-jaldee-filter>
-              </td></tr>
-            </tbody> -->
-            <!-- <tbody>
-              <tr>
-                <td colspan="7" *ngIf="open_filter === true" class="tble-filtr-td">
-                  <mat-accordion>
-                    <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
-                      <div class="form-group first_name">
-                        <mat-form-field class="example-full-width">
-                          <label class="col-form-label">{{first_name_cap}}</label>
-                          <input matInput [(ngModel)]="filter.first_name" #Ffname (blur)="doSearch()"
-                            (keyup)="focusInput($event,Fmobile)" autocomplete="off">
-                        </mat-form-field>
-                      </div>
-                      <div class="form-group mobile">
-                        <mat-form-field class="example-full-width">
-                          <label class="col-form-label">{{mobile_cap}}</label>
-                          <input matInput [(ngModel)]="filter.mobile" maxlength="10" #Fmobile (blur)="doSearch()"
-                            (keyup)="focusInput($event, Femail)" autocomplete="off">
-                        </mat-form-field>
-                      </div>
-                      <div class="form-group email">
-                        <mat-form-field class="example-full-width">
-                          <label class="col-form-label">{{email_cap}}</label>
-                          <input matInput [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
-                            (keyup)="focusInput($event, Fdate)" autocomplete="off">
-                        </mat-form-field>
-                      </div>
-                      <div class="check_in_date">
-                        <label class="col-form-label" for="displayName">{{checkin_label |capitalizeFirst}}
-                          {{date_cap}}</label>
-                        <mat-form-field>
-                          <input matInput [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
-                            (dateChange)="doSearch()" autocomplete="off">
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </td>
-              </tr>
-            </tbody> -->
             <tbody>
               <tr *ngFor="let customer of customers">
                 <td data-title="Name" class="name">
@@ -151,7 +93,6 @@
                 <td data-title="Last Visit" class="lastvisit">
                   {{customer.lastVisitedDate | date: dateFormat }}
                 </td>
-                <!-- <td></td> -->
               </tr>
             </tbody>
           </table>

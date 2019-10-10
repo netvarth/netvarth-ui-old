@@ -61,6 +61,7 @@ import { SearchProviderComponent } from './shared/components/search-provider/sea
 import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
+import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +126,8 @@ import { ConsumerPaymentmodeComponent } from './shared/components/consumer-payme
     LoadingSpinnerModule,
     LazyModule,
     SearchProviderModule,
-    ScrollToModule.forRoot()
+    ScrollToModule.forRoot(),
+    DateFormatPipeModule
   ],
   providers: [
     AuthGuardConsumer,

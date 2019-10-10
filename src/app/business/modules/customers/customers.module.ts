@@ -9,22 +9,24 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
 import { CustomersRoutingModule } from './customers.routing.module';
 import { CustomersListComponent } from './list/customers-list.component';
 import { JaldeeFilterModule } from '../../../shared/modules/filter/filter.module';
+import { DateFormatPipeModule } from '../../../shared/pipes/date-format/date-format.module';
 
 @NgModule({
     imports: [
-       CommonModule,
-       SharedModule,
-       MaterialModule,
-       BreadCrumbModule,
-       CapitalizeFirstPipeModule,
-       PagerModule,
-       LoadingSpinnerModule,
-       CustomersRoutingModule,
-       JaldeeFilterModule
+        CommonModule,
+        SharedModule,
+        MaterialModule,
+        BreadCrumbModule,
+        CapitalizeFirstPipeModule,
+        PagerModule,
+        LoadingSpinnerModule,
+        CustomersRoutingModule,
+        JaldeeFilterModule,
+        DateFormatPipeModule
 
     ],
     declarations: [CustomersListComponent],
     exports: [CustomersListComponent]
 })
 
-export class CustomersModule {}
+export class CustomersModule { }

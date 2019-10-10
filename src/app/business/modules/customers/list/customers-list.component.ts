@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddProviderCustomerComponent } from '../../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
 import { MatDialog } from '@angular/material';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
     selector: 'app-customers-list',
@@ -70,6 +71,7 @@ export class CustomersListComponent implements OnInit {
 
     constructor(private provider_services: ProviderServices,
         public dialog: MatDialog,
+        public dateformat: DateFormatPipe,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
@@ -189,7 +191,8 @@ export class CustomersListComponent implements OnInit {
             api_filter['firstName-eq'] = this.filter.first_name;
         }
         if (this.filter.date != null) {
-            api_filter['date-eq'] = this.filter.date.format('YYYY-MM-DD');
+            const formatedDate = this.dateformat.transformTofilterDate(this.filter.date);
+            api_filter['date-eq'] = formatedDate;
         }
         if (this.filter.email !== '') {
             api_filter['email-eq'] = this.filter.email;
@@ -209,6 +212,7 @@ export class CustomersListComponent implements OnInit {
         const kCode = parseInt(ev.keyCode, 10);
         if (kCode === 13) {
             input.focus();
+            this.doSearch();
         }
     }
     searchCustomer(source) {
