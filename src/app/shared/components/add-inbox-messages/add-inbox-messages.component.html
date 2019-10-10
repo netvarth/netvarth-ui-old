@@ -8,20 +8,69 @@
     <mat-dialog-content>
         <div class="form-group" *ngIf="!api_loading">
             <mat-form-field>
-                <textarea matInput class="form-control" id="message" placeholder="{{message_label}} *" formControlName="message"
-                    maxlength="1000">
+                <textarea matInput class="form-control" id="message" placeholder="{{message_label}} *"
+                    formControlName="message" maxlength="1000">
             </textarea>
             </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')" errorMsg="Please enter a message.">
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+                errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
-        <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{send_btn_cap}}</button>
+        <ng-container *ngIf="selectedMessage">
+            <div class="row col-md-12" *ngFor="let item of selectedMessage.files; let i = index">
+                <div class="col-md-7">
+                    <span class="ln-hgt-40">{{item.name}}</span>
+                </div>
+                <div class="col-md-5">
+                    <span class="mbt comm-menu-imgs">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button type="button" mat-menu-item (click)="captionMenuClicked(i)">
+                                <i class="icon-edit"></i>
+                                <span>Add caption</span>
+                            </button>
+                            <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                <i class="icon-delete"></i>
+                                <span>delete</span>
+                            </button>
+                        </mat-menu>
+                    </span>
+                </div>
+                <div style="margin-top: 15px" class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
+                    *ngIf="showCaptionBox[i]">
+                    <div class="input-group">
+                        <input placeholder="Enter image caption" type="text" class="form-control"
+                            [(ngModel)]="activeImageCaption[i]" [ngModelOptions]="{standalone: true}">
+                        <span class="input-group-btn">
+                            <button class="btn bt3 btn-default coupon-apply-btn"
+                                (click)="addCaption(activeImageCaption, i)" type="button">Add</button>&nbsp;
+                            <button class="btn bt3 btn-default coupon-apply-btn" (click)="closeCaptionMenu(i)"
+                                type="button">Cancel</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <div class="col-md-12" style="margin-top: 15px">
+            <button type="button" mat-dialog-close class="cs-btn bt2"
+                [disabled]="disableButton">{{cancel_btn_cap}}</button>
+            <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+                class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
+            <button type="button" *ngIf="source=='consumer-waitlist' || source=='provider-waitlist'" class="cs-btn bt3 btn-attach"
+                (click)="logofile.click()">
+                <input #logofile type="file" accept="image/*" style="display:none;" multiple
+                    (change)="filesSelected($event)">
+                <span><i class="fa fa-paperclip"></i></span>
+            </button>
+        </div>
     </mat-dialog-actions>
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 
-    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display>
 </form>

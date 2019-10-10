@@ -36,19 +36,23 @@
                                                         *ngFor="let inbox of users.inboxList, let childIndex = index"
                                                         [class.right]="inbox.messagestatus=='in'">
                                                         <div class="direct-chat-info clearfix">
-                                                            <!-- <span class="direct-chat-name pull-right">Sarah Bullock</span> -->
+                                                            <!-- <span class="direct-chat-name pull-right" *ngIf="inbox.messagestatus=='in'">{{inbox.username}}</span> -->
                                                             <span class="direct-chat-timestamp"
                                                                 [class.pull-left]="inbox.messagestatus=='in'"
                                                                 [class.pull-right]="inbox.messagestatus=='out'">{{formatDateDisplay(inbox.timestamp)}}</span>
                                                         </div>
                                                         <!-- /.direct-chat-info -->
-                                                        <!-- <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image"> -->
+                                                        <img *ngIf="inbox.messagestatus=='out'" class="direct-chat-img" [src]="blogo" alt="business image">
+                                                        <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img" [src]="clogo" alt="user image">
                                                         <!-- /.direct-chat-img -->
                                                         <div class="direct-chat-text"
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
+                                                            <div class="thumbnails mt10 mb10" *ngIf="inbox.attachments">
+                                                                <a class="mg-10" target="_blank" [href]="attachment.s3path" *ngFor="let attachment of inbox.attachments"><img [src]="attachment.s3path" style="width:100px; height:100px"/></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -61,9 +65,9 @@
                                                         {{selectedMessage[parentIndex].message.message}}</div>
                                                     <div class="input-group">
                                                         <input type="text" name="message" placeholder="Type Message ..."
-                                                            class="form-control" [(ngModel)]="messageToSend">
+                                                            class="form-control" [(ngModel)]="messageToSend"  [ngModelOptions]="{standalone: true}">
                                                         <span class="input-group-btn">
-                                                            <button class="btn btn-warning btn-flat" (click)="logofile.click()">
+                                                            <button *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message" class="btn btn-warning btn-flat" (click)="logofile.click()">
                                                                 <input #logofile type="file" accept="image/*" style="display:none;" multiple
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>

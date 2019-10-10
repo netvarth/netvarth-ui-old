@@ -249,7 +249,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
       ).subscribe((e: any) => {
-        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
+        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/dashboard/check-ins/'));
       });
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
@@ -1084,7 +1084,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       this.shared_functions.setitemonLocalStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'checkin-detail', checkin.ynwUuid]);
+    this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid]);
   }
   addProviderNote(checkin) {
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {

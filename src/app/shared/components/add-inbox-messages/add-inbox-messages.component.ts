@@ -7,14 +7,11 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
 })
-
 export class AddInboxMessagesComponent implements OnInit, OnDestroy {
-
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -30,8 +27,14 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   receiver_name = null;
   caption;
   disableButton = false;
-
   title = 'Send Message';
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  showCaptionBox: any = {};
+  activeImageCaption: any = [];
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -40,24 +43,18 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
     public common_datastorage: CommonDataStorageService
-
   ) {
-
     this.user_id = this.data.user_id || null;
     this.uuid = this.data.uuid || null;
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
-
     this.terminologies = data.terminologies;
-if(this.data.caption){
-  this.caption = this.data.caption;
-}
-else {
-  this.caption = 'Send Message';
-}
+    if (this.data.caption) {
+      this.caption = this.data.caption;
+    } else {
+      this.caption = 'Send Message';
+    }
     this.title = (this.data.type === 'reply') ? 'Send Reply' : this.caption;
-
-
     if (!data.terminologies &&
       (this.source === 'consumer-waitlist' ||
         this.source === 'consumer-common')) {
@@ -74,15 +71,11 @@ else {
       this.setLabel();
     }
   }
-
   ngOnInit() {
     this.createForm();
   }
-
   ngOnDestroy() {
-
   }
-
   gets3curl() {
     return new Promise((resolve, reject) => {
       this.sharedfunctionObj.getS3Url('provider')
@@ -104,10 +97,7 @@ else {
           }
         );
     });
-
-
   }
-
   setLabel() {
     this.api_loading = false;
     let provider_label = this.receiver_name;
@@ -125,14 +115,12 @@ else {
       case 'provider-common': this.message_label = 'Message to ' + consumer_label; break;
     }
   }
-
   createForm() {
     this.amForm = this.fb.group({
       message: ['', Validators.compose([Validators.required])]
     });
   }
   onSubmit(form_data) {
-
     this.resetApiErrors();
     const blankvalidate = projectConstants.VALIDATOR_BLANK;
     if (blankvalidate.test(form_data.message)) {
@@ -141,7 +129,6 @@ else {
       const post_data = {
         communicationMessage: form_data.message
       };
-
       switch (this.source) {
         case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
         case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
@@ -150,14 +137,23 @@ else {
       }
     }
   }
-
   providerToConsumerWaitlistNote(post_data) {
     this.disableButton = true;
-
     if (this.uuid !== null) {
-
-      this.shared_services.addProviderWaitlistNote(this.uuid,
-        post_data)
+      const dataToSend: FormData = new FormData();
+      dataToSend.append('message', post_data.communicationMessage);
+      const captions = {};
+      let i = 0;
+      if (this.selectedMessage) {
+        for (const pic of this.selectedMessage.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = 'caption';
+          i++;
+        }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
+      this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
         .subscribe(
           () => {
             this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
@@ -174,8 +170,21 @@ else {
   }
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
+      const dataToSend: FormData = new FormData();
+      dataToSend.append('message', post_data.communicationMessage);
+      const captions = {};
+      let i = 0;
+      if (this.selectedMessage) {
+        for (const pic of this.selectedMessage.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = 'caption';
+          i++;
+        }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
       this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
@@ -221,11 +230,46 @@ else {
             this.sharedfunctionObj.apiErrorAutoHide(this, error);
           }
         );
-
     }
   }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        this.selectedMessage.files.push(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedMessage.base64.push(e.target['result']);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+  deleteTempImage(index) {
+    this.selectedMessage.files.splice(index, 1);
+    if (this.showCaptionBox && this.showCaptionBox[index]) {
+      delete this.showCaptionBox[index];
+      delete this.activeImageCaption[index];
+    }
+  }
+  captionMenuClicked(index) {
+    if (!this.activeImageCaption) {
+      this.activeImageCaption = {};
+      this.activeImageCaption[index] = '';
+    }
+    if (!this.showCaptionBox) {
+      this.showCaptionBox = {};
+    }
+    this.showCaptionBox[index] = true;
+  }
+  closeCaptionMenu(index) {
+    if (this.showCaptionBox && this.showCaptionBox[index]) {
+      delete this.activeImageCaption[index];
+      this.showCaptionBox[index] = false;
+    }
   }
 }

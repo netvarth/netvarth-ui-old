@@ -13,6 +13,8 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 // import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 
 @NgModule({
@@ -24,7 +26,8 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../ynw_provid
         CapitalizeFirstPipeModule,
         PagerModule,
         LoadingSpinnerModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        InboxModule
     ],
     declarations: [
         DashboardComponent,
@@ -33,7 +36,8 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../ynw_provid
         ProviderWaitlistCheckInConsumerNoteComponent,
         // ProviderWaitlistCheckInDetailComponent,
         AdjustQueueDelayComponent,
-        ProviderWaitlistCheckInCancelPopupComponent
+        ProviderWaitlistCheckInCancelPopupComponent,
+        ProviderWaitlistCheckInDetailComponent
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,

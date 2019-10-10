@@ -4501,7 +4501,7 @@ margin-bottom: 0;
 .ln-hgt-24 {
   line-height:24px;
 }
-.direct-chat .material-icons{
+.direct-chat .material-icons, .comm-menu-imgs .material-icons{
   font-size: 0px !important
 }
 .reply-shade {
@@ -4571,6 +4571,10 @@ margin-bottom: 0;
  width: 270px !important;
  float: right !important;
   }
+}
+.btn-attach {
+  margin-top:-3px; 
+  padding: 8px 8px 9px 10px !important
 }
 .filter-toolbar .mat-form-field-underline{
   display: none !important;

@@ -3876,6 +3876,9 @@ body { font-size: 1rem !important}
 .mt5 {
     margin-top: 5px;
 }
+.mb10 {
+    margin-bottom: 10px;
+}
 .mt10 {
     margin-top: 10px;
 }
@@ -10231,3 +10234,11 @@ p.justify-alert {text-align: justify; padding: 5px}
 .menu>li>p {border-bottom:1px solid #ddd;}
 .centeralign {text-align: center !important}
 p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
+
+.mg-5 {
+    margin:5px !important
+}
+.mg-10 {
+    margin: 10px !important
+}
+.mr10 {margin-right: 10px !important}

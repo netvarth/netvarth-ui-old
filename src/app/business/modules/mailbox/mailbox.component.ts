@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -49,10 +51,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
     obtainedMsgs = false;
     selectedParentIndex;
     selectedChildIndex;
+    blogo: any;
+    clogo: any;
 
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
-        private shared_services: SharedServices) { }
+        private shared_services: SharedServices,
+        private provider_services: ProviderServices,
+        private router: Router) { }
 
     ngOnInit() {
         this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -64,6 +70,15 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     (data: any) => {
                         this.user_id = data.id;
                         this.loading = false;
+                        this.provider_services.getProviderLogo().subscribe(
+                            logo => {
+                                if (logo[0]) {
+                                  this.blogo = logo[0].url;
+                                } else {
+                                    this.blogo = 'img-null.svg';
+                                }
+                                this.clogo = '../../../assets/images/avatar5.png';
+                            });
                     },
                     () => {
                         this.loading = false;
@@ -106,7 +121,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         const inboxList = this.groupMessages[key];
                         const timestamp = this.groupMessages[key][0]['timestamp'];
                         const lastmessage = this.groupMessages[key][0]['message'];
-                        console.log(inboxList);
                         const inboxUserList = {
                             userKey: key,
                             inboxList: inboxList.reverse(),
@@ -114,7 +128,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
                             latestMessage: lastmessage
                         };
                         this.inboxUsersList.push(inboxUserList);
-                        console.log(this.inboxUsersList);
                     });
                     this.obtainedMsgs = true;
                     this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
@@ -125,40 +138,37 @@ export class MailboxComponent implements OnInit, OnDestroy {
     }
     sendMessage(messageToSend, inboxList, parentIndex) {
         const userId = this.getReceiverId(inboxList);
-        console.log('userid:' + userId);
-        alert(messageToSend);
         let uuid = null;
-
-        const dataToSend: FormData = new FormData();
-        if (this.selectedMessage && this.selectedMessage[parentIndex] && this.selectedMessage[parentIndex]['pics']) {
-            dataToSend.append('attachments', this.selectedMessage[parentIndex]['pics']);
-        }
-        const blob = new Blob([messageToSend], {type: 'application/json'});
-        // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        // submit_data.append('properties', blobPropdata);
-        dataToSend.append('message', blob);
-
-
         if (this.selectedMessage && this.selectedMessage[parentIndex]) {
-            if (this.selectedMessage[parentIndex].message.waitlistId) {
-                uuid = 'h_' + this.selectedMessage[parentIndex].message.waitlistId;
+            if (this.selectedMessage[parentIndex].message.waitlistid) {
+                uuid = 'h_' + this.selectedMessage[parentIndex].message.waitlistid;
             }
         }
-        // const post_data = {
-        //     communicationMessage: messageToSend
-        // };
         if (uuid) {
+            const dataToSend: FormData = new FormData();
+            dataToSend.append('message', messageToSend);
+            const captions = {};
+            let i = 0;
+            if (this.selectedMessage && this.selectedMessage[parentIndex] && this.selectedMessage[parentIndex]['pics']) {
+                for (const pic of this.selectedMessage[parentIndex]['pics'].files) {
+                    dataToSend.append('attachments', pic, pic['name']);
+                    captions[i] = 'caption';
+                    i++;
+                }
+            }
+            const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+            dataToSend.append('captions', blobPropdata);
             this.providerToConsumerWaitlistNote(dataToSend, uuid);
         } else {
-            this.providerToConsumerNoteAdd(dataToSend, userId);
+            const communications = {
+                communicationMessage: messageToSend
+            };
+            this.providerToConsumerNoteAdd(communications, userId);
         }
     }
     getReceiverId(inboxList) {
-        console.log(inboxList);
         let receiverid;
         inboxList.forEach(element => {
-            console.log(element);
-            console.log(this.user_id);
             if (element.ownerId === this.user_id) {
                 receiverid = element.receiverId;
                 return false;
@@ -177,7 +187,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     generateCustomInbox(messages: any) {
         this.inboxList = [];
         let senderName;
@@ -200,41 +209,17 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 ownerId: message.owner.id,
                 waitlistid: message.waitlistId,
                 messagestatus: messageStatus,
-                receiverId: message.receiver.id
+                receiverId: message.receiver.id,
+                attachments: message.attachements
             };
             this.inboxList.push(inboxData);
         }
-        console.log(JSON.stringify(this.inboxList));
         localStorage.setItem('inbox', JSON.stringify(this.inboxList));
     }
     ngOnDestroy() {
         if (this.cronHandle) {
             this.cronHandle.unsubscribe();
         }
-    }
-
-    replyMessage(message) {
-
-        const pass_ob = {};
-        let name = null;
-
-        let source = this.usertype + '-';
-        if (message.waitlistId) {
-            source = source + 'waitlist';
-            pass_ob['uuid'] = 'h_' + message.waitlistId;
-        } else {
-            source = source + 'common';
-        }
-
-        if (this.usertype === 'consumer') {
-            name = message.owner.userName || null;
-        }
-
-        pass_ob['source'] = source;
-        pass_ob['user_id'] = message['owner']['id'];
-        pass_ob['type'] = 'reply';
-        pass_ob['terminologies'] = this.terminologies;
-        pass_ob['name'] = name;
     }
     providerToConsumerWaitlistNote(post_data, uuid) {
         // this.disableButton = true;
@@ -279,12 +264,10 @@ export class MailboxComponent implements OnInit, OnDestroy {
         }
         return retdate;
     }
-
     filesSelected(event, parentIndex) {
         const input = event.target.files;
         if (input) {
             if (this.selectedMessage && this.selectedMessage[parentIndex] && this.selectedMessage[parentIndex]['pics']) {
-                alert('in');
             } else {
                 if (!this.selectedMessage[parentIndex]) {
                     this.selectedMessage[parentIndex] = {};
@@ -292,34 +275,20 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 if (!this.selectedMessage[parentIndex]['pics']) {
                     this.selectedMessage[parentIndex]['pics'] = {
                         files: [],
+                        base64: [],
                         caption: []
                     };
                 }
             }
             for (const file of input) {
                 this.selectedMessage[parentIndex]['pics'].files.push(file);
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.selectedMessage[parentIndex]['pics'].base64.push(e.target['result']);
+                };
+                reader.readAsDataURL(file);
             }
         }
-        // if (this.selectedMessage && this.selectedMessage[parentIndex]) {
-        // const submit_data: FormData = new FormData();
-        // const propertiesDetob = {};
-        // let i = 0;
-        // for (const pic of this.selectedMessage[parentIndex]['pics'].files) {
-        //     console.log(pic);
-        //     //  this.submit_data.append('files', pic, pic['name']);
-        //     const properties = {
-        //         'caption': this.selectedMessage[parentIndex]['pics'].caption[i] || ''
-        //     };
-        //     propertiesDetob[i] = properties;
-        //     i++;
-        // }
-        // this.selectedMessage[parentIndex]['properties'] = propertiesDetob;
-        // // const propertiesDet = {
-        //     'propertiesMap': propertiesDetob
-        // };
-        // const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        // this.submit_data.append('properties', blobPropdata);
-        // console.log(this.submit_data);
         console.log(this.selectedMessage[parentIndex]);
     }
     addCaption(caption, parentIndex, index) {
@@ -348,8 +317,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
             this.activeImageCaption[parentIndex] = {};
             this.activeImageCaption[parentIndex][index] = '';
         }
-        console.log(index + ' : ' + parentIndex);
-        console.log(this.showCaptionBox);
         if (!this.showCaptionBox[parentIndex]) {
             this.showCaptionBox[parentIndex] = {};
         }
