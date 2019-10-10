@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Observable';
 import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
 import { AddProviderCustomerComponent } from '../../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
 import { CheckInComponent } from '../../../../shared/modules/check-in/check-in.component';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -118,6 +119,20 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
+
+  filters = {
+    first_name: false,
+    last_name: false,
+    phone_number: false,
+    queue: false,
+    service: false,
+    waitlist_status: false,
+    payment_status: false,
+    check_in_start_date: false,
+    check_in_end_date: false,
+    location_id: false,
+    
+  };
   filter_date_start_min = null;
   filter_date_start_max = null;
   filter_date_end_min = null;
@@ -197,7 +212,8 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     private router: Router,
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
-    private shared_services: SharedServices) {
+    private shared_services: SharedServices,
+    public dateformat: DateFormatPipe) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -249,7 +265,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
       ).subscribe((e: any) => {
-        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/dashboard/check-ins/'));
+        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
       });
     const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
@@ -361,6 +377,21 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   closeCounters() {
     if (this.cronHandle) { this.cronHandle.unsubscribe(); }
   }
+  filterClicked(type) {
+    this.filters[type] = !this.filters[type];
+    if (!this.filters[type]) {
+        if (type === 'check_in_start_date' || type === 'check_in_end_date' ) {
+            this.filter[type] = null;
+        } 
+        else if(type === 'payment_status' || type === 'waitlist_status'|| type === 'service'||type === 'queue'){
+            this.filter[type] = 'all';
+        }
+        else{
+            this.filter[type] = '';
+        }
+        this.doSearch();
+    }
+}
   setSystemDate() {
     this.shared_services.getSystemDate()
       .subscribe(
@@ -852,6 +883,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.filter_date_start_max = null;
     this.filter_date_end_min = null;
     this.filter_date_end_max = null;
+    console.log(this.time_type);
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
       this.filter_date_end_max = moment(new Date()).add(-1, 'days');
@@ -1034,10 +1066,10 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
         api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
       }
       if (this.filter.check_in_start_date != null) {
-        api_filter['date-ge'] = this.filter.check_in_start_date.format('YYYY-MM-DD');
+        api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
       }
       if (this.filter.check_in_end_date != null) {
-        api_filter['date-le'] = this.filter.check_in_end_date.format('YYYY-MM-DD');
+        api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
       }
     }
     if (this.time_type === 0) {
@@ -1064,6 +1096,19 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.loadApiSwitch('doSearch');
   }
   resetFilter() {
+    this.filters = {
+      first_name: false,
+      last_name: false,
+      phone_number: false,
+      queue: false,
+      service: false,
+      waitlist_status: false,
+      payment_status: false,
+      check_in_start_date: false,
+      check_in_end_date: false,
+      location_id: false,
+      
+    };
     this.filter = {
       first_name: '',
       last_name: '',
@@ -1084,7 +1129,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       this.shared_functions.setitemonLocalStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid]);
+    this.router.navigate(['provider', 'checkin-detail', checkin.ynwUuid]);
   }
   addProviderNote(checkin) {
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
