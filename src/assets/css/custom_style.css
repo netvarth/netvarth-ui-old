@@ -4584,3 +4584,6 @@ margin-bottom: 0;
   border: 1px solid #ccc;
   padding: 8px;
 }
+.report-table table {
+  border: 0px !important;
+}

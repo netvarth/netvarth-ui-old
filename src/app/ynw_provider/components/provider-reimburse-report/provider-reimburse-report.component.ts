@@ -40,7 +40,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     {
       title: 'Billing/POS',
       url: '/provider/settings/pos'
-  },
+    },
     {
       title: 'Coupons',
       url: '/provider/settings/pos/coupons'
@@ -71,6 +71,11 @@ export class ProviderReimburseReportComponent implements OnInit {
   requestdialogRef;
   isCheckin;
   filterapplied = false;
+  filters: any = {
+    'from_date': false,
+    'to_date': false,
+    'pay_status': false
+  };
   constructor(private dialog: MatDialog, private router: Router,
     private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
   }
@@ -260,7 +265,11 @@ export class ProviderReimburseReportComponent implements OnInit {
    */
   doSearch() {
     this.loadApiSwitch('doSearch');
-    this.filterapplied = true;
+    if (this.filter.from_date !== '' || this.filter.to_date !== '' || this.filter.pay_status !== 'all') {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
   }
   /**
    * Perform Rest Call for Getting Reports
@@ -333,5 +342,18 @@ export class ProviderReimburseReportComponent implements OnInit {
       this.resetFilter();
     }
     this.getCouponReport();
+  }
+  filterClicked(value) {
+    this.filters[value] = !this.filters[value];
+    if (!this.filters[value]) {
+      if (value === 'from_date') {
+        this.filter.from_date = null;
+      } else if (value === 'to_date') {
+        this.filter.to_date = null;
+      } else if (value === 'ack_status') {
+        this.filter.pay_status = 'all';
+      }
+      this.doSearch();
+    }
   }
 }
