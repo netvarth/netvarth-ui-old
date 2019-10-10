@@ -1,64 +1,12 @@
 <section>
-    <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
-    <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-        <app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
-    <div class="content comn-cls dashboard audit"  *ngIf="!api_loading">
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
         <div class="container">
             <div class="row">
                 <div class="card p0 w-dta">
-                    <!-- <div class="logfil-outer">
-                        <div class="formgroup-outer">
-                            <div class="form-group">
-                                <label class="col-form-label">{{category_cap}}</label>
-                                <mat-form-field>
-                                    <mat-select [(ngModel)]="logSelcat" name="catg" (selectionChange)="selectCategory()">
-                                        <mat-option value=""> {{select_cap}}</mat-option>
-                                        <mat-option *ngFor="let cat of logCategories; let i = index" [value]="i">
-                                            {{ cat.displayName }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-form-label">{{sub_category_cap}}</label>
-                                <mat-form-field>
-                                    <mat-select [(ngModel)]="logSelsubcat">
-                                        <mat-option value=""> {{select_cap}}</mat-option>
-                                        <mat-option *ngFor="let scat of logSubcategories" [value]="scat.name">
-                                            {{ scat.dispName }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">{{action_cap}}</label>
-                                <mat-form-field>
-                                    <mat-select [(ngModel)]="logSelaction">
-                                        <mat-option value=""> {{select_cap}}</mat-option>
-                                        <mat-option *ngFor="let act of logActions" [value]="act.name">
-                                            {{ act.dispName }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="reason" class="col-form-label">{{select_date_cap}}</label>
-                                
-                                <mat-form-field>
-                                        <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" name="audit-datepicker" [(ngModel)]="logSeldate" [value]="logSeldate" type="text" autocomplete="off" [max]="tday">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-                                      </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="actions-div">
-                            <button type="button" class="cs-btn bt1 mat-button" (click)="do_search(false)">{{search_cap}}</button>
-                        </div>
-                    </div> -->
                     <div class="table-responsive dash-list">
                         <table class="table">
                             <thead>
@@ -70,14 +18,20 @@
                                     <th class="filter-fx-col">
                                         <table class="fltr-tbl">
                                             <tr>
-                                                <td class="cl-fltr" *ngIf="filterapplied === true"  (click)="clearFilter()" [matTooltipClass]="tooltipcls"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                                                    <img src="../../../../assets/images/icons8-clear-filters-40.png" alt=""/>
+                                                <td class="cl-fltr" *ngIf="filterapplied === true"
+                                                    (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
+                                                    <img src="../../../../assets/images/icons8-clear-filters-40.png"
+                                                        alt="" />
                                                 </td>
-                                                <td> 
+                                                <td>
                                                     <span>
-                                                        <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                                                        <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+                                                        <i class="icon-filter-one-op" (click)="toggleFilter()"
+                                                            *ngIf="open_filter" [matTooltipClass]="tooltipcls"
+                                                            [matTooltip]="'Close filter window'"></i>
+                                                        <i class="icon-filter-one" (click)="toggleFilter()"
+                                                            [matTooltipClass]="tooltipcls"
+                                                            [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -88,23 +42,23 @@
                             <tbody>
                                 <tr>
                                     <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
-                                        <mat-accordion>
-                                            <mat-expansion-panel [expanded]="open_filter === true" [disabled]="'true'">
-                                                <div class="form-group col-md-2">
-                                                    <label for="reason"
-                                                        class="col-form-label">{{select_date_cap}}</label>
-                                                    <mat-form-field>
-                                                        <input matInput [matDatepicker]="picker"
-                                                            (dateChange)="do_search(false)" name="audit-datepicker"
-                                                            [(ngModel)]="logSeldate" [value]="logSeldate" type="text"
-                                                            autocomplete="off" [max]="tday"[min]="minday">
-                                                        <mat-datepicker-toggle matSuffix [for]="picker">
-                                                        </mat-datepicker-toggle>
-                                                        <mat-datepicker #picker></mat-datepicker>
-                                                    </mat-form-field>
-                                                </div>
-                                            </mat-expansion-panel>
-                                        </mat-accordion>
+                                        <div id="customers-filter-toolbar" class="box-content filter-toolbar">
+                                            <div>
+                                                <a [class.button_filter]="dateFilter" (click)="filterClicked()"
+                                                    class="anchorbutton remMarginRight genMarginLeft" name="date"
+                                                    id="btn_date_filter_id"><span>Date</span></a>
+                                                <input type="text" [(ngModel)]="logSeldate" [min]="minday"
+                                                    [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)"
+                                                    class="genTextHeight" [hidden]="!dateFilter"
+                                                    (blur)="do_search(false)">
+                                                <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!dateFilter">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker [hidden]="!dateFilter"></mat-datepicker>
+
+                                                <input type="button" value=" Go " (click)="do_search(false)" id="btnGo"
+                                                    class="genMarginLeft genTextHeight stdbtn btn_black">
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>

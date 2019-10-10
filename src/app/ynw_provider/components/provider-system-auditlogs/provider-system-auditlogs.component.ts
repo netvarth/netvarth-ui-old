@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-provider-system-auditlogs',
@@ -26,7 +27,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   no_logs_cap = Messages.AUDIT_NO_LOGS_CAP;
   auditlog_details: any = [];
   load_complete = 0;
-  api_loading = true ;
+  api_loading = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   logCategories = projectConstants.AUDITLOG_FILTER_CATEGORIES;
   logSubcategories: any = [];
@@ -59,9 +60,11 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     }
   ];
   isCheckin;
+  dateFilter = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
-    private shared_services: SharedServices
+    private shared_services: SharedServices,
+    public date_format: DateFormatPipe
   ) { }
 
   ngOnInit() {
@@ -90,10 +93,10 @@ export class ProviderSystemAuditLogComponent implements OnInit {
           this.auditStatus = 1;
           this.getAuditList(cat, subcat, action, sdate);
         }
-        this.api_loading = false ;
+        this.api_loading = false;
       },
         () => {
-          this.api_loading = false ;
+          this.api_loading = false;
         });
   }
   getAuditList(cat, subcat, action, sdate) {
@@ -138,7 +141,6 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     }
   }
   do_search(pagecall) {
-
     if (pagecall === false) {
       this.holdlogSelcat = this.logSelcat;
       this.holdlogSelsubcat = this.logSelsubcat;
@@ -148,14 +150,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     }
     let seldate = '';
     if (this.holdlogSeldate) {
-      const mon = this.holdlogSeldate['_i']['month'] + 1;
-      let mn = '';
-      if (mon < 10) {
-        mn = '0' + mon;
-      } else {
-        mn = mon;
-      }
-      seldate = this.holdlogSeldate['_i']['year'] + '-' + mn + '-' + this.holdlogSeldate['_i']['date'];
+      seldate = this.date_format.transformTofilterDate(this.holdlogSeldate);
     }
     /*if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
       this.sharedfunctionObj.openSnackBar('Please select atleast one filter option', {'panelClass': 'snackbarerror'});
@@ -171,6 +166,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     }
     if (seldate !== '') {
       this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
     }
   }
   handle_pageclick(pg) {
@@ -197,5 +194,11 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   resetFilter() {
     this.logSeldate = '';
   }
-
+  filterClicked() {
+    this.dateFilter = !this.dateFilter;
+    if (!this.dateFilter) {
+      this.logSeldate = '';
+      this.do_search(false);
+    }
+  }
 }

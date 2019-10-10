@@ -1,46 +1,10 @@
 <section>
-    <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
-    <!-- Subheader section -->
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
     <div class="content">
-        <!-- <div class="logfil-outer">
-                        <div class="formgroup-outer">
-                            <div class="row">
-                            <div class="form-group col-md-3  col-sm-6 col-lg-3" >
-                                <mat-form-field>
-                                    <mat-select placeholder="{{acknow_status_cap}}" [(ngModel)]="alertSelAck" name="catg">
-                                        <mat-option value=""> {{any_cap}}</mat-option>
-                                        <mat-option value="true">{{acknowledged_cap}}</mat-option>
-                                        <mat-option value="false">{{not_acknowledged_cap}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group col-md-2 col-sm-4 col-lg-2">
-                                
-
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker" name="alert-datepicker" [(ngModel)]="alertSeldate"
-                                        [value]="alertSeldate" type="text" autocomplete="off" placeholder="{{select_date_cap}}"
-                                        [max]="tday">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            
-                            <div class="form-group col-md-7 col-sm-12 alrt"><button type="button" class="cs-btn bt3 mgn-bt-5" (click)="do_search(false)">{{search_cap}}</button>
-                                <button class="cs-btn bt3" *ngIf="filterapplied" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonclearTooltip">Clear</button>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="actions-div">
-                           
-                        </div> 
-                              
-                    </div> -->
-                    <app-common-innerloading-spinner  *ngIf="api_loading"></app-common-innerloading-spinner>
-        <div class="dashboard audit" *ngIf="!api_loading" >
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="dashboard audit" *ngIf="!api_loading">
             <div class="container">
                 <div class="row">
                     <div class="card p0 w-dta">
@@ -58,8 +22,8 @@
                                                     <td class="cl-fltr" *ngIf="filterapplied === true"
                                                         (click)="clearFilter()" [matTooltipClass]="tooltipcls"
                                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                                                        <img
-                                                            src="../../../../assets/images/icons8-clear-filters-40.png" alt=""/>
+                                                        <img src="../../../../assets/images/icons8-clear-filters-40.png"
+                                                            alt="" />
                                                     </td>
                                                     <td>
                                                         <span>
@@ -80,37 +44,39 @@
                                 <tbody>
                                     <tr>
                                         <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
-                                            <mat-accordion>
-                                                <mat-expansion-panel [expanded]="open_filter === true"
-                                                    [disabled]="'true'">
-                                                    <div class="form-group col-md-3  col-sm-6 col-lg-3">
-                                                        <label  class="col-form-label">{{acknow_status_cap}}</label>
-                                                        <mat-form-field>
-                                                            <mat-select (selectionChange)= "do_search(false)"
-                                                                [(ngModel)]="alertSelAck" name="catg">
-                                                                <mat-option value=""> {{any_cap}}
-                                                                </mat-option>
-                                                                <mat-option value="true">
-                                                                    {{acknowledged_cap}}</mat-option>
-                                                                <mat-option value="false">
-                                                                    {{not_acknowledged_cap}}</mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="form-group col-md-2 col-sm-4 col-lg-2">
-                                                        <label  class="col-form-label">Select Date</label>
-                                                        <mat-form-field>
-                                                            <input matInput [matDatepicker]="picker"
-                                                                name="alert-datepicker" (dateChange)="do_search(false)"
-                                                                [(ngModel)]="alertSeldate" [value]="alertSeldate"
-                                                                autocomplete="off" [max]="tday" [min]="minday">
-                                                            <mat-datepicker-toggle matSuffix [for]="picker">
-                                                            </mat-datepicker-toggle>
-                                                            <mat-datepicker #picker></mat-datepicker>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </mat-expansion-panel>
-                                            </mat-accordion>
+                                            <div id="customers-filter-toolbar" class="box-content filter-toolbar">
+                                                <a [class.button_filter]="filters['ack_status']"
+                                                    (click)="filterClicked('ack_status')"
+                                                    class="anchorbutton remMarginRight genMarginLeft" name="first_name"
+                                                    id="btn_first_name_filter_id"><span>{{acknow_status_cap}}</span></a>
+                                                <mat-form-field *ngIf="filters['ack_status']">
+                                                    <mat-select (selectionChange)="do_search(false)"
+                                                        [(ngModel)]="alertSelAck" name="catg">
+                                                        <mat-option value=""> {{any_cap}}
+                                                        </mat-option>
+                                                        <mat-option value="true">
+                                                            {{acknowledged_cap}}</mat-option>
+                                                        <mat-option value="false">
+                                                            {{not_acknowledged_cap}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+
+                                                <a [class.button_filter]="filters['date']"
+                                                    (click)="filterClicked('date')"
+                                                    class="anchorbutton remMarginRight genMarginLeft" name="date"
+                                                    id="btn_date_filter_id"><span>Date</span></a>
+                                                <input type="text" [(ngModel)]="alertSeldate" [min]="minday"
+                                                    [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)"
+                                                    class="genTextHeight" [hidden]="!filters['date']"
+                                                    (blur)="do_search(false)">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"
+                                                    [hidden]="!filters['date']">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker [hidden]="!filters['date']"></mat-datepicker>
+
+                                                <input type="button" value=" Go " (click)="do_search(false)" id="btnGo"
+                                                    class="genMarginLeft genTextHeight stdbtn btn_black">
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

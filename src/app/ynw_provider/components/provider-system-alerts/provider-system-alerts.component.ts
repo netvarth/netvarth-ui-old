@@ -46,6 +46,10 @@ export class ProviderSystemAlertComponent implements OnInit {
   tday = new Date();
   minday = new Date(2015, 0, 1);
   isCheckin;
+  filters: any = {
+    'ack_status': false,
+    'date': false
+  };
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
@@ -146,8 +150,10 @@ export class ProviderSystemAlertComponent implements OnInit {
     } else {
       this.getAlertList(this.holdalertSelAck || '', seldate);
     }
-    if (seldate !== '') {
+    if (seldate !== '' || this.holdalertSelAck !== 'false') {
       this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
     }
     // }
   }
@@ -175,5 +181,17 @@ export class ProviderSystemAlertComponent implements OnInit {
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
+  }
+
+  filterClicked(value) {
+    this.filters[value] = !this.filters[value];
+    if (!this.filters[value]) {
+      if (value === 'date') {
+        this.alertSeldate = null;
+      } else if (value === 'ack_status') {
+        this.alertSelAck = 'false';
+      }
+      this.do_search(false);
+    }
   }
 }
