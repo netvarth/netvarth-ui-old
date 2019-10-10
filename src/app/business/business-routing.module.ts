@@ -8,7 +8,7 @@ import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profil
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { AddProviderWaitlistCheckInBillComponent } from '../ynw_provider/components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+// import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
       // { path: 'learnmore', loadChildren: './modules/learnmore/provider-learnmore.module#ProviderLearnmoreModule' },
       { path: 'faq', loadChildren: './modules/faq/provider-faq.module#ProviderFaqModule' },
       { path: 'customers', loadChildren: './modules/customers/customers.module#CustomersModule' },
-      { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
+      // { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
       {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},
       { path: 'settings', loadChildren: '../ynw_provider/components/provider-settings/provider-settings.module#ProviderSettingsModule' },
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },

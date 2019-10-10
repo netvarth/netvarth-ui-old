@@ -34,7 +34,7 @@ import { ProviderSystemAlertComponent } from '../ynw_provider/components/provide
 import { AddProviderWaitlistQueuesComponent } from '../ynw_provider/components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { AddProviderWaitlistCheckInBillComponent } from '../ynw_provider/components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+// import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlemap.component';
@@ -63,7 +63,7 @@ import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/con
         AddProviderWaitlistQueuesComponent,
         AddProviderBprofileSearchAdwordsComponent,
         AddProviderWaitlistCheckInBillComponent,
-        ProviderWaitlistCheckInDetailComponent,
+        // ProviderWaitlistCheckInDetailComponent,
         GoogleMapComponent,
         ProviderbWizardComponent,
         ConfirmBoxComponent,
