@@ -191,8 +191,7 @@ export class CustomersListComponent implements OnInit {
             api_filter['firstName-eq'] = this.filter.first_name;
         }
         if (this.filter.date != null) {
-            const formatedDate = this.dateformat.transformTofilterDate(this.filter.date);
-            api_filter['date-eq'] = formatedDate;
+            api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.date);
         }
         if (this.filter.email !== '') {
             api_filter['email-eq'] = this.filter.email;
