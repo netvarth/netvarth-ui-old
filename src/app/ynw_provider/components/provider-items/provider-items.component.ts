@@ -51,17 +51,20 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   removeitemdialogRef;
   isCheckin;
   active_user;
+
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
     private router: Router, private dialog: MatDialog,
+    private routerobj: Router,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
   }
 
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    this.domain = user.sector;
+        this.domain = user.sector;
+    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    
     this.getitems();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': '/provider' + this.domain + '/help' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
@@ -202,9 +205,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/' + this.domain + '/help']);
-    // this.router.navigate(['/provider/' + this.domain + '/help/billing->items']);
-    // this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
   }
   // getMode(mod) {
   //   let moreOptions = {};

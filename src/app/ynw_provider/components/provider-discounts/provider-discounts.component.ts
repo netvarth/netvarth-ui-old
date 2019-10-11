@@ -45,15 +45,19 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   remdiscdialogRef;
   isCheckin;
   active_user;
+  domain;
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
     private router: Router,
+    private routerobj: Router,
     public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('DISCOUNT_LISTEMPTY');
   }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->discount' };
@@ -153,9 +157,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
 
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/learnmore/billing->discount']);
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    // this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
   }
   // getMode(mod) {
   //   let moreOptions = {};

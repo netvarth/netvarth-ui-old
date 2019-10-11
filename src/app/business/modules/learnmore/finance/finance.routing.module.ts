@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FinanceComponent } from './finance.component';
 
 const routes: Routes = [
-    { path: ':id', component: FinanceComponent },
+    { path: ':parent', component: FinanceComponent },
     { path: '/help', component: FinanceComponent }
 ];
 

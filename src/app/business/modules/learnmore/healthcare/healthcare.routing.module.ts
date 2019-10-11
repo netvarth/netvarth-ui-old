@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { HealthCareComponent } from './healthcare.component';
 
 const routes: Routes = [
-    { path: ':id', component: HealthCareComponent },
-    { path: ':/help', component: HealthCareComponent }
+    // { path: ':id', component: HealthCareComponent },
+    { path: ':/help', component: HealthCareComponent },
+    { path: ':parent', component: HealthCareComponent },
 ];
 
 @NgModule({

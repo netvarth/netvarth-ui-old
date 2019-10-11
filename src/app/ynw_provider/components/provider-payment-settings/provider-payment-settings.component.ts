@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedServices } from '../../../shared/services/shared-services';
-
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-provider-paymentsettings',
     templateUrl: './provider-payment-settings.component.html',
@@ -97,6 +96,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     payment_set_cap = '';
     isCheckin;
     active_user;
+    domain;
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     jPay_Billing = false;
     upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
@@ -126,6 +126,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private shared_functions: SharedFunctions,
         private router: Router,
         private shared_service: SharedServices,
+        private routerobj: Router,
         private activated_route: ActivatedRoute
 
     ) {
@@ -136,6 +137,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     ngOnInit() {
         this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
@@ -153,8 +156,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      */
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.router.navigate(['/provider/learnmore/payment']);
-    }
+        this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+      }
 
     /**
     * Clear all fields

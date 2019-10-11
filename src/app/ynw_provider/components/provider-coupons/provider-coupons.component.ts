@@ -61,15 +61,19 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   confirmremdialogRef;
   errorExist = false;
   active_user;
+  domain;
   frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
   frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
+    private routerobj: Router,
     public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions) {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
@@ -208,9 +212,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.router.navigate(['/provider/learnmore/billing->coupon']);
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    // this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
   }
   // getMode(mod) {
   //   let moreOptions = {};

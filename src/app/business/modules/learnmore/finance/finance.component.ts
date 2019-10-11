@@ -8,7 +8,6 @@ import { Location, CommonModule } from '@angular/common';
     templateUrl: './finance.component.html'
 })
 export class FinanceComponent implements OnChanges {
-    // code
   @Input() target: string;
   breadcrumbs = [
     {
@@ -26,12 +25,39 @@ export class FinanceComponent implements OnChanges {
   license = true;
   billing = true;
   miscellaneous = true;
-  showprofile = false;
-  showcheckinmanager = false;
-  showlicense = false;
-  showbill = false;
+  showpublic = false;
+
+  showverified = false;
+
+  showprofilesearch = false;
+  showbasicinfrmtion = false;
+  showadword = false;
+  showspecialization = false;
+  showlanguagesknown = false;
+  showprivacysettings = false;
+  showadditionalinfo = false;
+  showsocialmedia = false;
+  showgallery = false;
+  showbilling = false;
+  showpayment = false;
+  showtax = false;
+  showitem = false;
+  showcoupon = false;
+  showdiscount = false;
   showmiscellaneous = false;
-  //  menu: any;
+  shownonworking = false;
+  shownotifications = false;
+  showcheckinmanager = false;
+  showlocations = false;
+  showservices = false;
+  showtime = false;
+  showdepartment = false;
+  showlicense = false;
+  showupgrade = false;
+  showaddon = false;
+  showadwords = false;
+  showcustom = false;
+
   domain;
   show = 'false';
   constructor(
@@ -40,17 +66,14 @@ export class FinanceComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  /////here..
   ngOnChanges() {
-    // this.parentContent = this.parent;
-    // this.childContent = this.child;
   }
   setActivePricing(item) {
     this.activePrice = item;
   }
-  //here code change
+
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+   this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = this.active_user.sector;
     console.log(this.domain);
     if (this.target) {
@@ -58,14 +81,17 @@ export class FinanceComponent implements OnChanges {
     }
     this.activated_route.paramMap
       .subscribe(params => {
+        console.log(params);
         if (params.get('parent')) {
           const group = params.get('parent').split('->');
+          console.log(group);
           this.parent = group[0];
           console.log(this.parent);
           if (group.length > 1) {
             this.child = group[1];
           } else {
             this.child = this.parent;
+            console.log(this.parent);
           }
         } else {
           this.child = 'public-search';
@@ -94,44 +120,110 @@ export class FinanceComponent implements OnChanges {
     // console.log('parent......'+parentContent);
     this.child = childContent;
     this.parent = parentContent;
-    this.menu(parentContent);
+    this.menu(parentContent, childContent);
   }
-  menu(parentContent) {
+  menu(parentContent, childContent) {
+    console.log(parentContent);
+    console.log(childContent);
     if (parentContent === 'profile-search') {
-      this.showprofile = true;
-      this.showcheckinmanager = false;
-      this.showlicense = false;
-      this.showbill = false;
-      this.showmiscellaneous = false;
+      this.showprofilesearch = true;
+      if (childContent === 'public-search') {
+        this.showpublic = true;
+      }
+      if (childContent === 'verified-levels') {
+        this.showverified = true;
+      }
+      if (childContent === 'adwords') {
+        this.showadword = true;
+      }
+      if (childContent === 'basic-information') {
+        this.showbasicinfrmtion = true;
+      }
+      if (childContent === 'specializations') {
+        this.showspecialization = true;
+      }
+      if (childContent === 'custom-id') {
+        this.showcustom = true;
+      }
+      if (childContent === 'languages-known') {
+        this.showlanguagesknown = true;
+      }
+      if (childContent === 'privacy-settings') {
+        this.showprivacysettings = true;
+      }
+      if (childContent === 'additional-info') {
+        this.showadditionalinfo = true;
+      }
+      if (childContent === 'your-social-media') {
+        this.showsocialmedia = true;
+      }
+      if (childContent === 'photo-gallery') {
+        this.showgallery = true;
+      }
     }
+
+    if (parentContent === 'billing') {
+      this.showbilling = true;
+      if (childContent === 'payment-settings') {
+        this.showpayment = true;
+      }
+      if (childContent === 'tax-settings') {
+        this.showtax = true;
+      }
+      if (childContent === 'items') {
+        this.showitem = true;
+      }
+      if (childContent === 'coupon') {
+        this.showcoupon = true;
+      }
+      if (childContent === 'discount') {
+        this.showdiscount = true;
+      }
+    }
+
+    if (parentContent === 'miscellaneous') {
+      this.showmiscellaneous = true;
+      if (childContent === 'nonworking') {
+        this.shownonworking = true;
+      }
+      if (childContent === 'notifications') {
+        this.shownotifications = true;
+      }
+    }
+
     if (parentContent === 'checkinmanager') {
-      this.showprofile = false;
       this.showcheckinmanager = true;
-      this.showlicense = false;
-      this.showbill = false;
-      this.showmiscellaneous = false;
+      if (childContent === 'settings-locations') {
+        this.showlocations = true;
+      }
+      if (childContent === 'settings-services') {
+        this.showservices = true;
+      }
+      if (childContent === 'settings-time_windows') {
+        this.showtime = true;
+      }
+      if (childContent === 'settings-departments') {
+        this.showdepartment = true;
+      }
     }
+
     if (parentContent === 'license') {
       this.showlicense = true;
-      this.showprofile = false;
-      this.showcheckinmanager = false;
-      this.showbill = false;
-      this.showmiscellaneous = false;
+      if (childContent === 'upgradelicense') {
+        this.showupgrade = true;
+      }
+      if (childContent === 'addon') {
+        this.showaddon = true;
+      }
+      if (childContent === 'adwords') {
+        this.showadwords = true;
+      }
     }
-    if (parentContent === 'billing') {
-      this.showbill = true;
-      this.showlicense = false;
-      this.showprofile = false;
-      this.showcheckinmanager = false;
-      this.showmiscellaneous = false;
-    }
-    if (parentContent === 'miscellaneous') {
-      this.showbill = false;
-      this.showlicense = false;
-      this.showprofile = false;
-      this.showcheckinmanager = false;
-      this.showmiscellaneous = true;
-    }
+
+
+
+
+
+
   }
-  //here..
 }

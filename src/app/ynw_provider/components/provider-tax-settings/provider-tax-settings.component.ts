@@ -43,6 +43,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
     allFieldsExists = false;
     enabletax = false;
     taxSettings = false;
+    domain;
 
     constructor(private shared_functions: SharedFunctions,
         private routerobj: Router,
@@ -50,6 +51,8 @@ export class ProvidertaxSettingsComponent implements OnInit {
 
     }
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.resetApi();
@@ -145,8 +148,8 @@ export class ProvidertaxSettingsComponent implements OnInit {
 
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/learnmore/billing->tax-settings']);
-    }
+        this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+      }
     changeTaxStatus(event) {
         const status = (event.checked) ? 'enable' : 'disable';
         this.provider_services.updateTax(status)

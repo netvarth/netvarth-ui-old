@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 @Component({
     selector: 'app-miscellaneous',
     templateUrl: './miscellaneous.component.html'
@@ -15,15 +15,19 @@ export class MiscellaneousComponent implements OnInit {
             title: 'Miscellaneous'
         }
     ];
+    domain;
     breadcrumbs = this.breadcrumbs_init;
 
     constructor(
-        private router: Router
+        private router: Router,
+        private routerobj: Router,
+        public shared_functions: SharedFunctions,
     ) {
 
     }
     ngOnInit() {
-
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
     }
 
     gotoNonworkingDays() {
@@ -32,7 +36,8 @@ export class MiscellaneousComponent implements OnInit {
     gotoNotifications() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
     }
-    learnmore_clicked(parent, child) {
-
-    }
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+      }
 }

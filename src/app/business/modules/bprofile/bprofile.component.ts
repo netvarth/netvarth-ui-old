@@ -750,7 +750,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/'+ this.domain + '/profile-search->' + mod]);
+    this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
   }
   editCustomId(customId?) {
     this.normal_customid_show = 1;

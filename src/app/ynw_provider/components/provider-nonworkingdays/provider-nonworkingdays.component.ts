@@ -49,6 +49,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   editholdialogRef;
   remholdialogRef;
   active_user;
+  domain;
   qAvailability: any = [];
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
@@ -59,6 +60,8 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->nonworking' };
@@ -165,9 +168,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/miscellaneous->nonworking']);
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    // this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
   }
   // getMode(mod) {
   //   let moreOptions = {};

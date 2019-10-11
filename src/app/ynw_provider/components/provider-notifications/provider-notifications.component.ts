@@ -45,6 +45,7 @@ export class ProviderNotificationsComponent implements OnInit {
   em_arr: any = [];
   ph1_arr: any = [];
   em1_arr: any = [];
+  domain;
   savechekinNotification_json: any = {};
   savecancelNotification_json: any = {};
   notificationList: any = [];
@@ -52,9 +53,12 @@ export class ProviderNotificationsComponent implements OnInit {
   okCancelStatus = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
+    private shared_functions: SharedFunctions,
     public provider_services: ProviderServices) { }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->notifications' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     this.getNotificationList();
@@ -381,8 +385,6 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/miscellaneous->notifications']);
-    // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-    // this.sharedfunctionObj.sendMessage(pdata);
+    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
   }
 }

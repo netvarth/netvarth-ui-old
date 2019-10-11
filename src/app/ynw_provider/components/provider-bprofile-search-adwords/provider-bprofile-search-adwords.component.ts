@@ -38,6 +38,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
 
   customer_label = '';
   frm_adword_cap = '';
+  domain;
 
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
@@ -48,6 +49,8 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
     this.getTotalAllowedAdwordsCnt();
@@ -171,10 +174,11 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/license->adwords']);
+    this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);
+    // this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionObj.sendMessage(pdata);
-  }
+}
   // getMode(mod) {
   //   let moreOptions = {};
   //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };

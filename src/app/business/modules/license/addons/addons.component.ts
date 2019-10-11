@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-addons',
@@ -23,6 +24,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     tooltipcls = projectConstants.TOOLTIP_CLS;
     current_lic;
     addonTooltip = '';
+    domain;
     learn_more = Messages.LEARN_MORE_CAP;
     history_cap = Messages.HISTORY_HOME_CAP;
     breadcrumbs = [
@@ -37,10 +39,14 @@ export class AddonsComponent implements OnInit, OnDestroy {
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
+        private shared_functions: SharedFunctions,
+        private routerobj: Router,
         private sharedfunctionObj: SharedFunctions
     ) { }
 
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
     }
@@ -62,7 +68,13 @@ export class AddonsComponent implements OnInit, OnDestroy {
             this.addonhistorydialogRef.close();
         }
     }
-    learnmore_clicked(parent, child) {}
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);
+        // this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
+        // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
+        // this.sharedfunctionObj.sendMessage(pdata);
+    }
     goAddonHistory() {
         this.addonhistorydialogRef = this.dialog.open(ProviderAddonAuditlogsComponent, {
             width: '50%',

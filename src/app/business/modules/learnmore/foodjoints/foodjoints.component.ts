@@ -39,7 +39,27 @@ export class FoodJointComponent implements OnChanges {
   showadditionalinfo = false;
   showsocialmedia = false;
   showgallery = false;
-
+  showbilling = false;
+  showpayment = false;
+  showtax = false;
+  showitem = false;
+  showcoupon = false;
+  showdiscount = false;
+  showmiscellaneous = false;
+  shownonworking = false;
+  shownotifications = false;
+  showcheckinmanager = false;
+  showlocations = false;
+  showservices = false;
+  showtime = false;
+  showdepartment = false;
+  showlicense = false;
+  showupgrade = false;
+  showaddon = false;
+  showadwords = false;
+  showcustom = false;
+  showdashboard = false;
+  showboard = false;
   domain;
   show = 'false';
   constructor(
@@ -115,11 +135,17 @@ export class FoodJointComponent implements OnChanges {
       if (childContent === 'verified-levels') {
         this.showverified = true;
       }
+      if (childContent === 'adwords') {
+        this.showadword = true;
+      }
       if (childContent === 'basic-information') {
         this.showbasicinfrmtion = true;
       }
       if (childContent === 'specializations') {
         this.showspecialization = true;
+      }
+      if (childContent === 'custom-id') {
+        this.showcustom = true;
       }
       if (childContent === 'languages-known') {
         this.showlanguagesknown = true;
@@ -137,5 +163,72 @@ export class FoodJointComponent implements OnChanges {
         this.showgallery = true;
       }
     }
+
+    if (parentContent === 'billing') {
+      this.showbilling = true;
+      if (childContent === 'payment-settings') {
+        this.showpayment = true;
+      }
+      if (childContent === 'tax-settings') {
+        this.showtax = true;
+      }
+      if (childContent === 'items') {
+        this.showitem = true;
+      }
+      if (childContent === 'coupon') {
+        this.showcoupon = true;
+      }
+      if (childContent === 'discount') {
+        this.showdiscount = true;
+      }
+    }
+
+    if (parentContent === 'miscellaneous') {
+      this.showmiscellaneous = true;
+      if (childContent === 'nonworking') {
+        this.shownonworking = true;
+      }
+      if (childContent === 'notifications') {
+        this.shownotifications = true;
+      }
+    }
+
+    if (parentContent === 'checkinmanager') {
+      this.showcheckinmanager = true;
+      if (childContent === 'settings-locations') {
+        this.showlocations = true;
+      }
+      if (childContent === 'settings-services') {
+        this.showservices = true;
+      }
+      if (childContent === 'settings-time_windows') {
+        this.showtime = true;
+      }
+      if (childContent === 'settings-departments') {
+        this.showdepartment = true;
+      }
+    }
+
+    if (parentContent === 'license') {
+      this.showlicense = true;
+      if (childContent === 'upgradelicense') {
+        this.showupgrade = true;
+      }
+      if (childContent === 'addon') {
+        this.showaddon = true;
+      }
+      if (childContent === 'adwords') {
+        this.showadwords = true;
+      }
+    }
+    if (parentContent === 'dashboard') {
+      this.showdashboard = true;
+    }
+
+
+
+
+
+
   }
 }

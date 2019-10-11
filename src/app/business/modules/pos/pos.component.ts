@@ -31,15 +31,19 @@ export class POSComponent implements OnInit {
   pos_statusstr = 'Off';
   frm_public_self_cap = '';
   accountActiveMsg = '';
+  domain;
 
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
+    private routerobj: Router,
     private provider_services: ProviderServices) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
     this.getpaymentDetails();
     this.getPOSSettings();
   }
@@ -146,7 +150,8 @@ export class POSComponent implements OnInit {
       this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
     });
   }
-  learnmore_clicked(parent, child) {
-
+  learnmore_clicked(mod, e) {
+    e.stopPropagation();
+    this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
   }
 }

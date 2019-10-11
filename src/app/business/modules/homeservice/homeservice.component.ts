@@ -48,6 +48,7 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
     futureDateWaitlist = false;
     filterbydepartment = false;
     locationExists = false;
+    domain;
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -62,6 +63,8 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.loading = true;
         this.getBusinessProfile();
@@ -191,8 +194,8 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/learnmore/checkinmanager->' + mod]);
-    }
+        this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->' + mod]);
+      }
 
     handle_waitliststatus(event) {
         const is_check = (event.checked) ? 'Enable' : 'Disable';

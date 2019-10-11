@@ -47,6 +47,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
     isCheckin;
+    domain;
     futureDateWaitlist = false;
     filterbydepartment = false;
     locationExists = false;
@@ -64,6 +65,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
         this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.loading = true;
         this.getBusinessProfile();
@@ -209,10 +212,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/learnmore/checkinmanager->' + mod]);
-        // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
-        // this.shared_functions.sendMessage(pdata);
-    }
+        this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->' + mod]);
+      }
     // getMode(mod) {
     //   let moreOptions = {};
     //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': mod };

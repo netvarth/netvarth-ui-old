@@ -1,5 +1,5 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions()"></app-breadcrumb>
 </section>
 <section>
     <div class="content w-manager settings comn-cls lic-page">
@@ -141,7 +141,7 @@
                         <span class="b-link" (click)="gotoPaymentHistory()">
                             <h2>Payment History</h2>
                             <span class="form-level-settings">Here you can see your past payments. <a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                    id="customer-help" (click)="learnmore_clicked('upgradelicense', $event)">Learn
                                     More</a></span>
                         </span>
                     </div>
@@ -151,7 +151,7 @@
                     <span class="b-link" (click)="gotoAddOns()">
                         <h2>AddOns</h2>
                         <span class="form-level-settings">Click here to avail additional features. <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                id="customer-help" (click)="learnmore_clicked('addon', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -161,7 +161,7 @@
                     <span class="b-link" (click)="gotoJaldeeKeywords()">
                         <h2>Jaldee Keywords</h2>
                         <span class="form-level-settings">Add relevant keywords to increase your visibility to your patient. <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('settings-departments', $event)">Learn
+                                id="customer-help" (click)="learnmore_clicked('adwords', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

@@ -81,6 +81,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     licenseusedialogRef;
     invoicedialogRef;
     upgradesubscriptdialogRef;
+    domain;
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions,
@@ -102,6 +103,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
         this.loading = true;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         // this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
@@ -137,7 +140,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         } else {
             this.hide_invoiceperiod = false;
         }
-    }
+    }z
     getLicenseDetails(call_type = 'init') {
         this.license_message = '';
         this.provider_servicesobj.getLicenseDetails()
@@ -393,7 +396,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);
+        // this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
         // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
         // this.sharedfunctionObj.sendMessage(pdata);
     }
