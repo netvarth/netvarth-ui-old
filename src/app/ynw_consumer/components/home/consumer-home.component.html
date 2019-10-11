@@ -68,7 +68,7 @@
                                     <div class="lt0"
                                         *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
                                         {{waitlist.estimated_caption}} <span class="time now">
-                                            {{waitlist.estimated_time}}</span>
+                                            {{waitlist.estimated_timenow}}</span><span style="display: flex"> {{waitlist.estimated_time}}</span>
                                     </div>
                                     <div class="lt0"
                                         *ngIf="waitlist.estimated_date!='' && waitlist.waitlistStatus != 'cancelled'">
@@ -76,9 +76,10 @@
                                             <span *ngIf="waitlist.estimated_date_type == 'date'">{{waitlist.estimated_date
                                                 | date: dateFormatSp }}</span>
                                             <span
-                                                *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}},
+                                                *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}
                                             </span>
-                                            {{waitlist.estimated_time}}</span>
+                                            <span *ngIf="waitlist.calculationMode != 'NoCalc'">,{{waitlist.estimated_time}}</span></span>
+                                            <span style="display: flex"> {{waitlist.estimated_timeslot}}</span>
                                     </div>
                                     <div class="lt0" *ngIf="waitlist.waitlistStatus == 'cancelled'">
                                         <!-- <span *ngIf="waitlist.calculationMode == 'NoCalc'">
