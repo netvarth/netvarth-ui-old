@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',
@@ -35,6 +35,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     additional_info_cap = Messages.BPROFILE_ADDOTIONAL_INFO_CAP;
     edit_cap = Messages.EDIT_BTN;
     delete_btn = Messages.DELETE_BTN;
+    domain;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -53,13 +54,20 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
         private dialog: MatDialog,
+        private routerobj: Router,
+        public shared_functions: SharedFunctions,
         private service: QuestionService
     ) {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
         this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     }
-    learnmore_clicked(parent, child) {}
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+      }
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
         this.getBusinessProfile();

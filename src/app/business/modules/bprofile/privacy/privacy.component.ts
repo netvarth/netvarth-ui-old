@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { AddProviderBprofilePrivacysettingsComponent } from '../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-privacy',
     templateUrl: './privacy.component.html'
@@ -29,6 +29,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     privacydialogRef;
     phonearr: any = [];
     emailarr: any = [];
+    domain;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -47,9 +48,13 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
+        private routerobj: Router,
+        public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) { }
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.setPrivacyDetails();
     }
@@ -71,7 +76,10 @@ export class PrivacyComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    learnmore_clicked (parent, child) {}
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+      }
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {

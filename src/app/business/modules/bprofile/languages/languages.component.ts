@@ -5,7 +5,7 @@ import { ProviderDataStorageService } from '../../../../ynw_provider/services/pr
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-languages',
     templateUrl: './languages.component.html'
@@ -21,6 +21,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     breadcrumb_moreoptions: any = [];
+    domain;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -38,17 +39,24 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
+        private routerobj: Router,
+        public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
         this.getSpokenLanguages();
         this.setLanguages();
     }
-    learnmore_clicked(parent, child) {}
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+      }
     setLanguages() {
         this.bProfile = [];
         this.getBussinessProfileApi()

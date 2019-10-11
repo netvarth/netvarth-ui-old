@@ -200,6 +200,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   custId;
   active_user;
   current_license;
+  domain;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -217,6 +218,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
       customid: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_ALPHANUMERIC_HYPHEN)])]
@@ -747,7 +750,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
-    this.routerobj.navigate(['/provider/learnmore/profile-search->' + mod]);
+    this.routerobj.navigate(['/provider/'+ this.domain + '/profile-search->' + mod]);
   }
   editCustomId(customId?) {
     this.normal_customid_show = 1;

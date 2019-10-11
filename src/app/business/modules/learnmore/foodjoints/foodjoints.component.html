@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="card p0">
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]="true" (click)="menu('profile-search')">
+                        <mat-expansion-panel [expanded]="showprofilesearch" (click)="menu('profile-search') ">
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title 
                                     class="accordion-title">
@@ -20,7 +20,7 @@
                             
                             </div>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="true"
+                                <mat-expansion-panel [expanded]="showpublic && showprofilesearch" 
                                     (click)="handleScroll('public-search', 'profile-search')">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
@@ -69,7 +69,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showverified && showprofilesearch">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -276,7 +276,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showbasicinfrmtion && showprofilesearch">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -563,7 +563,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showprofilesearch && showprivacysettings">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -720,12 +720,12 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showprofilesearch && showspecialization">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
-                                                (click)="handleScroll('specialization','profile-search')">Specialization</span>
+                                                (click)="handleScroll('specializations','profile-search')">Specialization</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
@@ -987,7 +987,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showprofilesearch && showlanguagesknown">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1042,7 +1042,7 @@
 
 
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showprofilesearch && showadditionalinfo">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1093,7 +1093,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showprofilesearch && showgallery">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1141,7 +1141,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showprofilesearch && showsocialmedia">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1204,7 +1204,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                                <mat-expansion-panel [expanded]="false">
+                                <mat-expansion-panel [expanded]="showcustom">
                                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                         class="accordion">
                                         <mat-panel-title class="accordion-title">
@@ -1940,16 +1940,16 @@
                     </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]='false'>
+                        <mat-expansion-panel [expanded]="showlicense">
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title 
-                                    class="accordion-title" (click)="menu('license')">
+                                    class="accordion-title" (click)="menu('license && showlicense')">
                                     License
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showlicense">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -2001,7 +2001,7 @@
                                                 <li>The Free license package is free of cost with limited features.</li>
                                             </ul>
                                             <mat-accordion>
-                                                <mat-expansion-panel [expanded]="false">
+                                                <mat-expansion-panel [expanded]="showlicense">
                                                     <mat-expansion-panel-header expandedHeight="48px"
                                                         collapsedHeight="32px">
                                                         <mat-panel-title>
@@ -2113,7 +2113,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showlicense">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">

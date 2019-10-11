@@ -8,6 +8,7 @@ import { ProviderDataStorageService } from '../../../../ynw_provider/services/pr
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { MatDialog } from '@angular/material';
 import { ProviderBprofileSearchGalleryComponent } from '../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -49,6 +50,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     success_error = null;
     selitem_pic = '';
     image_remaining_cnt = 0;
+    domain;
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
@@ -70,18 +72,23 @@ export class MediaComponent implements OnInit, OnDestroy {
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
+        private routerobj: Router,
+        public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) { }
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
         this.getGalleryImages();
         this.getBusinessProfile();
     }
-    learnmore_clicked(parent, child) {
-
-    }
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+      }
     ngOnDestroy() {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();
