@@ -74,7 +74,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     loadingTb = false;
     upgradablepackages = [];
     addonTooltip = '';
-    breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'license->upgradelicense' };
+    breadcrumb_moreoptions = {
+           'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
     upgradedialogRef;
     active_user;
     lichistorydialogRef;
@@ -140,7 +141,12 @@ export class LicenseComponent implements OnInit, OnDestroy {
         } else {
             this.hide_invoiceperiod = false;
         }
-    }z
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/license']);
+        }
+    }
     getLicenseDetails(call_type = 'init') {
         this.license_message = '';
         this.provider_servicesobj.getLicenseDetails()
