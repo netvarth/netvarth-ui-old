@@ -293,7 +293,7 @@ export const projectConstants = {
   ],
   ALERT_CNT: 10,
   BUSINESS_NAME_MAX_LENGTH: 50,
-  BUSINESS_DESC_MAX_LENGTH: 400,
+  BUSINESS_DESC_MAX_LENGTH: 2000,
   REPORT_STATUSES: {
     PAYMENTPENDING: 'Payment Pending',
     REQUESTED: 'Requested',

@@ -85,7 +85,7 @@ export const Messages = {
   'BPROFILE_LANGUAGE_SAVED': 'Saved successfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
-  'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 400 characters',
+  'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 2000 characters',
 
   // Adwords
   'ADWORD_LISTEMPTY': 'No Jaldee-Keywords exist',

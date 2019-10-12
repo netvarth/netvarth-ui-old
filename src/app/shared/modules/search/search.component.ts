@@ -245,7 +245,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.locationRef.closePanel();
       this.seldomain.focus();
     }, 500);
-    this.handleNormalSearchClick();
+    // this.handleNormalSearchClick();
   }
   locationClick(value) {
     if (value.keyCode === 13) {
