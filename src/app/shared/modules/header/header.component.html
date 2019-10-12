@@ -7,7 +7,7 @@
     <!-- <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore> -->
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
-    <div class="container no-padding">
+    <div class="col-md-12 no-padding">
         <div class="row">
             <div class="lgo col-md-3">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
@@ -112,7 +112,7 @@
     </div>
     <ng-container *ngIf="ctype=='provider' && headercls!='itl-steps'">
         <div class="mobile-menu" [class.show]="showmobileSubmenu" *ngIf="small_device_display">
-            <div class="container">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="menu-outer">
                         <div class="outer">
@@ -179,7 +179,7 @@
     </ng-container>
 </header>
 <header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
-    <div class="container no-padding">
+    <div class="col-md-12 no-padding">
         <div class="row" style="padding:15px 0;">
             <div class="tp-1">
                 <div class="tp-l lgo"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
@@ -295,7 +295,7 @@
 </header>
 
 <div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
-    <div class="container">
+    <div class="col-md-12">
         <div class="row">
             <p *ngIf="active_license === 'Gold - FREE Trial 45 days' && license_message != ''"
                 style="color: red; width: 100%; text-align: left;">

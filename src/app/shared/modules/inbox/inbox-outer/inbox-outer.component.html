@@ -3,7 +3,7 @@
 </section>
 <section>
   <div class="content comn-cls">
-      <div class="container">
+      <div class="col-md-12">
           <div class="row">
               <div class="card p0">
                 <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)= "getInboxMessages()" *ngIf="obtainedMsgs"></app-inbox-list>

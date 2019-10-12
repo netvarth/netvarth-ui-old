@@ -3,7 +3,7 @@
     [class.consumer]="ctype!='provider'" [class.show]="showbottompopup">
 
     <section class="footer-home" *ngIf="ctype!='provider' && (includedFrom == 'home' || includedFrom == 'phome')">
-        <div class="container footer-middle hcode-footer-middle">
+        <div class="col-md-12 footer-middle hcode-footer-middle">
             <div class="row no-margin-bottom">
                 <div class="col-md-8 col-sm-12 sm-text-center sm-margin-bottom-four hcode-footer-menu">
                     <ul id="menu-footer-menu" class="list-inline footer-link text-uppercase">
@@ -67,7 +67,7 @@
 
 
     <!-- <div class="container-fluid bg-dark-gray footer-bottom hcode-footer-bottom" style="display:none;">
-                   <div class="container">
+                   <div class="col-md-12">
                       <div class="row margin-three">
                          <div class="col-md-9 col-sm-9 col-xs-12 copyright text-left letter-spacing-1 xs-text-center xs-margin-bottom-one light-gray-text2">
                             <div class="hcode-footer-copyright vertical-align-middle display-inline-block">
@@ -80,7 +80,7 @@
                 </div> -->
 
     <!-- <section class="sect1" *ngIf="ctype!='provider' && includedFrom == 'home'">
-        <div class="container">
+        <div class="col-md-12">
             <div class="row">
                 <div class="col-12">
                     <div class="lgo-btm">
@@ -128,7 +128,7 @@
     </section>
 
     <section class="sect2" *ngIf="ctype!='provider' && includedFrom == 'home'">
-        <div class="container">
+        <div class="col-md-12">
             <div class="row">
                 <div class="col-12">
                     <ul class="lnks">
@@ -147,7 +147,7 @@
 
     <div class="stp-box" *ngIf="ctype=='provider'">
         <div class="stp-header">
-            <div class="container">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="outer">
                         <div class="left">
@@ -169,7 +169,7 @@
         <!--Audit Log-->
 
         <div class="audit " *ngIf="showAuditDiv">
-            <div class="container">
+            <div class="col-md-12">
                 <div class="row">
                     <!-- <div class="table-outer stp-tbl"> -->
                     <span class="loading" *ngIf="auditStatus==1">
@@ -206,7 +206,7 @@
 
         <!--Alerts-->
         <div class="alerts tray" *ngIf="showAlertDiv">
-            <div class="container">
+            <div class="col-md-12">
                 <div class="row">
                     <!-- <div class="table-outer stp-tbl"> -->
                     <span class="loading" *ngIf="alertStatus==1">
@@ -243,7 +243,7 @@
         <!--Online Chekin-->
         <div class="o-checkin" *ngIf="showCheckinDiv">
             <div class="table-body">
-                <div class="container">
+                <div class="col-md-12">
                     <div class="row">
                         <div class="copy">
                             <div class="pubs" *ngIf="checkinStatus==1">
@@ -285,7 +285,7 @@
     </div>
 
     <section class="sect3" *ngIf="ctype=='provider' && show_prov_bottomicons">
-        <div class="container">
+        <div class="col-md-12">
             <div class="row">
                 <div class="copy-text">&copy; {{copyright_cap}} {{curyear}} {{jaldee_cap}}</div>
                 <div class="spt-controls ml-auto" *ngIf="shared_functions.checkLogin() && ctype=='provider'">

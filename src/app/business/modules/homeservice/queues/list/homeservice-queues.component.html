@@ -5,7 +5,7 @@
 </section>
 <section style="margin-bottom: 20px" class="q-list">
         <div class="content instant loc-list">
-                <div class="container">
+                <div class="col-md-12">
                         <p class="form-level-settings">{{waitlist_cap}}</p>
                         <div class="card" *ngIf="api_loading">
                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
@@ -317,7 +317,7 @@
                                                                         *ngIf="sqShowActiveQTodayCount[i] || sqShowActiveQFutureCount[i]">
                                                                         <h5>Check-ins</h5>
                                                                         <div class="c-ot m0">
-                                                                                <div class="container"
+                                                                                <div class="col-md-12"
                                                                                         *ngIf="todayQLoading[i]">
                                                                                         <app-common-innerloading-spinner>
                                                                                         </app-common-innerloading-spinner>
@@ -377,10 +377,10 @@
 
 <section style="margin-bottom: 20px">
         <div class="content loc-list">
-                <div class="container" *ngIf="api_loading">
+                <div class="col-md-12" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
-                <div class="container" *ngIf="!api_loading">
+                <div class="col-md-12" *ngIf="!api_loading">
                         <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
@@ -456,7 +456,7 @@
                                                                         *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
                                                                         <h5>Check-ins</h5>
                                                                         <div class="c-ot m0">
-                                                                                <div class="container"
+                                                                                <div class="col-md-12"
                                                                                         *ngIf="scheduleLoading[i]">
                                                                                         <app-common-innerloading-spinner>
                                                                                         </app-common-innerloading-spinner>
@@ -520,10 +520,10 @@
 <!--Disabled Qs Listing-->
 <section style="margin-bottom: 20px">
         <div class="content loc-list">
-                <div class="container" *ngIf="api_loading">
+                <div class="col-md-12" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
-                <div class="container" *ngIf="!api_loading">
+                <div class="col-md-12" *ngIf="!api_loading">
                         <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>

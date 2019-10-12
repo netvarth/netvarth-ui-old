@@ -7,10 +7,10 @@
 <section>
     <div class="content loc-list">
        
-            <div class="container"  *ngIf="api_loading">
+            <div class="col-md-12"  *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                     </div>
-                    <div class="container" *ngIf="!api_loading">
+                    <div class="col-md-12" *ngIf="!api_loading">
             <div class="row" *ngFor="let loc of loc_list">
                      <div class="card" [class.disabled]="loc.status=='INACTIVE'" [class.bse-lcn]="loc.baseLocation == true" >
                     <div class="copy">

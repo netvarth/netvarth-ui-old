@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" style="height: auto; min-height: 100%;">
+
 <head>
   <meta charset="utf-8">
   <title>Jaldee</title>
@@ -10,13 +11,14 @@
   <meta name="description" content="Jaldee">
   <meta name="keywords" content="Jaldee, Avoid waiting">
   <meta name="author" content="Jaldee Soft Private Limited">
-  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- <script src="https://cdn.ckeditor.com/4.5.11/full/ckeditor.js"></script> -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U&libraries=places" type="application/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U&libraries=places"
+    type="application/javascript"></script>
 
   <!-- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD887lzwqSirHdEhOWW00xdXNTNztLMVeA"></script> -->
 
@@ -31,33 +33,35 @@
     FontAwesomeConfig = { searchPseudoElements: true };
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
-  </head>
-  <body class="hold-transition sidebar-mini" style="height: auto;min-height: 100%;">
-    <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
-    <app-root></app-root>
-  </body>
-  </html>
-  <script>
-    window.onload = function () {
-function receiveMessage(e) {
-if (e.origin !== 'http://localhost:8181' || e.origin !== 'https://sascale.jaldee.com' ||  e.origin !== 'https://sa.jaldee.com' || e.origin !== 'https://test.jaldee.com'){
-  return;
-}
-const response = JSON.stringify(e.data.response);
-localStorage.setItem('jld', e.data.userdata['password']);
-delete e.data.userdata['password'];
-const userdata = JSON.stringify(e.data.userdata);
-localStorage.setItem('isBusinessOwner', 'true');
-localStorage.setItem('ynw-user', response);
-localStorage.setItem('ynw-credentials', userdata);
-messageEle.innerHTML = "Message Received: " + e.data;
-}
-window.addEventListener('message', receiveMessage);
-}
-    var DEBUG_MODE_ON = true; // hide browser console in production
-    if (!DEBUG_MODE_ON) {
-      console = console || {};
-      console.log = function(){};
-    }
+</head>
 
-  </script>
+<body class="hold-transition sidebar-mini" style="height: auto;min-height: 100%;">
+  <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
+  <app-root></app-root>
+</body>
+
+</html>
+<script>
+  window.onload = function () {
+    function receiveMessage(e) {
+      if (e.origin !== 'http://localhost:8181' || e.origin !== 'https://sascale.jaldee.com' || e.origin !== 'https://sa.jaldee.com' || e.origin !== 'https://test.jaldee.com') {
+        return;
+      }
+      const response = JSON.stringify(e.data.response);
+      localStorage.setItem('jld', e.data.userdata['password']);
+      delete e.data.userdata['password'];
+      const userdata = JSON.stringify(e.data.userdata);
+      localStorage.setItem('isBusinessOwner', 'true');
+      localStorage.setItem('ynw-user', response);
+      localStorage.setItem('ynw-credentials', userdata);
+      messageEle.innerHTML = "Message Received: " + e.data;
+    }
+    window.addEventListener('message', receiveMessage);
+  }
+  var DEBUG_MODE_ON = true; // hide browser console in production
+  if (!DEBUG_MODE_ON) {
+    console = console || {};
+    console.log = function () { };
+  }
+
+</script>
