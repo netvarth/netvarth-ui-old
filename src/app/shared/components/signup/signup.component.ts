@@ -297,7 +297,7 @@ export class SignUpComponent implements OnInit {
     // this.license_description = this.license_packages[item.value];
   }
 
-  onSubmit() {
+  onSubmit(acc_id?) {
     this.resetApiErrors();
     this.user_details = {};
     let userProfile = {
@@ -354,6 +354,16 @@ export class SignUpComponent implements OnInit {
           licPkgId: 9 || null,
           accountId: this.data.claimData.accountId
         };
+      } else if (acc_id) {
+        this.user_details = {
+          userProfile: userProfile,
+          sector: this.selectedDomain.domain,
+          subSector: this.subDomainList[this.signupForm.get('selectedSubDomains').value].value,
+          isAdmin: isAdmin, // checked this to find provider or customer
+          // licPkgId: this.signupForm.get('package_id').value || null,
+          licPkgId: 9 || null,
+          accountId: acc_id
+        };
       } else {
         const sub_Sector = this.subDomainList[this.signupForm.get('selectedSubDomains').value].value;
         this.user_details = {
@@ -401,6 +411,7 @@ export class SignUpComponent implements OnInit {
     this.shared_services.signUpProvider(user_details)
       .subscribe(
         () => {
+          this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
           this.createForm(2);
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
@@ -411,7 +422,11 @@ export class SignUpComponent implements OnInit {
           }
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
+            this.onSubmit(error.error);
+          } else {
+            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          }
         }
       );
   }

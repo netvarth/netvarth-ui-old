@@ -248,6 +248,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
+           // console.log(waitlist);
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
@@ -256,12 +257,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (today.valueOf() < waitlist_date.valueOf()) {
               this.waitlists[i].future = true;
               this.waitlists[i].estimated_time = retval.time;
+              this.waitlists[i].estimated_timenow = retval.timenow;
+              this.waitlists[i].estimated_timeslot = retval.timeslot;
               this.waitlists[i].estimated_caption = retval.caption;
               this.waitlists[i].estimated_date = retval.date;
               this.waitlists[i].estimated_date_type = retval.date_type;
               this.waitlists[i].estimated_autocounter = retval.autoreq;
             } else {
               this.waitlists[i].estimated_time = retval.time;
+              this.waitlists[i].estimated_timenow = retval.timenow;
+              this.waitlists[i].estimated_timeslot = retval.timeslot;
               this.waitlists[i].estimated_caption = retval.caption;
               this.waitlists[i].estimated_date = retval.date;
               this.waitlists[i].estimated_date_type = retval.date_type;
@@ -285,12 +290,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getAppxTime(waitlist) {
-    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
+    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '','timenow':'','timeslot':'', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (waitlist.waitlistStatus !== 'cancelled') {
       if (waitlist.hasOwnProperty('serviceTime') || waitlist.calculationMode === 'NoCalc') {
         appx_ret.caption = 'Checked in for'; // 'Check-In Time';
         if (waitlist.calculationMode === 'NoCalc') {
-          appx_ret.time = waitlist.queue.name + ' [' + waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime + ']';
+          appx_ret.time =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
         } else {
           appx_ret.time = waitlist.serviceTime;
         }
@@ -302,14 +307,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         if (today.valueOf() < waitlist_date.valueOf()) {
           appx_ret.date = waitlist.date;
           appx_ret.date_type = 'date';
+          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
         } else {
           appx_ret.date = 'Today';
           appx_ret.date_type = 'string';
+          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
         }
       } else {
         if (waitlist.appxWaitingTime === 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
-          appx_ret.time = 'Now';
+          appx_ret.time =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
+          appx_ret.timenow = 'Now';
         } else if (waitlist.appxWaitingTime !== 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
           appx_ret.date = '';
@@ -323,7 +331,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       let t2;
       appx_ret.caption = 'Checked in for';
       appx_ret.date = waitlist.date;
-      appx_ret.time = waitlist.queue.name + ' [' + waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime + ']';
+      appx_ret.time =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
       appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime, 'YYYY-MM-DD').format();
       time = waitlist.statusUpdatedTime.split('-');
       time1 = time[2].trim();

@@ -178,6 +178,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               } else {
                 return throwError(error);
               }
+            } else if (error.status === 303) {
+              this.shared_functions.setitemonLocalStorage('unClaimAccount', true);
+              return throwError(error);
             } else {
               console.log(error.status);
               return throwError(error);
