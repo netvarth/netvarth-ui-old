@@ -4,6 +4,7 @@
  * You should not use this file in production.
  * This file is for demo purposes only.
  */
+alert('demo');
 (function ($, AdminLTE) {
 
   "use strict";
@@ -317,6 +318,7 @@
     });
 
     $("[data-enable='expandOnHover']").on('click', function () {
+      alert('click');
       $(this).attr('disabled', true);
       AdminLTE.pushMenu.expandOnHover();
       if (!$('body').hasClass('sidebar-collapse'))
@@ -331,6 +333,7 @@
       $("[data-layout='layout-boxed']").attr('checked', 'checked');
     }
     if ($('body').hasClass('sidebar-collapse')) {
+      alert('clic');
       $("[data-layout='sidebar-collapse']").attr('checked', 'checked');
     }
 

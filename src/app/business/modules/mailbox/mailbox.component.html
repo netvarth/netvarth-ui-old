@@ -2,7 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content w-manager comn-cls">
+    <div class="content w-manager comn-cls mailbox">
         <div class="col-md-12">
             <div class="row">
                 <div class="p0">
@@ -10,24 +10,26 @@
                         <div class="card no-padding" *ngFor="let users of inboxUsersList, let parentIndex = index">
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
-                                    <mat-expansion-panel-header [collapsedHeight]="'75px'" [expandedHeight]="'75px'">
+                                    <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'">
                                         <mat-panel-title>
                                             <!-- <span class="refine-head">
                                                             <h4>{{users.userKey}}</h4>
                                                     </span> -->
-                                            <div class="row col-md-12">
-                                                <div class="title-color">
-                                                    <h4>{{users.userKey}}</h4>
-                                                </div>
-                                                <div>
-                                                    {{ (users.latestMessage.length>30)? (shared_functions.firstToUpper(users.latestMessage) | slice:0:30)+'.....':shared_functions.firstToUpper(users.latestMessage) }}
+                                            <div class="col-md-12 col-xs-12 no-padding">
+                                                <div class="col-md-12 col-xs-12 no-padding">
+                                                    <h4 class="title-color pull-left">{{users.userKey}}</h4>
                                                     <span
-                                                        class="fl-right">{{formatDateDisplay(users.latestTime)}}</span>
+                                                        class="chat-dt pull-right">{{formatDateDisplay(users.latestTime)}}</span>
+                                                </div>
+                                                <div class="col-md-12 col-xs-12 no-padding">
+                                                    <span
+                                                        class="">{{ (users.latestMessage.length>30)? (shared_functions.firstToUpper(users.latestMessage) | slice:0:30)+'.....':shared_functions.firstToUpper(users.latestMessage) }}</span>
+
                                                 </div>
                                             </div>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
-                                    <section>
+                                    <div class="col-md-12 no-padding">
                                         <div class="box box-warning direct-chat direct-chat-warning">
                                             <div class="box-body">
                                                 <!-- Conversations are loaded here -->
@@ -42,8 +44,10 @@
                                                                 [class.pull-right]="inbox.messagestatus=='out'">{{formatDateDisplay(inbox.timestamp)}}</span>
                                                         </div>
                                                         <!-- /.direct-chat-info -->
-                                                        <img *ngIf="inbox.messagestatus=='out'" class="direct-chat-img" [src]="blogo" alt="business image">
-                                                        <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img" [src]="clogo" alt="user image">
+                                                        <img *ngIf="inbox.messagestatus=='out'" class="direct-chat-img"
+                                                            [src]="blogo" alt="business image">
+                                                        <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img"
+                                                            [src]="clogo" alt="user image">
                                                         <!-- /.direct-chat-img -->
                                                         <div class="direct-chat-text"
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
@@ -51,7 +55,11 @@
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
                                                             <div class="thumbnails mt10 mb10" *ngIf="inbox.attachments">
-                                                                <a class="mg-10" target="_blank" [href]="attachment.s3path" *ngFor="let attachment of inbox.attachments"><img [src]="attachment.s3path" style="width:100px; height:100px"/></a>
+                                                                <a class="mg-10" target="_blank"
+                                                                    [href]="attachment.s3path"
+                                                                    *ngFor="let attachment of inbox.attachments"><img
+                                                                        [src]="attachment.s3path"
+                                                                        style="width:100px; height:100px" /></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -60,15 +68,21 @@
                                             <!-- /.box-body -->
                                             <div class="box-footer">
                                                 <form>
-                                                    <div class="reply-shade" *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message"><i
-                                                            class="fa fa-reply"></i>
+                                                    <div class="reply-shade"
+                                                        *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message">
+                                                        <i class="fa fa-reply"></i>
                                                         {{selectedMessage[parentIndex].message.message}}</div>
                                                     <div class="input-group">
                                                         <input type="text" name="message" placeholder="Type Message ..."
-                                                            class="form-control" [(ngModel)]="messageToSend"  [ngModelOptions]="{standalone: true}">
+                                                            class="form-control" [(ngModel)]="messageToSend"
+                                                            [ngModelOptions]="{standalone: true}">
                                                         <span class="input-group-btn">
-                                                            <button *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message" class="btn btn-warning btn-flat" (click)="logofile.click()">
-                                                                <input #logofile type="file" accept="image/*" style="display:none;" multiple
+                                                            <button
+                                                                *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message"
+                                                                class="btn btn-warning btn-flat"
+                                                                (click)="logofile.click()">
+                                                                <input #logofile type="file" accept="image/*"
+                                                                    style="display:none;" multiple
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>
                                                             </button>
@@ -85,55 +99,56 @@
                                                         <div
                                                             *ngFor="let item of selectedMessage[parentIndex]['pics'].files; let i = index">
                                                             <div class="col-md-7">
-                                                                <span class="ln-hgt-40">{{item.name}}</span>                                                                
+                                                                <span class="ln-hgt-40">{{item.name}}</span>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <span class="mbt">
-                                                                    <button type="button"
-                                                                        mat-icon-button
+                                                                    <button type="button" mat-icon-button
                                                                         [matMenuTriggerFor]="menu">
                                                                         <mat-icon>more_vert</mat-icon>
                                                                     </button>
                                                                     <mat-menu #menu="matMenu">
-                                                                        <button type="button"
-                                                                            mat-menu-item
+                                                                        <button type="button" mat-menu-item
                                                                             (click)="captionMenuClicked(i, parentIndex)">
                                                                             <i class="icon-edit"></i>
                                                                             <span>Add caption</span>
                                                                         </button>
                                                                         <button type="button"
-                                                                        (click)="deleteTempImage(i, parentIndex)" mat-menu-item>
+                                                                            (click)="deleteTempImage(i, parentIndex)"
+                                                                            mat-menu-item>
                                                                             <i class="icon-delete"></i>
                                                                             <span>delete</span>
                                                                         </button>
                                                                     </mat-menu>
                                                                 </span>
                                                             </div>
-                                                             <div style="margin-top: 15px"
-                                                                    class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
-                                                                    *ngIf="showCaptionBox && showCaptionBox[parentIndex] && showCaptionBox[parentIndex][i]">
+                                                            <div style="margin-top: 15px"
+                                                                class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
+                                                                *ngIf="showCaptionBox && showCaptionBox[parentIndex] && showCaptionBox[parentIndex][i]">
                                                                 <div class="input-group">
-                                                                    <input placeholder="Enter image caption" type="text" class="form-control"
-                                                                        [(ngModel)]="activeImageCaption[parentIndex][i]" [ngModelOptions]="{standalone: true}" >
-                                                                        <span class="input-group-btn">
-                                                                            <button
-                                                                                class="btn bt3 btn-default coupon-apply-btn"
-                                                                                (click)="addCaption(activeImageCaption, parentIndex, i)"
-                                                                                type="button">Add</button>&nbsp;
-                                                                            <button
-                                                                                class="btn bt3 btn-default coupon-apply-btn"
-                                                                                (click)="closeCaptionMenu(i, parentIndex)"
-                                                                                type="button">Cancel</button>                                                                            
-                                                                        </span>
+                                                                    <input placeholder="Enter image caption" type="text"
+                                                                        class="form-control"
+                                                                        [(ngModel)]="activeImageCaption[parentIndex][i]"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                    <span class="input-group-btn">
+                                                                        <button
+                                                                            class="btn bt3 btn-default coupon-apply-btn"
+                                                                            (click)="addCaption(activeImageCaption, parentIndex, i)"
+                                                                            type="button">Add</button>&nbsp;
+                                                                        <button
+                                                                            class="btn bt3 btn-default coupon-apply-btn"
+                                                                            (click)="closeCaptionMenu(i, parentIndex)"
+                                                                            type="button">Cancel</button>
+                                                                    </span>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                         </div>
                                                     </ng-container>
                                                 </form>
                                             </div>
                                             <!-- /.box-footer-->
                                         </div>
-                                    </section>
+                                    </div>
                                 </mat-expansion-panel>
                             </mat-accordion>
                         </div>

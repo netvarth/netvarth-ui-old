@@ -6,94 +6,100 @@
 
 <section>
     <div class="content comn-cls">
-        <div class="col-md-12 no-padding">
-            <div class="card">
-                <p class="form-level-settings">{{frm_items_cap}}<a class="learnmore-pointer" id="customer-help"
-                        (click)="learnmore_clicked('items', $event)">Learn
-                        More</a></p>
-                <div class="no-dta" *ngIf="item_list.length ==0 && query_executed == true">
-                    <p>{{emptyMsg}}</p>
-                    <span class="cs-btn bt3" (click)="addItem()">{{add_item_cap}}</span>
-                </div>
-                <div class="w-dta" *ngIf="item_list.length>0">
-                    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="card">
+                    <p class="form-level-settings">{{frm_items_cap}}<a class="learnmore-pointer" id="customer-help"
+                            (click)="learnmore_clicked('items', $event)">Learn
+                            More</a></p>
+                    <div class="no-dta" *ngIf="item_list.length ==0 && query_executed == true">
+                        <p>{{emptyMsg}}</p>
+                        <span class="cs-btn bt3" (click)="addItem()">{{add_item_cap}}</span>
+                    </div>
+                    <div class="w-dta" *ngIf="item_list.length>0">
+                        <div class="row">
 
-                        <div class="copy">
-                            <div class="table-outer q-itm">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <!-- <th></th> -->
-                                            <th>{{name_cap}}</th>
-                                            <th>{{price_cap}}</th>
-                                            <th>{{taxable_cap}}</th>
-                                            <th>Status</th>
-                                            <!-- <th>Status</th> -->
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of item_list"
-                                            [class.disabled-row]="item.status=='INACTIVE'">
-                                            <!-- <td class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
+                            <div class="copy">
+                                <div class="table-outer q-itm">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th></th> -->
+                                                <th>{{name_cap}}</th>
+                                                <th>{{price_cap}}</th>
+                                                <th>{{taxable_cap}}</th>
+                                                <th>Status</th>
+                                                <!-- <th>Status</th> -->
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of item_list"
+                                                [class.disabled-row]="item.status=='INACTIVE'">
+                                                <!-- <td class="pointer-cursor"  class="td1" (click)="showDetails(item.itemId)">
                                                         <div class="itm-prdct">
                                                         <img [src]="item.picSmall" *ngIf="item.picSmall !='' && item.picSmall">
                                                         <div class="noimage" *ngIf="!item.picSmall"></div>
                                                         </div>
                                                         </td> -->
-                                            <td data-title="Name" class="td2" class="pointer-cursor"
-                                                (click)="showDetails(item.itemId)"
-                                                [class.itemdisabled]="item.status=='INACTIVE'"><span
-                                                    [matTooltipClass]="tooltipcls"
-                                                    [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
-                                            </td>
-                                            <td data-title="Price" clas="td4">{{item.price |
+                                                <td data-title="Name" class="td2" class="pointer-cursor"
+                                                    (click)="showDetails(item.itemId)"
+                                                    [class.itemdisabled]="item.status=='INACTIVE'"><span
+                                                        [matTooltipClass]="tooltipcls"
+                                                        [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
+                                                </td>
+                                                <td data-title="Price" clas="td4">{{item.price |
                                                 currency:'&#8377; '}}</td>
-                                            <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}
-                                            </td>
-                                            <td data-title="Status" [ngClass]="{'green-text' : item.status=='ACTIVE'}">
-                                                {{item_status[item.status]}}</td>
-                                            <td class="action">
-                                                <span class="mbt">
-                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                        <mat-icon>more_vert</mat-icon>
-                                                    </button>
-                                                    <mat-menu #menu="matMenu">
-                                                        <button type="button" (click)="editItem(item)" mat-menu-item
-                                                            *ngIf="item.status=='ACTIVE'">
-                                                            <i class="icon-edit"></i>
-                                                            {{edit_btn}}
+                                                <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}
+                                                </td>
+                                                <td data-title="Status"
+                                                    [ngClass]="{'green-text' : item.status=='ACTIVE'}">
+                                                    {{item_status[item.status]}}</td>
+                                                <td class="action">
+                                                    <span class="mbt">
+                                                        <button type="button" mat-icon-button
+                                                            [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
                                                         </button>
-                                                        <button type="button" (click)="dochangeStatus(item)"
-                                                            mat-menu-item>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button type="button" (click)="editItem(item)" mat-menu-item
+                                                                *ngIf="item.status=='ACTIVE'">
+                                                                <i class="icon-edit"></i>
+                                                                {{edit_btn}}
+                                                            </button>
+                                                            <button type="button" (click)="dochangeStatus(item)"
+                                                                mat-menu-item>
+                                                                <i *ngIf="item.status=='INACTIVE' || !item.status"
+                                                                    class="icon-enable"></i>
+                                                                <i *ngIf="item.status=='ACTIVE'"
+                                                                    class="icon-disable"></i>
+                                                                {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                                            </button>
+                                                            <button type="button" (click)="doRemoveItem(item)"
+                                                                mat-menu-item>
+                                                                <i class="icon-delete"></i>
+                                                                {{delete_btn}}
+                                                            </button>
+                                                        </mat-menu>
+                                                    </span>
+                                                    <span class="mbt-mobile-show">
+                                                        <button class="editcls" type="button"
+                                                            (click)="editItem(item)">{{edit_btn}}</button>
+                                                        <button class="status" type="button"
+                                                            (click)="dochangeStatus(item)">
                                                             <i *ngIf="item.status=='INACTIVE' || !item.status"
                                                                 class="icon-enable"></i>
                                                             <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
-                                                            {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                                                        </button>
-                                                        <button type="button" (click)="doRemoveItem(item)"
-                                                            mat-menu-item>
-                                                            <i class="icon-delete"></i>
-                                                            {{delete_btn}}
-                                                        </button>
-                                                    </mat-menu>
-                                                </span>
-                                                <span class="mbt-mobile-show">
-                                                    <button class="editcls" type="button"
-                                                        (click)="editItem(item)">{{edit_btn}}</button>
-                                                    <button class="status" type="button" (click)="dochangeStatus(item)">
-                                                        <i *ngIf="item.status=='INACTIVE' || !item.status"
-                                                            class="icon-enable"></i>
-                                                        <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
-                                                        {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}</button>
-                                                    <button class="deletecls" type="button"
-                                                        (click)="doRemoveItem(item)">{{delete_btn}}</button>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <span class="addbt d-block d-md-none" (click)="addItem()"></span>
+                                                            {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}</button>
+                                                        <button class="deletecls" type="button"
+                                                            (click)="doRemoveItem(item)">{{delete_btn}}</button>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <span class="addbt d-block d-md-none" (click)="addItem()"></span>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,27 +1,25 @@
 <div class="col-md-12">
-    <div class="row">
-        <div class="bcrumb">
-            <div class="col-md-12">
-                <ng-container *ngFor="let breadcrumb of breadcrumbs;last as isLast">
-                    <ng-container *ngIf="breadcrumb.title && breadcrumb.title != null">
-                        <span *ngIf="!isLast" (click)="goNavigate(breadcrumb)" [class.pointer-cursor]="breadcrumb.url">
-                            {{breadcrumb.title }}
-                        </span>
-                        <ng-container *ngIf="isLast">
-                            {{breadcrumb.title }}
-                        </ng-container>
+    <div class="bcrumb">
+        <div class="no-padding">
+            <ng-container *ngFor="let breadcrumb of breadcrumbs;last as isLast">
+                <ng-container *ngIf="breadcrumb.title && breadcrumb.title != null">
+                    <span *ngIf="!isLast" (click)="goNavigate(breadcrumb)" [class.pointer-cursor]="breadcrumb.url">
+                        {{breadcrumb.title }}
+                    </span>
+                    <ng-container *ngIf="isLast">
+                        {{breadcrumb.title }}
                     </ng-container>
                 </ng-container>
-            </div>
-            <ng-container>
-                <div class="actions">
-                    <span [ngClass]="className" class="cs-btn bt6 {{className}}" *ngFor="let action of moreOptions.actions">
-                        <div (click)="btn_clicked(action.type)">{{action.title}}</div> <i *ngIf="action.icon" data-icon="B"
-                            (click)="btn_clicked(action.icontype)"></i>
-                    </span>
-                    <!-- <span (click)="learnmore_clicked()" class="cs-btn bt6 {{className}}"> {{lear_more_cap}}</span> -->
-                </div>
             </ng-container>
         </div>
+        <ng-container>
+            <div class="actions">
+                <span [ngClass]="className" class="cs-btn bt6 {{className}}" *ngFor="let action of moreOptions.actions">
+                    <div (click)="btn_clicked(action.type)">{{action.title}}</div> <i *ngIf="action.icon" data-icon="B"
+                        (click)="btn_clicked(action.icontype)"></i>
+                </span>
+                <!-- <span (click)="learnmore_clicked()" class="cs-btn bt6 {{className}}"> {{lear_more_cap}}</span> -->
+            </div>
+        </ng-container>
     </div>
 </div>

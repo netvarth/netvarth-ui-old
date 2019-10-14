@@ -625,3 +625,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     border-bottom-right-radius: 0px !important;; 
     border-bottom-left-radius: 0px !important;; 
   }
+  .mat-expansion-panel-header, .mat-expansion-panel-content {
+    font-family: 'Montserrat', sans-serif !important
+  }
