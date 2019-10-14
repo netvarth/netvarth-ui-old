@@ -4819,8 +4819,13 @@ i.notavail {
 }
 .pagination>.disabled>a, .pagination>.disabled>span {
   background-color: #ddd !important;
+  cursor: auto!important;
 }
 .pagination>li>a, .pagination>li>span {
   color: #fff!important;
   background-color: #3c8dbc!important;
+  cursor: pointer!important;
+}
+.coupon-outer .input-group-btn {
+  width: auto!important;
 }
