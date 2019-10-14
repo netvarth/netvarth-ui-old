@@ -4814,3 +4814,13 @@ i.notavail {
   font-size: 0.7rem !important;
   color: #e2aa00;
 }
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+  margin-left: 10px;
+}
+.pagination>.disabled>a, .pagination>.disabled>span {
+  background-color: #ddd !important;
+}
+.pagination>li>a, .pagination>li>span {
+  color: #fff!important;
+  background-color: #3c8dbc!important;
+}
