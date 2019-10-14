@@ -128,7 +128,7 @@ export class ProfessionalCareComponent implements OnChanges {
     this.parent = parentContent;
     this.menu(parentContent, childContent);
   }
-  menu(parentContent, childContent) {
+  menu(parentContent, childContent?) {
     console.log(parentContent);
     console.log(childContent);
     if (parentContent === 'profile-search') {

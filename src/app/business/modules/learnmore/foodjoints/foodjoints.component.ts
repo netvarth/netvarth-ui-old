@@ -240,3 +240,4 @@ export class FoodJointComponent implements OnInit {
   }
   }
 }
+

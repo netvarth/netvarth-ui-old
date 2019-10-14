@@ -165,3 +165,4 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 }
+

@@ -252,3 +252,4 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'waitlist-manager']);
   }
 }
+
