@@ -1,14 +1,14 @@
-import { Component, Input, OnChanges,OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
-import { Location, CommonModule } from '@angular/common'; 
+import { Location } from '@angular/common';
 @Component({
     selector: 'app-personalcare-learnmore',
     templateUrl: './personalcare.component.html'
 })
 
-export class PersonalCareComponent implements OnChanges {
+export class PersonalCareComponent implements OnInit {
   @Input() target: string;
   breadcrumbs = [
     {
@@ -70,8 +70,7 @@ export class PersonalCareComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  ngOnChanges() {
-  }
+
   setActivePricing(item) {
     this.activePrice = item;
   }
@@ -126,7 +125,7 @@ export class PersonalCareComponent implements OnChanges {
     this.parent = parentContent;
     this.menu(parentContent, childContent);
   }
-  menu(parentContent, childContent) {
+  menu(parentContent, childContent?) {
     console.log(parentContent);
     console.log(childContent);
     if (parentContent === 'profile-search') {

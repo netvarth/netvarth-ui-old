@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   bsubsector = '';
   blogo = '';
   qAvailability;
+  selectedMenu;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -66,8 +67,8 @@ export class MenuComponent implements OnInit, OnDestroy {
         // this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
         // break;
         case 'instant_q':
-           this.qAvailability = message.qAvailability;
-           break;
+          this.qAvailability = message.qAvailability;
+          break;
         // case 'popularList':
         //   this.jsonlist = message.target;
         //   if (this.jsonlist) {
@@ -78,8 +79,10 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   this.jsonlist = message.target;
         //   this.popular_search(this.jsonlist);
         //   break;
+        case 'menuChanged':
+          this.menuClick(message.value);
       }
-       this.getBusinessdetFromLocalstorage();
+      this.getBusinessdetFromLocalstorage();
     });
   }
   getBusinessdetFromLocalstorage() {
@@ -120,5 +123,45 @@ export class MenuComponent implements OnInit, OnDestroy {
       },
         () => {
         });
+  }
+  menuClick(menu) {
+    switch (menu) {
+      case 'check-ins':
+        this.router.navigate(['/provider/dashboard/check-ins']);
+        this.selectedMenu = 'check-ins';
+        break;
+      case 'settings':
+        this.router.navigate(['/provider/settings']);
+        this.selectedMenu = 'settings';
+        break;
+      case 'customers':
+        this.router.navigate(['/provider/customers']);
+        this.selectedMenu = 'customers';
+        break;
+      case 'license':
+        this.router.navigate(['/provider/license']);
+        this.selectedMenu = 'license';
+        break;
+      case 'inbox':
+        this.router.navigate(['/provider/inbox']);
+        this.selectedMenu = 'inbox';
+        break;
+      case 'alerts':
+        this.router.navigate(['/provider/alerts']);
+        this.selectedMenu = 'alerts';
+        break;
+      case 'auditlog':
+        this.router.navigate(['/provider/auditlog']);
+        this.selectedMenu = 'auditlog';
+        break;
+      case 'kiosk':
+        this.router.navigate(['/kiosk']);
+        this.selectedMenu = 'kiosk';
+        break;
+      case 'faq':
+        this.router.navigate(['/provider/faq']);
+        this.selectedMenu = 'faq';
+        break;
+    }
   }
 }

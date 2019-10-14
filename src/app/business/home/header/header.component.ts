@@ -162,10 +162,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   gotoLicense() {
     if (this.active_license === 'Diamond') {
       this.router.navigate(['provider', 'license']);
+      this.shared_functions.sendMessage({'ttype' : 'menuChanged', 'value' : 'license'});
     }
   }
   gotoInbox() {
     this.router.navigate(['provider', 'inbox']);
+    this.shared_functions.sendMessage({'ttype' : 'menuChanged', 'value' : 'inbox'});
   }
   upgradeMembership() {
     this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
@@ -200,6 +202,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (this.alertCnt === 0) {
       this.router.navigate(['provider', 'alerts']);
     }
+    this.shared_functions.sendMessage({'ttype' : 'menuChanged', 'value' : 'alerts'});
   }
   getAlerts(count) {
     // this.alerts = [];

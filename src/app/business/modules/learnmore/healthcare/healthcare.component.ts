@@ -1,4 +1,4 @@
-//import { Component, Input, OnChanges } from '@angular/core';
+// import { Component, Input, OnChanges } from '@angular/core';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
@@ -9,7 +9,7 @@ import { Location, CommonModule } from '@angular/common';
   templateUrl: './healthcare.component.html'
 })
 
-export class HealthCareComponent implements OnChanges {
+export class HealthCareComponent implements OnInit {
   @Input() target: string;
   breadcrumbs = [
     {
@@ -71,8 +71,7 @@ export class HealthCareComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  ngOnChanges() {
-  }
+
   setActivePricing(item) {
     this.activePrice = item;
   }
@@ -127,7 +126,7 @@ export class HealthCareComponent implements OnChanges {
     this.parent = parentContent;
     this.menu(parentContent, childContent);
   }
-  menu(parentContent, childContent) {
+  menu(parentContent, childContent?) {
     console.log(parentContent);
     console.log(childContent);
     if (parentContent === 'profile-search') {

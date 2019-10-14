@@ -8,7 +8,7 @@ import { Location, CommonModule } from '@angular/common';
   selector: 'app-foodjoints-learnmore',
   templateUrl: './foodjoints.component.html'
 })
-export class FoodJointComponent implements OnChanges {
+export class FoodJointComponent implements OnInit {
   @Input() target: string;
   breadcrumbs = [
     {
@@ -70,8 +70,7 @@ export class FoodJointComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  ngOnChanges() {
-  }
+
   setActivePricing(item) {
     this.activePrice = item;
   }
@@ -126,7 +125,7 @@ export class FoodJointComponent implements OnChanges {
     this.parent = parentContent;
     this.menu(parentContent, childContent);
   }
-  menu(parentContent, childContent) {
+  menu(parentContent, childContent?) {
     console.log(parentContent);
     console.log(childContent);
     if (parentContent === 'profile-search') {
@@ -239,9 +238,5 @@ export class FoodJointComponent implements OnChanges {
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
   }
-
-
-
-
   }
 }
