@@ -7,7 +7,7 @@
     <!-- <app-learnmore [passedDet]="passedDet" *ngIf="showLearnMore"></app-learnmore> -->
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
-    <div class="container no-padding">
+    <div class="container">
         <div class="row">
             <div class="lgo col-md-3">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
@@ -179,7 +179,7 @@
     </ng-container>
 </header>
 <header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
-    <div class="col-md-12 no-padding">
+    <div class="container">
         <div class="row" style="padding:15px 0;">
             <div class="tp-1">
                 <div class="tp-l lgo"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
