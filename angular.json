@@ -44,8 +44,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/owl.carousel/dist/owl.carousel.js",              
               "node_modules/crypto-js/crypto-js.js",
-              "src/assets/third-party/Admin-LTE/js/app.min.js",
-              "src/assets/third-party/Admin-LTE/js/demo.js"
+              "src/assets/third-party/Admin-LTE/js/app.js"
             ]
           },
           "configurations": {
