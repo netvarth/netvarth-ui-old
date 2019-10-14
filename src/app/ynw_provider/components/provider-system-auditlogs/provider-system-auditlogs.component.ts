@@ -5,7 +5,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-provider-system-auditlogs',
   templateUrl: './provider-system-auditlogs.component.html'
@@ -51,8 +51,10 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   auditStatus = 1;
   startpageval;
   totalCnt;
+  domain;
   perPage = projectConstants.PERPAGING_LIMIT;
   tday = new Date();
+  breadcrumb_moreoptions: any = [];
   minday = new Date(2015, 0, 1);
   breadcrumbs = [
     {
@@ -64,11 +66,15 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   constructor(private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
     private shared_services: SharedServices,
+    private routerobj: Router,
+    private shared_functions: SharedFunctions,
     public date_format: DateFormatPipe
   ) { }
 
   ngOnInit() {
-    // this.getAuditList();
+    // this.getAuditList();\
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.logSelcat = '';
     this.logSelsubcat = '';
     this.logSeldate = '';
@@ -82,6 +88,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdlogSelaction = this.logSelaction;
     this.getAuditListTotalCnt('', '', '', '');
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
   }
   getAuditListTotalCnt(cat, subcat, action, sdate) {
     this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)
@@ -122,6 +129,11 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   goback() {
     this.locationobj.back();
   }
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/downpanel']);
+    }
+}
   selectCategory() {
     this.logSelsubcat = '';
     this.setSubcategories(this.logSelcat);

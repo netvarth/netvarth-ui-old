@@ -207,9 +207,11 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   crtCustdialogRef;
   ChkindialogRef;
   bprofile: any = [];
+  domain;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
+    private routerobj: Router,
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices,
@@ -252,12 +254,13 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   }
   ngOnInit() {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.getDomainSubdomainSettings();
     this.getServiceList();
     this.getLocationList();
     this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'dashboard', 'subKey': 'dashboard', 'classname': 'b-delay'
-    };
+      'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     if (!this.server_date) { this.setSystemDate(); }
@@ -314,6 +317,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       }
     });
   }
+  
   getLocationList() {
     this.selected_location = null;
     this.provider_services.getProviderLocations()
@@ -403,7 +407,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   performActions(action) {
     if (action === 'adjustdelay') {
       this.showAdjustDelay();
-    } else if (action === 'adjustdelay_learnmore') {
+    } else if (action === 'learnmore') {
       this.learnmore_clicked(action);
     }
   }
@@ -1181,11 +1185,9 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     if (kCode === 13) { this.doSearch(); }
   }
   learnmore_clicked(action) {
-    if (action === 'adjustdelay') {
-      this.router.navigate(['/provider/learnmore/dashboard']);
-    } else if (action === 'adjustdelay_learnmore') {
-      this.router.navigate(['/provider/learnmore/adjustdelay']);
-    }
+    if (action === 'learnmore') {
+      this.routerobj.navigate(['/provider/' + this.domain + '/dashboard']);
+  }
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');

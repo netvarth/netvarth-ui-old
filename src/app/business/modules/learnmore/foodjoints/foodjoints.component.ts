@@ -59,7 +59,9 @@ export class FoodJointComponent implements OnChanges {
   showadwords = false;
   showcustom = false;
   showdashboard = false;
-  showboard = false;
+  showdashbord = false;
+  showcustomer = false;
+  showdownpanel = false;
   domain;
   show = 'false';
   constructor(
@@ -225,7 +227,18 @@ export class FoodJointComponent implements OnChanges {
       this.showdashboard = true;
     }
 
-
+    if (parentContent === 'dashboard') {
+      this.showdashboard = true;
+      if (childContent === 'dashboard') {
+        this.showdashbord = true;
+      }
+    }
+    if (parentContent === 'customer' && childContent === 'customer') {
+        this.showcustomer = true;
+    }
+    if (parentContent === 'downpanel' && childContent === 'downpanel') {
+      this.showdownpanel = true;
+  }
 
 
 

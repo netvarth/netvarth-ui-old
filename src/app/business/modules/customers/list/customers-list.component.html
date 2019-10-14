@@ -1,5 +1,5 @@
 <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading" (performAction)="performActions($event)">
   </app-breadcrumb>
 </section>
 <section class="dashboard content customers" *ngIf="!apiloading">

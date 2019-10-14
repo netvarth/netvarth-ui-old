@@ -7,7 +7,7 @@ import { AddProviderCustomerComponent } from '../../../../ynw_provider/component
 import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
 import { MatDialog } from '@angular/material';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
@@ -36,6 +36,7 @@ export class CustomersListComponent implements OnInit {
     no_customer_cap = '';
     checkin_label = '';
     checkedin_label = '';
+    domain;
     breadcrumb_moreoptions: any = [];
     breadcrumbs_init = [
         {
@@ -60,7 +61,6 @@ export class CustomersListComponent implements OnInit {
     crtCustdialogRef;
     calculationmode;
     showToken = false;
-
     filters: any = {
         'first_name': false,
         'date': false,
@@ -72,6 +72,7 @@ export class CustomersListComponent implements OnInit {
     constructor(private provider_services: ProviderServices,
         public dialog: MatDialog,
         public dateformat: DateFormatPipe,
+        private routerobj: Router,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
@@ -86,8 +87,10 @@ export class CustomersListComponent implements OnInit {
         this.checkedin_label = Messages.CHECKED_IN_LABEL;
     }
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.getCustomersList(true);
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     }
     filterClicked(type) {
@@ -103,6 +106,11 @@ export class CustomersListComponent implements OnInit {
     }
     routeLoadIndicator(e) {
         this.apiloading = e;
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
+        }
     }
     getCustomersList(from_oninit = false) {
         let filter = this.setFilterForApi();

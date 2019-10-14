@@ -59,7 +59,10 @@ export class HealthCareComponent implements OnChanges {
   showaddon = false;
   showadwords = false;
   showcustom = false;
-
+  showdashboard = false;
+  showdashbord = false;
+  showcustomer = false;
+  showdownpanel = false;
   domain;
   show = 'false';
   constructor(
@@ -221,11 +224,17 @@ export class HealthCareComponent implements OnChanges {
         this.showadwords = true;
       }
     }
-
-
-
-
-
-
+    if (parentContent === 'dashboard') {
+      this.showdashboard = true;
+      if (childContent === 'dashboard') {
+        this.showdashbord = true;
+      }
+    }
+    if (parentContent === 'customer' && childContent === 'customer') {
+        this.showcustomer = true;
+    }
+    if (parentContent === 'downpanel' && childContent === 'downpanel') {
+      this.showdownpanel = true;
+  }
   }
 }

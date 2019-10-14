@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="card p0">
                         <mat-accordion>
-                            <mat-expansion-panel id="public-search" [expanded]="false">
+                            <mat-expansion-panel id="public-search" [expanded]="showprofilesearch">
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('profile-search')">
                                         Profile and Search
@@ -26,7 +26,7 @@
                                         service.</span>
                                 </div>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showpublic && showprofilesearch">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -87,7 +87,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showverified && showprofilesearch">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -326,7 +326,88 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showadword && showprofilesearch">
+                                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                            class="accordion">
+                                            <mat-panel-title class="accordion-title">
+                                                <span class="helpcontent"
+                                                    (click)="handleScroll('adwords','license')">Jaldee
+                                                    Keywords</span>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+
+                                        <div class="helpcontent">
+                                            <span>Jaldee-Keyword is common keywords. A customer generally uses such
+                                                keywords to search for a
+                                                service provider.
+                                                Buying relevant keywords that a prospective customer would be searching
+                                                on Jaldee. For
+                                                example,
+                                                if you are a Veterinary provider, you can buy Jaldee-Keywords like “Dogs
+                                                provider”, “Dog
+                                                vaccination” etc.</span>
+                                            <h6>How to add a Jaldee-Keyword ?</h6>
+                                            <span>Different number of Jaldee-Keywords are available for different
+                                                license packages. They are listed below</span>
+                                            <table class="table addword-tbl">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="th1">LICENSE PACKAGE</th>
+                                                        <th class="th2">Jaldee-Keywords</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="tr1">
+                                                        <td class="td1">FREE</td>
+                                                        <td class="td2">0</td>
+                                                    </tr>
+                                                    <tr class="tr3">
+                                                        <td class="td1">SILVER</td>
+                                                        <td class="td2">0</td>
+                                                    </tr>
+                                                    <tr class="tr2">
+                                                        <td class="td1">GOLD</td>
+                                                        <td class="td2">2</td>
+                                                    </tr>
+                                                    <tr class="tr3">
+                                                        <td class="td1">PLATINUM</td>
+                                                        <td class="td2">5</td>
+                                                    </tr>
+                                                    <tr class="tr5">
+                                                        <td class="td1">DIAMOND</td>
+                                                        <td class="td2">25</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <ul class="ul-normal">
+                                                <li>All the available Jaldee-Keyword for the current license package are
+                                                    shown below the
+                                                    Jaldee-Keywords
+                                                    label.</li>
+                                                <li>To insert the keywords for your business click on the
+                                                    <strong>“+”</strong> symbol. Enter
+                                                    the
+                                                    keywords in
+                                                    the window and choose <strong>“Save”</strong>.</li>
+                                                <li>Here a provider can view the already added Jaldee-Keyword. The option
+                                                    to delete the
+                                                    Jaldee-Keyword is
+                                                    available.</li>
+                                                <li>In case the current license package does not support any free
+                                                    Jaldee-Keyword or the
+                                                    provider
+                                                    wants to add
+                                                    more Jaldee-Keyword than a license package offers, one can buy
+                                                    Jaldee-Keyword as Addon.
+                                                    Addon packages
+                                                    (5,20) are listed along with the pricing.</li>
+                                            </ul>
+                                        </div>
+
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                                <mat-accordion>
+                                    <mat-expansion-panel [expanded]="showbasicinfrmtion && showprofilesearch">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -551,7 +632,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showprofilesearch && showprivacysettings">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -723,12 +804,12 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showprofilesearch && showspecialization">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
                                                 <span class="helpcontent"
-                                                    (click)="handleScroll('specialization','profile-search')">Specialization</span>
+                                                    (click)="handleScroll('specializations','profile-search')">Specialization</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
     
@@ -835,7 +916,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showprofilesearch && showlanguagesknown">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -887,7 +968,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showprofilesearch && showadditionalinfo">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -933,7 +1014,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showprofilesearch && showgallery">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -989,7 +1070,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showprofilesearch && showsocialmedia">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -1057,7 +1138,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showcustom  && showprofilesearch">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -1124,7 +1205,7 @@
     
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showcheckinmanager'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('checkinmanager')">
                                         Check-In Manager
@@ -1260,11 +1341,11 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showlocations && showcheckinmanager">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent">Locations</span>
+                                                <span class="helpcontent" (click)="handleScroll('settings-locations','checkinmanager')">Locations</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
     
@@ -1339,7 +1420,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showservices && showcheckinmanager">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -1476,11 +1557,11 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showtime && showcheckinmanager">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
-                                                <span class="helpcontent"> Working Hours</span>
+                                                <span class="helpcontent" (click)="handleScroll('settings-time_windows','checkinmanager')"> Working Hours</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
     
@@ -1640,7 +1721,7 @@
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showdepartment && showcheckinmanager">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                             class="accordion">
                                             <mat-panel-title class="accordion-title">
@@ -1756,7 +1837,7 @@
                         </mat-accordion>
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showcustomer'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="handleScroll('customer', 'customer')">
                                         customer
@@ -1932,7 +2013,7 @@
                         </mat-accordion>
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showlicense'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('license')">
                                         License
@@ -1940,7 +2021,7 @@
                                 </mat-expansion-panel-header>
                                 <div class="helpcontent">
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="showupgrade && showlicense">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -2051,7 +2132,7 @@
                                                     <li>The Free license package is free of cost with limited features.</li>
                                                 </ul>
                                                 <mat-accordion>
-                                                    <mat-expansion-panel [expanded]="false">
+                                                    <mat-expansion-panel [expanded]="showupgrade && showlicense">
                                                         <mat-expansion-panel-header expandedHeight="48px"
                                                             collapsedHeight="32px">
                                                             <mat-panel-title>
@@ -2187,7 +2268,7 @@
                                     </mat-accordion>
                                     <!-- code obj -->
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="showupgrade && showlicense">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -2553,13 +2634,21 @@
                                                 <span>Here a provider can view the entire history of the payments done to
                                                     Jaldee so
                                                     far.</span>
-    
-    
-    
-    
-    
-    
-    
+                                                </div>
+
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                        <mat-accordion>
+                                            <mat-expansion-panel [expanded]="showaddon && showlicense">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                    class="accordion">
+                                                    <mat-panel-title class="accordion-title">
+                                                        <span class="helpcontent"
+                                                            (click)="handleScroll('addon','license')">Addon</span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+        
+                                                <div class="helpcontent">
                                                 <!-- one section here -->
                                                 <h6>Add-on</h6>
     
@@ -2612,7 +2701,7 @@
                                         </mat-expansion-panel>
                                     </mat-accordion>
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="showadwords && showlicense">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -2749,7 +2838,7 @@
                         </mat-accordion>
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showmiscellaneous'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('miscellaneous')">
                                         Miscellaneous
@@ -2757,7 +2846,7 @@
                                 </mat-expansion-panel-header>
                                 <div class="helpcontent">
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="shownonworking && showmiscellaneous">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -2814,7 +2903,7 @@
                                         </mat-expansion-panel>
                                     </mat-accordion>
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -2876,7 +2965,7 @@
                         </mat-accordion>
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showdashboard && showdashbord'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title"
                                         (click)="handleScroll('dashboard', 'dashboard')">
@@ -3382,118 +3471,10 @@
                             </mat-expansion-panel>
                         </mat-accordion>
                         <!-- next -->
-                        <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
-                                <mat-expansion-panel-header class="accordion">
-                                    <mat-panel-title class="accordion-title" (click)="handleScroll('payment', 'payment')">
-                                        Payment Settings
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                                <div class="helpcontent">
-                                    <h6>PAYMENTS</h6>
-                                    <section>
-                                        <span>In this section, a provider can select the payment mode with which he/she
-                                            wishes to
-                                            accept/settle payments.
-                                        </span>
-                                    </section>
-                                    <section>
-                                        <ul class="ul-normal">
-                                            <li>To enable online payments using any payment system, a provider has to switch
-                                                on the
-                                                "customer's Self pay” mode. Initially, this is set to off mode.</li>
-                                            <li>If a provider has not entered an email address before, click on the link
-                                                <strong>“Go
-                                                    To
-                                                    Email Settings”</strong> (Payment Settings) to add the email id. This
-                                                can be set
-                                                directly from My Account.</li>
-                                        </ul>
-                                        <h6 id="payment-settings">Payment Settings</h6>
-                                        <ul class="ul-normal">
-                                            <li>Two modes of payments can be enabled. These are:</li>
-                                            <ul ol class="ol-normal">
-                                                <li><strong>Jaldee Bank :</strong> Jaldee account means a customer can pay
-                                                    online for
-                                                    the
-                                                    services directly to the <strong>Jaldee Bank</strong> and in turn, the
-                                                    <strong>Jaldee team</strong> will reimburse the amount (charging a
-                                                    commission
-                                                    for
-                                                    each transaction) to the service provider. Jaldee bank is available for
-                                                    online
-                                                    payment. Upto <strong>Silver license package,</strong> only Jaldee bank
-                                                    is
-                                                    available
-                                                    for online payments. However, the providers with higher license packages
-                                                    (from
-                                                    Gold
-                                                    onwards) may or may not opt for the Jaldee bank for online payment.</li>
-                                                <li><strong>My Own Bank Account :</strong> In this section, a provider is
-                                                    required to
-                                                    submit the account details of <strong>Paytm/CC/DC/Net
-                                                        Banking/UPI</strong>. In case
-                                                    the
-                                                    provider has not added an email address, click on the link <strong>“Go
-                                                        To Email
-                                                        Settings”</strong> (Payment Settings) to add the email address.
-                                                    Furthermore,
-                                                    a
-                                                    provider needs to click on any mode of payment (with which he/she wants
-                                                    to settle
-                                                    the
-                                                    bill). The mode of payment can be either <strong>“Paytm"</strong> or
-                                                    <strong>“CC/DC/Net Banking/UPI”</strong> or both.
-                                                    <ul class="ul-normal">
-                                                        <li><strong>Paytm :</strong> This is an effortless mode of online
-                                                            payment
-                                                            commonly used these days. If the provider has a business Paytm
-                                                            account,
-                                                            he/she
-                                                            needs to
-                                                            provide the following details (Login to Paytm to get these
-                                                            production keys):
-                                                            <ul class="ul-normal">
-                                                                <li><strong>Mobile Number</strong></li>
-                                                                <li><strong>Merchant Id</strong></li>
-                                                                <li><strong>Merchant Key</strong></li>
-                                                                <li><strong>Website</strong></li>
-                                                                <li><strong>Industry Type</strong></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li><strong>CC/DC/Net Banking/UPI :</strong> To settle the bill
-                                                            using this mode
-                                                            of
-                                                            payment, a provider has to provide the following information:
-                                                            <ul class="ul-normal">
-                                                                <li><strong>Account Holder Name</strong></li>
-                                                                <li><strong>Bank Account Number</strong></li>
-                                                                <li><strong>Pan Card Number</strong></li>
-                                                                <li><strong>Bank Name</strong></li>
-                                                                <li><strong>IFSC Code</strong></li>
-                                                                <li><strong>Name on Pan Card</strong></li>
-                                                                <li><strong>Branch Name</strong></li>
-                                                                <li><strong>Business Filing Status</strong></li>
-                                                                <li><strong>Account Type</strong></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <li>To verify the <strong>Paytm/CC/DC/Net</strong> Banking and to start
-                                                accepting
-                                                digital
-                                                payments, please call the Jaldee team on 0487-2325650 or mail us to
-                                                support@jaldee.com.
-                                            </li>
-                                        </ul>
-                                    </section>
-                                </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
+                     
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showbilling'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title" (click)="menu('billing')">
                                         Billing/POS
@@ -3520,7 +3501,167 @@
                                         <li>Once settled a bill cannot be updated. The settled bill can be emailed.</li>
                                     </ul>
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]='showpayment && showbilling'>
+                                            <mat-expansion-panel-header class="accordion">
+                                                <mat-panel-title class="accordion-title" (click)="handleScroll('payment', 'payment')">
+                                                    Payment Settings
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="helpcontent">
+                                                <h6>PAYMENTS</h6>
+                                                <section>
+                                                    <span>In this section, a provider can select the payment mode with which he/she
+                                                        wishes to
+                                                        accept/settle payments.
+                                                    </span>
+                                                </section>
+                                                <section>
+                                                    <ul class="ul-normal">
+                                                        <li>To enable online payments using any payment system, a provider has to switch
+                                                            on the
+                                                            "customer's Self pay” mode. Initially, this is set to off mode.</li>
+                                                        <li>If a provider has not entered an email address before, click on the link
+                                                            <strong>“Go
+                                                                To
+                                                                Email Settings”</strong> (Payment Settings) to add the email id. This
+                                                            can be set
+                                                            directly from My Account.</li>
+                                                    </ul>
+                                                    <h6 id="payment-settings">Payment Settings</h6>
+                                                    <ul class="ul-normal">
+                                                        <li>Two modes of payments can be enabled. These are:</li>
+                                                        <ul ol class="ol-normal">
+                                                            <li><strong>Jaldee Bank :</strong> Jaldee account means a customer can pay
+                                                                online for
+                                                                the
+                                                                services directly to the <strong>Jaldee Bank</strong> and in turn, the
+                                                                <strong>Jaldee team</strong> will reimburse the amount (charging a
+                                                                commission
+                                                                for
+                                                                each transaction) to the service provider. Jaldee bank is available for
+                                                                online
+                                                                payment. Upto <strong>Silver license package,</strong> only Jaldee bank
+                                                                is
+                                                                available
+                                                                for online payments. However, the providers with higher license packages
+                                                                (from
+                                                                Gold
+                                                                onwards) may or may not opt for the Jaldee bank for online payment.</li>
+                                                            <li><strong>My Own Bank Account :</strong> In this section, a provider is
+                                                                required to
+                                                                submit the account details of <strong>Paytm/CC/DC/Net
+                                                                    Banking/UPI</strong>. In case
+                                                                the
+                                                                provider has not added an email address, click on the link <strong>“Go
+                                                                    To Email
+                                                                    Settings”</strong> (Payment Settings) to add the email address.
+                                                                Furthermore,
+                                                                a
+                                                                provider needs to click on any mode of payment (with which he/she wants
+                                                                to settle
+                                                                the
+                                                                bill). The mode of payment can be either <strong>“Paytm"</strong> or
+                                                                <strong>“CC/DC/Net Banking/UPI”</strong> or both.
+                                                                <ul class="ul-normal">
+                                                                    <li><strong>Paytm :</strong> This is an effortless mode of online
+                                                                        payment
+                                                                        commonly used these days. If the provider has a business Paytm
+                                                                        account,
+                                                                        he/she
+                                                                        needs to
+                                                                        provide the following details (Login to Paytm to get these
+                                                                        production keys):
+                                                                        <ul class="ul-normal">
+                                                                            <li><strong>Mobile Number</strong></li>
+                                                                            <li><strong>Merchant Id</strong></li>
+                                                                            <li><strong>Merchant Key</strong></li>
+                                                                            <li><strong>Website</strong></li>
+                                                                            <li><strong>Industry Type</strong></li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li><strong>CC/DC/Net Banking/UPI :</strong> To settle the bill
+                                                                        using this mode
+                                                                        of
+                                                                        payment, a provider has to provide the following information:
+                                                                        <ul class="ul-normal">
+                                                                            <li><strong>Account Holder Name</strong></li>
+                                                                            <li><strong>Bank Account Number</strong></li>
+                                                                            <li><strong>Pan Card Number</strong></li>
+                                                                            <li><strong>Bank Name</strong></li>
+                                                                            <li><strong>IFSC Code</strong></li>
+                                                                            <li><strong>Name on Pan Card</strong></li>
+                                                                            <li><strong>Branch Name</strong></li>
+                                                                            <li><strong>Business Filing Status</strong></li>
+                                                                            <li><strong>Account Type</strong></li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                        <li>To verify the <strong>Paytm/CC/DC/Net</strong> Banking and to start
+                                                            accepting
+                                                            digital
+                                                            payments, please call the Jaldee team on 0487-2325650 or mail us to
+                                                            support@jaldee.com.
+                                                        </li>
+                                                    </ul>
+                                                </section>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="showtax && showbilling">
+                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                                class="accordion">
+                                                <mat-panel-title class="accordion-title">
+                                                    <span class="helpcontent"
+                                                        (click)="handleScroll('tax-settings','billing')">Tax-Settings</span>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+    
+                                            <div class="helpcontent">
+                                                <span>Before setting up the taxes, ensure that one is familiar with the tax
+                                                    requirements of
+                                                    one’s
+                                                    business. The following instructions will help the provider through the
+                                                    tax setup of the
+                                                    business
+                                                    services in Jaldee:</span>
+                                                <ul ol class="ol-normal">
+                                                    <li>When the provider clicks on the tax settings under the Billing/PoS
+                                                        section, a window
+                                                        appears.
+                                                        The provider is required to fill the textbox (Enter the GST number
+                                                        of the business and the
+                                                        tax
+                                                        percentage for the respective sector here).</li>
+                                                    <li>At first, enter the <strong>GST</strong> number of the business.
+                                                    </li>
+                                                    <li>Next, enter the <strong>Tax Percentage</strong>.</li>
+                                                    <li>After the complete insertion of the details, click
+                                                        <strong>“Save”.</strong></li>
+                                                    <li>This tax will be applied to the services offered and the items that
+                                                        are being sold at
+                                                        the
+                                                        time of billing, only if the <strong>“Tax Applicable”</strong>
+                                                        toggle button is enabled
+                                                        in
+                                                        the respective section (i.e. Settings -> Check-In Manager
+                                                        ->Services).</li>
+                                                    <li>Jaldee has no role in paying taxes paid by the customer to the
+                                                        service provider. All types
+                                                        of
+                                                        taxes are collected directly by the service provider, so it is the
+                                                        provider's responsibility
+                                                        to
+                                                        remit the taxes to the Government.</li>
+                                                </ul>
+                                            </div>
+    
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="showitem && showbilling"">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -3565,7 +3706,7 @@
                                         </mat-expansion-panel>
                                     </mat-accordion>
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="showdiscount && showbilling">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -3637,7 +3778,7 @@
                                         </mat-expansion-panel>
                                     </mat-accordion>
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
+                                        <mat-expansion-panel [expanded]="showcoupon && showbilling">
                                             <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
@@ -3797,57 +3938,7 @@
                                             </div>
                                         </mat-expansion-panel>
                                     </mat-accordion>
-                                    <mat-accordion>
-                                        <mat-expansion-panel [expanded]="false">
-                                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                                class="accordion">
-                                                <mat-panel-title class="accordion-title">
-                                                    <span class="helpcontent"
-                                                        (click)="handleScroll('tax-settings','billing')">Tax-Settings</span>
-                                                </mat-panel-title>
-                                            </mat-expansion-panel-header>
-    
-                                            <div class="helpcontent">
-                                                <span>Before setting up the taxes, ensure that one is familiar with the tax
-                                                    requirements of
-                                                    one’s
-                                                    business. The following instructions will help the provider through the
-                                                    tax setup of the
-                                                    business
-                                                    services in Jaldee:</span>
-                                                <ul ol class="ol-normal">
-                                                    <li>When the provider clicks on the tax settings under the Billing/PoS
-                                                        section, a window
-                                                        appears.
-                                                        The provider is required to fill the textbox (Enter the GST number
-                                                        of the business and the
-                                                        tax
-                                                        percentage for the respective sector here).</li>
-                                                    <li>At first, enter the <strong>GST</strong> number of the business.
-                                                    </li>
-                                                    <li>Next, enter the <strong>Tax Percentage</strong>.</li>
-                                                    <li>After the complete insertion of the details, click
-                                                        <strong>“Save”.</strong></li>
-                                                    <li>This tax will be applied to the services offered and the items that
-                                                        are being sold at
-                                                        the
-                                                        time of billing, only if the <strong>“Tax Applicable”</strong>
-                                                        toggle button is enabled
-                                                        in
-                                                        the respective section (i.e. Settings -> Check-In Manager
-                                                        ->Services).</li>
-                                                    <li>Jaldee has no role in paying taxes paid by the customer to the
-                                                        service provider. All types
-                                                        of
-                                                        taxes are collected directly by the service provider, so it is the
-                                                        provider's responsibility
-                                                        to
-                                                        remit the taxes to the Government.</li>
-                                                </ul>
-                                            </div>
-    
-                                        </mat-expansion-panel>
-                                    </mat-accordion>
+                                 
                                 </div>
     
                             </mat-expansion-panel>
@@ -3897,7 +3988,7 @@
                         </mat-accordion>
                         <!-- next -->
                         <mat-accordion>
-                            <mat-expansion-panel [expanded]='false'>
+                            <mat-expansion-panel [expanded]='showdownpanel'>
                                 <mat-expansion-panel-header class="accordion">
                                     <mat-panel-title class="accordion-title"
                                         (click)="handleScroll('downpanel', 'downpanel')">

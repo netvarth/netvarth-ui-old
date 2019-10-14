@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-provider-system-alerts',
   templateUrl: './provider-system-alerts.component.html'
@@ -37,6 +37,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   alertStatus = 1;
   startpageval;
   totalCnt;
+  domain;
   perPage = projectConstants.PERPAGING_LIMIT;
   breadcrumbs = [
     {
@@ -46,6 +47,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   tday = new Date();
   minday = new Date(2015, 0, 1);
   isCheckin;
+  breadcrumb_moreoptions: any = [];
   filters: any = {
     'ack_status': false,
     'date': false
@@ -53,10 +55,14 @@ export class ProviderSystemAlertComponent implements OnInit {
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
+    private routerobj: Router,
+    private shared_functions: SharedFunctions,
     private shared_services: SharedServices
   ) { }
   ngOnInit() {
     // this.getAlertList();
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.alertSelAck = 'false'; // default becuase maximise from footer alert panel
     this.alertSeldate = '';
     this.alertStatus = 4;
@@ -64,6 +70,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.holdalertSeldate = this.alertSeldate;
     this.getAlertListTotalCnt(this.alertSelAck, '');
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
   }
   getAlertListTotalCnt(ackStatus, sdate) {
     if (ackStatus === '') {
@@ -106,7 +113,11 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.alertStatus = 0;
         });
   }
-
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/downpanel']);
+    }
+}
   clearFilter() {
     this.resetFilter();
 

@@ -3,8 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReligiousComponent } from './religious.component';
 
 const routes: Routes = [
-    { path: ':id', component: ReligiousComponent },
-    { path: ':/help', component: ReligiousComponent }
+    // { path: ':id', component: ReligiousComponent },
+    { path: ':/help', component: ReligiousComponent },
+    { path: ':parent', component: ReligiousComponent },
 ];
 
 @NgModule({

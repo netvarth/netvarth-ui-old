@@ -1690,7 +1690,7 @@
                     </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]='false'>
+                        <mat-expansion-panel [expanded]='showcustomer'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="handleScroll('customer', 'customer')">
                                     Create customer
@@ -2743,7 +2743,7 @@
                     </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]='false'>
+                        <mat-expansion-panel [expanded]='showdashboard && showdashbord'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title"
                                     (click)="handleScroll('dashboard', 'dashboard')">
@@ -3777,7 +3777,7 @@
                     </mat-accordion>
                     <!-- next -->
                     <mat-accordion>
-                        <mat-expansion-panel [expanded]='false'>
+                        <mat-expansion-panel [expanded]='showdownpanel'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title"
                                     (click)="handleScroll('downpanel', 'downpanel')">
