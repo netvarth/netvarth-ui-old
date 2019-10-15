@@ -270,8 +270,8 @@ export class CheckInInnerComponent implements OnInit {
           // const nextdate = new Date(seldate_checker.setDate(seldate_checker.getDate() + 1));
           const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const serverdate = moment(server).format();
-          const date1 = new Date(serverdate);
-          const nextdate = new Date(seldate_checker.setDate(date1.getDate() + 1));
+          const serverdate1 = new Date(serverdate);
+          const nextdate = new Date(seldate_checker.setDate(serverdate1.getDate() + 1));
 
           this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
           this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });  // done to set the min date in the calendar view
@@ -714,7 +714,7 @@ export class CheckInInnerComponent implements OnInit {
             // this.sel_ser_det.minPrePaymentAmount
             const payData = {
               'amount': this.prepaymentAmount,
-              //'paymentMode': this.paytype,
+              // 'paymentMode': this.paytype,
               'uuid': retUUID,
               'accountId': this.account_id,
               'purpose': 'prePayment'
@@ -762,7 +762,6 @@ export class CheckInInnerComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
           this.router.navigate(['/']);
         }
-        
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

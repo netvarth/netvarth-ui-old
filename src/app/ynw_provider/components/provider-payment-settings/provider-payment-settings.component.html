@@ -50,10 +50,14 @@
                                                     <div class='paymode-outer' *ngIf="emailidVerified">
                                                         <div class='paytm-outer patm_txtgrp'>
                                                             <div class="form-group">
-                                                                <mat-checkbox class="pay-chk" [checked]="paytmenabled"
+                                                                <!-- <mat-checkbox class="pay-chk" [checked]="paytmenabled"
                                                                     (change)="handleChange('pay')"
                                                                     [disabled]="!ineditMode" tabindex="0">{{pay_tm_cap}}
-                                                                </mat-checkbox>
+                                                                </mat-checkbox> -->
+                                                                <mat-checkbox disabled class="pay-chk" [checked]="paytmenabled"
+                                                                (change)="handleChange('pay')"
+                                                                 tabindex="0">{{pay_tm_cap}}
+                                                            </mat-checkbox>
                                                                 <span *ngIf="paytmverified && paytmenabled"
                                                                     class="verified">{{verified_cap}}</span><span
                                                                     *ngIf="!paytmverified && paytmenabled"

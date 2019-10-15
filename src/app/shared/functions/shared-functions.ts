@@ -469,7 +469,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return 'Ã¢â€šÂ¹' + ' ' + price;
+    return '₹' + ' ' + price;
   }
 
   imageValidation(file) {

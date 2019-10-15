@@ -127,15 +127,15 @@
                                     <span class="membership" *ngIf="headercls!='itl-steps' && isprovider">
                                         <div class="col-md-12 no-padding" (click)="btnAvailableClicked()">
                                             <h6 class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
-                                                I am available until {{qAvailability.timeRange.eTime}}
+                                                I am available online until {{qAvailability.timeRange.eTime}}
                                             </h6>
                                             <h6 class="red"
                                                 *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-                                                I am not available now
+                                                I am not available online now
                                             </h6>
                                             <h6 class="red"
                                                 *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
-                                                Today I'm available after {{qAvailability.timeRange.eTime}}
+                                                Today I'm available online after {{qAvailability.timeRange.eTime}}
                                             </h6>
                                         </div>
                                         <div (click)="holidaybtnClicked()">
