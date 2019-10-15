@@ -6,14 +6,14 @@
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </mat-dialog-content>
 <mat-dialog-content *ngIf="!loading">
-    <div class="card">
+    <div class="card" style="height: 75px;">
         <div class="col-md-12 no-padding">
             <div class="row">
                 <div class="col-md-6" *ngIf="!loading">
-                    <div class="label"><b>Jaldee Soft Pvt Ltd</b></div>
+                    <div ><b>Jaldee Soft Pvt Ltd</b></div>
                     <!-- <div class="label">[City]</div>
                                 <div class="label">[Email]</div> -->
-                    <div class="label">GSTIN: {{jaldeeegst_data}}</div>
+                    <div >GSTIN: {{jaldeeegst_data}}</div>
                 </div>
                 <!-- <div class="col-md-6 rightalign invoice-cap">INVOICE</div> -->
             </div>
@@ -65,7 +65,7 @@
         <div style="border-bottom:2px solid #ddd"></div>
         <div class="invoice" style="margin: 5px">
 
-            <span class="label" style="font-size: 20px; font-weight: 600">
+            <span  style="font-size: 20px; font-weight: 600">
                 <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
                 <span *ngIf="source === 'payment-history'"> Amount paid</span>
                 <span class="result"
