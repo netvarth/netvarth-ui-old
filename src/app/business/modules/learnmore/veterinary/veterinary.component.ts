@@ -1,16 +1,16 @@
-//import { Component, Input, OnChanges } from '@angular/core';
-import { Component, Input, OnChanges,OnInit } from '@angular/core';
+// import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
-import { Location, CommonModule } from '@angular/common'; 
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-veterinary-learnmore',
     templateUrl: './veterinary.component.html'
 })
 
-export class VeterinaryComponent implements OnChanges {
+export class VeterinaryComponent implements OnInit {
   @Input() target: string;
   breadcrumbs = [
     {
@@ -72,8 +72,7 @@ export class VeterinaryComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  ngOnChanges() {
-  }
+
   setActivePricing(item) {
     this.activePrice = item;
   }

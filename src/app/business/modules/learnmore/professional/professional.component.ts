@@ -1,16 +1,16 @@
-//import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Component, Input, OnChanges,OnInit } from '@angular/core';
+// import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
-import { Location, CommonModule } from '@angular/common'; 
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-professional-learnmore',
     templateUrl : './professional.component.html'
 })
 
-export class ProfessionalCareComponent implements OnChanges {
+export class ProfessionalCareComponent implements OnInit {
   @Input() target: string;
   breadcrumbs = [
     {
@@ -72,8 +72,7 @@ export class ProfessionalCareComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  ngOnChanges() {
-  }
+
   setActivePricing(item) {
     this.activePrice = item;
   }

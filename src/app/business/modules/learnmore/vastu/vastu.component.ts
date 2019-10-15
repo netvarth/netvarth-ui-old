@@ -1,15 +1,15 @@
-//import { Component, Input, OnChanges } from '@angular/core';
-import { Component, Input, OnChanges,OnInit } from '@angular/core';
+// import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
-import { Location, CommonModule } from '@angular/common'; 
+import { Location } from '@angular/common';
 @Component({
     selector: 'app-vastu-learnmore',
     templateUrl: './vastu.component.html'
 })
 
-export class VastuComponent implements OnChanges {
+export class VastuComponent implements OnInit {
   @Input() target: string;
   breadcrumbs = [
     {
@@ -71,8 +71,7 @@ export class VastuComponent implements OnChanges {
     private _location: Location,
     private _scrollToService: ScrollToService,
   ) { }
-  ngOnChanges() {
-  }
+
   setActivePricing(item) {
     this.activePrice = item;
   }
