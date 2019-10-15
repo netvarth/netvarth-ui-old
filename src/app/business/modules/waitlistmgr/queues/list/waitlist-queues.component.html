@@ -255,7 +255,7 @@
                                                                                         [checked]="queue.onlineCheckIn"
                                                                                         (change)="changeQSameDayOnlineStatus(queue, i, $event)">
                                                                                 </mat-slide-toggle>
-                                                                                <label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                               <p><label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label></p> 
                                                                         </div>
                                                                 </div>
                                                                 <div class="card"
@@ -330,7 +330,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Scheduled Working Hours
+                                                        Scheduled Working Hours({{scheduledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="row" *ngFor="let queue of scheduledQs; index as i">
@@ -342,13 +342,59 @@
                                                                                 <mat-icon>more_vert</mat-icon>
                                                                         </button>
                                                                 </span>
-                                                                <h3 class="pointer-cursor"
+
+
+                                                                <div class="q-time queuelist">
+                                                                        <div class="col-md-5 col-xs-12 no-padding">
+                                                                                <h3 class="pointer-cursor"
+                                                                                        style="margin-right: 50px"
+                                                                                        *ngFor="let schedule of queue.displayschedule"
+                                                                                        (click)="goQueueDetail(queue)" 
+                                                                                        [matTooltipClass]="tooltipcls"
+                                                                                        [matTooltip]="tooltip_queueedit">
+                                                                                        <i class="fas fa-calendar-day"></i> {{schedule.time}}
+                                                                                        <div style="font-size: small;
+                                                                                      color: black; margin-top: 2px;
+                                                                                      display: block;"> [<span
+                                                                                                        *ngIf="!queue.instantQueue">{{queue.name}}
+                                                                                                        - </span><span
+                                                                                                        *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                        </div>
+                                                                                </h3>
+                                                                        </div>
+                                                                        <div class="col-md-6 col-xs-12 mg-small-10 no-padding">
+                                                                                <div>
+                                                                                <label class="ttle">Same day Online check-ins</label>
+                                                                                <mat-slide-toggle class="example-margin"
+                                                                                        [checked]="queue.onlineCheckIn"
+                                                                                        (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                </mat-slide-toggle>
+                                                                               <p> <label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label></p></div>
+                                                                                <div>  <label class="ttle">Future Online check-ins</label>
+                                                                                <mat-slide-toggle class="example-margin"
+                                                                                [checked]="queue.futureWaitlist"
+                                                                                (change)="changeQFutureStatus(queue, i, $event)">
+                                                                                </mat-slide-toggle>
+                                                                                <p> <label class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label></p></div>
+                                                                        </div>
+                                                                        <!-- <div class="col-md-6 col-xs-12 mg-small-10 ">
+                                                                                <label class="ttle">Same day Online check-ins</label>
+                                                                                <mat-slide-toggle class="example-margin"
+                                                                                        [checked]="queue.onlineCheckIn"
+                                                                                        (change)="changeQSameDayOnlineStatus(queue, i, $event)">
+                                                                                </mat-slide-toggle>
+                                                                                <label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                        </div> -->
+                                                                </div>
+
+
+                                                                <!-- <h3 class="pointer-cursor"
                                                                         (click)="goQueueDetail(queue)"
                                                                         [matTooltipClass]="tooltipcls"
                                                                         [matTooltip]="tooltip_queueedit">
                                                                         {{queue.name | capitalizeFirst}}
-                                                                </h3>
-                                                                <div class="c-ot m0">
+                                                                </h3> -->
+                                                                <!-- <div class="c-ot m0">
                                                                         <div class="loc-style item"
                                                                                 *ngIf="queue.location">
                                                                                 <span class="ttle">{{loc_cap}}</span>
@@ -375,8 +421,8 @@
                                                                                         </ng-container>
                                                                                 </span>
                                                                         </div>
-                                                                </div>
-                                                                <div class="c-ot mt mgn-up-20">
+                                                                </div> -->
+                                                                <!-- <div class="c-ot mt mgn-up-20">
                                                                         <div class="item">
                                                                                 <label style="display: flex">Same day
                                                                                         Online check-ins
@@ -396,7 +442,7 @@
                                                                                         </mat-slide-toggle>
                                                                                 </label>
                                                                         </div>
-                                                                </div>
+                                                                </div> -->
                                                                 <div class="card"
                                                                         *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
                                                                         <h5>Check-ins</h5>
@@ -473,7 +519,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Disabled Working Hours
+                                                        Disabled Working Hours({{disabledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="row" *ngFor="let queue of disabledQs">
