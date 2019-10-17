@@ -1414,11 +1414,12 @@ sup {
 }
 
 @media only screen and (max-width: 769px) {
-  .bcrumb{
-  margin-bottom: 5px !important;
-  font-size: 1rem !important
+  .bcrumb {
+    margin-bottom: 5px !important;
+    font-size: 1rem !important
+  }
 }
-}
+
 .search-text .mat-option {
   height: auto!important;
 }
@@ -2765,36 +2766,39 @@ body {
   left: 4px;
   margin-top: -4px;
 }
-
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .arrived {
+.dashboard .chkins .checkin_status, .dashboard .chkins .payment{
+  font-size: 0.75rem;
+  margin-right: 10px
+}
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .arrived, .dashboard .chkins .checkin_status .arrived {
   color: #79e688;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .arrived:before {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .arrived:before, .dashboard .chkins .checkin_status .arrived:before {
   background: #79e688;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .done {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .done, .dashboard .chkins .checkin_status .done {
   color: #0edcb8;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .done:before {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .done:before, .dashboard .chkins .checkin_status .done:before {
   background: #0edcb8;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .cancelled {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .cancelled, .dashboard .chkins .checkin_status .cancelled {
   color: #f24949;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .cancelled:before {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .cancelled:before, .dashboard .chkins .checkin_status .cancelled:before {
   background: #f24949;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .checkedIn {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .checkedIn, .dashboard .chkins .checkin_status .checkedIn {
   color: #5568ff;
 }
 
-.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .checkedIn:before {
+.dashboard .card.w-dta .dash-list .table tbody tr td.checkin_status .checkedIn:before, .dashboard .chkins .checkin_status .checkedIn:before {
   background: #5568ff;
 }
 
@@ -4557,8 +4561,7 @@ i.notavail {
 }
 
 .q-time.queuelist label.ttle {
-  font-weight: 500 !important;
-  font-size: 14px;
+  font-weight: 500 !important
 }
 
 @media only screen and (max-width: 575px) {
@@ -4810,26 +4813,71 @@ i.notavail {
 .box-footer .input-group-addon, .box-footer .input-group-btn {
   width: auto !important
 }
-.mailbox .mat-expansion-panel-body {padding: 0 !important}
+
+.mailbox .mat-expansion-panel-body {
+  padding: 0 !important
+}
+
 .chat-dt {
   font-size: 0.7rem !important;
   color: #e2aa00;
 }
+
 .pagination>li:last-child>a, .pagination>li:last-child>span {
   margin-left: 10px;
 }
+
 .pagination>.disabled>a, .pagination>.disabled>span {
   background-color: #ddd !important;
   cursor: auto!important;
 }
+
 .pagination>li>a, .pagination>li>span {
   color: #fff!important;
   background-color: #3c8dbc!important;
   cursor: pointer!important;
 }
+
+@media only screen and (max-width: 575px) {
+  .chkin .icon-location, .chkin .icon-time {
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+  }
+  .chkin .nav>li>a {
+    padding: 10px !important;
+  }
+}
+
 .coupon-outer .input-group-btn {
   width: auto!important;
 }
+
+.dash .ques li.active {
+  font-weight: 800 !important
+}
+
+.dash .ques li a {
+  white-space: inherit !important;
+}
+
+.dashboard .chkins {
+  border-bottom: 1px solid #dbdbdb;
+  padding: 10px !important
+}
+.dashboard .chkins:nth-child(odd) {
+  background: rgba(0,0,0,.03) !important;
+}
+.dashboard .chkins:nth-child(even) {
+  background: transparent !important;
+}
+.dashboard .chkins .service, .dashboard .chkins .forwhom  {
+  font-weight: 600;
+}
+.dashboard .chkins  .paid-n { color : #f53404;}
+.dashboard .chkins  .paid-h { color : #fda60d;}
+.dashboard .chkins  .paid-f { color : #22d21e;}
+
+.navbar-custom-menu .navbar-nav > li > a > i {font-size:1.2rem}
 .active-lnk {
   border: 2px solid #f1b51c;
 }
