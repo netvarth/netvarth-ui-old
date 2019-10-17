@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
 import { MaterialModule } from '../common/material.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
+import { SharedModule } from '../common/shared.module';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
         ReactiveFormsModule,
         FormMessageDisplayModule,
         CommonModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        SharedModule
     ],
     declarations: [ServiceComponent],
     exports: [ServiceComponent]

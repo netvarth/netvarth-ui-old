@@ -11,6 +11,7 @@ import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { FormMessageDisplayService } from '../form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { SharedServices } from '../../services/shared-services';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -65,10 +66,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
     taxsettings;
     subdomainsettings;
     showService = false;
+    duration = { hour: 0, minute: 0 };
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
-        public servicesService: ServicesService) {
+        public servicesService: ServicesService,
+        public shared_service: SharedServices) {
         this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
@@ -111,7 +114,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                         'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
                                     });
+                                    this.convertTime(this.service_data['serviceDuration']);
                                 }
+
                                 this.changeNotification();
                                 this.changePrepayment();
                             }
@@ -169,13 +174,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
             form_data['taxable'] = false;
         } else {
             form_data.minPrePaymentAmount = (!form_data.isPrePayment || form_data.isPrePayment === false) ?
-            0 : form_data.minPrePaymentAmount;
-          form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+                0 : form_data.minPrePaymentAmount;
+            form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
+            const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
+            form_data.serviceDuration = duration;
         }
         const serviceActionModel = {};
         serviceActionModel['action'] = this.action;
         serviceActionModel['service'] = form_data;
-        console.log(serviceActionModel);
         this.servicesService.actionPerformed(serviceActionModel);
     }
     onCancel() {
@@ -219,7 +225,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.serviceForm.addControl('minPrePaymentAmount',
                     new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
             }
-
         }
     }
     createForm() {
@@ -227,7 +232,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.serviceForm = this.fb.group({
                 name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 description: ['', Validators.compose([Validators.maxLength(500)])],
-                serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+                serviceDuration: ['', Validators.compose([Validators.required])],
                 totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                 isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
                 taxable: [false],
@@ -247,5 +252,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     resetApiErrors() {
+    }
+    convertTime(time) {
+        this.duration.hour = Math.floor(time / 60);
+        this.duration.minute = time % 60;
+        this.serviceForm.get('serviceDuration').setValue(this.duration);
+    }
+    getAppxTime(waitlist) {
+        return this.sharedFunctons.providerConvertMinutesToHourMinute(waitlist);
     }
 }

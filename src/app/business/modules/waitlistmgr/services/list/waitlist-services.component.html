@@ -22,7 +22,7 @@
                         <div class="c-ot m0">
                             <div class="item">
                                 <span class="ttle">{{est_duration_cap}}</span>
-                                <span class="icon-time">{{service.serviceDuration}} {{min_cap}}</span>
+                                <span class="icon-time">{{getAppxTime(service.serviceDuration)}} </span>
                             </div>
                             <div class="item" *ngIf="isServiceBillable && service.totalAmount!=0">
                                 <span class="ttle">{{price_cap}}</span>

@@ -9,7 +9,8 @@
             <div class="c-ot">
                 <div class="item">
                     <span class="ttle">{{est_duration_cap}}</span>
-                    <span class="icon-time"> {{service_data.serviceDuration}} min</span>
+                    <span class="icon-time"> {{getAppxTime(service_data.serviceDuration)}} 
+                    </span>
                 </div>
                 <div class="item" *ngIf="service_data.totalAmount!=0">
                     <span class="ttle">{{price_cap}}</span>
@@ -80,17 +81,21 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
 
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
-                <mat-form-field>
-                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                    <ng-container class="example-full-width">
+                            <label class="col-form-label">{{est_duration_cap}}</label>
+                <!-- <mat-form-field> -->
+                    <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
-                        placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off">
-                </mat-form-field>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
+                        placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
+                        <ngb-timepicker [(ngModel)] = "duration" (keyup)="isvalid($event)" formControlName="serviceDuration"></ngb-timepicker>
+                <!-- </mat-form-field> -->
+                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
                     [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
     {'required' : 'Please enter estimated duration.',
     'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
     'maxlength' : 'Only 10 digits are allowed'
-  })"> </app-field-error-display>
+  })"> </app-field-error-display> -->
+                    </ng-container>
             </div>
             <div class="form-group"  *ngIf="subdomainsettings.serviceBillable">
                 <mat-form-field>

@@ -12,9 +12,9 @@ import { GalleryService } from '../../../../../shared/modules/gallery/galery-ser
     selector: 'app-waitlistservice-detail',
     templateUrl: './waitlistservice-detail.component.html'
 })
-export class WaitlistServiceDetailComponent implements OnInit {
+export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     actionparam = 'show'; // To know whether clicked edit/view from the services list page
-    serviceParams = {'action': 'show'};
+    serviceParams = { 'action': 'show' };
     service_id = null;
     api_loading = false;
     customer_label: any;
@@ -46,16 +46,19 @@ export class WaitlistServiceDetailComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private router: Router,
         private provider_shared_functions: ProviderSharedFuctions) {
-            this.activated_route.params.subscribe(
-                (params) => {
-                    this.service_id = params.id;
-                    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-                }
-            );
-            this.activated_route.queryParams.subscribe(
-                params => {
-                    this.actionparam = params.action;
-                });
+        this.activated_route.params.subscribe(
+            (params) => {
+                this.service_id = params.id;
+                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+            }
+        );
+        this.activated_route.queryParams.subscribe(
+            params => {
+                this.actionparam = params.action;
+            });
+    }
+    ngOnDestroy() {
+        this.serviceSubscription.unsubscribe();
     }
     ngOnInit() {
         this.initServiceParams();
@@ -79,7 +82,6 @@ export class WaitlistServiceDetailComponent implements OnInit {
         });
         this.serviceSubscription = this.servicesService.serviceUpdated.subscribe(
             serviceActionModel => {
-                console.log(serviceActionModel);
                 if (serviceActionModel) {
                     if (serviceActionModel.service) {
                         const post_itemdata2 = serviceActionModel.service;
@@ -193,7 +195,7 @@ export class WaitlistServiceDetailComponent implements OnInit {
                                     this.api_loading = false;
                                 }
                                 if (this.service_id) {
-                                   this.getServiceDetail();
+                                    this.getServiceDetail();
                                 } else {
                                     this.serviceParams['action'] = 'add';
                                     this.servicesService.initServiceParams(this.serviceParams);

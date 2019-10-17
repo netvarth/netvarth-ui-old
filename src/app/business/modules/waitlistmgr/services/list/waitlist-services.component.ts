@@ -132,4 +132,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    getAppxTime(waitlist) {
+        return this.shared_functions.providerConvertMinutesToHourMinute(waitlist);
+    }
 }
