@@ -164,8 +164,8 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     }
   }
   getLocationId() {
-    if (this.shared_functions.getItemOnCookie('provider_selected_location')) { // check whether the location is there in cookie
-      this.loccationId = this.shared_functions.getItemOnCookie('provider_selected_location');
+    if (this.shared_functions.getitemfromLocalStorage('provider_selected_location')) { // check whether the location is there in cookie
+      this.loccationId = this.shared_functions.getitemfromLocalStorage('provider_selected_location');
       this.getLocationDetails(this.loccationId);
     } else { // this is to take care of the situation where location id is not there in the cookie
       this.kiosk_services.getProviderLocations()

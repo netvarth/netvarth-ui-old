@@ -1,12 +1,13 @@
 /// <reference types="@types/googlemaps" />
 import { Component, Inject, OnInit, NgZone, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ViewChild } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedServices } from '../../../shared/services/shared-services';
 // import { } from 'googlemaps';
 
 @Component({
@@ -19,7 +20,6 @@ export class GoogleMapComponent implements OnInit {
   @ViewChild('gmap') gmapElement: any;
   @ViewChild('search')
   public searchElementRef: ElementRef;
-
   choose_location_cap = Messages.LOCATION_MAP_CAP;
   mark_map_cap = Messages.MARK_MAP_CAP;
   select_address_cap = Messages.SELECT_ADDRESS_CAP;
@@ -32,8 +32,7 @@ export class GoogleMapComponent implements OnInit {
   marker;
   obtained_address = '';
   obtained_pin = '';
-  mapaddress: any = [];
-
+  mapaddress;
   show_search = false;
 
   constructor(
@@ -41,50 +40,26 @@ export class GoogleMapComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private _ngZone: NgZone
-    ) {
-       if (data.passloc.lat !== '' && data.passloc.lon !== '') {
-        this.lat_lng.latitude = parseFloat(data.passloc.lat);
-        this.lat_lng.longitude = parseFloat(data.passloc.lon);
-       }
-     }
+    private _ngZone: NgZone, public shared_service: SharedServices
+  ) {
+    if (data.passloc.lat !== '' && data.passloc.lon !== '') {
+      this.lat_lng.latitude = parseFloat(data.passloc.lat);
+      this.lat_lng.longitude = parseFloat(data.passloc.lon);
+    }
+  }
 
   ngOnInit() {
-    if (!this.lat_lng.latitude || !this.lat_lng.longitude) {
-      const localloc = this.sharedfunctionObj.getitemfromLocalStorage('ynw-locdet');
-      if (localloc) {
-        if (localloc.autoname !== '' && localloc.autoname !== undefined && localloc.autoname !== null) {
-            this.lat_lng.latitude = parseFloat(localloc.lat);
-            this.lat_lng.longitude = parseFloat(localloc.lon);
-        } else { // case if details are not there in the local storage
-            this.lat_lng.latitude = parseFloat(projectConstants.SEARCH_DEFAULT_LOCATION.lat);
-            this.lat_lng.longitude = parseFloat(projectConstants.SEARCH_DEFAULT_LOCATION.lon);
-        }
-      } else {
-          this.lat_lng.latitude = parseFloat(projectConstants.SEARCH_DEFAULT_LOCATION.lat);
-          this.lat_lng.longitude = parseFloat(projectConstants.SEARCH_DEFAULT_LOCATION.lon);
-      }
-
-
-
+    if (this.data.passloc.lat === '' && this.data.passloc.lon === '') {
+      this.getCurrentLocation();
     }
+    this.setLocationtoMap();
+    this.getAddressonDragorClick();
+  }
 
-
-    const mapProp = {
-      center: new google.maps.LatLng( this.lat_lng.latitude, this.lat_lng.longitude),
-      zoom: projectConstants.MAP_ZOOM,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      mapTypeControl: false
-    };
-    const center = {lat: this.lat_lng.latitude, lng: this.lat_lng.longitude};
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-
-    this.marker = new google.maps.Marker({
-      position: center,
-      map: this.map,
-      draggable: true
-    });
-    // const ob = this;
+  getAddressonDragorClick(src?) {
+    if (src === 'currentLoc') {
+      this.getAddressfromLatLong();
+    }
     const getLatLng = (e) => {
       try {
         this._ngZone.run(() => {
@@ -94,55 +69,17 @@ export class GoogleMapComponent implements OnInit {
           this.obtained_address = '';
           this.obtained_pin = '';
           this.mapaddress = [];
-          this.provider_services.getGoogleMapLocationAddress(this.lat_lng.latitude, this.lat_lng.longitude)
-          .subscribe (mapdata => {
-            let map_address = '';
-            let map_pin = '';
-            this.obtained_address = '';
-            if (mapdata['status'] === 'OK') {
-              if (mapdata['results']) {
-                const maxcnt = 3;
-                for (let i = 0; i < mapdata['results'].length; i++) {
-                  if (i < maxcnt) {
-                    let formataddress = '';
-                    if (mapdata['results'][i].formatted_address) {
-                      formataddress = mapdata['results'][i].formatted_address;
-                    }
-                    let curpin = '';
-                    if (mapdata['results'][0]['address_components'][8]) {
-                      curpin = mapdata['results'][0]['address_components'][8]['long_name'];
-                    }
-                    this.mapaddress.push( { 'address': formataddress, 'pin': curpin });
-                  }
-                }
-                if (mapdata['results'][0]) {
-                  if (mapdata['results'][0] !== undefined) {
-                    map_address = mapdata['results'][0].formatted_address;
-                  }
-                  if (mapdata['results'][0]['address_components'][8] !== undefined) {
-                    map_pin = mapdata['results'][0]['address_components'][8]['long_name'] || '';
-                  }
-                }
-              }
-            }
-            this.obtained_address = map_address;
-            this.obtained_pin = map_pin;
-          });
+          this.getAddressfromLatLong();
         });
       } catch (error) {
         // blah
       }
     };
-
     this.marker.addListener('dragend', getLatLng.bind(this));
     this.map.addListener('click', getLatLng.bind(this));
-
     const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-
     });
-
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.searchElementRef.nativeElement);
-
     setTimeout(
       () => {
         this.show_search = true;
@@ -152,28 +89,58 @@ export class GoogleMapComponent implements OnInit {
       this._ngZone.run(() => {
         // get the place result
         const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
         // verify result
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-
-        // set latitude, longitude and zoom
-        // this.latitude = place.geometry.location.lat();
-        // this.longitude = place.geometry.location.lng();
-        // this.zoom = 12;
         this.map.setCenter(place.geometry.location);
         this.placeMarker(place.geometry.location, this.map);
-        const ob = {latLng: place.geometry.location};
+        const ob = { latLng: place.geometry.location };
         getLatLng(ob);
       });
     });
-
   }
 
+  // getAddress() {
+  //   this.mapaddress = [];
+  // this.provider_services.getGoogleMapLocationAddress(this.lat_lng.latitude, this.lat_lng.longitude)
+  //   .subscribe(mapdata => {
+  //     let map_address = '';
+  //     let map_pin = '';
+  //     this.obtained_address = '';
+  //     if (mapdata['status'] === 'OK') {
+  //       if (mapdata['results']) {
+  //         const maxcnt = 3;
+  //         for (let i = 0; i < mapdata['results'].length; i++) {
+  //           if (i < maxcnt) {
+  //             let formataddress = '';
+  //             if (mapdata['results'][i].formatted_address) {
+  //               formataddress = mapdata['results'][i].formatted_address;
+  //             }
+  //             let curpin = '';
+  //             if (mapdata['results'][0]['address_components'][8]) {
+  //               curpin = mapdata['results'][0]['address_components'][8]['long_name'];
+  //             }
+  //             this.mapaddress.push({ 'address': formataddress, 'pin': curpin });
+  //           }
+  //         }
+  //         if (mapdata['results'][0]) {
+  //           if (mapdata['results'][0] !== undefined) {
+  //             map_address = mapdata['results'][0].formatted_address;
+  //           }
+  //           if (mapdata['results'][0]['address_components'][8] !== undefined) {
+  //             map_pin = mapdata['results'][0]['address_components'][8]['long_name'] || '';
+  //           }
+  //         }
+  //       }
+  //     }
+  //     this.obtained_address = map_address;
+  //     this.obtained_pin = map_pin;
+  //   });
+  // }
 
   placeMarker(location, map) {
-    if ( this.marker ) {
+    if (this.marker) {
       this.marker.setPosition(location);
     } else {
       this.marker = new google.maps.Marker({
@@ -185,18 +152,55 @@ export class GoogleMapComponent implements OnInit {
   }
 
   mapselectionDone() {
-      const retvalues = {
-        'map_point': this.lat_lng,
-        'status': 'selectedonmap',
-        'address': this.obtained_address/*,
+    const retvalues = {
+      'map_point': this.lat_lng,
+      'status': 'selectedonmap',
+      'address': this.mapaddress
+      // 'address': this.obtained_address
+      /*,
         'pincode': this.obtained_pin*/
-      };
-      this.dialogRef.close(retvalues);
+    };
+    this.dialogRef.close(retvalues);
   }
 
   mapaddress_change(addressR) {
     this.obtained_address = addressR.address;
     this.obtained_pin = addressR.pin;
     // this.mapselectionDone();
+  }
+
+  getCurrentLocation() {
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.lat_lng.longitude = +pos.coords.longitude;
+        this.lat_lng.latitude = +pos.coords.latitude;
+        this.setLocationtoMap();
+        this.getAddressonDragorClick('currentLoc');
+      },
+        error => {
+
+        });
+    }
+  }
+
+  setLocationtoMap() {
+    const mapProp = {
+      center: new google.maps.LatLng(this.lat_lng.latitude, this.lat_lng.longitude),
+      zoom: projectConstants.MAP_ZOOM,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false
+    };
+    const center = { lat: this.lat_lng.latitude, lng: this.lat_lng.longitude };
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    this.marker = new google.maps.Marker({
+      position: center,
+      map: this.map,
+      draggable: true
+    });
+  }
+  getAddressfromLatLong() {
+    this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
+      this.mapaddress = this.shared_service.getFormattedAddress(data);
+    });
   }
 }

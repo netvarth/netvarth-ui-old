@@ -965,4 +965,35 @@ export class SharedServices {
   getSelectedLicenseMetrics() {
     return this.licenseMetrics;
   }
+
+  getAddressfromLatLong(data) {
+    return this.servicemeta.httpPost('provider/signup/location', data);
+  }
+
+  getTimeinMin(time) {
+    const time_min = (time.hour * 60) + time.minute;
+    return (typeof (time_min) === 'number') ? time_min : 0;
+  }
+
+  getFormattedAddress(data) {
+    let address;
+    if (data) {
+      if (data.area) {
+        address = data.area;
+      }
+      if (data.district && data.district !== data.area) {
+        address = address + ', ' + data.district;
+      }
+      if (data.state.state) {
+        address = address + ', ' + data.state.state;
+      }
+      if (data.state.country.country) {
+        address = address + ', ' + data.state.country.country;
+      }
+      if (data.pinCode) {
+        address = address + ', ' + data.pinCode;
+      }
+    }
+    return address;
+  }
 }
