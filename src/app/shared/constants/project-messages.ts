@@ -1381,6 +1381,11 @@ export const Messages = {
   'DISPLAYBOARD__INHELP': 'display help',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDS': 'Displayboards',
-  'DISPLAYBOARDLAYOUT_CAP': 'Layout'
+  'DISPLAYBOARDLAYOUT_CAP': 'Layout',
+
+  //JDN
+  'JDN_CREATED': 'Jdn enabled successfully',
+  'JDN_UPDATED' :'Jdn updated successfully',
+  'JDN_DISABLED':'Jdn disabled successfully',
 };
 

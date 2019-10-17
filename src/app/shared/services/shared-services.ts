@@ -11,6 +11,7 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 
 export class SharedServices {
+   
   licenseMetrics: any = [];
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
 
@@ -59,7 +60,15 @@ export class SharedServices {
     return this.servicemeta.httpPost(type + '/login/reset/' + phonenumber);
 
   }
-
+  addJdn(data) {
+    return this.servicemeta.httpPost('provider/settings/jdn/enable', data);
+}
+updateJdn(data){
+  return this.servicemeta.httpPut('provider/settings/jdn', data);
+}
+disable(){
+  return this.servicemeta.httpPut('provider/settings/jdn/disable');
+}
   OtpValidate(type = 'consumer', otp) {
 
     const path = type + '/login/reset/' + otp + '/validate';
@@ -167,6 +176,16 @@ export class SharedServices {
   getBusinessUniqueId(customId) {
 
     return this.servicemeta.httpGet('provider/business/' + customId);
+
+  }
+  getFeatures(subdomain) {
+
+    return this.servicemeta.httpGet('provider/ynwConf/features/' + subdomain);
+
+  }
+  getJdn() {
+
+    return this.servicemeta.httpGet('provider/settings/jdn');
 
   }
 

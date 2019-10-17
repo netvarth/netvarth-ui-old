@@ -7,45 +7,88 @@
             <div class="row">
                 <div class="card p0 ynw-common-form-nm taxform">
                     <div class="paysettings-tab">
-                        <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})</span>&nbsp;
-                        <span class="ctrl">
-                            <mat-slide-toggle [(ngModel)]="jdn_status"></mat-slide-toggle>
-                        </span>
-                        <div *ngIf="domain==='finance'; else elseBlock">
-                            <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
-                                <label class="col-form-label">Enter Custom Text</label>
-                                <textarea matInput class="form-control" id="jdn custom text" maxlength="500"
-                                    style="width: 500px;">
-                                </textarea>
-                            </div>
-                            <mat-dialog-actions *ngIf="jdn_status">
-                                <button type="submit" mat-button [disabled] class="cs-btn bt1">save
-                                </button> &nbsp;
-                                <button type="button" mat-dialog-close class="cs-btn bt2"
-                                    [disabled]="disableButton">cancel</button>
-                            </mat-dialog-actions>
-                        </div>
-                        <div>
-                            <ng-template #elseBlock>
+                        <div [class.disabled]="status === 'DISABLED'">
+                            <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})<span
+                                    *ngIf="status ==='ENABLED'">Enabled</span><span
+                                    *ngIf="status === 'DISABLED'">Disabled</span></span>&nbsp;
+                            <!-- <span class="ctrl">
+                            <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)"></mat-slide-toggle>
+                        </span> -->
+                            <div *ngIf="jdnType==='Label'; else elseBlock">
                                 <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
-                                    <label class="col-form-label">Choose Jaldee Discount</label>
-                                    <mat-radio-group>
-                                        <mat-radio-button value="5">5%</mat-radio-button>&nbsp;
-                                        <mat-radio-button value="10">10%</mat-radio-button>&nbsp;
-                                        <mat-radio-button value="20">20%</mat-radio-button>
-                                    </mat-radio-group>
+                                    <label class="col-form-label">Label</label>
+                                    <span *ngIf="rewrite !='edit'">{{jdnlabeltext}}</span>
+                                    <!-- <mat-form-field > -->
+                                    <input *ngIf="rewrite ==='edit'" matInput type="text" [(ngModel)]="jdnlabeltext"
+                                        class="form-control" id="jdnlabeltext" autocomplete="off">
+                                    <!-- </mat-form-field> -->
+
                                 </div>
-                                <mat-dialog-actions *ngIf="jdn_status">
-                                    <button type="submit" mat-button class="cs-btn bt1">save
-                                    </button> &nbsp;
-                                    <button type="button" mat-dialog-close class="cs-btn bt2"
-                                        [disabled]="disableButton">cancel</button>
-                                </mat-dialog-actions>
-                            </ng-template>
+
+                            </div>
+                            <div>
+                                <ng-template #elseBlock>
+                                    <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
+                                        <label *ngIf="rewrite ==='edit'" class="col-form-label">Choose Jaldee
+                                            Discount</label>
+                                        <label *ngIf="rewrite !='edit'" class="col-form-label">Jaldee Discount
+                                            {{discType}}%</label>
+                                        <mat-radio-group *ngIf="rewrite ==='edit'" [(ngModel)]="discType"
+                                            [disabled]="status === 'DISABLED'">
+                                            <mat-radio-button [value]=5>5%</mat-radio-button>&nbsp;
+                                            <mat-radio-button [value]=10>10%</mat-radio-button>&nbsp;
+                                            <mat-radio-button [value]=20>20%</mat-radio-button>
+                                        </mat-radio-group>
+                                        <!-- <mat-form-field> -->
+                                        <label class="col-form-label">Maximum Discount</label>
+                                        <span *ngIf="rewrite !='edit'">{{jdnmaxDiscounttext}}</span>
+                                        <input *ngIf="rewrite ==='edit'" [disabled]="status === 'DISABLED'"
+                                            type="number" matInput class="form-control" [(ngModel)]="jdnmaxDiscounttext"
+                                            id="jdnmaxDiscounttext">
+                                        <!-- </mat-form-field> -->
+                                    </div>
+
+                                </ng-template>
+                            </div>
+
+                            <div class="form-group" *ngIf="jdn_status" style="padding-top: 20px;">
+                                <label class="col-form-label">Note</label>
+                                <span *ngIf="rewrite !='edit'">{{jdndisplayNote}}</span>
+                                <textarea *ngIf="rewrite ==='edit'" [disabled]="status === 'DISABLED'"
+                                    class="form-control" [(ngModel)]="jdndisplayNote" id="jdndisplayNote"
+                                    maxlength="500">
+                            </textarea>
+                            </div>
                         </div>
+                        <mat-dialog-actions *ngIf="jdn_status">
+                            <button mat-button *ngIf="status !='ENABLED' && status !='DISABLED'" (click)="save()"
+                                class="cs-btn bt1" style="margin-right: 10px;">save
+                            </button>
+                            <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
+                                class="cs-btn bt1" style="margin-right: 10px;">update
+                            </button>
+                            <button mat-button *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"
+                                class="cs-btn bt1" style="margin-right: 10px;">edit
+                            </button>
+                            <button mat-button *ngIf="status === 'DISABLED'" (click)="save()" class="cs-btn bt1"
+                                style="margin-right: 10px;">enable
+                            </button>
+                            <button mat-button *ngIf="status === 'ENABLED' &&rewrite !='edit'" (click)="disable()"
+                                class="cs-btn bt1" style="margin-right: 10px;">disable
+                            </button>
+                            <button type="button" (click)="cancel()" *ngIf="status != 'DISABLED' && rewrite ==='edit'"
+                                class="cs-btn bt2" [disabled]="disableButton">cancel</button>
+                        </mat-dialog-actions>
+                        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+                        </app-field-error-display>
+
+                        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+                        </app-form-success-display>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+
 </section>
