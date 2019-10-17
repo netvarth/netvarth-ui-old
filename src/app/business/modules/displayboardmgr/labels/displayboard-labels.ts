@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-displayboard-labels',
@@ -24,16 +25,14 @@ export class DisplayboardLabelsComponent implements OnInit {
     ];
     api_loading: boolean;
     label_list: any;
-
+    add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     constructor (private router: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) { }
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Custom Field', 'type': 'addcustomfield' }]
-        };
+            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue', };
         this.getLabels();
     }
     getLabels() {

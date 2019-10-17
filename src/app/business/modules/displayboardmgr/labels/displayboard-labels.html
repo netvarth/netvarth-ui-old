@@ -3,7 +3,7 @@
         [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
-    <div class="content comn-cls">
+    <div class="content loc-list">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12 no-padding">
@@ -15,33 +15,60 @@
                     <div class="card" *ngIf="label_list.length==0">
                         No Labels Found
                     </div>
-                    <div class="card" *ngFor="let label of label_list">
+                    <div class="card" >
                         <div class="copy">
-                            <span class="mbt">
+                            <div class="col-md-12 addbt" style="display: flex">
+                                <mat-panel-description class="acc-plus-btn pointer-cursor">
+                                    <button mat-icon-button (click)="addLabel()" [matTooltipClass]="tooltipcls"
+                                        [matTooltip]="add_button">
+                                        <mat-icon style="color: #00aef2">{{add_circle_outline}}
+                                        </mat-icon>
+                                    </button>
+                                </mat-panel-description>
+                            </div>
+
+                            <!-- <span class="mbt">
                                 <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
-                            </span>
-                            <h3 (click)="goLabelDetail(label)" class="pointer-cursor"> {{label.label |
-                                        capitalizeFirst}}</h3>
-                            <div class="c-ot m0">
-                                <div class="item">
-                                    <span class="ttle">Field</span>
-                                </div>
-                                <div class="item">
-                                    <span class="ttle">subset</span>
+                            </span> -->
+                            <div class="col-md-12 card" *ngFor="let label of label_list">
+                                <div>
+                                    <div class="copy">
+                                        <span class="mbt">
+                                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                        </span>
+                                        <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
+                                                {{label.label | capitalizeFirst}}</h3> &nbsp;
+                                        <div class="c-ot m0">   
+                                            <div class="item">
+                                                <span class="ttle">Description</span>
+                                                <span>{{label.description | capitalizeFirst}}</span>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="c-ot m0"  *ngFor="let labelvalue of label.valueSet">
+                                            <div class="item" style="margin-top: 10px;">
+                                                <span class="ttle">Value</span>
+                                                <span> {{labelvalue.value}} ({{labelvalue.shortValue}})</span>
+                                            </div>
+                                        </div>
+
+                                        <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item (click)="editLabel(label)"
+                                                *ngIf="label.status=='ACTIVE'">
+                                                <i class="icon-edit"></i>
+                                                Edit
+                                            </button>
+                                            <button mat-menu-item (click)="deleteLabel(label)">
+                                                Delete
+                                            </button>
+                                        </mat-menu>
+                                    </div>
                                 </div>
                             </div>
-                            <span class="addbt d-block d-md-none" (click)="addLabel()"></span>
-                            <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="editLabel(label)" *ngIf="label.status=='ACTIVE'">
-                                    <i class="icon-edit"></i>
-                                    Edit
-                                </button>
-                                <button mat-menu-item (click)="deleteLabel(label)">
-                                    Delete
-                                </button>
-                            </mat-menu>
                         </div>
                     </div>
                 </div>

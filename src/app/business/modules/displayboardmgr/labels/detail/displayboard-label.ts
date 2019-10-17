@@ -74,6 +74,7 @@ export class DisplayboardLabelComponent implements OnInit {
             'actions': [{ 'title': 'Add Custom Field', 'type': 'addcustomfield' }]
         };
         this.initLabelParams();
+        
     }
     initLabelParams() {
         if (this.label_id === 'add') {
@@ -104,31 +105,29 @@ export class DisplayboardLabelComponent implements OnInit {
     }
     getLabelDetails() {
         this.api_loading = true;
-        // this.provider_services.getLabelDetails(this.label_id)
-        //     .subscribe(
-        //         data => {
-        // this.label = data;
-        this.label = { id: 1, name: 'label1', status: 'ACTIVE' };
+        this.provider_services.getLabel(this.label_id)
+            .subscribe(
+                data => {
+                    console.log(data)
+        this.label = data;
         this.action = 'show';
-        this.status = this.label.status;
         const breadcrumbs = [];
         this.breadcrumbs_init.map((e) => {
             breadcrumbs.push(e);
         });
         breadcrumbs.push({
-            title: this.label.name
+            title: this.label.label
         });
         this.breadcrumbs = breadcrumbs;
         this.api_loading = false;
         if (this.actionparam === 'edit') {
             this.action = 'edit';
         }
-        //     },
-        //     () => {
-        //         this.api_loading = false;
-        //         this.goBack();
-        //     }
-        // );
+            },
+            () => {
+                this.api_loading = false;
+            }
+        );
     }
     onSubmit(label_data) {
         console.log(label_data);
@@ -157,17 +156,16 @@ export class DisplayboardLabelComponent implements OnInit {
                 }
             );
     }
-    updateLabel(post_data) {
-        // this.provider_services.updateLabel(post_data)
-        //     .subscribe(
-        //         () => {
-        //             this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+    editLabel(post_data) {
+        this.provider_services.updateLabel(post_data)
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
         this.getLabelDetails();
-        // },
-        // error => {
-        //     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        // }
-        // );
+        },
+        error => {
+        }
+        );
     }
     // createForm() {
     //     this.labelForm = this.fb.group({

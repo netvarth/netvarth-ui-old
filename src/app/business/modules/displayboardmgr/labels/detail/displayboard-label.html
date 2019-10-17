@@ -4,90 +4,91 @@
 <section>
     <div class="content loc-list">
         <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-12" *ngIf="action=='show'">
-                    <div class="cl1">
-                        <span class="editbt" (click)="editLabel()"></span>
+            <div class="card">
+                <div class="row">
+                    <div class="cl1" *ngIf="action=='show'">
+                        <span class="editbt" style="margin-left: 50px;" (click)="editLabel()"></span>
                         <div class="ot-it">
-                            <h4>{{label.name | capitalizeFirst}}</h4>
-                            <div class="it-des">
-                                {{label.description | capitalizeFirst}}
-                            </div>
-                            <div class="c-ot">
+                            <h4>{{label.label | capitalizeFirst}}</h4>
+                            <div class="c-ot m0">
                                 <div class="item">
-
+                                    <span class="ttle">Description</span>
+                                    <span>{{ label.description | capitalizeFirst}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12" *ngIf="action !== 'show'">
-                    <form novalidate (keyup)="resetApiErrors()"
-                        class="ynw-common-form-nm wiz-service labelForm serviceform">
-                        <ng-container>
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <input matInput type="text" class="form-control" id="label_name"
-                                        placeholder="{{label_name_cap}}" [(ngModel)]="labelInfo.label"
-                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <textarea matInput class="form-control" id="description"
-                                        placeholder="Briefly describe label" [(ngModel)]="labelInfo.description"
-                                        [ngModelOptions]="{standalone: true}" (keyup)="setCharCount($event)"
-                                        (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
-                                </mat-form-field>
-                                <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
-                                    characters remaining</span>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <div class="col-md-4">
+                    <div class="col-md-12" *ngIf="action !== 'show'">
+                        <form novalidate (keyup)="resetApiErrors()"
+                            class="ynw-common-form-nm wiz-service labelForm serviceform">
+                            <ng-container>
+                                <div class="form-group">
                                     <mat-form-field>
-                                        <input matInput type="text" class="form-control" id="value" maxlength="10"
-                                            [(ngModel)]="value" [ngModelOptions]="{standalone: true}"
-                                            placeholder="Enter  Value*" autocomplete="off">
+                                        <input matInput type="text" class="form-control" id="label_name"
+                                            placeholder="{{label_name_cap}}" [(ngModel)]="labelInfo.label"
+                                            [ngModelOptions]="{standalone: true}" autocomplete="off">
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="form-group">
                                     <mat-form-field>
-                                        <input matInput type="text" class="form-control" id="shortcut" maxlength="10"
-                                            [(ngModel)]="shortValue" [ngModelOptions]="{standalone: true}"
-                                            placeholder="Enter  short value*" autocomplete="off">
+                                        <textarea matInput class="form-control" id="description"
+                                            placeholder="Briefly describe label" [(ngModel)]="labelInfo.description"
+                                            [ngModelOptions]="{standalone: true}" (keyup)="setCharCount($event)"
+                                            (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                                            maxlength="500"> </textarea>
                                     </mat-form-field>
+                                    <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                        characters remaining</span>
                                 </div>
-                                <div class="col-md-4">
-                                    <button type="submit" mat-button (click)="addtoValueSet(value, shortValue)"
-                                        class="cs-btn bt1 mt10">Add</button>
+                                <div class="form-group col-md-12">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="value" maxlength="10"
+                                                [(ngModel)]="value" [ngModelOptions]="{standalone: true}"
+                                                placeholder="Enter  Value*" autocomplete="off">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="shortcut"
+                                                maxlength="10" [(ngModel)]="shortValue"
+                                                [ngModelOptions]="{standalone: true}" placeholder="Enter  short value*"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" mat-button (click)="addtoValueSet(value, shortValue)"
+                                            class="cs-btn bt1 mt10">Add</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="col-md-12" *ngFor="let valueset of valueSet">
-                                    <div class="col-md-5">
-                                        {{valueset.value}}
-                                    </div>
-                                    <div class="col-md-5">
-                                        {{valueset.shortValue}}
-                                    </div>
-                                    <div class="col-md-2">
-                                        <span class="icon-delete" (click)="deleteValueforSet()"></span>
+                                <div class="col-md-12">
+                                    <div class="col-md-12" *ngFor="let valueset of valueSet">
+                                        <div class="col-md-5">
+                                            {{valueset.value}}
+                                        </div>
+                                        <div class="col-md-5">
+                                            {{valueset.shortValue}}
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span class="icon-delete" (click)="deleteValueforSet()"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="actiondiv">
-                                <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button>
-                                &nbsp;
-                                <button type="button" mat-button (click)="createLabel()" [disabled]="savedisabled"
-                                    class="cs-btn bt1">{{button_title}}</button>
-                                <!-- <span class="label-tooltip" *ngIf="type == 'add' && mode=='normal'">
+                                <div class="actiondiv">
+                                    <button (click)="onCancel()" type="button"
+                                        class="cs-btn bt2">{{cancel_btn}}</button>
+                                    &nbsp;
+                                    <button type="button" mat-button (click)="createLabel()" [disabled]="savedisabled"
+                                        class="cs-btn bt1">{{button_title}}</button>
+                                    <!-- <span class="label-tooltip" *ngIf="type == 'add' && mode=='normal'">
                                                 <i class="icon-bell"></i>
                                                 {{tooltip}}
                                             </span> -->
-                            </div>
-                            <br />
-                        </ng-container>
-                    </form>
+                                </div>
+                                <br />
+                            </ng-container>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
