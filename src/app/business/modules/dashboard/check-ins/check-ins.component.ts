@@ -131,7 +131,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     check_in_start_date: false,
     check_in_end_date: false,
     location_id: false,
-    
+
   };
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -260,7 +260,8 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.getServiceList();
     this.getLocationList();
     this.breadcrumb_moreoptions = {
-      'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
+      'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
+    };
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     if (!this.server_date) { this.setSystemDate(); }
@@ -317,7 +318,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       }
     });
   }
-  
+
   getLocationList() {
     this.selected_location = null;
     this.provider_services.getProviderLocations()
@@ -384,18 +385,16 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-        if (type === 'check_in_start_date' || type === 'check_in_end_date' ) {
-            this.filter[type] = null;
-        } 
-        else if(type === 'payment_status' || type === 'waitlist_status'|| type === 'service'||type === 'queue'){
-            this.filter[type] = 'all';
-        }
-        else{
-            this.filter[type] = '';
-        }
-        this.doSearch();
+      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+        this.filter[type] = null;
+      } else if (type === 'payment_status' || type === 'waitlist_status' || type === 'service' || type === 'queue') {
+        this.filter[type] = 'all';
+      } else {
+        this.filter[type] = '';
+      }
+      this.doSearch();
     }
-}
+  }
   setSystemDate() {
     this.shared_services.getSystemDate()
       .subscribe(
@@ -1111,7 +1110,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       check_in_start_date: false,
       check_in_end_date: false,
       location_id: false,
-      
+
     };
     this.filter = {
       first_name: '',
@@ -1187,7 +1186,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   learnmore_clicked(action) {
     if (action === 'learnmore') {
       this.routerobj.navigate(['/provider/' + this.domain + '/dashboard']);
-  }
+    }
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');

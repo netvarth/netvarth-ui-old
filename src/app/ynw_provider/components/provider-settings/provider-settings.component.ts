@@ -377,6 +377,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'miscellaneous':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
         break;
+      case 'displayboard':
+        this.routerobj.navigate(['provider', 'settings', 'displayboard']);
+        break;
+      case 'displayboard-labels':
+        this.routerobj.navigate(['provider', 'settings', 'displayboard', 'labels']);
+        break;
+      case 'displayboard-list':
+        this.routerobj.navigate(['provider', 'settings', 'displayboard', 'list']);
+        break;
+      case 'displayboard-layout':
+        this.routerobj.navigate(['provider', 'settings', 'displayboard', 'layout']);
+        break;
     }
   }
   getLocationCount() {

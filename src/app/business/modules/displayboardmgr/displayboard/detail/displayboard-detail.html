@@ -1,0 +1,105 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="card">
+                    <form [formGroup]="amForm" (keyup)="resetApiErrors()" class="ynw-common-form-nm ">
+                        <ng-container>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="Name"
+                                            placeholder="Enter Name" formControlName="Name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="Displayname"
+                                            placeholder="Enter Displayname" formControlName="Displayname">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group col-md-12 inline">
+                                    <label class="col-form-label">Category</label>
+                                    <mat-radio-button value="service"></mat-radio-button>
+                                    <!-- <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_enable_cap}}</label> -->
+                                    <label for="">Service</label>
+                                    <span style="margin-left: 50px">
+                                        <mat-radio-button value="NoCalc_WithToken"></mat-radio-button>
+                                        <!-- <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_enable_cap}}</label> -->
+                                        <label for="">Department</label>
+                                    </span>
+                                    <span style="margin-left: 50px">
+                                        <mat-radio-button value="NoCalc_WithToken"></mat-radio-button>
+                                        <!-- <label for="">{{do_not_show_cap}} {{customer_label}}s {{toke_enable_cap}}</label> -->
+                                        <label for="">Queues</label>
+                                    </span>
+
+                                </div>
+                                <div class="form-group col-md-12 inline">
+                                    <label class="col-form-label" style="margin-left: 20px">Choose
+                                        Services</label>
+                                    <mat-checkbox class="example-margin" style="margin-left: 30px">Service 1
+                                    </mat-checkbox>
+                                    <span style="margin-left: 50px">
+                                        <mat-checkbox class="example-margin">Service 2</mat-checkbox>
+                                    </span>
+                                    <span style="margin-left: 50px">
+                                        <mat-checkbox class="example-margin">Service 3</mat-checkbox>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-12 inline">
+                                        <label class="col-form-label">Status Board Field to display</label>
+                                        <mat-checkbox class="example-margin" style="margin-left: 30px">Name
+                                        </mat-checkbox>
+                                        <div class="form-group col-md-12 row">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="Displayname"
+                                                        placeholder="Enter Displayname" formControlName="Displayname">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="Defaultvalue"
+                                                        placeholder="Enter Defaultvalue" formControlName="Defaultvalue">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <mat-checkbox class="example-margin" style="margin-left: 30px">Token
+                                        </mat-checkbox>
+                                        <div class="form-group col-md-12 row">
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="Displayname"
+                                                        placeholder="Enter Displayname" formControlName="Displayname">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="Defaultvalue"
+                                                        placeholder="Enter Defaultvalue" formControlName="Defaultvalue">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="actiondiv col-md-12" style="margin-bottom:30px">
+                                <button (click)="onCancel()" type="button" class="cs-btn bt2">cancel</button>
+                                &nbsp;
+                                <button type="submit" mat-button [disabled]="!amForm.valid || savedisabled"
+                                    class="cs-btn bt1">Create</button>
+                            </div>
+                        </ng-container>
+                    </form>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</section>

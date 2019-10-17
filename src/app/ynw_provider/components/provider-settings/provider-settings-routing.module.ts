@@ -10,7 +10,8 @@ const routes: Routes = [
       { path: 'pos', loadChildren: '../../../business/modules/pos/pos.module#POSModule'},
       { path: 'miscellaneous', loadChildren: '../../../business/modules/miscellaneous/miscellaneous.module#MiscellaneousModule'},
       { path: 'home-service', loadChildren: '../../../business/modules/homeservice/homeservice.module#HomeServiceModule'},
-      { path: 'waitlist-manager', loadChildren: '../../../business/modules/waitlistmgr/waitlistmgr.module#WaitlistMgrModule' }
+      { path: 'waitlist-manager', loadChildren: '../../../business/modules/waitlistmgr/waitlistmgr.module#WaitlistMgrModule' },
+      { path: 'displayboard', loadChildren: '../../../business/modules/displayboardmgr/displayboard.module#DisplayboardModule' }
     ]
   },
 ];

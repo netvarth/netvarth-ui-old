@@ -1,0 +1,205 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12" *ngIf="action=='show'">
+                    <div class="cl1">
+                        <span class="editbt" (click)="editLabel()"></span>
+                        <div class="ot-it">
+                            <h4>{{label.name | capitalizeFirst}}</h4>
+                            <div class="it-des">
+                                {{label.description | capitalizeFirst}}
+                            </div>
+                            <div class="c-ot">
+                                <div class="item">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="action !== 'show'">
+                    <form [formGroup]="amForm" (keyup)="resetApiErrors()" class="ynw-common-form">
+                        <ng-container>
+                            <div class="form-group col-md-12 row">
+                                <mat-form-field>
+                                    <input matInput type="text" class="form-control" id="Name" placeholder="Enter Name"
+                                        formControlName="Name">
+                                </mat-form-field>
+
+                            </div>
+                            <div class="rw">
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <mat-select placeholder="Choose Layout" formControlName="layout">
+                                            <mat-option (click)="handlestatus()">
+                                                1 x 1
+                                            </mat-option>
+                                            <mat-option (click)="handlestatus1()">
+                                                1 x 2
+                                            </mat-option>
+                                            <mat-option (click)="handlestatus2()">
+                                                2 x 1
+                                            </mat-option>
+                                            <mat-option (click)="handlestatus3()">
+                                                2 x 2
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12 card" *ngIf="statussel">
+                                            <mat-form-field style="width: 300px">
+                                                <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                    <mat-option>
+                                                        Status Board 1
+                                                    </mat-option>
+                                                    <mat-option>
+                                                        Status Board 2
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 card" *ngIf="statussel1">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6 card" *ngIf="statussel1">
+                                            <mat-form-field>
+                                                <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                    <mat-option>
+                                                        Status Board 1
+                                                    </mat-option>
+                                                    <mat-option>
+                                                        Status Board 2
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-6 card" *ngIf="statussel1">
+                                            <mat-form-field>
+                                                <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                    <mat-option>
+                                                        Status Board 1
+                                                    </mat-option>
+                                                    <mat-option>
+                                                        Status Board 2
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 card" *ngIf="statusse2">
+                                <div class="form-group">
+                                    <div class="col-md-12 card" *ngIf="statusse2">
+                                        <mat-form-field style="width: 300px">
+                                            <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                <mat-option>
+                                                    Status Board 1
+                                                </mat-option>
+                                                <mat-option>
+                                                    Status Board 2
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-12 card" *ngIf="statusse2">
+                                        <mat-form-field style="width: 300px">
+                                            <mat-select placeholder="Choose Layout" formControlName="layout"
+                                                width="50px">
+                                                <mat-option>
+                                                    Status Board 1
+                                                </mat-option>
+                                                <mat-option>
+                                                    Status Board 2
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 card" *ngIf="statussel3">
+                                <div class="col-md-12" *ngIf="statussel3">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6 card" *ngIf="statussel3">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                        <mat-option>
+                                                            Status Board 1
+                                                        </mat-option>
+                                                        <mat-option>
+                                                            Status Board 2
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-6 card" *ngIf="statussel3">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                        <mat-option>
+                                                            Status Board 1
+                                                        </mat-option>
+                                                        <mat-option>
+                                                            Status Board 2
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" *ngIf="statussel3">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6 card" *ngIf="statussel3">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                        <mat-option>
+                                                            Status Board 1
+                                                        </mat-option>
+                                                        <mat-option>
+                                                            Status Board 2
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-6 card" *ngIf="statussel3">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Choose Layout" formControlName="layout">
+                                                        <mat-option>
+                                                            Status Board 1
+                                                        </mat-option>
+                                                        <mat-option>
+                                                            Status Board 2
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actiondiv" style="margin-bottom:30px">
+                                <button (click)="onCancel()" type="button" class="cs-btn bt2">cancel</button> &nbsp;
+                                <button type="submit" mat-button [disabled]="!amForm.valid || savedisabled"
+                                    class="cs-btn bt1">Create</button>
+                            </div>
+                        </ng-container>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

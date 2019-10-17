@@ -43,10 +43,10 @@ import { AddProviderSchedulesModule } from '../ynw_provider/components/add-provi
 import { DynamicFormModule } from './modules/dynamic-form/dynamic-form.module';
 import { ConfirmBoxComponent } from '../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
-import { SearchProviderCustomerComponent } from '../ynw_provider/components/search-provider-customer/search-provider-customer.component';
-import { AddProviderCustomerComponent } from '../ynw_provider/components/add-provider-customer/add-provider-customer.component';
 import { AddProviderMemberComponent } from '../ynw_provider/components/add-provider-member/add-provider-member.component';
 import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
+import { CustomerModule } from './modules/customer/customer.module';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../ynw_provider/components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 
 @NgModule({
     declarations: [
@@ -68,10 +68,9 @@ import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/con
         ProviderbWizardComponent,
         ConfirmBoxComponent,
         ProviderMembersComponent,
-        SearchProviderCustomerComponent,
-        AddProviderCustomerComponent,
         AddProviderMemberComponent,
-        ConfirmPaymentBoxComponent
+        ConfirmPaymentBoxComponent,
+        ProviderWaitlistCheckInCancelPopupComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -87,7 +86,8 @@ import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/con
         InboxModule,
         Nl2BrPipeModule,
         AddProviderSchedulesModule,
-        DynamicFormModule
+        DynamicFormModule,
+        CustomerModule
     ],
     entryComponents: [
         AddProviderWaitlistServiceComponent,
@@ -96,10 +96,9 @@ import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/con
         AddProviderBprofileSearchAdwordsComponent,
         GoogleMapComponent,
         ConfirmBoxComponent,
-        SearchProviderCustomerComponent,
-        AddProviderCustomerComponent,
         AddProviderMemberComponent,
-        ConfirmPaymentBoxComponent
+        ConfirmPaymentBoxComponent,
+        ProviderWaitlistCheckInCancelPopupComponent
     ],
     providers: [
         AuthGuardProviderHome,

@@ -697,5 +697,65 @@ export class ProviderServices {
     const url = 'provider/bill/settings/pos';
     return this.servicemeta.httpGet(url);
   }
+  getLabelList() {
+     const url = 'provider/waitlist/label';
+     return this.servicemeta.httpGet(url);
+  }
+  getLabel(labelId) {
+    const url = 'provider/waitlist/label/' + labelId;
+    return this.servicemeta.httpGet(url);
+  }
+  updateLabel(data) {
+    const url = 'provider/waitlist/label';
+    return this.servicemeta.httpPut(url, data);
+  }
+  createLabel(label) {
+    const url = 'provider/waitlist/label';
+    return this.servicemeta.httpPost(url, label);
+  }
+  deleteLabel (labelId) {
+    const url = 'provider/waitlist/label' + labelId;
+    return this.servicemeta.httpDelete(url);
+  }
+  getDisplayboards () {
+    const url = 'provider/statusBoard';
+    return this.servicemeta.httpGet(url);
+ }
+ getDisplayboard(boardId) {
+   const url = 'provider/statusBoard/' + boardId;
+   return this.servicemeta.httpGet(url);
+ }
+ updateDisplayboard(data) {
+   const url = 'provider/statusBoard';
+   return this.servicemeta.httpPut(url, data);
+ }
+ createDisplayboard(board) {
+   const url = 'provider/statusBoard';
+   return this.servicemeta.httpPost(url, board);
+ }
+ deleteDisplayboard (boardId) {
+   const url = 'provider/statusBoard' + boardId;
+   return this.servicemeta.httpDelete(url);
+ }
+ getBoardLayouts() {
+  const url = 'provider/statusBoard/dimension';
+  return this.servicemeta.httpGet(url);
+}
+getBoardLayout(layoutId) {
+ const url = 'provider/statusBoard/dimension/' + layoutId;
+ return this.servicemeta.httpGet(url);
+}
+updateBoardLayout(data) {
+ const url = 'provider/statusBoard/dimension';
+ return this.servicemeta.httpPut(url, data);
+}
+createBoardLayout(layout) {
+ const url = 'provider/statusBoard/dimension';
+ return this.servicemeta.httpPost(url, layout);
+}
+deleteBoardLayout (layoutId) {
+ const url = 'provider/statusBoard/dimension' + layoutId;
+ return this.servicemeta.httpDelete(url);
+}
 }
 

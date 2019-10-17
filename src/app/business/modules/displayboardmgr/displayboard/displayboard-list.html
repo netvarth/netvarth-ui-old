@@ -1,0 +1,93 @@
+<section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content comn-cls">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 no-padding" *ngIf="!api_loading">
+                    <div class="card" *ngIf="board_list.length==0">
+                        No Displayboards Found
+                    </div>
+                    <div class="card" *ngFor="let board of board_list">
+                        <div class="copy">
+                            <span class="mbt">
+                                <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                            </span>
+                            <h3 (click)="goDisplayboardDetails(board)" class="pointer-cursor"> {{board.name |
+                                                            capitalizeFirst}}</h3>
+                            <!-- <span class="addbt d-block d-md-none" (click)="addLabel()"></span> -->
+                            <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="editDisplayboard(board)">
+                                    <i class="icon-edit"></i>
+                                    Edit
+                                </button>
+                                <button mat-menu-item (click)="deleteDisplayboard(board)">
+                                    Delete
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 
+
+                            <div class="table-outer q-itm">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Catogory</th>
+                                            <th>Fields</th>
+                                            <th><span></span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-title="Name" class="td2" class="pointer-cursor"
+                                                (click)="showDetails(item.itemId)"><span [matTooltipClass]="tooltipcls"
+                                                    [matTooltip]="itemnameTooltip">1</span>
+                                            </td>
+                                            <td data-title="Price" clas="td4">Status board 1</td>
+                                            <td data-title="Taxable" clas="td3">Service
+                                            </td>
+                                            <td data-title="Taxable" clas="td3">Custom 1, Custom 2
+                                            </td>
+                                            <td class="action">
+                                                <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" mat-menu-item>
+                                                            <i class="icon-edit"></i>
+                                                            Edit
+                                                        </button>
+                                                        <button type="button" mat-menu-item>
+                                                            <i class="icon-delete"></i>
+                                                            delete
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+                                                <span class="mbt-mobile-show">
+                                                    <button class="editcls" type="button">edit</button>
+                                                    <button class="deletecls" type="button">delete</button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <span class="addbt d-block d-md-none" (click)="addItem()"></span>
+                            </div> -->
+<!-- </div>
+        </div>
+    </div>
+    </div>
+    </div> -->

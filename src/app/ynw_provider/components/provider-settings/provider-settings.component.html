@@ -198,19 +198,19 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{displayboard_heading}} <i
-                                    class="fa fa-gears fl-right pointer-cursor lnk"></i></h4>
+                                (click)="redirecTo('displayboard')" class="fa fa-gears fl-right pointer-cursor lnk"></i></h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-ul">
                                 <li class="form-level-settings"><a>{{frm_displayboard_inhelp}}</a></li>
-                                <li (click)="redirecTo('customfields')"><a class="pointer-cursor"><span class="lnk"
-                                            >{{customfields_cap}}</span></a>
+                                <li (click)="redirecTo('displayboard-labels')"><a class="pointer-cursor">
+                                    <span class="lnk" >{{customfields_cap}}</span></a>
                                 </li>
-                                <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span class="lnk" >{{displayboards_cap}}
-                                        </span></a>
+                                <li (click)="redirecTo('displayboard-list')"><a class="pointer-cursor"><span class="lnk" >{{displayboards_cap}}
+                                    </span></a>
                                 </li>
-                                <li (click)="redirecTo('layout')"><a class="pointer-cursor"><span class="lnk" >{{displayboards_layout_cap}}
-                                        </span></a>
+                                <li (click)="redirecTo('displayboard-layout')"><a class="pointer-cursor"><span class="lnk" >{{displayboards_layout_cap}}
+                                    </span></a>
                                 </li>
                             </ul>
                         </div>

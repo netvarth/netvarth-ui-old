@@ -1,0 +1,40 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="gotoCustomfields()" class="b-link">
+                        <h2>Custom fields / Labels</h2>
+                        <span class="form-level-settings">Manage custom fields here
+                            <a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('nonworking', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoDisplayboards()">
+                        <h2>Displayboards</h2>
+                        <span class="form-level-settings">Manage Display boards here <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('notifications', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoLayout()">
+                        <h2>Layout</h2>
+                        <span class="form-level-settings">Layout handling <a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('notifications', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -7,13 +7,13 @@ import { ProviderNotificationsComponent } from '../../../ynw_provider/components
 const routes: Routes = [
     { path: '', component: MiscellaneousComponent },
     {
-        path: 'holidays',
-        component: ProviderNonworkingdaysComponent
-      },
-      {
-        path: 'notifications',
-        component: ProviderNotificationsComponent
-      }
+      path: 'holidays',
+      component: ProviderNonworkingdaysComponent
+    },
+    {
+      path: 'notifications',
+      component: ProviderNotificationsComponent
+    }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
