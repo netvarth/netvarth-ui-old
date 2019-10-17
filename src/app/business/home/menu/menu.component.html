@@ -48,59 +48,58 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="">&nbsp;</li>
-      <li class="treeview" [class.active]="selectedMenu === 'check-ins'">
+      <li class="treeview">
         <a href="#">
           <i class="header fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li class="active"><a href="#" (click)="menuClick('check-ins')"><i class="fa fa-circle-o"></i> Checkins</a>
+          <li class=""><a href="#" routerLink="dashboard/check-ins" routerLinkActive="active-lnk"><i class="fa fa-circle-o"></i> Checkins</a>
           </li>
           <!-- <li><a href="index2.html"><i class="fa fa-circle-o"></i> Appointments</a></li>
           <li><a href="index2.html"><i class="fa fa-circle-o"></i> Orders</a></li> -->
         </ul>
       </li>
-      <li [class.active]="selectedMenu === 'settings'">
-        <a class="pointer-cursor" (click)="menuClick('settings')">
+      <li>
+        <a class="pointer-cursor" routerLink="settings" routerLinkActive="active-lnk">
           <i class="fa fa-gears"></i> <span>Settings</span>
         </a>
       </li>
-      <li class="treeview" [class.active]="selectedMenu === 'customers'">
-        <a class="pointer-cursor" (click)="menuClick('customers')">
+      <li class="treeview">
+        <a class="pointer-cursor" routerLink="customers" routerLinkActive="active-lnk">
           <i class="fa fa-user"></i>
           <span>Customers</span>
         </a>
       </li>
-      <li [class.active]="selectedMenu === 'license'">
-        <a class="pointer-cursor" (click)="menuClick('license')">
+      <li>
+        <a class="pointer-cursor" routerLink="license" routerLinkActive="active-lnk">
           <i class="fa fa-gavel"></i> <span>License</span>
         </a>
       </li>
-      <li [class.active]="selectedMenu === 'inbox'">
-        <a class="pointer-cursor" (click)="menuClick('inbox')">
+      <li>
+        <a class="pointer-cursor" routerLink="inbox" routerLinkActive="active-lnk">
           <i class="fa fa-envelope"></i> <span>Inbox</span>
           <small class="label pull-right bg-green"
             *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
         </a>
       </li>
-      <li [class.active]="selectedMenu === 'alerts'">
-        <a class="pointer-cursor" (click)="menuClick('alerts')">
+      <li>
+        <a class="pointer-cursor" routerLink="alerts" routerLinkActive="active-lnk">
           <i class="fa fa-bell-o"></i> <span>Alerts</span>
           <small class="label pull-right bg-orange" *ngIf="alertCnt>0">{{alertCnt}}</small>
         </a>
       </li>
-      <li [class.active]="selectedMenu === 'auditlog'">
-        <a class="pointer-cursor" (click)="menuClick('auditlog')">
+      <li>
+        <a class="pointer-cursor" routerLink="auditlog" routerLinkActive="active-lnk">
           <i class="fa fa-list"></i> <span>Activity Log</span>
         </a>
       </li>
-      <li [class.active]="selectedMenu === 'kiosk'">
-        <a class="pointer-cursor" (click)="menuClick('kiosk')">
+      <li>
+        <a class="pointer-cursor" routerLink="/kiosk" routerLinkActive="active-lnk">
           <i class="fa fa-tablet"></i><span>Kiosk</span>
         </a>
       </li>
-      <li><a class="pointer-cursor" (click)="gotoHelp()"><i class="fa fa-book"></i> <span>Help</span></a></li>
-      <li [class.active]="selectedMenu === 'faq'"><a (click)="menuClick('faq')"><i class="fa fa-book"></i>
-          <span>FAQ</span></a></li>
+      <li><a class="pointer-cursor" (click)="gotoHelp()" routerLinkActive="active-lnk"><i class="fa fa-book"></i> <span>Help</span></a></li>
+      <li><a routerLink="faq" routerLinkActive="active-lnk"><i class="fa fa-book"></i> <span>FAQ</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->

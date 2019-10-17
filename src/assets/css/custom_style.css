@@ -4830,6 +4830,9 @@ i.notavail {
 .coupon-outer .input-group-btn {
   width: auto!important;
 }
+.active-lnk {
+  border: 2px solid #f1b51c;
+}
 .invoice{
   margin: 0px !important;
   border: none !important;
