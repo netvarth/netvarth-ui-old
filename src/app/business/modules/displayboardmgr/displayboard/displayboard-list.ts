@@ -24,9 +24,11 @@ export class DisplayboardListComponent implements OnInit {
     ];
     api_loading: boolean;
     board_list: any = [];
+    domain: any;
 
     constructor(
         private router: Router,
+        private routerobj: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions
         ) { }
@@ -34,11 +36,13 @@ export class DisplayboardListComponent implements OnInit {
     ngOnInit() {
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Displayboard', 'type': 'addstatusboard' }]
+            'actions': [{ 'title': 'Add Displayboard', 'type': 'addstatusboard' },{ 'title': 'Learn More', 'type': 'learnmore' }]
         };
         this.getDisplayboards();
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
     }
-    getDisplayboards() {
+    getDisplayboards() { 
         this.api_loading = true;
         this.board_list = [];
         this.provider_services.getDisplayboards()
@@ -57,6 +61,9 @@ export class DisplayboardListComponent implements OnInit {
     performActions(action) {
         if (action === 'addstatusboard') {
             this.addDisplayboard();
+        }
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/help']);
         }
     }
     addDisplayboard() {

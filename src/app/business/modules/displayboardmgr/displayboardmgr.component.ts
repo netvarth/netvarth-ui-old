@@ -4,7 +4,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
     selector: 'app-displayboard-mgr',
-    templateUrl: './displayboardmgr.component.html'
+    templateUrl: './displayboardmgr.component.html' 
 })
 export class DisplayboardMgrComponent implements OnInit {
     breadcrumbs_init = [
@@ -17,8 +17,11 @@ export class DisplayboardMgrComponent implements OnInit {
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
+    breadcrumb_moreoptions = { 
+        'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
     domain;
     constructor (private router: Router,
+        private routerobj: Router,
         private shared_functions: SharedFunctions) {
     }
 
@@ -39,4 +42,9 @@ export class DisplayboardMgrComponent implements OnInit {
         e.stopPropagation();
         this.router.navigate(['/provider/' + this.domain + '/displayboard->' + mod]);
       }
+      performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/help']);
+        }
+    }
 }

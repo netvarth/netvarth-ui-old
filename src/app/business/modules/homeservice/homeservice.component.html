@@ -1,17 +1,19 @@
 <section>
         <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
         <!-- Subheader section -->
-        <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+        <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
     </section>
-    
+     
     <section>
         <div class="content w-manager">
             <div class="col-md-12" *ngIf="waitlist_manager != null">
                 <div class="row">
+                    
                     <div class="card p0" *ngIf="loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                     </div>
-                    <div class="card p0" *ngIf="!loading">
+                    <div class="card p0">
+                            
                         <div class="copy">
                             <div class="row">
                                 <div class="lbl col-sm-12 col-md-12 col-lg-12">

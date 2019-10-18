@@ -73,8 +73,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     loading = true;
     loadingTb = false;
     upgradablepackages = [];
-    addonTooltip = '';
-    breadcrumb_moreoptions = {
+    addonTooltip = ''; 
+    breadcrumb_moreoptions = { 
            'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
     upgradedialogRef;
     active_user;

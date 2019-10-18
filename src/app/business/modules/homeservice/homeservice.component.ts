@@ -16,8 +16,9 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
     locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
     services_cap = Messages.WAITLIST_SERVICES_CAP;
     ser_time_windows_cap = Messages.SERVICE_TIME_CAP;
+    learn_more = Messages.LEARN_MORE_CAP;
     bProfile = null;
-    online_checkin = false;
+    online_checkin = false; 
     waitlist_manager: any = null;
     location_count: any = 0;
     service_count: any = 0;
@@ -59,7 +60,8 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
     frm_set_ser_cap = '';
-    breadcrumb_moreoptions: any = [];
+    breadcrumb_moreoptions = { 
+        'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     ngOnInit() {
@@ -73,7 +75,7 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
         this.getServiceCount();
         this.getBusinessConfiguration();
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings' };
+      //  this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings' };
         // Update from footer
         this.subscription = this.shared_functions.getMessage()
             .subscribe(
@@ -101,6 +103,12 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
                     this.filterbydepartment = data['filterByDept'];
                 });
         this.loading = false;
+    }
+
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/homeservice']);
+        }
     }
     getBusinessProfile() {
         this.loading = true;
