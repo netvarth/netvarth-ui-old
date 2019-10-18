@@ -82,7 +82,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
                     <ng-container class="example-full-width">
-                            <label class="col-form-label">{{est_duration_cap}}</label>
+                            <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes)</label>
                 <!-- <mat-form-field> -->
                     <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
                         maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"

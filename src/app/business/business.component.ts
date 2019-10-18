@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, RouterEvent, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
 import { ProviderServices } from '../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
@@ -16,6 +16,7 @@ export class BusinessComponent implements OnInit {
   outerscroller = false;
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
+  apiloading = false;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -23,6 +24,12 @@ export class BusinessComponent implements OnInit {
     public shared_service: SharedServices,
     public provider_datastorage: CommonDataStorageService,
     private provider_shared_functions: ProviderSharedFuctions) {
+        router.events.subscribe(
+    (event: RouterEvent): void => {
+this._navigationInterceptor(event);
+    }
+  );
+
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/provider') {
@@ -40,6 +47,24 @@ export class BusinessComponent implements OnInit {
 
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
 
+  }
+
+  private _navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.apiloading = true;
+    }
+    if (event instanceof NavigationEnd) {
+      this.apiloading = false;
+    }
+  
+    // Set loading state to false in both of the below events to hide the spinner in case a request fails
+    if (event instanceof NavigationCancel) {
+      this.apiloading = false;
+    }
+    if (event instanceof NavigationError) {
+      this.apiloading = false;
+    }
+    console.log(this.apiloading);
   }
   handleScrollhide(ev) {
     this.outerscroller = ev;
