@@ -19,7 +19,7 @@
                     <span *ngIf="calculationmode=='NoCalc' && showToken"> Get Token</span>
                   </a>
                 </li>
-                <li class="dropdown notifications-menu">
+                <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
                   <a (click)="showAdjustDelay()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                     data-toggle="dropdown"><i class="fa fa-pause"></i> Adjust Delay</a>
                 </li>
@@ -143,70 +143,66 @@
             <!-- </tr>
             </tbody> -->
 
-            <div class=" row m0">
-              <div class="chkins col-md-12 col-xs-12 no-padding" *ngFor="let checkin of check_in_filtered_list">
+            <div class="chkins-sect row m0">
+              <div class="row chkins col-md-12 col-xs-12  m0 no-padding" *ngFor="let checkin of check_in_filtered_list">
                 <div class="col-md-1 col-xs-1">
                   <span class="icon-cloud" *ngIf="checkin.waitlistedBy == 'CONSUMER'" [matTooltipClass]="tooltipcls"
                     [matTooltip]="cloudTooltip"></span>
                 </div>
-                <div class="col-md-10 col-xs-10">
-                  <div class="col-md-7 col-xs-12 no-padding">
+                <div class="col-md-10 col-xs-9 no-padding">
+                  <div class="col-md-8 col-xs-12 no-padding">
                     <div class="col-md-12 col-xs-12 no-padding">
-                        <span data-title="Date" class="date pointer-cursor" *ngIf="time_type !=1"
+                      <span data-title="Date" class="date pointer-cursor" *ngIf="time_type !=1"
                         (click)="goCheckinDetail(checkin)">
                         {{checkin.date | date:dateFormat}}
-                        </span>
-                        <span *ngIf="time_type ==1 && calculationmode=='NoCalc' && showToken"
+                      </span>
+                      <span *ngIf="time_type ==1 && calculationmode=='NoCalc' && showToken"
                         (click)="goCheckinDetail(checkin)">
                         <ng-container *ngIf="checkin.token">Token# {{checkin.token}}</ng-container>
-                        </span>
-                        <span data-title="Name" class="name pointer-cursor" *ngIf="checkin.consumer"
+                      </span>
+                      <span data-title="Name" class="name pointer-cursor" *ngIf="checkin.consumer"
                         (click)="goCheckinDetail(checkin)">
-                        <span class="service">{{checkin.service.name}}<span *ngIf="checkin.service.deptName">
-                            ({{checkin.service.deptName}})</span></span> for <span class="forwhom"
+                        <span class="service inl-blk">{{checkin.service.name}}<span *ngIf="checkin.service.deptName">
+                            ({{checkin.service.deptName}})</span></span> for <span class="forwhom inl-blk"
                           *ngFor="let user of checkin.waitlistingFor">
                           {{checkin.waitlistingFor[0].firstName}} {{checkin.waitlistingFor[0].lastName}}
                         </span>
                       </span>
                     </div>
                     <div class="col-md-12 col-xs-12 no-padding mt10">
-                        <span class="icon-arrived checkin_status" title="{{arrived_upper}}" *ngIf="checkin.waitlistStatus == 'arrived'">
-                            <span class="arrived" *ngIf="time_type==1">{{arrived_upper}}</span>
-                          </span>
-                        <span data-title="{{checkin_label + ' Status'}}" class="checkin_status"
+                      <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
+                        *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
+                        <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i> {{getAppxTime(checkin)}}</span>
+                      </span>
+                      <span class="icon-arrived checkin_status m0" title="{{arrived_upper}}"
+                        *ngIf="checkin.waitlistStatus == 'arrived'">
+                        <span class="arrived" *ngIf="time_type==1">{{arrived_upper}}</span>
+                      </span>
+                      <span data-title="{{checkin_label + ' Status'}}" class="checkin_status"
                         *ngIf="time_type !=1  && checkin_label">
                         <span
                           [class]="checkin.waitlistStatus">{{check_in_statuses[getStatusLabel(checkin.waitlistStatus)]}}</span>
                       </span>
                       <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
-                          <ng-container *ngIf="checkin.paymentStatus">
-                            <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span
-                                class="text">{{not_paid_cap}}</span></span>
-                            <span class="paid-h" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
-                                class="text">{{partially_paid_cap}}</span></span>
-                            <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
-                                class="text">{{paid_cap}}</span></span>
-    
-                          </ng-container>
-                        </span>
+                        <ng-container *ngIf="checkin.paymentStatus">
+                          <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span
+                              class="text">{{not_paid_cap}}</span></span>
+                          <span class="paid-h" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
+                              class="text">{{partially_paid_cap}}</span></span>
+                          <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
+                              class="text">{{paid_cap}}</span></span>
+
+                        </ng-container>
+                      </span>
                     </div>
-                    
-                    
-                    
-                    <span data-title="Wait Time" class="date pointer-cursor"
-                      *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
-                      <span *ngIf="!showEditView">{{wait_time_caption}}: {{getAppxTime(checkin)}}</span>
-                    </span>
-                    
-                    
                   </div>
-                  <div class="col-md-5 col-xs-12 mt10 no-padding">
+                  <div class="col-md-4 col-xs-12 mt10 no-padding">
                     <span class="cnote" *ngIf="time_type !=0 && !small_device_display">
                       <span *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                         <i class="icon-note"></i>
                       </span>
                     </span>
-                    <div class="col-md-12" *ngIf="time_type!=2">
+                    <div class="col-md-12 mt10 col-xs-12 no-padding actions" *ngIf="time_type!=2">
                       <ng-container *ngIf="time_type == 1">
                         <span class="arrived cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'REPORT')"
                           *ngIf="checkin.waitlistStatus == 'checkedIn' && !checkin.disableArrivedbtn">
@@ -219,30 +215,30 @@
                         <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')"
                           *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                                           || checkin.waitlistStatus == 'arrived') && !checkin.disableStartbtn">
-                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
+                          <i class=""></i>{{start_label |capitalizeFirst}}
                         </span>
                         <span class="start cs-btn bt7" *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                       || checkin.waitlistStatus == 'arrived') && checkin.disableStartbtn">
-                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
+                          <i class=""></i>{{start_label |capitalizeFirst}}
                         </span>
                         <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
                           *ngIf="checkin.waitlistStatus == 'started' && !checkin.disableDonebtn">
-                          <i class="icon-play"></i>{{done_cap}}
+                          <i class=""></i>{{done_cap}}
                         </span>
                         <span class="done cs-btn bt7"
                           *ngIf="checkin.waitlistStatus == 'started' && checkin.disableDonebtn">
-                          <i class="icon-play"></i>{{done_cap}}
+                          <i class=""></i>{{done_cap}}
                         </span>
                       </ng-container>
                       <ng-container *ngIf="time_type == 0">
                         <!-- case of history-->
                         <span class="start cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                                           || checkin.waitlistStatus == 'arrived')">
-                          <i class="icon-play"></i>{{start_label |capitalizeFirst}}
+                          <i class=""></i>{{start_label |capitalizeFirst}}
                         </span>
                         <span class="done cs-btn bt7" (click)="changeWaitlistStatus(checkin, 'DONE')"
                           *ngIf="checkin.waitlistStatus == 'started'">
-                          <i class="icon-play"></i>{{done_cap}}
+                          <i class=""></i>{{done_cap}}
                         </span>
                       </ng-container>
                       <span class="cs-btn bt7 viewbill" (click)="viewBillPage(checkin)"
@@ -250,13 +246,13 @@
                                           checkin.waitlistStatus != 'cancelled' && time_type !== 2 && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid
                                           || (checkin.waitlistStatus === 'cancelled' && checkin.paymentStatus != 'NotPaid')">
                         <ng-container *ngIf="checkin.waitlistStatus != 'prepaymentPending'">
-                          <i class="icon-play"></i>{{bill_cap}}
+                          <i class=""></i>{{bill_cap}}
                         </ng-container>
                       </span>
                       <span class="acceptbill cs-btn bt7"
                         *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid' && checkin.waitlistStatus != 'cancelled' && checkin.waitlistStatus != 'checkedIn'"
                         (click)="viewBillPage(checkin)">
-                        <i class="icon-play"></i>{{accept_cap}}
+                        <i class=""></i>{{accept_cap}}
                       </span>
                     </div>
 
@@ -297,6 +293,45 @@
                   </span>
                 </div>
                 <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="search_paging chkin-brdr">
+                <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+                  [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
+                  [curpage]="pagination.startpageval"></app-pager>
+              </div>
+              <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
+                <div class="no-dta col-md-12"
+                  *ngIf="noFilter && time_type == 1 && load_waitlist ==1 && check_in_filtered_list.length == 0 && status_type =='all'">
+                  {{no_today_checkin_msg}}
+                </div>
+                <div class="no-dta col-md-12"
+                  *ngIf="noFilter && time_type == 1 && today_started_count == 0 && status_type =='started'">
+                  {{no_started_checkin_msg}}
+                </div>
+                <div class="no-dta col-md-12"
+                  *ngIf="noFilter && time_type == 1 && today_completed_count == 0 && status_type =='done'">
+                  {{no_completed_checkin_msg}}
+                </div>
+                <div class="no-dta col-md-12"
+                  *ngIf="noFilter && time_type == 1 && today_cancelled_count == 0 && status_type =='cancelled'">
+                  {{no_cancelled_checkin_msg}}
+                </div>
+                <div class="no-dta col-md-12"
+                  *ngIf="noFilter && time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+                  {{no_future_checkins}}
+                </div>
+                <div class="no-dta col-md-12"
+                  *ngIf="noFilter && time_type == 0 && load_waitlist ==1 && check_in_filtered_list.length == 0">
+                  {{no_history}}
+                </div>
+                <div class="no-dta col-md-12" *ngIf="!noFilter && check_in_filtered_list.length == 0">
+                  {{no_result_found}}
+                </div>
+              </ng-container>
+              <div class="no-dta col-md-12" *ngIf="noFilter && time_type ==1 && load_queue == 1 &&
+                    queues.length ==0">
+                <p>{{no_service_cap}}</p>
               </div>
             </div>
             <!-- <thead>
@@ -441,45 +476,7 @@
                   </td>
                 </tr>
               </tbody>  -->
-            <div class="search_paging">
-              <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
-                [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)"
-                [curpage]="pagination.startpageval"></app-pager>
-            </div>
           </div>
-          <ng-container *ngIf="time_type != 1 || (time_type ==1 && queues.length !=0)">
-            <div class="no-dta"
-              *ngIf="noFilter && time_type == 1 && load_waitlist ==1 && check_in_filtered_list.length == 0 && status_type =='all'">
-              {{no_today_checkin_msg}}
-            </div>
-            <div class="no-dta"
-              *ngIf="noFilter && time_type == 1 && today_started_count == 0 && status_type =='started'">
-              {{no_started_checkin_msg}}
-            </div>
-            <div class="no-dta"
-              *ngIf="noFilter && time_type == 1 && today_completed_count == 0 && status_type =='done'">
-              {{no_completed_checkin_msg}}
-            </div>
-            <div class="no-dta"
-              *ngIf="noFilter && time_type == 1 && today_cancelled_count == 0 && status_type =='cancelled'">
-              {{no_cancelled_checkin_msg}}
-            </div>
-            <div class="no-dta"
-              *ngIf="noFilter && time_type==2 && load_waitlist ==1 && check_in_filtered_list.length == 0">
-              {{no_future_checkins}}
-            </div>
-            <div class="no-dta"
-              *ngIf="noFilter && time_type == 0 && load_waitlist ==1 && check_in_filtered_list.length == 0">
-              {{no_history}}
-            </div>
-            <div class="no-dta" *ngIf="!noFilter && check_in_filtered_list.length == 0">
-              {{no_result_found}}
-            </div>
-          </ng-container>
-        </div>
-        <div class="no-dta" *ngIf="noFilter && time_type ==1 && load_queue == 1 &&
-                    queues.length ==0">
-          <p>{{no_service_cap}}</p>
         </div>
       </div>
     </div>

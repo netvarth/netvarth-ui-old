@@ -51,6 +51,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     {
       title: Messages.DASHBOARD_TITLE,
       url: '/provider'
+    },
+    {
+      title: 'Check-Ins',
+      url: '/provider/dashboard/check-ins'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

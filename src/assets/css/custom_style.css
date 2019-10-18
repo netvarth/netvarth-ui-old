@@ -4860,23 +4860,83 @@ i.notavail {
   white-space: inherit !important;
 }
 
-.dashboard .chkins {
-  border-bottom: 1px solid #dbdbdb;
-  padding: 10px !important
-}
 .dashboard .chkins:nth-child(odd) {
   background: rgba(0,0,0,.03) !important;
 }
 .dashboard .chkins:nth-child(even) {
   background: transparent !important;
 }
+
+.dashboard .chkins {
+  padding: 10px !important;
+}
+.chkin-brdr {
+  border-top: 1px solid #dbdbdb !important;
+}
+/* .dashboard .chkins:last-child {
+ 
+} */
 .dashboard .chkins .service, .dashboard .chkins .forwhom  {
   font-weight: 600;
 }
-.dashboard .chkins  .paid-n { color : #f53404;}
-.dashboard .chkins  .paid-h { color : #fda60d;}
-.dashboard .chkins  .paid-f { color : #22d21e;}
+.dashboard .chkins .date  {
+  font-weight: 500;
+  font-size:0.80rem;
+  color: #006b80
+}
+.dashboard .chkins .forwhom {
+  color: #00aef2;
+}
+.dashboard .chkins .name{ padding-right: 15px;}
+.dashboard .chkins .wt-time { padding-right: 25px;}
 
+.dashboard .chkins  .paid-n { color : #f53404; font-weight: 800;}
+.dashboard .chkins  .paid-h { color : #fda60d;font-weight: 800;}
+.dashboard .chkins  .paid-f { color : #22d21e;font-weight: 800;}
+.dashboard .card .actions span.start {
+  background: #4de2ff;
+  color: #006b80;
+}
+.dashboard .card .actions span.viewbill {
+  background: #f2cd61;
+  color: #7d600a;
+}
+.dashboard .card .actions span.done {
+  background: #0edcb8;
+  color: #021c18;
+}
+.dashboard .card .actions span.arrived {
+  background: #79e688;
+  color: #177c25;
+}
+.dashboard .card .actions span.acceptbill {
+  background: #63f2b2;
+  color: #0b7e4b;
+}
+.dashboard .card .actions span {
+  border-radius: 5px;
+  background-clip: padding-box;
+  height: auto;
+  text-transform: none;
+  padding: 5px 10px 5px 10px;
+  display: -webkit-box; 
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: none;
+  align-items: center;
+  font-weight: 500;
+}
+.dashboard .card.w-dta .checkin_status .arrived, .dashboard .card.w-dta .checkin_status .cancelled, .dashboard .card.w-dta .checkin_status .checkedIn, .dashboard .card.w-dta .checkin_status .done, .dashboard .card.w-dta .checkin_status .started {
+  color: #4de2ff;
+  padding: 2px 10px 2px 2px;
+  font-size: .75rem;
+  position: relative;
+  font-weight: 800
+}
+.dashboard .card.w-dta .checkin_status .cancelled {
+  color: #f24949;
+}
 .navbar-custom-menu .navbar-nav > li > a > i {font-size:1.2rem}
 .active-lnk {
   border: 2px solid #f1b51c;
@@ -4887,4 +4947,37 @@ i.notavail {
 }
 .label{
   padding: 0px !important;
+}
+
+.inl-blk { display: inline-block !important;}
+.content {background-color: transparent !important}
+.chkins-sect {border:1px solid #3c8dbc !important}
+.dashboard .card.w-dta .icon-arrived {
+  color: #4de2ff;
+}
+
+.dashboard .card.w-dta .name .icon-arrived .arrived {
+  color: #79e688;
+  padding: 2px 5px 2px 14px;
+  font-size: .65rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.dashboard .card.w-dta .name .icon-arrived .arrived:before {
+  position: absolute;
+  content: "";
+  background: #79e688;
+  width: 6px;
+  height: 6px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background-clip: padding-box;
+  top: 50%;
+  left: 4px;
+  margin-top: -4px;
+}
+
+.dashboard .card.w-dta .name .icon-arrived:before {
+  display: none;
 }

@@ -258,93 +258,100 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.domain = user.sector;
     this.getDomainSubdomainSettings();
     this.getServiceList();
-    this.getLocationList();
-    this.breadcrumb_moreoptions = {
-      'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
-    };
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    if (!this.server_date) { this.setSystemDate(); }
-    this.router.events
-      .pipe(filter((e: any) => e instanceof RoutesRecognized),
-        pairwise()
-      ).subscribe((e: any) => {
-        this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/checkin-detail/'));
-      });
-    const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
-    if (savedtype !== undefined && savedtype !== null) {
-      this.time_type = savedtype;
-    }
-    const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp'); // To get the active tab
-    if (stattype !== undefined && stattype !== null && stattype !== '') {
-      this.status_type = stattype;
-    }
-    if (stattype === null || stattype === '') { this.status_type = 'all'; }
-    this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
-    const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-    if (bprof === null || bprof === undefined) {
-      this.shared_services.bussinessDomains()
-        .subscribe(
-          res => {
-            this.holdbdata = res;
-            const today = new Date();
-            const postdata = {
-              cdate: today,
-              bdata: this.holdbdata
-            };
-            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
-            this.getBusinessProfile();
+    // this.getLocationList();
+    this.getLocationList().then(
+      () => {
+        this.breadcrumb_moreoptions = {
+          'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
+        };
+        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+        if (!this.server_date) { this.setSystemDate(); }
+        this.router.events
+          .pipe(filter((e: any) => e instanceof RoutesRecognized),
+            pairwise()
+          ).subscribe((e: any) => {
+            this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/dashboard/check-ins/'));
+          });
+        const savedtype = this.shared_functions.getitemfromLocalStorage('pdtyp');
+        if (savedtype !== undefined && savedtype !== null) {
+          this.time_type = savedtype;
+        }
+        const stattype = this.shared_functions.getitemfromLocalStorage('pdStyp'); // To get the active tab
+        if (stattype !== undefined && stattype !== null && stattype !== '') {
+          this.status_type = stattype;
+        }
+        if (stattype === null || stattype === '') { this.status_type = 'all'; }
+        this.shared_functions.setBusinessDetailsforHeaderDisp('', '', '', '');
+        const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+        if (bprof === null || bprof === undefined) {
+          this.shared_services.bussinessDomains()
+            .subscribe(
+              res => {
+                this.holdbdata = res;
+                const today = new Date();
+                const postdata = {
+                  cdate: today,
+                  bdata: this.holdbdata
+                };
+                this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+                this.getBusinessProfile();
+              }
+            );
+        } else {
+          this.getBusinessProfile();
+        }
+        this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
+          switch (message.ttype) {
+            case 'fromprovider': {
+              this.closeCounters();
+            }
           }
-        );
-    } else {
-      this.getBusinessProfile();
-    }
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
-      this.reloadAPIs();
-    });
-    this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
-      switch (message.ttype) {
-        case 'fromprovider': {
-          this.closeCounters();
-        }
+        });
+        this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
+          const ynw = this.shared_functions.getitemfromLocalStorage('loc_id');
+          switch (message.ttype) {
+            case 'location_change': {
+              this.changeLocation(ynw);
+            }
+          }
+        });
       }
-    });
-    this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
-      const ynw = this.shared_functions.getitemfromLocalStorage('loc_id');
-      switch (message.ttype) {
-        case 'location_change': {
-          this.changeLocation(ynw);
-        }
-      }
-    });
+    );
   }
 
   getLocationList() {
-    this.selected_location = null;
-    this.provider_services.getProviderLocations()
-      .subscribe(
-        (data: any) => {
-          const locations = data;
-          this.locations = [];
-          for (const loc of locations) {
-            if (loc.status === 'ACTIVE') {
-              this.locations.push(loc);
+    const self = this;
+    return new Promise(function (resolve, reject) {
+      self.selected_location = null;
+      self.provider_services.getProviderLocations()
+        .subscribe(
+          (data: any) => {
+            const locations = data;
+            self.locations = [];
+            for (const loc of locations) {
+              if (loc.status === 'ACTIVE') {
+                self.locations.push(loc);
+              }
             }
-          }
-          const cookie_location_id = this.shared_functions.getitemfromLocalStorage('provider_selected_location'); // same in provider checkin button page
-          if (cookie_location_id === '') {
-            if (this.locations[0]) {
-              this.changeLocation(this.locations[0]);
+            const cookie_location_id = self.shared_functions.getitemfromLocalStorage('provider_selected_location'); // same in provider checkin button page
+            if (cookie_location_id === '') {
+              if (self.locations[0]) {
+                self.changeLocation(self.locations[0]);
+              }
+            } else {
+              self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
             }
-          } else {
-            this.selectLocationFromCookies(parseInt(cookie_location_id, 10));
+            resolve();
+          },
+          () => {
+            reject();
+          },
+          () => {
           }
-        },
-        () => {
-        },
-        () => {
-        }
-      );
+        );
+    },
+    );
   }
   gotoLocations() {
     this.router.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
@@ -475,6 +482,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
             if (statusCode === 0) {
             }
             this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
+            this.reloadAPIs();
           }
         },
         () => { }
@@ -1132,7 +1140,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       this.shared_functions.setitemonLocalStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemonLocalStorage('hPFil', this.filter);
     }
-    this.router.navigate(['provider', 'checkin-detail', checkin.ynwUuid]);
+    this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid]);
   }
   addProviderNote(checkin) {
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
