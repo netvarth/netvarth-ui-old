@@ -3814,6 +3814,26 @@ package.</li>
 </div>
 </mat-expansion-panel>
 </mat-accordion>
+<mat-accordion>
+        <mat-expansion-panel [expanded]='showdownpanel'>
+                <mat-expansion-panel-header class="accordion">
+                <mat-panel-title 
+                class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">
+                Home Service
+                </mat-panel-title>
+                </mat-expansion-panel-header>
+                </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+            <mat-expansion-panel [expanded]='showdownpanel'>
+                    <mat-expansion-panel-header class="accordion">
+                    <mat-panel-title 
+                    class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">
+                    Display Board
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+        </mat-accordion>
 </div>
 </div>
 </div>
