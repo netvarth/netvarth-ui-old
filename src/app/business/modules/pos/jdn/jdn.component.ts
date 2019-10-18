@@ -11,7 +11,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 export class JDNComponent implements OnInit {
     jdn_full_cap = Messages.JDN_FUL_CAP;
     jdn_status = true;
-    status = '';
+    status = 'Create';
     jdn_data;
     domain;
     jdn;
@@ -85,12 +85,13 @@ export class JDNComponent implements OnInit {
             .subscribe(
                 (data) => {
                     console.log(data);
-                    this.api_success = this.shared_functions.getProjectMesssages('JDN_CREATED');
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_CREATED'), { 'panelClass': 'snackbarerror' });
+                    
                     this.getJdn();
 
                 },
                 error => {
-                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                    this.api_error = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
                 }
             );
@@ -121,12 +122,12 @@ export class JDNComponent implements OnInit {
             .subscribe(
                 (data) => {
                     console.log(data);
-                    this.api_success = this.shared_functions.getProjectMesssages('JDN_UPDATED');
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_UPDATED'), { 'panelClass': 'snackbarerror' });
                     this.getJdn();
                     this.rewrite =stat;
                 },
                 error => {
-                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                    this.api_error = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
                 }
             );
@@ -139,11 +140,11 @@ export class JDNComponent implements OnInit {
             .subscribe(
                 (data) => {
                     console.log(data);
-                    this.api_success = this.shared_functions.getProjectMesssages('JDN_DISABLED');
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_DISABLED'), { 'panelClass': 'snackbarerror' });
                     this.getJdn();
                 },
                 error => {
-                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                    this.api_error = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getJdn();
                 }
             );
@@ -157,6 +158,15 @@ export class JDNComponent implements OnInit {
             this.rewrite =stat;
             this.getJdn();
         }
+        handlejdn_status(event){
+            const value = (event.checked) ? true : false;
+            if(value == true){
+                this.save();
+            }else{
+                this.disable();
+            }
+        }
+
     getJdn() {
         this.shared_services.getJdn()
             .subscribe(data => {
