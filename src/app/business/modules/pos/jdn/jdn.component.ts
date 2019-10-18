@@ -10,7 +10,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 })
 export class JDNComponent implements OnInit {
     jdn_full_cap = Messages.JDN_FUL_CAP;
-    jdn_status = true;
+    jdn_status ;
     status = 'Create';
     jdn_data;
     domain;
@@ -84,7 +84,7 @@ export class JDNComponent implements OnInit {
         this.shared_services.addJdn(post_data)
             .subscribe(
                 (data) => {
-                    console.log(data);
+                    this.jdn_status = true;
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_CREATED'), { 'panelClass': 'snackbarerror' });
                     
                     this.getJdn();
@@ -121,7 +121,6 @@ export class JDNComponent implements OnInit {
         this.shared_services.updateJdn(put_data)
             .subscribe(
                 (data) => {
-                    console.log(data);
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_UPDATED'), { 'panelClass': 'snackbarerror' });
                     this.getJdn();
                     this.rewrite =stat;
@@ -139,7 +138,7 @@ export class JDNComponent implements OnInit {
         this.shared_services.disable()
             .subscribe(
                 (data) => {
-                    console.log(data);
+                   this.jdn_status = false;
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_DISABLED'), { 'panelClass': 'snackbarerror' });
                     this.getJdn();
                 },
@@ -174,6 +173,12 @@ export class JDNComponent implements OnInit {
                 console.log(data);
                 if (this.jdn_data != null) {
                     this.status = this.jdn_data.status;
+                    if(this.status === 'ENABLED'){
+                        this.jdn_status = true;
+                    }else{
+                        this.jdn_status = false;
+                    }
+                    // this.jdn_status = (this.status === 'ENABLED') ? 'true' : 'false';
                     this.fillJdnfields(this.jdn_data);
                 }
             });

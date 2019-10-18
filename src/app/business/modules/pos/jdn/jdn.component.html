@@ -11,7 +11,7 @@
                             <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})<span
                                     *ngIf="status ==='ENABLED'">Enabled</span><span
                                     *ngIf="status === 'DISABLED'">Disabled</span></span>&nbsp;
-                            <span class="ctrl">
+                            <span class="ctrl" *ngIf="status === 'ENABLED'||status === 'DISABLED'">
                             <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)"></mat-slide-toggle>
                         </span>
                         <span class="editbt" style="margin-left: 20px;" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span>
@@ -33,7 +33,8 @@
                                         <label *ngIf="rewrite ==='edit'|| status ==='Create'" class="col-form-label">Choose Jaldee
                                             Discount</label>
                                         <label *ngIf="rewrite !='edit'&& status !='Create'" class="col-form-label">Jaldee Discount
-                                            {{discType}}%</label>
+                                            </label>
+                                            <span *ngIf="rewrite !='edit'&& status !='Create'">{{discType}}%</span>
                                         <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" [(ngModel)]="discType"
                                             [disabled]="status === 'DISABLED'">
                                             <mat-radio-button [value]=5>5%</mat-radio-button>&nbsp;
@@ -52,7 +53,7 @@
                                 </ng-template>
                             </div>
 
-                            <div class="form-group"  style="padding-top: 20px;">
+                            <div class="form-group"  >
                                 <label class="col-form-label">Note</label>
                                 <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdndisplayNote}}</span>
                                 <textarea *ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
