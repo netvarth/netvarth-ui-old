@@ -3654,6 +3654,36 @@ Down Panel Options
                     Display Board
                     </mat-panel-title>
                     </mat-expansion-panel-header>
+                    <mat-accordion>
+                            <mat-expansion-panel [expanded]='showdownpanel'>
+                                    <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title 
+                                    class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">
+                                   Custom fields/labels
+                                    </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                            <mat-expansion-panel [expanded]='showdownpanel'>
+                                    <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title 
+                                    class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">
+                                   Displayboards
+                                    </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                            <mat-expansion-panel [expanded]='showdownpanel'>
+                                    <mat-expansion-panel-header class="accordion">
+                                    <mat-panel-title 
+                                    class="accordion-title" (click)="handleScroll('downpanel', 'downpanel')">
+                                   Layout
+                                    </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    </mat-expansion-panel>
+                    </mat-accordion>
                     </mat-expansion-panel>
         </mat-accordion>
 </div>
