@@ -24,31 +24,26 @@ export class BusinessComponent implements OnInit {
     public shared_service: SharedServices,
     public provider_datastorage: CommonDataStorageService,
     private provider_shared_functions: ProviderSharedFuctions) {
-        router.events.subscribe(
-    (event: RouterEvent): void => {
-this._navigationInterceptor(event);
-    }
-  );
+    router.events.subscribe(
+      (event: RouterEvent): void => {
+        this._navigationInterceptor(event);
+      }
+    );
 
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/provider') {
-              router.navigate(['provider', 'dashboard', 'check-ins']);
+          router.navigate(['provider', 'dashboard', 'check-ins']);
         }
       }
     });
-
     this.route.data.subscribe((data) => {
       if (data.terminologies) {
         this.provider_datastorage.set('terminologies', data.terminologies);
       }
-
     });
-
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
-
   }
-
   private _navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
       this.apiloading = true;
@@ -56,7 +51,6 @@ this._navigationInterceptor(event);
     if (event instanceof NavigationEnd) {
       this.apiloading = false;
     }
-  
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
     if (event instanceof NavigationCancel) {
       this.apiloading = false;
@@ -64,7 +58,6 @@ this._navigationInterceptor(event);
     if (event instanceof NavigationError) {
       this.apiloading = false;
     }
-    console.log(this.apiloading);
   }
   handleScrollhide(ev) {
     this.outerscroller = ev;
