@@ -15,9 +15,9 @@
                     <div class="card" *ngIf="label_list.length==0">
                         No Labels Found
                     </div>
-                    <div class="card" >
+                    <div class="card">
                         <div class="copy">
-                            <div class="col-md-12 addbt" style="display: flex">
+                            <div class="col-md-12" style="display: flex; margin-left: 1100px;">
                                 <mat-panel-description class="acc-plus-btn pointer-cursor">
                                     <button mat-icon-button (click)="addLabel()" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="add_button">
@@ -41,25 +41,24 @@
                                             </button>
                                         </span>
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
-                                                {{label.label | capitalizeFirst}}</h3> &nbsp;
-                                        <div class="c-ot m0">   
+                                            {{label.label | capitalizeFirst}}</h3> &nbsp;
+                                        <div class="c-ot m0">
                                             <div class="item">
                                                 <span class="ttle">Description</span>
                                                 <span>{{label.description | capitalizeFirst}}</span>
                                             </div>
                                         </div>
-                                      
-                                        <div class="c-ot m0"  *ngFor="let labelvalue of label.valueSet">
+
+                                        <div class="c-ot m0">
                                             <div class="item" style="margin-top: 10px;">
                                                 <span class="ttle">Value</span>
-                                                <span> {{labelvalue.value}} ({{labelvalue.shortValue}})</span>
+                                                <span *ngFor="let labelvalue of label.valueSet"> {{labelvalue.value}} ({{labelvalue.shortValue}}) </span>
                                             </div>
                                         </div>
 
                                         <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item (click)="editLabel(label)"
-                                                *ngIf="label.status=='ACTIVE'">
-                                                <i class="icon-edit"></i>
+                                            <button mat-menu-item (click)="editLabel(label)">
+                                                <!-- <i class="icon-edit"></i> -->
                                                 Edit
                                             </button>
                                             <button mat-menu-item (click)="deleteLabel(label)">
