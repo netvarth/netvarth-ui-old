@@ -74,7 +74,6 @@ export class DisplayboardLabelComponent implements OnInit {
             'actions': [{ 'title': 'Add Custom Field', 'type': 'addcustomfield' }]
         };
         this.initLabelParams();
-        
     }
     initLabelParams() {
         if (this.label_id === 'add') {
@@ -129,8 +128,9 @@ export class DisplayboardLabelComponent implements OnInit {
             }
         );
     }
-    onSubmit(label_data) {
-        console.log(label_data);
+    onSubmit(data) {
+        console.log(data);
+        this.editLabel(data);
     }
     createLabel() {
         const label_data = {};
@@ -156,16 +156,24 @@ export class DisplayboardLabelComponent implements OnInit {
                 }
             );
     }
+    // editLabel(post_data) {
+    //     this.action = 'edit';
+    //     this.provider_services.updateLabel(post_data)
+    //         .subscribe(
+    //             () => {
+    //                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
+    //     this.getLabelDetails();
+    //     },
+    //     error => {
+    //     }
+    //     );
+    // }
     editLabel(post_data) {
-        this.provider_services.updateLabel(post_data)
-            .subscribe(
-                () => {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
-        this.getLabelDetails();
-        },
-        error => {
-        }
-        );
+        this.action = 'edit';
+        const label_data = {};
+        label_data['label'] = this.labelInfo.label;
+        label_data['description'] = this.labelInfo.description;
+        label_data['valueSet'] = this.valueSet;
     }
     // createForm() {
     //     this.labelForm = this.fb.group({
@@ -186,6 +194,10 @@ export class DisplayboardLabelComponent implements OnInit {
     /**
  * For clearing api errors
  */
+deleteValueforSet(i){
+    this.valueSet.splice(i, 1);
+
+}
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
