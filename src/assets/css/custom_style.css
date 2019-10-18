@@ -4981,3 +4981,7 @@ i.notavail {
 .dashboard .card.w-dta .name .icon-arrived:before {
   display: none;
 }
+.disabled {
+  background: #e6e6e6 !important;
+  cursor: not-allowed !important;
+}
