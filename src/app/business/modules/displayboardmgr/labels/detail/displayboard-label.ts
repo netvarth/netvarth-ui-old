@@ -222,3 +222,4 @@ export class DisplayboardLabelComponent implements OnInit {
         this.router.navigate(['provider/settings/displayboard/labels']);
     }
 }
+
