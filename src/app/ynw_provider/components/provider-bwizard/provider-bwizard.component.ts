@@ -45,7 +45,7 @@ export class ProviderbWizardComponent implements OnInit {
   location_cap = Messages.WIZ_LOCATION_CAP;
   add_more_loc_in_set_cap = Messages.WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP;
   add_more_services_in_set_cap = Messages.WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP;
-  add_more_queue_in_set_cap;
+  add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP;
   choose_loc_cap = Messages.WIZ_CHOOSE_YOUR_LOCA_CAP;
   loc_not_avail_cap = Messages.WIZ_LOC_NOT_AVAIL_CAP;
   gps_coordinates_cap = Messages.WIZ_GPS_COORDINATES_CAP;
@@ -976,7 +976,7 @@ export class ProviderbWizardComponent implements OnInit {
         () => {
           this.service = post_data;
           this.showStep(3);
-          this.add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP;
+          // this.add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP;
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
