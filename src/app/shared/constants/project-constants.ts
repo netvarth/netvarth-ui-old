@@ -415,6 +415,32 @@ export const projectConstants = {
   },
   REGION_LANGUAGE: 'en-US',
   TIME_ZONE_REGION: 'Asia/Kolkata',
-  KEY: 'JALDEESOFT'
-
+  KEY: 'JALDEESOFT',
+  STATUS_BOARD: [
+    {
+      'name': 'token',
+      'displayname': 'Token',
+      'label': false
+    },
+    {
+      'name': 'service',
+      'displayname': 'Service',
+      'label': false
+    },
+    {
+      'name': 'appxWaitingTime',
+      'displayname': 'Waiting Time',
+      'label': false
+    },
+    {
+      'name': 'queue',
+      'displayname': 'Queue',
+      'label': false
+    },
+    {
+      'name': 'waitlistingFor',
+      'displayname': 'Customer',
+      'label': false
+    }
+  ]
 };

@@ -721,7 +721,7 @@ export class ProviderServices {
     const url = 'provider/statusBoard';
     return this.servicemeta.httpGet(url);
  }
- getDisplayboard(boardId) {
+ getDisplayboardbyId(boardId) {
    const url = 'provider/statusBoard/' + boardId;
    return this.servicemeta.httpGet(url);
  }
@@ -734,7 +734,7 @@ export class ProviderServices {
    return this.servicemeta.httpPost(url, board);
  }
  deleteDisplayboard (boardId) {
-   const url = 'provider/statusBoard' + boardId;
+   const url = 'provider/statusBoard/' + boardId;
    return this.servicemeta.httpDelete(url);
  }
  getBoardLayouts() {
@@ -758,5 +758,4 @@ deleteBoardLayout (layoutId) {
  return this.servicemeta.httpDelete(url);
 }
 }
-
 

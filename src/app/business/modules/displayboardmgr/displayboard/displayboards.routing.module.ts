@@ -5,7 +5,7 @@ import { DisplayboardDetailComponent } from './detail/displayboard-detail';
 
 const routes: Routes = [
     { path: '', component: DisplayboardListComponent},
-    { path: ':id', component: DisplayboardDetailComponent}
+    { path: ':action', component: DisplayboardDetailComponent}
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { DisplayboardDetailComponent } from './detail/displayboard-detail';
 import { DisplayboardListComponent } from './displayboard-list';
 import { DisplayboardsRoutingModule } from './displayboards.routing.module';
+import { SharedModule } from '../../../../shared/modules/common/shared.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { DisplayboardsRoutingModule } from './displayboards.routing.module';
         ReactiveFormsModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
-        CommonModule
+        CommonModule,
+        SharedModule
     ],
     exports: [DisplayboardListComponent]
 })

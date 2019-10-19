@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-displayboard-list',
@@ -25,30 +26,28 @@ export class DisplayboardListComponent implements OnInit {
     api_loading: boolean;
     board_list: any = [];
     domain: any;
-
+    add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     constructor(
         private router: Router,
         private routerobj: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions
-        ) { }
+    ) { }
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Displayboard', 'type': 'addstatusboard' },{ 'title': 'Learn More', 'type': 'learnmore' }]
+            'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
         };
         this.getDisplayboards();
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.domain = user.sector;
     }
-    getDisplayboards() { 
+    getDisplayboards() {
         this.api_loading = true;
         this.board_list = [];
         this.provider_services.getDisplayboards()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.board_list = data;
                     this.api_loading = false;
                 },
@@ -59,28 +58,35 @@ export class DisplayboardListComponent implements OnInit {
             );
     }
     performActions(action) {
-        if (action === 'addstatusboard') {
-            this.addDisplayboard();
-        }
+        // if (action === 'addstatusboard') {
+        //     console.log(action);
+        //     this.addDisplayboard();
+        // }
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->board']);
         }
     }
     addDisplayboard() {
-        this.router.navigate(['provider', 'settings', 'displayboard', 'list', 'add']);
+        this.router.navigate(['provider', 'settings', 'displayboard',
+            'list', 'add']);
     }
     editDisplayboard(board) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'edit' }
+            queryParams: { id: board.id }
         };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'list', board.id], navigationExtras);
+            'list', 'edit'], navigationExtras);
     }
     goDisplayboardDetails(board) {
+        // this.router.navigate(['provider', 'settings', 'displayboard',
+        //     'labels', board.id]);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { id: board.id }
+        };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'labels', board.id]);
+            'list', 'view'], navigationExtras);
     }
-    deleleDisplayboard(board) {
+    deleteDisplayboard(board) {
         this.provider_services.deleteDisplayboard(board.id).subscribe(
             () => {
                 this.getDisplayboards();
