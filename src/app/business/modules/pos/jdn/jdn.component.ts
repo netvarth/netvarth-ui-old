@@ -47,7 +47,10 @@ export class JDNComponent implements OnInit {
         this.shared_services.getFeatures(sub_domain)
             .subscribe(data => {
                 this.jdn = data;
+                if(this.jdn && this.jdn.features.JDN){
                 this.jdnType = this.jdn.features.JDN.JDNType;
+                }
+                
             });
         this.getJdn();
     }
@@ -66,7 +69,7 @@ export class JDNComponent implements OnInit {
             post_data = {
 
                 "label": this.jdnlabeltext,
-                "displyNote": this.jdndisplayNote,
+                "displyNote": this.jdndisplayNote||'',
                 "status": "ENABLED"
 
             };
@@ -74,7 +77,7 @@ export class JDNComponent implements OnInit {
             const discountPer = +this.discType;
 
             post_data = {
-                "displyNote": this.jdndisplayNote,
+                "displyNote": this.jdndisplayNote||'',
                 "discPercentage": discountPer,
                 "discMax": this.jdnmaxDiscounttext,
                 "status": "ENABLED"
@@ -85,7 +88,7 @@ export class JDNComponent implements OnInit {
             .subscribe(
                 (data) => {
                     this.jdn_status = true;
-                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_CREATED'), { 'panelClass': 'snackbarerror' });
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_CREATED'), { 'panelclass': 'snackbarerror' });
                     
                     this.getJdn();
 
@@ -97,6 +100,15 @@ export class JDNComponent implements OnInit {
             );
 
     }
+    radioChange(event){
+        if(event.value == 5){
+        this.jdnmaxDiscounttext = 50;
+        }else if(event.value == 10){
+            this.jdnmaxDiscounttext = 100;
+        }else{
+            this.jdnmaxDiscounttext = 200;
+        }
+    }
     update(stat) {
         this.resetApiErrors();
         let put_data;
@@ -104,7 +116,7 @@ export class JDNComponent implements OnInit {
             put_data = {
 
                 "label": this.jdnlabeltext,
-                "displyNote": this.jdndisplayNote,
+                "displyNote": this.jdndisplayNote || '',
                 "status": "ENABLED"
 
             };
@@ -112,7 +124,7 @@ export class JDNComponent implements OnInit {
             const discountPer = +this.discType;
 
             put_data = {
-                "displyNote": this.jdndisplayNote,
+                "displyNote": this.jdndisplayNote ||'',
                 "discPercentage": discountPer,
                 "discMax": this.jdnmaxDiscounttext,
                 "status": "ENABLED"
@@ -121,7 +133,7 @@ export class JDNComponent implements OnInit {
         this.shared_services.updateJdn(put_data)
             .subscribe(
                 (data) => {
-                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_UPDATED'), { 'panelClass': 'snackbarerror' });
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_UPDATED'), { 'panelclass': 'snackbarerror' });
                     this.getJdn();
                     this.rewrite =stat;
                 },
@@ -139,7 +151,7 @@ export class JDNComponent implements OnInit {
             .subscribe(
                 (data) => {
                    this.jdn_status = false;
-                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_DISABLED'), { 'panelClass': 'snackbarerror' });
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_DISABLED'), { 'panelclass': 'snackbarerror' });
                     this.getJdn();
                 },
                 error => {
