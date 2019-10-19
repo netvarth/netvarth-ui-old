@@ -44,7 +44,7 @@ export class DisplayboardMgrComponent implements OnInit {
       }
       performActions(action) {
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/help']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/displayboard']);
         }
-    }
+    } 
 }

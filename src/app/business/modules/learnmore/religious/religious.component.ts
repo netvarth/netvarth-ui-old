@@ -29,10 +29,10 @@ export class ReligiousComponent implements OnInit {
   license = true;
   billing = true;
   miscellaneous = true;
+  displayboard = true;
+  homeservice = true;
   showpublic = false;
-
   showverified = false;
-
   showprofilesearch = false;
   showbasicinfrmtion = false;
   showadword = false;
@@ -65,6 +65,13 @@ export class ReligiousComponent implements OnInit {
   showdashbord = false;
   showcustomer = false;
   showdownpanel = false;
+  showdisplayboard = false;
+  showlabel = false;
+  showboard = false;
+  showlayout = false;
+  showhomeservice = false;
+  showserviceH = false;
+  showhoursH = false;
   domain;
   show = 'false';
   constructor(
@@ -237,5 +244,29 @@ export class ReligiousComponent implements OnInit {
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
   }
+  if (parentContent === 'displayboard')
+  {
+    this.showdisplayboard = true;
+    if(childContent === 'label')
+    {
+      this.showlabel = true;
+    }
+    if(childContent === 'board')
+    {
+      this.showboard = true;
+    }
+    if(childContent === 'layout')
+    {
+      this.showlayout = true;
+    }
+  }
+ if (parentContent === 'homeservice')
+{
+  this.showhomeservice = true;
+  if(childContent === 'serviceH')
+  {this.showserviceH = true;}
+  if(childContent === 'hourH')
+  {this.showhoursH = true;}
+}
   }
 }

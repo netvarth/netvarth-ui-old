@@ -62,7 +62,7 @@ export class DisplayboardLabelsComponent implements OnInit {
     performActions(actions) {
         this.addLabel();
         if (actions === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/help']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->label']);
         }
     }
     addLabel() {

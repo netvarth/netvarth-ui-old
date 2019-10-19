@@ -202,7 +202,7 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/homeservice->' + mod]);
       }
 
     handle_waitliststatus(event) {

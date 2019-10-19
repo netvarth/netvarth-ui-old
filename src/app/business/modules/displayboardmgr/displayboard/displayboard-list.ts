@@ -63,7 +63,7 @@ export class DisplayboardListComponent implements OnInit {
             this.addDisplayboard();
         }
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/help']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->board']);
         }
     }
     addDisplayboard() {

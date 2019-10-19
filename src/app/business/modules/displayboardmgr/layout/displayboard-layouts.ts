@@ -63,7 +63,7 @@ export class DisplayboardLayoutsComponent implements OnInit {
             this.addDisplayboardLayout();
         }
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/help']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->layout']);
         }
     }
     addDisplayboardLayout() {
