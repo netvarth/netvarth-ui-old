@@ -50,6 +50,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="subs" *ngIf="license_upgarde_sub['price'] != 0">
+                                <h4>Subscription</h4>
+
+                                <span class="ttle">
+                                       You have currently enrolled to
+                                       <span class="pack active">
+                                        <span class="price">{{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</span> / {{license_upgarde_sub['current_sub']}}
+                                        </span>
+                                </span>
+
+                                <div class="subs-box">
+                                    <ng-container *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
+                                    <span class="change">Change plan to</span>
+
+                                    <div class="pack not-active" *ngFor="let sub of license_upgarde_sub['next_sub']"
+                                    (click)="doUpgradeSubcription(sub['value'])">
+                                    <span class="price">{{sub['amount'] | currency:'INR':'symbol':'.2-2'}}</span> / {{sub['type']}}
+                                    <span class="discount" *ngIf="sub['discount_per'] != 0">
+                                    ( {{sub['discount_per']}}% discount )
+                                    </span>
+                                    </div>
+                                    </ng-container>
+                                </div>
+
+                            </div>
                             <div class="colum">
                                 <div class="lc44">
                                     <div class="lc4-1 mgn-bt-10"
