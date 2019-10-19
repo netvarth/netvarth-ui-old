@@ -714,7 +714,7 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, label);
   }
   deleteLabel (labelId) {
-    const url = 'provider/waitlist/label' + labelId;
+    const url = 'provider/waitlist/label/' + labelId;
     return this.servicemeta.httpDelete(url);
   }
   getDisplayboards () {

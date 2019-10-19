@@ -9,7 +9,7 @@
                     <div class="copy locd">
                         <div class="lbl col-md-12 no padding">
                             <div class="cl1" *ngIf="action=='show'">
-                                <span class="editbt" (click)="editLabel()"></span>
+                                <span class="editbt" (click)="editLabel(labelData,id)"></span>
                                 <div class="ot-it">
                                     <h4>{{label.label | capitalizeFirst}}</h4>
                                     <div class="c-ot m0">
@@ -31,7 +31,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="label_name"
-                                                    placeholder="{{label_name_cap}}" [(ngModel)]="labelInfo.label"
+                                                    placeholder="{{label_name_cap}}" [(ngModel)]="label"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>
@@ -39,7 +39,7 @@
                                             <mat-form-field>
                                                 <textarea matInput class="form-control" id="description"
                                                     placeholder="Briefly describe label"
-                                                    [(ngModel)]="labelInfo.description"
+                                                    [(ngModel)]="description"
                                                     [ngModelOptions]="{standalone: true}" (keyup)="setCharCount($event)"
                                                     (focus)="setDescFocus()" (blur)="lostDescFocus()"
                                                     maxlength="500"> </textarea>
@@ -71,11 +71,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="col-md-12" *ngFor="let valueset of valueSet">
-                                                <div class="col-md-5">
+                                            <div class="col-md-10" *ngFor="let valueset of valueSet">
+                                                <div class="col-md-4">
                                                     {{valueset.value}}
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-4">
                                                     {{valueset.shortValue}}
                                                 </div>
                                                 <div class="col-md-2">
@@ -83,7 +83,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="actiondiv">
+                                        <div class="actiondiv" style="margin-top: 150px;">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;

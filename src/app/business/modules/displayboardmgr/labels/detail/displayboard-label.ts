@@ -43,13 +43,17 @@ export class DisplayboardLabelComponent implements OnInit {
             url: '/provider/settings/displayboard/labels'
         }
     ];
-    label: any;
+    label;
     action: string;
     status: any;
     breadcrumbs = this.breadcrumbs_init;
     api_error: any;
     api_success: any;
     valueSet = [];
+    value;
+    shortValue;
+    labelData: any = [];
+    description;
 
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
@@ -60,11 +64,16 @@ export class DisplayboardLabelComponent implements OnInit {
         private fb: FormBuilder) {
         this.activated_route.params.subscribe(params => {
             this.label_id = params.id;
+            console.log(this.label_id);
+            if (this.label_id) {
+                this.editLabelbyId(params.id);
+            }
         }
         );
         this.activated_route.queryParams.subscribe(
             qparams => {
                 this.actionparam = qparams.action;
+                console.log(this.actionparam);
             });
     }
 
@@ -84,7 +93,6 @@ export class DisplayboardLabelComponent implements OnInit {
             this.getLabelDetails();
         } else {
             this.action = 'add';
-            // this.createForm();
         }
     }
     setDescFocus() {
@@ -100,42 +108,37 @@ export class DisplayboardLabelComponent implements OnInit {
         if (this.labelInfo.description) {
             this.char_count = this.max_char_count - this.labelInfo.description.length;
         }
-
     }
     getLabelDetails() {
         this.api_loading = true;
         this.provider_services.getLabel(this.label_id)
             .subscribe(
                 data => {
-                    console.log(data)
-        this.label = data;
-        this.action = 'show';
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.label.label
-        });
-        this.breadcrumbs = breadcrumbs;
-        this.api_loading = false;
-        if (this.actionparam === 'edit') {
-            this.action = 'edit';
-        }
-            },
-            () => {
-                this.api_loading = false;
-            }
-        );
-    }
-    onSubmit(data) {
-        console.log(data);
-        this.editLabel(data);
+                    console.log(data);
+                    this.label = data;
+                    this.action = 'show';
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: this.label.label
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                    this.api_loading = false;
+                    if (this.actionparam === 'edit') {
+                        this.action = 'edit';
+                    }
+                },
+                () => {
+                    this.api_loading = false;
+                }
+            );
     }
     createLabel() {
         const label_data = {};
-        label_data['label'] = this.labelInfo.label;
-        label_data['description'] = this.labelInfo.description;
+        label_data['label'] = this.label;
+        label_data['description'] = this.description;
         label_data['valueSet'] = this.valueSet;
         label_data['displayName'] = 'Color';
         console.log(label_data);
@@ -155,54 +158,67 @@ export class DisplayboardLabelComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+        if (this.actionparam === 'edit') {
+            console.log(this.label);
+            const post_data = {
+                'id': this.labelData.id,
+                'label': this.label,
+                'description': this.description,
+                'valueSet': this.valueSet,
+            };
+            this.provider_services.updateLabel(post_data).subscribe(data => {
+            });
+        }
     }
-    // editLabel(post_data) {
-    //     this.action = 'edit';
-    //     this.provider_services.updateLabel(post_data)
-    //         .subscribe(
-    //             () => {
-    //                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SERVICE_UPDATED'));
-    //     this.getLabelDetails();
-    //     },
-    //     error => {
-    //     }
-    //     );
-    // }
-    editLabel(post_data) {
+    editLabelbyId(id) {
+        this.provider_services.getLabel(id).subscribe(data => {
+            console.log(data);
+            this.labelData = data;
+            if (this.actionparam === 'edit') {
+                this.label = this.labelData.label;
+                this.description = this.labelData.description;
+                this.valueSet = this.labelData.valueSet.value;
+                this.valueSet = this.labelData.valueSet;
+            }
+        });
+    }
+    editLabel() {
         this.action = 'edit';
-        const label_data = {};
-        label_data['label'] = this.labelInfo.label;
-        label_data['description'] = this.labelInfo.description;
-        label_data['valueSet'] = this.valueSet;
+        console.log(this.label_id)
+        this.editLabelbyId(this.label_id);
     }
-    // createForm() {
-    //     this.labelForm = this.fb.group({
-    //         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-    //         description: ['', Validators.compose([Validators.maxLength(500)])]
-    //     });
-    // }
+    deleteLabel(label_id) {
+        this.provider_services.deleteLabel(label_id)
+            .subscribe(
+                data => {
+                    this.getLabelDetails();
+                },
+                error => {
+                }
+            );
+    }
 
     addtoValueSet(value, shortcut) {
         const valset = {};
         valset['value'] = value;
         valset['shortValue'] = shortcut;
-
+        this.value = [];
+        this.shortValue = [];
         this.valueSet.push(valset);
         value = '';
         shortcut = '';
     }
-    /**
- * For clearing api errors
- */
-deleteValueforSet(i){
-    this.valueSet.splice(i, 1);
+    deleteValueforSet(i) {
+        this.value = [];
+        this.shortValue = [];
+        this.valueSet.splice(i, 1);
 
-}
+    }
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
     }
-    onCancel () {
+    onCancel() {
         this.router.navigate(['provider/settings/displayboard/labels']);
     }
 }
