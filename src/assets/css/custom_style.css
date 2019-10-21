@@ -5086,9 +5086,12 @@ min-height: auto !important;
 /* .dashboard .card.w-dta .dash-list .nav.chkn-dash ul li {
   list-style: none;
 } */
-.desfont{
-  width: 100% !important;
-  }
+  .desfont{
+    width: 30% !important;
+    }
+    .displyfont{
+      width: 70% !important;
+      }
   .labeladd{
     float: right !important;
   }
