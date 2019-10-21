@@ -20,25 +20,25 @@ export class DisplayboardLabelsComponent implements OnInit {
             url: '/provider/settings/displayboard'
         },
         {
-            title : 'Labels'
+            title: 'Labels'
         }
     ];
     api_loading: boolean;
     label_list: any;
-   
+
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
-    constructor (private router: Router,
+    constructor(private router: Router,
         private routerobj: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) { }
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue', 
+            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
         };
-           
+
         this.getLabels();
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.domain = user.sector;
@@ -73,7 +73,7 @@ export class DisplayboardLabelsComponent implements OnInit {
             queryParams: { id: label.id }
         };
         this.router.navigate(['provider', 'settings', 'displayboard',
-        'labels', 'edit'], navigationExtras);
+            'labels', 'edit'], navigationExtras);
     }
     goLabelDetail(label) {
         const navigationExtras: NavigationExtras = {

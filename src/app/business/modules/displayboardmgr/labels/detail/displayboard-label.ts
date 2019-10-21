@@ -24,7 +24,7 @@ export class DisplayboardLabelComponent implements OnInit {
     labelInfo = {
         'label': null,
         'description': null,
-        'displayName' : null,
+        'displayName': null,
         'valueSet': null
     };
     char_count = 0;
@@ -65,29 +65,28 @@ export class DisplayboardLabelComponent implements OnInit {
         private shared_functions: SharedFunctions,
         private shared_Functionsobj: SharedFunctions,
         private provider_shared_functions: ProviderSharedFuctions,
-        private fb: FormBuilder)
-        {
-            this.activated_route.params.subscribe(params => {
-                this.actionparam = params.id;
-            }
-            );
-            this.activated_route.queryParams.subscribe(
-                qparams => {
-                    this.label_id = qparams.id;
-                    if (this.label_id) {
-                        this.editLabelbyId(qparams.id);
-                    } else {
-                        const breadcrumbs = [];
-                        this.breadcrumbs_init.map((e) => {
-                            breadcrumbs.push(e);
-                        });
-                        breadcrumbs.push({
-                            title: 'Add'
-                        });
-                        this.breadcrumbs = breadcrumbs;
-                    }
-                });
+        private fb: FormBuilder) {
+        this.activated_route.params.subscribe(params => {
+            this.actionparam = params.id;
         }
+        );
+        this.activated_route.queryParams.subscribe(
+            qparams => {
+                this.label_id = qparams.id;
+                if (this.label_id) {
+                    this.editLabelbyId(qparams.id);
+                } else {
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: 'Add'
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                }
+            });
+    }
 
     ngOnInit() {
     }
@@ -105,9 +104,9 @@ export class DisplayboardLabelComponent implements OnInit {
             this.breadcrumbs = breadcrumbs;
             this.label = this.labelData.label;
             this.description = this.labelData.description;
-                this.displayName = this.labelData.displayName;
-                this.valueSet = this.labelData.valueSet.value;
-                this.valueSet = this.labelData.valueSet;
+            this.displayName = this.labelData.displayName;
+            this.valueSet = this.labelData.valueSet.value;
+            this.valueSet = this.labelData.valueSet;
         });
     }
     editStatusBoard(id) {
@@ -204,6 +203,6 @@ export class DisplayboardLabelComponent implements OnInit {
             this.router.navigate(['provider/settings/displayboard/labels']);
         }
     }
-   
+
 }
 

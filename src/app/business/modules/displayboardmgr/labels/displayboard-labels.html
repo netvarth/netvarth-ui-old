@@ -66,11 +66,11 @@
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
                                             {{label.label | capitalizeFirst}}</h3> &nbsp;
                                         <div class="c-ot m0">
-                                            <div class="item desfont">
+                                            <div class="item desfont" *ngIf="label.displayName">
                                                 <span class="ttle">Display Name</span>
                                                 <span>{{label.displayName | capitalizeFirst}}</span>
                                             </div>
-                                            <div class="item desfont">
+                                            <div class="item desfont" *ngIf="label.description">
                                                     <span class="ttle">Description</span>
                                                     <span>{{label.description | capitalizeFirst}}</span>
                                                 </div>
@@ -87,9 +87,11 @@
                                         <mat-menu #appMenu="matMenu">
                                             <button mat-menu-item (click)="editLabel(label)">
                                                 <!-- <i class="icon-edit"></i> -->
+                                                <i class="icon-edit"></i>
                                                 Edit
                                             </button>
                                             <button mat-menu-item (click)="deleteLabel(label)">
+                                                    <i class="icon-delete"></i>
                                                 Delete
                                             </button>
                                         </mat-menu>
