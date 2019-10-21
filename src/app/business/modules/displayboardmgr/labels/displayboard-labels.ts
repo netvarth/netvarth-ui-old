@@ -70,14 +70,17 @@ export class DisplayboardLabelsComponent implements OnInit {
     }
     editLabel(label) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'edit' }
+            queryParams: { id: label.id }
         };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'labels', label.id], navigationExtras);
+        'labels', 'edit'], navigationExtras);
     }
     goLabelDetail(label) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { id: label.id }
+        };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'labels', label.id]);
+            'labels', 'view'], navigationExtras);
     }
     deleteLabel(label) {
         this.provider_services.deleteLabel(label.id).subscribe(
