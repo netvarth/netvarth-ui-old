@@ -4852,10 +4852,17 @@ i.notavail {
   width: auto!important;
 }
 
-.dash .ques li.active {
+.dash .ques li.active{
   font-weight: 800 !important
 }
+.loc-lst li a h4{
+  font-weight: 500;
 
+}
+.loc-lst li.active, .loc-lst li.active a h4  {
+  color:#00aef2 !important;
+  font-weight:800;
+}
 .dash .ques li a {
   white-space: inherit !important;
 }
@@ -4987,3 +4994,69 @@ i.notavail {
   cursor: not-allowed !important;
   padding: 10px;
 }
+.disabled {
+  background: #e6e6e6 !important;
+  cursor: not-allowed !important;
+}
+.dashboard .card.w-dta .dash-list .navbar {
+margin-bottom: 0px !important;
+min-height: auto !important;
+
+
+}
+.dashboard .card.w-dta .dash-list .chkn-dash li.active {
+  background-color: #00aef2;
+  /* color: #fff !important; */
+}
+
+.dashboard .card.w-dta .dash-list .chkn-dash li.active > a{
+  color: #fff !important;
+}
+/* .dashboard .card.w-dta .dash-list .navbar li  {
+  height: 40px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #666;
+  padding: 0 30px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: .75rem;
+  -webkit-transition: .3s;
+  transition: all .3s;
+  position: relative;
+} */
+.filter-toolbar .date input{max-width: 80px; }
+.filter-toolbar {border-bottom: 1px solid #dbdbdb}
+.filter-toolbar .date .mat-icon-button { width: auto !important}
+@media only screen and (max-width: 575px) {
+  .filter-toolbar .filtr {margin-top: 10px !important}
+  .filter-toolbar .mat-form-field-wrapper {padding-bottom: 0px ! important}
+.genTextHeight {height: 29px !important}
+.filter-toolbar .genTextHeight.stdbtn {height: 28px !important}
+}
+@media only screen and (max-width: 768px) {
+  .dashboard .card.w-dta .dash-list .ctrls .tab-item {padding: 0 15px !important}
+}
+.dashboard .card.w-dta .dash-list .nav.chkn-dash > li {display: inline-block !important;}
+.dashboard .card.w-dta .dash-list .nav.chkn-dash ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  font-size: .875rem;
+}
+.dashboard .card.w-dta .dash-list .nav.chkn-dash ul>li>a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+.dashboard .card.w-dta .dash-list .nav.chkn-dash > li:last-child { 
+  right:0;
+  position:absolute
+}
+/* .dashboard .card.w-dta .dash-list .nav.chkn-dash ul li {
+  list-style: none;
+} */

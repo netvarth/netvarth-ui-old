@@ -88,6 +88,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   check_in_filtered_list: any = [];
   holdbdata: any = [];
   status_type = 'all';
+  status_subtype = 'started';
   queue_date = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
   edit_location = 0;
   load_locations = 0;
@@ -983,6 +984,9 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   }
   changeStatusType(type) {
     this.status_type = type;
+    if (type !== 'all') {
+      this.status_subtype = type;
+    }
     if (this.time_type === 1 && this.status_type === 'all') {
       this.showTime = true;
     } else {
