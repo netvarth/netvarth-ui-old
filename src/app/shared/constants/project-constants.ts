@@ -420,27 +420,32 @@ export const projectConstants = {
     {
       'name': 'token',
       'displayname': 'Token',
-      'label': false
+      'label': false,
+      'checked': false
     },
     {
       'name': 'service',
       'displayname': 'Service',
-      'label': false
+      'label': false,
+      'checked': false
     },
     {
       'name': 'appxWaitingTime',
       'displayname': 'Waiting Time',
-      'label': false
+      'label': false,
+      'checked': false
     },
     {
       'name': 'queue',
       'displayname': 'Queue',
-      'label': false
+      'label': false,
+      'checked': false
     },
     {
       'name': 'waitlistingFor',
       'displayname': 'Customer',
-      'label': false
+      'label': false,
+      'checked': false
     }
   ]
 };

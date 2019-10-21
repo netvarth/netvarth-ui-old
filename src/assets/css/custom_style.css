@@ -5077,3 +5077,20 @@ min-height: auto !important;
       display: flex !important;
     }
   }
+  .display-board .mat-expansion-panel-header-description{
+    float: right;
+    color: #00aef2;
+    margin-right: 0px;
+  }
+  @media (min-width: 992px) {
+  .disply-field .otp_scr .actiondiv{
+    margin-top: 15px;
+    margin-bottom: 0px;
+  }
+  .disply-field .otp_scr{
+    display: flex;
+  }
+}
+.content.loc-list .display-board .mbt {
+  top: 0px !important;
+}

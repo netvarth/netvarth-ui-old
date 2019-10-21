@@ -12,7 +12,7 @@
                             <p> No Displayboards Found</p>
                             <span class="cs-btn bt3" (click)="addDisplayboard()">Add it now</span>
                         </div>
-                        <div *ngIf="board_list.length > 0">
+                        <div class="display-board" *ngIf="board_list.length > 0">
                             <mat-panel-description class="acc-plus-btn">
                                 <button mat-icon-button (click)="addDisplayboard()">
                                     <mat-icon>{{add_circle_outline}}</mat-icon>

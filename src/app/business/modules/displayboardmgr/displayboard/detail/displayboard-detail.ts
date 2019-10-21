@@ -19,6 +19,9 @@ export class DisplayboardDetailComponent implements OnInit {
     isfocused = false;
     dept_data;
     cancel_btn = Messages.CANCEL_BTN;
+    service_caption = Messages.SERVICES_CAP;
+    department_cap = Messages.DEPARTMENT_CAP;
+    queue_cap = Messages.WORKING_HRS_CAP;
     button_title = 'Save';
     service = false;
     api_loading1 = true;
@@ -53,6 +56,7 @@ export class DisplayboardDetailComponent implements OnInit {
     defaultLables: any = [];
     showLabelEdit: any = [];
     selectedCategory = 'SERVICE';
+    selectedCategoryValue;
     fieldDisplayname: any = [];
     filedDefaultvalue: any = [];
     fieldArray: any = [];
@@ -62,6 +66,7 @@ export class DisplayboardDetailComponent implements OnInit {
     boardDisplayname;
     providerLabels: any = [];
     labelfromConstants = projectConstants.STATUS_BOARD;
+    submit_btn;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -82,7 +87,9 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.getProviderQueues();
                 if (this.sboard_id) {
                     this.getDisplaydashboardbyId(qparams.id);
+                    this.submit_btn = Messages.UPDATE_BTN;
                 } else {
+                    this.submit_btn = Messages.SAVE_BTN;
                     this.getLabels();
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
@@ -113,40 +120,50 @@ export class DisplayboardDetailComponent implements OnInit {
             this.boardDisplayname = this.displayBoardData.displayName;
             for (let i = 0; i < this.displayBoardData.statusBoardFor.length; i++) {
                 this.selectedCategory = this.displayBoardData.statusBoardFor[i].type;
+                this.selectedCategoryValue = this.displayBoardData.statusBoardFor[i].id[0];
                 if (this.displayBoardData.statusBoardFor[i].type === 'SERVICE') {
-                    for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
-                        for (let k = 0; k < this.services_list.length; k++) {
-                            if (this.services_list[k].id === this.displayBoardData.statusBoardFor[i].id[j]) {
-                                this.services_list[k].checked = true;
-                                this.serviceSelection(this.services_list[k]);
-                            }
-                        }
-                    }
+                    this.serviceSelection(this.services_list[k]);
                 }
                 if (this.displayBoardData.statusBoardFor[i].type === 'QUEUE') {
-                    for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
-                        for (let k = 0; k < this.display_schedule.length; k++) {
-                            if (this.display_schedule[k].id === this.displayBoardData.statusBoardFor[i].id[j]) {
-                                this.display_schedule[k].checked = true;
-                                this.queueSelection(this.display_schedule[k]);
-                            } else {
-                                this.display_schedule[k].checked = false;
-                            }
-                        }
-                    }
+                    this.queueSelection(this.display_schedule[k]);
                 }
                 if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
-                    for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
-                        for (let k = 0; k < this.departments.length; k++) {
-                            if (this.departments[k].departmentId === this.displayBoardData.statusBoardFor[i].id[j]) {
-                                this.departments[k].checked = true;
-                                this.departmentSelection(this.departments[k]);
-                            } else {
-                                this.departments[k].checked = false;
-                            }
-                        }
-                    }
+                    this.departmentSelection(this.departments[k]);
                 }
+                // if (this.displayBoardData.statusBoardFor[i].type === 'SERVICE') {
+                //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
+                //         for (let k = 0; k < this.services_list.length; k++) {
+                //             if (this.services_list[k].id === this.displayBoardData.statusBoardFor[i].id[j]) {
+                //                 this.services_list[k].checked = true;
+                //                 this.serviceSelection(this.services_list[k]);
+                //             }
+                //         }
+                //     }
+                // }
+                // if (this.displayBoardData.statusBoardFor[i].type === 'QUEUE') {
+                //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
+                //         for (let k = 0; k < this.display_schedule.length; k++) {
+                //             if (this.display_schedule[k].id === this.displayBoardData.statusBoardFor[i].id[j]) {
+                //                 this.display_schedule[k].checked = true;
+                //                 this.queueSelection(this.display_schedule[k]);
+                //             } else {
+                //                 this.display_schedule[k].checked = false;
+                //             }
+                //         }
+                //     }
+                // }
+                // if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
+                //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
+                //         for (let k = 0; k < this.departments.length; k++) {
+                //             if (this.departments[k].departmentId === this.displayBoardData.statusBoardFor[i].id[j]) {
+                //                 this.departments[k].checked = true;
+                //                 this.departmentSelection(this.departments[k]);
+                //             } else {
+                //                 this.departments[k].checked = false;
+                //             }
+                //         }
+                //     }
+                // }
             }
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
                 for (let j = 0; j < this.defaultLables.length; j++) {
@@ -178,8 +195,13 @@ export class DisplayboardDetailComponent implements OnInit {
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.createDisplayboard(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
                 this.getDisplaydashboardbyId(data);
-            });
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
         if (this.actionparam === 'edit') {
             const post_data = {
@@ -190,10 +212,13 @@ export class DisplayboardDetailComponent implements OnInit {
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {
-            });
+                this.shared_Functionsobj.openSnackBar('Displayboard updated successfully', { 'panelclass': 'snackbarerror' });
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
-        this.actionparam = 'view';
-
     }
     onCancel() {
         if (this.actionparam === 'edit') {
@@ -208,6 +233,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.provider_services.getServicesList(params)
             .subscribe(data => {
                 this.services_list = data;
+                this.selectedCategoryValue = this.services_list[0].id;
             });
         this.api_loading1 = false;
     }
@@ -272,17 +298,21 @@ export class DisplayboardDetailComponent implements OnInit {
         this.defaultLables = this.shared_Functionsobj.removeDuplicates(this.defaultLables, 'name');
     }
     lableSelection(index, source) {
-        console.log(source);
         if (source === 'change') {
             (!this.showLabelEdit[index]) ? this.showLabelEdit[index] = true : this.showLabelEdit[index] = false;
         } else {
             this.showLabelEdit[index] = true;
         }
-        this.fieldDisplayname[index] = this.defaultLables[index].displayname;
-
     }
     categorySelection(value) {
         this.selectedCategory = value;
+        if (this.selectedCategory === 'SERVICE') {
+            this.selectedCategoryValue = this.services_list[0].id;
+        } else if (this.selectedCategory === 'QUEUE') {
+            this.selectedCategoryValue = this.display_schedule[0].id;
+        } else if (this.selectedCategory === 'DEPARTMENT') {
+            this.selectedCategoryValue = this.deptObj.departments[0].departmentId;
+        }
     }
     saveLabels(index) {
         this.fieldArray.push({
