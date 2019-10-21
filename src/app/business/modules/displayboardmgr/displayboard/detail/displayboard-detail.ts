@@ -122,13 +122,13 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.selectedCategory = this.displayBoardData.statusBoardFor[i].type;
                 this.selectedCategoryValue = this.displayBoardData.statusBoardFor[i].id[0];
                 if (this.displayBoardData.statusBoardFor[i].type === 'SERVICE') {
-                    this.serviceSelection(this.services_list[k]);
+                    this.serviceSelection(this.displayBoardData.statusBoardFor[i].id[0]);
                 }
                 if (this.displayBoardData.statusBoardFor[i].type === 'QUEUE') {
-                    this.queueSelection(this.display_schedule[k]);
+                    this.queueSelection(this.displayBoardData.statusBoardFor[i].id[0]);
                 }
                 if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
-                    this.departmentSelection(this.departments[k]);
+                    this.departmentSelection(this.displayBoardData.statusBoardFor[i].id[0]);
                 }
                 // if (this.displayBoardData.statusBoardFor[i].type === 'SERVICE') {
                 //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
@@ -324,26 +324,44 @@ export class DisplayboardDetailComponent implements OnInit {
         });
     }
     serviceSelection(service) {
+        // this.statusBoardfor = [{
+        //     'type': 'SERVICE',
+        //     'id': [
+        //         service.id
+        //     ]
+        // }];
         this.statusBoardfor = [{
             'type': 'SERVICE',
             'id': [
-                service.id
+                service
             ]
         }];
     }
     departmentSelection(dept) {
+        // this.statusBoardfor = [{
+        //     'type': 'DEPARTMENT',
+        //     'id': [
+        //         dept.departmentId
+        //     ]
+        // }];
         this.statusBoardfor = [{
             'type': 'DEPARTMENT',
             'id': [
-                dept.departmentId
+                dept
             ]
         }];
     }
     queueSelection(queue) {
+        // this.statusBoardfor = [{
+        //     'type': 'QUEUE',
+        //     'id': [
+        //         queue.id
+        //     ]
+        // }];
         this.statusBoardfor = [{
             'type': 'QUEUE',
             'id': [
-                queue.id
+                queue
             ]
         }];
     }
