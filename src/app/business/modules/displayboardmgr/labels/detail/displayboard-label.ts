@@ -24,6 +24,7 @@ export class DisplayboardLabelComponent implements OnInit {
     labelInfo = {
         'label': null,
         'description': null,
+        'displayName' : null,
         'valueSet': null
     };
     char_count = 0;
@@ -62,41 +63,90 @@ export class DisplayboardLabelComponent implements OnInit {
         private provider_services: ProviderServices,
         public fed_service: FormMessageDisplayService,
         private shared_functions: SharedFunctions,
+        private shared_Functionsobj: SharedFunctions,
         private provider_shared_functions: ProviderSharedFuctions,
-        private fb: FormBuilder) {
-        this.activated_route.params.subscribe(params => {
-            this.label_id = params.id;
-            console.log(this.label_id);
-            if (this.label_id) {
-                this.editLabelbyId(params.id);
+        private fb: FormBuilder)
+        {
+            this.activated_route.params.subscribe(params => {
+                this.actionparam = params.id;
             }
+            );
+            this.activated_route.queryParams.subscribe(
+                qparams => {
+                    this.label_id = qparams.id;
+                    if (this.label_id) {
+                        this.editLabelbyId(qparams.id);
+                    } else {
+                        const breadcrumbs = [];
+                        this.breadcrumbs_init.map((e) => {
+                            breadcrumbs.push(e);
+                        });
+                        breadcrumbs.push({
+                            title: 'Add'
+                        });
+                        this.breadcrumbs = breadcrumbs;
+                    }
+                });
         }
-        );
-        this.activated_route.queryParams.subscribe(
-            qparams => {
-                this.actionparam = qparams.action;
-                console.log(this.actionparam);
-            });
-    }
 
     ngOnInit() {
-        this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Custom Field', 'type': 'addcustomfield' }]
-        };
-        this.initLabelParams();
     }
-    initLabelParams() {
-        if (this.label_id === 'add') {
-            this.label_id = null;
-            this.api_loading = false;
-        }
-        if (this.label_id) {
-            this.getLabelDetails();
-        } else {
-            this.action = 'add';
-        }
+    editLabelbyId(id) {
+        this.provider_services.getLabel(id).subscribe(data => {
+            this.labelData = data;
+            console.log(this.labelData);
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: this.labelData.label
+            });
+            this.breadcrumbs = breadcrumbs;
+            this.label = this.labelData.label;
+            this.description = this.labelData.description;
+                this.displayName = this.labelData.displayName;
+                this.valueSet = this.labelData.valueSet.value;
+                this.valueSet = this.labelData.valueSet;
+        });
     }
+    editStatusBoard(id) {
+        this.actionparam = 'edit';
+        this.editLabelbyId(id);
+    }
+
+    onSubmit() {
+        if (this.actionparam === 'add') {
+            const post_data = {
+                'label': this.label,
+                'displayName': this.displayName,
+                'description': this.description,
+                'valueSet': this.valueSet,
+            };
+            this.provider_services.createLabel(post_data).subscribe(data => {
+                this.editLabelbyId(data);
+            });
+        }
+        if (this.actionparam === 'edit') {
+            const post_data = {
+                'id': this.labelData.id,
+                'label': this.label,
+                'displayName': this.displayName,
+                'description': this.description,
+                'valueSet': this.valueSet
+            };
+            this.provider_services.updateLabel(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_UPDATED'));
+                this.editLabelbyId(data);
+            },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
+        this.actionparam = 'view';
+
+    }
+
     setDescFocus() {
         this.isfocused = true;
         if (this.labelInfo.description) {
@@ -111,87 +161,8 @@ export class DisplayboardLabelComponent implements OnInit {
             this.char_count = this.max_char_count - this.labelInfo.description.length;
         }
     }
-    getLabelDetails() {
-        this.api_loading = true;
-        this.provider_services.getLabel(this.label_id)
-            .subscribe(
-                data => {
-                    console.log(data);
-                    this.label = data;
-                    this.action = 'show';
-                    const breadcrumbs = [];
-                    this.breadcrumbs_init.map((e) => {
-                        breadcrumbs.push(e);
-                    });
-                    breadcrumbs.push({
-                        title: this.label.label
-                    });
-                    this.breadcrumbs = breadcrumbs;
-                    this.api_loading = false;
-                    if (this.actionparam === 'edit') {
-                        this.action = 'edit';
-                    }
-                },
-                () => {
-                    this.api_loading = false;
-                }
-            );
-    }
-    createLabel() {
-        if (this.action === 'add') {
-        const label_data = {};
-        label_data['label'] = this.label;
-        label_data['displayName'] = this.displayName;
-        label_data['description'] = this.description;
-        label_data['valueSet'] = this.valueSet;
-        console.log(label_data);
-        // "notification": [
-        //   {
-        //     "values": "string",
-        //     "messages": "string"
-        //   }
-        // ]
-        this.provider_services.createLabel(label_data)
-            .subscribe(
-                (id) => {
-                    this.label_id = id;
-                    this.getLabelDetails();
-                },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
-            );
-        }
-        if (this.actionparam === 'edit') {
-            console.log(this.label);
-            const post_data = {
-                'id': this.labelData.id,
-                'label': this.label,
-                'description': this.description,
-                'displayName': this.displayName,
-                'valueSet': this.valueSet,
-            };
-            this.provider_services.updateLabel(post_data).subscribe(data => {
-            });
-        }
-    }
-    editLabelbyId(id) {
-        this.provider_services.getLabel(id).subscribe(data => {
-            console.log(data);
-            this.labelData = data;
-            if (this.actionparam === 'edit') {
-                console.log(this.labelData.label);
-                this.label = this.labelData.label;
-                console.log(this.label);
-                this.description = this.labelData.description;
-                this.displayName = this.labelData.displayName;
-                this.valueSet = this.labelData.valueSet.value;
-                this.valueSet = this.labelData.valueSet;
-            }
-        });
-    }
     editLabel() {
-        this.action = 'edit';
+        this.actionparam = 'edit';
         console.log(this.label_id)
         this.editLabelbyId(this.label_id);
     }
@@ -199,7 +170,7 @@ export class DisplayboardLabelComponent implements OnInit {
         this.provider_services.deleteLabel(label_id)
             .subscribe(
                 data => {
-                    this.getLabelDetails();
+                    this.editLabelbyId(data);
                 },
                 error => {
                 }
@@ -227,7 +198,12 @@ export class DisplayboardLabelComponent implements OnInit {
         this.api_success = null;
     }
     onCancel() {
-        this.router.navigate(['provider/settings/displayboard/labels']);
+        if (this.actionparam === 'edit') {
+            this.actionparam = 'view';
+        } else {
+            this.router.navigate(['provider/settings/displayboard/labels']);
+        }
     }
+   
 }
 

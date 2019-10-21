@@ -8,28 +8,28 @@
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-md-12 no padding">
-                            <div class="cl1" *ngIf="action=='show'">
-                                <span class="editbt" (click)="editLabel(labelData,id)"></span>
+                            <div class="cl1" *ngIf="actionparam === 'view' && labelData">
+                                <span class="editbt" (click)="editLabel(labelData.id)"></span>
                                 <div class="ot-it">
-                                    <h4>{{label.label | capitalizeFirst}}</h4>
+                                    <h3>{{labelData.label | capitalizeFirst}}</h3>
                                     <div class="c-ot m0">
                                             <div class="item">
                                                     <span class="ttle">Display Name</span>
-                                                    <span>{{ label.displayName | capitalizeFirst}}</span>
+                                                    <span>{{ labelData.displayName | capitalizeFirst}}</span>
                                                 </div>
                                         <div class="item">
                                             <span class="ttle">Description</span>
-                                            <span>{{ label.description | capitalizeFirst}}</span>
+                                            <span>{{ labelData.description | capitalizeFirst}}</span>
                                         </div>
-                                        <div class="item">
+                                        <div class="item" *ngIf="labelData.valueSet">
                                             <span class="ttle">Value</span>
-                                            <span *ngFor="let labelvalue of label.valueSet"> {{labelvalue.value}}
+                                            <span *ngFor="let labelvalue of labelData.valueSet"> {{labelvalue.value}}
                                                 ({{labelvalue.shortValue}})</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12" *ngIf="action !== 'show'">
+                            <div class="col-md-12" *ngIf="actionparam !== 'view'">
                                 <form novalidate (keyup)="resetApiErrors()"
                                     class="ynw-common-form-nm wiz-service labelForm serviceform">
                                     <ng-container>
@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="displayName"
-                                                        placeholder="{{label_displayname_cap}}" [(ngModel)]="displayname"
+                                                        placeholder="{{label_displayname_cap}}" [(ngModel)]="displayName"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
@@ -98,7 +98,7 @@
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button (click)="createLabel()" type="button" mat-button [disabled]="savedisabled"
+                                            <button (click)="onSubmit()" type="button" mat-button [disabled]="savedisabled"
                                                 class="cs-btn bt2">{{button_title}}</button>
                                             <!-- <button type="button" mat-button (click)="createLabel()"
                                                 [disabled]="savedisabled" class="cs-btn bt1">{{button_title}}</button> -->
