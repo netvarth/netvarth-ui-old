@@ -40,10 +40,11 @@
                                 {{(service.status=='ACTIVE') ? 'Disable' :'Enable'}}
                             </button>
                         </mat-menu>
-                    </div>
+                    </div>                    
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 </section>
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

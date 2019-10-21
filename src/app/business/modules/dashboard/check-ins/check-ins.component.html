@@ -54,7 +54,8 @@
                   <ul class="dropdown-menu">
                     <li>
                       <ul class="menu">
-                        <li *ngFor="let location of locations;let i = index" [(value)]="i" [ngClass]="{'active': (location.place == selected_location.place)}">
+                        <li *ngFor="let location of locations;let i = index" [(value)]="i"
+                          [ngClass]="{'active': (location.place == selected_location.place)}">
                           <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
                             <h4>{{ location.place | capitalizeFirst }}</h4>
                           </a>
@@ -80,207 +81,90 @@
               {{history_cap}}</span>
           </div>
         </div>
-        <!-- <div class="qlst" *ngIf="time_type ==1 && apis_loaded"> -->
-        <!-- <ul *ngIf="!show_small_device_queue_display">
-            <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}" *ngFor="let queue of queues">
-              <div class="qname" (click)="selectedQueue(queue)">
-                <span class="qtitle"> {{queue.name}}</span>
-                <span *ngIf="queue && !queue.instantQueue && queue.queueSchedule && queue.queueSchedule.timeSlots">
-                  {{queue.queueSchedule.timeSlots[0].sTime }} - {{queue.queueSchedule.timeSlots[0].eTime }}
-                </span>
-              </div>
-            </li>
-          </ul> -->
-        <!-- <div class="queue-body" *ngIf="show_small_device_queue_display && queues.length !== 0 ">
-            <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i
-                class="fa fa-angle-left"></i></span>
-            <span class="leftarrow" *ngIf="queues.length > 1 && sel_queue_indx <= 0"><i
-                class="fa fa-angle-left disable"></i></span>
-            <span class="sel-queue" *ngIf="selected_queue">{{selected_queue.name}}
-              <span class="qtime"
-                *ngIf="selected_queue && !selected_queue.instantQueue && selected_queue.queueSchedule && selected_queue.queueSchedule.timeSlots">
-                {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
-                {{selected_queue.queueSchedule.timeSlots[0].eTime }}
-              </span></span>
-            <span class="rightarrow" (click)="handleQueueSel('next')" *ngIf="(queues.length -1) > sel_queue_indx"> <i
-                class="fa fa-angle-right"></i> </span>
-            <span class="rightarrow" *ngIf="queues.length > 1 && (queues.length -1) == sel_queue_indx"> <i
-                class="fa fa-angle-right disable"></i>
-            </span>
-          </div> -->
-        <!-- </div> -->
         <div class="dash-list">
-          <!-- <nav class="navbar navbar-static-top" role="navigation"> -->
-            <!-- <div class="navbar-custom-menu"> -->
-              <ul class="nav chkn-dash">
-                <li class="dropdown notifications-menu" [ngClass]="{'active': status_type =='all'}"
-                  *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
-                  <a (click)="changeStatusType('all')"  class="dropdown-toggle navbar-item-color bold pointer-cursor" >
-                    <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span>
-                  </a>
-                </li>
-                <li class="active dropdown notifications-menu" *ngIf="time_type != 1">
-                  <a class="dropdown-toggle navbar-item-color bold">
-                    <span>{{checkin_label |capitalizeFirst}}s</span>
-                  </a>
-                </li>
-                <ng-container *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
-                  <li *ngIf="!small_device_display" class="item dropdown notifications-menu"
-                    [ngClass]="{'active': status_type =='started'}">
-                    <a (click)="changeStatusType('started')"
-                      class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                      <span>{{started_upper}} ({{today_started_count}})</span>
-                    </a>
-                  </li>
-                  <li *ngIf="!small_device_display" class="item dropdown notifications-menu"
-                    [ngClass]="{'active': status_type =='done'}">
-                    <a (click)="changeStatusType('done')" class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                      <span>{{complete_cap}} ({{today_completed_count}})</span>
-                    </a>
-                  </li>
-                  <li *ngIf="!small_device_display" class="item dropdown notifications-menu"
-                    [ngClass]="{'active': status_type =='cancelled'}">
-                    <a (click)="changeStatusType('cancelled')"
-                      class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                      <span>{{cancelled_upper}} ({{today_cancelled_count}})</span>
-                    </a>
-                  </li>
-                  <!--  -->
-                  <li class="dropdown messages-menu"  [ngClass]="{'active': status_type !='all'}" *ngIf="small_device_display && time_type ==1 && selected_queue!=null && selected_queue.id">
-                    <a *ngIf="status_subtype =='started'" class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                      <span>{{started_upper}} ({{today_started_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
-                    </a>
-                    <a *ngIf="status_subtype =='done'" class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                      <span>{{complete_cap}} ({{today_completed_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
-                    </a>
-                    <a *ngIf="status_subtype =='cancelled'" class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                      <span>{{cancelled_upper}} ({{today_cancelled_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
-                    </a>
-                    
-                    <ul class="dropdown-menu">
-                      <li>
-                        <ul class="menu">
-                          <li class="dropdown item notifications-menu" [ngClass]="{'active': status_type =='started'}">
-                            <a (click)="changeStatusType('started')"
-                              class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                              <span>{{started_upper}} ({{today_started_count}})</span>
-                            </a>
-                          </li>
-                          <li class="dropdown item notifications-menu" [ngClass]="{'active': status_type =='done'}">
-                            <a (click)="changeStatusType('done')"
-                              class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                              <span>{{complete_cap}} ({{today_completed_count}})</span>
-                            </a>
-                          </li>
-                          <li class="dropdown item notifications-menu" [ngClass]="{'active': status_type =='cancelled'}">
-                            <a (click)="changeStatusType('cancelled')"
-                              class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                              <span>{{cancelled_upper}} ({{today_cancelled_count}})</span>
-                            </a>
-                          </li>
-                        </ul>
+          <ul class="nav chkn-dash">
+            <li class="dropdown notifications-menu" [ngClass]="{'active': status_type =='all'}"
+              *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
+              <a (click)="changeStatusType('all')" class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span>
+              </a>
+            </li>
+            <li class="active dropdown notifications-menu" *ngIf="time_type != 1">
+              <a class="dropdown-toggle navbar-item-color bold">
+                <span>{{checkin_label |capitalizeFirst}}s</span>
+              </a>
+            </li>
+            <ng-container *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
+              <li *ngIf="!small_device_display" class="item dropdown notifications-menu"
+                [ngClass]="{'active': status_type =='started'}">
+                <a (click)="changeStatusType('started')" class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                  <span>{{started_upper}} ({{today_started_count}})</span>
+                </a>
+              </li>
+              <li *ngIf="!small_device_display" class="item dropdown notifications-menu"
+                [ngClass]="{'active': status_type =='done'}">
+                <a (click)="changeStatusType('done')" class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                  <span>{{complete_cap}} ({{today_completed_count}})</span>
+                </a>
+              </li>
+              <li *ngIf="!small_device_display" class="item dropdown notifications-menu"
+                [ngClass]="{'active': status_type =='cancelled'}">
+                <a (click)="changeStatusType('cancelled')"
+                  class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                  <span>{{cancelled_upper}} ({{today_cancelled_count}})</span>
+                </a>
+              </li>
+              <li class="dropdown messages-menu" [ngClass]="{'active': status_type !='all'}"
+                *ngIf="small_device_display && time_type ==1 && selected_queue!=null && selected_queue.id">
+                <a *ngIf="status_subtype =='started'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                  data-toggle="dropdown">
+                  <span>{{started_upper}} ({{today_started_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
+                </a>
+                <a *ngIf="status_subtype =='done'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                  data-toggle="dropdown">
+                  <span>{{complete_cap}} ({{today_completed_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
+                </a>
+                <a *ngIf="status_subtype =='cancelled'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                  data-toggle="dropdown">
+                  <span>{{cancelled_upper}} ({{today_cancelled_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <ul class="menu">
+                      <li class="dropdown item notifications-menu" [ngClass]="{'active': status_type =='started'}">
+                        <a (click)="changeStatusType('started')"
+                          class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                          <span>{{started_upper}} ({{today_started_count}})</span>
+                        </a>
+                      </li>
+                      <li class="dropdown item notifications-menu" [ngClass]="{'active': status_type =='done'}">
+                        <a (click)="changeStatusType('done')"
+                          class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                          <span>{{complete_cap}} ({{today_completed_count}})</span>
+                        </a>
+                      </li>
+                      <li class="dropdown item notifications-menu" [ngClass]="{'active': status_type =='cancelled'}">
+                        <a (click)="changeStatusType('cancelled')"
+                          class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                          <span>{{cancelled_upper}} ({{today_cancelled_count}})</span>
+                        </a>
                       </li>
                     </ul>
                   </li>
-                </ng-container>
-                <li class="dropdown notifications-menu">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                    <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
-                  </a>
-                </li>
-                <!-- 
-                <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                    data-toggle="dropdown">
-                    <i class="fa fa-plus"></i>
-                    <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
-                      {{checkin_label |capitalizeFirst}}</span>
-                    <span *ngIf="calculationmode=='NoCalc' && showToken"> Get Token</span>
-                  </a>
-                </li> -->
-                <!-- <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                    data-toggle="dropdown">
-                    <i class="fa fa-plus"></i>
-                    <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
-                      {{checkin_label |capitalizeFirst}}</span>
-                    <span *ngIf="calculationmode=='NoCalc' && showToken"> Get Token</span>
-                  </a>
-                </li> -->
-                <!-- <li class="dropdown messages-menu" *ngIf="time_type ==1 && apis_loaded && selected_queue">
-                  <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
-                    *ngIf="selected_location">
-                    <i class="icon-time"></i><span
-                      *ngIf="!small_device_display">{{selected_queue.name | capitalizeFirst}}</span>
-                  </a>
-                  <ul class="dropdown-menu ques">
-                    <li>
-                      <ul class="menu">
-                        <li><a class="pointer-cursor">All Timings</a></li>
-                        <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
-                          *ngFor="let queue of queues;let i = index">
-                          <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
-                            <span class="qtime">{{queue.queueSchedule.timeSlots[0].sTime }} -
-                              {{queue.queueSchedule.timeSlots[0].eTime }}<span
-                                class="qname">[{{ queue.name | capitalizeFirst }}]</span></span>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li class="dropdown messages-menu">
-                  <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
-                    *ngIf="selected_location">
-                    <i class="icon-location"></i><span
-                      *ngIf="!small_device_display">{{selected_location.place | capitalizeFirst}}</span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <ul class="menu">
-                        <li *ngFor="let location of locations;let i = index" [(value)]="i">
-                          <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
-                            <h4>{{ location.place | capitalizeFirst }}</h4>
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Go to Locations</a></li>
-                  </ul>
-                </li> -->
-              </ul>
-            <!-- </div> -->
-          <!-- </nav> -->
-          <!-- <div class="ctrls">
-            <div class="col-md-12 no-padding">
-              <div class="pull-left tab-item" [ngClass]="{'active': status_type =='all'}"
-                (click)="changeStatusType('all')" *ngIf="(time_type ==1 && selected_queue!=null && selected_queue.id)">
-                <span>{{checkin_label |capitalizeFirst}}s ({{today_checkins_count}})</span></div>
-              <div class="active pull-left tab-item" *ngIf="time_type != 1">
-                <span>{{checkin_label |capitalizeFirst}}s</span>
-              </div>
-              <ng-container *ngIf="time_type ==1 && selected_queue!=null && selected_queue.id">
-                <div class="pull-left tab-item" [ngClass]="{'active': status_type =='started'}"
-                  (click)="changeStatusType('started')"><span>{{started_upper}} ({{today_started_count}})</span></div>
-                <div class="pull-left tab-item" [ngClass]="{'active': status_type =='done'}"
-                  (click)="changeStatusType('done')">
-                  <span>{{complete_cap}} ({{today_completed_count}})</span></div>
-                <div class="pull-left tab-item" [ngClass]="{'active': status_type =='cancelled'}"
-                  (click)="changeStatusType('cancelled')"><span>{{cancelled_upper}} ({{today_cancelled_count}})</span>
-                </div>
-              </ng-container>
-              <div class="pull-right tab-item"><a class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                  data-toggle="dropdown">
-                  <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
-                    [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                  <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
-                    [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
-                </a></div>
-            </div>
-          </div> -->
+                </ul>
+              </li>
+            </ng-container>
+            <li class="dropdown notifications-menu cl-fltr fltr-tbl">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                <i *ngIf="filterapplied === true" class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /> &nbsp;</i>
+                <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+              </a>
+            </li>
+          </ul>
           <div class="dash-list">
             <div class="chkins-sect row m0">
               <div id="dashboard-filter-cont" *ngIf="open_filter === true">

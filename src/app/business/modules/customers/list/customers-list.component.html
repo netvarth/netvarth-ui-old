@@ -1,110 +1,85 @@
 <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading" (performAction)="performActions($event)">
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" *ngIf="!apiloading"
+    (performAction)="performActions($event)">
   </app-breadcrumb>
 </section>
 <section class="dashboard content customers" *ngIf="!apiloading">
   <div class="col-md-12">
     <div class="row">
       <div class="card p0 w-dta ">
-        <div class="head main-header dash">
-          <span class="cust_count">{{customer_label | capitalizeFirst}}s {{checkedin_label}}: {{customer_count}}</span>
-          <nav class="navbar navbar-static-top right-aligned" role="navigation">
-            <div class="navbar-custom-menu">
-              <ul class="nav navbar-nav">
-                <li class="dropdown notifications-menu">
-                  <a (click)="searchCustomer('createCustomer')"
-                    class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="fa fa-plus"></i> Create {{customer_label}}
-                  </a>
-                </li>
-                <li *ngIf="filterapplied === true" class="cl-fltr fltr-tbl dropdown notifications-menu">
-                  <a class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
-                    [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                    <img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" />
-                  </a>
-                </li>
-                <li class="dropdown notifications-menu">
-                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
-                    <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                    <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+        <!-- <header class="main-header dash chkin"> -->
+        <!-- <nav class="navbar navbar-static-top" role="navigation"> -->
+        <!-- <div class="navbar-custom-menu"> -->
+        <div class="col-md-12 no-padding cust_label">
+          <span class="cust_count">{{customer_label | capitalizeFirst}}s {{checkedin_label}}:
+            {{customer_count}}</span>
         </div>
-        <div class="table-responsive dash-list">
+        <div class="col-md-12 no-padding">
+          <ul class="nav cust-dash">
+            <li class="dropdown notifications-menu cl-fltr fltr-tbl">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                <i *ngIf="filterapplied === true" class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img
+                    src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /> &nbsp;</i>
+                <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+              </a>
+            </li>
+            <li class="dropdown notifications-menu">
+              <a (click)="searchCustomer('createCustomer')"
+                class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                <i class="fa fa-plus"></i> Create {{customer_label}}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-12 cust-sect no-padding">
           <div id="customers-filter-cont" *ngIf="open_filter === true">
             <div id="customers-filter-toolbar" class="box-content filter-toolbar">
-              <div>
-                <a [class.button_filter]="filters['first_name']" (click)="filterClicked('first_name')"
-                  class="anchorbutton remMarginRight genMarginLeft" name="first_name"
-                  id="btn_first_name_filter_id"><span>First Name</span></a>
-                <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
-                  class="genTextHeight" [(ngModel)]="filter.first_name" [hidden]="!filters['first_name']">
+              <a [class.button_filter]="filters['first_name']" (click)="filterClicked('first_name')"
+                class="anchorbutton remMarginRight genMarginLeft" name="first_name"
+                id="btn_first_name_filter_id"><span>First Name</span></a>
+              <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)" class="genTextHeight"
+                [(ngModel)]="filter.first_name" [hidden]="!filters['first_name']">
 
-                <a [class.button_filter]="filters['date']" (click)="filterClicked('date')"
-                  class="anchorbutton remMarginRight genMarginLeft" name="date"
-                  id="btn_date_filter_id"><span>Date</span></a>
-                <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
-                  (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['date']" (blur)="doSearch()">
-                <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!filters['date']"></mat-datepicker-toggle>
-                <mat-datepicker #picker [hidden]="!filters['date']"></mat-datepicker>
+              <a [class.button_filter]="filters['date']" (click)="filterClicked('date')"
+                class="anchorbutton remMarginRight genMarginLeft" name="date"
+                id="btn_date_filter_id"><span>Date</span></a>
+              <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+                (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['date']" (blur)="doSearch()">
+              <mat-datepicker-toggle matSuffix [for]="picker" [hidden]="!filters['date']"></mat-datepicker-toggle>
+              <mat-datepicker #picker [hidden]="!filters['date']"></mat-datepicker>
 
-                <a [class.button_filter]="filters['mobile']" (click)="filterClicked('mobile')"
-                  class="anchorbutton remMarginRight genMarginLeft" name="mobile"
-                  id="btn_mobile_filter_id"><span>Mobile</span></a>
-                <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
-                  (keyup)="focusInput($event, Femail)" maxlength="10" class="genTextHeight"
-                  [hidden]="!filters['mobile']">
+              <a [class.button_filter]="filters['mobile']" (click)="filterClicked('mobile')"
+                class="anchorbutton remMarginRight genMarginLeft" name="mobile"
+                id="btn_mobile_filter_id"><span>Mobile</span></a>
+              <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                (keyup)="focusInput($event, Femail)" maxlength="10" class="genTextHeight" [hidden]="!filters['mobile']">
 
-                <a [class.button_filter]="filters['email']" (click)="filterClicked('email')"
-                  class="anchorbutton remMarginRight genMarginLeft" name="email"
-                  id="btn_email_filter_id"><span>Email</span></a>
-                <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
-                  (keyup)="focusInput($event, Fdate)" class="genTextHeight" [hidden]="!filters['email']">
-                <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
-                  class="genMarginLeft genTextHeight stdbtn btn_black">
-              </div>
-
+              <a [class.button_filter]="filters['email']" (click)="filterClicked('email')"
+                class="anchorbutton remMarginRight genMarginLeft" name="email"
+                id="btn_email_filter_id"><span>Email</span></a>
+              <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                (keyup)="focusInput($event, Fdate)" class="genTextHeight" [hidden]="!filters['email']">
+              <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
+                class="genMarginLeft genTextHeight stdbtn btn_black">
             </div>
           </div>
-          <table class="table">
-            <thead>
-              <tr class="tble-filtr-tr">
-                <th>{{name_cap}}</th>
-                <th>{{mobile_cap}}</th>
-                <th>{{email_cap}}</th>
-                <th [matTooltipClass]="tooltipcls"
-                  [matTooltip]="'Date shown only for '+customer_label+'s who have availed the service'">
-                  {{last_visit_cap}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let customer of customers">
-                <td data-title="Name" class="name">
-                  {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
-                </td>
-                <td data-title="Mobile" class="service"> {{customer.consumer.userProfile.primaryMobileNo}} </td>
-                <td data-title="Email" class="email">{{customer.consumer.userProfile.email}}</td>
-
-                <td data-title="Last Visit" class="lastvisit">
-                  {{customer.lastVisitedDate | date: dateFormat }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <ng-container *ngIf="loadComplete && customers.length == 0">
-            <div class="no-dta">
-              {{no_customer_cap}}
+          <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers">
+            <div class="col-md-4 col-sm-7 mt5">
+              <h6 class="mb5">{{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
+              </h6>
             </div>
-          </ng-container>
-          <div class="search_paging" *ngIf="loadComplete">
-            <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-              (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+            <div class="col-md-2 col-sm-5 mt5"><span><i
+                  class="fa fa-mobile"></i>{{customer.consumer.userProfile.primaryMobileNo}}</span></div>
+            <div class="col-md-4 col-sm-7 mt5"><span><i
+                  class="fa fa-envelope"></i>{{customer.consumer.userProfile.email}}</span></div>
+            <div class="col-md-2 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on {{customer.lastVisitedDate | date: dateFormat }}</span></div>
+            <div class="clearfix"></div>
           </div>
+
         </div>
       </div>
     </div>
