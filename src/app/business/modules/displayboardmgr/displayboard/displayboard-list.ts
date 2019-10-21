@@ -58,10 +58,6 @@ export class DisplayboardListComponent implements OnInit {
             );
     }
     performActions(action) {
-        // if (action === 'addstatusboard') {
-        //     console.log(action);
-        //     this.addDisplayboard();
-        // }
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->board']);
         }
@@ -78,8 +74,6 @@ export class DisplayboardListComponent implements OnInit {
             'list', 'edit'], navigationExtras);
     }
     goDisplayboardDetails(board) {
-        // this.router.navigate(['provider', 'settings', 'displayboard',
-        //     'labels', board.id]);
         const navigationExtras: NavigationExtras = {
             queryParams: { id: board.id }
         };

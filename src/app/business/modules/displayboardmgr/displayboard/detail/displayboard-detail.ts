@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -60,14 +60,14 @@ export class DisplayboardDetailComponent implements OnInit {
     displayBoardData: any = [];
     boardName;
     boardDisplayname;
+    providerLabels: any = [];
+    labelfromConstants = projectConstants.STATUS_BOARD;
     constructor(
-        private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
         private router: Router,
         private shared_Functionsobj: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
-        private shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute
     ) {
         this.activated_route.params.subscribe(params => {
@@ -80,10 +80,10 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.getProviderServices();
                 this.getDepartments();
                 this.getProviderQueues();
-                this.getLablels();
                 if (this.sboard_id) {
                     this.getDisplaydashboardbyId(qparams.id);
                 } else {
+                    this.getLabels();
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
                         breadcrumbs.push(e);
@@ -96,9 +96,9 @@ export class DisplayboardDetailComponent implements OnInit {
             });
     }
     ngOnInit() {
-        this.getLablels();
     }
     getDisplaydashboardbyId(id) {
+        this.getLabels();
         this.provider_services.getDisplayboardbyId(id).subscribe(data => {
             this.displayBoardData = data;
             const breadcrumbs = [];
@@ -109,7 +109,6 @@ export class DisplayboardDetailComponent implements OnInit {
                 title: this.displayBoardData.displayName
             });
             this.breadcrumbs = breadcrumbs;
-
             this.boardName = this.displayBoardData.name;
             this.boardDisplayname = this.displayBoardData.displayName;
             for (let i = 0; i < this.displayBoardData.statusBoardFor.length; i++) {
@@ -124,8 +123,6 @@ export class DisplayboardDetailComponent implements OnInit {
                         }
                     }
                 }
-
-
                 if (this.displayBoardData.statusBoardFor[i].type === 'QUEUE') {
                     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
                         for (let k = 0; k < this.display_schedule.length; k++) {
@@ -138,10 +135,6 @@ export class DisplayboardDetailComponent implements OnInit {
                         }
                     }
                 }
-
-
-
-
                 if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
                     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
                         for (let k = 0; k < this.departments.length; k++) {
@@ -156,26 +149,17 @@ export class DisplayboardDetailComponent implements OnInit {
                 }
             }
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
-                // if (!this.displayBoardData.fieldList[i].label) {
                 for (let j = 0; j < this.defaultLables.length; j++) {
-                    // alert(this.displayBoardData.fieldList[i].name + '=' + this.defaultLables[j].name);
                     if (this.displayBoardData.fieldList[i].name === this.defaultLables[j].name) {
                         this.fieldDisplayname[i] = this.displayBoardData.fieldList[i].displayName;
                         if (this.displayBoardData.fieldList[i].defaultValue) {
                             this.filedDefaultvalue[i] = this.displayBoardData.fieldList[i].defaultValue;
                         }
-
                         this.defaultLables[j].checked = true;
-                        this.lableSelection(j);
+                        this.lableSelection(j, 'exist');
                     }
-                    // else {
-                    //     this.defaultLables[j].checked = false;
-                    // }
-                    console.log(this.defaultLables[j].checked);
                 }
-                // }
             }
-            console.log(this.defaultLables);
 
         });
     }
@@ -194,7 +178,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.createDisplayboard(post_data).subscribe(data => {
-
+                this.getDisplaydashboardbyId(data);
             });
         }
         if (this.actionparam === 'edit') {
@@ -206,14 +190,18 @@ export class DisplayboardDetailComponent implements OnInit {
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {
-
             });
         }
+        this.actionparam = 'view';
+
     }
     onCancel() {
-        this.router.navigate(['provider/settings/displayboard/list']);
+        if (this.actionparam === 'edit') {
+            this.actionparam = 'view';
+        } else {
+            this.router.navigate(['provider/settings/displayboard/list']);
+        }
     }
-
     getProviderServices() {
         this.api_loading1 = true;
         const params = { 'status': 'ACTIVE' };
@@ -239,7 +227,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 },
                 error => {
                     this.loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -266,12 +254,30 @@ export class DisplayboardDetailComponent implements OnInit {
     resetApiErrors() {
     }
 
-    getLablels() {
-        this.defaultLables = projectConstants.STATUS_BOARD;
-        console.log(this.defaultLables);
+    getLabels() {
+        this.defaultLables = this.labelfromConstants;
+        for (let i = 0; i < this.defaultLables.length; i++) {
+            this.defaultLables[i].checked = false;
+        }
+        this.provider_services.getLabelList().subscribe(data => {
+            this.providerLabels = data;
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                this.defaultLables.push({
+                    'name': this.providerLabels[i].label,
+                    'displayname': this.providerLabels[i].displayName,
+                    'label': true,
+                });
+            }
+        });
+        this.defaultLables = this.shared_Functionsobj.removeDuplicates(this.defaultLables, 'name');
     }
-    lableSelection(index) {
-        (this.defaultLables[index].checked) ? this.showLabelEdit[index] = true : this.showLabelEdit[index] = false;
+    lableSelection(index, source) {
+        console.log(source);
+        if (source === 'change') {
+            (!this.showLabelEdit[index]) ? this.showLabelEdit[index] = true : this.showLabelEdit[index] = false;
+        } else {
+            this.showLabelEdit[index] = true;
+        }
         this.fieldDisplayname[index] = this.defaultLables[index].displayname;
 
     }
@@ -283,7 +289,7 @@ export class DisplayboardDetailComponent implements OnInit {
             'name': this.defaultLables[index].name,
             'displayName': this.fieldDisplayname[index],
             // 'defaultValue': 'string',
-            'label': this.defaultLables[index].label,
+            // 'label': this.defaultLables[index].label,
             'order': index
         });
     }

@@ -44,10 +44,10 @@
                                             [checked]="services_list[i].checked">
                                             {{service.name | capitalizeFirst}}
                                         </mat-checkbox> -->
-                                        <mat-radio-button [value]="service.id" 
-                                        [checked]="services_list[i].checked" (change)="serviceSelection(service)">
-                                                {{service.name | capitalizeFirst}}
-                                            </mat-radio-button>
+                                        <mat-radio-button [value]="service.id" [checked]="services_list[i].checked"
+                                            (change)="serviceSelection(service)">
+                                            {{service.name | capitalizeFirst}}
+                                        </mat-radio-button>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12 inline" *ngIf="selectedCategory === 'DEPARTMENT'">
@@ -58,10 +58,11 @@
                                             [checked]="departments[i].checked">
                                             {{department.departmentName | capitalizeFirst}}
                                         </mat-checkbox> -->
-                                        <mat-radio-button [value]="departments.departmentId" 
-                                        [checked]="departments[i].checked" (change)="departmentSelection(department)">
-                                        {{department.departmentName | capitalizeFirst}}
-                                            </mat-radio-button>
+                                        <mat-radio-button [value]="departments.departmentId"
+                                            [checked]="departments[i].checked"
+                                            (change)="departmentSelection(department)">
+                                            {{department.departmentName | capitalizeFirst}}
+                                        </mat-radio-button>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12 inline" *ngIf="selectedCategory === 'QUEUE'">
@@ -72,17 +73,17 @@
                                             [checked]="display_schedule[i].checked">{{schedule.name}}
                                             {{schedule.displayQ.dstr | capitalizeFirst}} {{schedule.displayQ.time}}
                                         </mat-checkbox> -->
-                                        <mat-radio-button [value]="schedule.id" 
-                                        [checked]="display_schedule[i].checked" (change)="queueSelection(schedule)">
-                                        {{schedule.displayQ.dstr | capitalizeFirst}} {{schedule.displayQ.time}}
-                                            </mat-radio-button>
+                                        <mat-radio-button [value]="schedule.id" [checked]="display_schedule[i].checked"
+                                            (change)="queueSelection(schedule)">
+                                            {{schedule.displayQ.dstr | capitalizeFirst}} {{schedule.displayQ.time}}
+                                        </mat-radio-button>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12 inline">
                                     <label class="col-form-label">Status Board Field to display</label>
                                     <div *ngFor="let label of defaultLables; let i = index">
                                         <mat-checkbox class="example-margin" style="margin-left: 30px"
-                                            (change)="lableSelection(i)" [checked]="defaultLables[i].checked">
+                                            (change)="lableSelection(i,'change')" [checked]="defaultLables[i].checked">
                                             {{label.displayname}}
                                         </mat-checkbox>
                                         <div class="form-group col-md-12 row" *ngIf="showLabelEdit[i]">
@@ -116,27 +117,40 @@
                         </ng-container>
                     </div>
 
-                    <div *ngIf="actionparam === 'view' && displayBoardData">
+
+                    <div class="copy" *ngIf="actionparam === 'view' && displayBoardData">
                         <span class="editbt" (click)="editStatusBoard(displayBoardData.id)"></span>
 
-
-                        {{displayBoardData.displayName}}
-                        {{displayBoardData.name}}
-                        <div *ngFor="let fields of displayBoardData.fieldList">
-                            {{fields.name}}
-                            {{fields.displayName}}
-                            {{fields.order}}
+                        <h3 (click)="goDisplayboardDetails(board)" class="pointer-cursor"> {{displayBoardData.displayName |
+                            capitalizeFirst}}</h3>
+                        <div class="c-ot" *ngFor="let fields of displayBoardData.fieldList">
+                            <div class="item">
+                                <span class="ttle">Display Name</span>
+                                <span class=""> {{fields.displayName}}
+                                </span>
+                            </div>
+                            <div class="item">
+                                <span class="ttle">Order</span>
+                                <span class=""> {{fields.order}}
+                                </span>
+                            </div>
                         </div>
-                        <div *ngFor="let labelfor of displayBoardData.statusBoardFor">
-                            {{labelfor.type}}
-                            <div *ngFor="let labelid of labelfor.id">
-                                {{getNamefromId(labelid,labelfor.type)}}
+                        <div class="c-ot" *ngFor="let labelfor of displayBoardData.statusBoardFor">
+                            <div class="item">
+                                <span class="ttle">Type</span>
+                                <span class=""> {{labelfor.type}}
+                                </span>
+                            </div>
+                            <div class="item" *ngFor="let labelid of labelfor.id">
+                                <span class="ttle">Items</span>
+                                <span class="">
+                                    {{getNamefromId(labelid,labelfor.type)}}
+                                </span>
                             </div>
                         </div>
 
                     </div>
                 </div>
-
             </div>
             <div class="clearfix"></div>
         </div>

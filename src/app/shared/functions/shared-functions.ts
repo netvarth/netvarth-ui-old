@@ -1246,4 +1246,8 @@ export class SharedFunctions {
       return rv;
     }, {});
   }
+  removeDuplicates(array, key) {
+    const lookup = new Set();
+    return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
+  }
 }
