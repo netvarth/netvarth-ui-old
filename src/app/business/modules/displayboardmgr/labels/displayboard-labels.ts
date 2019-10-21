@@ -79,12 +79,11 @@ export class DisplayboardLabelsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'displayboard',
             'labels', label.id]);
     }
-    deleleLabel(label) {
+    deleteLabel(label) {
         this.provider_services.deleteLabel(label.id).subscribe(
             () => {
                 this.getLabels();
             }
         );
     }
-   
 }

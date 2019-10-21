@@ -5060,3 +5060,20 @@ min-height: auto !important;
 /* .dashboard .card.w-dta .dash-list .nav.chkn-dash ul li {
   list-style: none;
 } */
+.desfont{
+  width: 100% !important;
+  }
+  .labeladd{
+    float: right !important;
+  }
+  .labelad{
+    margin-top: 19px !important;
+  }
+  @media only screen and (max-width: 575px) {
+    .labelsave{
+      margin-top: 50px !important;
+    }
+    .labeladsmall{
+      display: flex !important;
+    }
+  }

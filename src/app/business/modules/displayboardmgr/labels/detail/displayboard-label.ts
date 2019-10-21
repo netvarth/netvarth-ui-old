@@ -16,6 +16,7 @@ export class DisplayboardLabelComponent implements OnInit {
     label_id = null;
     api_loading = false;
     label_name_cap = 'Label';
+    label_displayname_cap = 'Display Name';
     cancel_btn = Messages.CANCEL_BTN;
     save_btn = Messages.SAVE_BTN;
     labelSubscription: Subscription;
@@ -54,6 +55,7 @@ export class DisplayboardLabelComponent implements OnInit {
     shortValue;
     labelData: any = [];
     description;
+    displayName;
 
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
@@ -136,11 +138,12 @@ export class DisplayboardLabelComponent implements OnInit {
             );
     }
     createLabel() {
+        if (this.action === 'add') {
         const label_data = {};
         label_data['label'] = this.label;
+        label_data['displayName'] = this.displayName;
         label_data['description'] = this.description;
         label_data['valueSet'] = this.valueSet;
-        label_data['displayName'] = 'Color';
         console.log(label_data);
         // "notification": [
         //   {
@@ -158,12 +161,14 @@ export class DisplayboardLabelComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+        }
         if (this.actionparam === 'edit') {
             console.log(this.label);
             const post_data = {
                 'id': this.labelData.id,
                 'label': this.label,
                 'description': this.description,
+                'displayName': this.displayName,
                 'valueSet': this.valueSet,
             };
             this.provider_services.updateLabel(post_data).subscribe(data => {
@@ -175,8 +180,11 @@ export class DisplayboardLabelComponent implements OnInit {
             console.log(data);
             this.labelData = data;
             if (this.actionparam === 'edit') {
+                console.log(this.labelData.label);
                 this.label = this.labelData.label;
+                console.log(this.label);
                 this.description = this.labelData.description;
+                this.displayName = this.labelData.displayName;
                 this.valueSet = this.labelData.valueSet.value;
                 this.valueSet = this.labelData.valueSet;
             }

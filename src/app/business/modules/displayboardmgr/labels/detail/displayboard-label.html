@@ -13,13 +13,18 @@
                                 <div class="ot-it">
                                     <h4>{{label.label | capitalizeFirst}}</h4>
                                     <div class="c-ot m0">
+                                            <div class="item">
+                                                    <span class="ttle">Display Name</span>
+                                                    <span>{{ label.displayName | capitalizeFirst}}</span>
+                                                </div>
                                         <div class="item">
                                             <span class="ttle">Description</span>
                                             <span>{{ label.description | capitalizeFirst}}</span>
                                         </div>
                                         <div class="item">
                                             <span class="ttle">Value</span>
-                                            <span *ngFor="let labelvalue of label.valueSet"> {{labelvalue.value}} ({{labelvalue.shortValue}})</span>
+                                            <span *ngFor="let labelvalue of label.valueSet"> {{labelvalue.value}}
+                                                ({{labelvalue.shortValue}})</span>
                                         </div>
                                     </div>
                                 </div>
@@ -36,10 +41,16 @@
                                             </mat-form-field>
                                         </div>
                                         <div class="form-group">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="displayName"
+                                                        placeholder="{{label_displayname_cap}}" [(ngModel)]="displayname"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                        <div class="form-group">
                                             <mat-form-field>
                                                 <textarea matInput class="form-control" id="description"
-                                                    placeholder="Briefly describe label"
-                                                    [(ngModel)]="description"
+                                                    placeholder="Briefly describe label" [(ngModel)]="description"
                                                     [ngModelOptions]="{standalone: true}" (keyup)="setCharCount($event)"
                                                     (focus)="setDescFocus()" (blur)="lostDescFocus()"
                                                     maxlength="500"> </textarea>
@@ -67,11 +78,11 @@
                                             <div class="col-md-4">
                                                 <button type="submit" mat-button
                                                     (click)="addtoValueSet(value, shortValue)"
-                                                    class="cs-btn bt1 mt10">Add</button>
+                                                    class="cs-btn bt1 mt10 labelad">Add</button>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="col-md-10" *ngFor="let valueset of valueSet">
+                                            <div class="col-md-10 labeladsmall" *ngFor="let valueset of valueSet">
                                                 <div class="col-md-4">
                                                     {{valueset.value}}
                                                 </div>
@@ -83,12 +94,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="actiondiv" style="margin-top: 150px;">
+                                        <div class="actiondiv labelsave" style="margin-top: 150px;">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button type="button" mat-button (click)="createLabel()"
-                                                [disabled]="savedisabled" class="cs-btn bt1">{{button_title}}</button>
+                                            <button (click)="createLabel()" type="button" mat-button [disabled]="savedisabled"
+                                                class="cs-btn bt2">{{button_title}}</button>
+                                            <!-- <button type="button" mat-button (click)="createLabel()"
+                                                [disabled]="savedisabled" class="cs-btn bt1">{{button_title}}</button> -->
                                             <!-- <span class="label-tooltip" *ngIf="type == 'add' && mode=='normal'">
                                                 <i class="icon-bell"></i>
                                                 {{tooltip}}
