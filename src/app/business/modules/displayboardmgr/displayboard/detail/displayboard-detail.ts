@@ -59,6 +59,7 @@ export class DisplayboardDetailComponent implements OnInit {
     selectedCategoryValue;
     fieldDisplayname: any = [];
     filedDefaultvalue: any = [];
+    fieldOrder: any = [];
     fieldArray: any = [];
     statusBoardfor: any = [];
     displayBoardData: any = [];
@@ -168,16 +169,17 @@ export class DisplayboardDetailComponent implements OnInit {
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
                 for (let j = 0; j < this.defaultLables.length; j++) {
                     if (this.displayBoardData.fieldList[i].name === this.defaultLables[j].name) {
-                        this.fieldDisplayname[i] = this.displayBoardData.fieldList[i].displayName;
+                        this.fieldDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.fieldOrder[j] = this.displayBoardData.fieldList[i].order;
                         if (this.displayBoardData.fieldList[i].defaultValue) {
-                            this.filedDefaultvalue[i] = this.displayBoardData.fieldList[i].defaultValue;
+                            this.filedDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
                         }
                         this.defaultLables[j].checked = true;
-                        this.lableSelection(j, 'exist');
+                        // this.saveLabels(j);
+                        this.lableSelection(j, 'edit');
                     }
                 }
             }
-
         });
     }
 
@@ -187,6 +189,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log(this.fieldArray);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': this.boardName,
@@ -213,6 +216,7 @@ export class DisplayboardDetailComponent implements OnInit {
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar('Displayboard updated successfully', { 'panelclass': 'snackbarerror' });
+                this.getDisplaydashboardbyId(this.displayBoardData.id);
                 this.actionparam = 'view';
             },
                 error => {
@@ -234,6 +238,7 @@ export class DisplayboardDetailComponent implements OnInit {
             .subscribe(data => {
                 this.services_list = data;
                 this.selectedCategoryValue = this.services_list[0].id;
+                this.serviceSelection(this.services_list[0].id);
             });
         this.api_loading1 = false;
     }
@@ -292,36 +297,80 @@ export class DisplayboardDetailComponent implements OnInit {
                     'name': this.providerLabels[i].label,
                     'displayname': this.providerLabels[i].displayName,
                     'label': true,
+                    'order': this.defaultLables.length + 1
                 });
             }
         });
         this.defaultLables = this.shared_Functionsobj.removeDuplicates(this.defaultLables, 'name');
     }
-    lableSelection(index, source) {
-        if (source === 'change') {
-            (!this.showLabelEdit[index]) ? this.showLabelEdit[index] = true : this.showLabelEdit[index] = false;
-        } else {
+    lableSelection(index, event, name?) {
+        if (event === 'edit') {
             this.showLabelEdit[index] = true;
+            this.saveLabels(index);
+        } else if (event.checked) {
+            this.showLabelEdit[index] = true;
+            this.fieldDisplayname[index] = this.defaultLables[index].displayname;
+            this.fieldOrder[index] = this.defaultLables[index].order;
+            if (this.defaultLables[index].defaultValue) {
+                this.filedDefaultvalue[index] = this.defaultLables[index].defaultValue;
+            }
+            this.saveLabels(index);
+        } else if (!event.checked) {
+            this.showLabelEdit[index] = false;
+            this.removeLabels(name);
+        }
+    }
+
+    getLabelName(value, index) {
+        for (let i = 0; i < this.fieldArray.length; i++) {
+            if (this.fieldArray[i].name === index.name) {
+                this.fieldArray[i].displayName = value;
+            }
+        }
+    }
+    getLabelvalue(value, index) {
+        for (let i = 0; i < this.fieldArray.length; i++) {
+            if (this.fieldArray[i].name === index.name) {
+                this.fieldArray[i].defaultValue = value;
+            }
+        }
+    }
+    getLabelOrder(value, index) {
+        for (let i = 0; i < this.fieldArray.length; i++) {
+            if (this.fieldArray[i].name === index.name) {
+                this.fieldArray[i].order = value;
+            }
+        }
+    }
+    removeLabels(name) {
+        for (let i = 0; i < this.fieldArray.length; i++) {
+            if (this.fieldArray[i].name === name) {
+                this.fieldArray.splice(i, 1);
+            }
         }
     }
     categorySelection(value) {
         this.selectedCategory = value;
         if (this.selectedCategory === 'SERVICE') {
             this.selectedCategoryValue = this.services_list[0].id;
+            this.serviceSelection(this.services_list[0].id);
         } else if (this.selectedCategory === 'QUEUE') {
             this.selectedCategoryValue = this.display_schedule[0].id;
+            this.queueSelection(this.display_schedule[0].id);
         } else if (this.selectedCategory === 'DEPARTMENT') {
             this.selectedCategoryValue = this.deptObj.departments[0].departmentId;
+            this.departmentSelection(this.deptObj.departments[0].departmentId);
         }
     }
     saveLabels(index) {
         this.fieldArray.push({
             'name': this.defaultLables[index].name,
             'displayName': this.fieldDisplayname[index],
-            // 'defaultValue': 'string',
-            // 'label': this.defaultLables[index].label,
-            'order': index
+            'defaultValue': this.filedDefaultvalue[index] || '',
+            'label': this.defaultLables[index].label,
+            'order': this.fieldOrder[index]
         });
+        this.fieldArray = this.shared_Functionsobj.removeDuplicates(this.fieldArray, 'name');
     }
     serviceSelection(service) {
         // this.statusBoardfor = [{
