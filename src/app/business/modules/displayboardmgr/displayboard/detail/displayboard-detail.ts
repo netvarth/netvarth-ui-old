@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
@@ -13,29 +12,15 @@ import { projectConstants } from '../../../../../shared/constants/project-consta
     templateUrl: './displayboard-detail.html'
 })
 export class DisplayboardDetailComponent implements OnInit {
-    amForm: FormGroup;
-    char_count = 0;
-    max_char_count = 250;
-    isfocused = false;
-    dept_data;
     cancel_btn = Messages.CANCEL_BTN;
     service_caption = Messages.SERVICES_CAP;
     department_cap = Messages.DEPARTMENT_CAP;
     queue_cap = Messages.WORKING_HRS_CAP;
-    button_title = 'Save';
-    service = false;
-    api_loading1 = true;
+    category = Messages.AUDIT_CATEGORY_CAP;
     sboard_id;
-    action = 'show';
     deptObj;
-    boardInfo = {
-        'name': null,
-        'displayname': null,
-    };
-    api_loading: boolean;
     departments: any = [];
     services_list: any = [];
-    loading = true;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -57,10 +42,10 @@ export class DisplayboardDetailComponent implements OnInit {
     showLabelEdit: any = [];
     selectedCategory = 'SERVICE';
     selectedCategoryValue;
-    fieldDisplayname: any = [];
-    filedDefaultvalue: any = [];
-    fieldOrder: any = [];
-    fieldArray: any = [];
+    labelDisplayname: any = [];
+    labelDefaultvalue: any = [];
+    labelOrder: any = [];
+    labelsList: any = [];
     statusBoardfor: any = [];
     displayBoardData: any = [];
     boardName;
@@ -131,70 +116,32 @@ export class DisplayboardDetailComponent implements OnInit {
                 if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
                     this.departmentSelection(this.displayBoardData.statusBoardFor[i].id[0]);
                 }
-                // if (this.displayBoardData.statusBoardFor[i].type === 'SERVICE') {
-                //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
-                //         for (let k = 0; k < this.services_list.length; k++) {
-                //             if (this.services_list[k].id === this.displayBoardData.statusBoardFor[i].id[j]) {
-                //                 this.services_list[k].checked = true;
-                //                 this.serviceSelection(this.services_list[k]);
-                //             }
-                //         }
-                //     }
-                // }
-                // if (this.displayBoardData.statusBoardFor[i].type === 'QUEUE') {
-                //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
-                //         for (let k = 0; k < this.display_schedule.length; k++) {
-                //             if (this.display_schedule[k].id === this.displayBoardData.statusBoardFor[i].id[j]) {
-                //                 this.display_schedule[k].checked = true;
-                //                 this.queueSelection(this.display_schedule[k]);
-                //             } else {
-                //                 this.display_schedule[k].checked = false;
-                //             }
-                //         }
-                //     }
-                // }
-                // if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
-                //     for (let j = 0; j < this.displayBoardData.statusBoardFor[i].id.length; j++) {
-                //         for (let k = 0; k < this.departments.length; k++) {
-                //             if (this.departments[k].departmentId === this.displayBoardData.statusBoardFor[i].id[j]) {
-                //                 this.departments[k].checked = true;
-                //                 this.departmentSelection(this.departments[k]);
-                //             } else {
-                //                 this.departments[k].checked = false;
-                //             }
-                //         }
-                //     }
-                // }
             }
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
                 for (let j = 0; j < this.defaultLables.length; j++) {
                     if (this.displayBoardData.fieldList[i].name === this.defaultLables[j].name) {
-                        this.fieldDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
-                        this.fieldOrder[j] = this.displayBoardData.fieldList[i].order;
+                        this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
                         if (this.displayBoardData.fieldList[i].defaultValue) {
-                            this.filedDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
+                            this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
                         }
                         this.defaultLables[j].checked = true;
-                        // this.saveLabels(j);
-                        this.lableSelection(j, 'edit');
+                        this.labelSelection(j, 'edit');
                     }
                 }
             }
         });
     }
-
     editStatusBoard(id) {
         this.actionparam = 'edit';
         this.getDisplaydashboardbyId(id);
     }
-
     onSubmit() {
-        console.log(this.fieldArray);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': this.boardName,
                 'displayName': this.boardDisplayname,
-                'fieldList': this.fieldArray,
+                'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.createDisplayboard(post_data).subscribe(data => {
@@ -211,7 +158,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'id': this.displayBoardData.id,
                 'name': this.boardName,
                 'displayName': this.boardDisplayname,
-                'fieldList': this.fieldArray,
+                'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {
@@ -232,7 +179,6 @@ export class DisplayboardDetailComponent implements OnInit {
         }
     }
     getProviderServices() {
-        this.api_loading1 = true;
         const params = { 'status': 'ACTIVE' };
         this.provider_services.getServicesList(params)
             .subscribe(data => {
@@ -240,10 +186,8 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.selectedCategoryValue = this.services_list[0].id;
                 this.serviceSelection(this.services_list[0].id);
             });
-        this.api_loading1 = false;
     }
     getDepartments() {
-        this.loading = false;
         this.departments = [];
         this.provider_services.getDepartments()
             .subscribe(
@@ -254,10 +198,8 @@ export class DisplayboardDetailComponent implements OnInit {
                             this.departments.push(this.deptObj.departments[i]);
                         }
                     }
-                    this.loading = false;
                 },
                 error => {
-                    this.loading = false;
                     this.shared_Functionsobj.apiErrorAutoHide(this, error);
                 }
             );
@@ -282,9 +224,6 @@ export class DisplayboardDetailComponent implements OnInit {
                 this.provider_shared_functions.setActiveQueues(activeQueues);
             });
     }
-    resetApiErrors() {
-    }
-
     getLabels() {
         this.defaultLables = this.labelfromConstants;
         for (let i = 0; i < this.defaultLables.length; i++) {
@@ -303,16 +242,16 @@ export class DisplayboardDetailComponent implements OnInit {
         });
         this.defaultLables = this.shared_Functionsobj.removeDuplicates(this.defaultLables, 'name');
     }
-    lableSelection(index, event, name?) {
+    labelSelection(index, event, name?) {
         if (event === 'edit') {
             this.showLabelEdit[index] = true;
             this.saveLabels(index);
         } else if (event.checked) {
             this.showLabelEdit[index] = true;
-            this.fieldDisplayname[index] = this.defaultLables[index].displayname;
-            this.fieldOrder[index] = this.defaultLables[index].order;
+            this.labelDisplayname[index] = this.defaultLables[index].displayname;
+            this.labelOrder[index] = this.defaultLables[index].order;
             if (this.defaultLables[index].defaultValue) {
-                this.filedDefaultvalue[index] = this.defaultLables[index].defaultValue;
+                this.labelDefaultvalue[index] = this.defaultLables[index].defaultValue;
             }
             this.saveLabels(index);
         } else if (!event.checked) {
@@ -320,32 +259,31 @@ export class DisplayboardDetailComponent implements OnInit {
             this.removeLabels(name);
         }
     }
-
     getLabelName(value, index) {
-        for (let i = 0; i < this.fieldArray.length; i++) {
-            if (this.fieldArray[i].name === index.name) {
-                this.fieldArray[i].displayName = value;
+        for (let i = 0; i < this.labelsList.length; i++) {
+            if (this.labelsList[i].name === index.name) {
+                this.labelsList[i].displayName = value;
             }
         }
     }
     getLabelvalue(value, index) {
-        for (let i = 0; i < this.fieldArray.length; i++) {
-            if (this.fieldArray[i].name === index.name) {
-                this.fieldArray[i].defaultValue = value;
+        for (let i = 0; i < this.labelsList.length; i++) {
+            if (this.labelsList[i].name === index.name) {
+                this.labelsList[i].defaultValue = value;
             }
         }
     }
     getLabelOrder(value, index) {
-        for (let i = 0; i < this.fieldArray.length; i++) {
-            if (this.fieldArray[i].name === index.name) {
-                this.fieldArray[i].order = value;
+        for (let i = 0; i < this.labelsList.length; i++) {
+            if (this.labelsList[i].name === index.name) {
+                this.labelsList[i].order = value;
             }
         }
     }
     removeLabels(name) {
-        for (let i = 0; i < this.fieldArray.length; i++) {
-            if (this.fieldArray[i].name === name) {
-                this.fieldArray.splice(i, 1);
+        for (let i = 0; i < this.labelsList.length; i++) {
+            if (this.labelsList[i].name === name) {
+                this.labelsList.splice(i, 1);
             }
         }
     }
@@ -363,22 +301,16 @@ export class DisplayboardDetailComponent implements OnInit {
         }
     }
     saveLabels(index) {
-        this.fieldArray.push({
+        this.labelsList.push({
             'name': this.defaultLables[index].name,
-            'displayName': this.fieldDisplayname[index],
-            'defaultValue': this.filedDefaultvalue[index] || '',
+            'displayName': this.labelDisplayname[index],
+            'defaultValue': this.labelDefaultvalue[index] || '',
             'label': this.defaultLables[index].label,
-            'order': this.fieldOrder[index]
+            'order': this.labelOrder[index]
         });
-        this.fieldArray = this.shared_Functionsobj.removeDuplicates(this.fieldArray, 'name');
+        this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service) {
-        // this.statusBoardfor = [{
-        //     'type': 'SERVICE',
-        //     'id': [
-        //         service.id
-        //     ]
-        // }];
         this.statusBoardfor = [{
             'type': 'SERVICE',
             'id': [
@@ -387,12 +319,6 @@ export class DisplayboardDetailComponent implements OnInit {
         }];
     }
     departmentSelection(dept) {
-        // this.statusBoardfor = [{
-        //     'type': 'DEPARTMENT',
-        //     'id': [
-        //         dept.departmentId
-        //     ]
-        // }];
         this.statusBoardfor = [{
             'type': 'DEPARTMENT',
             'id': [
@@ -401,12 +327,6 @@ export class DisplayboardDetailComponent implements OnInit {
         }];
     }
     queueSelection(queue) {
-        // this.statusBoardfor = [{
-        //     'type': 'QUEUE',
-        //     'id': [
-        //         queue.id
-        //     ]
-        // }];
         this.statusBoardfor = [{
             'type': 'QUEUE',
             'id': [

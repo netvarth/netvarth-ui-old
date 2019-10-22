@@ -14,17 +14,18 @@
                                         capitalizeFirst}} ({{displayBoardData.name}})</h3>
                             <div class="c-ot" *ngFor="let labelfor of displayBoardData.statusBoardFor">
                                 <div class="item">
-                                    <span class="ttle">Category</span>
-                                    <span class=""> {{labelfor.type}} <span *ngFor="let labelid of labelfor.id"> ({{getNamefromId(labelid, labelfor.type)}})</span>
+                                    <span class="ttle">{{category}}</span>
+                                    <span class=""> {{labelfor.type}} <span *ngFor="let labelid of labelfor.id">
+                                            ({{getNamefromId(labelid, labelfor.type)}})</span>
                                     </span>
-                                    {{getNamefromId(labelid,labelfor.type)}}
                                 </div>
                             </div>
                             <div>
                                 <div class="c-ot">
                                     <div class="item" style="width: 100%;">
                                         <span class="ttle">Selected fields (Order)</span>
-                                        <span class="" *ngFor="let fields of displayBoardData.fieldList" style="margin-right: 30px;"> {{fields.displayName}}({{fields.order}})
+                                        <span class="" *ngFor="let fields of displayBoardData.fieldList"
+                                            style="margin-right: 30px;"> {{fields.displayName}}({{fields.order}})
                                         </span>
                                     </div>
                                 </div>
@@ -50,7 +51,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group col-md-12 inline">
-                                        <label class="col-form-label">Category</label>
+                                        <label class="col-form-label">{{category}}</label>
                                         <mat-radio-group [(ngModel)]="selectedCategory">
                                             <mat-radio-button [value]="'SERVICE'" *ngIf="services_list.length > 0"
                                                 (change)="categorySelection('SERVICE')">
@@ -68,11 +69,8 @@
                                     <div class="form-group col-md-12 inline" *ngIf="selectedCategory === 'SERVICE'">
                                         <label class="col-form-label" style="margin-left: 20px">Choose
                                             Services</label>
-                                        <div *ngFor="let service of services_list; index as i">
-                                            <!-- <mat-checkbox class="example-margin" (change)="serviceSelection(service)"
-                                            [checked]="services_list[i].checked">
-                                            {{service.name | capitalizeFirst}}
-                                        </mat-checkbox> -->
+                                        <div *ngFor="let service of services_list; index as i"
+                                            style="margin-left: 30px;">
                                             <mat-radio-group [(ngModel)]="selectedCategoryValue">
                                                 <mat-radio-button [value]="service.id"
                                                     [checked]="services_list[i].checked"
@@ -86,10 +84,6 @@
                                         <label class="col-form-label" style="margin-left: 20px">Choose
                                             Department</label>
                                         <div *ngFor="let department of departments; index as i">
-                                            <!-- <mat-checkbox class="example-margin" (change)="departmentSelection(department)"
-                                            [checked]="departments[i].checked">
-                                            {{department.departmentName | capitalizeFirst}}
-                                        </mat-checkbox> -->
                                             <mat-radio-group [(ngModel)]="selectedCategoryValue">
                                                 <mat-radio-button [value]="departments.departmentId"
                                                     [checked]="departments[i].checked"
@@ -103,10 +97,6 @@
                                         <label class="col-form-label" style="margin-left: 20px">Choose
                                             Queues</label>
                                         <div *ngFor="let schedule of display_schedule; index as i">
-                                            <!-- <mat-checkbox class="example-margin" (change)="queueSelection(schedule)"
-                                            [checked]="display_schedule[i].checked">{{schedule.name}}
-                                            {{schedule.displayQ.dstr | capitalizeFirst}} {{schedule.displayQ.time}}
-                                        </mat-checkbox> -->
                                             <mat-radio-group [(ngModel)]="selectedCategoryValue">
                                                 <mat-radio-button [value]="schedule.id"
                                                     [checked]="display_schedule[i].checked"
@@ -130,36 +120,33 @@
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="fieldName"
                                                             placeholder="Enter Displayname" autocomplete="off"
-                                                            (blur)="getLabelName(fieldDisplayname[i], label)"
-                                                            [(ngModel)]="fieldDisplayname[i]">
+                                                            (blur)="getLabelName(labelDisplayname[i], label)"
+                                                            [(ngModel)]="labelDisplayname[i]">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="order"
                                                             placeholder="Enter Order" autocomplete="off"
-                                                            (blur)="getLabelOrder(fieldOrder[i], label)"
-                                                            [(ngModel)]="fieldOrder[i]">
+                                                            (blur)="getLabelOrder(labelOrder[i], label)"
+                                                            [(ngModel)]="labelOrder[i]">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-4" *ngIf="label.label">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control"
-                                                            id="fieldDisplayname" placeholder="Enter Defaultvalue"
-                                                            (blur)="getLabelvalue(filedDefaultvalue[i], label)"
-                                                            autocomplete="off" [(ngModel)]="filedDefaultvalue[i]">
+                                                            id="labelDisplayname" placeholder="Enter Defaultvalue"
+                                                            (blur)="getLabelvalue(labelDefaultvalue[i], label)"
+                                                            autocomplete="off" [(ngModel)]="labelDefaultvalue[i]">
                                                     </mat-form-field>
                                                 </div>
-                                                <!-- <div class="actiondiv col-md-12" style="margin-bottom:30px">
-                                                    <button type="button" mat-button (click)="saveLabels(i)"
-                                                        class="cs-btn bt1">Add</button>
-                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="actiondiv col-md-12" style="margin-bottom:30px">
-                                    <button (click)="onCancel()" type="button" class="cs-btn bt2">cancel</button>
+                                    <button (click)="onCancel()" type="button"
+                                        class="cs-btn bt2">{{cancel_btn}}</button>
                                     &nbsp;
                                     <button type="button" mat-button (click)="onSubmit()"
                                         class="cs-btn bt1">{{submit_btn}}</button>
