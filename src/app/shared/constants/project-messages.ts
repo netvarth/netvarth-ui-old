@@ -98,6 +98,7 @@ export const Messages = {
   'ONLINE_CHECKIN_SAVED': 'Waitlist settings saved successfully',
   'SERVICE_UPDATED': 'Service updated successfully',
   'LABEL_UPDATED': 'Label updated successfully',
+  'LABEL_ADDED': 'Label created successfully',
   'SERVICE_ADDED1': 'New service added successfully',
   'SERVICE_ADDED2': 'Please add this service to the relevant working hours by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',

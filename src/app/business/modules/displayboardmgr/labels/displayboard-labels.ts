@@ -49,7 +49,6 @@ export class DisplayboardLabelsComponent implements OnInit {
         this.provider_services.getLabelList()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.label_list = data;
                     this.api_loading = false;
                 },

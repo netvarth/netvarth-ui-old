@@ -93,7 +93,6 @@ export class DisplayboardLabelComponent implements OnInit {
     editLabelbyId(id) {
         this.provider_services.getLabel(id).subscribe(data => {
             this.labelData = data;
-            console.log(this.labelData);
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -123,6 +122,7 @@ export class DisplayboardLabelComponent implements OnInit {
                 'valueSet': this.valueSet,
             };
             this.provider_services.createLabel(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_ADDED'));
                 this.editLabelbyId(data);
             });
         }
@@ -162,7 +162,6 @@ export class DisplayboardLabelComponent implements OnInit {
     }
     editLabel() {
         this.actionparam = 'edit';
-        console.log(this.label_id)
         this.editLabelbyId(this.label_id);
     }
     deleteLabel(label_id) {
@@ -182,7 +181,9 @@ export class DisplayboardLabelComponent implements OnInit {
         valset['shortValue'] = shortcut;
         this.value = [];
         this.shortValue = [];
-        this.valueSet.push(valset);
+        if (valset['value'].length !== 0 && valset['shortValue'].length !== 0 ) {
+            this.valueSet.push(valset);
+        }
         value = '';
         shortcut = '';
     }

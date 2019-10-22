@@ -48,7 +48,6 @@ export class DisplayboardLayoutsComponent implements OnInit {
         this.provider_services.getBoardLayouts()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.layout_list = data;
                     this.api_loading = false;
                 },
