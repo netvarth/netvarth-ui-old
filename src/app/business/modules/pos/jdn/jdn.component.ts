@@ -56,7 +56,7 @@ export class JDNComponent implements OnInit {
     }
 
     fillJdnfields(data) {
-        this.jdndisplayNote = data.displyNote;
+        this.jdndisplayNote = data.displayNote;
         this.jdnlabeltext = data.label;
         this.discType = data.discPercentage;
         this.jdnmaxDiscounttext = data.discMax;
