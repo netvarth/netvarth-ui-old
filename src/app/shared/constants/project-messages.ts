@@ -906,7 +906,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license
   'CURRENT_PACKAGE_CAP': 'Your current License Package is',
-  'UPGRADE_LICENSE': 'Upgrade License',
+  'UPGRADE_LICENSE': 'Upgrade Plan',
   'LICENSE_CHANGE': 'License History',
   'LICENSE_USAGE': 'License Usage',
   'SUBSCRIPTION_CAP': 'Subscription',

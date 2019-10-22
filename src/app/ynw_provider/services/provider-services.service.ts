@@ -488,11 +488,13 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getLicenseSubscription() {
-    const url = 'provider/license/getSubscription';
+   // const url = 'provider/license/getSubscription';
+   const url = 'provider/license/billing';
     return this.servicemeta.httpGet(url);
   }
   changeLicenseSubscription(type) {
-    const url = 'provider/license/changeSubscription/' + type;
+    //const url = 'provider/license/changeSubscription/' + type;
+    const url = 'provider/license/billing/' + type;
     return this.servicemeta.httpPut(url);
   }
   getInvoice(uuid) {

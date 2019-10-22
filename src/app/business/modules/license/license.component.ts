@@ -83,6 +83,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     invoicedialogRef;
     upgradesubscriptdialogRef;
     domain;
+    statusOfLicense;
+    licensePlan;
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions,
@@ -286,6 +288,11 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.license_sub = data;
+                    this.licensePlan = this.license_sub.licSubType;
+                    if(this.license_sub.subscriptionTo){
+                   this.statusOfLicense = this.license_sub.subscriptionTo;
+                }
+                    console.log(this.license_sub);
                     this.getLicenseMetaData();
                 },
                 error => {
@@ -306,7 +313,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                 license_meta['price'] = meta['price'] || 0;
                                 license_meta['discPercFor12Months'] = meta['discPercFor12Months'] || 0;
                                 license_meta['discPercFor6Months'] = meta['discPercFor6Months'] || 0;
-                                license_meta['current_sub'] = (this.license_sub === 'Monthly') ? 'month' : 'year';
+                                license_meta['current_sub'] = (this.license_sub.licSubType === 'Monthly') ? 'month' : 'year';
                                 if (license_meta['current_sub'] === 'year') {
                                     const year_amount = (license_meta['price'] * 12);
                                     license_meta['price'] = year_amount - (year_amount * license_meta['discPercFor12Months'] / 100);
@@ -339,6 +346,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.getLicenseDetails('update');
+                    //this.getSubscriptionDetail();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
