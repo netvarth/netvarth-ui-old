@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-apply-label',
@@ -11,6 +12,21 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 export class ApplyLabelComponent implements OnInit {
     checkin_id;
     providerLabels: any = [];
+    breadcrumbs_init: any = [
+        {
+            title: Messages.DASHBOARD_TITLE,
+            url: '/provider'
+        },
+        {
+            title: 'Check-Ins',
+            url: '/provider/dashboard/check-ins'
+        },
+        {
+            title: 'Add Label'
+        }
+    ];
+    breadcrumbs = this.breadcrumbs_init;
+    labelValue;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions) {
@@ -46,5 +62,13 @@ export class ApplyLabelComponent implements OnInit {
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
+    }
+    changeLabelvalue(labelname, value) {
+        console.log(labelname);
+        console.log(value);
+        const labelMetric = {
+            labelname: value
+        };
+        console.log(labelMetric);
     }
 }

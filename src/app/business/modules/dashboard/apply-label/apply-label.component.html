@@ -1,13 +1,35 @@
-<div>
-    <div *ngFor="let label of providerLabels">
-        <mat-checkbox (change)="changeLabel()"> {{label.displayName}}</mat-checkbox>
-       
-        <div *ngFor="let value of label.valueSet">
-                <mat-radio-button>
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
 
-                        {{value.shortValue}}
-                </mat-radio-button>
-           
+<section>
+    <div class="content comn-cls">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                    <!-- <div class="card" *ngIf="api_loading">
+                        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                    </div> -->
+                    <div class="card">
+                        <div *ngFor="let label of providerLabels">
+                            {{label.displayName}}
+
+                            <div *ngFor="let value of label.valueSet">
+                                    <span class="start cs-btn bt7" (click)="changeLabelvalue(label.label, value.value)">
+                                            {{value.shortValue}}
+  </span>
+                                     
+                                </div>
+
+
+                        </div>
+
+
+
+                        <button (click)="addLabel()">Add</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
