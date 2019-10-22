@@ -1,0 +1,13 @@
+<div>
+    <div *ngFor="let label of providerLabels">
+        <mat-checkbox (change)="changeLabel()"> {{label.displayName}}</mat-checkbox>
+       
+        <div *ngFor="let value of label.valueSet">
+                <mat-radio-button>
+
+                        {{value.shortValue}}
+                </mat-radio-button>
+           
+        </div>
+    </div>
+</div>

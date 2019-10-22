@@ -15,6 +15,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerModule } from '../customer/customer.module';
+import { ApplyLabelComponent } from './apply-label/apply-label.component';
+import { MaterialModule } from '../../../shared/modules/common/material.module';
 // import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 
 @NgModule({
@@ -28,7 +30,8 @@ import { CustomerModule } from '../customer/customer.module';
         LoadingSpinnerModule,
         Nl2BrPipeModule,
         InboxModule,
-        CustomerModule
+        CustomerModule,
+        MaterialModule
     ],
     declarations: [
         DashboardComponent,
@@ -37,7 +40,8 @@ import { CustomerModule } from '../customer/customer.module';
         ProviderWaitlistCheckInConsumerNoteComponent,
         // ProviderWaitlistCheckInDetailComponent,
         AdjustQueueDelayComponent,
-        ProviderWaitlistCheckInDetailComponent
+        ProviderWaitlistCheckInDetailComponent,
+        ApplyLabelComponent
     ],
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,

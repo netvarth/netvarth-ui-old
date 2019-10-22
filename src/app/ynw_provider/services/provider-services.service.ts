@@ -488,12 +488,12 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getLicenseSubscription() {
-   // const url = 'provider/license/getSubscription';
-   const url = 'provider/license/billing';
+    // const url = 'provider/license/getSubscription';
+    const url = 'provider/license/billing';
     return this.servicemeta.httpGet(url);
   }
   changeLicenseSubscription(type) {
-    //const url = 'provider/license/changeSubscription/' + type;
+    // const url = 'provider/license/changeSubscription/' + type;
     const url = 'provider/license/billing/' + type;
     return this.servicemeta.httpPut(url);
   }
@@ -700,8 +700,8 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getLabelList() {
-     const url = 'provider/waitlist/label';
-     return this.servicemeta.httpGet(url);
+    const url = 'provider/waitlist/label';
+    return this.servicemeta.httpGet(url);
   }
   getLabel(labelId) {
     const url = 'provider/waitlist/label/' + labelId;
@@ -715,49 +715,57 @@ export class ProviderServices {
     const url = 'provider/waitlist/label';
     return this.servicemeta.httpPost(url, label);
   }
-  deleteLabel (labelId) {
+  deleteLabel(labelId) {
     const url = 'provider/waitlist/label/' + labelId;
     return this.servicemeta.httpDelete(url);
   }
-  getDisplayboards () {
+  getDisplayboards() {
     const url = 'provider/statusBoard';
     return this.servicemeta.httpGet(url);
- }
- getDisplayboardbyId(boardId) {
-   const url = 'provider/statusBoard/' + boardId;
-   return this.servicemeta.httpGet(url);
- }
- updateDisplayboard(data) {
-   const url = 'provider/statusBoard';
-   return this.servicemeta.httpPut(url, data);
- }
- createDisplayboard(board) {
-   const url = 'provider/statusBoard';
-   return this.servicemeta.httpPost(url, board);
- }
- deleteDisplayboard (boardId) {
-   const url = 'provider/statusBoard/' + boardId;
-   return this.servicemeta.httpDelete(url);
- }
- getBoardLayouts() {
-  const url = 'provider/statusBoard/dimension';
-  return this.servicemeta.httpGet(url);
-}
-getBoardLayout(layoutId) {
- const url = 'provider/statusBoard/dimension/' + layoutId;
- return this.servicemeta.httpGet(url);
-}
-updateBoardLayout(data) {
- const url = 'provider/statusBoard/dimension';
- return this.servicemeta.httpPut(url, data);
-}
-createBoardLayout(layout) {
- const url = 'provider/statusBoard/dimension';
- return this.servicemeta.httpPost(url, layout);
-}
-deleteBoardLayout (layoutId) {
- const url = 'provider/statusBoard/dimension' + layoutId;
- return this.servicemeta.httpDelete(url);
-}
+  }
+  getDisplayboardbyId(boardId) {
+    const url = 'provider/statusBoard/' + boardId;
+    return this.servicemeta.httpGet(url);
+  }
+  updateDisplayboard(data) {
+    const url = 'provider/statusBoard';
+    return this.servicemeta.httpPut(url, data);
+  }
+  createDisplayboard(board) {
+    const url = 'provider/statusBoard';
+    return this.servicemeta.httpPost(url, board);
+  }
+  deleteDisplayboard(boardId) {
+    const url = 'provider/statusBoard/' + boardId;
+    return this.servicemeta.httpDelete(url);
+  }
+  getBoardLayouts() {
+    const url = 'provider/statusBoard/dimension';
+    return this.servicemeta.httpGet(url);
+  }
+  getBoardLayout(layoutId) {
+    const url = 'provider/statusBoard/dimension/' + layoutId;
+    return this.servicemeta.httpGet(url);
+  }
+  updateBoardLayout(data) {
+    const url = 'provider/statusBoard/dimension';
+    return this.servicemeta.httpPut(url, data);
+  }
+  createBoardLayout(layout) {
+    const url = 'provider/statusBoard/dimension';
+    return this.servicemeta.httpPost(url, layout);
+  }
+  deleteBoardLayout(layoutId) {
+    const url = 'provider/statusBoard/dimension' + layoutId;
+    return this.servicemeta.httpDelete(url);
+  }
+  addLabeltoCheckin(uuid) {
+    const url = 'provider/waitlist/label/' + uuid;
+    return this.servicemeta.httpPost(url);
+  }
+  deleteLabelfromCheckin(uuid, label) {
+    const url = 'provider/waitlist/label/' + uuid + '/' + label;
+    return this.servicemeta.httpDelete(url);
+  }
 }
 

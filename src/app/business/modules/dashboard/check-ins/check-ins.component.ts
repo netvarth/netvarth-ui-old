@@ -1409,4 +1409,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       }
     });
   }
+  applyLabel(checkin) {
+    this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid, 'add-label']);
+  }
 }

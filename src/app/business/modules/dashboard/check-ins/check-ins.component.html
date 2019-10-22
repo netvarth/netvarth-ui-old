@@ -433,6 +433,12 @@
                         (click)="showConsumerNote(checkin)">
                         {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
                       </button>
+
+                      <button type="button" mat-menu-item (click)="applyLabel(checkin)">
+                      Add Label
+                    </button>
+
+
                     </mat-menu>
                   </span>
                 </div>

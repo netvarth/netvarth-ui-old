@@ -111,7 +111,7 @@
                                         <label class="col-form-label">Status Board Field to display</label>
                                         <div class="disply-field" *ngFor="let label of defaultLables; let i = index">
                                             <mat-checkbox class="example-margin" style="margin-left: 30px"
-                                                (change)="lableSelection(i,$event,label.name)"
+                                                (change)="labelSelection(i,$event,label.name)"
                                                 [checked]="defaultLables[i].checked">
                                                 {{label.displayname}}
                                             </mat-checkbox>
