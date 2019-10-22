@@ -5,6 +5,7 @@ import { SharedFunctions } from '../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../shared/services/shared-services';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-business',
@@ -17,6 +18,8 @@ export class BusinessComponent implements OnInit {
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
   apiloading = false;
+  activeSkin;
+  subscription: Subscription;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -43,6 +46,15 @@ export class BusinessComponent implements OnInit {
       }
     });
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
+
+    this.subscription = this.shared_functions.getMessage().subscribe(message => {
+      switch (message.ttype) {
+        case 'skin':
+          this.activeSkin = message.selectedSkin;
+          this.shared_functions.setitemonLocalStorage('activeSkin', this.activeSkin);
+          break;
+      }
+    });
   }
   private _navigationInterceptor(event: RouterEvent): void {
     if (event instanceof NavigationStart) {
@@ -69,6 +81,10 @@ export class BusinessComponent implements OnInit {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (user && usertype === 'provider') {
       this.getLicenseMetrics(user.accountLicenseDetails.accountLicense.licPkgOrAddonId);
+    }
+    this.activeSkin = this.shared_functions.getitemfromLocalStorage('activeSkin');
+    if (!this.activeSkin) {
+      this.activeSkin = 'skin-jaldee';
     }
   }
   getProviderLogo(bname = '', bsector = '', bsubsector = '') {

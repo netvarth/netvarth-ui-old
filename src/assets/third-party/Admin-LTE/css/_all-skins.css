@@ -1,4 +1,193 @@
 /*
+ * Skin: Jaldee
+ * ----------
+ */
+ .skin-jaldee .main-header .navbar {
+  background-color: #f39c12;
+}
+.skin-jaldee .main-header.dash .navbar {
+  background-color: #fff;
+}
+.skin-jaldee .title-color {
+  color: #3c8dbc;
+}
+.skin-jaldee .settings .hd h2 i { color : #3c8dbc}
+.skin-jaldee .available .text-success { color: #3c763d !important }
+.skin-jaldee .available .disabled { color: #dddd !important }
+.skin-jaldee .q-time.queuelist label.tstat {color: #999999 !important; font-weight: normal}
+
+.skin-jaldee .req-flds-cap {color: red; font-size: 9px;margin-left: 5px}
+
+.skin-jaldee .bus-name {color:#444444;}
+.skin-jaldee .main-header.dash .navbar {
+  margin-left: 0px !important;
+  padding-left:0px;
+  padding-right:0px;
+  background-color:transparent !important;
+  border-bottom: 1px solid #ddd !important;
+}
+.dashboard .main-header .navbar {
+  background-color: transparent !important;
+}
+.skin-jaldee .main-header.dash .navbar .navbar-item-color {
+  color: #3c8dbc !important;
+}
+.skin-jaldee .reply-shade {
+  background: #ddd;
+}
+.skin-jaldee .main-header.dash .navbar .icon-color {
+  color: #3c8dbc;
+  font-size: 16px
+}
+.skin-jaldee .main-header .navbar .nav > li > a {
+  color: #ffffff;
+}
+.skin-jaldee .main-header .navbar .nav > li > a:hover,
+.skin-jaldee .main-header .navbar .nav > li > a:active,
+.skin-jaldee .main-header .navbar .nav > li > a:focus,
+.skin-jaldee .main-header .navbar .nav .open > a,
+.skin-jaldee .main-header .navbar .nav .open > a:hover,
+.skin-jaldee .main-header .navbar .nav .open > a:focus,
+.skin-jaldee .main-header .navbar .nav > .active > a {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f6f6f6;
+}
+.skin-jaldee .main-header.dash .navbar .nav > li > a:hover {
+  background: none !important;
+  color: #ccc;
+}
+.skin-jaldee .main-header .navbar .sidebar-toggle {
+  color: #ffffff;
+}
+.skin-jaldee .main-header .navbar .sidebar-toggle:hover {
+  color: #f6f6f6;
+  background: rgba(0, 0, 0, 0.1);
+}
+.skin-jaldee .main-header .navbar .sidebar-toggle {
+  color: #fff;
+}
+.skin-jaldee .main-header .navbar .sidebar-toggle:hover {
+  background-color: #f39c12;
+}
+@media (max-width: 767px) {
+  .skin-jaldee .main-header .navbar .dropdown-menu li.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .skin-jaldee .main-header .navbar .dropdown-menu li a {
+    color: #fff;
+  }
+  .skin-jaldee .main-header .navbar .dropdown-menu li a:hover {
+    background: #f39c12;
+  }
+}
+.skin-jaldee .main-header .logo {
+  background-color: #f39c12;
+  color: #ffffff;
+  border-bottom: 0 solid transparent;
+}
+.skin-jaldee .main-header .logo:hover {
+  background-color: #f39c12;
+}
+.skin-jaldee .main-header li.user-header {
+  background-color: #f39c12;
+}
+.skin-jaldee .content-header {
+  background: transparent;
+}
+.skin-jaldee .wrapper,
+.skin-jaldee .main-sidebar,
+.skin-jaldee .left-side {
+  background-color: #dee6f0;
+  border-right: 1px solid #3c8dbc;
+}
+.skin-jaldee .user-panel > .info,
+.skin-jaldee .user-panel > .info > a {
+  color: #fff;
+}
+.skin-jaldee .sidebar-menu > li.header {
+  color: #4b646f;
+  background: #1a2226;
+}
+.skin-jaldee .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+  font-weight: 600
+}
+/* .skin-jaldee .sidebar-menu > li:hover > a,
+.skin-jaldee .sidebar-menu > li.active > a,
+.skin-jaldee .sidebar-menu > li.menu-open > a {
+  color: #ffffff;
+  background: #1e282c;
+} */
+.skin-jaldee .sidebar-menu > li.active > a {
+  border-left-color: #f39c12;
+}
+.skin-jaldee .sidebar-menu > li > .treeview-menu {
+  margin: 0 1px;
+  /* background: #2c3b41; */
+}
+.skin-jaldee .sidebar a {
+  color: #444444;
+}
+.skin-jaldee .sidebar a:hover {
+  text-decoration: none;
+}
+.skin-jaldee .sidebar-menu .treeview-menu > li > a {
+  color: #444444;
+}
+.skin-jaldee .sidebar-menu .treeview-menu > li.active > a,
+.skin-jaldee .sidebar-menu .treeview-menu > li > a:hover {
+  color: #ffffff;
+}
+.skin-jaldee .sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #374850;
+  margin: 10px 10px;
+}
+.skin-jaldee .sidebar-form input[type="text"],
+.skin-jaldee .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #374850;
+  border: 1px solid transparent;
+  height: 35px;
+}
+.skin-jaldee .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+}
+.skin-jaldee .sidebar-form input[type="text"]:focus,
+.skin-jaldee .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-jaldee .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-jaldee .sidebar-form .btn {
+  color: #999;
+  border-top-left-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 0;
+}
+.skin-jaldee.layout-top-nav .main-header > .logo {
+  background-color: #3c8dbc;
+  color: #ffffff;
+  border-bottom: 0 solid transparent;
+}
+.skin-jaldee.layout-top-nav .main-header > .logo:hover {
+  background-color: #3b8ab8;
+}
+@media (max-width: 767px) {
+  .skin-jaldee .main-header .navbar .dropdown-menu li a {
+     color:#444444 !important;
+}
+}
+
+
+/*
  * Skin: Blue
  * ----------
  */
@@ -9,13 +198,15 @@
   background-color: #fff;
 }
 .skin-blue .title-color {
-  color: #00aef2;
+  color: #3c8dbc;
 }
-.skin-blue .settings .hd h2 i { color : #00aef2}
+.skin-blue .settings .hd h2 i { color : #3c8dbc}
 .skin-blue .available .text-success { color: #3c763d !important }
 .skin-blue .available .disabled { color: #dddd !important }
 .skin-blue .q-time.queuelist label.tstat {color: #999999 !important; font-weight: normal}
-
+.skin-blue .dashboard .card.w-dta .dash-list .table thead {
+  background-color: #3c8dbc !important;
+}
 .skin-blue .req-flds-cap {color: red; font-size: 9px;margin-left: 5px}
 
 .skin-blue .bus-name {color: white}
@@ -189,6 +380,9 @@
 }
 .skin-blue-light .main-header .navbar .nav > li > a {
   color: #ffffff;
+}
+.skin-blue-light .dashboard .main-header .navbar .nav > li > a {
+  color: #3c8dbc;
 }
 .skin-blue-light .main-header .navbar .nav > li > a:hover,
 .skin-blue-light .main-header .navbar .nav > li > a:active,
@@ -1105,6 +1299,9 @@
 }
 .skin-red-light .main-header .navbar .nav > li > a {
   color: #ffffff;
+}
+.skin-red-light .dashboard .main-header .navbar .nav > li > a {
+  color:#3c8dbc !important
 }
 .skin-red-light .main-header .navbar .nav > li > a:hover,
 .skin-red-light .main-header .navbar .nav > li > a:active,

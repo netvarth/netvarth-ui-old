@@ -12,7 +12,7 @@
                         </div>
                         <div class="card" *ngIf="!api_loading">
                                 <div class="copy">
-                                        <div class="col-md-12" style="display: flex">
+                                        <div class="col-md-12 no-padding" style="display: flex">
                                                 <label style="color: #222223!important">
                                                         <b>My Availability Today
                                                         </b>
@@ -222,8 +222,8 @@
                                                         </form>
                                                 </div>
                                         </div>
-                                        <div class="row col-md-12 col-xs-12 no-padding" *ngFor="let queue of todaysQs; index as i">
-                                                <div class="card">
+                                        <div class="row col-md-12 col-xs-12 no-padding mt10" *ngFor="let queue of todaysQs; index as i">
+                                                <div class="col-md-12 no-padding">
                                                         <div class="copy">
                                                                 <span class="mbt" style="margin-top: 10px">
                                                                         <button type="button" mat-icon-button
@@ -232,7 +232,7 @@
                                                                         </button>
                                                                 </span>
                                                                 <div class="q-time queuelist">
-                                                                        <div class="col-md-5 col-xs-12 no-padding">
+                                                                        <div class="col-md-5 col-xs-12">
                                                                                 <h3 class="pointer-cursor"
                                                                                         style="margin-right: 50px"
                                                                                         *ngFor="let schedule of queue.displayschedule"
