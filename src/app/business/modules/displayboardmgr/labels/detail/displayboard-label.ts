@@ -108,11 +108,6 @@ export class DisplayboardLabelComponent implements OnInit {
             this.valueSet = this.labelData.valueSet;
         });
     }
-    editStatusBoard(id) {
-        this.actionparam = 'edit';
-        this.editLabelbyId(id);
-    }
-
     onSubmit() {
         if (this.actionparam === 'add') {
             const post_data = {
@@ -174,7 +169,6 @@ export class DisplayboardLabelComponent implements OnInit {
                 }
             );
     }
-
     addtoValueSet(value, shortcut) {
         const valset = {};
         valset['value'] = value;

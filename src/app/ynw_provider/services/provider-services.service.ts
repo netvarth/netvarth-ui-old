@@ -756,7 +756,7 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, layout);
   }
   deleteBoardLayout(layoutId) {
-    const url = 'provider/statusBoard/dimension' + layoutId;
+    const url = 'provider/statusBoard/dimension/' + layoutId;
     return this.servicemeta.httpDelete(url);
   }
   addLabeltoCheckin(uuid, data) {

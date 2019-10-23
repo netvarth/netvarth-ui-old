@@ -58,9 +58,7 @@ export class DisplayboardLayoutsComponent implements OnInit {
             );
     }
     performActions(action) {
-        if (action === 'addlayout') {
-            this.addDisplayboardLayout();
-        }
+    this.addDisplayboardLayout();
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->layout']);
         }
@@ -73,13 +71,16 @@ export class DisplayboardLayoutsComponent implements OnInit {
             queryParams: { action: 'edit' }
         };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'list', layout.id], navigationExtras);
+            'layout', layout.id], navigationExtras);
     }
     goDisplayboardLayoutDetails(layout) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { id: layout.id }
+        };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'layout', layout.id]);
+            'layout', 'view'], navigationExtras);
     }
-    deleleDisplayboardLayout(layout) {
+    deleteDisplayboardLayout(layout) {
         this.provider_services.deleteBoardLayout(layout.id).subscribe(
             () => {
                 this.getDisplayboardLayouts();

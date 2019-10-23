@@ -1,38 +1,44 @@
 <section>
-        <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
-            [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-    </section>
-    <section>
-        <div class="content comn-cls">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12 no-padding" *ngIf="!api_loading">
-                        <div class="card" *ngIf="layout_list.length==0">
-                            No Layouts Found
-                        </div>
-                        <div class="card" *ngFor="let layout of layout_list">
-                            <div class="copy">
-                                <span class="mbt">
-                                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                </span>
-                                <h3 (click)="goDisplayboardLayoutDetails(layout)" class="pointer-cursor"> {{layout.name |
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 no-padding" *ngIf="!api_loading">
+                    <div class="card" *ngIf="layout_list.length==0">
+                        No Layouts Found
+                    </div>
+                    <div class="card" *ngFor="let layout of layout_list">
+                        <div class="copy">
+                            <span class="mbt">
+                                <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                            </span>
+                            <h3 (click)="goDisplayboardLayoutDetails(layout)" class="pointer-cursor"> {{layout.name |
                                                                 capitalizeFirst}}</h3>
-                                <!-- <span class="addbt d-block d-md-none" (click)="addLabel()"></span> -->
-                                <mat-menu #appMenu="matMenu">
-                                    <button mat-menu-item (click)="editDisplayboardLayout(layout)">
-                                        <i class="icon-edit"></i>
-                                        Edit
-                                    </button>
-                                    <button mat-menu-item (click)="deleteDisplayboardLayout(layout)">
-                                        Delete
-                                    </button>
-                                </mat-menu>
+                            <div class="c-ot m0">
+                                <div class="item desfont">
+                                    <span class="ttle">Layout</span>
+                                    <span>{{layout.layout | capitalizeFirst}}</span>
+                                </div>
                             </div>
+                            <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="editDisplayboardLayout(layout)">
+                                    <i class="icon-edit"></i>
+                                    Edit
+                                </button>
+                                <button mat-menu-item (click)="deleteDisplayboardLayout(layout)">
+                                        <i class="icon-delete"></i>
+                                    Delete
+                                </button>
+                            </mat-menu>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
