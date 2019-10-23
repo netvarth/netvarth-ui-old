@@ -5148,3 +5148,17 @@ min-height: auto !important;
     cursor: not-allowed !important;
     /* border: 3px dashed #ccc !important; */
   }
+  .add-label {
+    margin: 10px;
+  }
+  .add-label .field {
+    padding: 5px;
+  }
+  .add-label .field-name {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .selected_btn {
+    background-color: #3c8dbc;
+    color: white;
+  }

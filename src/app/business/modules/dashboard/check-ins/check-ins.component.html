@@ -157,7 +157,8 @@
             <li class="dropdown notifications-menu cl-fltr fltr-tbl">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i *ngIf="filterapplied === true" class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
-                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /> &nbsp;</i>
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img
+                    src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /> &nbsp;</i>
                 <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
                 <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
@@ -335,8 +336,13 @@
                               class="text">{{partially_paid_cap}}</span></span>
                           <span class="paid-f" *ngIf="checkin.paymentStatus == 'FullyPaid'"><span
                               class="text">{{paid_cap}}</span></span>
-
                         </ng-container>
+                      </span>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-padding mt10">
+                      <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                        <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
+                          {{getDisplayname(label.key)}} : {{label.value}}</span>
                       </span>
                     </div>
                   </div>
@@ -433,12 +439,9 @@
                         (click)="showConsumerNote(checkin)">
                         {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
                       </button>
-
-                      <button type="button" mat-menu-item (click)="applyLabel(checkin)">
-                      Add Label
-                    </button>
-
-
+                      <button type="button" mat-menu-item *ngIf="time_type!=0" (click)="applyLabel(checkin)">
+                        Manage Label
+                      </button>
                     </mat-menu>
                   </span>
                 </div>
