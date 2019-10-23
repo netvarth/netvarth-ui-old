@@ -209,6 +209,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   ChkindialogRef;
   bprofile: any = [];
   domain;
+  providerLabels: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -260,6 +261,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.getDomainSubdomainSettings();
     this.getServiceList();
     // this.getLocationList();
+    this.getLabel();
     this.getLocationList().then(
       () => {
         this.breadcrumb_moreoptions = {
@@ -1410,6 +1412,18 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
   applyLabel(checkin) {
-    this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid, 'add-label']);
+    this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
+  }
+  getLabel() {
+    this.provider_services.getLabelList().subscribe(data => {
+      this.providerLabels = data;
+    });
+  }
+  getDisplayname(label) {
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      if (this.providerLabels[i].label === label) {
+        return this.providerLabels[i].displayName;
+      }
+    }
   }
 }

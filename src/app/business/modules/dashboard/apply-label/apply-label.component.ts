@@ -10,7 +10,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 })
 
 export class ApplyLabelComponent implements OnInit {
-    checkin_id;
+    checkinId;
     providerLabels: any = [];
     breadcrumbs_init: any = [
         {
@@ -22,41 +22,50 @@ export class ApplyLabelComponent implements OnInit {
             url: '/provider/dashboard/check-ins'
         },
         {
-            title: 'Add Label'
+            title: 'Manage Label'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
-    labelValue;
+    labelMap;
+    label;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions) {
         this.activateroute.params.subscribe(data => {
-            this.checkin_id = data.id;
+            this.checkinId = data.id;
+        });
+        this.activateroute.queryParams.subscribe(data => {
+            this.label = data;
         });
     }
-
     ngOnInit() {
         this.getLabels();
     }
-
     getLabels() {
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            const value = Object.values(this.label);
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+                    for (let k = 0; k < value.length; k++) {
+                        if (this.providerLabels[i].valueSet[j].value === value[k]) {
+                            this.providerLabels[i].valueSet[j].selected = true;
+                        }
+                    }
+                }
+            }
         });
     }
-
     addLabel() {
-        console.log(this.checkin_id);
-        this.provider_services.addLabeltoCheckin(this.checkin_id).subscribe(data => {
+        this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
 
         },
             error => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
             });
     }
-
     deleteLabel(label) {
-        this.provider_services.deleteLabelfromCheckin(this.checkin_id, label).subscribe(data => {
+        this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
 
         },
             error => {
@@ -64,11 +73,24 @@ export class ApplyLabelComponent implements OnInit {
             });
     }
     changeLabelvalue(labelname, value) {
-        console.log(labelname);
-        console.log(value);
-        const labelMetric = {
-            labelname: value
-        };
-        console.log(labelMetric);
+        this.labelMap = new Object();
+        this.labelMap[labelname] = value;
+        for (let i = 0; i < this.providerLabels.length; i++) {
+            for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+                if (this.providerLabels[i].valueSet[j].value === value) {
+                    if (!this.providerLabels[i].valueSet[j].selected) {
+                        this.providerLabels[i].valueSet[j].selected = true;
+                        this.addLabel();
+                    } else {
+                        this.providerLabels[i].valueSet[j].selected = false;
+                        this.deleteLabel(labelname);
+                    }
+                } else {
+                    if (this.providerLabels[i].label === labelname) {
+                        this.providerLabels[i].valueSet[j].selected = false;
+                    }
+                }
+            }
+        }
     }
 }

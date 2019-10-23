@@ -759,9 +759,9 @@ export class ProviderServices {
     const url = 'provider/statusBoard/dimension' + layoutId;
     return this.servicemeta.httpDelete(url);
   }
-  addLabeltoCheckin(uuid) {
+  addLabeltoCheckin(uuid, data) {
     const url = 'provider/waitlist/label/' + uuid;
-    return this.servicemeta.httpPost(url);
+    return this.servicemeta.httpPost(url, data);
   }
   deleteLabelfromCheckin(uuid, label) {
     const url = 'provider/waitlist/label/' + uuid + '/' + label;

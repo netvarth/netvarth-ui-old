@@ -12,14 +12,17 @@
                             <span class="ctrl" *ngIf="status === 'ENABLED'||status === 'DISABLED'">
                             <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)"></mat-slide-toggle>
                         </span>
-                        <span class="editbt" style="margin-left: 20px;" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span>
+                        <!-- <span class="editbt" style="margin-left: 20px;" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span> -->
                         <p
-                                    *ngIf="status ==='ENABLED'"><b>On</b></p>
+                                    *ngIf="status ==='ENABLED'">On</p>
                                     <p
-                                    *ngIf="status === 'DISABLED'"><b>Off</b></p>
+                                    *ngIf="status === 'DISABLED'">Off</p>
+                                
                             <div *ngIf="jdnType==='Label'; else elseBlock">
+                                    <!-- <div >  <span class="editbt"  *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></div>  -->
                                 <div class="form-group"  >
-                                    <label class="col-form-label">Label</label>
+                                    <label class="col-form-label">Label<span class="editbt" style="margin-left: 10%" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></label>
+                                    
                                     <span *ngIf="rewrite !='edit' && status !='Create'">{{jdnlabeltext}}</span>
                                     <!-- <mat-form-field > -->
                                     <input style="width: 50%" *ngIf="rewrite ==='edit' || status ==='Create'" matInput type="text" [(ngModel)]="jdnlabeltext"
@@ -29,14 +32,15 @@
                                 </div>
 
                             </div>
-                            <div>
+                            
+                            <div >
                                 <ng-template #elseBlock>
                                     <div class="form-group"  style="padding-top: 20px;">
                                         <label *ngIf="rewrite ==='edit'|| status ==='Create'" class="col-form-label">Choose Jaldee
                                             Discount</label>
                                             <div>
                                         <label *ngIf="rewrite !='edit'&& status !='Create'" class="col-form-label">Jaldee Discount
-                                            </label>
+                                                <span class="editbt" style="margin-left: 10%" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></label>
                                             <span *ngIf="rewrite !='edit'&& status !='Create'">{{discType}}%</span></div>
                                         <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
                                             [disabled]="status === 'DISABLED'">
@@ -55,7 +59,7 @@
 
                                 </ng-template>
                             </div>
-
+                       
                             <div class="form-group"  >
                                 <label class="col-form-label"*ngIf="rewrite !='edit'&& status !='Create'&& jdndisplayNote">Note</label>
                                 <label class="col-form-label"*ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
