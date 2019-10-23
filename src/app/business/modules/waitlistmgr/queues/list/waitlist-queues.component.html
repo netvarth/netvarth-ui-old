@@ -6,11 +6,11 @@
 <section class="q-list">
         <div class="content instant loc-list">
                 <div class="col-md-12">
-                        <p class="form-level-settings">{{waitlist_cap}}</p>
                         <div class="card" *ngIf="api_loading">
                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
                         </div>
                         <div class="card" *ngIf="!api_loading">
+                                <p class="form-level-settings">{{waitlist_cap}}</p>
                                 <div class="copy">
                                         <div class="col-md-12 no-padding" style="display: flex">
                                                 <label style="color: #222223!important">
@@ -30,7 +30,7 @@
                                         <div class="row" *ngIf="showInstantQFlag">
                                                 <div class="col-md-12 card">
                                                         <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
-                                onSubmit(instantQForm.value)" (keyup)="resetApiErrors()">
+                                        onSubmit(instantQForm.value)" (keyup)="resetApiErrors()">
                                                                 <div class="instant-ed">
                                                                         <span [class.label-margin]="true">
                                                                                 <strong>I am available
@@ -169,10 +169,10 @@
                                                                                         <app-field-error-display
                                                                                                 [displayError]="fed_service.isFieldValid(instantQForm,'qcapacity')"
                                                                                                 [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qcapacity',
-                                                                                                        {
-                                                                                                          'required' : 'Please enter the capacity',
-                                                                                                          'maxlength' : 'Only 4 digits are allowed'
-                                                                                                        })">
+                                                                                                                {
+                                                                                                                  'required' : 'Please enter the capacity',
+                                                                                                                  'maxlength' : 'Only 4 digits are allowed'
+                                                                                                                })">
                                                                                         </app-field-error-display>
                                                                                 </div>
                                                                         </div>
@@ -202,10 +202,10 @@
                                                                                         <app-field-error-display
                                                                                                 [displayError]="fed_service.isFieldValid(instantQForm,'qserveonce')"
                                                                                                 [errorMsgs]="fed_service.getErrorMessage(instantQForm,'qserveonce',
-                                                                                                                {
-                                                                                                                'required' : 'Please enter the ' + customer_label + 's served at a time' ,
-                                                                                                                'maxlength' : 'Only 4 digits are allowed'
-                                                                                                                })">
+                                                                                                                        {
+                                                                                                                        'required' : 'Please enter the ' + customer_label + 's served at a time' ,
+                                                                                                                        'maxlength' : 'Only 4 digits are allowed'
+                                                                                                                        })">
                                                                                         </app-field-error-display>
                                                                                 </div>
                                                                         </div>
@@ -222,7 +222,8 @@
                                                         </form>
                                                 </div>
                                         </div>
-                                        <div class="row col-md-12 col-xs-12 no-padding mt10" *ngFor="let queue of todaysQs; index as i">
+                                        <div class="row col-md-12 col-xs-12 no-padding mt10"
+                                                *ngFor="let queue of todaysQs; index as i">
                                                 <div class="col-md-12 no-padding">
                                                         <div class="copy">
                                                                 <span class="mbt" style="margin-top: 10px">
@@ -232,30 +233,37 @@
                                                                         </button>
                                                                 </span>
                                                                 <div class="q-time queuelist">
-                                                                        <div class="col-md-5 col-xs-12">
+                                                                        <div
+                                                                                class="col-md-5 col-xs-12 no-padding-small">
                                                                                 <h3 class="pointer-cursor"
                                                                                         style="margin-right: 50px"
                                                                                         *ngFor="let schedule of queue.displayschedule"
                                                                                         (click)="goQueueDetail(queue)"
                                                                                         [matTooltipClass]="tooltipcls"
                                                                                         [matTooltip]="tooltip_queueedit">
-                                                                                        <i class="fas fa-calendar-day"></i> {{schedule.time}}
+                                                                                        <i
+                                                                                                class="fas fa-calendar-day"></i>
+                                                                                        {{schedule.time}}
                                                                                         <div style="font-size: small;
-                                                                                      color: black; margin-top: 2px;
-                                                                                      display: block;"> [<span
+                                                                                              color: black; margin-top: 2px;
+                                                                                              display: block;"> [<span
                                                                                                         *ngIf="!queue.instantQueue">{{queue.name}}
                                                                                                         - </span><span
                                                                                                         *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
                                                                                         </div>
                                                                                 </h3>
                                                                         </div>
-                                                                        <div class="col-md-6 col-xs-12 mg-small-10 no-padding">
-                                                                                <label class="ttle">Same day Online check-ins</label>
+                                                                        <div
+                                                                                class="col-md-6 col-xs-12 mg-small-10 no-padding">
+                                                                                <label class="ttle">Same day Online
+                                                                                        check-ins</label>
                                                                                 <mat-slide-toggle class="example-margin"
                                                                                         [checked]="queue.onlineCheckIn"
                                                                                         (change)="changeQSameDayOnlineStatus(queue, i, $event)">
                                                                                 </mat-slide-toggle>
-                                                                               <p><label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label></p> 
+                                                                                <p><label
+                                                                                                class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                                </p>
                                                                         </div>
                                                                 </div>
                                                                 <div class="card"
@@ -317,24 +325,26 @@
                                 </div>
                         </div>
                 </div>
+                <div class="clearfix"></div>
         </div>
 </section>
 
-<section>
+<section class="sched_q">
         <div class="content loc-list">
-                <div class="col-md-12" *ngIf="api_loading">
+                <div class="card" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <div class="col-md-12" *ngIf="!api_loading">
-                        <mat-accordion>
+                        <mat-accordion class="card no-padding">
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
                                                         Scheduled Working Hours({{scheduledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div class="row" *ngFor="let queue of scheduledQs; index as i">
-                                                <div class="card">
+
+                                        <div class="row q-time queuelist" *ngFor="let queue of scheduledQs; index as i">
+                                                <div class="col-md-12 no-padding pt10 pb5">
                                                         <div class="copy">
                                                                 <span class="mbt">
                                                                         <button type="button" mat-icon-button
@@ -342,107 +352,59 @@
                                                                                 <mat-icon>more_vert</mat-icon>
                                                                         </button>
                                                                 </span>
-
-
-                                                                <div class="q-time queuelist">
-                                                                        <div class="col-md-5 col-xs-12 no-padding">
+                                                                <div class="q-time ">
+                                                                        <div
+                                                                                class="col-md-5 col-xs-12 no-padding-small">
                                                                                 <h3 class="pointer-cursor"
                                                                                         style="margin-right: 50px"
                                                                                         *ngFor="let schedule of queue.displayschedule"
-                                                                                        (click)="goQueueDetail(queue)" 
+                                                                                        (click)="goQueueDetail(queue)"
                                                                                         [matTooltipClass]="tooltipcls"
                                                                                         [matTooltip]="tooltip_queueedit">
-                                                                                        <i class="fas fa-calendar-day"></i> {{schedule.time}}
+                                                                                        <i
+                                                                                                class="fas fa-calendar-day"></i>
+                                                                                        {{schedule.time}}
                                                                                         <div style="font-size: small;
-                                                                                      color: black; margin-top: 2px;
-                                                                                      display: block;"> [<span
+                                                                                              color: black; margin-top: 2px;
+                                                                                              display: block;"> [<span
                                                                                                         *ngIf="!queue.instantQueue">{{queue.name}}
-                                                                                                        - </span><span
+                                                                                                        -
+                                                                                                </span><span
                                                                                                         *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
                                                                                         </div>
                                                                                 </h3>
                                                                         </div>
-                                                                        <div class="col-md-6 col-xs-12 mg-small-10 no-padding">
-                                                                                <div>
-                                                                                <label class="ttle">Same day Online check-ins</label>
-                                                                                <mat-slide-toggle class="example-margin"
-                                                                                        [checked]="queue.onlineCheckIn"
-                                                                                        (change)="changeQSameDayOnlineStatus(queue, i, $event)">
-                                                                                </mat-slide-toggle>
-                                                                               <p> <label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label></p></div>
-                                                                                <div>  <label class="ttle">Future Online check-ins</label>
-                                                                                <mat-slide-toggle class="example-margin"
-                                                                                [checked]="queue.futureWaitlist"
-                                                                                (change)="changeQFutureStatus(queue, i, $event)">
-                                                                                </mat-slide-toggle>
-                                                                                <p> <label class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label></p></div>
-                                                                        </div>
-                                                                        <!-- <div class="col-md-6 col-xs-12 mg-small-10 ">
-                                                                                <label class="ttle">Same day Online check-ins</label>
-                                                                                <mat-slide-toggle class="example-margin"
-                                                                                        [checked]="queue.onlineCheckIn"
-                                                                                        (change)="changeQSameDayOnlineStatus(queue, i, $event)">
-                                                                                </mat-slide-toggle>
-                                                                                <label class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
-                                                                        </div> -->
-                                                                </div>
-
-
-                                                                <!-- <h3 class="pointer-cursor"
-                                                                        (click)="goQueueDetail(queue)"
-                                                                        [matTooltipClass]="tooltipcls"
-                                                                        [matTooltip]="tooltip_queueedit">
-                                                                        {{queue.name | capitalizeFirst}}
-                                                                </h3> -->
-                                                                <!-- <div class="c-ot m0">
-                                                                        <div class="loc-style item"
-                                                                                *ngIf="queue.location">
-                                                                                <span class="ttle">{{loc_cap}}</span>
-                                                                                <span
-                                                                                        class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
-                                                                        </div>
-                                                                        <div class="item" *ngIf="queue.capacity">
-                                                                                <span class="ttle">Maximum
-                                                                                        {{customer_label}}s served
-                                                                                </span>
-                                                                                <span
-                                                                                        class="icon-customer-line">{{queue.capacity}}</span>
-                                                                        </div>
-                                                                        <div class="item" *ngIf="queue.displayschedule">
-                                                                                <span
-                                                                                        class="ttle">{{schedule_cap}}</span>
-                                                                                <span>
-                                                                                        <ng-container
-                                                                                                *ngFor="let schedule of queue.displayschedule">
-                                                                                                <span
-                                                                                                        class="day">{{schedule.dstr}}</span>&nbsp;:&nbsp;
-                                                                                                <span
-                                                                                                        class="time">{{schedule.time}}</span>
-                                                                                        </ng-container>
-                                                                                </span>
-                                                                        </div>
-                                                                </div> -->
-                                                                <!-- <div class="c-ot mt mgn-up-20">
-                                                                        <div class="item">
-                                                                                <label style="display: flex">Same day
-                                                                                        Online check-ins
+                                                                        <div
+                                                                                class="col-md-6 col-xs-12 mg-small-10 no-padding">
+                                                                                <div class="col-md-12 no-padding">
+                                                                                        <label class="ttle">Same
+                                                                                                day
+                                                                                                Online
+                                                                                                check-ins</label>
                                                                                         <mat-slide-toggle
                                                                                                 class="example-margin"
                                                                                                 [checked]="queue.onlineCheckIn"
                                                                                                 (change)="changeQSameDayOnlineStatus(queue, i, $event)">
                                                                                         </mat-slide-toggle>
-                                                                                </label>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                                <label>Future check-ins
+                                                                                        <p> <label
+                                                                                                        class="tstat">{{queue.onlineCheckIn ? 'On' : 'Off'}}</label>
+                                                                                        </p>
+                                                                                </div>
+                                                                                <div class="col-md-12 no-padding">
+                                                                                        <label class="ttle">Future
+                                                                                                Online
+                                                                                                check-ins</label>
                                                                                         <mat-slide-toggle
                                                                                                 class="example-margin"
                                                                                                 [checked]="queue.futureWaitlist"
                                                                                                 (change)="changeQFutureStatus(queue, i, $event)">
                                                                                         </mat-slide-toggle>
-                                                                                </label>
+                                                                                        <p> <label
+                                                                                                        class="tstat">{{queue.futureWaitlist ? 'On' : 'Off'}}</label>
+                                                                                        </p>
+                                                                                </div>
                                                                         </div>
-                                                                </div> -->
+                                                                </div>
                                                                 <div class="card"
                                                                         *ngIf="sqShowTodayCount[i] || sqShowFutureCount[i]">
                                                                         <h5>Check-ins</h5>
@@ -483,7 +445,8 @@
                                                                         <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                 *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i]">
-                                                                                <i class="fa fa-plus"></i>Checkins Count
+                                                                                <i class="fa fa-plus"></i>Checkins
+                                                                                Count
                                                                         </button>
                                                                         <button mat-menu-item
                                                                                 (click)="addEditProviderQueue('edit', queue)"
@@ -500,30 +463,32 @@
                                                         </div>
                                                 </div>
                                         </div>
+
                                         <div class="card" *ngIf="scheduledQs.length==0">
                                                 No Scheduled Working Hours
                                         </div>
                                 </mat-expansion-panel>
                         </mat-accordion>
                 </div>
+                <div class="clearfix"></div>
         </div>
 </section>
 <!--Disabled Qs Listing-->
-<section>
+<section class="sched_q">
         <div class="content loc-list">
                 <div class="col-md-12" *ngIf="api_loading">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <div class="col-md-12" *ngIf="!api_loading">
-                        <mat-accordion>
+                        <mat-accordion class="card no-padding">
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
                                                         Disabled Working Hours({{disabledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div class="row" *ngFor="let queue of disabledQs">
-                                                <div class="card disabled">
+                                        <div class="row q-time queuelist" *ngFor="let queue of disabledQs">
+                                                <div class="col-md-12 disabled pt10 pb5">
                                                         <div class="copy">
                                                                 <span class="mbt" *ngIf="queue.showDisableBtn">
                                                                         <button type="button" mat-icon-button
@@ -531,41 +496,25 @@
                                                                                 <mat-icon>more_vert</mat-icon>
                                                                         </button>
                                                                 </span>
-                                                                <h3 style="color: black">
-                                                                        {{queue.name | capitalizeFirst}}
-                                                                </h3>
-                                                                <div class="c-ot m0">
-                                                                        <div class="loc-style item"
-                                                                                [class.disabled-style]="queue.queueState=='DISABLED'"
-                                                                                *ngIf="queue.location">
-                                                                                <span class="ttle">{{loc_cap}}</span>
+                                                                <div class="col-md-5 col-xs-12 no-padding-small">
+                                                                        <h3 class="pointer-cursor"
+                                                                                style="margin-right: 50px"
+                                                                                *ngFor="let schedule of queue.displayschedule"
+                                                                                (click)="goQueueDetail(queue)"
+                                                                                [matTooltipClass]="tooltipcls"
+                                                                                [matTooltip]="tooltip_queueedit">
+                                                                                <i class="fas fa-calendar-day"></i>
                                                                                 <span
-                                                                                        class="icon-location">{{queue.location.place | capitalizeFirst}}</span>
-                                                                        </div>
-                                                                        <div class="item"
-                                                                                [class.disabled-style]="queue.queueState=='DISABLED'"
-                                                                                *ngIf="queue.capacity">
-                                                                                <span class="ttle">Maximum
-                                                                                        {{customer_label}}s served
-                                                                                </span>
-                                                                                <span
-                                                                                        class="icon-customer-line">{{queue.capacity}}</span>
-                                                                        </div>
-                                                                        <div class="item"
-                                                                                [class.disabled-style]="queue.queueState=='DISABLED'"
-                                                                                *ngIf="queue.displayschedule && !queue.instantQueue">
-                                                                                <span
-                                                                                        class="ttle">{{schedule_cap}}</span>
-                                                                                <span>
-                                                                                        <ng-container
-                                                                                                *ngFor="let schedule of queue.displayschedule">
-                                                                                                <span
-                                                                                                        class="day">{{schedule.dstr}}</span>&nbsp;:&nbsp;
-                                                                                                <span
-                                                                                                        class="time">{{schedule.time}}</span>
-                                                                                        </ng-container>
-                                                                                </span>
-                                                                        </div>
+                                                                                        *ngIf="!queue.instantQueue">{{schedule.time}}</span>
+                                                                                <div style="font-size: small;
+                                                                                                color: black; margin-top: 2px;
+                                                                                                display: block;">
+                                                                                        [<span>{{queue.name}}
+                                                                                                -
+                                                                                        </span><span
+                                                                                                *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>
+                                                                                </div>
+                                                                        </h3>
                                                                 </div>
                                                                 <mat-menu #appMenu="matMenu">
                                                                         <button mat-menu-item
@@ -576,6 +525,7 @@
                                                                         </button>
                                                                 </mat-menu>
                                                         </div>
+                                                        <div class="clearfix"></div>
                                                 </div>
                                         </div>
                                         <div class="card" *ngIf="disabledQs.length==0">
@@ -584,5 +534,6 @@
                                 </mat-expansion-panel>
                         </mat-accordion>
                 </div>
+                <div class="clearfix"></div>
         </div>
 </section>
