@@ -20,6 +20,7 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { SignUpComponent } from '../signup/signup.component';
+import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 
 @Component({
   selector: 'app-provider-detail',
@@ -130,10 +131,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   phonelist: any = [];
   showEmailPhonediv = false;
   coupondialogRef;
+  jdndialogRef;
   femaleTooltip = projectConstants.TOOLTIP_FEMALE;
   maleTooltip = projectConstants.TOOLTIP_MALE;
   virtualsectionHeader = 'Click here to View More Details';
   isPlaceisSame = false;
+  jdnDiscountType;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -191,6 +194,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   services: any = [];
   deptlist: any = [];
   jaldeediscountJson;
+  maximumDiscount: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -460,6 +464,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           case 'jaldeediscount':
             console.log(res);
             this.jaldeediscountJson = res;
+            
         }
       },
         () => {
@@ -1047,6 +1052,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.coupondialogRef.afterClosed().subscribe(() => {
     });
   }
+
+  openJdn() {
+    this.jdndialogRef = this.dialog.open(JdnComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      disableClose: true,
+      data: {
+        jdnList: this.jaldeediscountJson
+       
+      }
+    });
+    this.jdndialogRef.afterClosed().subscribe(() => {
+    });
+  }
+
   firstChckinCuponCunt(CouponList) {
     for (let index = 0; index < CouponList.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {

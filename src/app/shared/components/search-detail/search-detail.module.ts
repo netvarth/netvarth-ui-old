@@ -17,6 +17,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { SearchProviderComponent } from '../search-provider/search-provider.component';
 import { SearchProviderModule } from '../search-provider/search-provider.module';
+import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 @NgModule({
     imports: [
         CommonModule,
@@ -37,7 +38,11 @@ import { SearchProviderModule } from '../search-provider/search-provider.module'
     declarations: [
         SearchDetailComponent,
         ProviderDetailComponent,
+        JdnComponent,
         ConsumerWaitlistHistoryComponent
+    ],
+    entryComponents: [
+        JdnComponent 
     ]
 })
 

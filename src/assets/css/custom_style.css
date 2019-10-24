@@ -5291,3 +5291,11 @@ i.notavail {
     background-color: #3c8dbc;
     color: white;
   }
+  .assured{
+    font-style: italic;
+    color: #00cc96;
+  }
+  .jdn{
+    font-size: small;
+    color: #00aef2;
+  }

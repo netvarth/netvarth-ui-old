@@ -122,9 +122,6 @@
                                     <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor"
                                             (click)="openCoupons()">{{jaldee_coupon}}</span></li>
 
-                                            <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor"
-                                                (click)="openCoupons()">Jaldee Discount Network</span></li>
-
                                     <li><span class="icon-history"
                                             (click)="redirectMe('history')">{{history_cap}}</span></li>
                                     <li *ngIf="!isInFav"><span class="fav icon-favourite"
@@ -133,6 +130,9 @@
                                             (click)="doRemoveFav()">{{rem_from_fav_cap}}</span></li>
                                     <li><span class="icon-message" (click)="communicateHandler()"
                                             *ngIf="provider_bussiness_id">{{send_msgs_cap}}</span></li>
+                                            <li *ngIf="this.jaldeediscountJson"(click)="openJdn()" style="cursor: pointer"><span class="jdn">JDN</span>&nbsp;<span class="assured">Assured</span>
+                                                
+                                                
                                 </ul>
                                 <div class="socialmedia" *ngIf="socialMedialist.length>0">
                                     <a rel="noopener" [href]="soc.value" target="_blank"

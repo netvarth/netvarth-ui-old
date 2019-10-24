@@ -1,0 +1,42 @@
+<h1 class="mat-dialog-title">Jdn <span>Details</span>
+    <button #jdn mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content style="padding: 0px 20px 20px 20px;">
+    <div  >
+        <div class="outer">
+            <div class="outer1 ">
+                <div class="name" *ngIf="jdnDetailList.discPercentage">
+                    <span class="dispvalue">Discount: </span>
+                    <span >{{jdnDetailList.discPercentage}}% </span>
+                    
+                </div>
+                <!-- <div class="description"*ngIf="jdnDetailList.discMax">
+                        <span class="dispvalue">Maximumvalue: </span>
+                        <span >{{jdnDetailList.discMax}}</span>
+                    </div> -->
+            </div>
+            <div class="outer3" *ngIf="jdnDetailList.discMax" >
+                    <div class="description">
+                            <span class="dispvalue">Maximumvalue: </span>
+                            <span >{{jdnDetailList.discMax}}</span>
+                    </div>
+                </div>
+            <div class="outer3" *ngIf="jdnDetailList.label" >
+                <div >
+                    <span class="dispvalue">Label: </span>
+                    <span >{{jdnDetailList.label}}</span>
+                </div>
+            </div>
+            <!-- <div class="outer4" >
+                <div class="prepayment">
+                    <span>vbg : </span><span style="font-weight: bold">
+                        <span>&#8377; </span>jhk
+                    </span>
+                </div>
+            </div> -->
+           
+        </div>
+    </div>
+</mat-dialog-content>

@@ -474,7 +474,7 @@
                                 <span class="communicate" (click)="communicateHandler(search_result)"
                                     *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
                                     [matTooltip]="commTooltip">{{send_messages}}</span>
-                                <span class="communicate" *ngIf="search_result.fields.jdn">Jaldee Disount Network</span>
+                               <span *ngIf="search_result.fields.jdn" class="jdn" >JDN</span><span class="assured"> Assured</span>
                                 <span class="claim-business" (click)="claimBusiness(search_result)"
                                     *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}}</span>
                             </div>
