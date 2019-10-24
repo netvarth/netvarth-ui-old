@@ -58,7 +58,7 @@
                                                         </mat-menu>
                                                     </span>
 
-                                                    <span class="mbt-mobile-show">
+                                                    <span class="mbt-mobile-show" *ngIf="discount.discType!='OnDemand'" >
                                                         <button class="editcls" type="button"
                                                             (click)="editDiscounts(discount)">{{edit_btn}}</button>
                                                         <button class="deletecls" type="button"

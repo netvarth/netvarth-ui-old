@@ -787,6 +787,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.today_cancelled_count = this.getCount(list, 'cancelled');
     this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_count;
   }
+
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
@@ -1408,6 +1409,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.ChkindialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
         this.reloadActionSubheader.emit(result);
+        this.reloadAPIs();
       }
     });
   }

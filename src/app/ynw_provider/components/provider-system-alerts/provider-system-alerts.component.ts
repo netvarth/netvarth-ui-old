@@ -81,6 +81,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         this.totalCnt = data;
         if (this.totalCnt === 0) {
           this.alertStatus = 2;
+          this.alert_details = [];
         } else {
           this.alertStatus = 1;
           this.getAlertList(ackStatus, sdate);
