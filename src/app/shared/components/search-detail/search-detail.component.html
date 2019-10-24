@@ -404,8 +404,7 @@
                                         <div class="departments" *ngIf="search_result.fields.departments">
                                             <ul>
                                                 <li [class.active]="selectedDepartment==departments"
-                                                *ngFor="let departments of search_result.fields.departments"
-                                                    >
+                                                    *ngFor="let departments of search_result.fields.departments">
                                                     {{departments | capitalizeFirst}}
                                                 </li>
                                             </ul>
@@ -475,6 +474,7 @@
                                 <span class="communicate" (click)="communicateHandler(search_result)"
                                     *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
                                     [matTooltip]="commTooltip">{{send_messages}}</span>
+                                <span class="communicate" *ngIf="search_result.fields.jdn">Jaldee Disount Network</span>
                                 <span class="claim-business" (click)="claimBusiness(search_result)"
                                     *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}}</span>
                             </div>
