@@ -190,7 +190,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   claimdialogRef;
   services: any = [];
   deptlist: any = [];
-
+  jaldeediscountJson;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -254,6 +254,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('virtualFields', true);
           this.getbusinessprofiledetails_json('coupon', true);
           this.getbusinessprofiledetails_json('services', true);
+          this.getbusinessprofiledetails_json('jaldeediscount', true);
         },
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
@@ -270,6 +271,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
+        console.log(section);
+        console.log(res);
         switch (section) {
           case 'businessProfile': {
             this.socialMedialist = [];
@@ -412,7 +415,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.locationjson[i]['services'] = [];
               this.getServiceByLocationid(this.locationjson[i].id, i);
               if (this.businessjson.claimStatus === 'Claimed') {
-              this.getProviderDepart(this.provider_bussiness_id);
+                this.getProviderDepart(this.provider_bussiness_id);
               }
               this.locationjson[i]['checkins'] = [];
               this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
@@ -454,6 +457,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
             break;
           }
+          case 'jaldeediscount':
+            console.log(res);
+            this.jaldeediscountJson = res;
         }
       },
         () => {
