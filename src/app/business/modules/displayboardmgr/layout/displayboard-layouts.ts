@@ -37,12 +37,12 @@ export class DisplayboardLayoutsComponent implements OnInit {
         private routerobj: Router,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions
-        ) { }
+    ) { }
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Layout', 'type': 'addlayout' },{ 'title': 'Learn More', 'type': 'learnmore' }]
+            'actions': [{ 'title': 'Add Layout', 'type': 'addlayout' }, { 'title': 'Learn More', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
@@ -63,8 +63,11 @@ export class DisplayboardLayoutsComponent implements OnInit {
                 }
             );
     }
+    showDisplayboard(layout) {
+        this.router.navigate(['provider', 'settings', 'displayboard', 'layout', layout.id, 'view']);
+    }
     performActions(action) {
-    this.addDisplayboardLayout();
+        this.addDisplayboardLayout();
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->layout']);
         }

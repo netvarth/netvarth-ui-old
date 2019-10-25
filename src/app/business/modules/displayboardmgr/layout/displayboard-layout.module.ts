@@ -9,12 +9,14 @@ import { CommonModule } from '@angular/common';
 import { DisplayboardLayoutsRoutingModule } from './displayboard-layout.routing.module';
 import { DisplayboardLayoutComponent } from './detail/displayboard-layout';
 import { DisplayboardLayoutsComponent } from './displayboard-layouts';
+import { DisplayboardLayoutContentComponent } from './content/displayboard-content-component';
 
 
 @NgModule({
     declarations: [
        DisplayboardLayoutComponent,
-       DisplayboardLayoutsComponent
+       DisplayboardLayoutsComponent,
+       DisplayboardLayoutContentComponent
     ],
     imports: [
         DisplayboardLayoutsRoutingModule,
