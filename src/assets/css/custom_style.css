@@ -5307,3 +5307,13 @@ i.notavail {
     height: 35px !important;
     background-color: rgb(242, 242, 242)!important;
   }
+  .layout_name{
+    color: #000 !important;
+    font-weight: 400 !important;
+  }
+  .desfont{
+    width: 30% !important;
+    }
+    .displyfont{
+      width: 60% !important;
+      }

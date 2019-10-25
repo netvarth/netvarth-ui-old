@@ -31,7 +31,7 @@
                                 <mat-panel-description class="acc-plus-btn pointer-cursor labeladd">
                                     <button mat-icon-button (click)="addLabel()" [matTooltipClass]="tooltipcls"
                                         [matTooltip]="add_button">
-                                        <mat-icon style="color: #00aef2">{{add_circle_outline}}
+                                        <mat-icon style="color: #3c8dbc">{{add_circle_outline}}
                                         </mat-icon>
                                     </button>
                                 </mat-panel-description>
@@ -45,19 +45,13 @@
                                             </button>
                                         </span>
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
-                                            {{label.label | capitalizeFirst}}</h3> &nbsp;
+                                                {{label.displayName | capitalizeFirst}}<span class="layout_name"> ({{label.label | capitalizeFirst}})</span></h3> &nbsp;
                                         <div class="c-ot m0">
-                                            <div class="item desfont" *ngIf="label.displayName">
-                                                <span class="ttle">Display Name</span>
-                                                <span>{{label.displayName | capitalizeFirst}}</span>
-                                            </div>
-                                            <div class="item displyfont" *ngIf="label.description">
+                                            <div class="item" *ngIf="label.description">
                                                 <span class="ttle">Description</span>
                                                 <span>{{label.description | capitalizeFirst}}</span>
                                             </div>
-                                        </div>
-                                        <div class="c-ot m0">
-                                            <div class="item" style="margin-top: 10px;">
+                                            <div class="item">
                                                 <span class="ttle">Value</span>
                                                 <span *ngFor="let labelvalue of label.valueSet">
                                                     {{labelvalue.value}} ({{labelvalue.shortValue}}) </span>
@@ -76,8 +70,11 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

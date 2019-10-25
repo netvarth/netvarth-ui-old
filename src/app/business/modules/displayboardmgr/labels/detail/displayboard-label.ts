@@ -98,7 +98,7 @@ export class DisplayboardLabelComponent implements OnInit {
                 breadcrumbs.push(e);
             });
             breadcrumbs.push({
-                title: this.labelData.label
+                title: this.labelData.displayName
             });
             this.breadcrumbs = breadcrumbs;
             this.label = this.labelData.label;

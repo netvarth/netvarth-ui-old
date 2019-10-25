@@ -134,7 +134,7 @@ export class DisplayboardLayoutComponent implements OnInit {
                 breadcrumbs.push(e);
             });
             breadcrumbs.push({
-                title: this.layoutData.name
+                title: this.layoutData.displayName
             });
             this.breadcrumbs = breadcrumbs;
             this.name = this.layoutData.name;

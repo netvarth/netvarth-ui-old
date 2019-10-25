@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-displayboard-layouts',
@@ -24,6 +25,7 @@ export class DisplayboardLayoutsComponent implements OnInit {
     ];
     api_loading: boolean;
     layout_list: any = [];
+    add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
     boardLayouts = [
         { displayName: '1x1', value: '1_1', row: 1, col: 1 },

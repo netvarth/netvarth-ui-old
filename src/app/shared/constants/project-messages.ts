@@ -1289,7 +1289,7 @@ export const Messages = {
   'FRM_LEVEL_LANG_MSG': 'To widen your [customer] base, add different languages known to you here.',
   'FRM_LEVEL_ADDITIONAL_MSG': 'Add other details of you or your business so that [customer]s can understand you more.',
   'FRM_LEVEL_VERI_MSG': 'To upgrade verification level contact Jaldee.',
-  'FRM_LEVEL_GALLERY_MSG': 'Add images and catchy captions to boost your [customer]\'s check-ins.',
+  'FRM_LEVEL_GALLERY_MSG': 'Add images and catchy captions to boost your [customer]\'s check-ins',
   'FRM_LEVEL_SOCIAL_MSG': 'To connect with [customer]s on your social media platform, add your social media links here.',
 
   // form-level-provider-waitlist
