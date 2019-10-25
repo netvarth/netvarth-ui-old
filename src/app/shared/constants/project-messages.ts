@@ -826,6 +826,7 @@ export const Messages = {
   'BPROFILE_LATIITUDE_CAP': 'Latitude:',
   'BPROFILE_LOCATION_AMENITIES': 'Location Amenities',
   'BPROFILE_CHANGE_WORKING_HOURS_CAP': 'You can change the working hours by editing the working hours of this location',
+  'BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP': 'You can change the working hours by editing the working hours of this service',
   'BPROFILE_VIEW_SERVICE_WINDOW_CAP': 'to edit the working hours',
   'BPROFILE_PRIVACY_SETTINGS_CAP': 'Privacy Settings',
   'BPROFILE_ANY_CAP': 'any',

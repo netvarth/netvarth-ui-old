@@ -39,6 +39,9 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     subscription: Subscription; // for gallery
     serviceSubscription: Subscription; // from service module
     servstatus;
+    can_change_hours = Messages.BPROFILE_CHANGE_SERVICE_WORKING_HOURS_CAP;
+    click_here_cap = Messages.CLICK_HERE_CAP;
+    view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private servicesService: ServicesService,

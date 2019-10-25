@@ -111,7 +111,14 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     'maxlength' : 'Only 10 digits are allowed'})">
                 </app-field-error-display>
             </div>
-            <div class="form-group inline"  *ngIf="subdomainsettings.serviceBillable">
+
+            <div class="row"style="margin-bottom: 10px">
+                    <mat-accordion>
+                            <mat-expansion-panel>
+                              <mat-expansion-panel-header class="advancedheader">
+                                <mat-panel-title>Advanced</mat-panel-title></mat-expansion-panel-header>
+            
+            <div class="form-group inline" style="margin-top: 10px" *ngIf="subdomainsettings.serviceBillable">
                 <label class="col-form-label">{{enable_prepayment_cap}}</label>
                 <mat-slide-toggle class="example-margin" formControlName="isPrePayment" (change)="changePrepayment()">
 
@@ -146,6 +153,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
                 <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
             </mat-radio-group>
+       
+    </mat-expansion-panel>
+</mat-accordion>
+        </div>
             <div class="actiondiv">
                 <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
                 <button type="submit" mat-button [disabled]="!serviceForm.valid || savedisabled"
