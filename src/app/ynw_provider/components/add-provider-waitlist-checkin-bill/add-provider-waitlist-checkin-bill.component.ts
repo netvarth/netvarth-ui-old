@@ -142,7 +142,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   pay_data = {
     'uuid': null,
     'acceptPaymentBy': 'cash',
-    'amount': 0
+    'amount': 0,
+    'paynot':''
   };
   selectedItems = [];
   bill_load_complete = 0;
@@ -204,6 +205,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountPrivateNotes = false;
   discountDisplayNotes = false;
   changedDate;
+  abc: any;
+  
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -212,7 +215,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
-
   ) {
     this.activated_route.params.subscribe(params => {
       this.uuid = params.id;
@@ -1038,7 +1040,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   //     this.getCheckinDetails();
   //   });
   // }
-  initPayment(mode, amount) {
+  
+  initPayment(mode, amount,paynot) {
+  
+    console.log(paynot)
     let status = 0;
     const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
       width: '50%',
@@ -1052,12 +1057,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
     });
     canceldialogRef.afterClosed().subscribe(result => {
+      //alert(result);
       status = result;
       if (status === 1) {
-        this.makePayment(mode, amount);
+        this.makePayment(mode, amount,paynot);
       }
       if (status === 2) {
-        this.makePayment(mode, amount, status);
+        this.makePayment(mode, amount,paynot, status);
+        //console.log(this.makePayment);
       }
     });
 
@@ -1071,10 +1078,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   hidePayWorkBench() {
     this.showPayWorkBench = false;
   }
-  makePayment(mode, amount, status?) {
+  makePayment(mode, amount,paynot, status?) {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.acceptPaymentBy = mode;
     this.pay_data.amount = amount;
+    this.pay_data.paynot = paynot;
+    
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
