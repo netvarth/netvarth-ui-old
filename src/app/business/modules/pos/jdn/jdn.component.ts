@@ -69,7 +69,7 @@ export class JDNComponent implements OnInit {
             post_data = {
 
                 "label": this.jdnlabeltext,
-                "displyNote": this.jdndisplayNote||'',
+                "displayNote": this.jdndisplayNote||'',
                 "status": "ENABLED"
 
             };
@@ -77,7 +77,7 @@ export class JDNComponent implements OnInit {
             const discountPer = +this.discType;
 
             post_data = {
-                "displyNote": this.jdndisplayNote||'',
+                "displayNote": this.jdndisplayNote||'',
                 "discPercentage": discountPer,
                 "discMax": this.jdnmaxDiscounttext,
                 "status": "ENABLED"
@@ -116,7 +116,7 @@ export class JDNComponent implements OnInit {
             put_data = {
 
                 "label": this.jdnlabeltext,
-                "displyNote": this.jdndisplayNote || '',
+                "displayNote": this.jdndisplayNote || '',
                 "status": "ENABLED"
 
             };
@@ -124,7 +124,7 @@ export class JDNComponent implements OnInit {
             const discountPer = +this.discType;
 
             put_data = {
-                "displyNote": this.jdndisplayNote ||'',
+                "displayNote": this.jdndisplayNote ||'',
                 "discPercentage": discountPer,
                 "discMax": this.jdnmaxDiscounttext,
                 "status": "ENABLED"

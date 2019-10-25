@@ -29,13 +29,12 @@
                     <span >{{jdnDetailList.label}}</span>
                 </div>
             </div>
-            <!-- <div class="outer4" >
-                <div class="prepayment">
-                    <span>vbg : </span><span style="font-weight: bold">
-                        <span>&#8377; </span>jhk
-                    </span>
+            <div class="outer4" *ngIf="jdnDetailList.displayNote">
+                <div >
+                    <span class="dispvalue">Displaynote: </span>
+                    <span >{{jdnDetailList.displyNote}}</span>
                 </div>
-            </div> -->
+            </div>
            
         </div>
     </div>

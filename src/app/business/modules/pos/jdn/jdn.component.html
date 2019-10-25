@@ -74,8 +74,10 @@
                             <button mat-button *ngIf="status !='ENABLED' && status !='DISABLED'" (click)="save()"
                                 class="cs-btn bt1" style="margin-right: 10px;">set
                             </button>
+                            <button type="button" style="margin-right: 10px;" (click)="cancel()" *ngIf="status != 'DISABLED' && rewrite ==='edit'"
+                                class="cs-btn bt2" [disabled]="disableButton">cancel</button>
                             <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
-                                class="cs-btn bt1" style="margin-right: 10px;">update
+                                class="cs-btn bt1" >update
                             </button>
                             <!-- <button mat-button *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"
                                 class="cs-btn bt1" style="margin-right: 10px;">edit
@@ -86,8 +88,7 @@
                             <button mat-button *ngIf="status === 'ENABLED' &&rewrite !='edit'" (click)="disable()"
                                 class="cs-btn bt1" style="margin-right: 10px;">disable
                             </button> -->
-                            <button type="button" (click)="cancel()" *ngIf="status != 'DISABLED' && rewrite ==='edit'"
-                                class="cs-btn bt2" [disabled]="disableButton">cancel</button>
+                            
                         </mat-dialog-actions>
                         <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
                         </app-field-error-display>
