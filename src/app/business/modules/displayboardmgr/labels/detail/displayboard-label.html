@@ -83,14 +83,14 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="col-md-10 labeladsmall" *ngFor="let valueset of valueSet">
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 col-xs-5">
                                                     {{valueset.value}}
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 col-xs-6">
                                                     {{valueset.shortValue}}
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <span class="icon-delete" (click)="deleteValueforSet(i)"></span>
+                                                <div class="col-md-2 col-xs-1">
+                                                    <span class="icon-delete pull-right" (click)="deleteValueforSet(i)"></span>
                                                 </div>
                                             </div>
                                         </div>

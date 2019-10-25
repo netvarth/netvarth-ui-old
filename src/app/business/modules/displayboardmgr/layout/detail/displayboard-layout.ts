@@ -25,15 +25,33 @@ export class DisplayboardLayoutComponent implements OnInit {
     statusse2 = false;
     statussel3 = false;
     layoutData: any = [];
+    boardSelectedItems: any = {};
+    boardLayouts = [
+        { displayName: '1x1', value: '1_1', row: 1, col: 1 },
+        { displayName: '1x2', value: '1_2', row: 1, col: 2 },
+        { displayName: '2x1', value: '2_1', row: 2, col: 1 },
+        { displayName: '2x2', value: '2_2', row: 2, col: 2 }
+    ];
+
+
+    // selectedRows = 1;
+    // selectedCols = 1;
+
     action = 'show';
     api_loading: boolean;
     name;
-    layout;
+    layout = this.boardLayouts[0];
     displayName;
     metric: any = [];
+    metricSelected = {};
     id;
     board_list: any = [];
     displayBoardData: any = [];
+
+
+    boardLayoutFields = {};
+    boardRows = 1;
+    boardCols = 1;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -78,15 +96,38 @@ export class DisplayboardLayoutComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
-     }
+    }
+    getLayout(layoutvalue) {
+        let layoutActive;
+        for (let i = 0; i < this.boardLayouts.length; i++) {
+            if (this.boardLayouts[i].value === layoutvalue) {
+                layoutActive = this.boardLayouts[i];
+                break;
+            }
+        }
+        return layoutActive;
+    }
     ngOnInit() {
         this.getDisplayboards();
+    }
+    createRange(number) {
+        const items = [];
+        for (let i = 0; i < number; i++) {
+            items.push(i);
+        }
+        return items;
+    }
+    handleLayout(layout) {
+        console.log(layout);
+        this.boardRows = layout.row;
+        this.boardCols = layout.col;
     }
     editLayoutbyId(id) {
         this.provider_services.getBoardLayout(id).subscribe(data => {
             this.layoutData = data;
             console.log(this.layoutData);
             console.log(this.displayBoardData);
+            this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
@@ -98,41 +139,68 @@ export class DisplayboardLayoutComponent implements OnInit {
             this.breadcrumbs = breadcrumbs;
             this.name = this.layoutData.name;
             this.displayName = this.layoutData.displayName;
-            this.layout = this.layoutData.layout;
+            // this.layout = this.layoutData.layout;
             this.id = this.layoutData.id;
-
-
+            const layoutPosition = this.layoutData.layout.split('_');
+            console.log(layoutPosition[0]);
+            console.log(layoutPosition[1]);
+            this.boardRows = layoutPosition[0];
+            this.boardCols = layoutPosition[1];
+            this.layoutData.metric.forEach(element => {
+                this.boardSelectedItems[element.position] = element.sbId;
+                this.metricSelected[element.position] = element.sbId;
+                console.log(element);
+            });
+            console.log(this.boardSelectedItems);
         });
     }
+    handleLayoutMetric(selectedItem, position) {
+        console.log(position + ':' + selectedItem);
+        this.metricSelected[position] = selectedItem;
+    }
     onSubmit() {
-        console.log( this.metric);
+        for (let i = 0; i < this.boardRows; i++) {
+            for (let j = 0; j < this.boardCols; j++) {
+                this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
+            }
+        }
+        console.log(this.metric);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': this.name,
-                'layout': this.layout,
+                'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric,
             };
             this.provider_services.createBoardLayout(post_data).subscribe(data => {
                 this.editLayoutbyId(data);
-            });
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.layoutData.id,
                 'name': this.name,
-                'layout': this.layout,
+                'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric
             };
             this.provider_services.updateBoardLayout(post_data).subscribe(data => {
-                this.editLayoutbyId(data);
+                this.editLayoutbyId(this.layoutData.id);
+                this.actionparam = 'view';
             },
                 error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
+    }
+    onCancel() {
         this.actionparam = 'view';
-
     }
     getDisplayboards() {
         this.api_loading = true;
@@ -142,7 +210,7 @@ export class DisplayboardLayoutComponent implements OnInit {
                 data => {
                     this.board_list = data;
 
-                    console.log( this.board_list);
+                    console.log(this.board_list);
                     this.api_loading = false;
                 },
                 error => {
@@ -155,67 +223,6 @@ export class DisplayboardLayoutComponent implements OnInit {
         this.actionparam = 'edit';
         this.editLayoutbyId(id);
     }
-    // deleteDisplayboardLayout(layout_id) {
-    //     this.provider_services.deleteBoardLayout(layout_id)
-    //         .subscribe(
-    //             data => {
-    //             },
-    //             error => {
-    //             }
-    //         );
-    // }
     resetApiErrors() {
-    }
-    handlestatus( ) {
-        this.layout = '1x1';
-        // this.metric = ["position" : '0_0']
-        this.statussel = true;
-        this.statussel1 = false;
-        this.statusse2 = false;
-        this.statussel3 = false;
-    }
-    chooselayout11(id, ldata) {
-        console.log( this.metric);
-        console.log(this.id);
-        this.metric.push({'position' : ldata, 'sbId' : id});
-    }
-    chooselayout12(id, ldata) {
-        console.log( this.metric);
-        console.log(this.id);
-        this.metric.push({'position' : ldata, 'sbId' : id});
-        console.log( this.metric);
-    }
-    chooselayout21(id, ldata) {
-        console.log( this.metric);
-        console.log(this.id);
-        this.metric.push({'position' : ldata, 'sbId' : id});
-        console.log( this.metric);
-    }
-    chooselayout22(id, ldata) {
-        console.log( this.metric);
-        console.log(this.id);
-        this.metric.push({'position' : ldata, 'sbId' : id});
-        console.log( this.metric);
-    }
-    handlestatus1() {
-        this.layout = '1x2';
-        this.statussel1 = true;
-        this.statussel = false;
-        this.statusse2 = false;
-        this.statussel3 = false;
-    }
-    handlestatus2() {
-        this.layout = '2x1';
-        this.statussel1 = false;
-        this.statussel = false;
-        this.statusse2 = true;
-        this.statussel3 = false;
-    }
-    handlestatus3() {
-        this.layout = '2x2';
-        this.statussel1 = false;
-        this.statussel = false;
-        this.statusse2 = false;
-        this.statussel3 = true;
     }
 }

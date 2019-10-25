@@ -2049,7 +2049,9 @@ sup {
   margin-bottom: 5px !important
 }
 
-.content.w-manager .card .b-link:hover .form-level-settings {
+.content.w-manager .card .b-link:hover .form-level-settings, 
+.content.w-manager .card .b-link:hover span h2,
+.content.w-manager .card .b-link:hover span{
   color: #fff !important
 }
 
@@ -5236,6 +5238,8 @@ i.notavail {
 .q-comp .form-group .schselectall i {
   color: #3c8dbc !important
 }
+.content.w-manager .card .b-link:hover h2 {color: #fff !important;}
+.content.w-manager .card .b-link:hover .learnmore-pointer {color: #f2cd61 !important}
 .mat-button {
   background-color: #3c8dbc !important;
 }
@@ -5291,7 +5295,7 @@ i.notavail {
     background-color: #3c8dbc;
     color: white;
   }
-  .assured{
+   .assured{
     font-style: italic;
     color: #00cc96;
   }

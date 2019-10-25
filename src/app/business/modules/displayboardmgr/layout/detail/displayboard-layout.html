@@ -19,7 +19,7 @@
                                         </div>
                                         <div class="item desfont" *ngIf="layoutData.layout">
                                                 <span class="ttle">Layout</span>
-                                                <span>{{layoutData.layout | capitalizeFirst}}</span>
+                                                <span>{{(getLayout(layoutData.layout)).displayName}}</span>
                                             </div>
                                     </div>
                                 </div>
@@ -44,19 +44,12 @@
                                         </div>
                                         <div class="form-group">
                                             <mat-form-field>
-                                                <mat-select placeholder="Choose Layout" id="layout" [(ngModel)]="layout"
+                                                <mat-select placeholder="Choose Layout" id="layout" 
+                                                (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
                                                     [ngModelOptions]="{standalone: true}">
-                                                    <mat-option (click)="handlestatus()" [value]="layout">
-                                                        1 x 1
-                                                    </mat-option>
-                                                    <mat-option (click)="handlestatus1()" [value]="layout">
-                                                        1 x 2
-                                                    </mat-option>
-                                                    <mat-option (click)="handlestatus2()" [value]="layout">
-                                                        2 x 1
-                                                    </mat-option>
-                                                    <mat-option (click)="handlestatus3()"[value]="layout">
-                                                        2 x 2
+                                                    <mat-option *ngFor="let layout of boardLayouts"
+                                                        [value]="layout">
+                                                        {{ layout.displayName }}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
@@ -64,147 +57,24 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-12 card" *ngIf="statussel">
-                                                        <mat-form-field>
-                                                            <mat-select placeholder="Choose Layout" id="displayName"
-                                                                [(ngModel)]="st1" [ngModelOptions]="{standalone: true}">
-                                                                <mat-option [value]="board_list.displayName"
-                                                                    *ngFor="let board_list of board_list"
-                                                                    (click)="chooselayout11(board_list.id,'0_0')">
-                                                                    {{board_list.displayName |
-                                                                        capitalizeFirst}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 card" *ngIf="statussel1">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-4 card" *ngIf="statussel1" style="width: 50%;">
-                                                        <mat-form-field>
-                                                            <mat-select placeholder="Choose Layout" id="layout"
-                                                                [(ngModel)]="st1" [ngModelOptions]="{standalone: true}">
-                                                                <mat-option [value]="board_list.displayName"
-                                                                    *ngFor="let board_list of board_list"
-                                                                    (click)="chooselayout12(board_list.id,'0_0')">
-                                                                    {{board_list.displayName |
-                                                                            capitalizeFirst}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </div>
-                                                    <div class="col-md-4 card" *ngIf="statussel1" style="width: 50%;">
-                                                        <mat-form-field>
-                                                            <mat-select placeholder="Choose Layout" id="displayName"
-                                                                [(ngModel)]="st2" [ngModelOptions]="{standalone: true}">
-                                                                <mat-option [value]="board_list.displayName"
-                                                                    *ngFor="let board_list of board_list"
-                                                                    (click)="chooselayout12(board_list.id,'0_1')">
-                                                                    {{board_list.displayName | capitalizeFirst}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 card" *ngIf="statusse2">
-                                            <div class="form-group">
-                                                <div class="col-md-12 card" *ngIf="statusse2">
-                                                    <mat-form-field>
-                                                        <mat-select placeholder="Choose Layout" id="displayName"
-                                                            [(ngModel)]="st1" [ngModelOptions]="{standalone: true}">
-                                                            <mat-option [value]="board_list.displayName"
-                                                                *ngFor="let board_list of board_list"
-                                                                (click)="chooselayout21(board_list.id,'0_0')">
-                                                                {{board_list.displayName | capitalizeFirst}}
-                                                            </mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-md-12 card" *ngIf="statusse2">
-                                                    <mat-form-field>
-                                                        <mat-select placeholder="Choose Layout" id="displayName"
-                                                            [(ngModel)]="st2" [ngModelOptions]="{standalone: true}">
-                                                            <mat-option [value]="board_list.displayName"
-                                                                *ngFor="let board_list of board_list"
-                                                                (click)="chooselayout21(board_list.id,'1_0')">
-                                                                {{board_list.displayName | capitalizeFirst}}
-                                                            </mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 card" *ngIf="statussel3">
-                                            <div class="col-md-12" *ngIf="statussel3">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-6 card" *ngIf="statussel3"
-                                                            style="width: 50%;">
-                                                            <mat-form-field>
-                                                                <mat-select placeholder="Choose Layout" id="displayName"
-                                                                    [(ngModel)]="st1"
-                                                                    [ngModelOptions]="{standalone: true}">
-                                                                    <mat-option [value]="board_list.displayName"
-                                                                        *ngFor="let board_list of board_list"
-                                                                        (click)="chooselayout22(board_list.id,'0_0')">
-                                                                        {{board_list.displayName | capitalizeFirst}}
-                                                                    </mat-option>
-                                                                </mat-select>
-                                                            </mat-form-field>
-                                                        </div>
-                                                        <div class="col-md-6 card" *ngIf="statussel3"
-                                                            style="width: 50%;">
-                                                            <mat-form-field>
-                                                                <mat-select placeholder="Choose Layout" id="displayName"
-                                                                    [(ngModel)]="st2"
-                                                                    [ngModelOptions]="{standalone: true}">
-                                                                    <mat-option [value]="board_list.displayName"
-                                                                        *ngFor="let board_list of board_list"
-                                                                        (click)="chooselayout22(board_list.id,'0_1')">
-                                                                        {{board_list.displayName | capitalizeFirst}}
-                                                                    </mat-option>
-                                                                </mat-select>
-                                                            </mat-form-field>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" *ngIf="statussel3">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-6 card" *ngIf="statussel3"
-                                                            style="width: 50%;">
-                                                            <mat-form-field>
-                                                                <mat-select placeholder="Choose Layout" id="displayName"
-                                                                    [(ngModel)]="st3"
-                                                                    [ngModelOptions]="{standalone: true}">
-                                                                    <mat-option [value]="board_list.displayName"
-                                                                        *ngFor="let board_list of board_list"
-                                                                        (click)="chooselayout22(board_list.id,'1_0')">
-                                                                        {{board_list.displayName | capitalizeFirst}}
-                                                                    </mat-option>
-                                                                </mat-select>
-                                                            </mat-form-field>
-                                                        </div>
-                                                        <div class="col-md-6 card" *ngIf="statussel3"
-                                                            style="width: 50%;">
-                                                            <mat-form-field>
-                                                                <mat-select placeholder="Choose Layout" id="displayName"
-                                                                    [(ngModel)]="st4"
-                                                                    [ngModelOptions]="{standalone: true}">
-                                                                    <mat-option [value]="board_list.displayName"
-                                                                        *ngFor="let board_list of board_list"
-                                                                        (click)="chooselayout22(board_list.id,'1_1')">
-                                                                        {{board_list.displayName | capitalizeFirst}}
-                                                                    </mat-option>
-                                                                </mat-select>
-                                                            </mat-form-field>
-                                                        </div>
+                                                    <div class="col-md-12 card">                                    
+                                                        <div *ngFor = "let row of createRange(boardRows)">
+                                                            <div *ngFor = "let col of createRange(boardCols)" class="col-md-{{12/boardCols}}">
+                                                                <mat-form-field>
+                                                                    <mat-select placeholder="Choose Layout" id="displayName"
+                                                                    (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)"    
+                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]" [ngModelOptions]="{standalone: true}">
+                                                                        <mat-option [value]="board_list.id"
+                                                                            *ngFor="let board_list of board_list"
+                                                                            >
+                                                                            {{board_list.displayName |
+                                                                                capitalizeFirst}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>                                                                                                                                                                            
                                                     </div>
                                                 </div>
                                             </div>

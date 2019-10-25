@@ -6292,16 +6292,17 @@ body { font-size: 1rem !important}
 .content.w-manager .card .b-link:hover {
     background: #1873f2;
     border-color: transparent;
+    color:#fff !important;
 }
 
 .content.w-manager .card .b-link:hover h2 {
     color: #fff;
 }
 
-.content.w-manager .card .b-link:hover h2 span {
-    background: #fff;
+/* .content.w-manager .card .b-link:hover h2 span {
+    color: #fff;
     color: #00aef2;
-}
+} */
 
 .content.w-manager .card app-form-success-display .sts-msg {
     -webkit-border-bottom-right-radius: 5px;

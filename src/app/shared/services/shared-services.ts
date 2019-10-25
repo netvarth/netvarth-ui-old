@@ -7,6 +7,7 @@ import * as CryptoJS from 'crypto-js';
 // Import RxJs required methods
 
 import { ServiceMeta } from './service-meta';
+import { AlertPromise } from 'selenium-webdriver';
 
 @Injectable()
 
@@ -602,7 +603,7 @@ disable(){
   }
 
   getAlertsTotalCnt(ackStatus, sdate) {
-
+    // alert(ackStatus);
     let retparam = this.buildAlertsParams(ackStatus, sdate);
 
     if (retparam !== '') {
@@ -618,14 +619,15 @@ disable(){
   }
 
   buildAlertsParams(ackStatus, sdate) {
-
     let param = '';
+      if (ackStatus === true) {
+        param += 'ackStatus-eq=true';
+      } else {
+        if (ackStatus === false) {
+          param += 'ackStatus-eq=false';
+        }
+      }
 
-    if (ackStatus !== '') {
-
-      param += 'ackStatus-eq=' + ackStatus;
-
-    }
 
     /*if (subcat !== '') {
 
@@ -662,7 +664,6 @@ disable(){
       param += 'createdDate-eq=' + sdate;
 
     }
-
     return param;
 
   }
