@@ -25,6 +25,12 @@ export class DisplayboardLayoutsComponent implements OnInit {
     api_loading: boolean;
     layout_list: any = [];
     domain: any;
+    boardLayouts = [
+        { displayName: '1x1', value: '1_1', row: 1, col: 1 },
+        { displayName: '1x2', value: '1_2', row: 1, col: 2 },
+        { displayName: '2x1', value: '2_1', row: 2, col: 1 },
+        { displayName: '2x2', value: '2_2', row: 2, col: 2 }
+    ];
 
     constructor(
         private router: Router,
@@ -68,10 +74,10 @@ export class DisplayboardLayoutsComponent implements OnInit {
     }
     editDisplayboardLayout(layout) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'edit' }
+            queryParams: { id: layout.id }
         };
         this.router.navigate(['provider', 'settings', 'displayboard',
-            'layout', layout.id], navigationExtras);
+            'layout', 'edit'], navigationExtras);
     }
     goDisplayboardLayoutDetails(layout) {
         const navigationExtras: NavigationExtras = {
@@ -86,5 +92,15 @@ export class DisplayboardLayoutsComponent implements OnInit {
                 this.getDisplayboardLayouts();
             }
         );
+    }
+    getLayout(layoutvalue) {
+        let layoutActive;
+        for (let i = 0; i < this.boardLayouts.length; i++) {
+            if (this.boardLayouts[i].value === layoutvalue) {
+                layoutActive = this.boardLayouts[i];
+                break;
+            }
+        }
+        return layoutActive;
     }
 }

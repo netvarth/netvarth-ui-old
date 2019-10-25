@@ -11,12 +11,12 @@
                             <div class="cl1" *ngIf="actionparam === 'view'">
                                 <span class="editbt" (click)="editlayout(layoutData.id)"></span>
                                 <div class="ot-it">
-                                    <h3>{{layoutData.name | capitalizeFirst}}</h3>
+                                    <h3>{{layoutData.displayName | capitalizeFirst}}({{layoutData.name | capitalizeFirst}})</h3>
                                     <div class="c-ot m0">
-                                        <div class="item desfont" *ngIf="layoutData.displayName">
+                                        <!-- <div class="item desfont" *ngIf="layoutData.displayName">
                                             <span class="ttle">Display Name</span>
                                             <span>{{layoutData.displayName | capitalizeFirst}}</span>
-                                        </div>
+                                        </div> -->
                                         <div class="item desfont" *ngIf="layoutData.layout">
                                                 <span class="ttle">Layout</span>
                                                 <span>{{(getLayout(layoutData.layout)).displayName}}</span>

@@ -17,12 +17,11 @@
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                             </span>
-                            <h3 (click)="goDisplayboardLayoutDetails(layout)" class="pointer-cursor"> {{layout.name |
-                                                                capitalizeFirst}}</h3>
+                            <h3 (click)="goDisplayboardLayoutDetails(layout)" class="pointer-cursor"> {{layout.displayName | capitalizeFirst}}({{layout.name | capitalizeFirst}})</h3>
                             <div class="c-ot m0">
                                 <div class="item desfont">
                                     <span class="ttle">Layout</span>
-                                    <span>{{layout.layout | capitalizeFirst}}</span>
+                                    <span>{{(getLayout(layout.layout)).displayName}}</span>
                                 </div>
                             </div>
                             <mat-menu #appMenu="matMenu">
