@@ -32,11 +32,6 @@ export class DisplayboardLayoutComponent implements OnInit {
         { displayName: '2x1', value: '2_1', row: 2, col: 1 },
         { displayName: '2x2', value: '2_2', row: 2, col: 2 }
     ];
-
-
-    // selectedRows = 1;
-    // selectedCols = 1;
-
     action = 'show';
     api_loading: boolean;
     name;
@@ -47,8 +42,6 @@ export class DisplayboardLayoutComponent implements OnInit {
     id;
     board_list: any = [];
     displayBoardData: any = [];
-
-
     boardLayoutFields = {};
     boardRows = 1;
     boardCols = 1;
@@ -118,15 +111,12 @@ export class DisplayboardLayoutComponent implements OnInit {
         return items;
     }
     handleLayout(layout) {
-        console.log(layout);
         this.boardRows = layout.row;
         this.boardCols = layout.col;
     }
     editLayoutbyId(id) {
         this.provider_services.getBoardLayout(id).subscribe(data => {
             this.layoutData = data;
-            console.log(this.layoutData);
-            console.log(this.displayBoardData);
             this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;
             const breadcrumbs = [];
@@ -142,20 +132,15 @@ export class DisplayboardLayoutComponent implements OnInit {
             // this.layout = this.layoutData.layout;
             this.id = this.layoutData.id;
             const layoutPosition = this.layoutData.layout.split('_');
-            console.log(layoutPosition[0]);
-            console.log(layoutPosition[1]);
             this.boardRows = layoutPosition[0];
             this.boardCols = layoutPosition[1];
             this.layoutData.metric.forEach(element => {
                 this.boardSelectedItems[element.position] = element.sbId;
                 this.metricSelected[element.position] = element.sbId;
-                console.log(element);
             });
-            console.log(this.boardSelectedItems);
         });
     }
     handleLayoutMetric(selectedItem, position) {
-        console.log(position + ':' + selectedItem);
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
@@ -164,7 +149,6 @@ export class DisplayboardLayoutComponent implements OnInit {
                 this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
             }
         }
-        console.log(this.metric);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': this.name,
@@ -209,8 +193,6 @@ export class DisplayboardLayoutComponent implements OnInit {
             .subscribe(
                 data => {
                     this.board_list = data;
-
-                    console.log(this.board_list);
                     this.api_loading = false;
                 },
                 error => {
