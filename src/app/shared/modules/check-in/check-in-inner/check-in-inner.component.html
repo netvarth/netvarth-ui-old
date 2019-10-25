@@ -314,7 +314,7 @@
                         class="queue-avail-date">{{sel_queue_waitingmins}}</span>
                 </div>
                 <div class="queue-head"
-                    *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId']">
+                    *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                     <strong>{{persons_ahead_cap}}</strong> <span
                         class="queue-avail-date">{{sel_queue_personaahead}}</span>
                 </div>

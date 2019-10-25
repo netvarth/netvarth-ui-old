@@ -278,7 +278,7 @@
                                             <div class="o-now" *ngIf="loc.opennow">
                                                 {{open_now_cap}}</div>
                                             <div
-                                                *ngIf="settingsjson['calculationMode'] && settingsjson['calculationMode']=='NoCalc' && showToken">
+                                                *ngIf="settingsjson['calculationMode']!='NoCalc'|| (settingsjson['calculationMode']=='NoCalc' && showToken)">
                                                 <div class="timing" *ngIf="loc['personAhead']">
                                                     <div style="display: flex">
                                                         <b>{{loc['personAhead']}} &nbsp;</b>

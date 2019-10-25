@@ -490,7 +490,7 @@
                                             {{search_result.fields['estimatedtime_det']['message']}}</ng-container>
                                     </div>
                                     <div
-                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                        *ngIf="search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' ||(search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken'])">
                                         <div *ngIf="search_result.fields['estimatedtime_det']['personAhead']">
                                             <b>{{search_result.fields['estimatedtime_det']['personAhead']}} </b><span
                                                 class="people-ahead"
