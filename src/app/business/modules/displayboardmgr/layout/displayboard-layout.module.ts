@@ -13,8 +13,8 @@ import { DisplayboardLayoutsComponent } from './displayboard-layouts';
 
 @NgModule({
     declarations: [
-       DisplayboardLayoutComponent,
-       DisplayboardLayoutsComponent
+        DisplayboardLayoutComponent,
+        DisplayboardLayoutsComponent
     ],
     imports: [
         DisplayboardLayoutsRoutingModule,
@@ -29,5 +29,5 @@ import { DisplayboardLayoutsComponent } from './displayboard-layouts';
     ],
     exports: [DisplayboardLayoutsComponent]
 })
-export class DisplayboardLayoutModule {}
+export class DisplayboardLayoutModule { }
 

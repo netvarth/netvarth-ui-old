@@ -23,31 +23,18 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) {
-            this.onResize();
+        this.onResize();
         this.activated_route.params.subscribe(
             qparams => {
                 this.layout_id = qparams.id;
             });
     }
-
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
-      const screenHeight = window.innerHeight;
-      this.boardHeight = screenHeight / 2;
-      console.log(this.boardHeight);
-
-
-    //   this.boardstyle.forEach((element) => {
-        // const htmlElement = this.boardstyle as HTMLElement;
-        // Assigning the property directly
-        // setTimeout(htmlElement.style.height = this.boardHeight);
-        // OR
-        // Using the setAttribute method
-        // setTimeout(htmlElement.setAttribute("style", "display:none;"),this.duration);
-    //   });
-
+        const screenHeight = window.innerHeight;
+        this.boardHeight = screenHeight / 2;
+        console.log(this.boardHeight);
     }
-
     ngOnInit() {
         if (this.layout_id) {
             let layoutData;
@@ -64,7 +51,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
                 });
         }
     }
-    getFieldValue (field, checkin) {
+    getFieldValue(field, checkin) {
         let fieldValue = '';
         if (field.name === 'waitlistingFor') {
             fieldValue = checkin[field.name][0].firstName + ' ' + checkin[field.name][0].lastName;

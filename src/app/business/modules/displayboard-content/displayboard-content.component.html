@@ -3,11 +3,15 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-12">
-                    <div *ngFor="let row of createRange(boardRows)" [ngStyle]="{'max-height.px': boardHeight}">
-                        <div *ngFor="let col of createRange(boardCols)" #boardid class="col-md-{{12/boardCols}}" style="background: white;">
-                            <div *ngIf="selectedDisplayboards[row + '_' + col]" style="overflow: scroll;">
-                                <div *ngIf="selectedDisplayboards[row + '_' + col]['board']">
-                                    {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</div>
+                    <div *ngFor="let row of createRange(boardRows)">
+                        <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}}"
+                            [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}"
+                            style="background: white;border: 1px solid #ccc;overflow: auto;">
+                            <div *ngIf="selectedDisplayboards[row + '_' + col]">
+                                <div *ngIf="selectedDisplayboards[row + '_' + col]['board']"
+                                    style="text-align: center;">
+                                    <strong> {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</strong>
+                                </div>
                                 <table class="table table-striped responsive-table"
                                     *ngIf="selectedDisplayboards[row + '_' + col]['board']">
                                     <thead>
@@ -18,9 +22,9 @@
                                         </tr>
                                     </thead>
                                     <tbody style="overflow: scroll;">
-                                        <tr
-                                            *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']">
-                                                <td *ngFor = "let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
+                                        <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']">
+                                            <td
+                                                *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
                                                 {{getFieldValue(field, checkin)}}
                                             </td>
                                         </tr>
