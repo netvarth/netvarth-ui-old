@@ -321,10 +321,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             }
                             let display_schedule = [];
                             display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
+                           // alert(JSON.stringify(display_schedule));
                             allQs[ii]['displayschedule'] = display_schedule;
                             // replace instancequeue with new flag
                             if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
                                 this.todaysQs.push(allQs[ii]);
+                               console.log(this.todaysQs);
                             }
                             if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);

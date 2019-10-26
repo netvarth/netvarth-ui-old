@@ -243,7 +243,8 @@
                                                                                         [matTooltip]="tooltip_queueedit">
                                                                                         <i
                                                                                                 class="fas fa-calendar-day"></i>
-                                                                                        {{schedule.time}}
+                                                                                        {{schedule.time}}&nbsp;<span style="font-size: small;
+                                                                                        color: black;">({{schedule.dstr}})</span>
                                                                                         <div style="font-size: small;
                                                                                               color: black; margin-top: 2px;
                                                                                               display: block;"> [<span
@@ -363,7 +364,8 @@
                                                                                         [matTooltip]="tooltip_queueedit">
                                                                                         <i
                                                                                                 class="fas fa-calendar-day"></i>
-                                                                                        {{schedule.time}}
+                                                                                        {{schedule.time}}&nbsp;<span style="font-size: small;
+                                                                                        color: black;">({{schedule.dstr}})</span>
                                                                                         <div style="font-size: small;
                                                                                               color: black; margin-top: 2px;
                                                                                               display: block;"> [<span
@@ -505,7 +507,8 @@
                                                                                 [matTooltip]="tooltip_queueedit">
                                                                                 <i class="fas fa-calendar-day"></i>
                                                                                 <span
-                                                                                        *ngIf="!queue.instantQueue">{{schedule.time}}</span>
+                                                                                        *ngIf="!queue.instantQueue">{{schedule.time}}&nbsp;<span style="font-size: small;
+                                                                                        color: black;">({{schedule.dstr}})</span></span>
                                                                                 <div style="font-size: small;
                                                                                                 color: black; margin-top: 2px;
                                                                                                 display: block;">
