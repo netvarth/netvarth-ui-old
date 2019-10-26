@@ -38,6 +38,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
   notification_cap = Messages.NOTIFICATION_CAP;
+  saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
   frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG;
   frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
@@ -337,6 +338,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'notifications':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
         break;
+        case 'saleschannel':
+          this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
+          break;
       case 'items':
         if (this.noitemError) {
           this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);

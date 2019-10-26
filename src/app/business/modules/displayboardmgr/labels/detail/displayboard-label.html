@@ -17,7 +17,7 @@
                                             <span class="ttle">Description</span>
                                             <span>{{ labelData.description | capitalizeFirst}}</span>
                                         </div>
-                                        <div class="item" *ngIf="labelData.valueSet">
+                                        <div class="item desfont" *ngIf="labelData.valueSet">
                                             <span class="ttle">Value</span>
                                             <span *ngFor="let labelvalue of labelData.valueSet"> {{labelvalue.value}}
                                                 ({{labelvalue.shortValue}})</span>

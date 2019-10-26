@@ -767,5 +767,9 @@ export class ProviderServices {
     const url = 'provider/waitlist/label/' + uuid + '/' + label;
     return this.servicemeta.httpDelete(url);
   }
+  addSalesCode(id) {
+    const url = 'provider/salesChannel/' + id;
+    return this.servicemeta.httpPost(url);
+  }
 }
 

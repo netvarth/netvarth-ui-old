@@ -981,6 +981,7 @@ export const Messages = {
   'MISCELLANEOUS_CAP': 'Miscellaneous',
   'NON_WORKING_CAP': 'Non-working Days',
   'NOTIFICATION_CAP': 'Notifications',
+  'SALESCHANNEL_CAP': 'Sales Channel',
   'DEPARTMENT_CAP': 'Department',
   'ADD NOTIFICATIONS': 'Notifications added successfully',
   'UPDATED NOTIFICATIONS': 'Notifications updated successfully',

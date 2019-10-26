@@ -1,0 +1,39 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="card p0">
+                    <div class="copy locd">
+                        <div class="lbl col-md-12 no padding">
+                            <div class="col-md-12">
+                                <form novalidate (keyup)="resetApiErrors()"
+                                    class="ynw-common-form-nm wiz-service labelForm serviceform">
+                                    <ng-container>
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="id"
+                                                    placeholder="Enter Sales channel code" [(ngModel)]="id"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="actiondiv labelsave">
+                                            <button (click)="onCancel()" type="button"
+                                                class="cs-btn bt2">Cancel</button>
+                                            &nbsp;
+                                            <button (click)="addSalesCode(id)" type="button" mat-button
+                                                [disabled]="savedisabled" class="cs-btn bt2">SET</button>
+                                        </div>
+                                    </ng-container>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

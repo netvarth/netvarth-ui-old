@@ -36,6 +36,9 @@ export class MiscellaneousComponent implements OnInit {
     gotoNotifications() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
     }
+    gotosaleschannel() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);

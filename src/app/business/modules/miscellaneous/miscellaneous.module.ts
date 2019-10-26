@@ -12,6 +12,7 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { ProviderNotificationsComponent } from '../../../ynw_provider/components/provider-notifications/provider-notifications.component';
+import { SaleschannelComponent } from './saleschannel/saleschannel.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { ProviderNotificationsComponent } from '../../../ynw_provider/components
         MiscellaneousComponent,
         AddProviderNonworkingdaysComponent,
         ProviderNonworkingdaysComponent,
-        ProviderNotificationsComponent
+        ProviderNotificationsComponent,
+        SaleschannelComponent
     ],
     entryComponents: [
         AddProviderNonworkingdaysComponent
