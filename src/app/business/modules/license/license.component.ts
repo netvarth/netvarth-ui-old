@@ -83,8 +83,10 @@ export class LicenseComponent implements OnInit, OnDestroy {
     invoicedialogRef;
     upgradesubscriptdialogRef;
     domain;
-    statusOfLicense;
+    statusOfLicense = 0;
     licensePlan;
+    annualMonthAmount;
+    pendingStatus = 0;
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions,
@@ -284,15 +286,22 @@ export class LicenseComponent implements OnInit, OnDestroy {
             );
     }
     getSubscriptionDetail() {
+        this.statusOfLicense = 0;
+        this.pendingStatus = 0;
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
                 data => {
                     this.license_sub = data;
+                   // console.log(this.license_sub);
                     this.licensePlan = this.license_sub.licSubType;
                     if(this.license_sub.subscriptionTo){
                    this.statusOfLicense = this.license_sub.subscriptionTo;
                 }
-                    console.log(this.license_sub);
+                if(this.license_sub.pendingStmtCount){
+                    this.pendingStatus = this.license_sub.pendingStmtCount;
+                }
+                //console.log(this.pendingStatus);
+                    
                     this.getLicenseMetaData();
                 },
                 error => {
@@ -332,7 +341,11 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                     ];
                                 }
                                 this.license_upgarde_sub = license_meta;
+                                for (let details of this.license_upgarde_sub['next_sub']) {
+                                console.log(this.license_upgarde_sub);
+                                this.annualMonthAmount = details.amount;
                             }
+                        }
                         }
                     }
                 },

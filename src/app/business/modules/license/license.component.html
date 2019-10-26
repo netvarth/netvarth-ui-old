@@ -43,10 +43,13 @@
                                                         
                                                     <span class="warning"
                                                         *ngIf="license_message != ''">{{license_message}}</span></span>
-                                                        <div *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
-                                                    <div style="margin-top: 5px;" *ngFor="let sub of license_upgarde_sub['next_sub']">
-                                                        <span *ngIf= "statusOfLicense != 1">Change plan to 
-                                                            <button class="cs-btn bt1"   (click)="doUpgradeSubcription(sub['value'])">Yearly({{sub['amount'] | currency:'INR':'symbol':'.2-2'}})</button>
+                                                        <!-- <div *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
+                                                    <div style="margin-top: 5px;" *ngFor="let sub of license_upgarde_sub['next_sub']"> -->
+                                                        <div>
+                                                            <div>
+                                                        <span *ngIf= "licensePlan == 'Monthly' && pendingStatus == 0" >Change plan to 
+                                                            <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly({{annualMonthAmount | currency:'INR':'symbol':'.2-2'}})</button></span>
+                                                            <span *ngIf= "licensePlan == 'Annual' && statusOfLicense == 0"> Change plan to <button class="cs-btn bt1"   (click)="doUpgradeSubcription('Monthly')">Monthly</button>
                                                             <!-- <span   *ngIf= "statusOfLicense == 1" >Yearly({{sub['amount'] | currency:'INR':'symbol':'.2-2'}})</span> -->
                                                         </span>
                                                     </div>
@@ -74,11 +77,21 @@
                             
 
                                 <div class="lc4-1 mgn-bt-10"
-                                *ngIf="statusOfLicense == 1">
+                                *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 1">
                                 <div class="lt">
                                     You changed your license package to annual
                                     . The invoice for this
                                     transaction will be generated in next business cycle.
+                                    If you need to cancel <span style="color: deepskyblue" (click)="doUpgradeSubcription('Monthly')">Click here</span> 
+                                </div>
+                            </div>
+                            <div class="lc4-1 mgn-bt-10"
+                                *ngIf= "licensePlan == 'Annual' && pendingStatus == 1">
+                                <div class="lt">
+                                    You changed your license package to monthly
+                                    . The invoice for this
+                                    transaction will be generated in next business cycle.
+                                    If you need to cancel <span style="color: deepskyblue" (click)="doUpgradeSubcription('Annual')">Click here</span> 
                                 </div>
                             </div>
                             <!-- <div class="lc11">
