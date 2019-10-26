@@ -73,7 +73,7 @@
                                             You can have upto<b> {{adwordsmaxcount}} Jaldee-Keywords</b>
                                         </div>
                                         <div class="ad-r">
-                                            <span *ngFor="let adword of adwordshow_list">{{adword.name}}</span> <span
+                                            <span *ngFor="let adword of adwordshow_list">{{getAdwordDisplayName(adword.name)}}</span> <span
                                                 class="mre" *ngIf="adwords_remaining>0"><a
                                                     routerLink="/provider/license/addons">+{{adwords_remaining}}
                                                     {{more_cap}}</a></span>

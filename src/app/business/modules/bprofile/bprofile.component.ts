@@ -105,7 +105,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   schedule_arr: any = [];
   display_schedule: any = [];
   reqFields: any = {
-    name : false,
+    name: false,
     location: false,
     schedule: false,
     domainvirtual: false,
@@ -269,6 +269,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
       this.adworddialogRef.close();
     }
   }
+  getAdwordDisplayName(name) {
+    return name.replace(projectConstants.ADWORDSPLIT, ' ');
+  }
   getPublicSearch() {
     this.provider_services.getPublicSearch()
       .subscribe(
@@ -321,7 +324,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
                   console.log(this.reqFields);
                 });
-          });
+            });
           this.provider_datastorage.set('bProfile', data);
           for (let i = 0; i < this.businessConfig.length; i++) {
             if (this.businessConfig[i].id === this.bProfile.serviceSector.id) {

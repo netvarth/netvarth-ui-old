@@ -95,7 +95,9 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         this.getAdwords();
       });
   }
-
+  getAdwordDisplayName(name) {
+    return name.replace(projectConstants.ADWORDSPLIT, ' ');
+  }
   getAdwords() {
     this.provider_servicesobj.getAdwords()
       .subscribe(data => {

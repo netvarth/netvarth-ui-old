@@ -452,5 +452,6 @@ export const projectConstants = {
       'checked': false,
       'order': 5,
     }
-  ]
+  ],
+  ADWORDSPLIT: '__'
 };

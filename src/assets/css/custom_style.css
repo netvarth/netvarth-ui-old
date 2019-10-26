@@ -5303,6 +5303,7 @@ i.notavail {
     font-size: small;
     color: #00aef2;
   }
+  .main-sidebar small.label {padding:5px !important}
   .advancedheader{
     height: 35px !important;
     background-color: rgb(242, 242, 242)!important;

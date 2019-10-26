@@ -51,6 +51,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     } else {
       this.resetApiErrors();
+      form_data.adwordname = form_data.adwordname.replace(' ', projectConstants.ADWORDSPLIT);
       this.addAdword(form_data.adwordname);
     }
   }

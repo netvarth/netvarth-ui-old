@@ -719,7 +719,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (this.kwtyp === 'kwtitle') {
       let ptitle = this.kw.replace('/', '');
       ptitle = ptitle.replace(/'/g, '\\\'');
-      q_str = q_str + ' title:\'' + ptitle + '\'';
+      q_str = q_str + '(or (prefix field=title \'' + ptitle + '\') (phrase field=title \'' + ptitle + '\'))';
     } else if (this.kwtyp === 'kwphrase') {
       const words = [];
       this.kw = this.kw.replace(/'/g, '\\\'');
@@ -739,17 +739,17 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           }
         }
       }
-      let queryStr = 'adwords:\'' + this.kw + '\' ';
-      if (words.length > 1) {
-        queryStr = '(and ';
-        for (let i = 0; i < words.length; i++) {
-          queryStr += ('adwords:\'' + words[i] + '\' ');
-        }
-        queryStr += ')';
-      }
+      // let queryStr = 'adwords:\'' + this.kw + '\' ';
+      // if (words.length > 1) {
+      //   queryStr = '(and ';
+      //   for (let i = 0; i < words.length; i++) {
+      //     queryStr += ('adwords:\'' + words[i] + '\' ');
+      //   }
+      //   queryStr += ')';
+      // }
       phrasestr = ' (or sub_sector_displayname:\'' + this.kw + '\'' + ' sub_sector:\'' + this.kw.toLowerCase() + '\'' + ' specialization:\'' + this.kw.toLowerCase() + '\'' +
         ' specialization_displayname:\'' + this.kw + '\''
-        + ' title:\'' + this.kw + '\'' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\'' + queryStr + ' )';
+        + ' (prefix field=title\'' + this.kw + '\')' + ' services:\'' + this.kw + '\'' + ' qualification:\'' + this.kw + '\' adwords:\'' + this.kw.replace(' ', projectConstants.ADWORDSPLIT) + '\')';
     }
     if (this.domain && this.domain !== 'All' && this.domain !== 'undefined' && this.domain !== undefined) { // case of domain is selected
       q_str = q_str + 'sector:\'' + this.domain + '\'';
