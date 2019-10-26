@@ -30,3 +30,4 @@ import { DisplayboardLayoutsComponent } from './displayboard-layouts';
     exports: [DisplayboardLayoutsComponent]
 })
 export class DisplayboardLayoutModule {}
+

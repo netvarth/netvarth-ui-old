@@ -358,3 +358,4 @@ export class DisplayboardDetailComponent implements OnInit {
         return displayName;
     }
 }
+

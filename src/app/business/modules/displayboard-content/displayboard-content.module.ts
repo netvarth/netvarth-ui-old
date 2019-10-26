@@ -22,3 +22,4 @@ import { AuthGuardProvider } from '../../../shared/guard/auth.guard';
 })
 export class DisplayboardLayoutContentModule {
 }
+

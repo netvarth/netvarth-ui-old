@@ -110,3 +110,4 @@ export class DisplayboardLayoutsComponent implements OnInit {
         return layoutActive;
     }
 }
+
