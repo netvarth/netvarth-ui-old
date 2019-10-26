@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DisplayboardLayoutsComponent } from './displayboard-layouts';
 import { DisplayboardLayoutComponent } from './detail/displayboard-layout';
-import { DisplayboardLayoutContentComponent } from './content/displayboard-content-component';
 
 const routes: Routes = [
     { path: '', component: DisplayboardLayoutsComponent},
-    { path: ':id', component: DisplayboardLayoutComponent},
-    { path: ':id/view', component: DisplayboardLayoutContentComponent}
+    { path: ':id', component: DisplayboardLayoutComponent}
 ];
 
 @NgModule({

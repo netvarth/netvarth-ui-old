@@ -62,6 +62,7 @@ import { SearchProviderModule } from './shared/components/search-provider/search
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
+import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,7 +128,8 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
     LazyModule,
     SearchProviderModule,
     ScrollToModule.forRoot(),
-    DateFormatPipeModule
+    DateFormatPipeModule,
+    DisplayboardLayoutContentModule
   ],
   providers: [
     AuthGuardConsumer,

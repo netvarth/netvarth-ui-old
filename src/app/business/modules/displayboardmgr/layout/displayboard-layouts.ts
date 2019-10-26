@@ -66,7 +66,8 @@ export class DisplayboardLayoutsComponent implements OnInit {
             );
     }
     showDisplayboard(layout) {
-        this.router.navigate(['provider', 'settings', 'displayboard', 'layout', layout.id, 'view']);
+        // this.router.navigate(['/displayboard/' + layout.id]);
+        window.open('/displayboard/' + layout.id, '_blank');
     }
     performActions(action) {
         this.addDisplayboardLayout();

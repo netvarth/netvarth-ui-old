@@ -296,8 +296,8 @@ export class DisplayboardDetailComponent implements OnInit {
             this.selectedCategoryValue = this.display_schedule[0].id;
             this.queueSelection(this.display_schedule[0].id);
         } else if (this.selectedCategory === 'DEPARTMENT') {
-            this.selectedCategoryValue = this.deptObj.departments[0].departmentId;
-            this.departmentSelection(this.deptObj.departments[0].departmentId);
+            this.selectedCategoryValue = this.departments[0].departmentId;
+            this.departmentSelection(this.departments[0].departmentId);
         }
     }
     saveLabels(index) {

@@ -85,7 +85,7 @@
                                             Department</label>
                                         <div *ngFor="let department of departments; index as i">
                                             <mat-radio-group [(ngModel)]="selectedCategoryValue">
-                                                <mat-radio-button [value]="departments.departmentId"
+                                                <mat-radio-button [value]="department.departmentId"
                                                     [checked]="departments[i].checked"
                                                     (change)="departmentSelection(department.departmentId)">
                                                     {{department.departmentName | capitalizeFirst}}
