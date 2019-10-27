@@ -39,11 +39,11 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: this.work_hours,
-            url: '/provider/settings/waitlist-manager/queues'
+            url: '/provider/settings/q-manager/queues'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -108,7 +108,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
             );
     }
     goBack() {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'queues']);
             this.api_loading = false;
     }

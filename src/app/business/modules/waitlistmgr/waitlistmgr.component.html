@@ -1,86 +1,93 @@
 <section>
-        <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
-        <!-- Subheader section -->
-        <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-    </section>
-    
-    <section>
-        <div class="content w-manager">
-            <div class="col-md-12" *ngIf="waitlist_manager != null">
-                <div class="row">
-                    <div class="card p0" *ngIf="loading">
-                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                    </div>
-                    <div class="card p0" *ngIf="!loading">
-                        <div class="copy">
-                            <div class="row">
-                                <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                                    <label>Online Check-Ins</label>
-                                </div>
-                                <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
-                                    style="margin-left: 10px; display: grid">
-                                    <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
-                                        (change)="handle_waitliststatus($event)">Same Day
-                                    </mat-checkbox>
-                                    <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
-                                        (change)="handleFuturewaitlist($event)">Future
-                                    </mat-checkbox>
-    
-                                    Walk-in Check-Ins always enabled
-                                </div>
+    <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
+    <!-- Subheader section -->
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content w-manager">
+        <div class="col-md-12" *ngIf="waitlist_manager != null">
+            <div class="row">
+                <div class="card p0" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card p0" *ngIf="!loading">
+                    <div class="copy">
+                        <div class="row">
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                                <label>Online Check-Ins</label>
+                            </div>
+                            <div class="lbr mt-2  col-sm-12 col-md-12 col-lg-12"
+                                style="margin-left: 10px; display: grid">
+                                <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
+                                    (change)="handle_waitliststatus($event)">Same Day
+                                </mat-checkbox>
+                                <mat-checkbox [checked]="futureDateWaitlist" [(ngModel)]="futureDateWaitlist"
+                                    (change)="handleFuturewaitlist($event)">Future
+                                </mat-checkbox>
+
+                                Walk-in Check-Ins always enabled
                             </div>
                         </div>
-                        <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
-                        </app-provider-waitlist-online-checkin>
                     </div>
-                </div>
-    
-                <div class="row">
-                    <div class="card p0">
-                        <span (click)="goLocation()" class="b-link">
-                            <h2>{{locName}} <p style="font-size: inherit; margin-bottom: 0px"
-                                    *ngIf="multipeLocationAllowed == true"> ({{location_count}})</p>
-                            </h2>
-                            <span class="form-level-settings">{{frm_set_loc_cap}}<a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('settings-locations', $event)">Learn
-                                    More</a></span>
-                        </span>
-                    </div>
-                </div>
-    
-                <div class="row">
-                    <div class="card p0">
-                        <span class="b-link" (click)="goService()">
-                            <h2>{{services_cap}} ({{service_count}})</h2>
-                            <span class="form-level-settings">{{frm_set_ser_cap}}<a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('settings-services', $event)">Learn
-                                    More</a></span>
-                        </span>
-                    </div>
-                </div>
-    
-                <div class="row">
-                    <div class="card p0">
-                        <span class="b-link" (click)="goQueue()">
-                            <h2>{{ser_time_windows_cap}} ({{queues_count}})</h2>
-                            <span class="form-level-settings">{{frm_set_working_hr_cap}}<a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('settings-time_windows', $event)">Learn
-                                    More</a></span>
-                        </span>
-                    </div>
-                </div>
-    
-                <div class="row" *ngIf="filterbydepartment">
-                    <div class="card p0">
-                        <span class="b-link" (click)="goDepartments()">
-                            <h2>Departments ({{departmentCount}})</h2>
-                            <span class="form-level-settings">Add the department details here. Assign your services to
-                                departments <a class="learnmore-pointer" id="customer-help"
-                                    (click)="learnmore_clicked('settings-departments', $event)">Learn More</a></span>
-                        </span>
-                    </div>
+                    <app-provider-waitlist-online-checkin *ngIf="waitlist_manager">
+                    </app-provider-waitlist-online-checkin>
                 </div>
             </div>
-            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="card p0">
+                    <span (click)="goLocation()" class="b-link">
+                        <h2>{{locName}} <p style="font-size: inherit; margin-bottom: 0px"
+                                *ngIf="multipeLocationAllowed == true"> ({{location_count}})</p>
+                        </h2>
+                        <span class="form-level-settings">{{frm_set_loc_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-locations', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="filterbydepartment">
+                <div class="card p0">
+                    <span class="b-link" (click)="goDepartments()">
+                        <h2>Departments ({{departmentCount}})</h2>
+                        <span class="form-level-settings">Add the department details here. Assign your services to
+                            departments <a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('settings-departments', $event)">Learn More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="goService()">
+                        <h2>{{services_cap}} ({{service_count}})</h2>
+                        <span class="form-level-settings">{{frm_set_ser_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-services', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="goQueue()">
+                        <h2>{{ser_time_windows_cap}} ({{queues_count}})</h2>
+                        <span class="form-level-settings">{{frm_set_working_hr_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-time_windows', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoDisplayboards()">
+                        <h2>Displayboards ({{board_count}})</h2>
+                        <span class="form-level-settings">{{frm_set_working_hr_cap}}<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('settings-time_windows', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
         </div>
-    </section>
+        <div class="clearfix"></div>
+    </div>
+</section>

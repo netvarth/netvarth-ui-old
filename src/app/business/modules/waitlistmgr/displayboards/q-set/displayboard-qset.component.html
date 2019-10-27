@@ -1,0 +1,63 @@
+<section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content comn-cls loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 no-padding" *ngIf="!api_loading">
+                    <div class="card" *ngIf="board_list.length == 0">
+                        <div class="no-dta">
+                            <p> No Q-Set Found</p>
+                            <span class="cs-btn bt3" (click)="addDisplayboardQSet()">Add it now</span>
+                        </div>
+                    </div>
+                    <div class="card no-padding display-board" *ngIf="board_list.length > 0">
+                        <div class="copy">
+                            <div class="col-md-12 no-padding">
+                                <ul class="nav jd-custom-nav chkn-dash">
+                                    <li class="dropdown notifications-menu pull-right">
+                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                            (click)="addDisplayboardQSet()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                <i class="fa fa-plus"></i> QSet
+                                                <!-- <mat-icon style="color: #3c8dbc"> </mat-icon> -->
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-12 pt10 mt5 qset" *ngFor="let board of board_list">
+                                <span class="mbt">
+                                    <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </span>
+                                <h3 (click)="goDisplayboardQSetDetails(board)" class="pointer-cursor"> {{board.displayName |
+                                                            capitalizeFirst}}</h3>
+                                <!-- <div class="c-ot m0">
+                                    <div class="item" style="width: 100%;">
+                                        <span class="" *ngFor="let fields of board.statusBoardFor">{{fields.type}}
+                                        </span>
+                                    </div>
+                                </div> -->
+                                <mat-menu #appMenu="matMenu">
+                                    <button mat-menu-item (click)="editDisplayboardQSet(board)">
+                                        <i class="icon-edit"></i>
+                                        Edit
+                                    </button>
+                                    <button mat-menu-item (click)="deleteDisplayboardQSet(board)">
+                                        <i class="icon-delete"></i>
+                                        Delete
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

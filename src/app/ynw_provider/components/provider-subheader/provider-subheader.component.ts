@@ -248,7 +248,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
       );
   }
   btnAvailableClicked() {
-    this.routerobj.navigate(['provider/settings/waitlist-manager/queues/instant']);
+    this.routerobj.navigate(['provider/settings/q-manager/queues/instant']);
   }
   getProviderLocations() {
     return new Promise((resolve, reject) => {

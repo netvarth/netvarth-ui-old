@@ -24,6 +24,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     queues_count: any = 0;
     instant_count: any = 0;
     departmentCount: any = 0;
+    board_count: any = 0;
     locations: any = [];
     selected_location = null;
     multipeLocationAllowed = false;
@@ -76,6 +77,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.getServiceCount();
         this.getDepartmentsCount();
         this.getBusinessConfiguration();
+        this.getDisplayboardCount();
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings' };
         // Update from footer
@@ -86,6 +88,15 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                         this.getWaitlistMgr();
                     }
                 });
+    }
+    getDisplayboardCount() {
+        let layout_list: any = [];
+        this.provider_services.getDisplayboards()
+            .subscribe(
+                data => {
+                    layout_list = data;
+                    this.board_count = layout_list.length;
+            });
     }
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks
@@ -138,21 +149,24 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    gotoDisplayboards() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+    }
     goLocation() {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
     }
     goService() {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
     }
     goQueue() {
         if (this.locationExists) {
-            this.router.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+            this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
         } else {
             this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
     goDepartments() {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager', 'departments']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'departments']);
     }
     getLocationCount() {
         this.loading = true;

@@ -241,7 +241,7 @@ export const projectConstants = {
       displayName: 'Settings',
       subcat: [
         { name: 'LOCATION', dispName: 'Location' },
-        { name: 'QUEUE', dispName: 'Working Hours' },
+        { name: 'QUEUE', dispName: 'Qs' },
         { name: 'SERVICE', dispName: 'Service' },
         { name: 'HOLIDAY', dispName: 'Holiday' },
         { name: 'WAITLIST', dispName: 'Waitlist' },
@@ -371,7 +371,7 @@ export const projectConstants = {
     2: 'Please set profile name',
     3: 'Please set location',
     4: 'No active services found',
-    5: 'No active working hours found',
+    5: 'No active queues found',
     pushMsg: 'Push message',
     email: 'Email',
     professionalConsulting: 'Eg:- Adv.Pranav, Ameya Professionals Private Limited, etc',

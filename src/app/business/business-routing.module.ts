@@ -21,7 +21,6 @@ const routes: Routes = [
       { path: '', component: BusinessHomeComponent, canActivate: [AuthGuardProviderHome] },
       // { path: 'learnmore', loadChildren: './modules/learnmore/provider-learnmore.module#ProviderLearnmoreModule' },
       { path: 'faq', loadChildren: './modules/faq/provider-faq.module#ProviderFaqModule' },
-      { path: 'skins', loadChildren: './modules/skins/provider-skins.module#ProviderSkinsModule' },
       { path: 'customers', loadChildren: './modules/customers/customers.module#CustomersModule' },
       // { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
       {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},

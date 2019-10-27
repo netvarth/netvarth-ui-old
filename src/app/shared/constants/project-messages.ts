@@ -110,8 +110,8 @@ export const Messages = {
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location amenities saved successfully',
   'WAITLIST_LOCATION_CHG_STATLOCATION': 'Location "[locname]" has been [status] successfully',
   'WAITLIST_LOCATION_CHG_BASELOCATION': 'Base location changed to [locname]',
-  'WAITLIST_QUEUE_CREATED': 'Working Hours created successfully',
-  'WAITLIST_QUEUE_UPDATED': 'Working Hours updated successfully',
+  'WAITLIST_QUEUE_CREATED': 'Q created successfully',
+  'WAITLIST_QUEUE_UPDATED': 'Q updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
@@ -219,7 +219,7 @@ export const Messages = {
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
-  'QUEUENAME_TOOLTIP': 'Click here to edit the Working Hours',
+  'QUEUENAME_TOOLTIP': 'Click here to edit the Q',
   'ADD_BUTTON': 'Click to create an instant queue',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
@@ -230,7 +230,7 @@ export const Messages = {
   'CHECKINS_TIME_CAPTION': 'Next Available Time',
   'PREPAYMENT_ERROR': 'Sorry! Please try again.',
   'FUTURE_NO_CHECKINS': 'No future [waitlist]s',
-  'PROFILE_TOOLTIP': 'Profile & Search',
+  'PROFILE_TOOLTIP': 'Jaldee Online',
   'SETTINGS_TOOLTIP': 'Settings',
   'LOCATION_TOOLTIP': 'Location',
   'WORKINGHOUR_TOOLTIP': 'Working Hour',
@@ -326,7 +326,7 @@ export const Messages = {
   'WAITLIST_FOR_CAP': 'Check-In For:',
   'SERVICE_CAP': 'Service:',
   'SRVIC_CAP': 'Service',
-  'SER_TIME_WINDOW_CAP': 'Working Hours:',
+  'SER_TIME_WINDOW_CAP': 'Q:',
   'PAY_STATUS_CAP': 'Payment Status:',
   'NOT_PAID_CAP': 'Not Paid',
   'PARTIALLY_PAID_CAP': 'Partially Paid',
@@ -401,7 +401,7 @@ export const Messages = {
   'YOU_HAVE_CAP': 'You have',
   'AT_THIS_LOC_CAP': 'at this location',
   'GET_DIRECTIONS_CAP': 'Get Directions',
-  'WORKING_HRS_CAP': 'Working Hours',
+  'WORKING_HRS_CAP': 'Q',
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
   'SERVPRICE_CAP': 'Price ',
@@ -478,7 +478,7 @@ export const Messages = {
   'SELECT_DEPT_CAP': 'Select Department',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
-  'SERV_TIME_WINDOW_CAP': 'Working Hours',
+  'SERV_TIME_WINDOW_CAP': 'Q',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
   'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted ',
@@ -691,7 +691,7 @@ export const Messages = {
   'LOC_PLACEHOLDER': 'Enter your precise location',
 
   // App-ynw_provider-components-add-provider-waitlist_queue
-  'SERVICE_TIME_WINDOW_CAP': 'Title for Working Hours *',
+  'SERVICE_TIME_WINDOW_CAP': 'Title for Q *',
   'QUEUE_LOCATION_CAP': 'Location *',
   'QUEUE_SERVICE_CAP': 'Service*',
   'QUEUE_SERVICE_OFFERD_CAP': 'Services offered in this schedule*',
@@ -730,7 +730,8 @@ export const Messages = {
   'TODAY_HOME_CAP': 'Today',
   'FUTURE_HOME_CAP': 'Future',
   'HISTORY_HOME_CAP': 'History',
-  'SERVICE_TIME_CAP': 'Working Hours',
+  'SERVICE_TIME_CAP': 'Queues',
+  'QUEUE_CAP': 'Queues (Qs)',
   'SERVICES_CAP': 'Services',
   'CHECK_IN_STATUS_CAP': 'Check-In Status',
   'PAYMENT_STATUS_CAP': 'Payment Status',
@@ -814,7 +815,7 @@ export const Messages = {
   'BPROFILE_DELETE_PICTURE_CAP': 'Delete Picture',
   'BPROFILE_INFORMATION_CAP': 'information',
   'BPROFILE_NEED_LOCATION_CAP': 'Need Location',
-  'BPROFILE_WORK_HOURS_SEARCH_CAP': 'Working Hours to turn on Public Search',
+  'BPROFILE_WORK_HOURS_SEARCH_CAP': 'Q to turn on Public Search',
   'BPROFILE_BASE_LOCATION': 'Your Base Location details are Incomplete',
   'BPROFILE_PLEASE_CAP': 'Please use the',
   'BPROFILE_BUTTON_COMPLETE_CAP': 'button to complete it',
@@ -843,7 +844,7 @@ export const Messages = {
   'NO_SOCIAL_MEDIA': 'You haven\'t added any social media links',
 
   // App-ynw_provider-components-provider-bprofile-search-schedulepopup
-  'MANAGE_WORK_HOURS_CAP': 'Manage Working Hours',
+  'MANAGE_WORK_HOURS_CAP': 'Manage Q',
 
   // App-ynw_provider-components-provider-bprofile-search-socialmedia
   'SOCIAL_SELECT_CAP': 'Select',
@@ -964,7 +965,7 @@ export const Messages = {
   'DATE_TO_CAP': 'Date To',
 
   // App-ynw_provider-components-provider-settings
-  'WAITLIST_MANAGE_CAP': 'Check-in',
+  'WAITLIST_MANAGE_CAP': 'Q Manager',
   'ACCEPT_ONLINE_CAP': 'Accept Online',
   'SETTINGS_CAP': 'Settings',
   'LOCATIONS_CAP': 'Locations',
@@ -1022,7 +1023,7 @@ export const Messages = {
   'CHECKIN_FUTURE_CAP': 'Accept Future',
 
   // App-ynw_provider-components-provider-waitlist-queues
-  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Working Hours',
+  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Q',
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
   // App-ynw_provider-components-provider-waitlist-service-detail
@@ -1109,7 +1110,7 @@ export const Messages = {
   'WIZ_GOOGLE_MAP_URL_CAP': 'Google Map URL',
   'WIZ_USED_FIND_EXACT_LOC_CAP': 'This can be used to find the exact location',
   'WIZ_BACK_CAP': 'Back',
-  'WIZ_WORKING_HOURS_CAP': 'Working Hours',
+  'WIZ_WORKING_HOURS_CAP': 'Q',
   'WIZ_SHOWS_B_HOURS_CAP': 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP': 'Public Search',
   'WIZ_TURN_ON_OFF_CAP': 'Enable the Public Search here. This salient feature allows your profile to be displayed in the [customer] search.',
@@ -1201,7 +1202,7 @@ export const Messages = {
   'CHECK_DET_LOCATION_CAP': 'Location:',
   'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for:',
   'CHECK_DET_SERVICE_CAP': 'Service:',
-  'CHECK_DET_QUEUE_CAP': 'Working Hours:',
+  'CHECK_DET_QUEUE_CAP': 'Q:',
   'CHECK_DET_PAY_STATUS_CAP': 'Payment Status:',
   'CHECK_DET_NOT_PAID_CAP': 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP': 'Partially Paid',
@@ -1224,7 +1225,7 @@ export const Messages = {
   'Q_DET_MAX_CAP_CAP': 'Maximum Capacity',
   'Q_DET_NO_OF_CAP': 'No of',
   'Q_DET_SERVED_AT_A_TIME_CAP': 's served at a time',
-  'Q_DET_SER_TIME_WIND_STATUS_CAP': 'Working Hours Status',
+  'Q_DET_SER_TIME_WIND_STATUS_CAP': 'Q Status',
   'Q_DET_ENABLED_CAP': 'Enabled',
   'Q_DET_DISABLED_CAP': 'Disabled',
   'Q_DET_SCHEDULE_CAP': 'Schedule',
@@ -1387,9 +1388,9 @@ export const Messages = {
   'DISPLAYBOARDS': 'Displayboards',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
 
-  //JDN
+  // JDN
   'JDN_CREATED': 'Jdn enabled successfully',
-  'JDN_UPDATED' :'Jdn updated successfully',
-  'JDN_DISABLED':'Jdn disabled successfully',
+  'JDN_UPDATED': 'Jdn updated successfully',
+  'JDN_DISABLED': 'Jdn disabled successfully',
 };
 

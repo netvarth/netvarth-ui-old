@@ -512,7 +512,7 @@ export class HomeserviceQueuesComponent implements OnInit, OnDestroy {
      * @param queue queue object for getting queue id
      */
     goQueueDetail(queue) {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'queues', queue.id]);
     }
     /**

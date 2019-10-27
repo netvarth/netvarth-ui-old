@@ -357,7 +357,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     );
   }
   gotoLocations() {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
+    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
   }
   onChangeLocationSelect(event) {
     const value = event;

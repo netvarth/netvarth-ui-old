@@ -249,7 +249,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         });
   }
   gotoCheckinSettings() {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager']);
+    this.router.navigate(['provider', 'settings', 'q-manager']);
   }
 }
 

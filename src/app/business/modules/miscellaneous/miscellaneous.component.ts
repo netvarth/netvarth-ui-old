@@ -39,6 +39,12 @@ export class MiscellaneousComponent implements OnInit {
     gotosaleschannel() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
     }
+    gotothemes() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
+    }
+    gotoJdn() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);

@@ -6,7 +6,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
-import {Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -47,7 +47,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   no_alerts_cap = Messages.NO_ALERTS_CAP;
   settings_not_found_cap = Messages.SETTINGS_NOT_FOUND_CAP;
   accept_online_checkin_cap = Messages.ACC_ONLINE_CHECKIN_CAP;
-legal_cap = Messages.LEGALCAP;
+  legal_cap = Messages.LEGALCAP;
 
   curyear;
   ctype;
@@ -78,7 +78,7 @@ legal_cap = Messages.LEGALCAP;
   constructor(
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
-    public router: Router) {this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
+    public router: Router) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
 
   ngOnInit() {
     if (this.router.url.substr(-8) !== '/bwizard') {
@@ -236,7 +236,7 @@ legal_cap = Messages.LEGALCAP;
     this.clearDivs();
     this.showbottompopup = true;
     this.showCheckinDiv = true;
-    this.bottomdivHeader = this.checkin_label.charAt(0).toUpperCase() + this.checkin_label.slice(1) +  ' Enable / Disable';
+    this.bottomdivHeader = this.checkin_label.charAt(0).toUpperCase() + this.checkin_label.slice(1) + ' Enable / Disable';
     this.selOpt = 'Checkin';
     this.waitlistmgr = [];
     this.shared_services.getWaitlistMgr()
@@ -270,7 +270,7 @@ legal_cap = Messages.LEGALCAP;
         this.clearDivs();
         break;
       case 'Checkin':
-        this.router.navigate(['/provider/settings/waitlist-manager']);
+        this.router.navigate(['/provider/settings/q-manager']);
         this.selOpt = '';
         this.clearDivs();
         break;
@@ -307,7 +307,7 @@ legal_cap = Messages.LEGALCAP;
 
         });
   }
-   changefutureOnlinestatus(curstat) {
+  changefutureOnlinestatus(curstat) {
     const changestatus = (curstat) ? 'Disable' : 'Enable';
     this.shared_services.setFutureCheckinStatus(changestatus)
       .subscribe(() => {
@@ -333,19 +333,19 @@ legal_cap = Messages.LEGALCAP;
         this.router.navigate(['privacy']);
         window.scroll(0, 0);
         break;
-        case 'about':
+      case 'about':
         this.router.navigate(['about']);
         window.scroll(0, 0);
         break;
-        case 'contact':
+      case 'contact':
         this.router.navigate(['contact']);
         window.scroll(0, 0);
         break;
-        // case 'faq':
-        // this.router.navigate(['faq']);
-        // window.scroll(0, 0);
-        // break;
-        case 'pricing':
+      // case 'faq':
+      // this.router.navigate(['faq']);
+      // window.scroll(0, 0);
+      // break;
+      case 'pricing':
         this.router.navigate(['pricing']);
         window.scroll(0, 0);
         break;

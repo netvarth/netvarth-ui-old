@@ -313,7 +313,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.resetApiErrors();
 
     if (!form_data.qname.replace(/\s/g, '').length) {
-      const error = 'Please enter working hours name';
+      const error = 'Please enter queue name';
       this.sharedfunctionObj.apiErrorAutoHide(this, error);
       return;
     }

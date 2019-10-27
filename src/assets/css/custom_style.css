@@ -1787,9 +1787,11 @@ sup {
   display: block !important;
   height: auto !important
 }
-
+.bcrumb a, .bcrumb span {
+  display: unset;
+}
 .bcrumb div:first-child {
-  display: flex !important;
+  /* display: flex !important; */
   float: left !important;
 }
 
@@ -2049,9 +2051,7 @@ sup {
   margin-bottom: 5px !important
 }
 
-.content.w-manager .card .b-link:hover .form-level-settings, 
-.content.w-manager .card .b-link:hover span h2,
-.content.w-manager .card .b-link:hover span{
+.content.w-manager .card .b-link:hover .form-level-settings, .content.w-manager .card .b-link:hover span h2, .content.w-manager .card .b-link:hover span {
   color: #fff !important
 }
 
@@ -4757,7 +4757,7 @@ i.notavail {
     min-height: 575px
   }
   .set-block-ul {
-    min-height: 470px
+    min-height: 750px
   }
 }
 
@@ -4782,6 +4782,7 @@ i.notavail {
 .mb-3, .my-3 {
   margin-bottom: 1rem!important;
 }
+
 .phadd {
   margin-top: 5px !important;
 }
@@ -4997,11 +4998,11 @@ i.notavail {
   border: 1px solid #3c8dbc !important
 } */
 
-.cust-sect .custs:nth-child(odd) {
+.cust-sect .custs:nth-child(odd), .qset:nth-child(odd),.dboard:nth-child(odd){
   background: rgba(0, 0, 0, .03) !important;
 }
 
-.cust-sect .custs:nth-child(even) {
+.cust-sect .custs:nth-child(even), .qset:nth-child(even), .dboard:nth-child(even) {
   background: transparent !important;
 }
 
@@ -5231,90 +5232,150 @@ i.notavail {
   height: 54px !important
 }
 
-.content.loc-list .card .copy h3, 
-.content.w-manager .card .b-link h2,
-.display-board .mat-expansion-panel-header-description,
-.dashboard .chkins .forwhom,
-.q-comp .form-group .schselectall i {
+.content.loc-list .card .copy h3, .content.w-manager .card .b-link h2, .display-board .mat-expansion-panel-header-description, .dashboard .chkins .forwhom, .q-comp .form-group .schselectall i {
   color: #3c8dbc !important
 }
-.content.w-manager .card .b-link:hover h2 {color: #fff !important;}
-.content.w-manager .card .b-link:hover .learnmore-pointer {color: #f2cd61 !important}
+
+.content.w-manager .card .b-link:hover h2 {
+  color: #fff !important;
+}
+
+.content.w-manager .card .b-link:hover .learnmore-pointer {
+  color: #f2cd61 !important
+}
+
 .mat-button {
   background-color: #3c8dbc !important;
 }
+
 .mailbox .title-color {
   color: #3c8dbc !important;
 }
+
 .direct-chat-warning .right>.direct-chat-text {
-  background :#3c8dbc !important;
-  color: #fff !important; 
+  background: #3c8dbc !important;
+  color: #fff !important;
 }
+
 .mailbox .input-group-btn .btn-warning {
   background-color: #3c8dbc !important;
 }
-  .upgrade{
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-    font-size: smaller !important;
-    height: 35px !important;
-    margin-bottom: 5px !important;
+
+.upgrade {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  font-size: smaller !important;
+  height: 35px !important;
+  margin-bottom: 5px !important;
+}
+
+.subscibeDisable {
+  background: #f2f2f2;
+  cursor: not-allowed !important;
+  /* border: 3px dashed #ccc !important; */
+}
+
+@media only screen and (max-width: 575px) {
+  .no-padding-small {
+    padding: 0 !important;
   }
-  .subscibeDisable{
-    background: #f2f2f2;
-    cursor: not-allowed !important;
-    /* border: 3px dashed #ccc !important; */
+  .queuelist .ttle {
+    font-size: 0.90rem !important;
   }
-  @media only screen and (max-width: 575px) {
-    .no-padding-small {padding: 0 !important;}
-    .queuelist .ttle { font-size: 0.90rem !important;}
-    .adjustdelay .mat-checkbox-layout {white-space:normal;}
-    .adjustdelay .mat-checkbox-inner-container {margin-top:4px}
+  .adjustdelay .mat-checkbox-layout {
+    white-space: normal;
   }
-  .queuelist {padding-bottom: 10px; margin-bottom: 10px;}
-  .queuelist span.mbt {padding-top:10px}
-  .pl0  { padding-left: 0;}
-  .pr0  { padding-right: 0;}
-  .is-bx.step1 .content, .is-bx.step2 .content, .is-bx.step3 .content, .is-bx.step4 .content {
-    background-color: #fff !important;
+  .adjustdelay .mat-checkbox-inner-container {
+    margin-top: 4px
   }
-  .jaldee-header {
-    z-index: 811 !important;
-  }
-    .add-label {
-    margin: 10px;
-  }
-  .add-label .field {
-    padding: 5px;
-  }
-  .add-label .field-name {
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  .selected_btn {
-    background-color: #3c8dbc;
-    color: white;
-  }
-   .assured{
-    font-style: italic;
-    color: #00cc96;
-  }
-  .jdn{
-    font-size: small;
-    color: #00aef2;
-  }
-  .main-sidebar small.label {padding:5px !important}
-  .advancedheader{
-    height: 35px !important;
-    background-color: rgb(242, 242, 242)!important;
-  }
-  .layout_name{
-    color: #000 !important;
-    font-weight: 400 !important;
-  }
-  .desfont{
-    width: 50% !important;
-    }
-    .displyfont{
-      width: 50% !important;
-      }
+}
+
+.queuelist {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.queuelist span.mbt {
+  padding-top: 10px
+}
+
+.pl0 {
+  padding-left: 0;
+}
+
+.pr0 {
+  padding-right: 0;
+}
+
+.is-bx.step1 .content, .is-bx.step2 .content, .is-bx.step3 .content, .is-bx.step4 .content {
+  background-color: #fff !important;
+}
+
+.jaldee-header {
+  z-index: 811 !important;
+}
+
+.add-label {
+  margin: 10px;
+}
+
+.add-label .field {
+  padding: 5px;
+}
+
+.add-label .field-name {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.selected_btn {
+  background-color: #3c8dbc;
+  color: white;
+}
+
+.assured {
+  font-style: italic;
+  color: #00cc96;
+}
+
+.jdn {
+  font-size: small;
+  color: #00aef2;
+}
+
+.main-sidebar small.label {
+  padding: 5px !important
+}
+
+.advancedheader {
+  height: 35px !important;
+  background-color: rgb(242, 242, 242)!important;
+}
+
+.layout_name {
+  color: #000 !important;
+  font-weight: 400 !important;
+}
+
+.desfont {
+  width: 50% !important;
+}
+
+.displyfont {
+  width: 50% !important;
+}
+
+li.separator {
+  border-bottom: 1px solid #c4b7b7;
+  /* padding-bottom: 10px !important; */
+}
+li.separator.setsplit {
+  border-bottom: 1px solid #c3bdbd !important;
+}
+.jd-custom-nav, nav.jd-custom-nav,.dashboard .main-header .navbar.jd-custom-nav,
+.skin-blue .main-header.dash .navbar {
+  background-color: #d8e2f1 !important;
+  background: #d8e2f1 !important;
+}
+.set-block-ul p.form-level-settings {margin: 0 !important}
+.set-block-ul p.sts{margin:0 !important}

@@ -27,7 +27,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: 'Services'
@@ -53,7 +53,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     }
     performActions(action) {
         if (action === 'addservice') {
-            this.router.navigate(['provider', 'settings', 'waitlist-manager',
+            this.router.navigate(['provider', 'settings', 'q-manager',
                 'services', 'add']);
         }
     }
@@ -103,12 +103,12 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'services', service.id], navigationExtras);
     }
 
     goServiceDetail(service) {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'services', service.id]);
     }
 

@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { Messages } from '../../../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { Messages } from '../../../../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { projectConstants } from '../../../../../../shared/constants/project-constants';
 
 @Component({
-    selector: 'app-displayboard-detail',
-    templateUrl: './displayboard-detail.html'
+    selector: 'app-displayboard-qset-detail',
+    templateUrl: './displayboard-qset-detail.component.html'
 })
-export class DisplayboardDetailComponent implements OnInit {
+export class DisplayboardQSetDetailComponent implements OnInit {
     cancel_btn = Messages.CANCEL_BTN;
     service_caption = Messages.SERVICES_CAP;
     department_cap = Messages.DEPARTMENT_CAP;
@@ -27,12 +27,16 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Displayboard',
-            url: '/provider/settings/displayboard'
+            title: Messages.WAITLIST_MANAGE_CAP,
+            url: '/provider/settings/q-manager'
         },
         {
             title: 'Displayboards',
-            url: '/provider/settings/displayboard/list'
+            url: '/provider/settings/q-manager/displayboards'
+        },
+        {
+            title: 'Q-Set',
+            url: '/provider/settings/q-manager/displayboards/q-set'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -92,7 +96,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     getDisplaydashboardbyId(id) {
         this.getLabels();
-        this.provider_services.getDisplayboardbyId(id).subscribe(data => {
+        this.provider_services.getDisplayboardQSetbyId(id).subscribe(data => {
             this.displayBoardData = data;
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
@@ -175,7 +179,7 @@ export class DisplayboardDetailComponent implements OnInit {
         if (this.actionparam === 'edit') {
             this.actionparam = 'view';
         } else {
-            this.router.navigate(['provider/settings/displayboard/list']);
+            this.router.navigate(['provider/settings/q-manager/displayboards/q-set']);
         }
     }
     getProviderServices() {

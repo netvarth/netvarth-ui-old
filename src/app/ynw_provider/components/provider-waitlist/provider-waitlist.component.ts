@@ -137,20 +137,20 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
       );
   }
   goLocation() {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
+    this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
   }
   goService() {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
+    this.router.navigate(['provider', 'settings', 'q-manager', 'services']);
   }
   goQueue() {
     if (this.locationExists) {
-      this.router.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+      this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
     } else {
       this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
     }
   }
   goDepartments() {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager', 'departments']);
+    this.router.navigate(['provider', 'settings', 'q-manager', 'departments']);
   }
   getLocationCount() {
     this.loading = true;

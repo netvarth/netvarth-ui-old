@@ -95,7 +95,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['/provider/' + this.domain + '/help']);
   }
   btnAvailableClicked() {
-    this.router.navigate(['provider/settings/waitlist-manager/queues']);
+    this.router.navigate(['provider/settings/q-manager/queues']);
   }
   holidaybtnClicked() {
     this.router.navigate(['provider/settings/miscellaneous/holidays']);

@@ -38,7 +38,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     ngOnInit() {
         if (this.layout_id) {
             let layoutData;
-            this.provider_services.getBoardLayout(this.layout_id).subscribe(
+            this.provider_services.getDisplayboardQSetbyId(this.layout_id).subscribe(
                 layoutInfo => {
                     layoutData = layoutInfo;
                     const layoutPosition = layoutData.layout.split('_');
@@ -71,7 +71,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
         return fieldValue;
     }
     setDisplayboards(element) {
-        this.provider_services.getDisplayboardbyId(element.sbId).subscribe(
+        this.provider_services.getDisplayboardQSetbyId(element.sbId).subscribe(
             (displayboard) => {
                 this.selectedDisplayboards[element.position]['board'] = displayboard;
                 const Mfilter = this.setFilterForApi(displayboard);

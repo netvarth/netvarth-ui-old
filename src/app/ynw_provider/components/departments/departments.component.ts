@@ -21,7 +21,7 @@ export class DepartmentsComponent implements OnInit {
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: 'Departments'
@@ -46,7 +46,7 @@ export class DepartmentsComponent implements OnInit {
         // this.loading = false;
     }
     gotoDepartmentDetails(dept) {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'department', dept.departmentId]);
     }
     getDepartments() {
@@ -88,7 +88,7 @@ export class DepartmentsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'addDepartment') {
-            this.router.navigate(['provider', 'settings', 'waitlist-manager',
+            this.router.navigate(['provider', 'settings', 'q-manager',
                 'department', 'add']);
         }
     }

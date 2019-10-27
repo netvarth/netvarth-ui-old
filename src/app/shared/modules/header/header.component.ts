@@ -559,7 +559,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/provider-home']);
   }
   btnAvailableClicked() {
-    this.router.navigate(['provider/settings/waitlist-manager/queues']);
+    this.router.navigate(['provider/settings/q-manager/queues']);
   }
   holidaybtnClicked() {
     this.router.navigate(['provider/settings/holidays']);

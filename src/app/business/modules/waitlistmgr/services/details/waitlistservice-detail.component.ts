@@ -28,11 +28,11 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: 'Services',
-            url: '/provider/settings/waitlist-manager/services'
+            url: '/provider/settings/q-manager/services'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -105,7 +105,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                             this.serviceParams['action'] = 'show';
                             this.servicesService.initServiceParams(this.serviceParams);
                         } else {
-                            this.router.navigate(['provider/settings/waitlist-manager/services']);
+                            this.router.navigate(['provider/settings/q-manager/services']);
                         }
                     }
                 }
@@ -288,7 +288,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
     }
     // Gallery Section ends
     goBack() {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'services']);
         this.api_loading = false;
     }

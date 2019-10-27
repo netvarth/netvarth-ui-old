@@ -18,7 +18,7 @@ export class ApplyLabelComponent implements OnInit {
             url: '/provider'
         },
         {
-            title: 'Check-Ins',
+            title: 'Q Manager',
             url: '/provider/dashboard/check-ins'
         },
         {

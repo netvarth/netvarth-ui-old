@@ -53,7 +53,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: this.work_hours
@@ -517,7 +517,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * @param queue queue object for getting queue id
      */
     goQueueDetail(queue) {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'queues', queue.id]);
     }
     /**

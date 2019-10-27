@@ -5,10 +5,10 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-displayboard-layouts',
-    templateUrl: './displayboard-layouts.html'
+    selector: 'app-displayboards',
+    templateUrl: './displayboards.component.html'
 })
-export class DisplayboardLayoutsComponent implements OnInit {
+export class DisplayboardsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
@@ -16,11 +16,11 @@ export class DisplayboardLayoutsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Displayboard',
-            url: '/provider/settings/displayboard'
+            title: Messages.WAITLIST_MANAGE_CAP,
+            url: '/provider/settings/q-manager'
         },
         {
-            title: 'Layouts'
+            title: 'Displayboards'
         }
     ];
     api_loading: boolean;
@@ -53,7 +53,7 @@ export class DisplayboardLayoutsComponent implements OnInit {
     getDisplayboardLayouts() {
         this.api_loading = true;
         this.layout_list = [];
-        this.provider_services.getBoardLayouts()
+        this.provider_services.getDisplayboards()
             .subscribe(
                 data => {
                     this.layout_list = data;
@@ -72,24 +72,27 @@ export class DisplayboardLayoutsComponent implements OnInit {
         }
     }
     addDisplayboardLayout() {
-        this.router.navigate(['provider', 'settings', 'displayboard', 'layout', 'add']);
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
+    }
+    gotoDisplayboardQSet () {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set']);
     }
     editDisplayboardLayout(layout) {
         const navigationExtras: NavigationExtras = {
             queryParams: { id: layout.id }
         };
-        this.router.navigate(['provider', 'settings', 'displayboard',
-            'layout', 'edit'], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', 'edit'], navigationExtras);
     }
     goDisplayboardLayoutDetails(layout) {
         const navigationExtras: NavigationExtras = {
             queryParams: { id: layout.id }
         };
-        this.router.navigate(['provider', 'settings', 'displayboard',
-            'layout', 'view'], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', 'view'], navigationExtras);
     }
     deleteDisplayboardLayout(layout) {
-        this.provider_services.deleteBoardLayout(layout.id).subscribe(
+        this.provider_services.deleteDisplayboard(layout.id).subscribe(
             () => {
                 this.getDisplayboardLayouts();
             }

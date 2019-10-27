@@ -7,11 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 
 @Component({
-    selector: 'app-displayboard-layout',
-    templateUrl: './displayboard-layout.html'
+    selector: 'app-displayboard-details',
+    templateUrl: './displayboard-details.component.html'
 })
-export class DisplayboardLayoutComponent implements OnInit {
-
+export class DisplayboardDetailComponent implements OnInit {
     amForm: FormGroup;
     char_count = 0;
     max_char_count = 250;
@@ -40,7 +39,7 @@ export class DisplayboardLayoutComponent implements OnInit {
     metric: any = [];
     metricSelected = {};
     id;
-    board_list: any = [];
+    qset_list: any = [];
     displayBoardData: any = [];
     boardLayoutFields = {};
     boardRows = 1;
@@ -51,23 +50,22 @@ export class DisplayboardLayoutComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Displayboard',
-            url: '/provider/settings/displayboard'
+            title: Messages.WAITLIST_MANAGE_CAP,
+            url: '/provider/settings/q-manager'
         },
         {
-            title: 'Layouts',
-            url: '/provider/settings/displayboard/layout'
+            title: 'Displayboards',
+            url: '/provider/settings/q-manager/displayboards'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
     actionparam = 'show';
     constructor(
-        private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
-        private router: Router,
         private shared_functions: SharedFunctions,
-        private activated_route: ActivatedRoute
+        private activated_route: ActivatedRoute,
+        private router: Router
     ) {
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
@@ -101,7 +99,7 @@ export class DisplayboardLayoutComponent implements OnInit {
         return layoutActive;
     }
     ngOnInit() {
-        this.getDisplayboards();
+        this.getDisplayboardQSets();
     }
     createRange(number) {
         const items = [];
@@ -115,7 +113,7 @@ export class DisplayboardLayoutComponent implements OnInit {
         this.boardCols = layout.col;
     }
     editLayoutbyId(id) {
-        this.provider_services.getBoardLayout(id).subscribe(data => {
+        this.provider_services.getDisplayboard(id).subscribe(data => {
             this.layoutData = data;
             this.layout = this.getLayout(this.layoutData.layout);
             this.displayBoardData = data;
@@ -156,7 +154,7 @@ export class DisplayboardLayoutComponent implements OnInit {
                 'displayName': this.displayName,
                 'metric': this.metric,
             };
-            this.provider_services.createBoardLayout(post_data).subscribe(data => {
+            this.provider_services.createDisplayboard(post_data).subscribe(data => {
                 this.editLayoutbyId(data);
                 this.actionparam = 'view';
             },
@@ -173,7 +171,7 @@ export class DisplayboardLayoutComponent implements OnInit {
                 'displayName': this.displayName,
                 'metric': this.metric
             };
-            this.provider_services.updateBoardLayout(post_data).subscribe(data => {
+            this.provider_services.updateDisplayboard(post_data).subscribe(data => {
                 this.editLayoutbyId(this.layoutData.id);
                 this.actionparam = 'view';
             },
@@ -184,15 +182,19 @@ export class DisplayboardLayoutComponent implements OnInit {
         }
     }
     onCancel() {
-        this.actionparam = 'view';
+        if (this.actionparam === 'edit') {
+            this.actionparam = 'view';
+        } else {
+            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        }
     }
-    getDisplayboards() {
+    getDisplayboardQSets() {
         this.api_loading = true;
-        this.board_list = [];
-        this.provider_services.getDisplayboards()
+        this.qset_list = [];
+        this.provider_services.getDisplayboardQSets()
             .subscribe(
                 data => {
-                    this.board_list = data;
+                    this.qset_list = data;
                     this.api_loading = false;
                 },
                 error => {

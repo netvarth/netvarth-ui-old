@@ -59,15 +59,13 @@
                                                 <div class="row">
                                                     <div class="col-md-12 card">                                    
                                                         <div *ngFor = "let row of createRange(boardRows)">
-                                                            <div *ngFor = "let col of createRange(boardCols)" class="col-md-{{12/boardCols}}">
+                                                            <div *ngFor = "let col of createRange(boardCols)" class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                                 <mat-form-field>
-                                                                    <mat-select placeholder="Choose Layout" id="displayName"
-                                                                    (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)"    
-                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]" [ngModelOptions]="{standalone: true}">
-                                                                        <mat-option [value]="board_list.id"
-                                                                            *ngFor="let board_list of board_list"
+                                                                    <mat-select placeholder="Choose Layout"                                                                     
+                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]" [ngModelOptions]="{standalone: true}" (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)" >
+                                                                        <mat-option [value]="qset.id" *ngFor="let qset of qset_list"
                                                                             >
-                                                                            {{board_list.displayName |
+                                                                            {{qset.displayName |
                                                                                 capitalizeFirst}}
                                                                         </mat-option>
                                                                     </mat-select>

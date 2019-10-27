@@ -50,7 +50,7 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
     },
     {
       title: Messages.WAITLIST_MANAGE_CAP,
-      url: '/provider/settings/waitlist-manager'
+      url: '/provider/settings/q-manager'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
@@ -241,7 +241,7 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   }
 
   goLocationDetail(location_detail) {
-    this.router.navigate(['provider', 'settings', 'waitlist-manager',
+    this.router.navigate(['provider', 'settings', 'q-manager',
       'location-detail', location_detail.id]);
   }
 

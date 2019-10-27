@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Messages } from '../../../../shared/constants/project-messages';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-displayboard-list',
-    templateUrl: './displayboard-list.html'
+    selector: 'app-displayboard-qset',
+    templateUrl: './displayboard-qset.component.html'
 })
-export class DisplayboardListComponent implements OnInit {
+export class DisplayboardQSetComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
@@ -16,11 +16,15 @@ export class DisplayboardListComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Displayboard',
-            url: '/provider/settings/displayboard'
+            title: Messages.WAITLIST_MANAGE_CAP,
+            url: '/provider/settings/q-manager'
         },
         {
-            title: 'Displayboards'
+            title: 'Displayboards',
+            url: '/provider/settings/q-manager/displayboards'
+        },
+        {
+            title: 'Q-Set'
         }
     ];
     api_loading: boolean;
@@ -38,14 +42,14 @@ export class DisplayboardListComponent implements OnInit {
         this.breadcrumb_moreoptions = {
             'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
         };
-        this.getDisplayboards();
+        this.getDisplayboardQsets();
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.domain = user.sector;
     }
-    getDisplayboards() {
+    getDisplayboardQsets() {
         this.api_loading = true;
         this.board_list = [];
-        this.provider_services.getDisplayboards()
+        this.provider_services.getDisplayboardQSets()
             .subscribe(
                 data => {
                     this.board_list = data;
@@ -62,28 +66,28 @@ export class DisplayboardListComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->board']);
         }
     }
-    addDisplayboard() {
-        this.router.navigate(['provider', 'settings', 'displayboard',
-            'list', 'add']);
+    addDisplayboardQSet() {
+        this.router.navigate(['provider', 'settings',  'q-manager',
+        'displayboards', 'q-set', 'add']);
     }
-    editDisplayboard(board) {
+    editDisplayboardQSet(board) {
         const navigationExtras: NavigationExtras = {
             queryParams: { id: board.id }
         };
-        this.router.navigate(['provider', 'settings', 'displayboard',
-            'list', 'edit'], navigationExtras);
+        this.router.navigate(['provider', 'settings', 'q-manager',
+            'displayboards', 'q-set', 'edit'], navigationExtras);
     }
-    goDisplayboardDetails(board) {
+    goDisplayboardQSetDetails(board) {
         const navigationExtras: NavigationExtras = {
             queryParams: { id: board.id }
         };
-        this.router.navigate(['provider', 'settings', 'displayboard',
-            'list', 'view'], navigationExtras);
+        this.router.navigate(['provider', 'settings',  'q-manager',
+        'displayboards', 'q-set', 'view'], navigationExtras);
     }
-    deleteDisplayboard(board) {
-        this.provider_services.deleteDisplayboard(board.id).subscribe(
+    deleteDisplayboardQSet(board) {
+        this.provider_services.deleteDisplayboardQSet(board.id).subscribe(
             () => {
-                this.getDisplayboards();
+                this.getDisplayboardQsets();
             }
         );
     }

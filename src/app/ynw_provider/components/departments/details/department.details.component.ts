@@ -24,11 +24,11 @@ export class DepartmentDetailComponent implements OnInit {
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: 'Departments',
-            url: '/provider/settings/waitlist-manager/departments'
+            url: '/provider/settings/q-manager/departments'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -162,7 +162,7 @@ export class DepartmentDetailComponent implements OnInit {
                 this.selected_action = 'show';
                 this.changeDetectorRef.detectChanges();
             } else {
-                this.router.navigate(['provider/settings/waitlist-manager/departments']);
+                this.router.navigate(['provider/settings/q-manager/departments']);
             }
         }
     }

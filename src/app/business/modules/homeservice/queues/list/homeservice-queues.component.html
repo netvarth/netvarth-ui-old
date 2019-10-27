@@ -385,7 +385,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Scheduled Working Hours
+                                                        Scheduled Qs
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="row" *ngFor="let queue of scheduledQs; index as i">
@@ -510,7 +510,7 @@
                                                 </div>
                                         </div>
                                         <div class="card" *ngIf="scheduledQs.length==0">
-                                                No Scheduled Working Hours
+                                                No Scheduled Qs
                                         </div>
                                 </mat-expansion-panel>
                         </mat-accordion>
@@ -528,7 +528,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Disabled Working Hours
+                                                        Disabled Qs
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="row" *ngFor="let queue of disabledQs">
@@ -588,7 +588,7 @@
                                                 </div>
                                         </div>
                                         <div class="card" *ngIf="disabledQs.length==0">
-                                                No Disabled Working Hours
+                                                No Disabled Qs
                                         </div>
                                 </mat-expansion-panel>
                         </mat-accordion>

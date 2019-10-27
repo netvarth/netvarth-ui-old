@@ -29,8 +29,8 @@ export class JDNComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Billing/POS',
-            url: '/provider/settings/pos'
+            title: 'Miscellaneous',
+            url: '/provider/settings/miscellaneous'
         },
         {
             title: 'JDN'

@@ -6,15 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { CommonModule } from '@angular/common';
-import { DisplayboardDetailComponent } from './detail/displayboard-detail';
-import { DisplayboardListComponent } from './displayboard-list';
+import { DisplayboardsComponent } from './displayboards.component';
 import { DisplayboardsRoutingModule } from './displayboards.routing.module';
-import { SharedModule } from '../../../../shared/modules/common/shared.module';
+import { DisplayboardDetailComponent } from './detail/displayboard-details.component';
+
 
 @NgModule({
     declarations: [
-       DisplayboardListComponent,
-       DisplayboardDetailComponent
+        DisplayboardsComponent,
+        DisplayboardDetailComponent
     ],
     imports: [
         DisplayboardsRoutingModule,
@@ -25,9 +25,9 @@ import { SharedModule } from '../../../../shared/modules/common/shared.module';
         ReactiveFormsModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
-        CommonModule,
-        SharedModule
+        CommonModule
     ],
-    exports: [DisplayboardListComponent]
+    exports: [DisplayboardsComponent]
 })
-export class DisplayboardsModule {}
+export class DisplayboardsModule { }
+

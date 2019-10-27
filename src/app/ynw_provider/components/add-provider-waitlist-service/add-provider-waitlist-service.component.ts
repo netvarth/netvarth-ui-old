@@ -499,7 +499,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
   }
   gotoManageQueue() {
     this.dialogRef.close('reloadlist');
-    this.router.navigate(['/provider/settings/waitlist-manager/queues']);
+    this.router.navigate(['/provider/settings/q-manager/queues']);
   }
   reload() {
     this.dialogRef.close('reloadlist');

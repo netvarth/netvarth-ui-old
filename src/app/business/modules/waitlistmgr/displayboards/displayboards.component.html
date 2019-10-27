@@ -1,0 +1,99 @@
+<section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 no-padding">
+                    <div class="card" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding" *ngIf="!api_loading">
+                    <div class="content comn-cls" *ngIf="layout_list.length==0">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="card">
+                                    <div class="no-dta" *ngIf="layout_list.length==0">
+                                        <p>No Displayboards Found</p>
+                                        <span class="cs-btn bt3" (click)="addDisplayboardLayout()">Add Displayboard</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card no-padding" *ngIf="layout_list.length!==0">
+                        <div class="copy">
+                            <div class="col-md-12 no-padding">
+                                <ul class="nav jd-custom-nav chkn-dash">
+                                    <li class="dropdown notifications-menu pull-right">
+                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                            (click)="addDisplayboardLayout()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                    <i class="fa fa-plus"></i> Displayboard
+                                                    <!-- <mat-icon style="color: #3c8dbc"> </mat-icon> -->
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown notifications-menu pull-right">
+                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                            (click)="gotoDisplayboardQSet()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>QueueSet
+                                                <!-- <mat-icon style="color: #3c8dbc"> {{add_circle_outline}}
+                                                </mat-icon> -->
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- <mat-panel-description class="acc-plus-btn pointer-cursor labeladd">
+                                    <button mat-icon-button 
+                                        >
+                                        
+                                    </button>
+                                </mat-panel-description> -->
+                            </div>
+                            <div class="col-md-12 pt10 mt5 dboard" *ngFor="let layout of layout_list">
+                                <div class="copy">
+                                    <span class="mbt">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </span>
+                                    <h3 (click)="goDisplayboardLayoutDetails(layout)" class="pointer-cursor">
+                                        {{layout.displayName | capitalizeFirst}}<span class="layout_name">
+                                            </span></h3>
+                                    <!-- <div class="c-ot m0">
+                                            <div class="item desfont">
+                                                <span class="ttle">Layout</span>
+                                                <span>{{(getLayout(layout.layout)).displayName}}</span>
+                                            </div>
+                                        </div> -->
+                                    <mat-menu #appMenu="matMenu">
+                                        <button mat-menu-item (click)="editDisplayboardLayout(layout)">
+                                            <i class="icon-edit"></i>
+                                            Edit
+                                        </button>
+                                        <button mat-menu-item (click)="deleteDisplayboardLayout(layout)">
+                                            <i class="icon-delete"></i>
+                                            Delete
+                                        </button>
+                                        <button mat-menu-item>
+                                            <i class="fa fa-folder-open"></i>
+                                            <a class="pointer-cursor" target="_blank"
+                                                style="color: black; font-weight: 400;"
+                                                routerLink="/displayboard/{{layout.id}}"> Open
+                                            </a> </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

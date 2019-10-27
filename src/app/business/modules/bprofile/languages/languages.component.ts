@@ -28,7 +28,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: 'Profile & Search',
+            title: 'Jaldee Online',
             url: '/provider/settings/bprofile'
         },
         {

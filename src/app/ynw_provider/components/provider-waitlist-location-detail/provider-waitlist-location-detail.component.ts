@@ -45,11 +45,11 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         },
         {
             title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/waitlist-manager'
+            url: '/provider/settings/q-manager'
         },
         {
             title: 'Locations',
-            url: '/provider/settings/waitlist-manager/locations'
+            url: '/provider/settings/q-manager/locations'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
@@ -209,7 +209,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         }
     }
     goBack() {
-        this.router.navigate(['provider', 'settings', 'waitlist-manager',
+        this.router.navigate(['provider', 'settings', 'q-manager',
             'locations']);
         this.api_loading = false;
     }
@@ -267,6 +267,6 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         this.provider_shared_functions.addEditQueuePopup(this, type, 'location_detail', queue, this.provider_shared_functions.getActiveQueues());
     }
     goQueueDetail(queue) {
-        this.router.navigate(['provider/settings/waitlist-manager/', 'queues', queue.id]);
+        this.router.navigate(['provider/settings/q-manager/', 'queues', queue.id]);
     }
 }

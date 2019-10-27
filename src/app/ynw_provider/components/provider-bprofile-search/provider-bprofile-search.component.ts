@@ -222,7 +222,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       url: '/provider/settings'
     },
     {
-      title: 'Profile & Search'
+      title: 'Jaldee Online'
     }
   ];
   businessConfig: any = [];
@@ -767,7 +767,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     if (this.bProfile.baseLocation) {
       const locid = this.bProfile.baseLocation.id;
       if (locid) {
-        // this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
+        // this.routerobj.navigate(['/provider/settings/q-manager/location-detail/' + locid]);
         this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'locationoutermainclass'],
@@ -825,7 +825,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     if (this.bProfile.baseLocation) {
       const locid = this.bProfile.baseLocation.id;
       if (locid) {
-        this.routerobj.navigate(['/provider/settings/waitlist-manager/location-detail/' + locid]);
+        this.routerobj.navigate(['/provider/settings/q-manager/location-detail/' + locid]);
       }
     }
   }

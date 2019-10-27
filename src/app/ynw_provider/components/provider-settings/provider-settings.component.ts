@@ -20,6 +20,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   public_search_cap = Messages.BPROFILE_PUBLIC_SEARCH_CAP;
   services_cap = Messages.SERVICES_CAP;
   service_window_cap = Messages.SERVICE_TIME_CAP;
+  qs_cap = Messages.QUEUE_CAP;
   invoice_cap = Messages.INVOICE_CAP;
   waitlist_manage_cap = Messages.WAITLIST_MANAGE_CAP;
   accept_online_cap = Messages.ACCEPT_ONLINE_CAP;
@@ -69,6 +70,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   coupon_count = 0;
   item_list;
   item_count = 0;
+  board_count = 0;
   bProfile = null;
   multipeLocationAllowed = false;
   locName;
@@ -88,6 +90,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   customer_label = '';
   isCheckin;
   reqFields: any = {};
+  pos_status: any;
+  pos_statusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -135,6 +139,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getDiscounts();
     this.getCoupons();
     this.getitems();
+    this.getPOSSettings();
+    this.getDisplayboardCount();
     this.getBusinessConfiguration();
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     // Update from footer
@@ -264,6 +270,23 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       );
   }
+  getPOSSettings() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos_status = data['enablepos'];
+      this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
+    });
+  }
+  handle_posStatus(event) {
+    const value = (event.checked) ? true : false;
+    const status = (value) ? 'enabled' : 'disabled';
+    this.provider_services.setProviderPOSStatus(value).subscribe(data => {
+      this.shared_functions.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.getPOSSettings();
+    }, (error) => {
+      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.getPOSSettings();
+    });
+  }
   getSearchstatus() {
     this.provider_services.getPublicSearch()
       .subscribe(data => {
@@ -310,14 +333,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
         break;
       case 'locations':
-        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'locations']);
+        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'locations']);
         break;
       case 'services':
-        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'services']);
+        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'services']);
         break;
       case 'queues':
         if (this.locationExists) {
-          this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'queues']);
+          this.routerobj.navigate(['provider', 'settings', 'q-manager', 'queues']);
         } else {
           this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
@@ -349,7 +372,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
         break;
       case 'waitlistmanager':
-        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager']);
+        this.routerobj.navigate(['provider', 'settings', 'q-manager']);
         break;
       // case 'license':
       //   this.routerobj.navigate(['provider', 'license']);
@@ -361,7 +384,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'pos', 'taxsettings']);
         break;
       case 'departments':
-        this.routerobj.navigate(['provider', 'settings', 'waitlist-manager', 'departments']);
+        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'departments']);
         break;
       case 'homeservice':
         this.routerobj.navigate(['provider', 'settings', 'home-service']);
@@ -390,8 +413,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'displayboard-list':
         this.routerobj.navigate(['provider', 'settings', 'displayboard', 'list']);
         break;
-      case 'displayboard-layout':
-        this.routerobj.navigate(['provider', 'settings', 'displayboard', 'layout']);
+      case 'displayboards':
+        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        break;
+      case 'skins':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
         break;
     }
   }
@@ -402,6 +428,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.location_count = data;
         });
   }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+        .subscribe(
+            data => {
+                layout_list = data;
+                this.board_count = layout_list.length;
+        });
+}
   getServiceCount() {
     this.provider_services.getServiceCount()
       .subscribe(

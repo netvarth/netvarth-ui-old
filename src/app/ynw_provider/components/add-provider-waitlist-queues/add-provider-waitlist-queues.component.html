@@ -18,7 +18,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
         {
-          'required' : 'Please enter title for working hours',
+          'required' : 'Please enter title for queue',
           'maxlength' : 'Name can contain only 100 characters'
         })">
             </app-field-error-display>

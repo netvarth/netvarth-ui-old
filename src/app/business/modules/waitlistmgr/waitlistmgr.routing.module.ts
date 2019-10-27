@@ -25,7 +25,8 @@ const routes: Routes = [
       {
         path: 'department/:id',
         component: DepartmentDetailComponent
-      }
+      },
+      {path: 'displayboards', loadChildren: '../../../business/modules/waitlistmgr/displayboards/displayboards.module#DisplayboardsModule'}
 ];
 
 @NgModule({
