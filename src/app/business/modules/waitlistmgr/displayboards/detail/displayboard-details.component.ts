@@ -64,6 +64,7 @@ export class DisplayboardDetailComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
+        private shared_Functionsobj: SharedFunctions,
         private activated_route: ActivatedRoute,
         private router: Router
     ) {
@@ -155,6 +156,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'metric': this.metric,
             };
             this.provider_services.createDisplayboard(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(data);
                 this.actionparam = 'view';
             },
@@ -172,6 +174,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'metric': this.metric
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(this.layoutData.id);
                 this.actionparam = 'view';
             },

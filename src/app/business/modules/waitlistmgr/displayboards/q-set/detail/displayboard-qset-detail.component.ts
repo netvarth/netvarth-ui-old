@@ -149,7 +149,8 @@ export class DisplayboardQSetDetailComponent implements OnInit {
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.createDisplayboardQSet(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
+                // this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_ADD'), { 'panelclass': 'snackbarerror' });
                 this.getDisplaydashboardbyId(data);
                 this.actionparam = 'view';
             },
@@ -166,7 +167,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
                 'statusBoardFor': this.statusBoardfor
             };
             this.provider_services.updateDisplayboardQSet(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar('Displayboard updated successfully', { 'panelclass': 'snackbarerror' });
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.getDisplaydashboardbyId(this.displayBoardData.id);
                 this.actionparam = 'view';
             },
