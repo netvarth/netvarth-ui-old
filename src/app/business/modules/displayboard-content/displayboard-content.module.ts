@@ -25,3 +25,4 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 export class DisplayboardLayoutContentModule {
 }
 
+
