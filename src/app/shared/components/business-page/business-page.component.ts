@@ -953,7 +953,6 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                   this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
                 }
                 
-
                 else {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
