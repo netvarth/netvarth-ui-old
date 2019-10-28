@@ -5,13 +5,15 @@ import { DisplayboardContentRoutingModule } from './displayboard-content-routing
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AuthGuardProvider } from '../../../shared/guard/auth.guard';
+import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 @NgModule({
     declarations: [
         DisplayboardLayoutContentComponent
     ],
     imports: [
         CommonModule,
-        DisplayboardContentRoutingModule
+        DisplayboardContentRoutingModule,
+        CapitalizeFirstPipeModule
     ],
     exports: [],
     providers: [

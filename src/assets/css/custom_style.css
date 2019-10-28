@@ -5379,3 +5379,19 @@ li.separator.setsplit {
 }
 .set-block-ul p.form-level-settings {margin: 0 !important}
 .set-block-ul p.sts{margin:0 !important}
+.display-layout {
+  display: flex;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  width: 50%;
+}
+.display-layout .logo img{
+  width: 80px;
+  height: 80px;
+}
+.display-layout .title {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
