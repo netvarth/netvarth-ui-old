@@ -42,14 +42,20 @@
                                         <label *ngIf="rewrite !='edit'&& status !='Create'" class="col-form-label">Jaldee Discount
                                                 <span class="editbt" style="margin-left: 10%" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></label>
                                             <span *ngIf="rewrite !='edit'&& status !='Create'">{{discType}}%</span></div>
-                                        <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
+                                        <!-- <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
                                             [disabled]="status === 'DISABLED'">
                                             <mat-radio-button [value]=5>5%</mat-radio-button>&nbsp;
                                             <mat-radio-button [value]=10>10%</mat-radio-button>&nbsp;
                                             <mat-radio-button [value]=20>20%</mat-radio-button>
+                                        </mat-radio-group> -->
+                                        <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
+                                            [disabled]="status === 'DISABLED'">
+                                            <mat-radio-button [value]=option.percentage *ngFor="let option of jdnPercentage;">{{option.percentage}}%</mat-radio-button>
+                                            
                                         </mat-radio-group>
+
                                         <!-- <mat-form-field> -->
-                                        <label style="margin-top: 10px;"class="col-form-label">Maximum Discount</label>
+                                        <label style="margin-top: 10px;"class="col-form-label">Maximum Discount(₹)</label>
                                         <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdnmaxDiscounttext}}</span>
                                         <input style="width: 50%"*ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
                                             type="number" matInput class="form-control" [(ngModel)]="jdnmaxDiscounttext"

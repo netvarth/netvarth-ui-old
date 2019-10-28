@@ -47,9 +47,9 @@
                                                     <div style="margin-top: 5px;" *ngFor="let sub of license_upgarde_sub['next_sub']"> -->
                                                         <div>
                                                             <div>
-                                                        <span *ngIf= "licensePlan == 'Monthly' && pendingStatus == 0" >Change plan to 
+                                                        <span *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 0" >Change plan to 
                                                             <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly({{annualMonthAmount | currency:'INR':'symbol':'.2-2'}})</button></span>
-                                                            <span *ngIf= "licensePlan == 'Annual' && statusOfLicense == 0"> Change plan to <button class="cs-btn bt1"   (click)="doUpgradeSubcription('Monthly')">Monthly</button>
+                                                            <span *ngIf= "licensePlan == 'Annual' && statusOfLicense == 0"> Contact Admin if you need to change this to monthly
                                                             <!-- <span   *ngIf= "statusOfLicense == 1" >Yearly({{sub['amount'] | currency:'INR':'symbol':'.2-2'}})</span> -->
                                                         </span>
                                                     </div>

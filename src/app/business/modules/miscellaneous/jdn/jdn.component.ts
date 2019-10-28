@@ -36,6 +36,10 @@ export class JDNComponent implements OnInit {
             title: 'JDN'
         }
     ];
+    jdnPercentage: any;
+    maximumDiscount1: any;
+    maximumDiscount2: any;
+    maximumDiscount3: any;
     constructor(
         private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
@@ -49,6 +53,20 @@ export class JDNComponent implements OnInit {
                 this.jdn = data;
                 if (this.jdn && this.jdn.features.JDN) {
                     this.jdnType = this.jdn.features.JDN.JDNType;
+                    this.jdnPercentage = this.jdn.features.JDN.JDNPercent;
+                    for(let option of  this.jdnPercentage){
+                        if(option.percentage === 5){
+                            this.maximumDiscount1 = option.maxDiscount;
+                        }
+                        else if(option.percentage === 10){
+                            this.maximumDiscount2 = option.maxDiscount;
+                        }
+                        else{
+                            this.maximumDiscount3 = option.maxDiscount;
+                        }
+                        
+
+                    }
                 }
 
             });
@@ -102,11 +120,11 @@ export class JDNComponent implements OnInit {
     }
     radioChange(event) {
         if (event.value === 5) {
-            this.jdnmaxDiscounttext = 50;
+            this.jdnmaxDiscounttext = this.maximumDiscount1;
         } else if (event.value === 10) {
-            this.jdnmaxDiscounttext = 100;
+            this.jdnmaxDiscounttext = this.maximumDiscount2;
         } else {
-            this.jdnmaxDiscounttext = 200;
+            this.jdnmaxDiscounttext = this.maximumDiscount3;
         }
     }
     update(stat) {

@@ -287,19 +287,18 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     getSubscriptionDetail() {
         this.statusOfLicense = 0;
-        this.pendingStatus = 0;
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
                 data => {
                     this.license_sub = data;
-                   // console.log(this.license_sub);
+                   console.log(this.license_sub);
                     this.licensePlan = this.license_sub.licSubType;
                     if(this.license_sub.subscriptionTo){
                    this.statusOfLicense = this.license_sub.subscriptionTo;
                 }
-                if(this.license_sub.pendingStmtCount){
-                    this.pendingStatus = this.license_sub.pendingStmtCount;
-                }
+                // if(this.license_sub.pendingStmtCount){
+                //     this.pendingStatus = this.license_sub.pendingStmtCount;
+                // }
                 //console.log(this.pendingStatus);
                     
                     this.getLicenseMetaData();
