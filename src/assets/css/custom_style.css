@@ -5395,3 +5395,6 @@ li.separator.setsplit {
   font-size: 1.2rem;
   margin-left: 10px;
 }
+.time_align{
+  margin-left: 20px !important;
+}

@@ -281,6 +281,20 @@
                                                     <p class="smlft">* {{need_loc_cap}} &amp; {{work_to_turn_search}}
                                                     </p>
                                                 </div>
+
+
+                                                <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
+                                                    <!-- <div class="title">
+                                                        <h3>{{working_hours_cap}}</h3>
+                                                        <span class="form-level-settings">{{frm_working_hr_cap}}<a
+                                                                class="learnmore-pointer" id="customer-help"
+                                                                (click)="learnmore_clicked('basic-information', $event)">Learn
+                                                                More</a>
+                                                        </span>
+                                                    </div> -->
+                                                    
+                                                </div>
+
                                                 <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
                                                     <span (click)="editLocation()" class="editbt"></span>
                                                     <div class="title">
@@ -301,17 +315,47 @@
                                                             <span>{{base_loc.address | capitalizeFirst}}</span>
                                                             <span *ngIf="base_loc.pinCode && base_loc.pinCode!=''">
                                                                 {{pin_cap}} : {{base_loc.pinCode}}
-                                                            </span>
-                                                        </div>
+                                                            </span>                                                          
+                                                        </div>                                                       
                                                         <div class="cop-r" *ngIf="loc_list.length>0">
                                                             <ul class="info-lst" *ngIf="multipeLocationAllowed">
                                                                 <li>You can add more locations under <a
                                                                         routerLink="/provider/settings/q-manager/locations">settings</a>
                                                                 </li>
-                                                            </ul>
-
-                                                        </div>
+                                                            </ul>                                                          
+                                                        </div>                               
                                                     </div>
+                                                    <div class="locSchedule time_align">
+                                                        <span class="sub-title">General Business hours</span>
+                                                        <ul *ngIf="display_schedule.length > 0">
+                                                            <li *ngFor="let schedule of display_schedule">
+                                                                <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
+                                                                class="time">{{schedule.time}}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- <div class="whrs" >
+                                                        <span class="sub-title time_align"><b>General Business hours</b></span>
+                                                        <ul  *ngIf="display_schedule.length > 0">
+                                                            <li *ngFor="let schedule of display_schedule">
+                                                                <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
+                                                                class="time">{{schedule.time}}</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div> -->
+                                                    <!-- <ul class="whrs" *ngIf="display_schedule.length > 0">
+                                                        <li *ngFor="let schedule of display_schedule">
+                                                            <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
+                                                                class="time">{{schedule.time}}</span>
+                                                        </li>
+                                                    </ul> -->
+                                                    <ng-container *ngIf="display_schedule.length == 0">
+                                                        <div class="no-dta">
+                                                            <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
+                                                            <span class="cs-btn bt3"
+                                                                (click)="change_schedulepopup()">{{add_it_cap}}</span>
+                                                        </div>
+                                                    </ng-container>           
                                                     <div class="copy block-level">
                                                         <h5>{{loc_amenities_cap}} <span (click)="editLocation('badge')"
                                                                 class="editbt"
@@ -357,40 +401,11 @@
                                                     </ng-container>
                                                 </div>
 
-                                                <div class="loc-panl" *ngIf="normal_locationinfo_show==3">
-                                                    <div class="title">
-                                                        <h3>{{working_hours_cap}}</h3>
-                                                        <span class="form-level-settings">{{frm_working_hr_cap}}<a
-                                                                class="learnmore-pointer" id="customer-help"
-                                                                (click)="learnmore_clicked('basic-information', $event)">Learn
-                                                                More</a>
-                                                        </span>
-                                                    </div>
-                                                    <div class="copy wrk-hrs">
-                                                        <ul class="whrs" *ngIf="display_schedule.length > 0">
-                                                            <li *ngFor="let schedule of display_schedule">
-                                                                <span class="day">{{schedule.dstr}}&nbsp;:</span> <span
-                                                                    class="time">{{schedule.time}}</span>
-                                                            </li>
-                                                        </ul>
-                                                        <ng-container *ngIf="display_schedule.length == 0">
-                                                            <div class="no-dta">
-                                                                <p>{{have_not_add_cap}} {{working_hours_cap}}.</p>
-                                                                <span class="cs-btn bt3"
-                                                                    (click)="change_schedulepopup()">{{add_it_cap}}</span>
-                                                            </div>
-                                                        </ng-container>
 
-                                                        <!-- <div class="schedule_msgdiv"
-                                                            *ngIf="display_schedule.length > 0">
-                                                            <ul class="info-lst">
-                                                                <li>{{can_change_hours}}. <span (click)="editQueue()"
-                                                                        class="pointer-cursor"><b>{{click_here_cap}}</b></span>
-                                                                    {{view_time_wind_cap}}.</li>
-                                                            </ul>
-                                                        </div> -->
-                                                    </div>
-                                                </div>
+
+                                                
+
+
                                             </div>
                                         </div>
                                     </mat-expansion-panel>
