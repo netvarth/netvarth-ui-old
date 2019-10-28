@@ -4,7 +4,7 @@ import { MiscellaneousComponent } from './miscellaneous.component';
 import { ProviderNonworkingdaysComponent } from '../../../ynw_provider/components/provider-nonworkingdays/provider-nonworkingdays.component';
 import { ProviderNotificationsComponent } from '../../../ynw_provider/components/provider-notifications/provider-notifications.component';
 import { SaleschannelComponent } from './saleschannel/saleschannel.component';
-import { JDNComponent } from '../pos/jdn/jdn.component';
+import { JDNComponent } from './jdn/jdn.component';
 
 const routes: Routes = [
     { path: '', component: MiscellaneousComponent },
@@ -24,6 +24,7 @@ const routes: Routes = [
       path: 'jdn',
       component: JDNComponent
     },
+    { path: 'labels', loadChildren: './labels/labels.module#LabelsModule'},
     { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' }
 ];
 @NgModule({

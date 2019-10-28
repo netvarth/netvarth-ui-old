@@ -5,10 +5,10 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
-    selector: 'app-displayboard-labels',
-    templateUrl: './displayboard-labels.html'
+    selector: 'app-labels',
+    templateUrl: './labels.component.html'
 })
-export class DisplayboardLabelsComponent implements OnInit {
+export class LabelsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
@@ -16,8 +16,8 @@ export class DisplayboardLabelsComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Displayboard',
-            url: '/provider/settings/displayboard'
+            title: 'Miscellaneous',
+            url: '/provider/settings/miscellaneous'
         },
         {
             title: 'Labels'
@@ -65,20 +65,20 @@ export class DisplayboardLabelsComponent implements OnInit {
         }
     }
     addLabel() {
-        this.router.navigate(['provider/settings/displayboard/labels/add']);
+        this.router.navigate(['provider/settings/miscellaneous/labels/add']);
     }
     editLabel(label) {
         const navigationExtras: NavigationExtras = {
             queryParams: { id: label.id }
         };
-        this.router.navigate(['provider', 'settings', 'displayboard',
+        this.router.navigate(['provider', 'settings', 'miscellaneous',
             'labels', 'edit'], navigationExtras);
     }
     goLabelDetail(label) {
         const navigationExtras: NavigationExtras = {
             queryParams: { id: label.id }
         };
-        this.router.navigate(['provider', 'settings', 'displayboard',
+        this.router.navigate(['provider', 'settings', 'miscellaneous',
             'labels', 'view'], navigationExtras);
     }
     deleteLabel(label) {

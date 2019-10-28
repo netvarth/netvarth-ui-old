@@ -44,7 +44,10 @@ export class MiscellaneousComponent implements OnInit {
     }
     gotoJdn() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
-      }
+    }
+    gotoLabels () {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
+    }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);

@@ -395,23 +395,17 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'homeservice-queues':
           this.routerobj.navigate(['provider', 'settings', 'home-service', 'queues']);
           break;
-      case 'jdn':
-        this.routerobj.navigate(['provider', 'settings', 'pos', 'jdn']);
-        break;
       case 'pos':
         this.routerobj.navigate(['provider', 'settings', 'pos']);
         break;
       case 'miscellaneous':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
         break;
-      case 'displayboard':
-        this.routerobj.navigate(['provider', 'settings', 'displayboard']);
-        break;
-      case 'displayboard-labels':
-        this.routerobj.navigate(['provider', 'settings', 'displayboard', 'labels']);
-        break;
-      case 'displayboard-list':
-        this.routerobj.navigate(['provider', 'settings', 'displayboard', 'list']);
+        case 'jdn':
+          this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
+          break;
+      case 'labels':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
         break;
       case 'displayboards':
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);

@@ -4757,7 +4757,7 @@ i.notavail {
     min-height: 575px
   }
   .set-block-ul {
-    min-height: 750px
+    min-height: 600px
   }
 }
 
@@ -4998,11 +4998,11 @@ i.notavail {
   border: 1px solid #3c8dbc !important
 } */
 
-.cust-sect .custs:nth-child(odd), .qset:nth-child(odd),.dboard:nth-child(odd){
+.cust-sect .custs:nth-child(odd), .qset:nth-child(odd),.dboard:nth-child(odd), .custlabl:nth-child(odd){
   background: rgba(0, 0, 0, .03) !important;
 }
 
-.cust-sect .custs:nth-child(even), .qset:nth-child(even), .dboard:nth-child(even) {
+.cust-sect .custs:nth-child(even), .qset:nth-child(even), .dboard:nth-child(even),.custlabl:nth-child(even) {
   background: transparent !important;
 }
 

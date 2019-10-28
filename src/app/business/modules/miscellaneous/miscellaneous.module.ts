@@ -13,7 +13,7 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { ProviderNotificationsComponent } from '../../../ynw_provider/components/provider-notifications/provider-notifications.component';
 import { SaleschannelComponent } from './saleschannel/saleschannel.component';
-
+import { JDNComponent } from './jdn/jdn.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -31,7 +31,8 @@ import { SaleschannelComponent } from './saleschannel/saleschannel.component';
         AddProviderNonworkingdaysComponent,
         ProviderNonworkingdaysComponent,
         ProviderNotificationsComponent,
-        SaleschannelComponent
+        SaleschannelComponent,
+        JDNComponent
     ],
     entryComponents: [
         AddProviderNonworkingdaysComponent

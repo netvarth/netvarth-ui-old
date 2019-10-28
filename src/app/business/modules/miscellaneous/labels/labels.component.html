@@ -16,7 +16,6 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="card">
-
                                     <div class="no-dta" *ngIf="label_list.length==0">
                                         <p>No Labels Found</p>
                                         <span class="cs-btn bt3" (click)="addLabel()">Add Labels</span>
@@ -25,18 +24,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card" *ngIf="label_list.length!==0">
+                    <div class="card no-padding" *ngIf="label_list.length!==0">
                         <div class="copy">
-                            <div class="col-md-12">
-                                <mat-panel-description class="acc-plus-btn pointer-cursor labeladd">
-                                    <button mat-icon-button (click)="addLabel()" [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="add_button">
-                                        <mat-icon style="color: #3c8dbc">{{add_circle_outline}}
-                                        </mat-icon>
-                                    </button>
-                                </mat-panel-description>
+                            <div class="col-md-12 no-padding">
+                                <ul class="nav jd-custom-nav chkn-dash">
+                                    <li class="dropdown notifications-menu pull-right">
+                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addLabel()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                <i class="fa fa-plus"></i> Label
+                                                <!-- <mat-icon style="color: #3c8dbc"> </mat-icon> -->
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="col-md-12 card" *ngFor="let label of label_list">
+                            <div class="col-md-12 pt10 mt5 custlabl" *ngFor="let label of label_list">
                                 <div>
                                     <div class="copy">
                                         <span class="mbt">
@@ -45,8 +48,10 @@
                                             </button>
                                         </span>
                                         <h3 (click)="goLabelDetail(label)" class="pointer-cursor">
-                                                {{label.displayName | capitalizeFirst}}<span class="layout_name"> ({{label.label | capitalizeFirst}})</span></h3> &nbsp;
-                                        <div class="c-ot m0">
+                                            {{label.displayName | capitalizeFirst}}</h3> 
+                                            <!-- <span class="layout_name">
+                                                    ({{label.label | capitalizeFirst}})</span> -->
+                                        <!-- <div class="c-ot m0">
                                             <div class="item" *ngIf="label.description">
                                                 <span class="ttle">Description</span>
                                                 <span>{{label.description | capitalizeFirst}}</span>
@@ -56,7 +61,7 @@
                                                 <span *ngFor="let labelvalue of label.valueSet">
                                                     {{labelvalue.value}} ({{labelvalue.shortValue}}) </span>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <mat-menu #appMenu="matMenu">
                                             <button mat-menu-item (click)="editLabel(label)">
                                                 <i class="icon-edit"></i>
@@ -70,11 +75,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -8,10 +8,10 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 @Component({
-    selector: 'app-displayboard-label',
-    templateUrl: './displayboard-label.html'
+    selector: 'app-label',
+    templateUrl: './label.component.html'
 })
-export class DisplayboardLabelComponent implements OnInit {
+export class LabelComponent implements OnInit {
     actionparam = 'show';
     label_id = null;
     api_loading = false;
@@ -37,12 +37,12 @@ export class DisplayboardLabelComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Displayboard',
-            url: '/provider/settings/displayboard'
+            title: 'Miscellanous',
+            url: '/provider/settings/miscellaneous'
         },
         {
             title: 'Labels',
-            url: '/provider/settings/displayboard/labels'
+            url: '/provider/settings/miscellaneous/labels'
         }
     ];
     label;
@@ -195,7 +195,7 @@ export class DisplayboardLabelComponent implements OnInit {
         if (this.actionparam === 'edit') {
             this.actionparam = 'view';
         } else {
-            this.router.navigate(['provider/settings/displayboard/labels']);
+            this.router.navigate(['provider/settings/miscellaneous/labels']);
         }
     }
 

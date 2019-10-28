@@ -10,7 +10,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 })
 export class JDNComponent implements OnInit {
     jdn_full_cap = Messages.JDN_FUL_CAP;
-    jdn_status ;
+    jdn_status;
     status = 'Create';
     jdn_data;
     domain;
@@ -47,10 +47,10 @@ export class JDNComponent implements OnInit {
         this.shared_services.getFeatures(sub_domain)
             .subscribe(data => {
                 this.jdn = data;
-                if(this.jdn && this.jdn.features.JDN){
-                this.jdnType = this.jdn.features.JDN.JDNType;
+                if (this.jdn && this.jdn.features.JDN) {
+                    this.jdnType = this.jdn.features.JDN.JDNType;
                 }
-                
+
             });
         this.getJdn();
     }
@@ -68,19 +68,19 @@ export class JDNComponent implements OnInit {
         if (this.jdnType === 'Label') {
             post_data = {
 
-                "label": this.jdnlabeltext,
-                "displayNote": this.jdndisplayNote||'',
-                "status": "ENABLED"
+                'label': this.jdnlabeltext,
+                'displayNote': this.jdndisplayNote || '',
+                'status': 'ENABLED'
 
             };
         } else {
             const discountPer = +this.discType;
 
             post_data = {
-                "displayNote": this.jdndisplayNote||'',
-                "discPercentage": discountPer,
-                "discMax": this.jdnmaxDiscounttext,
-                "status": "ENABLED"
+                'displayNote': this.jdndisplayNote || '',
+                'discPercentage': discountPer,
+                'discMax': this.jdnmaxDiscounttext,
+                'status': 'ENABLED'
             };
         }
 
@@ -89,7 +89,7 @@ export class JDNComponent implements OnInit {
                 (data) => {
                     this.jdn_status = true;
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_CREATED'), { 'panelclass': 'snackbarerror' });
-                    
+
                     this.getJdn();
 
                 },
@@ -100,12 +100,12 @@ export class JDNComponent implements OnInit {
             );
 
     }
-    radioChange(event){
-        if(event.value == 5){
-        this.jdnmaxDiscounttext = 50;
-        }else if(event.value == 10){
+    radioChange(event) {
+        if (event.value === 5) {
+            this.jdnmaxDiscounttext = 50;
+        } else if (event.value === 10) {
             this.jdnmaxDiscounttext = 100;
-        }else{
+        } else {
             this.jdnmaxDiscounttext = 200;
         }
     }
@@ -115,19 +115,19 @@ export class JDNComponent implements OnInit {
         if (this.jdnType === 'Label') {
             put_data = {
 
-                "label": this.jdnlabeltext,
-                "displayNote": this.jdndisplayNote || '',
-                "status": "ENABLED"
+                'label': this.jdnlabeltext,
+                'displayNote': this.jdndisplayNote || '',
+                'status': 'ENABLED'
 
             };
         } else {
             const discountPer = +this.discType;
 
             put_data = {
-                "displayNote": this.jdndisplayNote ||'',
-                "discPercentage": discountPer,
-                "discMax": this.jdnmaxDiscounttext,
-                "status": "ENABLED"
+                'displayNote': this.jdndisplayNote || '',
+                'discPercentage': discountPer,
+                'discMax': this.jdnmaxDiscounttext,
+                'status': 'ENABLED'
             };
         }
         this.shared_services.updateJdn(put_data)
@@ -135,7 +135,7 @@ export class JDNComponent implements OnInit {
                 (data) => {
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_UPDATED'), { 'panelclass': 'snackbarerror' });
                     this.getJdn();
-                    this.rewrite =stat;
+                    this.rewrite = stat;
                 },
                 error => {
                     this.api_error = this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -150,7 +150,7 @@ export class JDNComponent implements OnInit {
         this.shared_services.disable()
             .subscribe(
                 (data) => {
-                   this.jdn_status = false;
+                    this.jdn_status = false;
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('JDN_DISABLED'), { 'panelclass': 'snackbarerror' });
                     this.getJdn();
                 },
@@ -161,22 +161,22 @@ export class JDNComponent implements OnInit {
             );
 
     }
-    edit(stat){
-        this.rewrite =stat;
+    edit(stat) {
+        this.rewrite = stat;
         this.getJdn();
+    }
+    cancel(stat) {
+        this.rewrite = stat;
+        this.getJdn();
+    }
+    handlejdn_status(event) {
+        const value = (event.checked) ? true : false;
+        if (value) {
+            this.save();
+        } else {
+            this.disable();
         }
-        cancel(stat){
-            this.rewrite =stat;
-            this.getJdn();
-        }
-        handlejdn_status(event){
-            const value = (event.checked) ? true : false;
-            if(value == true){
-                this.save();
-            }else{
-                this.disable();
-            }
-        }
+    }
 
     getJdn() {
         this.shared_services.getJdn()
@@ -185,9 +185,9 @@ export class JDNComponent implements OnInit {
                 console.log(data);
                 if (this.jdn_data != null) {
                     this.status = this.jdn_data.status;
-                    if(this.status === 'ENABLED'){
+                    if (this.status === 'ENABLED') {
                         this.jdn_status = true;
-                    }else{
+                    } else {
                         this.jdn_status = false;
                     }
                     // this.jdn_status = (this.status === 'ENABLED') ? 'true' : 'false';
@@ -195,7 +195,7 @@ export class JDNComponent implements OnInit {
                 }
             });
     }
-    
+
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
