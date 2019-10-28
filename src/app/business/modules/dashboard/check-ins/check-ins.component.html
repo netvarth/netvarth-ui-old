@@ -32,7 +32,7 @@
                   <ul class="dropdown-menu ques">
                     <li>
                       <ul class="menu">
-                        <li><a class="pointer-cursor">All Timings</a></li>
+                        <!-- <li><a class="pointer-cursor">All Timings</a></li> -->
                         <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
                           *ngFor="let queue of queues;let i = index">
                           <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
@@ -313,7 +313,7 @@
                         </span>
                       </span>
                     </div>
-                    <div class="col-md-12 col-xs-12 no-padding mt10">
+                    <div class="col-md-12 col-xs-12 no-padding mt10" >
                       <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
                         *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                         <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i> {{getAppxTime(checkin)}}</span>
@@ -338,7 +338,7 @@
                         </ng-container>
                       </span>
                     </div>
-                    <div class="col-md-12 col-xs-12 no-padding mt10">
+                    <div class="col-md-12 col-xs-12 no-padding mt10" *ngIf="checkin.label">
                       <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
                         <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
                           {{getDisplayname(label.key)}} : {{label.value}}</span>
