@@ -17,17 +17,17 @@
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-ul">
                                 <li class="form-level-settings"><a>{{frm_profile_cap}}</a></li>
-                                <li><a>{{public_search_cap}} <span class="pull-right">
+                                <li><a>{{public_search_cap}} <span class="pull-right"> 
                                             <mat-slide-toggle [(ngModel)]="search_status"
                                                 (change)="handle_searchstatus()">
                                             </mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="search_status">{{search_statusstr}}</p>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Your profile is now visible to clients in jaldee.com</p>
                                     </a></li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk">Online
                                             Profile</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Manage your profile here</p>
                                     </a>
                                     <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
                                         class="req-flds-cap">required fields missing</p>
@@ -35,31 +35,31 @@
                                 </li>
                                 <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span
                                             class="lnk">Specializations</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Mention your specializations here</p>
                                         <p *ngIf="reqFields.specialization" class="req-flds-cap">required fields missing
                                         </p>
                                     </a></li>
                                 <li (click)="redirecTo('additionalinfo')"><a class="pointer-cursor"><span
                                             class="lnk">Additional
                                             Info</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Add other details of you or your business so that clients can understand you more</p>
                                     </a>
                                     <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
                                         class="req-flds-cap">required fields missing</p>
                                 </li>
                                 <li (click)="redirecTo('privacy')"><a class="pointer-cursor"><span
                                             class="lnk">Privacy</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Manage the privacy of your contact details here.</p>
                                     </a></li>
                                 <li (click)="redirecTo('languages')"><a class="pointer-cursor"><span
                                             class="lnk">Languages
                                             Known</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">To widen your client base, add different languages known to you here.</p>
                                     </a></li>
                                 <li (click)="redirecTo('media')"><a class="pointer-cursor"><span class="lnk">Gallery &
                                             Social
                                             Media</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Add catchy images and social media platforms</p>
                                     </a></li>
                             </ul>
                         </div>
@@ -83,7 +83,7 @@
                                             </mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="pos_status">{{pos_statusstr}}</p>
-                                        <p class="form-level-settings" *ngIf="pos_status">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings" *ngIf="pos_status">Billing/pos hints.</p>
                                         <p class="form-level-settings" *ngIf="!pos_status">{{frm_public_self_cap}}
                                         </p>
                                     </a>
@@ -91,19 +91,19 @@
                                 <li (click)="redirecTo('items')"><a class="pointer-cursor"><span
                                             class="lnk">{{items_cap}}
                                             <span class="pull-right badge bg-blue">{{item_count}}</span></span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Create new items and related information here.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('discounts')"><a class="pointer-cursor"><span
                                             class="lnk">{{discount_cap}}
                                             <span class="pull-right badge bg-blue">{{discount_count}}</span></span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Create your discounts here.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('coupons')"><a class="pointer-cursor"><span
                                             class="lnk">{{coupons_cap}}
                                         </span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Create your coupons and details here.</p>
                                     </a>
                                 </li>
                                 <li class="separator setsplit"></li>
@@ -112,7 +112,7 @@
                                                 (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p>
-                                        <p class="form-level-settings" *ngIf="payment_status">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings" *ngIf="payment_status">Jaldee pay hints</p>
                                         <p class="form-level-settings" *ngIf="!payment_status">{{frm_public_self_cap}}
                                         </p>
                                     </a>
@@ -120,7 +120,7 @@
                                 <li (click)="redirecTo('paymentsettings')"><a class="pointer-cursor"><span
                                             class="lnk">{{payment_setting_cap}}
                                         </span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Set up your payment modes here</p>
                                         <div class="payTypeVerify"
                                             *ngIf="paytmVerified && !payuVerified &&!isJaldeeAccount">Active payment
                                             mode : PayTm </div>
@@ -139,7 +139,7 @@
                                 <li (click)="redirecTo('taxsettings')"><a class="pointer-cursor"><span
                                             class="lnk">{{tax_setting_cap}}
                                         </span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Set up your tax requirements here. Enable the "Tax Settings" toggle switch to apply taxes for your services.</p>
                                     </a>
                                 </li>
                             </ul>
@@ -162,7 +162,7 @@
                                                 (change)="handle_waitliststatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Set up same day checkin here</p>
                                     </a></li>
                                 <li><a>Future {{checkin_label |capitalizeFirst}}s
                                         <span class="pull-right">
@@ -171,34 +171,34 @@
                                         </span>
                                         <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
                                         </p>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Set up future checkin here</p>
                                     </a></li>
                                 <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
                                             class="lnk">{{locName}} <span class="pull-right badge bg-blue"
                                                 *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Set up your locations here</p>
                                     </a></li>
                                 <li *ngIf="filterbydepartment" (click)="redirecTo('departments')"><a
                                         class="pointer-cursor"><span class="lnk">Departments
                                             <span class="pull-right badge bg-blue">{{departmentCount}}</span></span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Add departments here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('services')"><a class="pointer-cursor"><span
                                             class="lnk">{{services_cap}} <span class="pull-right badge bg-blue"
                                                 *ngIf="multipeLocationAllowed == true">{{service_count}}</span></span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Add and manage services here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span class="lnk">{{qs_cap}}
                                             <span class="pull-right badge bg-blue">{{queues_count}}</span></span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Add and manage your queues here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span
                                             class="lnk">{{displayboards_cap}}<span class="pull-right badge bg-blue">{{board_count}}</span>
                                         </span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Manage display boards here</p>
                                     </a>
                                 </li>
                             </ul>
@@ -287,34 +287,34 @@
                                 <li class="form-level-settings"><a>{{frm_mis_cap}}</a></li>
                                 <li (click)="redirecTo('nonworking')"><a class="pointer-cursor"><span
                                             class="lnk">{{non_work_cap}}</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Manage your non working days here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('notifications')"><a class="pointer-cursor"><span
                                             class="lnk">{{notification_cap}}</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Manage your notifications here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('displayboard-labels')"><a class="pointer-cursor">
                                         <span class="lnk">{{customfields_cap}}</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Manage your custom fields here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('jdn')"><a class="pointer-cursor"><span
                                             class="lnk">{{frm_jdn_short_cap}}
                                         </span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Add Jaldee Discount Network here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('saleschannel')"><a class="pointer-cursor"><span
                                             class="lnk">{{saleschannel_cap}}</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Sales channel options</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('skins')">
                                     <a class="pointer-cursor">
                                         <span class="lnk">Themes</span>
-                                        <p class="form-level-settings">{{frm_waitlist_cap}}</p>
+                                        <p class="form-level-settings">Customize your themes</p>
                                     </a>
                                 </li>
                             </ul>
