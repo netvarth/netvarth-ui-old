@@ -148,7 +148,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
                 'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor
             };
-            this.provider_services.createDisplayboard(post_data).subscribe(data => {
+            this.provider_services.createDisplayboardQSet(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
                 this.getDisplaydashboardbyId(data);
                 this.actionparam = 'view';
@@ -165,7 +165,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
                 'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor
             };
-            this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+            this.provider_services.updateDisplayboardQSet(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar('Displayboard updated successfully', { 'panelclass': 'snackbarerror' });
                 this.getDisplaydashboardbyId(this.displayBoardData.id);
                 this.actionparam = 'view';
