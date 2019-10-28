@@ -42,7 +42,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   credt_debtJson: any = null;
   credt_debtDetls = '';
   licenseDiscounts: any = null;
-  discounts;
+  discounts: any = [];
   loading = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
@@ -128,8 +128,11 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           }
           if (this.invoice.discount) {
             this.licenseDiscounts = JSON.parse(this.invoice.discount);
-            this.discounts = this.licenseDiscounts.discount;
-            this.latestInvoiceDiscount = this.licenseDiscounts.discount;
+            this.licenseDiscounts.discount.forEach(discountObj => {
+              this.latestInvoiceDiscount.push(discountObj);
+              this.discounts.push(discountObj);
+            });
+           
           }
           if (this.invoice.mergedStatements) {
             this.checkPreviousStatements(this.invoice.mergedStatements);
