@@ -51,8 +51,7 @@
                                         <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
                                             [disabled]="status === 'DISABLED'">
                                             <mat-radio-button [value]=option.percentage *ngFor="let option of jdnPercentage;">{{option.percentage}}%</mat-radio-button>
-                                            
-                                        </mat-radio-group>
+                                                        </mat-radio-group>
 
                                         <!-- <mat-form-field> -->
                                         <label style="margin-top: 10px;"class="col-form-label">Maximum Discount(₹)</label>

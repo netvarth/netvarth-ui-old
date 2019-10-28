@@ -285,6 +285,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    
     getSubscriptionDetail() {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()

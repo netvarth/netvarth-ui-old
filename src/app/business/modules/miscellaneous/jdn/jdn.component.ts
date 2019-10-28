@@ -118,6 +118,7 @@ export class JDNComponent implements OnInit {
             );
 
     }
+    
     radioChange(event) {
         if (event.value === 5) {
             this.jdnmaxDiscounttext = this.maximumDiscount1;
