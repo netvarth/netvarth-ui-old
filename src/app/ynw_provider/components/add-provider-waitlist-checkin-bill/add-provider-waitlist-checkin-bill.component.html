@@ -631,6 +631,12 @@
 													{{bill_data.netTotal | currency:'&#8377; '}}
 												</td>
 											</tr>
+											<tr class="amt jdn"
+												*ngIf="bill_data.jdn && bill_data.jdn.discount">
+												<td class="name">JDN</td>
+												<td class="price">(-){{bill_data.jdn.discount|
+													currency:'&#8377; '}} </td>
+											</tr>
 											<tr class="amt discount"
 												*ngFor="let discount of bill_data.discount">
 												<td class="name">{{discount.name}}</td>
@@ -838,7 +844,7 @@
 								<div class="add-serv-item edit-row service no-padding">
 									<div class="spl no-padding">
 										<div class="item qty no-padding">
-											<span class="label">{{wbamount_cap}}</span> 
+											<span class="label" style="font-size:.875rem;color: #000;">{{wbamount_cap}}</span> 
 											<span
 												class="number">
 												<mat-form-field class="example-full-width">
@@ -854,29 +860,32 @@
 													</mat-form-field>
 												</mat-form-field>
 											</span>
-											&nbsp;&nbsp;&nbsp;
-											<span>
-												<mat-form-field style="padding-bottom: 20px;" class="example-full-width">
-													<textarea matInput placeholder="Leave a Payment Note" [(ngModel)]="paynot"></textarea>
-													</mat-form-field>
-											</span>
 									
 										</div>
+										
 									
 											
 												
 									</div>
-									<div class="spr" style="padding-top: 10px;">
-										<button type="button" mat-button class="cs-btn bt1 accept"
-											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-											(click)="initPayment('cash',amountpay,paynot)">{{paybycash_cap}}</button>
-										<button type="button" mat-button class="cs-btn bt1 accept"
-											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
-											(click)="initPayment('other',amountpay,paynot)">{{paybyothers_cap}}</button>
-										<button class="cs-btn bt2 cancel"
-											(click)="hidePayWorkBench()">{{cancel_btn_cap}}</button>
-									</div>
+									
 								</div>
+								
+							</div>
+							<span>
+									<!-- <mat-form-field  class="example-full-width"> -->
+										<label style="font-weight: 500;">Leave a Payment Note  </label>
+										<textarea matInput style="margin-bottom: 10px;"  [(ngModel)]="paynot"></textarea>
+										<!-- </mat-form-field> -->
+								</span>
+							<div >
+								<button type="button" mat-button class="cs-btn bt1 accept"
+									*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+									(click)="initPayment('cash',amountpay,paynot)">{{paybycash_cap}}</button>
+								<button type="button" mat-button class="cs-btn bt1 accept"
+									*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+									(click)="initPayment('other',amountpay,paynot)">{{paybyothers_cap}}</button>
+								<button type="button" mat-button class="cs-btn bt2 cancel"
+									(click)="hidePayWorkBench()">{{cancel_btn_cap}}</button>
 							</div>
 						</ng-container>
 						<div class="col-12 button-group" *ngIf="!showPayWorkBench">

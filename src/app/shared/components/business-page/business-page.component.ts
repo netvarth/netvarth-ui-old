@@ -951,10 +951,24 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                   this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                } else {
-                  this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
-                  this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
                 }
+                
+
+                else {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
+                  } else {
+                    this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
+                  }
+                  this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
+                    + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
+                  // this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                }
+                // else {
+                //   this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
+                //   this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                // }
               }
             } else {
               this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
