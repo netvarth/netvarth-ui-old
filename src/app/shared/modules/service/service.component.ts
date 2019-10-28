@@ -68,6 +68,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     showService = false;
     advanced = false;
     duration = { hour: 0, minute: 0 };
+    showAdvancedSettings = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
@@ -100,7 +101,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.serviceForm.setValue({
                                         'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                         'description': this.service_data['description'] || this.serviceForm.get('description').value,
-                                        'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
                                         'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
                                     });
                                 } else {
@@ -116,10 +116,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
                                     });
                                     this.convertTime(this.service_data['serviceDuration']);
+                                    this.changePrepayment();
                                 }
 
                                 this.changeNotification();
-                                this.changePrepayment();
                             }
                         }
                     }
@@ -143,10 +143,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
     isvalid(evt) {
         return this.sharedFunctons.isValid(evt);
     }
-    onAdvanced(){
-        if(this.advanced == false){
+    onAdvanced() {
+        if (this.advanced === false) {
             this.advanced = true;
-        }else{
+        } else {
             this.advanced = false;
         }
     }
@@ -250,8 +250,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.serviceForm = this.fb.group({
                 name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 description: ['', Validators.compose([Validators.maxLength(500)])],
-                notification: [false],
-                notificationType: ['email']
+                notification: [false]
             });
         }
         if (this.action === 'add') {
@@ -268,5 +267,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     getAppxTime(waitlist) {
         return this.sharedFunctons.providerConvertMinutesToHourMinute(waitlist);
+    }
+    advancedClick() {
+(this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
     }
 }

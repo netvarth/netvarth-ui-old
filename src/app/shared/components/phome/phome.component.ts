@@ -19,7 +19,7 @@ export class PhomeComponent implements OnInit {
   activePrice = '';
   showMoreList: any = {};
   images = {
-    special_offers: 'assets/images/special offers.svg',
+    special_offers: 'assets/images/special offer-01-01.png',
     jaldee_online: 'assets/images/home/jaldee_online.svg',
     jaldee_token: 'assets/images/home/jaldee_token.svg',
     jaldee_checkin: 'assets/images/home/jaldee_checkin.svg',
