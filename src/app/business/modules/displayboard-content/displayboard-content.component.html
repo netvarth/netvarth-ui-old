@@ -1,41 +1,55 @@
-<section>
-    <div class="col-md-12">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-12">
-                    <div *ngFor="let row of createRange(boardRows)">
-                        <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}}"
-                            [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}"
-                            style="background: white;border: 1px solid #ccc;overflow: auto;">
-                            <div *ngIf="selectedDisplayboards[row + '_' + col]">
-                                <div *ngIf="selectedDisplayboards[row + '_' + col]['board']"
-                                    style="text-align: center;">
-                                    <strong> {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</strong>
-                                </div>
-                                <table class="table table-striped responsive-table"
-                                    *ngIf="selectedDisplayboards[row + '_' + col]['board']">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
-                                                {{field.displayName}}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="overflow: scroll;">
-                                        <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']">
-                                            <td
-                                                *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
-                                                {{getFieldValue(field, checkin)}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+<div style="display: flex;">
+    <div class="display-layout">
+        <div class="logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div>
+        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</span>
+    </div>
+    <div class="display-layout">
+    </div>
+</div>
+
+<div class="col-md-12" style="display: block;padding: 0px;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngFor="let row of createRange(boardRows)">
+                    <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}}"
+                        [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}"
+                        style="background: white;border: 1px solid #ccc;overflow: auto;">
+                        <div *ngIf="selectedDisplayboards[row + '_' + col]">
+                            <div *ngIf="selectedDisplayboards[row + '_' + col]['board']" style="text-align: center;">
+                                <strong> {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</strong>
                             </div>
+                            <table class="table table-striped responsive-table"
+                                *ngIf="selectedDisplayboards[row + '_' + col]['board']">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
+                                            {{field.displayName}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="overflow: scroll;">
+                                    <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']">
+                                        <td
+                                            *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
+                                            {{getFieldValue(field, checkin)}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+
+
+    <div class="card" style="padding: 10px;">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.1.5
+        </div>
+        <strong>Copyright &copy; 2019 Jaldee Inc.</strong> All rights
+        reserved.
+    </div>
+</div>
