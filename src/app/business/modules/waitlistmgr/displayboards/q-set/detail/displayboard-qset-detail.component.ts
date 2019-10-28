@@ -66,7 +66,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
         private activated_route: ActivatedRoute
     ) {
         this.activated_route.params.subscribe(params => {
-            this.actionparam = params.action;
+            this.actionparam = params.id;
         }
         );
         this.activated_route.queryParams.subscribe(
