@@ -50,6 +50,11 @@
                     <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
                         <!-- {{shared_functions.firstToUpper(message.msg)}} -->
                     </div>
+                    <div class="thumbnails mt10 mb10" *ngIf="message.attachements">
+                        <a class="mg-10" target="_blank" [href]="attachment.s3path"
+                            *ngFor="let attachment of message.attachements"><img [src]="attachment.s3path"
+                                style="width:100px; height:100px" /></a>
+                    </div>
                     <div class="action">
                         <span class="icon-reply" (click)="replyMessage(message)"
                             *ngIf="user_id != message.owner.id && !hide_reply_button">

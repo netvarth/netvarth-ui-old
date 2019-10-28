@@ -87,7 +87,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.msgdialogRef.close();
     }
   }
-
   replyMessage(message) {
 
     const pass_ob = {};
