@@ -677,6 +677,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   }
   changeLocation(location) {
     this.selected_location = location;
+    this.shared_functions.setitemonLocalStorage('provider_selected_location', this.selected_location.id);
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
     this.today_waitlist_count = 0;
@@ -898,7 +899,6 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.filter_date_start_max = null;
     this.filter_date_end_min = null;
     this.filter_date_end_max = null;
-    console.log(this.time_type);
     if (this.time_type === 0) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
       this.filter_date_end_max = moment(new Date()).add(-1, 'days');
@@ -1351,19 +1351,19 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
 
   createCheckin(user_data) {
     const post_data = {};
-    let selected_location = null;
-    const cookie_location_id = this.shared_functions.getitemfromLocalStorage('provider_selected_location'); // same in provider home page
-    if (cookie_location_id === '') {
-      if (this.locations[0]) {
-        selected_location = this.locations[0];
-      }
-    } else {
-      selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
-    }
-    if (selected_location != null) {
+    // let selected_location = null;
+    // const cookie_location_id = this.shared_functions.getitemfromLocalStorage('provider_selected_location'); // same in provider home page
+    // if (cookie_location_id === '') {
+    //   if (this.locations[0]) {
+    //     selected_location = this.locations[0];
+    //   }
+    // } else {
+    //   selected_location = this.selectLocationFromCookie(parseInt(cookie_location_id, 10));
+    // }
+    if (this.selected_location != null) {
       post_data['location'] = {
-        'id': selected_location['id'],
-        'name': selected_location['place']
+        'id': this.selected_location['id'],
+        'name': this.selected_location['place']
       };
     }
     post_data['provider'] = {
