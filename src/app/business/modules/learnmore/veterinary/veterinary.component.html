@@ -3969,10 +3969,10 @@ last
                                     </mat-expansion-panel>
                                 </mat-accordion>
                                 <mat-accordion>
-                                    <mat-expansion-panel [expanded]="false">
+                                    <mat-expansion-panel [expanded]="showmycoupon && showbilling">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                                             <mat-panel-title>
-                                                <span class="helpcontent"> My Coupons</span>
+                                                <span class="helpcontent" (click)="handleScroll('mycoupon','billing')"> My Coupons</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="helpcontent">

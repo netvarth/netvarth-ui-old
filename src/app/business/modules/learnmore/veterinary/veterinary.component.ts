@@ -46,6 +46,7 @@ export class VeterinaryComponent implements OnInit {
   showtax = false;
   showitem = false;
   showcoupon = false;
+  showmycoupon = false;
   showdiscount = false;
   showmiscellaneous = false;
   shownonworking = false;
@@ -187,6 +188,9 @@ export class VeterinaryComponent implements OnInit {
       }
       if (childContent === 'coupon') {
         this.showcoupon = true;
+      }
+      if (childContent === 'mycoupon') {
+        this.showmycoupon = true;
       }
       if (childContent === 'discount') {
         this.showdiscount = true;
