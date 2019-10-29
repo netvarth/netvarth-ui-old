@@ -49,7 +49,7 @@ export class GoogleMapComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data.passloc.lat === '' && this.data.passloc.lon === '') {
+    if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
       this.getCurrentLocation();
     }
     this.setLocationtoMap();

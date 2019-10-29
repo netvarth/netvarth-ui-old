@@ -853,14 +853,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   const business_hours = JSON.parse(this.search_data.hits.hit[i].fields.business_hours1[0]);
                   for (let j = 0; j < business_hours.length; j++) {
                     const obt_sch = business_hours[j];
-                    for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
-                      // pushing the schedule details to the respective array to show it in the page
-                      schedule_arr.push({
-                        day: obt_sch.repeatIntervals[k],
-                        sTime: obt_sch.timeSlots[0].sTime,
-                        eTime: obt_sch.timeSlots[0].eTime,
-                        recurrtype: obt_sch.recurringType
-                      });
+                    if (obt_sch && obt_sch.repeatIntervals) {
+                      for (let k = 0; k < obt_sch.repeatIntervals.length; k++) {
+                        // pushing the schedule details to the respective array to show it in the page
+                        schedule_arr.push({
+                          day: obt_sch.repeatIntervals[k],
+                          sTime: obt_sch.timeSlots[0].sTime,
+                          eTime: obt_sch.timeSlots[0].eTime,
+                          recurrtype: obt_sch.recurringType
+                        });
+                      }
                     }
                     this.search_data.hits.hit[i].fields['display_schedule'] = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
                   }
