@@ -355,7 +355,7 @@
                         <div style="margin-bottom: 20px">
                             <div style="display: flex">
                                 <div style="margin-bottom: 10px; margin-top: 5px">
-                                    <b> Specialization </b>
+                                    <b> Specialization * </b>
                                 </div>
                                 <div *ngIf="showAddbtn && showSpecial">
                                     <mat-panel-description class="acc-plus-btn">
@@ -405,7 +405,7 @@
                             <div *ngIf="fields.mandatory">
                                 <div style="display: flex">
                                     <div style="margin-bottom: 10px; margin-top: 5px">
-                                        <b> {{fields.displayName}} </b>
+                                        <b> {{fields.displayName}} *</b>
                                     </div>
                                     <mat-panel-description class="acc-plus-btn">
                                         <button mat-icon-button *ngIf="!fields['value']"
@@ -504,7 +504,7 @@
                         </div>
                         <div class="acc-cont" *ngFor="let fields of domain_fields">
                             <div *ngIf="fields.mandatory">
-                                <b> {{fields.displayName}} </b>
+                                <b> {{fields.displayName}} *</b>
 
                                 <mat-panel-description class="acc-plus-btn">
                                     <button mat-icon-button *ngIf="!fields['value']"

@@ -214,6 +214,8 @@ export const Messages = {
   'FAVORITE_TOOLTIP': 'Your favourite providers',
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
+  'COUPON_TOOPTIP': 'Jaldee coupons',
+  'JDN_TOOPTIP' : 'You will get 5% for provider',
   'REF_TOOPTIP': 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
