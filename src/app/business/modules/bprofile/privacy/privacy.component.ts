@@ -219,6 +219,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         this.privacydialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (result.message === 'reloadlist') {
+                    
                     this.bProfile = result.data;
                     this.setPrivacyDetails();
                 }

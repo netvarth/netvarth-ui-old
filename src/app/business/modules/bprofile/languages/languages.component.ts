@@ -132,8 +132,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
                 if (result['mod'] === 'reloadlist') {
                     // this.getBusinessProfile();
                     this.bProfile = result['data'];
-                    if (this.bProfile.languagesSpoken) {
-                        if (this.bProfile.languagesSpoken.length > 0) {
+                    this.setLanguages();
+                    if (this.bProfile.sellanguages) {
+                        if (this.bProfile.sellanguages.length > 0) {
                             this.normal_language_show = 3;
                         } else {
                             this.normal_language_show = 2;

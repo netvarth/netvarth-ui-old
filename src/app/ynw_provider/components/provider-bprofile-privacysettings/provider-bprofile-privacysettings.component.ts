@@ -66,6 +66,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     }
     this.curtype = data.curtype;
     this.bProfile = data.bprofile;
+    this.loadData = data;
     // extracting the phone numbers and settings it to the required object
     if (this.curtype === 'phone') {
       if (this.curmod === 'add') {

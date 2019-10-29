@@ -143,6 +143,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   commTooltip = '';
   refTooltip = '';
   bNameTooltip = '';
+  jdnTooltip = '';
+ couponTooltip = '';
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   hideRefineifOneresultchk = false;
@@ -180,6 +182,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
+    this.couponTooltip = this.shared_functions.getProjectMesssages('COUPON_TOOPTIP');
+    this.jdnTooltip = this.shared_functions.getProjectMesssages('JDN_TOOPTIP');
     this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
     this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
     this.bNameTooltip = this.shared_functions.getProjectMesssages('BUSSNAME_TOOPTIP');

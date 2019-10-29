@@ -5398,3 +5398,14 @@ li.separator.setsplit {
 .time_align{
   margin-left: 20px !important;
 }
+.jdn_tooltip{
+  cursor: pointer !important;
+}
+.settings_info{
+    font-size: .65rem !important;
+    font-family: 'Roboto Slab', sans-serif !important;
+    color: #999999 !important;
+    text-align: justify;
+    line-height: 2;
+    font-weight: normal !important;
+}
