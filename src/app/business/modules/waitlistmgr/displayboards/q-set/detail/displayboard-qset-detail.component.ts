@@ -35,7 +35,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
             url: '/provider/settings/q-manager/displayboards'
         },
         {
-            title: 'Q-Set',
+            title: 'QueueSet',
             url: '/provider/settings/q-manager/displayboards/q-set'
         }
     ];

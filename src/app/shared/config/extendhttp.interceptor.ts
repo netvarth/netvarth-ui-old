@@ -14,7 +14,7 @@ import { Subject } from 'rxjs/Subject';
 import { throwError, observable, EMPTY } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
-import { retry } from 'rxjs/operators';
+import { retry, delay } from 'rxjs/operators';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -146,6 +146,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
+            console.log(req);
+            console.log(url);
             if (this._checkSessionExpiryErr(error)) {
               // window.location.reload();
               this.router.navigate(['']);
@@ -159,15 +161,17 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return throwError(error);
             } else if (error.status === 0) {
               // Network Error Handling
-              return next.handle(req).pipe(
+              // return next.handle(this.updateHeader(req, url)).pipe(
                 retry(2),
-                catchError((errorN: HttpErrorResponse) => {
-                  this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-                  return throwError(errorN);
-                })
-              );
+                // catchError((errorN: HttpErrorResponse) => {
+                   this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+                   return EMPTY;
+                // }),
+                // delay(10000);
+              // );
             } else if (error.status === 404) {
-              return throwError(error);
+              return EMPTY;
+              // return throwError(error);
             } else if (error.status === 401) {
               this.shared_functions.logout();
               return throwError(error);
@@ -186,6 +190,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return throwError(error);
             }
           }
+          console.log(caught);
           return caught;
         })
       );

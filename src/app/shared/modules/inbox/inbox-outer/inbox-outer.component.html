@@ -1,14 +1,21 @@
 <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+  <div class="comn-cls">
+    <div class="container">
+      <div class="row">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+      </div>
+    </div>
+  </div>
 </section>
 <section>
   <div class="content comn-cls">
-      <div class="container">
-          <div class="row">
-              <div class="card p0">
-                <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)= "getInboxMessages()" *ngIf="obtainedMsgs"></app-inbox-list>
-              </div>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="card p0">
+          <app-inbox-list [messages]="messages" [fromsource]="'inbox'" (reloadApi)="getInboxMessages()"
+            *ngIf="obtainedMsgs"></app-inbox-list>
+        </div>
       </div>
+    </div>
   </div>
 </section>

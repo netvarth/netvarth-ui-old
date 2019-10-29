@@ -198,7 +198,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         }
     }
     /**
-     * Add instant Q button clicked
+     * Add instant Queue button clicked
      */
     addInstantQBtnClicked() {
         this.action = 'add';
@@ -235,7 +235,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         });
     }
     /**
-     * Method to change instant Q's location
+     * Method to change instant Queue's location
      * @param event event
      */
     onChangeLocationSelect(event) {
@@ -244,7 +244,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.selected_location = this.locations[value] || [];
     }
     /**
-     * set values for Instant Q form while editing
+     * set values for Instant Queue form while editing
      * @param q queue Object
      */
     updateForm(q) {
@@ -367,7 +367,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         });
     }
     /**
-     * To get Available Instant Q Details
+     * To get Available Instant Queue Details
      */
     isAvailableNow() {
         return new Promise((resolve, reject) => {
@@ -452,7 +452,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.parallelServeEditable = true;
     }
     /**
-     * Create form for Instant Q
+     * Create form for Instant Queue
      * @param server_date for setting timings
      */
     createForm(server_date) {
@@ -604,8 +604,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         }
     }
     /**
-     * Method to create instant Q
-     * @param post_data input to create Instant Q
+     * Method to create instant Queue
+     * @param post_data input to create Instant Queue
      */
     createInstantQ(post_data) {
         this.provider_services.addInstantQ(post_data)
@@ -621,8 +621,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             );
     }
     /**
-     * Method to Update Instant Q
-     * @param post_data input to update Instant Q
+     * Method to Update Instant Queue
+     * @param post_data input to update Instant Queue
      */
     updateInstantQ(post_data) {
         if (post_data.services.length === 0) {
@@ -693,7 +693,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                 });
     }
     /**
-     * Call modal box for add/edit scheduled Q
+     * Call modal box for add/edit scheduled Queue
      * @param type add/edit
      * @param queue queue object if edit
      */
@@ -727,7 +727,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                 });
     }
     /**
-     * Method to set scheduled, instant, disabled Qs
+     * Method to set scheduled, instant, disabled Queues
      */
     initializeQs() {
         this.api_loading = true;
@@ -756,7 +756,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                 });
     }
     /**
-     * Method to set values for instant Q creation
+     * Method to set values for instant Queue creation
      */
     initInstantQForm(queue?) {
         this.shared_services.getSystemDate()

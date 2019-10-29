@@ -340,7 +340,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Scheduled Qs({{scheduledQs.length}})
+                                                        Scheduled Queues({{scheduledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
 
@@ -467,7 +467,7 @@
                                         </div>
 
                                         <div class="card" *ngIf="scheduledQs.length==0">
-                                                No Scheduled Qs
+                                                No Scheduled Queues
                                         </div>
                                 </mat-expansion-panel>
                         </mat-accordion>
@@ -475,7 +475,7 @@
                 <div class="clearfix"></div>
         </div>
 </section>
-<!--Disabled Qs Listing-->
+<!--Disabled Queues Listing-->
 <section class="sched_q">
         <div class="content loc-list">
                 <div class="col-md-12" *ngIf="api_loading">
@@ -486,7 +486,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Disabled Qs({{disabledQs.length}})
+                                                        Disabled Queues({{disabledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="row q-time queuelist" *ngFor="let queue of disabledQs">
@@ -532,7 +532,7 @@
                                                 </div>
                                         </div>
                                         <div class="card" *ngIf="disabledQs.length==0">
-                                                No Disabled Qs
+                                                No Disabled Queues
                                         </div>
                                 </mat-expansion-panel>
                         </mat-accordion>

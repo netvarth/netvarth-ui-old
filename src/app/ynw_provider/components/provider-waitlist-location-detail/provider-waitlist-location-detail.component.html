@@ -130,7 +130,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let queue of queues">
-                                    <td data-title="Qs" class="pointer-cursor" (click)="goQueueDetail(queue)"
+                                    <td data-title="Queues" class="pointer-cursor" (click)="goQueueDetail(queue)"
                                         [class.disabled]="queue.queueState=='DISABLED'"
                                         [matTooltip]="'Click here to view queue'">
                                         {{queue.name | capitalizeFirst}}</td>

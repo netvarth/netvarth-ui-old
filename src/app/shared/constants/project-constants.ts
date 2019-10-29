@@ -241,7 +241,7 @@ export const projectConstants = {
       displayName: 'Settings',
       subcat: [
         { name: 'LOCATION', dispName: 'Location' },
-        { name: 'QUEUE', dispName: 'Qs' },
+        { name: 'QUEUE', dispName: 'Queues' },
         { name: 'SERVICE', dispName: 'Service' },
         { name: 'HOLIDAY', dispName: 'Holiday' },
         { name: 'WAITLIST', dispName: 'Waitlist' },
