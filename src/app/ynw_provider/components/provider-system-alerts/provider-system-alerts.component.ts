@@ -6,6 +6,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 @Component({
   selector: 'app-provider-system-alerts',
   templateUrl: './provider-system-alerts.component.html'
@@ -57,7 +58,8 @@ export class ProviderSystemAlertComponent implements OnInit {
     private locationobj: Location,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    private shared_services: SharedServices
+    private shared_services: SharedServices,
+    public date_format: DateFormatPipe
   ) { }
   ngOnInit() {
     // this.getAlertList();
@@ -137,7 +139,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   goback() {
     this.locationobj.back();
   }
-  do_search(pagecall) {
+  do_search(pagecall) { 
     if (pagecall === false) {
       this.startpageval = 1;
       this.holdalertSelAck = this.alertSelAck;
@@ -145,14 +147,15 @@ export class ProviderSystemAlertComponent implements OnInit {
     }
     let seldate = '';
     if (this.holdalertSeldate) {
-      const mon = this.holdalertSeldate['_i']['month'] + 1;
-      let mn = '';
-      if (mon < 10) {
-        mn = '0' + mon;
-      } else {
-        mn = mon;
-      }
-      seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
+      // const mon = this.holdalertSeldate['_i']['month'] + 1;
+      // let mn = '';
+      // if (mon < 10) {
+      //   mn = '0' + mon;
+      // } else {
+      //   mn = mon;
+      // }
+      // seldate = this.holdalertSeldate['_i']['year'] + '-' + mn + '-' + this.holdalertSeldate['_i']['date'];
+      seldate = this.date_format.transformTofilterDate(this.holdalertSeldate);
     }
     /*if (pagecall === false && this.holdalertSelAck === '' && seldate === '') {
       this.sharedfunctionObj.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
