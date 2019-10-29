@@ -33,9 +33,11 @@ export class AddProviderBprofileSpecializationsComponent implements OnInit {
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions
   ) {
+    this.loadData = data;
   }
   ngOnInit() {
     this.api_loading = true;
+    
     this.specialization_arr = this.data.specializations;
     if (this.data.selspecializations) {
       this.selspecialization_arr = this.data.selspecializations;

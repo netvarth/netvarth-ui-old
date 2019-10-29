@@ -110,7 +110,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     }
     handleSpecialization() {
         let holdselspec;
-        if (this.bProfile.specialization) {
+        if (this.bProfile && this.bProfile.specialization) {
             holdselspec = JSON.parse(JSON.stringify(this.bProfile.specialization)); // to avoid pass by reference
         } else {
             holdselspec = [];
@@ -133,8 +133,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                 if (result['mod'] === 'reloadlist') {
                     // this.getBusinessProfile();
                     this.bProfile = result['data'];
-                    if (this.bProfile.specialization) {
-                        if (this.bProfile.specialization.length > 0) {
+                    this.initSpecializations();
+                    if (this.bProfile && this.bProfile.selspecializations) {
+                        if (this.bProfile.selspecializations.length > 0) {
                             this.normal_specilization_show = 3;
                         } else {
                             this.normal_specilization_show = 2;

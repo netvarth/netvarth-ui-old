@@ -30,6 +30,7 @@ export class AddProviderBprofileSpokenLanguagesComponent implements OnInit {
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions
   ) {
+    this.loadData = data;
   }
   ngOnInit() {
     this.api_loading = true;
