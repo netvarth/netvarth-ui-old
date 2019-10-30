@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="form-group">
                                             <mat-form-field>
-                                                <mat-select placeholder="Choose Layout" id="layout" 
+                                                <mat-select placeholder="Choose Queue-Set" id="layout" 
                                                 (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
                                                     [ngModelOptions]="{standalone: true}">
                                                     <mat-option *ngFor="let layout of boardLayouts"
@@ -61,7 +61,7 @@
                                                         <div *ngFor = "let row of createRange(boardRows)">
                                                             <div *ngFor = "let col of createRange(boardCols)" class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                                 <mat-form-field>
-                                                                    <mat-select placeholder="Choose Layout"                                                                     
+                                                                    <mat-select placeholder="Choose Queue-Set"                                                                     
                                                                     [(ngModel)]="boardSelectedItems[row + '_' + col]" [ngModelOptions]="{standalone: true}" (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)" >
                                                                         <mat-option [value]="qset.id" *ngFor="let qset of qset_list"
                                                                             >
