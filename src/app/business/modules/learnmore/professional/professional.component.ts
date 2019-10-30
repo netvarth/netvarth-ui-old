@@ -90,23 +90,23 @@ export class ProfessionalCareComponent implements OnInit {
   ngOnInit() {
    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = this.active_user.sector;
-    console.log(this.domain);
+    //console.log(this.domain);
     if (this.target) {
       // this.triggerScrollTo(this.target);
     }
     this.activated_route.paramMap
       .subscribe(params => {
-        console.log(params);
+       // console.log(params);
         if (params.get('parent')) {
           const group = params.get('parent').split('->');
-          console.log(group);
+      //    console.log(group);
           this.parent = group[0];
-          console.log(this.parent);
+        //  console.log(this.parent);
           if (group.length > 1) {
             this.child = group[1];
           } else {
             this.child = this.parent;
-            console.log(this.parent);
+         //   console.log(this.parent);
           }
         } else {
           this.child = 'public-search';
@@ -138,8 +138,8 @@ export class ProfessionalCareComponent implements OnInit {
     this.menu(parentContent, childContent);
   }
   menu(parentContent, childContent?) {
-    console.log(parentContent);
-    console.log(childContent);
+    //console.log(parentContent);
+    //console.log(childContent);
     if (parentContent === 'profile-search') {
       this.showprofilesearch = true;
       if (childContent === 'public-search') {
