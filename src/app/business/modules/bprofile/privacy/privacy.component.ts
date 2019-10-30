@@ -79,7 +79,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
-      }
+    }
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -219,7 +219,6 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         this.privacydialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (result.message === 'reloadlist') {
-                    
                     this.bProfile = result.data;
                     this.setPrivacyDetails();
                 }

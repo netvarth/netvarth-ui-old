@@ -3972,7 +3972,8 @@ last
                                     <mat-expansion-panel [expanded]="showmycoupon && showbilling">
                                         <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
                                             <mat-panel-title>
-                                                <span class="helpcontent" (click)="handleScroll('mycoupon','billing')"> My Coupons</span>
+                                                <span class="helpcontent" (click)="handleScroll('mycoupon','billing')">
+                                                    My Coupons</span>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="helpcontent">
@@ -4097,117 +4098,116 @@ last
                         </mat-expansion-panel>
                     </mat-accordion>
                     <mat-accordion>
-                            <mat-expansion-panel [expanded]='showhomeservice'>
+                        <mat-expansion-panel [expanded]='showhomeservice'>
                             <mat-expansion-panel-header class="accordion">
-                            <mat-panel-title class="accordion-title"
-                            (click)="menu('homeservice')">
-                            Home Service
-                            </mat-panel-title>
+                                <mat-panel-title class="accordion-title" (click)="menu('homeservice')">
+                                    Home Service
+                                </mat-panel-title>
                             </mat-expansion-panel-header>
                             <mat-accordion>
-                            <mat-expansion-panel [expanded]="showserviceH && showhomeservice"
-                            (click)="handleScroll('serviceH', 'homeservice')">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                            class="accordion">
-                            <mat-panel-title class="accordion-title">
-                            <span class="helpcontent">Services</span>
-                            </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            
-                            <div class="helpcontent">
-                            
-                            
-                            </div>
-                            
-                            </mat-expansion-panel>
+                                <mat-expansion-panel [expanded]="showserviceH && showhomeservice"
+                                    (click)="handleScroll('serviceH', 'homeservice')">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent">Services</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent">
+
+
+                                    </div>
+
+                                </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                            <mat-expansion-panel [expanded]="showhoursH && showhomeservice"
-                            (click)="handleScroll('hourH', 'homeservice')">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                            class="accordion">
-                            <mat-panel-title class="accordion-title">
-                            <span class="helpcontent">Queues</span>
-                            </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            
-                            <div class="helpcontent">
-                            
-                            
-                            </div>
-                            
-                            </mat-expansion-panel>
+                                <mat-expansion-panel [expanded]="showhoursH && showhomeservice"
+                                    (click)="handleScroll('hourH', 'homeservice')">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent">Queues</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent">
+
+
+                                    </div>
+
+                                </mat-expansion-panel>
                             </mat-accordion>
-                            </mat-expansion-panel>
-                            </mat-accordion>
-                            <mat-accordion>
-                            <mat-expansion-panel [expanded]='showdisplayboard'>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                        <mat-expansion-panel [expanded]='showdisplayboard'>
                             <mat-expansion-panel-header class="accordion">
-                            <mat-panel-title class="accordion-title"
-                            (click)="menu('displayboard')">
-                            Display Board
-                            </mat-panel-title>
+                                <mat-panel-title class="accordion-title" (click)="menu('displayboard')">
+                                    Display Board
+                                </mat-panel-title>
                             </mat-expansion-panel-header>
                             <mat-accordion>
-                            <mat-expansion-panel [expanded]="showlabel && showdisplayboard"
-                            (click)="handleScroll('label', 'displayboard')">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                            class="accordion">
-                            <mat-panel-title class="accordion-title">
-                            <span class="helpcontent">Custom field/labels</span>
-                            </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            
-                            <div class="helpcontent">
-                            
-                            
-                            </div>
-                            
-                            </mat-expansion-panel>
+                                <mat-expansion-panel [expanded]="showlabel && showdisplayboard"
+                                    (click)="handleScroll('label', 'displayboard')">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent">Custom field/labels</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent">
+
+
+                                    </div>
+
+                                </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                            <mat-expansion-panel [expanded]="showboard && showdisplayboard"
-                            (click)="handleScroll('board', 'displayboard')">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                            class="accordion">
-                            <mat-panel-title class="accordion-title">
-                            <span class="helpcontent">Displayboards</span>
-                            </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            
-                            <div class="helpcontent">
-                            
-                            
-                            </div>
-                            
-                            </mat-expansion-panel>
+                                <mat-expansion-panel [expanded]="showboard && showdisplayboard"
+                                    (click)="handleScroll('board', 'displayboard')">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent">Displayboards</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent">
+
+
+                                    </div>
+
+                                </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                            <mat-expansion-panel [expanded]="showlayout && showdisplayboard"
-                            (click)="handleScroll('layout', 'displayboard')">
-                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                            class="accordion">
-                            <mat-panel-title class="accordion-title">
-                            <span class="helpcontent">Layouts</span>
-                            </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            
-                            <div class="helpcontent">
-                            
-                            
-                            </div>
-                            
-                            </mat-expansion-panel>
-                            </mat-accordion>
-                            
-                            </mat-expansion-panel>
+                                <mat-expansion-panel [expanded]="showlayout && showdisplayboard"
+                                    (click)="handleScroll('layout', 'displayboard')">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent">Layouts</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="helpcontent">
+
+
+                                    </div>
+
+                                </mat-expansion-panel>
                             </mat-accordion>
 
-                  
-                   
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+
+
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 
 </section>

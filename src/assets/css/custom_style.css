@@ -5409,3 +5409,5 @@ li.separator.setsplit {
     line-height: 2;
     font-weight: normal !important;
 }
+.displayboard .no-dta {text-align: center;}
+.sidebar .user-panel i.disabled {background: none !important;}
