@@ -164,6 +164,40 @@
                     <div class="prepay-dur-pr">
                         <div class="prepay-amt">{{service_needs_prepayment}} {{checkinLabel}}</div>
                         <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls"><span>&#8377; </span>{{prepaymentAmount}}</span></div>
+                        
+                        <div class="prepayEmail" *ngIf="!emailExist">
+                                <label for="reason" style="margin-bottom: 15px;" class="col-form-label">Email id needed for payment. Please enter your email</label>
+                        <ng-container  >
+                            <div class="form-group">
+                                <mat-form-field>
+                                    <input matInput type="text" class="form-control" id="email"
+                                         placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail" autocomplete="off"
+                                        (keyup)="showConfrmEmail($event)" onpaste="return false;"
+                                        oncopy="return false" oncut="return false" ondrag="return false"
+                                        ondrop="return false">
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="true" *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                                    </app-field-error-display>
+                                
+                            </div>
+                            <div class="form-group" *ngIf="confrmshow">
+                                <mat-form-field>
+                                    <input matInput type="text" class="form-control" id="email1"
+                                         placeholder="Re-enter Email(user@xyz.com)" [(ngModel)]="payEmail1"
+                                        autocomplete="off" onpaste="return false;" oncopy="return false"
+                                        oncut="return false" ondrag="return false" ondrop="return false">
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="true" *ngIf="email1error != null" errorMsg={{email1error}}>
+                                    </app-field-error-display>
+                            </div>
+                            <!-- <span class="input-group-btn">
+                                <button class="btn bt3 btn-default"
+                                    (click)="addEmail()" type="button">Add</button>
+                            </span> -->
+                        </ng-container>
+                    </div>
+        
+                        
                         <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
                             <div class='prepay-head-sorry'> {{no_pay_modes_avail_cap}} </div>
                         </div>
@@ -179,6 +213,10 @@
                     </div>
                 </div>
             </ng-container>
+        <div >
+            
+                
+            </div>
             <ng-container
                 *ngIf="(s3CouponsList.length > 0) && page_source != 'provider_checkin' && queuejson.length > 0">
                 <div class="coupon-outer">

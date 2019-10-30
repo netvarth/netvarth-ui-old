@@ -122,6 +122,7 @@ export class CheckInInnerComponent implements OnInit {
   page_source = null;
   main_heading;
   dispCustomernote = false;
+  dispCustomerEmail = false;
   CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
   queueQryExecuted = false;
   todaydate;
@@ -149,6 +150,15 @@ export class CheckInInnerComponent implements OnInit {
   selected_dept;
   deptLength;
   filterDepart = false;
+  confrmshow = false;
+  userData: any = [];
+  userEmail;
+  emailExist = false;
+  payEmail;
+  payEmail1;
+  emailerror = null;
+  email1error = null;
+
 
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -181,6 +191,7 @@ export class CheckInInnerComponent implements OnInit {
     this.get_token_cap = Messages.GET_TOKEN;
     this.maxsize = 1;
     this.step = 1;
+    this.getProfile();
     this.loggedinuser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
     this.gets3curl();
     this.getFamilyMembers();
@@ -461,7 +472,88 @@ export class CheckInInnerComponent implements OnInit {
       );
   }
 
+  getProfile() {
+    this.sharedFunctionobj.getProfile()
+      .then(
+        data => {
+          this.userData = data;
+          this.userEmail = this.userData.userProfile.email || '';
+          if (this.userEmail) {
+            this.emailExist = true;
+          } else {
+            this.emailExist = false;
+          }
+        });
+  }
+  addEmail() {
+    this.resetApiErrors();
+    this.resetApi();
+    let post_data;
+    let passtyp;
+    if (this.payEmail) {
+      const stat = this.validateEmail(this.payEmail);
+      if (!stat) {
+        this.emailerror = 'Please enter a valid email.';
+      }
+    }
+    if (this.payEmail1) {
+      const stat1 = this.validateEmail(this.payEmail1);
+      if (!stat1) {
+        this.email1error = 'Please enter a valid email.';
+      }
+    }
 
+
+    return new Promise((resolve) => {
+
+      if (this.payEmail === this.payEmail1) {
+        post_data = {
+          'id': this.userData.userProfile.id || null,
+          'firstName': this.userData.userProfile.firstName || null,
+          'lastName': this.userData.userProfile.lastName || null,
+          'dob': this.userData.userProfile.dob || null,
+          'gender': this.userData.userProfile.gender || null,
+          'email': this.payEmail || ''
+        };
+        passtyp = 'consumer';
+        if (this.payEmail) {
+          this.shared_services.updateProfile(post_data, passtyp)
+            .subscribe(
+              () => {
+                // this.api_success = Messages.PROFILE_UPDATE;
+               // this.sharedFunctionobj.openSnackBar(Messages.PROFILE_UPDATE);
+                resolve();
+              },
+              error => {
+                // this.api_error = error.error;
+                this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              });
+       }
+      } else {
+        this.email1error = 'Email and Re-entered Email do not match';
+      }
+    });
+
+
+
+
+
+
+  }
+  validateEmail(mail) {
+    const emailField = mail;
+    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (reg.test(emailField) === false) {
+      return false;
+    }
+    return true;
+  }
+
+  resetApiErrors() {
+
+    this.emailerror = null;
+    this.email1error = null;
+  }
   setServiceDetails(curservid) {
     let serv;
     for (let i = 0; i < this.servicesjson.length; i++) {
@@ -537,6 +629,11 @@ export class CheckInInnerComponent implements OnInit {
     this.sel_queue_name = '';
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+  }
+  showConfrmEmail(event) {
+    if (event.key !== 'Enter') {
+      this.confrmshow = true;
+    }
   }
 
   isSelectedService(id) {
@@ -643,6 +740,20 @@ export class CheckInInnerComponent implements OnInit {
     this.main_heading = 'Family Members';
   }
   handleCheckinClicked() {
+    if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin' && !this.emailExist) {
+      this.addEmail().then(
+        () => {
+          this.confirmCheckin();
+        }
+
+      );
+    } else {
+      this.confirmCheckin();
+    }
+  }
+
+  confirmCheckin() {
+
     this.resetApi();
     let error = '';
     // if (this.step === 1) {
@@ -726,7 +837,7 @@ export class CheckInInnerComponent implements OnInit {
               disableClose: true,
               data: {
                 'details': payData,
-                'origin' : 'consumer'
+                'origin': 'consumer'
               }
             });
             // this.shared_services.consumerPayment(payData)
@@ -762,7 +873,7 @@ export class CheckInInnerComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
           this.router.navigate(['/']);
         }
-        
+
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -981,6 +1092,13 @@ export class CheckInInnerComponent implements OnInit {
       this.dispCustomernote = false;
     } else {
       this.dispCustomernote = true;
+    }
+  }
+  handleEmail() {
+    if (this.dispCustomerEmail) {
+      this.dispCustomerEmail = false;
+    } else {
+      this.dispCustomerEmail = true;
     }
   }
 
