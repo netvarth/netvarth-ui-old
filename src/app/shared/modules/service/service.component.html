@@ -7,6 +7,10 @@
                 {{service_data.description | capitalizeFirst}}
             </div>
             <div class="c-ot">
+                <div class="item" *ngIf="departmentName">
+                    <span class="ttle">Department Name</span>
+                    <span>{{departmentName}}</span>
+                </div>
                 <div class="item">
                     <span class="ttle">{{est_duration_cap}}</span>
                     <span class="icon-time"> {{getAppxTime(service_data.serviceDuration)}}
@@ -79,7 +83,15 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </app-field-error-display>
                 <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
             </div>
-
+            <div class="form-group" *ngIf="filterDepart">
+                <mat-form-field>
+                    <mat-select formControlName="department" placeholder="Choose Department *">
+                        <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
+                            {{dept.departmentName | capitalizeFirst}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
                 <ng-container class="example-full-width">
                     <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes)</label>
@@ -112,7 +124,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     'maxlength' : 'Only 10 digits are allowed'})">
                 </app-field-error-display>
             </div>
-
 
             <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
             <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings">

@@ -12,6 +12,7 @@ import { Messages } from '../../constants/project-messages';
 import { FormMessageDisplayService } from '../form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -24,7 +25,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     end_service_notify_cap = '';
     service_cap = Messages.PRO_SERVICE_CAP;
     description_cap = Messages.DESCRIPTION_CAP;
-    price_cap = Messages.PRICE_CAP;
+    price_cap = Messages.PRICES_CAP;
     service_name_cap = Messages.SERVICE_NAME_CAP;
     est_duration_cap = Messages.SERVICE_DURATION_CAP;
     enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
@@ -69,11 +70,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
     advanced = false;
     duration = { hour: 0, minute: 0 };
     showAdvancedSettings = false;
+    departments: any = [];
+    filterDepart = false;
+    departmentName;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
         public servicesService: ServicesService,
-        public shared_service: SharedServices) {
+        public shared_service: SharedServices,
+        public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
@@ -89,6 +94,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.createForm();
                     } else {
                         this.service_data = this.service;
+                        this.getDepartments(this.service.department);
                         if (this.service_data) {
                             if (this.service_data.status === 'ACTIVE') {
                                 this.servstatus = true;
@@ -101,12 +107,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.serviceForm.setValue({
                                         'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                         'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                        'department': this.service_data['department'] || this.serviceForm.get('department').value,
                                         'notification': this.service_data['notification'] || this.serviceForm.get('notification').value
                                     });
                                 } else {
                                     this.serviceForm.setValue({
                                         'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                         'description': this.service_data['description'] || this.serviceForm.get('description').value,
+                                        'department': this.service_data['department'] || this.serviceForm.get('department').value,
                                         'serviceDuration': this.service_data['serviceDuration'] || this.serviceForm.get('serviceDuration').value,
                                         'totalAmount': this.service_data['totalAmount'] || this.serviceForm.get('totalAmount').value || '0',
                                         'isPrePayment': (!this.base_licence && this.service_data['minPrePaymentAmount'] &&
@@ -118,7 +126,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.convertTime(this.service_data['serviceDuration']);
                                     this.changePrepayment();
                                 }
-
                                 this.changeNotification();
                             }
                         }
@@ -173,6 +180,28 @@ export class ServiceComponent implements OnInit, OnDestroy {
         const serviceActionModel = {};
         serviceActionModel['action'] = 'edit';
         this.servicesService.actionPerformed(serviceActionModel);
+    }
+    getDepartments(deptid?) {
+        this.provider_services.getDepartments()
+            .subscribe(
+                data => {
+                    this.filterDepart = data['filterByDept'];
+                    for (let i = 0; i < data['departments'].length; i++) {
+                        if (data['departments'][i].departmentStatus === 'ACTIVE') {
+                            this.departments.push(data['departments'][i]);
+                        }
+                        if (data['departments'][i].departmentId === deptid) {
+                            this.departmentName = data['departments'][i].departmentName;
+                        }
+                    }
+                    if (this.action === 'add' && this.departments.length > 0) {
+                        this.serviceForm.get('department').setValue(this.departments[0].departmentId);
+                    }
+                },
+                error => {
+                    this.sharedFunctons.apiErrorAutoHide(this, error);
+                }
+            );
     }
     onSubmit(form_data) {
         if (!this.subdomainsettings.serviceBillable) {
@@ -236,10 +265,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     createForm() {
+        this.getDepartments();
         if (this.subdomainsettings.serviceBillable) {
             this.serviceForm = this.fb.group({
                 name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 description: ['', Validators.compose([Validators.maxLength(500)])],
+                department: ['', Validators.compose([Validators.maxLength(500)])],
                 serviceDuration: ['', Validators.compose([Validators.required])],
                 totalAmount: [0, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
                 isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
@@ -250,6 +281,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.serviceForm = this.fb.group({
                 name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 description: ['', Validators.compose([Validators.maxLength(500)])],
+                department: ['', Validators.compose([Validators.maxLength(500)])],
                 notification: [false]
             });
         }
@@ -269,6 +301,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
         return this.sharedFunctons.providerConvertMinutesToHourMinute(waitlist);
     }
     advancedClick() {
-(this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
+        (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
     }
 }

@@ -207,6 +207,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   frm_lang_cap = '';
   current_license;
   domain;
+  showCustomId = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -251,6 +252,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.frm_adword_cap = Messages.FRM_LEVEL_ADWORDS_MSG.replace('[customer]', this.customer_label);
     this.frm_loc_amen_cap = Messages.FRM_LEVEL_LOC_AMENITIES_MSG.replace('[customer]', this.customer_label);
+    // this.getLicensemetrics();
   }
   ngOnDestroy() {
     if (this.primarydialogRef) {
@@ -267,6 +269,21 @@ export class BProfileComponent implements OnInit, OnDestroy {
     }
     if (this.adworddialogRef) {
       this.adworddialogRef.close();
+    }
+  }
+
+  getLicensemetrics() {
+    const licenseMetrics = this.shared_services.getSelectedLicenseMetrics();
+    for (let i = 0; i < licenseMetrics.length; i++) {
+      if (licenseMetrics[i].id === 13) {
+        if (licenseMetrics[i].anyTimeValue === 'true') {
+          // this.jPay_Billing = true;
+          this.showCustomId = true;
+        } else {
+          // this.jPay_Billing = false;
+          this.showCustomId = false;
+        }
+      }
     }
   }
   getAdwordDisplayName(name) {
@@ -318,11 +335,9 @@ export class BProfileComponent implements OnInit, OnDestroy {
           this.bProfile = data;
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
-              console.log(domainfields);
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
                 subdomainfields => {
                   this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
-                  console.log(this.reqFields);
                 });
             });
           this.provider_datastorage.set('bProfile', data);
