@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="card p0" *ngIf="normal_profile_active==3 && normal_locationinfo_show==3">
-                                <div class="pubs w-dta bprof">
+                                <div class="pubs card w-dta bprof">
                                     <div class="ctrl">
                                         <div class="ct-l">
                                             <h2>{{public_search_cap}}
@@ -61,7 +61,7 @@
                                             (click)="learnmore_clicked('public-search', $event)">Learn
                                             More</a></p>
                                 </div>
-                                <div class="pubs adwds w-dta">
+                                <div class="pubs card adwds w-dta">
                                     <h2>{{adowrds_cap}}
                                         <span (click)="addAdwords()" class="addbt cs-btn bt8"
                                             *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span></h2>
@@ -85,7 +85,7 @@
                                         {{adword_maxcount}}
                                     </div>
                                 </div>
-                                <div class="pubs adwds w-dta">
+                                <div class="pubs card adwds w-dta">
                                     <div class="cd-b veifyLevel">
                                         <span
                                             *ngIf="bProfile && bProfile.verifyLevel =='NONE'">{{verified_level_change}}.
@@ -110,7 +110,7 @@
                                                 More</a></span>
                                     </div>
                                 </div>
-                                <div class="pubs adwds customBus w-dta">
+                                <div class="pubs card adwds customBus w-dta">
                                     <h2>Custom Business ID
                                         <!-- <span (click)="addAdwords()" class="addbt cs-btn bt8"
                                             *ngIf="adwords_maxremaining>0 && adword_list.length==0"></span> -->
