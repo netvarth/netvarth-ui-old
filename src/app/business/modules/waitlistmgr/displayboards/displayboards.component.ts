@@ -68,7 +68,7 @@ export class DisplayboardsComponent implements OnInit {
     performActions(action) {
         this.addDisplayboardLayout();
         if (action === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->layout']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-displayboards']);
         }
     }
     addDisplayboardLayout() {

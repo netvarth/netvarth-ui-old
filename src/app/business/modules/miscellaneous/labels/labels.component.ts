@@ -61,7 +61,7 @@ export class LabelsComponent implements OnInit {
     performActions(actions) {
         this.addLabel();
         if (actions === 'learnmore') {
-            this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->label']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->labels']);
         }
     }
     addLabel() {

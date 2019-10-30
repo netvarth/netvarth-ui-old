@@ -70,6 +70,9 @@ export class VastuComponent implements OnInit {
   showhomeservice = false;
   showserviceH = false;
   showhoursH = false;
+  showjdn = false;
+  showsaleschannel = false;
+  showthemes = false;
   domain;
   show = 'false';
   constructor(
@@ -200,6 +203,18 @@ export class VastuComponent implements OnInit {
       if (childContent === 'notifications') {
         this.shownotifications = true;
       }
+      if (childContent === 'labels') {
+        this.showlabel = true;
+      }
+      if (childContent === 'jdn') {
+        this.showjdn = true;
+      }
+      if (childContent === 'saleschannel') {
+        this.showsaleschannel = true;
+      }
+      if (childContent === 'themes') {
+        this.showthemes = true;
+      }
     }
 
     if (parentContent === 'checkinmanager') {
@@ -215,6 +230,9 @@ export class VastuComponent implements OnInit {
       }
       if (childContent === 'settings-departments') {
         this.showdepartment = true;
+      }
+      if (childContent === 'settings-displayboards') {
+        this.showdisplayboard = true;
       }
     }
 
@@ -242,22 +260,7 @@ export class VastuComponent implements OnInit {
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
   }
-  if (parentContent === 'displayboard')
-  {
-    this.showdisplayboard = true;
-    if(childContent === 'label')
-    {
-      this.showlabel = true;
-    }
-    if(childContent === 'board')
-    {
-      this.showboard = true;
-    }
-    if(childContent === 'layout')
-    {
-      this.showlayout = true;
-    }
-  }
+ 
  if (parentContent === 'homeservice')
 {
   this.showhomeservice = true;
