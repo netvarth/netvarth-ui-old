@@ -111,8 +111,8 @@ export const Messages = {
   'WAITLIST_LOCATION_AMINITIES_SAVED': 'Location amenities saved successfully',
   'WAITLIST_LOCATION_CHG_STATLOCATION': 'Location "[locname]" has been [status] successfully',
   'WAITLIST_LOCATION_CHG_BASELOCATION': 'Base location changed to [locname]',
-  'WAITLIST_QUEUE_CREATED': 'Q created successfully',
-  'WAITLIST_QUEUE_UPDATED': 'Q updated successfully',
+  'WAITLIST_QUEUE_CREATED': 'Queue created successfully',
+  'WAITLIST_QUEUE_UPDATED': 'Queue updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
@@ -222,7 +222,7 @@ export const Messages = {
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
-  'QUEUENAME_TOOLTIP': 'Click here to edit the Q',
+  'QUEUENAME_TOOLTIP': 'Click here to edit the Queue',
   'ADD_BUTTON': 'Click to create an instant queue',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
@@ -329,7 +329,7 @@ export const Messages = {
   'WAITLIST_FOR_CAP': 'Check-In For:',
   'SERVICE_CAP': 'Service:',
   'SRVIC_CAP': 'Service',
-  'SER_TIME_WINDOW_CAP': 'Q:',
+  'SER_TIME_WINDOW_CAP': 'Queue:',
   'PAY_STATUS_CAP': 'Payment Status:',
   'NOT_PAID_CAP': 'Not Paid',
   'PARTIALLY_PAID_CAP': 'Partially Paid',
@@ -481,7 +481,7 @@ export const Messages = {
   'SELECT_DEPT_CAP': 'Select Department',
   'NO_SER_AVAIL_CAP': 'No services available.',
   'ADD_CHANGE_MEMBER': 'Add / Change Member',
-  'SERV_TIME_WINDOW_CAP': 'Q',
+  'SERV_TIME_WINDOW_CAP': 'Queue',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
   'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted ',
@@ -694,7 +694,7 @@ export const Messages = {
   'LOC_PLACEHOLDER': 'Enter your precise location',
 
   // App-ynw_provider-components-add-provider-waitlist_queue
-  'SERVICE_TIME_WINDOW_CAP': 'Title for Q *',
+  'SERVICE_TIME_WINDOW_CAP': 'Title for Queue *',
   'QUEUE_LOCATION_CAP': 'Location *',
   'QUEUE_SERVICE_CAP': 'Service*',
   'QUEUE_SERVICE_OFFERD_CAP': 'Services offered in this schedule*',
@@ -818,7 +818,7 @@ export const Messages = {
   'BPROFILE_DELETE_PICTURE_CAP': 'Delete Picture',
   'BPROFILE_INFORMATION_CAP': 'information',
   'BPROFILE_NEED_LOCATION_CAP': 'Need Location',
-  'BPROFILE_WORK_HOURS_SEARCH_CAP': 'Q to turn on Public Search',
+  'BPROFILE_WORK_HOURS_SEARCH_CAP': 'Queue to turn on Public Search',
   'BPROFILE_BASE_LOCATION': 'Your Base Location details are Incomplete',
   'BPROFILE_PLEASE_CAP': 'Please use the',
   'BPROFILE_BUTTON_COMPLETE_CAP': 'button to complete it',
@@ -847,7 +847,7 @@ export const Messages = {
   'NO_SOCIAL_MEDIA': 'You haven\'t added any social media links',
 
   // App-ynw_provider-components-provider-bprofile-search-schedulepopup
-  'MANAGE_WORK_HOURS_CAP': 'Manage Q',
+  'MANAGE_WORK_HOURS_CAP': 'Manage Queue',
 
   // App-ynw_provider-components-provider-bprofile-search-socialmedia
   'SOCIAL_SELECT_CAP': 'Select',
@@ -1026,7 +1026,7 @@ export const Messages = {
   'CHECKIN_FUTURE_CAP': 'Accept Future',
 
   // App-ynw_provider-components-provider-waitlist-queues
-  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Q',
+  'QUEUE_NEW_SERVICE_WIND_CAP': 'Add Queue',
   'QUEUE_MAX_CAPACITY_CAP': 'Max. Capacity',
 
   // App-ynw_provider-components-provider-waitlist-service-detail
@@ -1113,7 +1113,7 @@ export const Messages = {
   'WIZ_GOOGLE_MAP_URL_CAP': 'Google Map URL',
   'WIZ_USED_FIND_EXACT_LOC_CAP': 'This can be used to find the exact location',
   'WIZ_BACK_CAP': 'Back',
-  'WIZ_WORKING_HOURS_CAP': 'Q',
+  'WIZ_WORKING_HOURS_CAP': 'Queue',
   'WIZ_SHOWS_B_HOURS_CAP': 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP': 'Public Search',
   'WIZ_TURN_ON_OFF_CAP': 'Enable the Public Search here. This salient feature allows your profile to be displayed in the [customer] search.',
@@ -1205,7 +1205,7 @@ export const Messages = {
   'CHECK_DET_LOCATION_CAP': 'Location:',
   'CHECK_DET_WAITLIST_FOR_CAP': 'Check-In for:',
   'CHECK_DET_SERVICE_CAP': 'Service:',
-  'CHECK_DET_QUEUE_CAP': 'Q:',
+  'CHECK_DET_QUEUE_CAP': 'Queue:',
   'CHECK_DET_PAY_STATUS_CAP': 'Payment Status:',
   'CHECK_DET_NOT_PAID_CAP': 'Not Paid',
   'CHECK_DET_PARTIALLY_PAID_CAP': 'Partially Paid',
@@ -1228,7 +1228,7 @@ export const Messages = {
   'Q_DET_MAX_CAP_CAP': 'Maximum Capacity',
   'Q_DET_NO_OF_CAP': 'No of',
   'Q_DET_SERVED_AT_A_TIME_CAP': 's served at a time',
-  'Q_DET_SER_TIME_WIND_STATUS_CAP': 'Q Status',
+  'Q_DET_SER_TIME_WIND_STATUS_CAP': 'Queue Status',
   'Q_DET_ENABLED_CAP': 'Enabled',
   'Q_DET_DISABLED_CAP': 'Disabled',
   'Q_DET_SCHEDULE_CAP': 'Schedule',
