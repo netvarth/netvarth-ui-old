@@ -9,6 +9,8 @@ import { ProviderBprofileSearchSocialMediaComponent } from '../../../../ynw_prov
 import { MatDialog } from '@angular/material';
 import { ProviderBprofileSearchGalleryComponent } from '../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { Router } from '@angular/router';
+import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -68,11 +70,13 @@ export class MediaComponent implements OnInit, OnDestroy {
             title: 'Gallery & Social Media'
         }
     ];
+    subscription: Subscription;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
         private routerobj: Router,
+        private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) { }
@@ -84,11 +88,29 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
         this.getGalleryImages();
         this.getBusinessProfile();
+        this.subscription = this.galleryService.getMessage().subscribe(input => {
+            if (input.ttype === 'image-upload') {
+                this.provider_services.uploadGalleryImages(input.value)
+                    .subscribe(
+                        () => {
+                            this.getGalleryImages();
+                            this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
+                            this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                        },
+                        error => {
+                            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                        }
+                    );
+            } else if (input.ttype === 'delete-image') {
+                this.deleteImage(input.value);
+            }
+        });
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
-      }
+    }
     ngOnDestroy() {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();
@@ -123,7 +145,6 @@ export class MediaComponent implements OnInit, OnDestroy {
     getBusinessProfile() {
         this.showaddsocialmedia = false;
         this.bProfile = [];
-
         this.getBussinessProfileApi()
             .then(
                 data => {
@@ -149,7 +170,6 @@ export class MediaComponent implements OnInit, OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-
             _this.provider_services.getBussinessProfile()
                 .subscribe(
                     data => {
@@ -159,9 +179,9 @@ export class MediaComponent implements OnInit, OnDestroy {
                         reject();
                     }
                 );
-
         });
     }
+
     confirmDelete(file, indx) {
         const skey = this.image_list[indx].keyName;
         file.keyName = skey;
@@ -172,56 +192,32 @@ export class MediaComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.image_list = data;
-                    this.image_showlist = [];
-                    this.image_list_popup = [];
-                    this.image_remaining_cnt = 0;
-                    if (this.image_list.length > 0) {
-                        for (let i = 0; i < this.image_list.length; i++) {
-                            const imgobj = new Image(
-                                i,
-                                { // modal
-                                    img: this.image_list[i].url,
-                                    description: this.image_list[i].caption || ''
-                                });
-                            this.image_list_popup.push(imgobj);
-                        }
-                        this.normal_gallery_show = 3;
-                    } else {
-                        this.normal_gallery_show = 2;
-                    }
                 },
                 () => {
 
                 }
             );
-
     }
-    deleteImage(file, bypassgetgallery?) {
-        this.provider_services.deleteProviderGalleryImage(file.keyName)
+    deleteImage(file) {
+        this.provider_services.deleteProviderGalleryImage(file)
             .subscribe(
                 () => {
-                    // this.sharedfunctionobj.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
-                    if (!bypassgetgallery) {
-                        this.getGalleryImages();
-                    }
+                    this.getGalleryImages();
                 },
                 () => {
 
                 }
             );
-
     }
     onButtonBeforeHook(event: ButtonEvent) {
         if (!event || !event.button) {
             return;
         }
-
         // Invoked after a click on a button, but before that the related
         // action is applied.
         // For instance: this method will be invoked after a click
         // of 'close' button, but before that the modal gallery
         // will be really closed.
-
         // if (event.button.type === ButtonType.DELETE) {
         if (event.button.type === ButtonType.DELETE) {
             // remove the current image and reassign all other to the array of images
@@ -236,7 +232,7 @@ export class MediaComponent implements OnInit, OnDestroy {
                 plain: undefined
             };
             // this.confirmDelete(file, event.image.id);
-            this.deleteImage(file, true);
+            this.deleteImage(file);
             this.image_list_popup = this.image_list_popup.filter((val: Image) => event.image && val.id !== event.image.id);
         }
     }

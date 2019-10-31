@@ -240,9 +240,10 @@
                                                                                         *ngFor="let schedule of queue.displayschedule"
                                                                                         (click)="goQueueDetail(queue)"
                                                                                         [matTooltipClass]="tooltipcls"
-                                                                                        [matTooltip]="tooltip_queueedit">
-                                                                                        <i
-                                                                                                class="fas fa-calendar-day"></i>
+                                                                                        [matTooltip]="tooltip_queueedit" 
+                                                                                        >
+                                                                                        <i *ngIf="!queue.instantQueue" class="q-recur"></i>
+                                                                                        <i *ngIf="queue.instantQueue" class="q-instant"></i>
                                                                                         {{schedule.time}}&nbsp;<span style="font-size: small;
                                                                                         color: black;">({{schedule.dstr}})</span>
                                                                                         <div style="font-size: small;
@@ -340,7 +341,7 @@
                                 <mat-expansion-panel [expanded]="false">
                                         <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                        Scheduled Queues({{scheduledQs.length}})
+                                                <i class="q-recur">&nbsp;&nbsp;&nbsp;</i>Scheduled Queues({{scheduledQs.length}})
                                                 </mat-panel-title>
                                         </mat-expansion-panel-header>
 

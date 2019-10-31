@@ -5411,3 +5411,19 @@ li.separator.setsplit {
 }
 .displayboard .no-dta {text-align: center;}
 .sidebar .user-panel i.disabled {background: none !important;}
+.q-instant{
+  background:url(../images/q-instant.png);
+  background-size:cover;
+      position: relative;
+  width:20px;
+  height:20px;
+  margin-right: 5px !important;
+}
+.q-recur{
+  background:url(../images/home/anchor.png);
+  background-size:cover;
+      position: relative;
+  width:20px;
+  height:20px;
+  margin-right: 5px !important;
+}
