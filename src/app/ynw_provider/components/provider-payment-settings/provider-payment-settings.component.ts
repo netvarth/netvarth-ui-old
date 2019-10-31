@@ -279,6 +279,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getPaymentSettings()
             .subscribe(data => {
                 this.paySettings = data;
+                console.log(this.paySettings);
                 this.initPaymentSettings(this.paySettings, 0);
             });
         if (showmsg === 1) {
@@ -345,6 +346,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      * @param status enable/disable
      */
     saveAccountPaymentSettings(status) {
+        console.log(status);
         this.provider_services.setPaymentAccountSettings(status)
             .subscribe(() => {
                 this.getPaymentSettings(1);
@@ -359,14 +361,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     /**
      * Save PayU/PayTM Account Information
      */
-    savePaySettings() {
+    savePaySettings(source) {
         this.resetApi();
         const postData = { 'dcOrCcOrNb': false, 'payTm': false, 'payU': false };
         postData['onlinePayment'] = this.paystatus;
         const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
         const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
         const blankpattern = projectConstants.VALIDATOR_BLANK;
-        if (this.paytmenabled === true) {
+        console.log(this.paytmenabled);
+        if (source === 'payTm') {
             postData['payTm'] = true;
            // this.paytmBlur();
             this.paytmMidBlur();
@@ -393,7 +396,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         } else {
             postData.payTm = false;
         }
-        if (this.ccenabled === true) {
+        if (source === 'cc') {
             postData['payU'] = true;
             postData.dcOrCcOrNb = true;
             this.panCardBlur();
@@ -427,6 +430,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
         if (!this.errorExist) {
             this.saveEnabled = false;
+            console.log(postData);
             this.provider_services.setPaymentSettings(postData)
                 .subscribe(() => {
                     this.getPaymentSettings(1);
