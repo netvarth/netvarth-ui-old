@@ -5427,3 +5427,12 @@ li.separator.setsplit {
   height:20px;
   margin-right: 5px !important;
 }
+@media only screen and (max-width: 575px) {
+  .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+    min-height: 60px !important;
+  }
+}
+.qset_add{
+  color: #f24949 !important;
+ text-align: center !important;
+}

@@ -24,13 +24,10 @@
                                         <app-innerloading-spinner spinnerParams="loadingParams">
                                         </app-innerloading-spinner>
                                     </div>
-
                                     <div class="no-dta"
                                         *ngIf="normal_domainfield_show== 4 && normal_subdomainfield_show== 4">
                                         <p>{{have_not_add_cap}} {{additional_cap}} {{info_cap}}.</p>
                                     </div>
-
-
                                     <ng-container
                                         *ngIf="normal_subdomainfield_show==3 || normal_subdomainfield_show==4">
                                         <div class="acc-cont" *ngFor="let fields of subdomain_fields">
@@ -422,5 +419,6 @@
                 </div>
             </div>
         </div>
+       <div class="clearfix"></div>
     </div>
 </section>
