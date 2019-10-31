@@ -118,15 +118,15 @@
                 *ngIf="small_device_display && time_type ==1 && selected_queue!=null && selected_queue.id">
                 <a *ngIf="status_subtype =='started'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                   data-toggle="dropdown">
-                  <span>{{started_upper}} ({{today_started_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
+                  <span>{{started_upper}} ({{today_started_count}}) &nbsp;<i class="fa fa-angle-right" style="font-size: medium"></i></span>
                 </a>
                 <a *ngIf="status_subtype =='done'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                   data-toggle="dropdown">
-                  <span>{{complete_cap}} ({{today_completed_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
+                  <span>{{complete_cap}} ({{today_completed_count}}) &nbsp;<i class="fa fa-angle-right" style="font-size: medium"></i></span>
                 </a>
                 <a *ngIf="status_subtype =='cancelled'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                   data-toggle="dropdown">
-                  <span>{{cancelled_upper}} ({{today_cancelled_count}}) &nbsp;<i class="fa fa-ellipsis-v"></i></span>
+                  <span>{{cancelled_upper}} ({{today_cancelled_count}}) &nbsp;<i class="fa fa-angle-right" style="font-size: medium"></i></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
