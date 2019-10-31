@@ -54,6 +54,7 @@
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
+                                    
                                     <div class="c-row one three two-col"
                                         *ngIf="service.discount &&service.discount.length > 0">
                                         <div class="name">
@@ -101,6 +102,13 @@
                                             {{gross_amnt_cap}}
                                         </div>
                                         <div class="price">{{bill_data.netTotal | currency:'&#8377; '}}</div>
+                                    </div>
+                                    <div class="c-row two section-two">
+                                        <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
+                                            <div class="name">JDN</div>
+                                            <div class="price">(-){{bill_data.jdn.discount |
+                                                currency:'&#8377; '}}</div>
+                                        </div>
                                     </div>
                                     <div class="c-row two section-two" *ngFor="let discount of bill_data.discount">
                                         <div class="discount-row two-col">
