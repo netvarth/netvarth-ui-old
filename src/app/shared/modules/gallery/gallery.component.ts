@@ -17,6 +17,7 @@ export class GalleryComponent implements OnInit, OnChanges {
     @Input() source_id;
     @Input() images;
     @Input() status;
+    @Input() source;
     activeHeader;
     image_list: any = [];
     image_list_popup: Image[];
@@ -62,12 +63,11 @@ export class GalleryComponent implements OnInit, OnChanges {
             disableClose: true,
             data: {
                 type: 'edit',
-                source_id: this.source_id
+                source_id: this.source_id || this.source
             }
         });
         this.galleryDialog.componentInstance.performUpload.subscribe(
             (imagelist_input) => {
-                console.log(imagelist_input);
                 const input = {
                     'type': 'add',
                     'value': imagelist_input
@@ -82,7 +82,6 @@ export class GalleryComponent implements OnInit, OnChanges {
     }
     ngOnChanges() {
         this.image_list = this.images || [];
-        console.log(this.image_list);
         this.loadImages(this.image_list);
     }
     ngOnInit() {
@@ -102,14 +101,11 @@ export class GalleryComponent implements OnInit, OnChanges {
         }
     }
     confirmDelete(file, indx) {
-        // console.log('delete', file);
         const skey = this.image_list[indx].keyName;
         file.keyName = skey;
-        // console.log('from confirm', file, indx);
         this.sharedfunctionObj.confirmGalleryImageDelete(this, file);
     }
     onButtonBeforeHook(event: ButtonEvent) {
-        // console.log('onButtonBeforeHook ', event);
         if (!event || !event.button) {
             return;
         }
