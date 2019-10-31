@@ -5090,7 +5090,8 @@ i.notavail {
     height: 29px !important
   }
   .filter-toolbar .genTextHeight.stdbtn {
-    height: 28px !important
+    height: 28px !important;
+    background: blue !important;
   }
 }
 
@@ -5441,4 +5442,9 @@ li.separator.setsplit {
   margin-top: 5px;
   color: #41c389;
   cursor: pointer;
+}
+ .qo_bt {
+  background: #3c8dbc;
+  text-shadow: none;
+  color: #fff;
 }
