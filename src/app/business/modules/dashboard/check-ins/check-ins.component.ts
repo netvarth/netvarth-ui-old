@@ -183,7 +183,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   apis_loaded = false;
   breadcrumbs_init = [
     {
-      title: Messages.DASHBOARD_TITLE,
+      // title: Messages.DASHBOARD_TITLE,
       url: 'provider/dashboard'
     },
     {

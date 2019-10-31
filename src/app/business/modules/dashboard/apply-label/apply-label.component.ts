@@ -14,11 +14,11 @@ export class ApplyLabelComponent implements OnInit {
     providerLabels: any = [];
     breadcrumbs_init: any = [
         {
-            title: Messages.DASHBOARD_TITLE,
+            // title: Messages.DASHBOARD_TITLE,
             url: '/provider'
         },
         {
-            title: 'Queue Manager',
+            title: 'Check-ins',
             url: '/provider/dashboard/check-ins'
         },
         {

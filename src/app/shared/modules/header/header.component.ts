@@ -66,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   apis_loaded = false;
   breadcrumbs_init = [
     {
-      title: Messages.DASHBOARD_TITLE,
+      // title: Messages.DASHBOARD_TITLE,
       url: '/' + this.shared_functions.isBusinessOwner('returntyp')
     }
   ];

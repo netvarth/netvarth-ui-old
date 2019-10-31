@@ -23,7 +23,7 @@ export class AddMembersHolderComponent implements OnInit {
   addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
   breadcrumbs_init = [
     {
-      title: Messages.DASHBOARD_TITLE,
+      // title: Messages.DASHBOARD_TITLE,
       url: '/consumer'
     },
     {
