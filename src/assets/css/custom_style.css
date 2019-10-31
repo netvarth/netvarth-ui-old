@@ -5436,3 +5436,9 @@ li.separator.setsplit {
   color: #f24949 !important;
  text-align: center !important;
 }
+.alert-ack {
+  float: right;
+  margin-top: 5px;
+  color: #41c389;
+  cursor: pointer;
+}

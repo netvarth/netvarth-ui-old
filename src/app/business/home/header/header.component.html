@@ -54,7 +54,7 @@
                   <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
                     [class.high]="alert.severity.name=='High'" [class.error]="alert.severity.name=='Critical'"
                     class="justify-alert">
-                    {{alert.text}} <i class="fa fa-thumbs-o-up" [matTooltip]="'Acknowledge'"
+                    {{alert.text}} <i class="fa fa-thumbs-o-up alert-ack" [matTooltip]="'Acknowledge'"
                       *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
                   </p>
                 </li>

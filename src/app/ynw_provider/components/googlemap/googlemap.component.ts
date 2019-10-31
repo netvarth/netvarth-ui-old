@@ -151,7 +151,6 @@ export class GoogleMapComponent implements OnInit {
     }
   }
   mapselectionDone() {
-    console.log(this.obtained_address);
     const retvalues = {
       'map_point': this.lat_lng,
       'status': 'selectedonmap',
@@ -161,7 +160,6 @@ export class GoogleMapComponent implements OnInit {
     this.dialogRef.close(retvalues);
   }
   mapaddress_change(addressR) {
-    console.log(addressR);
     this.obtained_address = addressR.address;
     this.obtained_pin = addressR.pin;
     // this.mapselectionDone();
@@ -199,8 +197,6 @@ export class GoogleMapComponent implements OnInit {
       const currentAddress = this.shared_service.getFormattedAddress(data);
       this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
       this.locationName = data['area'];
-      console.log(this.mapaddress);
-      console.log(this.mapaddress[0]);
       this.mapaddress_change(this.mapaddress[0]);
       this.getAddress();
     });

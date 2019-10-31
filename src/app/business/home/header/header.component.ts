@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
+import { Messages } from '../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-header',
@@ -43,10 +44,10 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.getBusinessdetFromLocalstorage();
     });
   }
-  gotoActiveHome () {
+  gotoActiveHome() {
     this.router.navigate(['provider', 'dashboard', 'check-ins']);
   }
-  gotoProfile () {
+  gotoProfile() {
     this.router.navigate(['provider', 'settings', 'bprofile']);
   }
   getBusinessdetFromLocalstorage() {
@@ -162,12 +163,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   gotoLicense() {
     if (this.active_license === 'Diamond') {
       this.router.navigate(['provider', 'license']);
-      this.shared_functions.sendMessage({'ttype' : 'menuChanged', 'value' : 'license'});
+      this.shared_functions.sendMessage({ 'ttype': 'menuChanged', 'value': 'license' });
     }
   }
   gotoInbox() {
     this.router.navigate(['provider', 'inbox']);
-    this.shared_functions.sendMessage({'ttype' : 'menuChanged', 'value' : 'inbox'});
+    this.shared_functions.sendMessage({ 'ttype': 'menuChanged', 'value': 'inbox' });
   }
   upgradeMembership() {
     this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
@@ -202,9 +203,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (this.alertCnt === 0) {
       this.router.navigate(['provider', 'alerts']);
     }
-    this.shared_functions.sendMessage({'ttype' : 'menuChanged', 'value' : 'alerts'});
+    this.shared_functions.sendMessage({ 'ttype': 'menuChanged', 'value': 'alerts' });
   }
-  getAlerts(count) {
+  getAlerts(count?) {
     // this.alerts = [];
     let maxCnt = projectConstants.ALERT_CNT;
     if (count < maxCnt) {
@@ -250,6 +251,17 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
   gotoCheckinSettings() {
     this.router.navigate(['provider', 'settings', 'q-manager']);
+  }
+  alertAcknowlege(alert) {
+    this.shared_service.acknowledgeAlert(alert.id)
+      .subscribe(() => {
+        this.shared_functions.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
+        this.getAlertCount();
+        this.getAlerts();
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
 }
 

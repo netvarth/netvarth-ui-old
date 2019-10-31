@@ -75,7 +75,7 @@
                                         <div class="ad-r">
                                             <span *ngFor="let adword of adwordshow_list">{{getAdwordDisplayName(adword.name)}}</span> <span
                                                 class="mre" *ngIf="adwords_remaining>0"><a
-                                                    routerLink="/provider/license/addons">+{{adwords_remaining}}
+                                                    routerLink="/provider/license/keywords">+{{adwords_remaining}}
                                                     {{more_cap}}</a></span>
                                             <span (click)="addAdwords()" class="addbt cs-btn bt8"
                                                 *ngIf="adwords_maxremaining>0 && adword_list.length>0"></span>
