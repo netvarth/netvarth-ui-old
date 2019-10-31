@@ -709,9 +709,7 @@ export class ProviderbWizardComponent implements OnInit {
               }
             }
             const addr = result['address'] || null;
-            // if (addr) {
-            //   this.wizard_data_holder['location'] = addr.split(',')[0];
-            // }
+              this.wizard_data_holder['location'] = result['location'];
           }
         }
       }

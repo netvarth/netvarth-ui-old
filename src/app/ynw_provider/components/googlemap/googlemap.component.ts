@@ -33,7 +33,8 @@ export class GoogleMapComponent implements OnInit {
   obtained_address = '';
   obtained_pin = '';
   mapaddress;
-  show_search = false;
+  show_search = true;
+  locationName;
 
   constructor(
     public dialogRef: MatDialogRef<GoogleMapComponent>,
@@ -51,13 +52,15 @@ export class GoogleMapComponent implements OnInit {
   ngOnInit() {
     if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
       this.getCurrentLocation();
+    } else {
+      this.setLocationtoMap();
+      this.getAddressonDragorClick('edit');
     }
-    this.setLocationtoMap();
-    this.getAddressonDragorClick();
   }
-
-  getAddressonDragorClick(src?) {
-    if (src === 'currentLoc') {
+  getAddressonDragorClick(action?) {
+    this.show_search = true;
+    this.mapaddress = [];
+    if (!action) {
       this.getAddressfromLatLong();
     }
     const getLatLng = (e) => {
@@ -72,19 +75,19 @@ export class GoogleMapComponent implements OnInit {
           this.getAddressfromLatLong();
         });
       } catch (error) {
-        // blah
+
       }
     };
     this.marker.addListener('dragend', getLatLng.bind(this));
     this.map.addListener('click', getLatLng.bind(this));
     const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
     });
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.searchElementRef.nativeElement);
-    setTimeout(
-      () => {
-        this.show_search = true;
-      }, 1000
-    );
+    // this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.searchElementRef.nativeElement);
+    // setTimeout(
+    //   () => {
+    //     this.show_search = true;
+    //   }, 1000
+    // );
     autocomplete.addListener('place_changed', () => {
       this._ngZone.run(() => {
         // get the place result
@@ -100,45 +103,42 @@ export class GoogleMapComponent implements OnInit {
       });
     });
   }
-
-  // getAddress() {
-  //   this.mapaddress = [];
-  // this.provider_services.getGoogleMapLocationAddress(this.lat_lng.latitude, this.lat_lng.longitude)
-  //   .subscribe(mapdata => {
-  //     let map_address = '';
-  //     let map_pin = '';
-  //     this.obtained_address = '';
-  //     if (mapdata['status'] === 'OK') {
-  //       if (mapdata['results']) {
-  //         const maxcnt = 3;
-  //         for (let i = 0; i < mapdata['results'].length; i++) {
-  //           if (i < maxcnt) {
-  //             let formataddress = '';
-  //             if (mapdata['results'][i].formatted_address) {
-  //               formataddress = mapdata['results'][i].formatted_address;
-  //             }
-  //             let curpin = '';
-  //             if (mapdata['results'][0]['address_components'][8]) {
-  //               curpin = mapdata['results'][0]['address_components'][8]['long_name'];
-  //             }
-  //             this.mapaddress.push({ 'address': formataddress, 'pin': curpin });
-  //           }
-  //         }
-  //         if (mapdata['results'][0]) {
-  //           if (mapdata['results'][0] !== undefined) {
-  //             map_address = mapdata['results'][0].formatted_address;
-  //           }
-  //           if (mapdata['results'][0]['address_components'][8] !== undefined) {
-  //             map_pin = mapdata['results'][0]['address_components'][8]['long_name'] || '';
-  //           }
-  //         }
-  //       }
-  //     }
-  //     this.obtained_address = map_address;
-  //     this.obtained_pin = map_pin;
-  //   });
-  // }
-
+  getAddress() {
+    this.provider_services.getGoogleMapLocationAddress(this.lat_lng.latitude, this.lat_lng.longitude)
+      .subscribe(mapdata => {
+        let map_address = '';
+        let map_pin = '';
+        // this.obtained_address = '';
+        if (mapdata['status'] === 'OK') {
+          if (mapdata['results']) {
+            const maxcnt = 3;
+            for (let i = 0; i < mapdata['results'].length; i++) {
+              if (i < maxcnt) {
+                let formataddress = '';
+                if (mapdata['results'][i].formatted_address) {
+                  formataddress = mapdata['results'][i].formatted_address;
+                }
+                let curpin = '';
+                if (mapdata['results'][0]['address_components'][8]) {
+                  curpin = mapdata['results'][0]['address_components'][8]['long_name'];
+                }
+                this.mapaddress.push({ 'address': formataddress, 'pin': curpin });
+              }
+            }
+            if (mapdata['results'][0]) {
+              if (mapdata['results'][0] !== undefined) {
+                map_address = mapdata['results'][0].formatted_address;
+              }
+              if (mapdata['results'][0]['address_components'][8] !== undefined) {
+                map_pin = mapdata['results'][0]['address_components'][8]['long_name'] || '';
+              }
+            }
+          }
+        }
+        // this.obtained_address = map_address;
+        this.obtained_pin = map_pin;
+      });
+  }
   placeMarker(location, map) {
     if (this.marker) {
       this.marker.setPosition(location);
@@ -150,39 +150,35 @@ export class GoogleMapComponent implements OnInit {
       });
     }
   }
-
   mapselectionDone() {
+    console.log(this.obtained_address);
     const retvalues = {
       'map_point': this.lat_lng,
       'status': 'selectedonmap',
-      'address': this.mapaddress
-      // 'address': this.obtained_address
-      /*,
-        'pincode': this.obtained_pin*/
+      'address': this.obtained_address,
+      'location': this.locationName
     };
     this.dialogRef.close(retvalues);
   }
-
   mapaddress_change(addressR) {
+    console.log(addressR);
     this.obtained_address = addressR.address;
     this.obtained_pin = addressR.pin;
     // this.mapselectionDone();
   }
-
   getCurrentLocation() {
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lat_lng.longitude = +pos.coords.longitude;
         this.lat_lng.latitude = +pos.coords.latitude;
         this.setLocationtoMap();
-        this.getAddressonDragorClick('currentLoc');
+        this.getAddressonDragorClick();
       },
         error => {
 
         });
     }
   }
-
   setLocationtoMap() {
     const mapProp = {
       center: new google.maps.LatLng(this.lat_lng.latitude, this.lat_lng.longitude),
@@ -200,7 +196,13 @@ export class GoogleMapComponent implements OnInit {
   }
   getAddressfromLatLong() {
     this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
-      this.mapaddress = this.shared_service.getFormattedAddress(data);
+      const currentAddress = this.shared_service.getFormattedAddress(data);
+      this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
+      this.locationName = data['area'];
+      console.log(this.mapaddress);
+      console.log(this.mapaddress[0]);
+      this.mapaddress_change(this.mapaddress[0]);
+      this.getAddress();
     });
   }
 }

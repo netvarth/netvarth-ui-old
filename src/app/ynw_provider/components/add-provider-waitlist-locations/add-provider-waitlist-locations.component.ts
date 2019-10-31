@@ -491,12 +491,14 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           this.amForm.patchValue({
             locaddress: result['address'] || null
           });
-          const addr = result['address'] || null;
-          if (addr) {
-            this.amForm.patchValue({
-              locname: addr.split(',')[0]
+             this.amForm.patchValue({
+              locname: result['location']
             });
-          }
+          // if (addr) {
+          //   this.amForm.patchValue({
+          //     locname: addr.split(',')[0]
+          //   });
+          // }
         }
       }
     });
