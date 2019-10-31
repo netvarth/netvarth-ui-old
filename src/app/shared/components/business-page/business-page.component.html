@@ -319,7 +319,7 @@
                                         <span class="checkin-btn disabled" style="cursor: auto"
                                             *ngIf="loc['calculationMode']=='NoCalc' && showToken && (!loc['onlineCheckIn'] || !loc['isAvailableToday'] || !loc['availableToday'])">{{get_token_btn}}</span>
 
-                                        <div class="future-date-link">
+                                        <!-- <div class="future-date-link"> -->
                                             <span class="checkin-future bt10"
                                                 *ngIf="loc['estimatedtime_det']['cdate'] && settingsjson['futureDateWaitlist']"
                                                 (click)="checkinClicked(loc.id, loc.place, loc['estimatedtime_det']['cdate'],true)">{{do_you_want_to_cap}}
@@ -329,7 +329,7 @@
                                                     *ngIf="loc['calculationMode']=='NoCalc' && showToken">{{get_token_btn}}</span>
                                                 {{for_cap}}
                                                 <span>{{different_date_cap}}</span></span>
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-12 no-padding middle-sect"
