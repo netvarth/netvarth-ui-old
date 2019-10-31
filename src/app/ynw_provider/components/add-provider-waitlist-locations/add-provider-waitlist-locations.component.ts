@@ -542,3 +542,4 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     this.api_success = null;
   }
 }
+
