@@ -875,6 +875,7 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     if(this.open_filter === true){
    this.toggleFilter();
   }
+  
     if (time_type === 1 && this.status_type === 'all') {
       this.showTime = true;
     } else {
