@@ -30,13 +30,13 @@
                                         <p class="settings_info">Manage your profile here</p>
                                     </a>
                                     <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
-                                        class="req-flds-cap">required fields missing</p>
+                                        class="req-flds-cap" style="padding-left: 13px;">required fields missing</p>
 
                                 </li>
                                 <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span
                                             class="lnk">Specializations</span>
                                         <p class="settings_info">Mention your specializations here</p>
-                                        <p *ngIf="reqFields.specialization" class="req-flds-cap">required fields missing
+                                        <p *ngIf="reqFields.specialization" class="req-flds-cap" style="padding-left: 13px;">required fields missing
                                         </p>
                                     </a></li>
                                 <li (click)="redirecTo('additionalinfo')"><a class="pointer-cursor"><span
@@ -45,7 +45,7 @@
                                         <p class="settings_info">Add other details of you or your business so that clients can understand you more</p>
                                     </a>
                                     <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                        class="req-flds-cap">required fields missing</p>
+                                        class="req-flds-cap" style="padding-left: 13px;">required fields missing</p>
                                 </li>
                                 <li (click)="redirecTo('privacy')"><a class="pointer-cursor"><span
                                             class="lnk">Privacy</span>
