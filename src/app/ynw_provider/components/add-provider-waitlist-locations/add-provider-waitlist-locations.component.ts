@@ -242,6 +242,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       const result2 = pattern2.test(curlabel);
       if (result2) {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
+        this.disableButton = false;
         return;
       }
       form_data.locmapurl = this.amForm.controls['locmapurl'].value;
@@ -348,6 +349,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       const result2 = pattern2.test(curlabel);
       if (result2) {
         this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
+        this.disableButton = false;
         return;
       }
       form_data.locmapurl = this.amForm.controls['locmapurl'].value;
@@ -491,9 +493,9 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
           this.amForm.patchValue({
             locaddress: result['address'] || null
           });
-             this.amForm.patchValue({
-              locname: result['location']
-            });
+          this.amForm.patchValue({
+            locname: result['location']
+          });
           // if (addr) {
           //   this.amForm.patchValue({
           //     locname: addr.split(',')[0]
