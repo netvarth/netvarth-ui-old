@@ -215,7 +215,7 @@ export class JDNComponent implements OnInit {
                 }
             });
     }
-
+ 
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
