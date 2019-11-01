@@ -11,6 +11,7 @@ import { MailboxRoutingModule } from './mailbox.routing.module';
 import { MailboxComponent } from './mailbox.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { SharedModule } from '../../../shared/modules/common/shared.module';
         BreadCrumbModule,
         MailboxRoutingModule,
         Nl2BrPipeModule,
-        SharedModule
+        SharedModule,
+        LoadingSpinnerModule
     ],
     exports: [MailboxComponent],
     entryComponents: [],

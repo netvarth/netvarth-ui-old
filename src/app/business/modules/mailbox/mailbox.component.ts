@@ -49,6 +49,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     ];
     userDet;
     obtainedMsgs = false;
+    api_loading = true;
     selectedParentIndex;
     selectedChildIndex;
     blogo: any;
@@ -109,6 +110,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     }
     getInboxMessages() {
         const usertype = this.shared_functions.isBusinessOwner('returntyp');
+      
         this.inbox_services.getInbox(usertype)
             .subscribe(
                 data => {
@@ -131,10 +133,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     });
                     this.obtainedMsgs = true;
                     this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
+                    this.api_loading = false;
                 },
                 () => {
+                   
                 }
-            );
+               
+            ); 
+           
     }
     sendMessage(messageToSend, inboxList, parentIndex) {
         const userId = this.getReceiverId(inboxList);
