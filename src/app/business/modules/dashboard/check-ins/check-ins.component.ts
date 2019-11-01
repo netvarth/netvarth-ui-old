@@ -18,6 +18,7 @@ import { SearchProviderCustomerComponent } from '../../../../ynw_provider/compon
 import { AddProviderCustomerComponent } from '../../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
 import { CheckInComponent } from '../../../../shared/modules/check-in/check-in.component';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { ApplyLabelComponent } from '../apply-label/apply-label.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -210,6 +211,11 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   bprofile: any = [];
   domain;
   providerLabels: any = [];
+  checkinId;
+  labelMap;
+  label;
+  showValueCreation: any = [];
+  labeldialogRef;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -872,10 +878,10 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     );
   }
   setTimeType(time_type) {
-    if(this.open_filter === true){
-   this.toggleFilter();
-  }
-  
+    if (this.open_filter === true) {
+      this.toggleFilter();
+    }
+
     if (time_type === 1 && this.status_type === 'all') {
       this.showTime = true;
     } else {
@@ -1431,5 +1437,74 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
         return this.providerLabels[i].displayName;
       }
     }
+  }
+
+  addLabel() {
+    this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
+
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
+      });
+  }
+  deleteLabel(label) {
+    this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
+
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  changeLabelvalue(checkin, labelname, value) {
+    this.checkinId = checkin.ynwUuid;
+    this.labelMap = new Object();
+    this.labelMap[labelname] = value;
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+        console.log(value);
+        console.log(this.providerLabels[i].valueSet[j].value);
+        if (this.providerLabels[i].valueSet[j].value === value) {
+          if (!this.providerLabels[i].valueSet[j].selected) {
+            this.providerLabels[i].valueSet[j].selected = true;
+            this.addLabel();
+          } else {
+            this.providerLabels[i].valueSet[j].selected = false;
+            this.deleteLabel(labelname);
+          }
+        } else {
+          if (this.providerLabels[i].label === labelname) {
+            this.providerLabels[i].valueSet[j].selected = false;
+          }
+        }
+      }
+    }
+    console.log(this.providerLabels);
+  }
+  addLabelvalue(checkin, source, uuid) {
+    this.checkinId = uuid;
+    // this.router.navigate(['provider', 'dashboard', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
+    this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        checkin: checkin,
+        source: source,
+        uuid: this.checkinId
+      }
+    });
+    this.labeldialogRef.afterClosed().subscribe(data => {
+      this.labelMap = new Object();
+      this.labelMap[data.label] = data.value;
+      this.addLabel();
+      this.getDisplayname(data.label);
+      this.getTodayCheckIn();
+    });
+  }
+  labelClick(checkin) {
+    console.log(checkin);
+    console.log(this.providerLabels);
+
   }
 }

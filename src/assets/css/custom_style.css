@@ -5463,3 +5463,7 @@ li.separator.setsplit {
 .amount_box{
   width: 100px !important;
 }
+.dashboard .card .actions .labelcheck {
+  padding: 5px;
+  margin: 0px;
+}

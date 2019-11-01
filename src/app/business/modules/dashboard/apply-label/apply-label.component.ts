@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-apply-label',
@@ -28,15 +30,26 @@ export class ApplyLabelComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     labelMap;
     label;
+    labelname;
+    value;
+    source;
+    uuid;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
-        public shared_functions: SharedFunctions) {
+        public shared_functions: SharedFunctions,
+        @Inject(MAT_DIALOG_DATA) public checkin: any,
+        public dialogRef: MatDialogRef<ApplyLabelComponent>, ) {
         this.activateroute.params.subscribe(data => {
             this.checkinId = data.id;
         });
         this.activateroute.queryParams.subscribe(data => {
             this.label = data;
         });
+        this.source = checkin.source;
+        this.uuid = checkin.uuid;
+        if (this.source === 'label') {
+            this.label = checkin.checkin;
+        }
     }
     ngOnInit() {
         this.getLabels();
@@ -44,16 +57,16 @@ export class ApplyLabelComponent implements OnInit {
     getLabels() {
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
-            const value = Object.values(this.label);
-            for (let i = 0; i < this.providerLabels.length; i++) {
-                for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-                    for (let k = 0; k < value.length; k++) {
-                        if (this.providerLabels[i].valueSet[j].value === value[k]) {
-                            this.providerLabels[i].valueSet[j].selected = true;
-                        }
-                    }
-                }
-            }
+            // const value = Object.values(this.label);
+            // for (let i = 0; i < this.providerLabels.length; i++) {
+            //     for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+            //         for (let k = 0; k < value.length; k++) {
+            //             if (this.providerLabels[i].valueSet[j].value === value[k]) {
+            //                 this.providerLabels[i].valueSet[j].selected = true;
+            //             }
+            //         }
+            //     }
+            // }
         });
     }
     addLabel() {
@@ -91,6 +104,57 @@ export class ApplyLabelComponent implements OnInit {
                     }
                 }
             }
+        }
+    }
+    createLabel() {
+        if (this.source === 'new') {
+            const valueSet = [];
+            const valset = {};
+            valset['value'] = this.value;
+            valset['shortValue'] = this.value.replace(' ', '_');
+            if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+                valueSet.push(valset);
+            }
+            const post_data = {
+                'label': this.labelname,
+                'displayName': this.labelname,
+                'valueSet': valueSet,
+            };
+            this.provider_services.createLabel(post_data).subscribe(
+                () => {
+                    this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+                    setTimeout(() => {
+                        this.dialogRef.close({ label: this.labelname, value: this.value, message: 'reloadlist' });
+                    }, projectConstants.TIMEOUT_DELAY);
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                });
+        } else {
+            let valueSet = [];
+            const valset = {};
+            valset['value'] = this.value;
+            valset['shortValue'] = this.value.replace(' ', '_');
+            valueSet = this.label.valueSet;
+            if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+                valueSet.push(valset);
+            }
+            const post_data = {
+                'id': this.label.id,
+                'label': this.label.label,
+                'displayName': this.label.displayName,
+                'valueSet': valueSet,
+            };
+            this.provider_services.updateLabel(post_data).subscribe(
+                () => {
+                    this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+                    setTimeout(() => {
+                        this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
+                    }, projectConstants.TIMEOUT_DELAY);
+                },
+                error => {
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                });
         }
     }
 }

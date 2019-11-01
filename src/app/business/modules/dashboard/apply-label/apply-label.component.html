@@ -1,12 +1,12 @@
-<section>
+<!-- <section>
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section>
+</section> -->
 
-<section>
+<!-- <section>
     <div class="content comn-cls">
         <div class="col-md-12">
             <div class="row">
-                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding">
                     <div class="card">
                         <div *ngFor="let label of providerLabels" class="add-label">
                             <div class="field-name"> {{label.displayName}} </div>
@@ -22,4 +22,26 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
+
+<h1 class="mat-dialog-title">Manage label <button mat-dialog-close class="modal_close"
+        tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+
+<mat-dialog-content class="ynw-common-form">
+    <div class="form-group col-md-12" *ngIf="source === 'new'">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="displayName" placeholder="Label Name"
+                [(ngModel)]="labelname" autocomplete="off">
+        </mat-form-field>
+    </div>
+    <div class="form-group col-md-12">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="value" [(ngModel)]="value"
+                placeholder="Enter  Value*" autocomplete="off">
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="!api_loading">
+        <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">Cancel</button>
+        <button (click)="createLabel()" type="button" mat-button class="cs-btn bt1" [disabled]="disableButton">Create</button>
+</mat-dialog-actions>

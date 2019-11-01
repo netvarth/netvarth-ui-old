@@ -118,15 +118,18 @@
                 *ngIf="small_device_display && time_type ==1 && selected_queue!=null && selected_queue.id">
                 <a *ngIf="status_subtype =='started'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                   data-toggle="dropdown">
-                  <span>{{started_upper}} ({{today_started_count}}) &nbsp;<i class="fa fa-angle-right" style="font-size: medium"></i></span>
+                  <span>{{started_upper}} ({{today_started_count}}) &nbsp;<i class="fa fa-angle-right"
+                      style="font-size: medium"></i></span>
                 </a>
                 <a *ngIf="status_subtype =='done'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                   data-toggle="dropdown">
-                  <span>{{complete_cap}} ({{today_completed_count}}) &nbsp;<i class="fa fa-angle-right" style="font-size: medium"></i></span>
+                  <span>{{complete_cap}} ({{today_completed_count}}) &nbsp;<i class="fa fa-angle-right"
+                      style="font-size: medium"></i></span>
                 </a>
                 <a *ngIf="status_subtype =='cancelled'" class="dropdown-toggle navbar-item-color bold pointer-cursor"
                   data-toggle="dropdown">
-                  <span>{{cancelled_upper}} ({{today_cancelled_count}}) &nbsp;<i class="fa fa-angle-right" style="font-size: medium"></i></span>
+                  <span>{{cancelled_upper}} ({{today_cancelled_count}}) &nbsp;<i class="fa fa-angle-right"
+                      style="font-size: medium"></i></span>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
@@ -157,7 +160,8 @@
             <li class="dropdown notifications-menu cl-fltr fltr-tbl">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i *ngIf="filterapplied === true" class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
-                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /> &nbsp;</i>
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img
+                    src="../../../../assets/images/icons8-clear-filters-40.png" alt="" /> &nbsp;</i>
                 <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
                 <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
@@ -313,7 +317,7 @@
                         </span>
                       </span>
                     </div>
-                    <div class="col-md-12 col-xs-12 no-padding mt10" >
+                    <div class="col-md-12 col-xs-12 no-padding mt10">
                       <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
                         *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                         <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i> {{getAppxTime(checkin)}}</span>
@@ -351,7 +355,8 @@
                         <i class="icon-note"></i>
                       </span>
                     </span>
-                    <div class="col-md-12 mt10 col-xs-12 no-padding actions" *ngIf="time_type!=2">
+                    <div class="col-md-12 mt10 col-xs-12 no-padding actions" *ngIf="time_type!=2"
+                      style="display: flex;">
                       <ng-container *ngIf="time_type == 1">
                         <span class="arrived cs-btn bt7 btnchkinsmall" (click)="changeWaitlistStatus(checkin, 'REPORT')"
                           *ngIf="checkin.waitlistStatus == 'checkedIn' && !checkin.disableArrivedbtn">
@@ -377,11 +382,12 @@
                         <span class="done cs-btn bt7 btnchkinsmall"
                           *ngIf="checkin.waitlistStatus == 'started' && checkin.disableDonebtn">
                           <i class=""></i>{{done_cap}}
-                        </span>                        
+                        </span>
                       </ng-container>
                       <ng-container *ngIf="time_type == 0">
                         <!-- case of history-->
-                        <span class="start cs-btn bt7 btnchkinsmall" (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="(checkin.waitlistStatus == 'checkedIn'
+                        <span class="start cs-btn bt7 btnchkinsmall" (click)="changeWaitlistStatus(checkin, 'STARTED')"
+                          *ngIf="(checkin.waitlistStatus == 'checkedIn'
                                                           || checkin.waitlistStatus == 'arrived')">
                           <i class=""></i>{{start_label |capitalizeFirst}}
                         </span>
@@ -403,8 +409,46 @@
                         (click)="viewBillPage(checkin)">
                         <i class=""></i>{{accept_cap}}
                       </span>
-                      <i class="fa fa-tags" (click)="labels()"></i>
-                    </div>                    
+                      <!-- <i class="fa fa-tags" (click)="labels()"></i> -->
+
+                      <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav ">
+                          <li class="dropdown messages-menu loc-lst">
+                            <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
+                              style="padding: 5px;">
+                              <i class="fa fa-tags" (click)="labelClick(checkin)"></i>
+                            </a>
+                            <ul class="dropdown-menu"
+                              style="min-width: 0px; width: auto;max-height: 240px;overflow-x: hidden;">
+                              <li style="border-bottom: 1px solid;">
+                                <ul class="menu" style="padding: 10px; width: max-content;max-height: none;">
+                                  <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                    <ul class="menu" style="overflow: hidden;">
+                                      <li *ngFor="let value of label.valueSet">
+                                        <mat-checkbox class="example-margin" (click)="$event.stopPropagation();"
+                                          (change)="changeLabelvalue(checkin, label.label, value.value)">
+                                        </mat-checkbox>
+                                        <span class="labelcheck" style="font-size: smaller;padding: 0px;">
+                                          {{value.shortValue}} </span>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li *ngFor="let label of providerLabels;let i = index">
+                                <a class="pointer-cursor" (click)="addLabelvalue(label, 'label', checkin.ynwUuid)">
+                                  <h4 style="font-size: smaller;">{{label.displayName}}</h4>
+                                </a>
+                              </li>
+                              <li class="footer"><a class="pointer-cursor" style="border-top: 1px solid;"
+                                  (click)="addLabelvalue(checkin, 'new', checkin.ynwUuid)">Manage Label</a>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-1 col-xs-1">
@@ -438,9 +482,9 @@
                         (click)="showConsumerNote(checkin)">
                         {{view_cap}} {{customer_label |capitalizeFirst}} {{note_cap}}
                       </button>
-                      <button type="button" mat-menu-item *ngIf="time_type!=0" (click)="applyLabel(checkin)">
+                      <!-- <button type="button" mat-menu-item *ngIf="time_type!=0" (click)="applyLabel(checkin)">
                         Manage Label
-                      </button>
+                      </button> -->
                     </mat-menu>
                   </span>
                 </div>
