@@ -370,16 +370,18 @@
 															</div>
 															<div
 																class="col-md-12 col-sm-12 col-lg-12 notes providernotes">
-																<button class="cs-btn bt1"
+																<button class="cs-btn bt1" style="width: 150px;
+																height: 40px;"
 																	mat-button
 																	[disabled]="displaybuttondisabled"
 																	*ngIf="showDisplaynoteSection"
 																	(click)="addDisplaynote()">
-																	<span
+																	<span 
 																		*ngIf="!displayNoteedit">{{add_note_btn}}</span>
-																	<span
+																	<span 
 																		*ngIf="displayNoteedit">{{update_note_btn}}</span></button>
-																<button class="cs-btn bt1"
+																<button class="cs-btn bt1" style="width: 150px;
+																height: 40px;"
 																	mat-button
 																	*ngIf="showPrivatenoteSection"
 																	[disabled]="privatebuttondisabled"
@@ -388,7 +390,7 @@
 																		*ngIf="!privateNoteedit">{{add_note_btn}}</span>
 																	<span
 																		*ngIf="privateNoteedit">{{update_note_btn}}</span></button>
-																<button style="margin-left:5px;"
+																<button style="margin-top: 5px;"
 																	class="cs-btn bt2"
 																	(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 															</div>
