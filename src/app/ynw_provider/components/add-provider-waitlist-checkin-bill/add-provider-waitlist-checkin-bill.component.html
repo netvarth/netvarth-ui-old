@@ -845,7 +845,7 @@
 							<div class="section-two pay-wb" style="display: flex;">
 								<div class="add-serv-item edit-row service no-padding">
 									<div class="spl no-padding">
-										<div class="item qty no-padding">
+										<div class="item qty no-padding" style="margin-left: 0px;">
 											<span class="label" style="font-size:.875rem;color: #000;">{{wbamount_cap}}</span> 
 											<span
 												class="number">
@@ -873,12 +873,14 @@
 								</div>
 								
 							</div> 
-							<span>
-									<!-- <mat-form-field  class="example-full-width"> -->
+							<div class="col-md-12 p0" >
+									<div class="col-md-6 p0">
+									<mat-form-field  >
 										<label style="font-weight: 500;">Leave a Payment Note  </label>
 										<textarea matInput style="margin-bottom: 10px;"  [(ngModel)]="paynot"></textarea>
-										<!-- </mat-form-field> -->
-								</span>
+										</mat-form-field>
+									</div>
+									</div>
 							<div >
 								<button type="button" mat-button class="cs-btn bt1 accept"
 									*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
