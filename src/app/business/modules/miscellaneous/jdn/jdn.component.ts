@@ -54,6 +54,7 @@ export class JDNComponent implements OnInit {
                 if (this.jdn && this.jdn.features.JDN) {
                     this.jdnType = this.jdn.features.JDN.JDNType;
                     this.jdnPercentage = this.jdn.features.JDN.JDNPercent;
+                    if(this.jdnPercentage){
                     for(let option of  this.jdnPercentage){
                         if(option.percentage === 5){
                             this.maximumDiscount1 = option.maxDiscount;
@@ -67,6 +68,7 @@ export class JDNComponent implements OnInit {
                         
 
                     }
+                }
                 }
 
             });
@@ -201,7 +203,6 @@ export class JDNComponent implements OnInit {
         this.shared_services.getJdn()
             .subscribe(data => {
                 this.jdn_data = data;
-                console.log(data);
                 if (this.jdn_data != null) {
                     this.status = this.jdn_data.status;
                     if (this.status === 'ENABLED') {
