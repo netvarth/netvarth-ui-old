@@ -5460,3 +5460,6 @@ li.separator.setsplit {
 .sidebar-collapse .bus-name {
   display: none;
 }
+.amount_box{
+  width: 100px !important;
+}
