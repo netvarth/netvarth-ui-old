@@ -377,7 +377,7 @@
                         <span class="done cs-btn bt7 btnchkinsmall"
                           *ngIf="checkin.waitlistStatus == 'started' && checkin.disableDonebtn">
                           <i class=""></i>{{done_cap}}
-                        </span>
+                        </span>                        
                       </ng-container>
                       <ng-container *ngIf="time_type == 0">
                         <!-- case of history-->
@@ -403,8 +403,8 @@
                         (click)="viewBillPage(checkin)">
                         <i class=""></i>{{accept_cap}}
                       </span>
-                    </div>
-
+                      <i class="fa fa-tags" (click)="labels()"></i>
+                    </div>                    
                   </div>
                 </div>
                 <div class="col-md-1 col-xs-1">

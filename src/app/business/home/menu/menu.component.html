@@ -19,10 +19,10 @@
                 </span>
             </div> -->
 
-        <div (click)="btnAvailableClicked()" class="pointer-cursor available">
+        <div (click)="closeMenu();btnAvailableClicked()" class="pointer-cursor available">
           <div class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
-            <i class="fa fa-circle text-success"></i> I am available online <br />
-            until {{qAvailability.timeRange.eTime}}
+            <i class="fa fa-circle text-success"></i> <span>I am available online</span> <br />
+            <span>until {{qAvailability.timeRange.eTime}}</span>
           </div>
           <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
             <i class="fa fa-circle disabled"></i> I am not available now
@@ -58,42 +58,42 @@
         </ul>
       </li> -->
       <li>
-        <a class="pointer-cursor" routerLink="dashboard/check-ins" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="dashboard/check-ins" (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-dashboard"></i> <span> Check-Ins</span>
         </a>
       </li>
       <li class="treeview">
-        <a class="pointer-cursor" routerLink="customers" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="customers"  (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-users"></i>
           <span> Customers</span>
         </a>
       </li>
       <li>
-        <a class="pointer-cursor" routerLink="inbox" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="inbox"  (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-envelope"></i> <span> Inbox</span>
           <small class="label pull-right bg-green"
             *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
         </a>
       </li>
       <li>
-        <a class="pointer-cursor" routerLink="alerts" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="alerts"  (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-bell-o"></i> <span> Alerts</span>
           <small class="label pull-right bg-orange" *ngIf="alertCnt>0">{{alertCnt}}</small>
         </a>
       </li>
       <li>
-        <a class="pointer-cursor" routerLink="auditlog" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="auditlog"  (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-list"></i> <span> Activity Log</span>
         </a>
       </li>
       <li class="separator"></li>
       <li>
-        <a class="pointer-cursor" routerLink="license" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="license"  (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="icon-license"></i> <span> License</span>
         </a>
       </li>
       <li>
-        <a class="pointer-cursor" routerLink="settings" routerLinkActive="active-lnk">
+        <a class="pointer-cursor" routerLink="settings"  (click)="closeMenu()" routerLinkActive="active-lnk">
           <i class="fa fa-gears"></i> <span> Settings</span>
         </a>
       </li>
@@ -103,8 +103,8 @@
           <i class="fa fa-tablet"></i><span>Kiosk</span>
         </a>
       </li> -->
-      <li><a class="pointer-cursor" (click)="gotoHelp()" routerLinkActive="active-lnk"><i class="fa fa-question-circle-o"></i> <span>Help</span></a></li>
-      <li><a routerLink="faq" routerLinkActive="active-lnk"><i class="fa fa-book"></i> <span>FAQ</span></a></li>      
+      <li><a class="pointer-cursor" (click)="closeMenu();gotoHelp()" routerLinkActive="active-lnk"><i class="fa fa-question-circle-o"></i> <span>Help</span></a></li>
+      <li><a routerLink="faq"  (click)="closeMenu()" routerLinkActive="active-lnk"><i class="fa fa-book"></i> <span>FAQ</span></a></li>      
     </ul>
   </section>
   <!-- /.sidebar -->

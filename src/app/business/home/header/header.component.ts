@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
@@ -34,6 +34,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private _scrollToService: ScrollToService,
+    private renderer: Renderer2,
     public shared_service: SharedServices) {
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
@@ -43,6 +44,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       }
       this.getBusinessdetFromLocalstorage();
     });
+  }
+  closeMenu() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.renderer.removeClass(document.body, 'sidebar-open');
+    }
   }
   gotoActiveHome() {
     this.router.navigate(['provider', 'dashboard', 'check-ins']);

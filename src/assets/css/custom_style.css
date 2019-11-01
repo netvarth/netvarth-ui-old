@@ -4757,7 +4757,7 @@ i.notavail {
     min-height: 575px
   }
   .set-block-ul {
-    min-height: 650px
+    min-height: 670px
   }
 }
 
@@ -5421,7 +5421,7 @@ li.separator.setsplit {
   margin-right: 5px !important;
 }
 .q-recur{
-  background:url(../images/home/anchor.png);
+  background:url(../images/q-recur.png);
   background-size:cover;
       position: relative;
   width:20px;
@@ -5447,4 +5447,16 @@ li.separator.setsplit {
   background: #3c8dbc;
   text-shadow: none;
   color: #fff;
+}
+.dashboard .card.w-dta .dash-list .chkn-dash li.active:hover,
+.dashboard .card.w-dta .dash-list .chkn-dash li.active>a:hover {
+  color: #3c8dbc !important;
+}
+@media (min-width: 768px) {
+  .sidebar-mini.sidebar-collapse .main-sidebar {
+    z-index: 1 !important;
+  }
+}
+.sidebar-collapse .bus-name {
+  display: none;
 }

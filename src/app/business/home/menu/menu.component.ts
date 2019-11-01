@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
@@ -24,7 +24,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
@@ -89,6 +90,12 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
       this.blogo = bdetails.logo || 'img-null.svg';
+    }
+  }
+  closeMenu() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.renderer.removeClass(document.body, 'sidebar-open');
     }
   }
   gotoHelp() {
