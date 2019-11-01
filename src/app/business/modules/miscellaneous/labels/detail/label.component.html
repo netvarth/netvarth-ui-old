@@ -11,7 +11,7 @@
                             <div class="cl1" *ngIf="actionparam === 'view' && labelData">
                                 <span class="editbt" (click)="editLabel(labelData.id)"></span>
                                 <div class="ot-it">
-                                    <h3>{{ labelData.displayName | capitalizeFirst}} <span class="layout_name"> ({{labelData.label | capitalizeFirst}})</span></h3>
+                                    <h3>{{ labelData.displayName | capitalizeFirst}} </h3>
                                     <div class="c-ot m0">
                                         <div class="item displyfont" *ngIf="labelData.description">
                                             <span class="ttle">Description</span>
@@ -30,16 +30,16 @@
                                     class="ynw-common-form-nm wiz-service labelForm serviceform">
                                     <ng-container>
                                         <div class="form-group">
-                                            <mat-form-field>
+                                            <!-- <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="label_name"
                                                     placeholder="{{label_name_cap}}" [(ngModel)]="label"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                            </mat-form-field>
+                                            </mat-form-field> -->
                                         </div>
                                         <div class="form-group">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="displayName"
-                                                        placeholder="{{label_displayname_cap}}" [(ngModel)]="displayName"
+                                                        placeholder="{{label_name_cap}}" [(ngModel)]="displayName"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>

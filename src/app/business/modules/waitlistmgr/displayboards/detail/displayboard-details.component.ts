@@ -127,6 +127,7 @@ export class DisplayboardDetailComponent implements OnInit {
             });
             this.breadcrumbs = breadcrumbs;
             this.name = this.layoutData.name;
+            console.log(this.layoutData.displayName);
             this.displayName = this.layoutData.displayName;
             // this.layout = this.layoutData.layout;
             this.id = this.layoutData.id;
@@ -149,8 +150,9 @@ export class DisplayboardDetailComponent implements OnInit {
             }
         }
         if (this.actionparam === 'add') {
+            console.log(this.displayName.replace(/ /g,"_"));
             const post_data = {
-                'name': this.name,
+                'name': this.displayName.replace(/ /g,"_"),
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric,
@@ -168,7 +170,7 @@ export class DisplayboardDetailComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.layoutData.id,
-                'name': this.name,
+                'name': this.displayName.replace(/ /g,"_"),
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric

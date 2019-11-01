@@ -143,7 +143,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
     onSubmit() {
         if (this.actionparam === 'add') {
             const post_data = {
-                'name': this.boardName,
+                'name': this.boardDisplayname.replace(/ /g,"_"),
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor
@@ -161,7 +161,7 @@ export class DisplayboardQSetDetailComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.displayBoardData.id,
-                'name': this.boardName,
+                'name': this.boardDisplayname.replace(/ /g,"_"),
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor

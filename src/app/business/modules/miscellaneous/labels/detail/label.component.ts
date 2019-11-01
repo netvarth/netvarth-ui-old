@@ -110,8 +110,9 @@ export class LabelComponent implements OnInit {
     }
     onSubmit() {
         if (this.actionparam === 'add') {
+            console.log(this.displayName.replace(/ /g,"_"));
             const post_data = {
-                'label': this.label,
+                'label': this.displayName.replace(/ /g,"_"),
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet,
@@ -124,7 +125,7 @@ export class LabelComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.labelData.id,
-                'label': this.label,
+                'label': this.displayName.replace(/ /g,"_"),
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet

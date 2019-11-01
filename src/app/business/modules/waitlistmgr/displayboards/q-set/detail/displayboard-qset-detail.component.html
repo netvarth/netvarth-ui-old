@@ -11,7 +11,7 @@
                             <span class="editbt" (click)="editStatusBoard(displayBoardData.id)"
                                 style="float: right;"></span>
                             <h3 (click)="goDisplayboardDetails(board)" class="pointer-cursor"> {{displayBoardData.displayName |
-                                        capitalizeFirst}} ({{displayBoardData.name}})</h3>
+                                        capitalizeFirst}}</h3>
                             <div class="c-ot" *ngFor="let labelfor of displayBoardData.statusBoardFor">
                                 <div class="item">
                                     <span class="ttle">{{category}}</span>
@@ -35,17 +35,17 @@
                         <div class="ynw-common-form-nm" *ngIf="actionparam !== 'view'">
                             <ng-container>
                                 <div class="form-group col-md-12">
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="bName"
                                                 [(ngModel)]="boardName" placeholder="Enter Name" autocomplete="off">
                                         </mat-form-field>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6">
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="bName"
                                                 autocomplete="off" [(ngModel)]="boardDisplayname"
-                                                placeholder="Enter display Name">
+                                                placeholder="Enter Display Name">
                                         </mat-form-field>
                                     </div>
                                 </div>
