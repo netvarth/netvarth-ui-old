@@ -5467,3 +5467,10 @@ li.separator.setsplit {
   padding: 5px;
   margin: 0px;
 }
+.bill-add-note{
+  height: 33px !important;
+}
+.bill-add-note-cancel{
+  height: 33px !important;;
+  padding-top: 10.5px !important;;
+}
