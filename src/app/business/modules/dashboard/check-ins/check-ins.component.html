@@ -16,12 +16,12 @@
                     <i class="fa fa-plus"></i>
                     <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
                       {{checkin_label |capitalizeFirst}}</span>
-                    <span *ngIf="calculationmode=='NoCalc' && showToken"> Get Token</span>
+                    <span *ngIf="calculationmode=='NoCalc' && showToken"> New Token</span>
                   </a>
                 </li>
                 <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
                   <a (click)="showAdjustDelay()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                    data-toggle="dropdown"><i class="fa fa-pause"></i> Adjust Delay</a>
+                    data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Add Delay</a>
                 </li>
                 <li class="dropdown messages-menu" *ngIf="time_type ==1 && apis_loaded && selected_queue">
                   <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"

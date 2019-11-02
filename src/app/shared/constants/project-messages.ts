@@ -569,7 +569,7 @@ export const Messages = {
   'NO_MSG_EXISTS_CAP': 'No messages found',
 
   // App-shared-modules-learnmore-adjustdelay
-  'ADJUST_DELAY_CAP': 'Adjust Delay',
+  'ADJUST_DELAY_CAP': 'Add Delay',
 
   // App-shared-modules-learnmore-checkin
   'CHECK_IN_CAP': 'Check In',
