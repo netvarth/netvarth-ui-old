@@ -16,6 +16,7 @@ import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/co
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerModule } from '../customer/customer.module';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ProviderWaitlistCheckInDetailComponent } from '../../../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
         LoadingSpinnerModule,
         Nl2BrPipeModule,
         InboxModule,
-        CustomerModule
+        CustomerModule,
+        NgbModule.forRoot()
     ],
     declarations: [
         DashboardComponent,

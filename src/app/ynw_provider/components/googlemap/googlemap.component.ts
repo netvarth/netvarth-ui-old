@@ -50,11 +50,12 @@ export class GoogleMapComponent implements OnInit {
   }
 
   ngOnInit() {
-    if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
-      this.getCurrentLocation();
-    } else {
+    // if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
+    if (this.data.passloc.lat && this.data.passloc.lon) {
       this.setLocationtoMap();
       this.getAddressonDragorClick('edit');
+    } else {
+      this.getCurrentLocation();
     }
   }
   getAddressonDragorClick(action?) {

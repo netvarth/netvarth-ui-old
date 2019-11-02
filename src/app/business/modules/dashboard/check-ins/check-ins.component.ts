@@ -1441,7 +1441,6 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
 
   addLabel() {
     this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
-
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
@@ -1449,7 +1448,6 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
   }
   deleteLabel(label) {
     this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
-
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1461,8 +1459,6 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
     this.labelMap[labelname] = value;
     for (let i = 0; i < this.providerLabels.length; i++) {
       for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        console.log(value);
-        console.log(this.providerLabels[i].valueSet[j].value);
         if (this.providerLabels[i].valueSet[j].value === value) {
           if (!this.providerLabels[i].valueSet[j].selected) {
             this.providerLabels[i].valueSet[j].selected = true;
@@ -1478,7 +1474,6 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
         }
       }
     }
-    console.log(this.providerLabels);
   }
   addLabelvalue(checkin, source, uuid) {
     this.checkinId = uuid;
@@ -1495,16 +1490,38 @@ export class CheckInsDashboardComponent implements OnInit, OnDestroy, AfterViewI
       }
     });
     this.labeldialogRef.afterClosed().subscribe(data => {
-      this.labelMap = new Object();
-      this.labelMap[data.label] = data.value;
-      this.addLabel();
-      this.getDisplayname(data.label);
-      this.getTodayCheckIn();
+      console.log(data);
+      if (data) {
+        this.labelMap = new Object();
+        this.labelMap[data.label] = data.value;
+        this.addLabel();
+        this.getLabel();
+        this.getDisplayname(data.label);
+        this.getTodayCheckIn();
+      }
+
     });
   }
   labelClick(checkin) {
-    console.log(checkin);
-    console.log(this.providerLabels);
-
+    const value = Object.values(checkin.label);
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+        if (value.length > 0) {
+          for (let k = 0; k < value.length; k++) {
+            if (this.providerLabels[i].valueSet[j].value === value[k]) {
+              this.providerLabels[i].valueSet[j].selected = true;
+            }
+          }
+        } else {
+          this.providerLabels[i].valueSet[j].selected = false;
+        }
+      }
+    }
+  }
+  toggled(event) {
+    if (event) {
+    } else {
+      this.getTodayCheckIn();
+    }
   }
 }
