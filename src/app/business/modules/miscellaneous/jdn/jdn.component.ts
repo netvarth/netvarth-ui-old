@@ -221,3 +221,4 @@ export class JDNComponent implements OnInit {
         this.api_success = null;
     }
 }
+
