@@ -44,7 +44,8 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
     entryComponents: [
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
-        AdjustQueueDelayComponent
+        AdjustQueueDelayComponent,
+        ApplyLabelComponent
     ],
     exports: [DashboardComponent]
 })
