@@ -5281,7 +5281,7 @@ i.notavail {
     padding: 0 !important;
   }
   .queuelist .ttle {
-    font-size: 0.90rem !important;
+    font-size: 0.87rem !important;
   }
   .adjustdelay .mat-checkbox-layout {
     white-space: normal;
@@ -5413,20 +5413,25 @@ li.separator.setsplit {
 .displayboard .no-dta {text-align: center;}
 .sidebar .user-panel i.disabled {background: none !important;}
 .q-instant{
-  background:url(../images/q-instant.png);
+  content: '';
+  background:url(../images/q-instant.png) no-repeat;
   background-size:cover;
       position: relative;
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
+  background-position: center;
   margin-right: 5px !important;
 }
 .q-recur{
-  background:url(../images/q-recur.png);
+  content: '';
+  background:url(../images/q-recur.png) no-repeat;
   background-size:cover;
       position: relative;
-  width:20px;
-  height:20px;
+      background-position: center;
+  width:18px;
+  height:18px;
   margin-right: 5px !important;
+  
 }
 @media only screen and (max-width: 575px) {
   .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
@@ -5460,6 +5465,10 @@ li.separator.setsplit {
 .sidebar-collapse .bus-name {
   display: none;
 }
+.content.loc-list .card .copy h3 {
+  font-size: 1rem !important;
+}
+.sched_q .mat-expansion-panel-body {padding : 0 15px 15px !important}
 .amount_box{
   width: 100px !important;
 }
