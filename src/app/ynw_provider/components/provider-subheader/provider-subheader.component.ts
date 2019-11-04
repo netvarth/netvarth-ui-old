@@ -107,18 +107,18 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
         });
   }
 
-  kioskClick() {
-    const licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
-    for (let i = 0; i < licenseMetrics.length; i++) {
-      if (licenseMetrics[i].id === 9) {
-        if (licenseMetrics[i].anyTimeValue === 'true') {
-          this.routerobj.navigate(['/kiosk']);
-        } else {
-          this.shared_functions.openSnackBar('You are not allowed to do this operation. Please upgrade license package', { 'panelClass': 'snackbarerror' });
-        }
-      }
-    }
-  }
+  // kioskClick() {
+  //   const licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
+  //   for (let i = 0; i < licenseMetrics.length; i++) {
+  //     if (licenseMetrics[i].id === 9) {
+  //       if (licenseMetrics[i].anyTimeValue === 'true') {
+  //         this.routerobj.navigate(['/kiosk']);
+  //       } else {
+  //         this.shared_functions.openSnackBar('You are not allowed to do this operation. Please upgrade license package', { 'panelClass': 'snackbarerror' });
+  //       }
+  //     }
+  //   }
+  // }
 
   searchCustomer(source) {
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {

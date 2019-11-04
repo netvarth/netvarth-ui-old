@@ -44,7 +44,7 @@ export class SetPasswordAppComponent implements OnInit {
   createForm() {
     this.spForm = this.fb.group({
       new_password: ['', Validators.compose(
-        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')])],
+        [Validators.required])],
       confirm_password: ['', Validators.compose(
         [Validators.required])],
 

@@ -114,6 +114,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             title: 'Payment'
         }
     ];
+    licenseMetadata: any = [];
+    licenseMetrics: any = [];
     /**
      * Constructor
      * @param provider_services ProviderServices
@@ -130,6 +132,14 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private activated_route: ActivatedRoute
 
     ) {
+        this.shared_functions.getMessage().subscribe(data => {
+            this.getLicensemetrics();
+            switch (data.ttype) {
+                case 'upgradelicence':
+                    this.getLicensemetrics();
+                    break;
+            }
+        });
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(params => {
             this.tabid = (params.id) ? params.id : 0;
@@ -147,7 +157,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.name;
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
-        this.getLicenseMetrics();
+        // this.getLicenseMetrics();
     }
     /**
      * Function to call the Learn More Page
@@ -157,7 +167,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
-      }
+    }
 
     /**
     * Clear all fields
@@ -166,7 +176,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     resetApi(code?) {
         this.errorExist = false;
         if (code !== undefined) {
-            if(code == 'paytm'){
+            if (code === 'paytm') {
                 this.showError = {
                     'paytmmobile': { status: false, msg: '' },
                     'paytmMerchantId': { status: false, msg: '' },
@@ -175,8 +185,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     'paytmWebsiteWeb': { status: false, msg: '' },
                     'paytmWebsiteApp': { status: false, msg: '' },
                 };
-            }
-            else if(code == 'cc'){
+            } else if (code === 'cc') {
                 this.showError = {
                     'pannumber': { status: false, msg: '' },
                     'panname': { status: false, msg: '' },
@@ -190,9 +199,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     'taxpercentage': { status: false, msg: '' },
                     'gstnumber': { status: false, msg: '' }
                 };
-            }
-            else {
-            this.showError[code] = { status: false, msg: '' };
+            } else {
+                this.showError[code] = { status: false, msg: '' };
             }
         } else {
             this.showError = {
@@ -220,9 +228,9 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.resetApi(paymenttype);
         this.initPaymentSettings(this.paySettings, 1, paymenttype);
     }
-    initPaymentSettings(paySettings, type ,mode?) {
+    initPaymentSettings(paySettings, type, mode?) {
         if (mode !== undefined) {
-            if(mode == 'paytm'){
+            if (mode === 'paytm') {
                 this.paystatus = paySettings.onlinePayment || false;
                 this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
                 this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
@@ -230,9 +238,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
                 this.paytmIndustryType = paySettings.paytmIndustryType || '';
                 this.paytmMerchantId = paySettings.paytmMerchantId || '';
-            }
-            else{ 
-                this.paystatus = paySettings.onlinePayment || false;  
+            } else {
+                this.paystatus = paySettings.onlinePayment || false;
                 this.pannumber = paySettings.panCardNumber || '';
                 this.panname = paySettings.nameOnPanCard || '';
                 this.bankacname = paySettings.accountHolderName || '';
@@ -243,33 +250,32 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.bankfiling = paySettings.businessFilingStatus || '';
                 this.bankactype = paySettings.accountType || '';
             }
+        } else {
+            this.paystatus = paySettings.onlinePayment || false;
+            this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
+            this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
+            this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
+            this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
+            this.paytmIndustryType = paySettings.paytmIndustryType || '';
+            this.paytmMerchantId = paySettings.paytmMerchantId || '';
+            this.pannumber = paySettings.panCardNumber || '';
+            this.panname = paySettings.nameOnPanCard || '';
+            this.bankacname = paySettings.accountHolderName || '';
+            this.bankacnumber = paySettings.bankAccountNumber || '';
+            this.bankname = paySettings.bankName || '';
+            this.bankifsc = paySettings.ifscCode || '';
+            this.bankbranch = paySettings.branchCity || '';
+            this.bankfiling = paySettings.businessFilingStatus || '';
+            this.bankactype = paySettings.accountType || '';
+            this.paytmverified = paySettings.payTmVerified || false;
+            this.payuverified = paySettings.payUVerified || false;
+            if (type === 0) {
+                this.paytmenabled = paySettings.payTm || false;
+                this.ccenabled = paySettings.dcOrCcOrNb || false;
+                this.isJaldeeAccount = paySettings.isJaldeeAccount;
+                this.optJaldeeAccount = (this.isJaldeeAccount) ? 'enable' : 'disable';
+            }
         }
-        else{
-        this.paystatus = paySettings.onlinePayment || false;
-        this.paytmmobile = paySettings.payTmLinkedPhoneNumber || '';
-        this.paytmMerchantKey = paySettings.paytmMerchantKey || '';
-        this.paytmWebsiteWeb = paySettings.paytmWebsiteWeb || '';
-        this.paytmWebsiteApp = paySettings.paytmWebsiteApp || '';
-        this.paytmIndustryType = paySettings.paytmIndustryType || '';
-        this.paytmMerchantId = paySettings.paytmMerchantId || '';
-        this.pannumber = paySettings.panCardNumber || '';
-        this.panname = paySettings.nameOnPanCard || '';
-        this.bankacname = paySettings.accountHolderName || '';
-        this.bankacnumber = paySettings.bankAccountNumber || '';
-        this.bankname = paySettings.bankName || '';
-        this.bankifsc = paySettings.ifscCode || '';
-        this.bankbranch = paySettings.branchCity || '';
-        this.bankfiling = paySettings.businessFilingStatus || '';
-        this.bankactype = paySettings.accountType || '';
-        this.paytmverified = paySettings.payTmVerified || false;
-        this.payuverified = paySettings.payUVerified || false;
-        if (type === 0) {
-            this.paytmenabled = paySettings.payTm || false;
-            this.ccenabled = paySettings.dcOrCcOrNb || false;
-            this.isJaldeeAccount = paySettings.isJaldeeAccount;
-            this.optJaldeeAccount = (this.isJaldeeAccount) ? 'enable' : 'disable';
-        }
-    }
     }
     /**
      * Get Payment Settings
@@ -371,7 +377,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         console.log(this.paytmenabled);
         if (source === 'payTm') {
             postData['payTm'] = true;
-           // this.paytmBlur();
+            // this.paytmBlur();
             this.paytmMidBlur();
             this.paytmMkeyBlur();
             this.paytmwebsitewebBlur();
@@ -647,17 +653,34 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         return this.shared_functions.removSpace(evt);
     }
 
-    getLicenseMetrics() {
-        const licenseMetrics = this.shared_service.getSelectedLicenseMetrics();
-        console.log(licenseMetrics);
-        for (let i = 0; i < licenseMetrics.length; i++) {
-            if (licenseMetrics[i].id === 6) {
-                if (licenseMetrics[i].anyTimeValue === 'true') {
-                    this.jPay_Billing = true;
-                } else {
-                    this.jPay_Billing = false;
+    getLicensemetrics() {
+        let pkgId;
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+            pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+        }
+        this.provider_services.getLicenseMetadata().subscribe(data => {
+            this.licenseMetadata = data;
+        });
+        this.provider_services.getLicenseMetrics().subscribe(data => {
+            this.licenseMetrics = data;
+            for (let i = 0; i < this.licenseMetrics.length; i++) {
+                for (let j = 0; j < this.licenseMetadata.length; j++) {
+                    if (this.licenseMetrics[i].displayName === 'Jaldee Pay/Billing') {
+                        if (this.licenseMetadata[j].pkgId === pkgId) {
+                            for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
+                                if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {
+                                    if (this.licenseMetadata[j].metrics[k].anyTimeValue === 'true') {
+                                        this.jPay_Billing = true;
+                                    } else {
+                                        this.jPay_Billing = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        }
+        });
     }
 }

@@ -71,6 +71,9 @@ export class ProviderServices {
   getLicenseMetadata() {
     return this.servicemeta.httpGet('provider/license/licensemetadata');
   }
+  getLicenseMetrics() {
+    return this.servicemeta.httpGet('provider/license/metric');
+  }
   getTotalAllowedAdwordsCnt() {
     return this.servicemeta.httpGet('provider/license/adwords/count');
   }

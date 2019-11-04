@@ -12,7 +12,7 @@ import { AlertPromise } from 'selenium-webdriver';
 @Injectable()
 
 export class SharedServices {
-   
+
   licenseMetrics: any = [];
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
 
@@ -64,10 +64,10 @@ export class SharedServices {
   addJdn(data) {
     return this.servicemeta.httpPost('provider/settings/jdn/enable', data);
 }
-updateJdn(data){
+updateJdn(data) {
   return this.servicemeta.httpPut('provider/settings/jdn', data);
 }
-disable(){
+disable() {
   return this.servicemeta.httpPut('provider/settings/jdn/disable');
 }
   OtpValidate(type = 'consumer', otp) {
@@ -976,14 +976,6 @@ disable(){
 
   getBussinessProfile() {
     return this.servicemeta.httpGet('provider/bProfile');
-  }
-
-  setSelectedLicenseMetrics(metrics) {
-    this.licenseMetrics = metrics;
-  }
-
-  getSelectedLicenseMetrics() {
-    return this.licenseMetrics;
   }
 
   getAddressfromLatLong(data) {

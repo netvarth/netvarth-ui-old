@@ -132,7 +132,7 @@ export class AddProviderItemComponent implements OnInit {
   }
   onSubmit(form_data) {
     // }
-    let imgcaption = '';
+    // let imgcaption = '';
     const iprice = parseFloat(form_data.price);
     if (!iprice || iprice === 0) {
       this.api_error = 'Please enter the price';
@@ -147,13 +147,13 @@ export class AddProviderItemComponent implements OnInit {
         this.api_error = 'Please select the file';
         return;
       }*/
-      if (this.selitem_pic) {
-        if (this.captionRef.nativeElement) {
-          imgcaption = this.captionRef.nativeElement.value || '';
-        }
-        imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
-      }
-      const submit_data: FormData = new FormData();
+      // if (this.selitem_pic) {
+      //   if (this.captionRef.nativeElement) {
+      //     imgcaption = this.captionRef.nativeElement.value || '';
+      //   }
+      //   imgcaption = (imgcaption === '') ? 'Itempic' : imgcaption;
+      // }
+      // const submit_data: FormData = new FormData();
       const post_itemdata = {
         'displayName': form_data.displayName,
         'shortDesc': form_data.shortDesc,
@@ -161,17 +161,17 @@ export class AddProviderItemComponent implements OnInit {
         'taxable': form_data.taxable,
         'price': form_data.price
       };
-      const blob_itemdata = new Blob([JSON.stringify(post_itemdata)], { type: 'application/json' });
-      submit_data.append('item', blob_itemdata);
-      if (this.selitem_pic) {
-        submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
-        const propertiesDet = {
-          'caption': imgcaption // form_data.caption
-        };
-        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        submit_data.append('properties', blobPropdata);
-      }
-      this.addItem(submit_data);
+      // const blob_itemdata = new Blob([JSON.stringify(post_itemdata)], { type: 'application/json' });
+      // submit_data.append('item', blob_itemdata);
+      // if (this.selitem_pic) {
+      //   submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+      //   const propertiesDet = {
+      //     'caption': imgcaption // form_data.caption
+      //   };
+      //   const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+      //   submit_data.append('properties', blobPropdata);
+      // }
+      this.addItem(post_itemdata);
     } else {
       const post_itemdata = {
         'displayName': form_data.displayName,

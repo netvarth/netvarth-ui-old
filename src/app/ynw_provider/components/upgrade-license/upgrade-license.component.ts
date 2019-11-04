@@ -71,14 +71,13 @@ export class UpgradeLicenseComponent implements OnInit {
       this.api_loading = true;
       this.provider_services.upgradeLicensePackage(this.selected_pac.pkgId)
         .subscribe(data => {
-          this.getLicenseMetrics(this.selected_pac.pkgId);
           const loginuserdata = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata['new_lic'] = this.selected_pac.displayName;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
           this.sharedfunctionObj.setitemonLocalStorage('ynw-user', loginuserdata);
           this.api_success = Messages.LICENSE_UPGRADED.replace('[package]', this.selected_pac.pkgName);
-          const pdata = { 'ttype': 'upgradelicence' };
+          const pdata = { 'ttype': 'upgradelicence'};
           this.sharedfunctionObj.sendMessage(pdata);
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
@@ -90,23 +89,6 @@ export class UpgradeLicenseComponent implements OnInit {
           }
         );
     }
-  }
-
-  getLicenseMetrics(pkgId) {
-    this.selectedpkgMetrics = [];
-    this.shared_service.getLicenseMetadata().subscribe(data => {
-      this.licenseMetrics = data;
-      for (let i = 0; i < this.licenseMetrics.length; i++) {
-        if (pkgId === this.licenseMetrics[i].pkgId) {
-          for (let j = 0; j < this.licenseMetrics[i].metrics.length; j++) {
-            if (this.licenseMetrics[i].metrics[j].type === 'Boolean') {
-              this.selectedpkgMetrics.push(this.licenseMetrics[i].metrics[j]);
-            }
-          }
-        }
-      }
-      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
-    });
   }
 
   licensepackage_Select(val) {

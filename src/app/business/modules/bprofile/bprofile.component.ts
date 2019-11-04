@@ -208,6 +208,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   current_license;
   domain;
   showCustomId = false;
+  licenseMetadata: any = [];
+  licenseMetrics: any = [];
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -220,6 +222,14 @@ export class BProfileComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    this.shared_functions.getMessage().subscribe(data => {
+      this.getLicensemetrics();
+      switch (data.ttype) {
+        case 'upgradelicence':
+          this.getLicensemetrics();
+          break;
+      }
+    });
   }
 
   ngOnInit() {
@@ -273,18 +283,34 @@ export class BProfileComponent implements OnInit, OnDestroy {
   }
 
   getLicensemetrics() {
-    const licenseMetrics = this.shared_services.getSelectedLicenseMetrics();
-    for (let i = 0; i < licenseMetrics.length; i++) {
-      if (licenseMetrics[i].id === 13) {
-        if (licenseMetrics[i].anyTimeValue === 'true') {
-          // this.jPay_Billing = true;
-          this.showCustomId = true;
-        } else {
-          // this.jPay_Billing = false;
-          this.showCustomId = false;
+    let pkgId;
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+      pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+    }
+    this.provider_services.getLicenseMetadata().subscribe(data => {
+      this.licenseMetadata = data;
+    });
+    this.provider_services.getLicenseMetrics().subscribe(data => {
+      this.licenseMetrics = data;
+      for (let i = 0; i < this.licenseMetrics.length; i++) {
+        for (let j = 0; j < this.licenseMetadata.length; j++) {
+          if (this.licenseMetrics[i].displayName === 'Custom URL') {
+            if (this.licenseMetadata[j].pkgId === pkgId) {
+              for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
+                if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {
+                  if (this.licenseMetadata[j].metrics[k].anyTimeValue === 'true') {
+                    this.showCustomId = true;
+                  } else {
+                    this.showCustomId = false;
+                  }
+                }
+              }
+            }
+          }
         }
       }
-    }
+    });
   }
   getAdwordDisplayName(name) {
     return name.replace(projectConstants.ADWORDSPLIT, ' ');

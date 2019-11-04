@@ -77,11 +77,6 @@ export class BusinessComponent implements OnInit {
 
   ngOnInit() {
     this.getBusinessProfile();
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    if (user && usertype === 'provider') {
-      this.getLicenseMetrics(user.accountLicenseDetails.accountLicense.licPkgOrAddonId);
-    }
     this.activeSkin = this.shared_functions.getitemfromLocalStorage('activeSkin');
     if (!this.activeSkin) {
       this.activeSkin = 'skin-jaldee';
@@ -143,23 +138,6 @@ export class BusinessComponent implements OnInit {
             reject();
           }
         );
-    });
-  }
-
-  getLicenseMetrics(pkgId) {
-    this.selectedpkgMetrics = [];
-    this.shared_service.getLicenseMetadata().subscribe(data => {
-      this.licenseMetrics = data;
-      for (let i = 0; i < this.licenseMetrics.length; i++) {
-        if (pkgId === this.licenseMetrics[i].pkgId) {
-          for (let j = 0; j < this.licenseMetrics[i].metrics.length; j++) {
-            if (this.licenseMetrics[i].metrics[j].type === 'Boolean') {
-              this.selectedpkgMetrics.push(this.licenseMetrics[i].metrics[j]);
-            }
-          }
-        }
-      }
-      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
     });
   }
 }

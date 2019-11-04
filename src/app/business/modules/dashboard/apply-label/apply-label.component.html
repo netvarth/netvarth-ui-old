@@ -24,10 +24,10 @@
     </div>
 </section> -->
 
-<h1 class="mat-dialog-title">Manage label <button mat-dialog-close class="modal_close" tabindex="-1"><i
+<h1 class="mat-dialog-title">{{caption}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
             class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content class="ynw-common-form">
-    <div class="form-group col-md-12" *ngIf="source === 'new'">
+    <div class="form-group col-md-12" *ngIf="source === 'newlabel'">
         <mat-form-field>
             <input matInput type="text" class="form-control" id="displayName" placeholder="Label Name"
                 [(ngModel)]="labelname" autocomplete="off">

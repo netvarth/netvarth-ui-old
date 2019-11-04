@@ -420,11 +420,10 @@
                               <i class="fa fa-tags" (click)="labelClick(checkin)"></i>
                             </a>
                             <ul ngbDropdownMenu class="dropdown-menu" style="width: auto;">
-                              <li>
+                              <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
                                 <ul class="menu"
-                                  style="padding: 10px; width: max-content;max-height: 240px;overflow-x: hidden;background: white;">
-                                  <li *ngFor="let label of providerLabels;let i = index" [(value)]="i"
-                                    style="border-bottom: 1px solid;">
+                                  style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
+                                  <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                     <span style="font-weight: 700;"> {{label.displayName}} </span>
                                     <ul class="menu" style="overflow: hidden;max-height:none;">
                                       <li *ngFor="let value of label.valueSet">
@@ -436,6 +435,11 @@
                                           (click)="$event.stopPropagation();changeLabelvalue(checkin, label.label, value.value)">
                                           {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                       </li>
+                                      <li>
+                                        <a class="pointer-cursor" style="color: black;"
+                                          (click)="$event.stopPropagation();addLabelvalue(label.label, 'newvalue', checkin.ynwUuid)">
+                                          Enter new {{label.displayName}}</a>
+                                      </li>
                                     </ul>
                                   </li>
                                 </ul>
@@ -446,10 +450,11 @@
                                             <h4 style="font-size: smaller;">{{label.displayName}}</h4>
                                           </a>
                                       </li> -->
-                              <li class="footer"><a class="pointer-cursor" style="border-top: 1px solid;"
-                                  (click)="addLabelvalue(checkin, 'new', checkin.ynwUuid)">Add Label</a>
-                              </li>
                               <li class="footer"><a class="pointer-cursor"
+                                  (click)="$event.stopPropagation();addLabelvalue(checkin, 'newlabel', checkin.ynwUuid)">Add
+                                  Label</a>
+                              </li>
+                              <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
                                   routerLink="/provider/settings/miscellaneous/labels">Manage
                                   Label</a>
                               </li>

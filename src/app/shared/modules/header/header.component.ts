@@ -202,13 +202,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.setLicense();
-
-    const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    if (cuser && usertype === 'provider') {
-      this.getLicenseMetrics(cuser.accountLicenseDetails.accountLicense.licPkgOrAddonId);
-    }
-
     this.getBusinessdetFromLocalstorage();
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -231,22 +224,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.popular_search(this.jsonlist);
     }
   }
-  getLicenseMetrics(pkgId) {
-    this.selectedpkgMetrics = [];
-    this.shared_service.getLicenseMetadata().subscribe(data => {
-      this.licenseMetrics = data;
-      for (let i = 0; i < this.licenseMetrics.length; i++) {
-        if (pkgId === this.licenseMetrics[i].pkgId) {
-          for (let j = 0; j < this.licenseMetrics[i].metrics.length; j++) {
-            if (this.licenseMetrics[i].metrics[j].type === 'Boolean') {
-              this.selectedpkgMetrics.push(this.licenseMetrics[i].metrics[j]);
-            }
-          }
-        }
-      }
-      this.shared_service.setSelectedLicenseMetrics(this.selectedpkgMetrics);
-    });
-  }
+
   getLicenseDetails(call_type = 'init') {
     this.license_message = '';
     this.shared_service.getLicenseDetails()

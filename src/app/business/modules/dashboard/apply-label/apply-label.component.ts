@@ -34,6 +34,7 @@ export class ApplyLabelComponent implements OnInit {
     value;
     source;
     uuid;
+    caption;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -47,8 +48,13 @@ export class ApplyLabelComponent implements OnInit {
         });
         this.source = checkin.source;
         this.uuid = checkin.uuid;
-        if (this.source === 'label') {
-            this.label = checkin.checkin;
+        // if (this.source === 'newvalue') {
+        this.label = checkin.checkin;
+        // }
+        if (this.source === 'newvalue') {
+            this.caption = 'Add label - ' + this.label;
+        } else {
+            this.caption = 'Add Label';
         }
     }
     ngOnInit() {
@@ -107,7 +113,7 @@ export class ApplyLabelComponent implements OnInit {
         }
     }
     createLabel() {
-        if (this.source === 'new') {
+        if (this.source === 'newlabel') {
             const valueSet = [];
             const valset = {};
             valset['value'] = this.value;
@@ -124,37 +130,38 @@ export class ApplyLabelComponent implements OnInit {
                 () => {
                     this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
                     setTimeout(() => {
-                        this.dialogRef.close({ label: this.labelname, value: this.value, message: 'reloadlist' });
+                        this.dialogRef.close({ label: this.labelname, value: this.value, message: 'newlabel' });
                     }, projectConstants.TIMEOUT_DELAY);
                 },
                 error => {
                     this.shared_functions.apiErrorAutoHide(this, error);
                 });
         } else {
-            let valueSet = [];
-            const valset = {};
-            valset['value'] = this.value;
-            valset['shortValue'] = this.value.replace(' ', '_');
-            valueSet = this.label.valueSet;
-            if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
-                valueSet.push(valset);
-            }
-            const post_data = {
-                'id': this.label.id,
-                'label': this.label.label,
-                'displayName': this.label.displayName,
-                'valueSet': valueSet,
-            };
-            this.provider_services.updateLabel(post_data).subscribe(
-                () => {
-                    this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
-                    setTimeout(() => {
-                        this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
-                    }, projectConstants.TIMEOUT_DELAY);
-                },
-                error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                });
+            this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
+            // let valueSet = [];
+            // const valset = {};
+            // valset['value'] = this.value;
+            // valset['shortValue'] = this.value.replace(' ', '_');
+            // valueSet = this.label.valueSet;
+            // if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+            //     valueSet.push(valset);
+            // }
+            // const post_data = {
+            //     'id': this.label.id,
+            //     'label': this.label.label,
+            //     'displayName': this.label.displayName,
+            //     'valueSet': valueSet,
+            // };
+            // this.provider_services.updateLabel(post_data).subscribe(
+            //     () => {
+            //         this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+            //         setTimeout(() => {
+            //             this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
+            //         }, projectConstants.TIMEOUT_DELAY);
+            //     },
+            //     error => {
+            //         this.shared_functions.apiErrorAutoHide(this, error);
+            //     });
         }
     }
 }
