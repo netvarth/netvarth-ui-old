@@ -84,7 +84,7 @@
                                         </span>
                                         <p class="sts" [class.active]="pos_status">{{pos_statusstr}}</p>
                                         <p class="settings_info" *ngIf="pos_status">Billing/pos hints.</p>
-                                        <p class="form-level-settings" *ngIf="!pos_status">{{frm_public_self_cap}}
+                                        <p class="settings_info" *ngIf="!pos_status">{{frm_public_self_cap}}
                                         </p>
                                     </a>
                                 </li>
@@ -113,7 +113,7 @@
                                         </span>
                                         <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p>
                                         <p class="settings_info" *ngIf="payment_status">Jaldee pay hints</p>
-                                        <p class="form-level-settings" *ngIf="!payment_status">{{frm_public_self_cap}}
+                                        <p class="settings_info" *ngIf="!payment_status">{{frm_public_self_cap}}
                                         </p>
                                     </a>
                                 </li>
