@@ -16,6 +16,7 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
+import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 
 @Component({
   selector: 'app-search-detail',
@@ -153,6 +154,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   servicedialogRef;
   commdialogRef;
   coupondialogRef;
+  jdndialogRef;
   isfirstCheckinOffer = false;
   btn_clicked = false;
   server_date;
@@ -1843,5 +1845,31 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
               });
             });
         });
+  }
+
+  openJdn(obj){
+
+    const s3id = obj.fields.unique_id;
+    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    this.shared_functions.getS3Url('provider')
+      .then(
+        res => {
+          const s3url = res;
+          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'jaldeediscount', UTCstring)
+            .subscribe(jdnList => {
+              this.jdndialogRef = this.dialog.open(JdnComponent, {
+                width: '60%',
+                panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+                disableClose: true,
+                data: {
+                  jdnList: jdnList
+                }
+              });
+              this.jdndialogRef.afterClosed().subscribe(result => {
+                
+              });
+            });
+        });
+
   }
 }
