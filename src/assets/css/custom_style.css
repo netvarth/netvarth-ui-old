@@ -5521,3 +5521,6 @@ li.separator.setsplit {
   padding-top: 10.5px !important;
   ;
 }
+.emailPrepay{
+  border: none;
+}

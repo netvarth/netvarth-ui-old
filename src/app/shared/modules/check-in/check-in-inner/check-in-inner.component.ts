@@ -504,7 +504,7 @@ export class CheckInInnerComponent implements OnInit {
     }
 
 
-    return new Promise((resolve) => {
+    // return new Promise((resolve) => {
 
       if (this.payEmail === this.payEmail1) {
         post_data = {
@@ -520,9 +520,10 @@ export class CheckInInnerComponent implements OnInit {
           this.shared_services.updateProfile(post_data, passtyp)
             .subscribe(
               () => {
+                this.getProfile();
                 // this.api_success = Messages.PROFILE_UPDATE;
                // this.sharedFunctionobj.openSnackBar(Messages.PROFILE_UPDATE);
-                resolve();
+                //resolve();
               },
               error => {
                 // this.api_error = error.error;
@@ -532,7 +533,7 @@ export class CheckInInnerComponent implements OnInit {
       } else {
         this.email1error = 'Email and Re-entered Email do not match';
       }
-    });
+   // });
 
 
 
@@ -739,20 +740,20 @@ export class CheckInInnerComponent implements OnInit {
     this.step = 3;
     this.main_heading = 'Family Members';
   }
+  // handleCheckinClicked() {
+  //   if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin' && !this.emailExist) {
+  //     this.addEmail().then(
+  //       () => {
+  //         this.confirmCheckin();
+  //       }
+
+  //     );
+  //   } else {
+  //     this.confirmCheckin();
+  //   }
+  // }
+
   handleCheckinClicked() {
-    if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin' && !this.emailExist) {
-      this.addEmail().then(
-        () => {
-          this.confirmCheckin();
-        }
-
-      );
-    } else {
-      this.confirmCheckin();
-    }
-  }
-
-  confirmCheckin() {
 
     this.resetApi();
     let error = '';
