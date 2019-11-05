@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="card p0">
                     <span (click)="gotoItems()" class="b-link">
-                        <h2>Items <p style="font-size: inherit; margin-bottom: 0px"> (0)</p>
+                        <h2>Items <p style="font-size: inherit; margin-bottom: 0px"> ({{item_count}})</p>
                         </h2>
                         <span class="form-level-settings">Create new items and related information here<a
                                 class="learnmore-pointer" id="customer-help"
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoDiscounts()">
-                        <h2>Discounts (0)</h2>
+                        <h2>Discounts ({{discount_count}})</h2>
                         <span class="form-level-settings">Create your discounts here<a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('discount', $event)">Learn
                                 More</a></span>

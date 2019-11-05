@@ -74,7 +74,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         this.provider_services.getProviderLogo().subscribe(
                             logo => {
                                 if (logo[0]) {
-                                  this.blogo = logo[0].url;
+                                    this.blogo = logo[0].url;
                                 } else {
                                     this.blogo = 'img-null.svg';
                                 }
@@ -105,12 +105,11 @@ export class MailboxComponent implements OnInit, OnDestroy {
             this.selectedMessage[parentIndex]['message'] = message;
             this.selectedParentIndex = parentIndex;
             this.selectedChildIndex = childIndex;
-            console.log(this.selectedMessage);
+            // console.log(this.selectedMessage);
         }
     }
     getInboxMessages() {
         const usertype = this.shared_functions.isBusinessOwner('returntyp');
-      
         this.inbox_services.getInbox(usertype)
             .subscribe(
                 data => {
@@ -136,11 +135,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     this.api_loading = false;
                 },
                 () => {
-                   
                 }
-               
-            ); 
-           
+            );
     }
     sendMessage(messageToSend, inboxList, parentIndex) {
         const userId = this.getReceiverId(inboxList);
@@ -233,6 +229,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
             post_data)
             .subscribe(
                 () => {
+                    this.messageToSend = '';
+                    this.selectedMessage = [];
                     this.getInboxMessages();
                 },
                 error => {
@@ -247,6 +245,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 post_data)
                 .subscribe(
                     () => {
+                        this.messageToSend = '';
+                        this.selectedMessage = [];
                         this.getInboxMessages();
                     },
                     error => {
@@ -295,11 +295,11 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 reader.readAsDataURL(file);
             }
         }
-        console.log(this.selectedMessage[parentIndex]);
+        // console.log(this.selectedMessage[parentIndex]);
     }
     addCaption(caption, parentIndex, index) {
-        console.log(caption);
-        console.log(this.activeImageCaption[parentIndex][index]);
+        // console.log(caption);
+        // console.log(this.activeImageCaption[parentIndex][index]);
         // this.pics.caption[index] = e;
         // const caption = {
         //  index : e

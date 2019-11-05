@@ -41,6 +41,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'checkin-settings-changed':
           this.showCheckinED();
           break;
+        case 'upgradelicence':
+          this.setLicense();
+          break;
       }
       this.getBusinessdetFromLocalstorage();
     });

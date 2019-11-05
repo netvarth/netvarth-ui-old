@@ -5,14 +5,14 @@
     <div class="content w-manager comn-cls mailbox">
         <div class="col-md-12">
             <div class="row">
-                <div class="p0">   
-                        <div *ngIf="api_loading">
-                                <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                                </div>     
+                <div class="p0">
+                    <div *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    </div>
                     <div *ngIf="!api_loading">
-                           
+
                         <div class="card no-padding" *ngFor="let users of inboxUsersList, let parentIndex = index">
-                                
+
                             <mat-accordion>
                                 <mat-expansion-panel [expanded]="false">
                                     <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'">
@@ -91,7 +91,7 @@
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>
                                                             </button>
-                                                            <button type="button"
+                                                            <button type="button" [disabled]="!messageToSend"
                                                                 (click)="sendMessage(messageToSend, users.inboxList, parentIndex)"
                                                                 class="btn btn-warning btn-flat">
                                                                 <span *ngIf="!selectedMessage[parentIndex]">Send</span>

@@ -63,13 +63,13 @@ export class SharedServices {
   }
   addJdn(data) {
     return this.servicemeta.httpPost('provider/settings/jdn/enable', data);
-}
-updateJdn(data) {
-  return this.servicemeta.httpPut('provider/settings/jdn', data);
-}
-disable() {
-  return this.servicemeta.httpPut('provider/settings/jdn/disable');
-}
+  }
+  updateJdn(data) {
+    return this.servicemeta.httpPut('provider/settings/jdn', data);
+  }
+  disable() {
+    return this.servicemeta.httpPut('provider/settings/jdn/disable');
+  }
   OtpValidate(type = 'consumer', otp) {
 
     const path = type + '/login/reset/' + otp + '/validate';
@@ -620,14 +620,13 @@ disable() {
 
   buildAlertsParams(ackStatus, sdate) {
     let param = '';
-      if (ackStatus === true) {
-        param += 'ackStatus-eq=true';
-      } else {
-        if (ackStatus === false) {
-          param += 'ackStatus-eq=false';
-        }
+    if (ackStatus === 'true') {
+      param += 'ackStatus-eq=true';
+    } else {
+      if (ackStatus === 'false') {
+        param += 'ackStatus-eq=false';
       }
-
+    }
 
     /*if (subcat !== '') {
 

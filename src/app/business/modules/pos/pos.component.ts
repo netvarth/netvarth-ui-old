@@ -32,6 +32,14 @@ export class POSComponent implements OnInit {
   frm_public_self_cap = '';
   accountActiveMsg = '';
   domain;
+  nodiscountError = false;
+  noitemError = false;
+  itemError = '';
+  discountError = '';
+  discount_list;
+  discount_count = 0;
+  item_list;
+  item_count = 0;
 
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
@@ -46,6 +54,35 @@ export class POSComponent implements OnInit {
         this.domain = user.sector;
     this.getpaymentDetails();
     this.getPOSSettings();
+    this.getDiscounts();
+    this.getitems();
+  }
+
+  getDiscounts() {
+    this.provider_services.getProviderDiscounts()
+      .subscribe(data => {
+        this.discount_list = data;
+        this.discount_count = this.discount_list.length;
+        this.nodiscountError = true;
+      },
+        (error) => {
+          this.discountError = error;
+          this.nodiscountError = false;
+        }
+      );
+  }
+
+  getitems() {
+    this.provider_services.getProviderItems()
+      .subscribe(data => {
+        this.item_list = data;
+        this.item_count = this.item_list.length;
+        this.noitemError = true;
+      },
+        (error) => {
+          this.itemError = error;
+          this.noitemError = false;
+        });
   }
 
   getpaymentDetails() {
@@ -119,10 +156,18 @@ export class POSComponent implements OnInit {
       );
   }
   gotoItems() {
-    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+    if (this.noitemError) {
+      this.router.navigate(['provider', 'settings', 'pos', 'items']);
+    } else {
+      this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
+    }
   }
   gotoDiscounts() {
-    this.router.navigate(['provider', 'settings', 'pos', 'discounts']);
+    if (this.nodiscountError) {
+      this.router.navigate(['provider', 'settings', 'pos', 'discounts']);
+    } else {
+      this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
+    }
   }
   gotoCoupons() {
     this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
