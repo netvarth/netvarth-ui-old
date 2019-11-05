@@ -63,6 +63,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
   one_person_ahead = Messages.ONE_PERSON_AHEAD;
   get_token_cap = Messages.GET_FIRST_TOKEN;
+  claim_my_business_cap = Messages.CLAIM_BUSINESS_CAP;
   s3url;
   retval;
   kwdet: any = [];

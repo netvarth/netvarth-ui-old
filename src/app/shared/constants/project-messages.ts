@@ -323,7 +323,7 @@ export const Messages = {
 
   // Consumer-Waitlist
   'CHECKIN_DET_CAP': 'Check-In Details',
-  'BUSS_NAME_CAP': 'Bussiness Name:',
+  'BUSS_NAME_CAP': 'Business Name:',
   'DATE_CAP': 'Date:',
   'LOCATION_CAP': 'Location',
   'WAITLIST_FOR_CAP': 'Check-In For:',
@@ -431,7 +431,7 @@ export const Messages = {
   'BASIC_CAP': 'Basic',
   'BASIC_PLUS_CAP': 'Basic Plus',
   'PREMIUM_CAP': 'Advanced',
-  'CLAIM_BUSINESS_CAP': 'Own this business? Claim it now',
+  'CLAIM_BUSINESS_CAP': 'Claim it now',
   'SORRY_CAP': 'Sorry !! Online ',
   'NOT_ALLOWED_CAP': ' is currently not allowed',
   'NO_YNW_RES_FOUND_CAP': 'No YNW results found',

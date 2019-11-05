@@ -187,7 +187,7 @@
           <span class="communicate" (click)="communicateHandler(search_result)" *ngIf="search_result.claimable!=1"
             [matTooltipClass]="tooltipcls" [matTooltip]="commTooltip">{{send_messages}}</span>
           <span class="claim-business" (click)="claimBusiness(search_result)"
-            *ngIf="search_result.claimable==1">{{claim_my_business_cap}}</span>
+            *ngIf="search_result.claimable==1">{{claim_my_business_cap}} <i style="font-size: 1.1rem;" class="fa fa-hand-o-up" aria-hidden="true"></i></span>
         </div>
       </div>
       <div class="bottom-sect">
