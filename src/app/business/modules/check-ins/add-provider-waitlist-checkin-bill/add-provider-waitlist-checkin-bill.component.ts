@@ -2,19 +2,19 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-import { ProviderServices } from '../../services/provider-services.service';
-import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
-import { ConfirmPaymentBoxComponent } from '../../shared/component/confirm-paymentbox/confirm-paymentbox.component';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { ActivatedRoute } from '@angular/router';
-import { JcCouponNoteComponent } from '../jc-Coupon-note/jc-Coupon-note.component';
+import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 
 export interface ItemServiceGroup {
   type: string;
@@ -143,7 +143,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     'uuid': null,
     'acceptPaymentBy': 'cash',
     'amount': 0,
-    'paynot':''
+    'paynot': ''
   };
   selectedItems = [];
   bill_load_complete = 0;
@@ -183,8 +183,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   qty = '';
   breadcrumbs = [
     {
-      // title: Messages.DASHBOARD_TITLE,
-      url: '/provider'
+      title: 'Check-ins',
+      url: '/provider/check-ins'
     },
     {
       title: 'Bill'
@@ -206,7 +206,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountDisplayNotes = false;
   changedDate;
   abc: any;
-  
+
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -340,7 +340,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-        this.changedDate = this.changeDate(this.bill_data.createdDate);
+          this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
           for (let i = 0; i < this.bill_data.discount.length; i++) {
@@ -353,7 +353,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
           if (this.bill_data.displayNotes || this.bill_data.privateNotes || this.discountDisplayNotes || this.discountPrivateNotes) {
             this.billNotesExists = true;
-            }
+          }
           if (this.showPayWorkBench) {
             this.showPayment();
           }
@@ -1025,25 +1025,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.disableCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, data);
   }
-  // makePayment(checkin, bill_data) {
-  //   this.makPaydialogRef = this.dialog.open(ProviderWaitlistCheckInPaymentComponent, {
-  //     width: '50%',
-  //     panelClass: ['commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       checkin: checkin,
-  //       bill_data: bill_data
-  //     }
-  //   });
 
-  //   this.makPaydialogRef.afterClosed().subscribe(result => {
-  //     this.getCheckinDetails();
-  //   });
-  // }
-  
-  initPayment(mode, amount,paynot) {
-  
-    console.log(paynot)
+  initPayment(mode, amount, paynot) {
     let status = 0;
     const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
       width: '50%',
@@ -1057,14 +1040,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
     });
     canceldialogRef.afterClosed().subscribe(result => {
-      //alert(result);
+      // alert(result);
       status = result;
       if (status === 1) {
-        this.makePayment(mode, amount,paynot);
+        this.makePayment(mode, amount, paynot);
       }
       if (status === 2) {
-        this.makePayment(mode, amount,paynot, status);
-        //console.log(this.makePayment);
+        this.makePayment(mode, amount, paynot, status);
+        // console.log(this.makePayment);
       }
     });
 
@@ -1078,12 +1061,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   hidePayWorkBench() {
     this.showPayWorkBench = false;
   }
-  makePayment(mode, amount,paynot, status?) {
+  makePayment(mode, amount, paynot, status?) {
     this.pay_data.uuid = this.checkin.ynwUuid;
     this.pay_data.acceptPaymentBy = mode;
     this.pay_data.amount = amount;
     this.pay_data.paynot = paynot;
-    
+
     this.provider_services.acceptPayment(this.pay_data)
       .subscribe(
         data => {
@@ -1155,9 +1138,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
 
   changeDate(time) {
-    let r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
-    return r[3]+"-"+r[2]+"-"+r[1]+r[4];
-}
+    const r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
+    return r[3] + '-' + r[2] + '-' + r[1] + r[4];
+  }
 
   emailBill() {
     this.provider_services.emailWaitlistBill(this.uuid)
@@ -1220,14 +1203,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	</tr>';
       // List<Discount> serviceDisounts = mapper.readValue(service.getDiscount().toString(), new TypeReference<List<Discount>>(){});
       if (service.discount && service.discount.length > 0) {
-      for (const serviceDiscount of service.discount) {
-        bill_html += '	<tr style="color:#aaa">';
-        bill_html += '<td style="text-align:right;"';
-        bill_html += '	colspan="2">' + serviceDiscount.name + '</td>';
-        bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(serviceDiscount.discountValue).toFixed(2);
-        bill_html += '</td>';
-        bill_html += '	</tr>';
-      }
+        for (const serviceDiscount of service.discount) {
+          bill_html += '	<tr style="color:#aaa">';
+          bill_html += '<td style="text-align:right;"';
+          bill_html += '	colspan="2">' + serviceDiscount.name + '</td>';
+          bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(serviceDiscount.discountValue).toFixed(2);
+          bill_html += '</td>';
+          bill_html += '	</tr>';
+        }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';

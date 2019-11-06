@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
-import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../components/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import * as moment from 'moment';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -49,12 +49,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
     {
-      // title: Messages.DASHBOARD_TITLE,
-      url: '/provider'
-    },
-    {
       title: 'Check-Ins',
-      url: '/provider/dashboard/check-ins'
+      url: '/provider/check-ins'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

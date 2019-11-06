@@ -33,8 +33,7 @@ import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/prov
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { AddProviderWaitlistQueuesComponent } from '../ynw_provider/components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
-import { AddProviderWaitlistCheckInBillComponent } from '../ynw_provider/components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
-// import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
+import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GoogleMapComponent } from '../ynw_provider/components/googlemap/googlemap.component';
@@ -46,7 +45,7 @@ import { ProviderMembersComponent } from '../ynw_provider/components/provider-me
 import { AddProviderMemberComponent } from '../ynw_provider/components/add-provider-member/add-provider-member.component';
 import { ConfirmPaymentBoxComponent } from '../ynw_provider/shared/component/confirm-paymentbox/confirm-paymentbox.component';
 import { CustomerModule } from './modules/customer/customer.module';
-import { ProviderWaitlistCheckInCancelPopupComponent } from '../ynw_provider/components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 
 @NgModule({
     declarations: [

@@ -55,7 +55,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     }
   }
   gotoActiveHome() {
-    this.router.navigate(['provider', 'dashboard', 'check-ins']);
+    this.router.navigate(['provider', 'check-ins']);
   }
   gotoProfile() {
     this.router.navigate(['provider', 'settings', 'bprofile']);
@@ -116,7 +116,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       case 'members':
         this.router.navigate([usertype, 'members']);
         break;
-      case 'dashboard':
+      case 'check-ins':
         this.router.navigate([usertype]);
         break;
     }

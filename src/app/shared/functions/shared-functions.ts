@@ -139,7 +139,7 @@ export class SharedFunctions {
           data => {
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
-            this.router.navigate(['/provider']);
+            this.router.navigate(['/provider/check-ins/']);
 
           },
           error => {
@@ -166,7 +166,7 @@ export class SharedFunctions {
           data => {
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
-            this.router.navigate(['/provider']);
+            this.router.navigate(['/provider/check-ins/']);
 
           },
           error => {

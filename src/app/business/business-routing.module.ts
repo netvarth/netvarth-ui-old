@@ -7,7 +7,7 @@ import { BusinessComponent } from './business.component';
 import { EditProfileComponent } from '../shared/modules/edit-profile/edit-profile.component';
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
-import { AddProviderWaitlistCheckInBillComponent } from '../ynw_provider/components/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
+import { AddProviderWaitlistCheckInBillComponent } from './modules/check-ins/add-provider-waitlist-checkin-bill/add-provider-waitlist-checkin-bill.component';
 // import { ProviderWaitlistCheckInDetailComponent } from '../ynw_provider/components/provider-waitlist-checkin-detail/provider-waitlist-checkin-detail.component';
 import { ChangePasswordComponent } from '../shared/modules/change-password/change-password.component';
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
@@ -19,16 +19,13 @@ const routes: Routes = [
     path: '', component: BusinessComponent, resolve: { terminologies: ProviderResolver },
     children: [
       { path: '', component: BusinessHomeComponent, canActivate: [AuthGuardProviderHome] },
-      // { path: 'learnmore', loadChildren: './modules/learnmore/provider-learnmore.module#ProviderLearnmoreModule' },
       { path: 'faq', loadChildren: './modules/faq/provider-faq.module#ProviderFaqModule' },
       { path: 'customers', loadChildren: './modules/customers/customers.module#CustomersModule' },
-      // { path: 'checkin-detail/:id', component: ProviderWaitlistCheckInDetailComponent },
       {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},
       { path: 'settings', loadChildren: '../ynw_provider/components/provider-settings/provider-settings.module#ProviderSettingsModule' },
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
-      // { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin] },
       { path: 'members', component: ProviderMembersComponent},
       { path: 'inbox', loadChildren: './modules/mailbox/mailbox.module#MailboxModule' },
       { path: 'finance', loadChildren: './modules/learnmore/finance/finance.module#FinanceModule'},
@@ -42,7 +39,7 @@ const routes: Routes = [
       { path: 'license', loadChildren: '../business/modules/license/license.module#LicenseModule' },
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
-      { path: 'dashboard', loadChildren: '../business/modules/dashboard/dashboard.module#DashboardModule'},
+      { path: 'check-ins', loadChildren: '../business/modules/check-ins/check-ins.module#CheckinsModule'},
       { path: 'bwizard', component: ProviderbWizardComponent }
     ]
   }

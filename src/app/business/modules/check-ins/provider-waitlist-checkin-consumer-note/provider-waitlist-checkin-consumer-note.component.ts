@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Messages } from '../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-consumer-note',

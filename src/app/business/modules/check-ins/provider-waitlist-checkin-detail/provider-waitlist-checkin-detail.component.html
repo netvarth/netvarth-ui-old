@@ -1,14 +1,12 @@
 <section>
-  <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'dashboard'"></app-provider-subheader> -->
-  <!-- Subheader section -->
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 
 <section>
   <div class="content comn-cls">
-    <div class="col-md-12">
+    <div class="col-md-12 no-padding-small">
       <div class="row">
-        <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
+        <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
           <div class="card" *ngIf="api_loading">
             <app-common-innerloading-spinner> </app-common-innerloading-spinner>
           </div>
@@ -160,7 +158,7 @@
             </mat-accordion>
           </div>
         </div>
-        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
           <div class="card">
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
             <div class="c-history-outer">

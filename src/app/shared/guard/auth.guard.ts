@@ -57,7 +57,7 @@ export class AuthGuardHome implements CanActivate {
       credentials = JSON.parse(localStorage.getItem('ynw-user'));
       userType = credentials['userType'];
       if (localStorage.getItem('isBusinessOwner') === 'true' || userType === 3) {
-        this.router.navigate(['/provider']);
+        this.router.navigate(['/provider/check-ins/']);
         return false;
       } else if (localStorage.getItem('isBusinessOwner') === 'false') {
         this.router.navigate(['/consumer']);

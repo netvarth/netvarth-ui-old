@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderWaitlistQueuesComponent } from '../../components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
-import { ProviderWaitlistCheckInCancelPopupComponent } from '../../components/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
+import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { AddProviderWaitlistServiceComponent } from '../../components/add-provider-waitlist-service/add-provider-waitlist-service.component';

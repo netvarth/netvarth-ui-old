@@ -36,7 +36,7 @@ export class BusinessComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/provider') {
-          router.navigate(['provider', 'dashboard', 'check-ins']);
+          router.navigate(['provider', 'check-ins']);
         }
       }
     });
