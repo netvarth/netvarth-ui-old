@@ -366,6 +366,16 @@
                     <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message</span>
                     </a>
+                    <a class="btn-play pointer-cursor"
+                    *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid && checkin.paymentStatus != 'NotPaid'"
+                    (click)="viewBillPage(checkin)">
+                    <i class="fa"></i> <span class=""> Bill </span>
+                  </a>
+                  <a class="btn-play pointer-cursor"
+                    *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid'"
+                    (click)="viewBillPage(checkin)">
+                    <i class="fa"></i> <span class=""> Accept payment </span>
+                  </a>
                     <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
                       <i class="fa icon-note"></i> <span> Private Note </span>
                     </a>
