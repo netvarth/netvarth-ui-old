@@ -112,7 +112,7 @@
 
                   </tr>
                 <tr class="invoice-discount" *ngFor="let discount of latestInvoiceDiscount">
-                    <td style="text-align: right">{{discount.name}} <span class="invoice-head"
+                    <td style="text-align: left">{{discount.name}} <span
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
                     <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
@@ -121,7 +121,7 @@
 
                 <tr>
                     <td ><strong>Previous Balance Due</strong></td>
-                    <td class="previousDue" (click)="togglePreviousDue();">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}  </td>
+                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}  </td>
 
                   </tr> 
               
@@ -157,9 +157,9 @@
               <table class="table table-striped">
                 <thead>
                   <th>Applied Date </th>
-                  <th>Name </th>
-                  <th>Description</th>
-                  <th>Type</th>
+                  <th>Name</th>
+                  <th style="padding-left: 10px;">Description</th>
+                  <th style="text-align: center;">Type</th>
                   <th>Discount Value</th>
                   <th>Discounted Amount</th>
   
