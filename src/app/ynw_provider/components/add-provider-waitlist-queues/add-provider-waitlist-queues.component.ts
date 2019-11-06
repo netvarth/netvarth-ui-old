@@ -107,9 +107,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
       qendtime: [this.dend_time, Validators.compose([Validators.required])],
       qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-      qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-      futureWaitlist: [false ],
-      onlineCheckIn: [false]
+      qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
+      //futureWaitlist: [false ],
+      //onlineCheckIn: [false]
     });
 
     // if (this.data.type === 'edit') {
@@ -171,9 +171,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qstarttime: sttime || null,
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
-      qserveonce: this.data.queue.parallelServing || null,
-      futureWaitlist: this.data.queue.futureWaitlist || false,
-      onlineCheckIn: this.data.queue.onlineCheckIn || false
+      qserveonce: this.data.queue.parallelServing || null
+      // futureWaitlist: this.data.queue.futureWaitlist || false,
+      // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
     this.amForm.get('qlocation').disable();
 
@@ -442,8 +442,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         'queueSchedule': schedulejson,
         'parallelServing': form_data.qserveonce,
         'capacity': form_data.qcapacity,
-        'futureWaitlist': form_data.futureWaitlist,
-        'onlineCheckIn': form_data.onlineCheckIn,
+        // 'futureWaitlist': form_data.futureWaitlist,
+        // 'onlineCheckIn': form_data.onlineCheckIn,
         'location': {
           'id': form_data.qlocation
         },
