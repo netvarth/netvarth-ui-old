@@ -405,6 +405,7 @@ export const Messages = {
   'AT_THIS_LOC_CAP': 'at this location',
   'GET_DIRECTIONS_CAP': 'Get Directions',
   'WORKING_HRS_CAP': 'Queues',
+  'GENERAL_WORKING_HRS_CAP': 'General working hours',
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
   'SERVPRICE_CAP': 'Price ',

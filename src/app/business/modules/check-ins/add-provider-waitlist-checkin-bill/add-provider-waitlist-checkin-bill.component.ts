@@ -675,6 +675,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * @param name Service/Item Name
    */
   itemServiceSelected(type, name) {
+   // console.log(this.ItemServiceGroupOptions);
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
     if (type === 'Services') {
       this.selectedItemService = name;
