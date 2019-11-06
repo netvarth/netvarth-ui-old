@@ -216,6 +216,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labeldialogRef;
   grouped_list: any;
   new_checkins_list: any = [];
+  started_checkins_list: any = [];
+  completed_checkins_list: any = [];
+  cancelled_checkins_list: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -808,7 +811,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.check_in_list = data;
           this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
           console.log(this.grouped_list['arrived']);
-
+          
+          if (this.grouped_list && this.grouped_list['started']) {
+            this.started_checkins_list = this.grouped_list['started'].slice();
+          }
+          if (this.grouped_list && this.grouped_list['done']) {
+            this.completed_checkins_list = this.grouped_list['done'].slice();
+          }
+          if (this.grouped_list && this.grouped_list['cancelled']) {
+            this.cancelled_checkins_list = this.grouped_list['cancelled'].slice();
+          }
           if (this.grouped_list && this.grouped_list['checkedIn']) {
             this.new_checkins_list = this.grouped_list['checkedIn'].slice();
           }
