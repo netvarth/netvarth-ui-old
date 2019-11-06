@@ -38,8 +38,8 @@
                                         <div class="lc-box" >
                                             <div class="tp"><h5>Subscription</h5>
                                            
-                                                <span class="ttle">Your currently subscribed to the <span
-                                                        class="pkg">{{currentlicense_details.accountLicense.displayName}} Licenses (<span style="color: #0edcb8;">{{licensePlan}}</span>)</span>plan 
+                                                <span class="ttle">You are currently subscribed to the <span
+                                                        class="pkg">{{currentlicense_details.accountLicense.displayName}} License (<span style="color: #0edcb8;">{{licensePlan}}</span>)</span>plan 
                                                         
                                                     <span class="warning"
                                                         *ngIf="license_message != ''">{{license_message}}</span></span>
@@ -48,7 +48,7 @@
                                                         <div>
                                                             <div>
                                                         <span *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 0" >Change plan to 
-                                                            <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly({{annualMonthAmount | currency:'INR':'symbol':'.2-2'}})</button></span>
+                                                            <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly</button></span>
                                                             <span *ngIf= "licensePlan == 'Annual' && statusOfLicense == 0"> Contact Admin if you need to change this to monthly
                                                             <!-- <span   *ngIf= "statusOfLicense == 1" >Yearly({{sub['amount'] | currency:'INR':'symbol':'.2-2'}})</span> -->
                                                         </span>

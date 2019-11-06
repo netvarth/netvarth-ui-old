@@ -963,7 +963,7 @@ export const Messages = {
   'SCCESS_MSG': 'Requested Successfully',
   'ERROR_MSG': 'Failed',
   'NO_REPORTS_MSG': 'No reports',
-  'GRANT_TOTAL': 'Grant Total',
+  'GRANT_TOTAL': 'Grand Total',
   'DATE_FROM_CAP': 'Date From',
   'DATE_TO_CAP': 'Date To',
 
@@ -1291,8 +1291,8 @@ export const Messages = {
   'FRM_LEVEL_WORKING_MSG': 'Details of your business hours are shown here.',
   'FRM_LEVEL_PRIVACY_MSG': 'Manage the privacy of your contact details here.',
   'FRM_LEVEL_SPEC_MSG': 'Mention your specializations here.',
-  'FRM_LEVEL_LANG_MSG': 'To widen your [customer] base, add different languages known to you here.',
-  'FRM_LEVEL_ADDITIONAL_MSG': 'Add other details of you or your business so that [customer]s can understand you more.',
+  'FRM_LEVEL_LANG_MSG': 'Add languages you know, to increase visibility.',
+  'FRM_LEVEL_ADDITIONAL_MSG': 'Add more details of your business for your [customer] to see.',
   'FRM_LEVEL_VERI_MSG': 'To upgrade verification level contact Jaldee.',
   'FRM_LEVEL_GALLERY_MSG': 'Add images and catchy captions to boost your [customer]\'s check-ins',
   'FRM_LEVEL_SOCIAL_MSG': 'To connect with [customer]s on your social media platform, add your social media links here.',
@@ -1306,7 +1306,7 @@ export const Messages = {
 
   // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
-  'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up your tax requirements here. Enable the \"Tax Settings\" toggle switch to apply taxes for your services.',
+  'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
 
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage usage and payment history of your jaldee license, and upgrade license here.',

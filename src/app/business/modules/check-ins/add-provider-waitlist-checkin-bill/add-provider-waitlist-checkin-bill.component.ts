@@ -50,7 +50,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   sub_tot_cap = Messages.SUB_TOT_CAP;
   dis_coupons_cap = Messages.DISCOUNTS_COUPONS_CAP;
   delete_btn_cap = Messages.DELETE_BTN;
-  gross_amnt_cap = Messages.GROSS_AMNT_CAP;
+  gross_amnt_cap = Messages.AMOUNT_CAP;
   bill_disc_cap = Messages.BILL_DISCOUNT_CAP;
   tax_cap = Messages.TAX_CAP;
   amount_paid_cap = Messages.AMNT_PAID_CAP;
