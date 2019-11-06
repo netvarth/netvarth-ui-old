@@ -119,7 +119,7 @@
                                     <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                             class="fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                             (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
-                                    <li><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor"
+                                    <li *ngIf="s3CouponList.length>0"><i class="fa fa-tag blue"></i><span class="icon-jal-coupon pointer-cursor"
                                             (click)="openCoupons()">{{jaldee_coupon}}</span></li>
 
                                     <li><span class="icon-history"
