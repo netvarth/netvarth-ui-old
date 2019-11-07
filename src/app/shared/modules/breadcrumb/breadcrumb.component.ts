@@ -11,7 +11,7 @@ import { Messages } from '../../constants/project-messages';
 export class BreadCrumbComponent implements OnInit, OnChanges {
 
     lear_more_cap = Messages.LEARN_MORE_CAP;
-
+    
     @Input() breadcrumbs;
     @Input() moreOptions: any = [];
     @Output() performAction: EventEmitter<any> = new EventEmitter();

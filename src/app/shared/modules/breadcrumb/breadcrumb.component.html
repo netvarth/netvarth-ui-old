@@ -15,7 +15,9 @@
         <ng-container>
             <div class="actions">
                 <span [ngClass]="className" class="cs-btn bt6 {{className}}" *ngFor="let action of moreOptions.actions">
-                    <div (click)="btn_clicked(action.type)">{{action.title}}</div> <i *ngIf="action.icon" data-icon="B"
+                   
+                    <div (click)="btn_clicked(action.type)"><i *ngIf="action.title=='Help'" class="fa fa-book"></i>{{action.title}}</div>  
+                    <i *ngIf="action.icon" data-icon="B"
                         (click)="btn_clicked(action.icontype)"></i>
                 </span>
                 <!-- <span (click)="learnmore_clicked()" class="cs-btn bt6 {{className}}"> {{lear_more_cap}}</span> -->

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -40,14 +41,18 @@ export class JDNComponent implements OnInit {
     maximumDiscount1: any;
     maximumDiscount2: any;
     maximumDiscount3: any;
+    breadcrumb_moreoptions: any = [];
     constructor(
         private shared_services: SharedServices,
+        private routerobj: Router,
         private shared_functions: SharedFunctions) {
 
     }
     ngOnInit() {
         const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user_data.sector;
         const sub_domain = user_data.subSector || null;
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.shared_services.getFeatures(sub_domain)
             .subscribe(data => {
                 this.jdn = data;
@@ -73,6 +78,11 @@ export class JDNComponent implements OnInit {
 
             });
         this.getJdn();
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->jdn']);
+        }
     }
 
     fillJdnfields(data) {

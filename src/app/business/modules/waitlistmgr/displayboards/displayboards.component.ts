@@ -44,7 +44,7 @@ export class DisplayboardsComponent implements OnInit {
     ngOnInit() {
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
+            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');

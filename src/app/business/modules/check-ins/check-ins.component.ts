@@ -274,7 +274,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getLocationList().then(
       () => {
         this.breadcrumb_moreoptions = {
-          'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
+          'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
+         
         };
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');

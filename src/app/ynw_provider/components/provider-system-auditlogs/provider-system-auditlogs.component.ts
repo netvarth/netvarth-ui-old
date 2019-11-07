@@ -88,7 +88,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdlogSelaction = this.logSelaction;
     this.getAuditListTotalCnt('', '', '', '');
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
   }
   getAuditListTotalCnt(cat, subcat, action, sdate) {
     this.shared_services.getAuditLogsTotalCnt(cat, subcat, action, sdate)

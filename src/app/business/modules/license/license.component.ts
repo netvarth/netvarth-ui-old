@@ -75,7 +75,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     upgradablepackages = [];
     addonTooltip = ''; 
     breadcrumb_moreoptions = { 
-           'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
+           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     upgradedialogRef;
     active_user;
     lichistorydialogRef;
