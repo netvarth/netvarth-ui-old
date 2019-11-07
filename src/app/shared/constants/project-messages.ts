@@ -751,7 +751,7 @@ export const Messages = {
   'PRO_SERVICE_CAP': 'Service',
   'PRO_STATUS_CAP': 'Status',
   'NOTE_CAP': 'Note',
-  'CHANGE_STATUS_CAP': 'Change Status to',
+  'CHANGE_STATUS_CAP': 'Change to',
   'ADD_NOTE_CAP': 'Add Note',
   'PRO_AVAILABLE_CAP': 'available',
   'NO_SERVICE_CAP': 'No service time-windows available',

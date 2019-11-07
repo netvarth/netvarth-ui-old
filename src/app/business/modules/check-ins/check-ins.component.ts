@@ -219,6 +219,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   started_checkins_list: any = [];
   completed_checkins_list: any = [];
   cancelled_checkins_list: any = [];
+  section_start: any = [];
+  section_complete: any = [];
+  section_cancel: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -809,10 +812,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         data => {
           this.new_checkins_list = [];
+          this.started_checkins_list = [];
+          this.completed_checkins_list = [];
+          this.cancelled_checkins_list = [];
           this.check_in_list = data;
           this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
-          console.log(this.grouped_list['arrived']);
-          
           if (this.grouped_list && this.grouped_list['started']) {
             this.started_checkins_list = this.grouped_list['started'].slice();
           }
@@ -828,9 +832,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.grouped_list && this.grouped_list['arrived']) {
             Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
           }
-          console.log(this.new_checkins_list);
           this.sortCheckins(this.new_checkins_list);
-            console.log(this.new_checkins_list);
           if (this.filterapplied === true) {
             this.noFilter = false;
           } else {
@@ -851,7 +853,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
   sortCheckins(checkins) {
-    console.log(checkins);
     checkins.sort(function (message1, message2) {
       if (message1.token > message2.token) {
         return 11;
@@ -1515,8 +1516,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.labelMap[labelname] = value;
     for (let i = 0; i < this.providerLabels.length; i++) {
       for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        console.log(value);
-        console.log(this.providerLabels[i].valueSet[j].value);
         if (this.providerLabels[i].valueSet[j].value === value) {
           if (!this.providerLabels[i].valueSet[j].selected) {
             this.providerLabels[i].valueSet[j].selected = true;
@@ -1532,7 +1531,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    console.log(this.providerLabels);
   }
   addLabelvalue(checkin, source, uuid) {
     this.checkinId = uuid;
@@ -1555,15 +1553,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTodayCheckIn();
     });
   }
-  labelClick(checkin) {
-    console.log(checkin);
-    console.log(this.providerLabels);
 
-  }
-  openActionsWindow(type, index) {
+  openActionsWindow(type, index, status?) {
     switch (type) {
       case 'new':
-        this.section_new[index] = !this.section_new[index];
+        switch (status) {
+          case 'new':
+            this.section_new[index] = !this.section_new[index];
+            break;
+          case 'start':
+            this.section_start[index] = !this.section_start[index];
+            break;
+          case 'complete':
+            this.section_complete[index] = !this.section_complete[index];
+            break;
+          case 'cancel':
+            this.section_cancel[index] = !this.section_cancel[index];
+            break;
+        }
         break;
       case 'future':
         this.section_future[index] = !this.section_future[index];
@@ -1573,4 +1580,5 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
+  toggled() { }
 }

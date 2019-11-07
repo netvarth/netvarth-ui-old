@@ -5641,7 +5641,9 @@ li.separator.setsplit {
   margin-left: 5px !important;
   font-weight: bold;
 }
-.today .btn-more,.today .btn-play {
+.today .btn-more,.today .btn-play,
+.future .btn-more,.future .btn-play,
+.history .btn-more,.history .btn-play {
   padding: 10px 15px 10px 15px !important;
 }
 .btn-message {
