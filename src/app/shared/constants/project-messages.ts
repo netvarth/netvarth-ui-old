@@ -485,7 +485,7 @@ export const Messages = {
   'SERV_TIME_WINDOW_CAP': 'Queue',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
-  'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted ',
+  'NOT_ACCEPTED_THIS_DATE_CAP': 'for this service is not available at the moment. Please try for a different time/date',
   'NEEDS_PREPAYMENT_FOR_CAP': 'This service needs prepayment for',
   'PRE_PAYMENT_AMNT_CAP': 'Pre Payment Amount:',
   'NO_PAY_MODES_AVAIL_CAP': 'Sorry no payment modes available',
