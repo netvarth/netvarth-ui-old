@@ -295,7 +295,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (waitlist.hasOwnProperty('serviceTime') || waitlist.calculationMode === 'NoCalc') {
         appx_ret.caption = 'Checked in for'; // 'Check-In Time';
         if (waitlist.calculationMode === 'NoCalc') {
-          appx_ret.time =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
+          appx_ret.time =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
         } else {
           appx_ret.time = waitlist.serviceTime;
         }
@@ -307,16 +307,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         if (today.valueOf() < waitlist_date.valueOf()) {
           appx_ret.date = waitlist.date;
           appx_ret.date_type = 'date';
-          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
+          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
         } else {
           appx_ret.date = 'Today';
           appx_ret.date_type = 'string';
-          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
+          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
         }
       } else {
         if (waitlist.appxWaitingTime === 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
-          appx_ret.time =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
+          appx_ret.time =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
           appx_ret.timenow = 'Now';
         } else if (waitlist.appxWaitingTime !== 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
@@ -331,7 +331,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       let t2;
       appx_ret.caption = 'Checked in for';
       appx_ret.date = waitlist.date;
-      appx_ret.time =  waitlist.queue.queueStartTime + ' : ' + waitlist.queue.queueEndTime ;
+      appx_ret.time =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
       appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime, 'YYYY-MM-DD').format();
       time = waitlist.statusUpdatedTime.split('-');
       time1 = time[2].trim();
