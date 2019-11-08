@@ -482,6 +482,7 @@
                                 <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')">
                                   <i class="fa"></i> <span> {{done_cap}} </span>
                                 </a>
+                                
                                 <a class="btn-play pointer-cursor"
                                   *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
                                   (click)="viewBillPage(checkin)">
@@ -620,6 +621,9 @@
                                 <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'REPORT')"
                                   *ngIf="checkin.waitlistStatus != 'arrived' && !small_device_display">
                                   <i class="fa icon-arrived"></i> <span>Arrived </span>
+                                </a>
+                                <a class="btn-play pointer-cursor " (click)="printCheckin(checkin)">
+                                  <i class="fa"></i> <span> Print </span>
                                 </a>
                                 <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i)">
                                   <i class="fa fa-angle-right black"></i>
