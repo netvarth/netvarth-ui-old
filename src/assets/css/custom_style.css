@@ -5743,3 +5743,19 @@ li.separator.setsplit {
 .bdstyle{
   margin-left: 20px
 }
+/* consumer help */
+.cons-help{
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  word-wrap: break-word !important;
+}
+.cons-content-card{
+position: relative !important;
+display: flex !important;
+flex-direction: column !important;
+min-width: 0 !important;
+word-wrap: break-word !important;
+background-color:#fff !important;
+}
