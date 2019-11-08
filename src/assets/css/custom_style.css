@@ -5641,9 +5641,7 @@ li.separator.setsplit {
   margin-left: 5px !important;
   font-weight: bold;
 }
-.today .btn-more,.today .btn-play,
-.future .btn-more,.future .btn-play,
-.history .btn-more,.history .btn-play {
+.today .btn-more,.today .btn-play {
   padding: 10px 15px 10px 15px !important;
 }
 .btn-message {
@@ -5742,3 +5740,6 @@ li.separator.setsplit {
 }
 .history .info-box, .future .info-box {min-height: auto !important;}
 .info-box-icon.cancelled {background: #f67676 !important;}
+.bdstyle{
+  margin-left: 20px
+}
