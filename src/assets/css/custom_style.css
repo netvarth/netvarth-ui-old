@@ -5573,7 +5573,7 @@ li.separator.setsplit {
 }
 .today .info-box-content {
   padding: 0 !important;
-  margin-left: 60px !important;
+  margin-left: 60px;
 }
 .today .info-box {
   min-height: auto !important;
@@ -5641,7 +5641,9 @@ li.separator.setsplit {
   margin-left: 5px !important;
   font-weight: bold;
 }
-.today .btn-more,.today .btn-play {
+.today .btn-more,.today .btn-play,
+.future .btn-more,.future .btn-play,
+.history .btn-more,.history .btn-play {
   padding: 10px 15px 10px 15px !important;
 }
 .btn-message {
@@ -5758,4 +5760,12 @@ flex-direction: column !important;
 min-width: 0 !important;
 word-wrap: break-word !important;
 background-color:#fff !important;
+}
+.dashboard-wait {
+  font-size: 0.80rem !important;
+  margin-top: 20px !important;
+  height: 30px !important;
+}
+.tkn-leftbox {
+  margin-left: 10px !important;
 }

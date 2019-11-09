@@ -222,6 +222,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   section_start: any = [];
   section_complete: any = [];
   section_cancel: any = [];
+  showStausFilters = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -278,7 +279,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.breadcrumb_moreoptions = {
           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-         
+
         };
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
@@ -944,6 +945,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.check_in_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
+    this.section_cancel = [];
+    this.section_complete = [];
+    this.section_start = [];
+    this.section_future = [];
+    this.section_history = [];
+    this.section_new = [];
     this.shared_functions.setitemonLocalStorage('pdtyp', this.time_type);
     if (time_type !== 0) {
       this.shared_functions.removeitemfromLocalStorage('hP');
@@ -1094,6 +1101,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
       .then(
         result => {
+          this.section_cancel = [];
+          this.section_complete = [];
+          this.section_start = [];
+          this.section_future = [];
+          this.section_history = [];
+          this.section_new = [];
           this.loadApiSwitch(result);
         }
       );
@@ -1580,5 +1593,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
-  toggled() { }
+  toggled(event) {
+    console.log(event);
+    if (!event) {
+      console.log(event);
+      if (this.time_type === 1) {
+        this.getTodayCheckIn();
+      } else if (this.time_type === 2) {
+        this.getFutureCheckIn();
+      } else if (this.time_type === 0) {
+        this.getHistoryCheckIn();
+      }
+    }
+  }
+  filterbyStatus() {
+    
+  }
+  filterClick() {
+    this.showStausFilters = !this.showStausFilters;
+  }
 }

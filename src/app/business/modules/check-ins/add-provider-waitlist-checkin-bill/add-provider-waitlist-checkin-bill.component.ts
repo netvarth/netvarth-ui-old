@@ -463,8 +463,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             resolve();
           },
           error => {
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            reject(error);
+            this.discounts = [];
+            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // reject(error);
           }
         );
     });
