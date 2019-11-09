@@ -1,5 +1,6 @@
 <section>
-        <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+        (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section>
     <div class="content comn-cls">
@@ -10,79 +11,96 @@
                         <div [class.disabledJdn]="status === 'DISABLED'">
                             <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})</span>&nbsp;
                             <span class="ctrl" *ngIf="status === 'ENABLED'||status === 'DISABLED'">
-                            <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)"></mat-slide-toggle>
-                        </span>
-                        <!-- <span class="editbt" style="margin-left: 20px;" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span> -->
-                        <p
-                                    *ngIf="status ==='ENABLED'">On</p>
-                                    <p
-                                    *ngIf="status === 'DISABLED'">Off</p>
-                                
+                                <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)">
+                                </mat-slide-toggle>
+                            </span>
+                            <!-- <span class="editbt" style="margin-left: 20px;" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span> -->
+                            <p *ngIf="status ==='ENABLED'">On</p>
+                            <p *ngIf="status === 'DISABLED'">Off</p>
+
                             <div *ngIf="jdnType==='Label'; else elseBlock">
-                                    <!-- <div >  <span class="editbt"  *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></div>  -->
-                                <div class="form-group"  >
-                                    <label class="col-form-label">Label<span class="editbt" style="margin-left: 10%" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></label>
-                                    
+                                <!-- <div >  <span class="editbt"  *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></div>  -->
+                                <div class="form-group">
+                                    <label class="col-form-label">Label<span class="editbt" style="margin-left: 10%"
+                                            *ngIf="status === 'ENABLED'&& rewrite !='edit'"
+                                            (click)="edit('edit')"></span></label>
                                     <span *ngIf="rewrite !='edit' && status !='Create'">{{jdnlabeltext}}</span>
                                     <!-- <mat-form-field > -->
-                                    <input style="width: 50%" *ngIf="rewrite ==='edit' || status ==='Create'" matInput type="text" [(ngModel)]="jdnlabeltext"
-                                        class="form-control" id="jdnlabeltext" autocomplete="off">
+                                    <input style="width: 50%" *ngIf="rewrite ==='edit' || status ==='Create'" matInput
+                                        type="text" [(ngModel)]="jdnlabeltext" class="form-control" id="jdnlabeltext"
+                                        autocomplete="off">
                                     <!-- </mat-form-field> -->
-
                                 </div>
-
                             </div>
-                            
-                            <div >
+                            <div>
                                 <ng-template #elseBlock>
-                                    <div class="form-group"  style="padding-top: 20px;">
-                                        <label *ngIf="rewrite ==='edit'|| status ==='Create'" class="col-form-label">Choose Jaldee
-                                            Discount</label>
-                                            <div>
-                                        <label *ngIf="rewrite !='edit'&& status !='Create'" class="col-form-label">Jaldee Discount
-                                                <span class="editbt" style="margin-left: 10%" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></label>
-                                            <span *ngIf="rewrite !='edit'&& status !='Create'">{{discType}}%</span></div>
+                                    <div class="form-group" style="padding-top: 20px;">
+                                        <label *ngIf="rewrite ==='edit'|| status ==='Create'"
+                                            class="col-form-label">Choose Discount Offered</label>
+                                        <div>
+                                            <label *ngIf="rewrite !='edit'&& status !='Create'"
+                                                class="col-form-label">Discount Offered
+                                                <span class="editbt" style="margin-left: 80%"
+                                                    *ngIf="status === 'ENABLED'&& rewrite !='edit'"
+                                                    (click)="edit('edit')"></span></label>
+                                            <span *ngIf="rewrite !='edit'&& status !='Create'">{{discType}}% (upto
+                                                {{jdnmaxDiscounttext}})</span>
+                                        </div>
                                         <!-- <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
                                             [disabled]="status === 'DISABLED'">
                                             <mat-radio-button [value]=5>5%</mat-radio-button>&nbsp;
                                             <mat-radio-button [value]=10>10%</mat-radio-button>&nbsp;
                                             <mat-radio-button [value]=20>20%</mat-radio-button>
                                         </mat-radio-group> -->
-                                        <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'" (change)="radioChange($event)" [(ngModel)]="discType"
+                                        <mat-radio-group *ngIf="rewrite ==='edit'|| status ==='Create'"
+                                            (change)="radioChange($event)" [(ngModel)]="discType"
                                             [disabled]="status === 'DISABLED'">
-                                            <mat-radio-button [value]=option.percentage *ngFor="let option of jdnPercentage;">{{option.percentage}}%&nbsp;</mat-radio-button>
-                                                        </mat-radio-group>
-
+                                            <mat-radio-button class="jdnpercent" [value]=option.percentage
+                                                *ngFor="let option of jdnPercentage;">{{option.percentage}}%
+                                            </mat-radio-button>
+                                        </mat-radio-group>
                                         <!-- <mat-form-field> -->
-                                        <label style="margin-top: 10px;"class="col-form-label">Maximum Discount(₹)</label>
+                                        <div class="form-group">
+                                            <label style="margin-top: 10px;" class="col-form-label"
+                                                *ngIf="rewrite ==='edit'|| status ==='Create'">Maximum Discount
+                                                ({{rupee_symbol}})</label>
+                                            <!-- <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdnmaxDiscounttext}}</span> -->
+                                            <input style="width: 10%" *ngIf="rewrite ==='edit' || status ==='Create'"
+                                                [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
+                                                (keyup)="isvalid($event)" matInput class="form-control"
+                                                [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext">
+                                        </div>
+                                        <!-- <label style="margin-top: 10px;"class="col-form-label">Maximum Discount(₹)</label>
                                         <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdnmaxDiscounttext}}</span>
                                         <input style="width: 50%"*ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
                                             type="number" matInput class="form-control" [(ngModel)]="jdnmaxDiscounttext"
-                                            id="jdnmaxDiscounttext">
+                                            id="jdnmaxDiscounttext"> -->
                                         <!-- </mat-form-field> -->
                                     </div>
-
                                 </ng-template>
                             </div>
-                       
-                            <div class="form-group"  >
-                                <label class="col-form-label"*ngIf="rewrite !='edit'&& status !='Create'&& jdndisplayNote">Note</label>
-                                <label class="col-form-label"*ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
+                            <div class="form-group">
+                                <label class="col-form-label"
+                                    *ngIf="rewrite !='edit'&& status !='Create'&& jdndisplayNote">Note</label>
+                                <label class="col-form-label"
+                                    *ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
                                 <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdndisplayNote}}</span>
-                                <textarea style="width: 50%" *ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
+                                <textarea style="width: 50%" *ngIf="rewrite ==='edit' || status ==='Create'"
+                                    [disabled]="status === 'DISABLED'" placeholder="Enter Display Note *"
                                     class="form-control" [(ngModel)]="jdndisplayNote" id="jdndisplayNote"
                                     maxlength="500">
                             </textarea>
                             </div>
                         </div>
-                        <mat-dialog-actions >
+                        <mat-dialog-actions>
                             <button mat-button *ngIf="status !='ENABLED' && status !='DISABLED'" (click)="save()"
-                                class="cs-btn bt1" style="margin-right: 10px;">set
+                                class="cs-btn bt1" style="margin-right: 10px;">Enable JDN
                             </button>
-                            <button type="button" style="margin-right: 10px;" (click)="cancel()" *ngIf="status != 'DISABLED' && rewrite ==='edit'"
-                                class="cs-btn bt2" [disabled]="disableButton">cancel</button>
+                            <button type="button" style="margin-right: 10px;" (click)="cancel()"
+                                *ngIf="status != 'DISABLED' && rewrite ==='edit'" class="cs-btn bt2"
+                                [disabled]="disableButton">cancel</button>
                             <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
-                                class="cs-btn bt1" >update
+                                class="cs-btn bt1">update
                             </button>
                             <!-- <button mat-button *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"
                                 class="cs-btn bt1" style="margin-right: 10px;">edit
@@ -93,18 +111,14 @@
                             <button mat-button *ngIf="status === 'ENABLED' &&rewrite !='edit'" (click)="disable()"
                                 class="cs-btn bt1" style="margin-right: 10px;">disable
                             </button> -->
-                            
                         </mat-dialog-actions>
                         <!-- <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
                         </app-field-error-display>
-
                         <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
                         </app-form-success-display> -->
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
 </section>

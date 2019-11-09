@@ -412,7 +412,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': 'Are you sure you wanted to change the subscription ?'
+                'message': 'Are you sure you want to change the subscription ?'
             }
         });
         this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {
