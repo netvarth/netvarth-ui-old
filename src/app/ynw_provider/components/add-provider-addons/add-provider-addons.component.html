@@ -30,10 +30,12 @@ onSubmit()" (keyup)="resetApiErrors()"
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
+    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+      <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
     <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn_cap}}
     </button>
     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"> </app-common-innerloading-spinner>
+    </div>
   </mat-dialog-actions>
   
 </form> 
