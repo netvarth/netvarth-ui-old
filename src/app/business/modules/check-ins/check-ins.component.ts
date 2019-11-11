@@ -711,12 +711,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.future_waitlist_count = result;
         }
       );
-    this.getTodayCheckinCount()
-      .then(
-        (result) => {
-          this.today_waitlist_count = result;
-        }
-      );
   }
   selectedQueue(selected_queue) {
     if (selected_queue.id) {

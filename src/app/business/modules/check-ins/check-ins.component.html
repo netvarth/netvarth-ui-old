@@ -80,9 +80,10 @@
             </div>
           </nav>
         </header>
-        <div class="row">
+        <!-- <div class="row"> -->
           <div class="head">
-            <div class="links col-md-6 col-sm-12" *ngIf="selected_location">
+            <!-- <div class="links col-md-6 col-sm-12" *ngIf="selected_location"> -->
+                <div class="links" *ngIf="selected_location">
               <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
                 {{today_cap}} ({{today_waitlist_count}})
               </span>
@@ -94,8 +95,8 @@
             </div>
 
 
-            <div class="popular col-md-6 col-sm-12" style="display: flex;">
-
+            <!-- <div class="popular col-md-6 col-sm-12" style="display: flex;"> -->
+                <div class="popular">
                 <!-- <a (click)="filterbyStatus('new')">
                   <i class="fa fa-check"></i>
                   New</a>
@@ -133,7 +134,7 @@
           </div>
 
 
-        </div>
+        <!-- </div> -->
         <div class="dash-list">
           <!-- <ul class="nav chkn-dash">
             <li class="dropdown notifications-menu cl-fltr fltr-tbl">
