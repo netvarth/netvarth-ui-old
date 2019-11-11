@@ -477,7 +477,9 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
-          this.userEmail = this.userData.userProfile.email || '';
+          if (this.userData.userProfile !== undefined) {
+            this.userEmail = this.userData.userProfile.email || '';
+          }
           if (this.userEmail) {
             this.emailExist = true;
           } else {
