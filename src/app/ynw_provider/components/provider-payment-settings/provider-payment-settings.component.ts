@@ -152,8 +152,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
-        this.getProviderProfile();
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'payment' };
+        this.getProviderProfile(); 
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.activeLicPkg = this.shared_functions.getitemfromLocalStorage('ynw-user').accountLicenseDetails.accountLicense.name;
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
@@ -167,6 +167,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/billing->payment-settings']);
+        }
     }
 
     /**
