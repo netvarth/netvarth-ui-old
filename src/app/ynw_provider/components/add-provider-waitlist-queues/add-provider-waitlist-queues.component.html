@@ -6,10 +6,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
     </h1>
-    <app-common-innerloading-spinner  *ngIf="api_loading1">
-        </app-common-innerloading-spinner>
+    <app-common-innerloading-spinner *ngIf="api_loading1">
+    </app-common-innerloading-spinner>
     <mat-dialog-content *ngIf="!api_loading1">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <mat-form-field class="example-full-width">
                 <mat-form-field>
                     <input matInput placeholder="{{service_time_window_name}}" formControlName="qname"
@@ -22,7 +22,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
           'maxlength' : 'Name can contain only 100 characters'
         })">
             </app-field-error-display>
-        </div>
+        </div> -->
         <div class="form-group" *ngIf="data.source !== 'location_detail'">
             <div *ngIf="data.type!='edit'">
                 <mat-form-field *ngIf="loc_list.length > 1">
@@ -51,25 +51,43 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         </div>
         <div class="form-group">
             <label class="labelstyle">{{service_cap}}</label>
-            <div class="schselectall ">
-                <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectAllService()">
+            <div class="schselectall">
+                <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectdept()">
                     {{select_All}}</i>
-                <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectAllService()">
+                <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectdept()">
                     {{select_All}}</i>
             </div>
+            <div *ngFor="let department of departments;let i = index">
+                <mat-checkbox (change)="selectdeprtservice(i,$event,department.departmentName)"
+                    [checked]="department.checked === true">{{department.departmentName}}
+                </mat-checkbox>
+                <section class="schedule-section leftselectAll">
+                    <div *ngFor="let services of department.serviceIds;let j = index">
+                        <mat-checkbox class="example-margin"
+                            (change)="serviceunderdept(j,department.departmentName, i, services)"
+                            [checked]="serviceSelection[department.departmentName][j]" *ngIf="SelService[i]"
+                            style="display:block">{{services}}</mat-checkbox>
+                    </div>
+                </section>
+                <!-- <div style="display: flex" *ngFor="let services of department.serviceIds" class="service-section leftselectAll">
+                    <mat-checkbox 
+                        [checked]="department.checked === true || department.deptchecked === true"
+                        style="margin-left: 40px; display:block" *ngIf="SelServcall">{{services}}</mat-checkbox>
 
-            <section class="service-section leftselectAll">
+                </div> -->
+            </div>
+
+            <!-- <section class="service-section leftselectAll">
                 <div *ngFor="let service of services_list; index as i ">
                     <mat-checkbox class="example-margin" [value]="service.id" (change)="handleServicechecbox(i)"
                         [checked]="services_list[i].checked === true">{{service.name | capitalizeFirst}}
                     </mat-checkbox>
                 </div>
-            </section>
+            </section> -->
         </div>
         <div class="form-group">
             <label class="labelstyle">{{schedule_cap}}</label><a class="link exstschdlesze pointer-cursor"
                 (click)="existingScheduletoggle()">{{existing_schedules}}</a>
-
             <!-- WANT TO SHOW THIS WHEN ABOVE SECTION ELEMENT IS CLICKED -->
             <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
 
@@ -80,10 +98,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
             </div>
             <!-- END SECTION -->
-
-
-
-
             <!-- <div class="jd_stw" *ngIf="this.activeSchedules.length>0">
                 <span class="whrs">{{existing_schedule_cap}}
                     <span class="item" *ngFor="let schedule of this.activeSchedules">
@@ -91,8 +105,6 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     </span>]
                 </span>
             </div> -->
-
-
 
             <div class="schselectall">
                 <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()"> {{select_All}}</i>
@@ -132,6 +144,22 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <mat-form-field>
+                    <input matInput placeholder="{{service_time_window_name}}" formControlName="qname"
+                        autocomplete="off" ngModel maxlength="20">
+                </mat-form-field>
+            </mat-form-field>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
+            {
+              'required' : 'Please enter title for queue',
+              'maxlength' : 'Name can contain only 100 characters'
+            })">
+            </app-field-error-display>
+        </div>
+
         <div class="form-group">
             <mat-form-field>
                 <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
@@ -176,7 +204,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>
         <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}
         </button>
-        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">   </app-common-innerloading-spinner>
+        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+        </app-common-innerloading-spinner>
     </mat-dialog-actions>
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
     <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
