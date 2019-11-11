@@ -25,8 +25,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
 
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
+    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+      <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
     <button type="submit" mat-button class="cs-btn bt1" [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
+    </div>
   </mat-dialog-actions>
 </form>
 
