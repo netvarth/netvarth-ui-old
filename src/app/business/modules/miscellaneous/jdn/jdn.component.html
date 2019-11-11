@@ -93,7 +93,8 @@
                             </div>
                         </div>
                         <mat-dialog-actions>
-                            <button mat-button *ngIf="status !='ENABLED' && status !='DISABLED'" (click)="save()"
+                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                <button mat-button *ngIf="status !='ENABLED' && status !='DISABLED'" (click)="save()"
                                 class="cs-btn bt1" style="margin-right: 10px;">Enable JDN
                             </button>
                             <button type="button" style="margin-right: 10px;" (click)="cancel()"
@@ -102,6 +103,7 @@
                             <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
                                 class="cs-btn bt1">update
                             </button>
+                            </div>
                             <!-- <button mat-button *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"
                                 class="cs-btn bt1" style="margin-right: 10px;">edit
                             </button>

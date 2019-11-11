@@ -175,9 +175,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 </mat-accordion> -->
             </div>
             <div class="actiondiv" style="margin-top: 10px;">
-                <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
+                <div style="margin-bottom:30px;display: inline-flex;">
+                    <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
                 <button type="submit" mat-button [disabled]="!serviceForm.valid || savedisabled"
                     class="cs-btn bt1">{{button_title}}</button>
+                </div>
                 <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
                     <i class="icon-bell"></i>
                     {{tooltip}}
