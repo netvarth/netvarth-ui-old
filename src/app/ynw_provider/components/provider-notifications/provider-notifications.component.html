@@ -1,5 +1,5 @@
 <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section class="content comn-cls lic-page notifications">
   <div class="col-md-12">
@@ -10,7 +10,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title class="block-level">Online checkins</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12">
+            <div class="rw col-md-12"> 
               <div class="form-group">
                 <div style="display: flex">
                   <span class="notification" style="font-weight: 600"> Notify whenever check-in happens</span>
