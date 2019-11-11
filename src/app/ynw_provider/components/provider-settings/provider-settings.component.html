@@ -76,6 +76,65 @@
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
+                            <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Q Manager <i
+                                    class="fa fa-gears fl-right lnk"></i></h4>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked set-block-ul">
+                                <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
+                                <li><a>Same Day Online {{checkin_label |capitalizeFirst}}s <span class="pull-right">
+                                            <mat-slide-toggle [(ngModel)]="waitlist_status"
+                                                (change)="handle_waitliststatus($event)"></mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p>
+                                        <p class="settings_info">Set up same day checkin here</p>
+                                    </a></li>
+                                <li><a>Future {{checkin_label |capitalizeFirst}}s
+                                        <span class="pull-right">
+                                            <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
+                                                (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>
+                                        </span>
+                                        <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
+                                        </p>
+                                        <p class="settings_info">Set up future checkin here</p>
+                                    </a></li>
+                                <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
+                                            class="lnk">{{locName}} <span class="pull-right badge bg-blue"
+                                                *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
+                                        <p class="settings_info">Set up your locations here</p>
+                                    </a></li>
+                                <li *ngIf="filterbydepartment" (click)="redirecTo('departments')"><a
+                                        class="pointer-cursor"><span class="lnk">Departments
+                                            <span class="pull-right badge bg-blue">{{departmentCount}}</span></span>
+                                        <p class="settings_info">Add departments here</p>
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('services')"><a class="pointer-cursor"><span
+                                            class="lnk">{{services_cap}} <span class="pull-right badge bg-blue"
+                                                *ngIf="multipeLocationAllowed == true">{{service_count}}</span></span>
+                                        <p class="settings_info">Add and manage services here</p>
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span class="lnk">{{qs_cap}}
+                                            <span class="pull-right badge bg-blue">{{queues_count}}</span></span>
+                                        <p class="settings_info">Add and manage your queues here</p>
+                                    </a>
+                                </li>
+                                <!-- <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span
+                                            class="lnk">{{displayboards_cap}}<span class="pull-right badge bg-blue">{{board_count}}</span>
+                                        </span>
+                                        <p class="settings_info">Manage display boards here</p>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-12 set-block">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="billposTooltip">{{billing_cap}} <i class="fa fa-gears fl-right lnk"></i>
                             </h4>
@@ -148,65 +207,6 @@
                                         <p class="settings_info">Set up and turn on tax configuration.</p>
                                     </a>
                                 </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-12 set-block">
-                    <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user-2">
-                        <div class="widget-user-header bg-blue">
-                            <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Q Manager <i
-                                    class="fa fa-gears fl-right lnk"></i></h4>
-                        </div>
-                        <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked set-block-ul">
-                                <li class="form-level-settings"><a>{{frm_waitlist_cap}}</a></li>
-                                <li><a>Same Day Online {{checkin_label |capitalizeFirst}}s <span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="waitlist_status"
-                                                (change)="handle_waitliststatus($event)"></mat-slide-toggle>
-                                        </span>
-                                        <p class="sts" [class.active]="waitlist_status">{{waitlist_statusstr}}</p>
-                                        <p class="settings_info">Set up same day checkin here</p>
-                                    </a></li>
-                                <li><a>Future {{checkin_label |capitalizeFirst}}s
-                                        <span class="pull-right">
-                                            <mat-slide-toggle [(ngModel)]="futureDateWaitlist"
-                                                (change)="handle_futurewaitliststatus($event)"></mat-slide-toggle>
-                                        </span>
-                                        <p class="sts" [class.active]="futureDateWaitlist">{{futurewaitlist_statusstr}}
-                                        </p>
-                                        <p class="settings_info">Set up future checkin here</p>
-                                    </a></li>
-                                <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
-                                            class="lnk">{{locName}} <span class="pull-right badge bg-blue"
-                                                *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
-                                        <p class="settings_info">Set up your locations here</p>
-                                    </a></li>
-                                <li *ngIf="filterbydepartment" (click)="redirecTo('departments')"><a
-                                        class="pointer-cursor"><span class="lnk">Departments
-                                            <span class="pull-right badge bg-blue">{{departmentCount}}</span></span>
-                                        <p class="settings_info">Add departments here</p>
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('services')"><a class="pointer-cursor"><span
-                                            class="lnk">{{services_cap}} <span class="pull-right badge bg-blue"
-                                                *ngIf="multipeLocationAllowed == true">{{service_count}}</span></span>
-                                        <p class="settings_info">Add and manage services here</p>
-                                    </a>
-                                </li>
-                                <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span class="lnk">{{qs_cap}}
-                                            <span class="pull-right badge bg-blue">{{queues_count}}</span></span>
-                                        <p class="settings_info">Add and manage your queues here</p>
-                                    </a>
-                                </li>
-                                <!-- <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span
-                                            class="lnk">{{displayboards_cap}}<span class="pull-right badge bg-blue">{{board_count}}</span>
-                                        </span>
-                                        <p class="settings_info">Manage display boards here</p>
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
                     </div>
