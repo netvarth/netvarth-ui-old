@@ -72,6 +72,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   number;
   SelService: any = [];
   serviceSelection: any = [];
+  filterbyDept = false;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -168,6 +169,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       minute: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
         ['h:mm A']).format('mm'), 10)
     };
+    console.log(this.data.queue);
     this.amForm.setValue({
       qname: this.data.queue.name || null,
       qlocation: this.data.queue.location.id || null,
@@ -190,6 +192,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     } else {
       this.Selall = false;
     }
+    if (this.filterbyDept) {
     for (let j = 0; j < this.departments.length; j++) {
       this.serviceSelection[this.departments[j].departmentName] = [];
       for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
@@ -202,7 +205,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         }
       }
     }
-
     let count = 0;
     for (let j = 0; j < this.departments.length; j++) {
       for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
@@ -216,17 +218,19 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     if (count === 0) {
       this.SelServcall = true;
     }
-    // for (let j = 0; j < this.data.queue.services.length; j++) {
-    //   for (let k = 0; k < this.services_list.length; k++) {
-    //     if (this.data.queue.services[j].id === this.services_list[k].id) {
-    //       this.services_list[k].checked = true;
-    //       this.services_selected.push(this.data.queue.services[j].id);
-    //     }
-    //   }
-    // }
-    // if (this.services_selected.length === this.services_list.length) {
-    //   this.SelServcall = true;
-    // }
+  } else {
+    for (let j = 0; j < this.data.queue.services.length; j++) {
+      for (let k = 0; k < this.services_list.length; k++) {
+        if (this.data.queue.services[j].id === this.services_list[k].id) {
+          this.services_list[k].checked = true;
+          this.services_selected.push(this.data.queue.services[j].id);
+        }
+      }
+    }
+    if (this.services_selected.length === this.services_list.length) {
+      this.SelServcall = true;
+    }
+  }
     this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
     this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
   }
@@ -302,6 +306,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       .subscribe(
         data => {
           this.deptObj = data;
+          this.filterbyDept = this.deptObj.filterByDept;
           this.departments = this.deptObj.departments;
           for (let i = 0; i < this.services_list.length; i++) {
             for (let j = 0; j < this.departments.length; j++) {

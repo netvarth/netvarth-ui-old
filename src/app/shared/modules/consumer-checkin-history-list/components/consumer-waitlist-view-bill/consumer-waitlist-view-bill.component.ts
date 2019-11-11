@@ -325,6 +325,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       this.sharedServices.applyCoupon(action, uuid, this.checkin.provider.id).subscribe
         (billInfo => {
           this.bill_data = billInfo;
+          this.getWaitlistBill(this.checkin);
           this.clearJCoupon();
           resolve();
         },
