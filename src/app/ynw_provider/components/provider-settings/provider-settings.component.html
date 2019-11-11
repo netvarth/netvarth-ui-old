@@ -25,27 +25,33 @@
                                         <p class="sts" [class.active]="search_status">{{search_statusstr}}</p>
                                         <p class="settings_info">Manage your profile visibility</p>
                                     </a></li>
-                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk">Online
-                                            Profile</span>
+                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk" style="display: flex;">Online
+                                            Profile
+                                            <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                            class="req-flds-cap">*required fields missing</p></span>
                                         <p class="settings_info">Manage your profile here</p>
                                     </a>
-                                    <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
-                                        class="req-flds-cap" style="padding-left: 13px;">required fields missing</p>
+                                    <!-- <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                        class="req-flds-cap" style="padding-left: 13px;">required fields missing</p> -->
 
                                 </li>
-                                <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span
-                                            class="lnk">Specializations</span>
+                                <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span style="display: flex;"
+                                            class="lnk">Specializations
+                                            <p *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
+                                                </p></span>
                                         <p class="settings_info">Mention your specializations here</p>
-                                        <p *ngIf="reqFields.specialization" class="req-flds-cap" style="padding-left: 13px;">required fields missing
-                                        </p>
+                                        <!-- <p *ngIf="reqFields.specialization" class="req-flds-cap" style="padding-left: 13px;">*required fields missing
+                                        </p> -->
                                     </a></li>
-                                <li (click)="redirecTo('additionalinfo')"><a class="pointer-cursor"><span
+                                <li (click)="redirecTo('additionalinfo')"><a class="pointer-cursor"><span style="display: flex;"
                                             class="lnk">Additional
-                                            Info</span>
+                                            Info
+                                            <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
+                                            class="req-flds-cap">*required fields missing</p></span>
                                         <p class="settings_info">Add more details of your business for your client to see</p>
                                     </a>
-                                    <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                        class="req-flds-cap" style="padding-left: 13px;">required fields missing</p>
+                                    <!-- <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
+                                        class="req-flds-cap" style="padding-left: 13px;">required fields missing</p> -->
                                 </li>
                                 <li (click)="redirecTo('privacy')"><a class="pointer-cursor"><span
                                             class="lnk">Privacy</span>

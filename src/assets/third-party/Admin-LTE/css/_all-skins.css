@@ -16,7 +16,7 @@
 .skin-jaldee .available .disabled { color: #dddd !important }
 .skin-jaldee .q-time.queuelist label.tstat {color: #999999 !important; font-weight: normal}
 
-.skin-jaldee .req-flds-cap {color: red; font-size: 9px;margin-left: 5px}
+.skin-jaldee .req-flds-cap {color: red; font-size: 9px;margin-left: 5px;margin-bottom: 0px;}
 
 .skin-jaldee .bus-name {color:#444444;}
 .skin-jaldee .main-header.dash .navbar {
@@ -206,7 +206,7 @@
 .skin-blue .dashboard .card.w-dta .dash-list .table thead {
   background-color: #3c8dbc !important;
 }
-.skin-blue .req-flds-cap {color: red; font-size: 9px;margin-left: 5px}
+.skin-blue .req-flds-cap {color: red; font-size: 9px;margin-left: 5px;margin-bottom: 0px;}
 
 .skin-blue .bus-name {color: white}
 .skin-blue .main-header.dash .navbar {
