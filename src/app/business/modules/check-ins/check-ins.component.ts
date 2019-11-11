@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChild } from '@angular/core';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -30,10 +30,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
-  service_window_cap = Messages.SERVICE_TIME_CAP;
-  services_cap = Messages.SERVICES_CAP;
-  check_in_status = Messages.CHECK_IN_STATUS_CAP;
-  payment_status = Messages.PAYMENT_STATUS_CAP;
+  service_window_cap = Messages.WIZ_WORKING_HOURS_CAP;
+  services_cap = Messages.SRVIC_CAP;
+  check_in_status = Messages.PAY_STATUS;
+  payment_status = Messages.PAYMENT_CAP;
   start_date = Messages.START_DATE_CAP;
   end_date = Messages.END_DATE_CAP;
   token_no = Messages.TOKEN_NO_CAP;
@@ -222,7 +222,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   section_start: any = [];
   section_complete: any = [];
   section_cancel: any = [];
-  showStausFilters = false;
+  showStausFilters: any = [];
+  filterStatus = true;
+  showTokenFilter = false;
+  token;
+  newPanel = true;
+  startedPanel = false;
+  completedPanel = false;
+  cancelledPanel = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -704,6 +711,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.future_waitlist_count = result;
         }
       );
+    this.getTodayCheckinCount()
+      .then(
+        (result) => {
+          this.today_waitlist_count = result;
+        }
+      );
   }
   selectedQueue(selected_queue) {
     if (selected_queue.id) {
@@ -1038,6 +1051,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.adjustdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.getTodayCheckIn();
       }
     });
   }
@@ -1054,6 +1068,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
   countApiCall() {
+    // if (this.shared_functions.getitemfromLocalStorage('pdq') !== 'null') {
+    //   this.getTodayCheckinCount();
+    // }
     this.getHistoryCheckinCount();
     this.getFutureCheckinCount();
   }
@@ -1142,6 +1159,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const api_filter = {};
     if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;
+      if (this.token) {
+        api_filter['token-eq'] = this.token;
+      }
     } else if (this.filter.queue !== 'all') {
       api_filter['queue-eq'] = this.filter.queue;
     }
@@ -1157,10 +1177,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filter.service;
     }
+    if (this.filter.waitlist_status !== 'all') {
+      api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+    }
     if (this.time_type !== 1) {
-      if (this.filter.waitlist_status !== 'all') {
-        api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
-      }
+      // if (this.filter.waitlist_status !== 'all') {
+      //   api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+      // }
       if (this.filter.check_in_start_date != null) {
         api_filter['date-ge'] = this.dateformat.transformTofilterDate(this.filter.check_in_start_date);
       }
@@ -1328,6 +1351,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   isvalid(evt) {
+    if (evt.keyCode === 13) {
+      this.doSearch();
+    }
     return this.shared_functions.isValid(evt);
   }
 
@@ -1406,7 +1432,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.srchcustdialogRef.afterClosed().subscribe(result => {
       if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
         this.createCheckin(result.data);
-      } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
+      } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
         this.createCustomer(result.data, source);
       }
     });
@@ -1593,23 +1619,39 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
-  toggled(event) {
-    console.log(event);
-    if (!event) {
-      console.log(event);
-      if (this.time_type === 1) {
-        this.getTodayCheckIn();
-      } else if (this.time_type === 2) {
-        this.getFutureCheckIn();
-      } else if (this.time_type === 0) {
-        this.getHistoryCheckIn();
-      }
+  // toggled(event) {
+  //   if (!event) {
+  //     if (this.time_type === 1) {
+  //       this.getTodayCheckIn();
+  //     } else if (this.time_type === 2) {
+  //       this.getFutureCheckIn();
+  //     } else if (this.time_type === 0) {
+  //       this.getHistoryCheckIn();
+  //     }
+  //   }
+  // }
+  filterbyStatus(status) {
+    this.filterStatus = false;
+    if (this.showStausFilters[status]) {
+      this.showStausFilters[status] = false;
+    } else {
+      this.showStausFilters[status] = true;
     }
-  }
-  filterbyStatus() {
-    
-  }
-  filterClick() {
-    this.showStausFilters = !this.showStausFilters;
+    if (!this.showStausFilters['checkedIn'] && !this.showStausFilters['started'] && !this.showStausFilters['complete'] && !this.showStausFilters['cancelled']) {
+      this.filterStatus = true;
+    }
+    this.filter.waitlist_status = status;
+    if (status === 'checkedIn') {
+      this.newPanel = true;
+    }
+    if (status === 'started') {
+      this.startedPanel = true;
+    }
+    if (status === 'complete') {
+      this.completedPanel = true;
+    }
+    if (status === 'cancelled') {
+      this.cancelledPanel = true;
+    }
   }
 }

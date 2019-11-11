@@ -5794,3 +5794,15 @@ background-color:#fff !important;
   background: #3c8dbc;
   color: white;
 }
+@media only screen and (max-width: 1102px) {
+  .filterStatus {
+    font-size: x-small !important;
+    padding: 0px !important;
+  }
+}
+@media only screen and (max-width: 408px) {
+  .dashboard .chkins .paid-f,
+  .dashboard .chkins .paid-h {
+    display: block;
+  }
+}
