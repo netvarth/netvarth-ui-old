@@ -33,19 +33,24 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             title: 'Services'
         }
     ];
+    domain: any;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
+        private routerobj: Router,
         public router: Router) { }
 
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.api_loading = true;
         this.getDomainSubdomainSettings();
         this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
-            'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' }]
+            'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
+            { 'title': 'Help', 'type': 'learnmore' }]
         };
     }
 
@@ -55,6 +60,9 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         if (action === 'addservice') {
             this.router.navigate(['provider', 'settings', 'q-manager',
                 'services', 'add']);
+        }
+        else if (action === 'learnmore'){
+            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
         }
     }
     getServices() {
