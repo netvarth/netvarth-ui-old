@@ -9,6 +9,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { CheckInComponent } from './check-in.component';
 import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component';
+import { LivetrackComponent } from './live-track/livetrack.component';
 
 
 @NgModule({
@@ -24,11 +25,13 @@ import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component
         LoadingSpinnerModule
     ],
     entryComponents: [
-        CheckInComponent
+        CheckInComponent,
+        LivetrackComponent
     ],
     declarations: [
         CheckInComponent,
-        CheckInInnerComponent
+        CheckInInnerComponent,
+        LivetrackComponent
     ],
     exports: [CheckInInnerComponent]
 })

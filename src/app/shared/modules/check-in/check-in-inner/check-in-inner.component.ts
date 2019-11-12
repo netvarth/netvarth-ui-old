@@ -11,6 +11,7 @@ import { CommonDataStorageService } from '../../../../shared/services/common-dat
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { LivetrackComponent } from '../live-track/livetrack.component';
 
 @Component({
   selector: 'app-check-in-inner',
@@ -153,11 +154,19 @@ export class CheckInInnerComponent implements OnInit {
   confrmshow = false;
   userData: any = [];
   userEmail;
+  userPhone;
   emailExist = false;
   payEmail;
   payEmail1;
   emailerror = null;
   email1error = null;
+  phoneerror = null;
+  edit = true;
+  selected_phone;
+  consumerPhoneNo;
+  trackUuid;
+  liveTrack = false;
+  source: any = [];
 
 
   constructor(public fed_service: FormMessageDisplayService,
@@ -477,7 +486,10 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
+          console.log(this.userData);
           this.userEmail = this.userData.userProfile.email || '';
+          this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+          this.consumerPhoneNo = this.userPhone;
           if (this.userEmail) {
             this.emailExist = true;
           } else {
@@ -541,6 +553,38 @@ export class CheckInInnerComponent implements OnInit {
 
 
   }
+  addPhone(){
+    this.resetApiErrors();
+    this.resetApi();
+    const curphone = this.selected_phone;
+      const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+    if (this.selected_phone === '') {
+      this.phoneerror = Messages.BPROFILE_PHONENO;
+      return;
+    }
+    else  if (!result) {
+        this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+        return;
+      }
+      else if (!result1) {
+        this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+        return;
+      }
+      else{
+        this.consumerPhoneNo = this.selected_phone;
+        this.userPhone = this.selected_phone;
+        this.edit = true;
+     
+      }
+    
+  }
+  editPhone(){
+    this.edit = false;
+    this.selected_phone = this.userPhone;
+  }
   validateEmail(mail) {
     const emailField = mail;
     const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -554,6 +598,7 @@ export class CheckInInnerComponent implements OnInit {
 
     this.emailerror = null;
     this.email1error = null;
+    this.phoneerror = null;
   }
   setServiceDetails(curservid) {
     let serv;
@@ -812,6 +857,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   addCheckInConsumer(post_Data) {
+    post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
@@ -819,6 +865,7 @@ export class CheckInInnerComponent implements OnInit {
         let retUUID;
         Object.keys(retData).forEach(key => {
           retUUID = retData[key];
+         this.trackUuid = retData[key];
         });
         if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
           if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
@@ -869,11 +916,28 @@ export class CheckInInnerComponent implements OnInit {
             this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
           }
           setTimeout(() => {
+            this.source['list'] = 'reloadlist';
+          this.source['mode'] = this.page_source;
             // this.dialogRef.close('reloadlist');
-            this.returntoParent.emit('reloadlist');
+            console.log(this.source);
+            this.returntoParent.emit(this.source);
           }, projectConstants.TIMEOUT_DELAY);
           this.router.navigate(['/']);
         }
+        setTimeout(() => {
+          this.liveTrack = true;
+          this.resetApi();
+        }, 2000);
+        
+        // const dialogrefd = this.dialog.open(LivetrackComponent, {
+        //   width: '50%',
+        //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        //   disableClose: true,
+        //   data: {
+        //     'details': this.trackUuid,
+        //     'origin': 'consumer'
+        //   }
+        // });
 
       },
         error => {
@@ -892,8 +956,10 @@ export class CheckInInnerComponent implements OnInit {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
         }
         setTimeout(() => {
+          this.source['list'] = 'reloadlist';
+          this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
-          this.returntoParent.emit('reloadlist');
+          this.returntoParent.emit(this.source);
         }, projectConstants.TIMEOUT_DELAY);
       },
         error => {

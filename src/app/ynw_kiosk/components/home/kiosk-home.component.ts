@@ -311,7 +311,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     return checkIndata;
   }
   handleCheckinReturn(retdata) {
-    if (retdata === 'reloadlist') {
+    if (retdata.list === 'reloadlist') {
       this.showMode('main');
     }
   }

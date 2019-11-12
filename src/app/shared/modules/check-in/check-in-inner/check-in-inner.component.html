@@ -1,9 +1,9 @@
-<h1 [class.mat-dialog-title]="!fromKiosk" [class.kioskinnertitle]="fromKiosk">{{main_heading}}
+<h1 [class.mat-dialog-title]="!fromKiosk" [class.kioskinnertitle]="fromKiosk" *ngIf="!liveTrack">{{main_heading}}
     <button #queue mat-dialog-close class="modal_close" *ngIf="!fromKiosk">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
-<div [class.mat-dialog-content]="!fromKiosk" [class.kioskcontent]="fromKiosk">
+<div [class.mat-dialog-content]="!fromKiosk" [class.kioskcontent]="fromKiosk" *ngIf="!liveTrack" >
     <div class="mainouter checkin-page">
        
         <ng-container *ngIf="step==1 && !api_loading1">
@@ -274,6 +274,16 @@
                     </div>
                 </div>
             </ng-container>
+            <ng-container  *ngIf="page_source != 'provider_checkin'">
+                <div class="input-group">
+                    <label  *ngIf="edit" class="col-form-label" >Contact number: <span *ngIf="userPhone" >{{userPhone}} </span><span style="color: #00aef2;" (click)="editPhone()" >Edit</span></label>
+                    <input *ngIf="!edit"  type="text" style="width: 50%;border-bottom: 1px solid;" placeholder="Contact number" class=" emailPrepay"[(ngModel)]="selected_phone">
+                    <span *ngIf="!edit"  (click)="addPhone()" style="color: #00aef2;" >Add</span>
+                    <app-field-error-display [displayError]="true" *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
+                    </app-field-error-display>
+                    
+                </div>
+            </ng-container>
         </ng-container>
         <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner> 
         <ng-container *ngIf="step==3">
@@ -331,7 +341,7 @@
 </div>
 
 <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk"
-    *ngIf="queuejson.length > 0 && servicesjson.length > 0">
+    *ngIf="queuejson.length > 0 && servicesjson.length > 0 && !liveTrack">
     <div class="waitlist-button-outer">
         <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
             <div class="showDetService" *ngIf="sel_ser_det.name">
@@ -392,6 +402,27 @@
     </ng-container>
 </div>
 
-<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+
+<div *ngIf="liveTrack">
+    <h4 class="mat-dialog-title">Tracking
+        <button mat-dialog-close class="modal_close" tabindex="-1" style="color: black">
+          <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+      </h4>
+    <mat-dialog-content>
+      <div >
+         <div style="padding-bottom: 10px">Prepayment Amount: <b>&#8377; hj</b></div> 
+          <div style="padding-bottom: 10px">Payment Options
+         <div><p class="settings_info" style="margin-right: 352px;">Choose your payment options from here</p></div>
+          </div>
+       
+        <div class="col-md-12 cc-dc-nb" style="display: flex">
+          <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button>
+          <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button>
+        </div>
+      </div>
+    </mat-dialog-content></div>
+    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
 <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
 </app-form-success-display>
