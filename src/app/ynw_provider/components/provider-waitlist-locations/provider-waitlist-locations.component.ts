@@ -55,11 +55,14 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   ];
   breadcrumbs = this.breadcrumbs_init;
   isCheckin;
+  domain: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
     private dialog: MatDialog,
     private router: Router,
+    private routerobj: Router,
+    public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_shared_functions: ProviderSharedFuctions
   ) {
@@ -67,6 +70,8 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   }
 
   ngOnInit() {
+    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.domain = user.sector;
     this.getBusinessConfiguration();
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
@@ -93,6 +98,9 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   performActions(action) {
     if (action === 'addlocation') {
       this.addLocation();
+    }
+    else if(action === 'learnmore'){
+      this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-locations']);
     }
   }
   getBussinessProfile() {
@@ -152,6 +160,10 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
           const actions = [];
           if (this.show_addlocationButton) {
             actions.push({ 'title': this.new_loc_cap, 'type': 'addlocation' });
+            actions.push({'title':'Help','type':'learnmore'});
+          }
+          else{
+            actions.push({'title':'Help','type':'learnmore'});
           }
           this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-locations', 'subKey': '', 'classname': 'b-loc',
