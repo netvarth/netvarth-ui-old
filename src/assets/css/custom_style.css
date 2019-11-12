@@ -5806,3 +5806,10 @@ background-color:#fff !important;
     display: block;
   }
 }
+
+.addservice-tooltip .icon-bell{
+  border-radius: 50px;
+  background: #ffc107;
+  margin-right: 5px;
+  padding: 2px;
+}

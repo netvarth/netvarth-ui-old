@@ -21,7 +21,6 @@ export class SetPasswordFormComponent implements OnInit {
   passworddialogRef;
   isValidConfirm_pw = false;
   customer = '';
-
   spForm;
   @Input() type;
   @Input() checkConsumerOrProvider;
@@ -45,19 +44,27 @@ export class SetPasswordFormComponent implements OnInit {
   }
 
   createForm() {
-    this.spForm = this.fb.group({
-      new_password: ['', Validators.compose(
-        [Validators.required])],
-      confirm_password: ['', Validators.compose(
-        [Validators.required])],
-    });
+    if (this.checkConsumerOrProvider === 'true') {
+      this.spForm = this.fb.group({
+        new_password: ['', Validators.compose(
+          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+        confirm_password: ['', Validators.compose(
+          [Validators.required])],
+      });
+    } else {
+      this.spForm = this.fb.group({
+        new_password: ['', Validators.compose(
+          [Validators.required])],
+        confirm_password: ['', Validators.compose(
+          [Validators.required])],
+      });
+    }
     setTimeout(() => {
       if (this.document.getElementById('newpassfield')) {
         this.document.getElementById('newpassfield').focus();
       }
     }, 500);
   }
-
   doOnPasswordSubmit(value) {
     this.retonPasswordSubmit.emit(value);
   }

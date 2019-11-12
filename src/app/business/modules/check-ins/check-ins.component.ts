@@ -279,6 +279,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = user.sector;
     this.getDomainSubdomainSettings();
+    this.getPos();
     this.getServiceList();
     // this.getLocationList();
     this.getLabel();
@@ -612,6 +613,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { },
         () => { }
       );
+  }
+  getPos() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
   }
   getQueueListByDate() {
     this.load_queue = 0;
@@ -1306,7 +1312,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
         .subscribe(
           (data: any) => {
-            this.pos = data.pos;
+            // this.pos = data.pos;
             if (data.serviceBillable === false) {
               this.isServiceBillable = false;
               this.hideServiceBillCount = 1;

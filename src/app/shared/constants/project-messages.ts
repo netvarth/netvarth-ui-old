@@ -101,7 +101,7 @@ export const Messages = {
   'LABEL_UPDATED': 'Label updated successfully',
   'LABEL_ADDED': 'Label created successfully',
   'SERVICE_ADDED1': 'New service added successfully',
-  'SERVICE_ADDED2': 'Please add this service to the relevant working hours by editing it.',
+  'SERVICE_ADDED2': 'Please add this service to the relevant Queues by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Enable [customer] self pay button under payment settings to collect prepayment for this service.',
@@ -117,7 +117,7 @@ export const Messages = {
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
-  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant working hours by editing it',
+  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant Queues by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
