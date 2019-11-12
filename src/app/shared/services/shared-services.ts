@@ -961,10 +961,6 @@ export class SharedServices {
 
   }
 
-  getLicenseMetadata() {
-    return this.servicemeta.httpGet('provider/license/licensemetadata');
-  }
-
   getProviderDept(id) {
 
     const path = 'consumer/waitlist/department/services?account=' + id;

@@ -132,6 +132,10 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.open_filter = !this.open_filter;
   }
   resetFilter() {
+    this.filters = {
+      'ack_status': false,
+      'date': false
+    };
     this.alertSeldate = '';
     this.alertSelAck = 'false';
     this.holdalertSeldate = null;

@@ -1,6 +1,7 @@
 <section>
     <!-- Subheader section -->
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+        (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 
 <section>
@@ -12,7 +13,10 @@
                         <!-- <mat-tab-group dynamicHeight="true" class="paysettings-tab" [selectedIndex]="tabid"
                     (selectedIndexChange)="selectedIndexChange($event)">
                    <mat-tab > -->
-                        <div class="paysettings ">
+                        <div class="card" *ngIf="api_loading">
+                                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                            </div>
+                        <div class="paysettings" *ngIf="!api_loading">
                             <span class="form-level-settings">{{payment_set_cap}}<a class="learnmore-pointer"
                                     id="customer-help" (click)="learnmore_clicked('payment-settings', $event)">Learn
                                     More</a></span>
@@ -30,10 +34,11 @@
                                             <mat-radio-button [disabled]="disableMyAcc" [value]="'disable'">
                                             </mat-radio-button>
                                             <label for="">{{my_own_account_cap}}</label>
-                                            <div class="payment-smalldevice"*ngIf="optJaldeeAccount!='enable'">
-                                                   
+                                         
+                                            <div class="payment-smalldevice" *ngIf="optJaldeeAccount!='enable'">
+
                                                 <div class="outermost" *ngIf="jPay_Billing">
-                                                   
+
                                                     <div class="no-dta"
                                                         *ngIf="!emailidVerified && profileQueryExecuted">
                                                         <p>{{pay_if_mail_verified_cap}}</p>
@@ -43,338 +48,395 @@
                                                         <p>{{revisit_this_page_cap}}</p>
                                                     </div>
                                                     <div class='paymode-outer' *ngIf="emailidVerified">
-                                                            <mat-accordion>
-                                                                    <mat-expansion-panel [expanded]="false">
-                                                                      <mat-expansion-panel-header>
-                                                                        <mat-panel-title>
-                                                                          <span> {{pay_tm_cap}}<span *ngIf="paytmverified"
-                                                                    class="verified">{{verified_cap}}</span><span
-                                                                    *ngIf="!paytmverified"
-                                                                    class="not-verified">{{not_verified_cap}}</span></span>
-                                                                        </mat-panel-title>
-                                                                      </mat-expansion-panel-header>
-                                                                      <div class='paytm-det row ynw-common-form-nm' >
-                                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="form-group mobile-field">
-                                                                                    <!-- <label class="caption">Enter 10 digits mobile
+                                                        <mat-accordion>
+                                                            <mat-expansion-panel [expanded]="false">
+                                                                <mat-expansion-panel-header>
+                                                                    <mat-panel-title>
+                                                                        <span> {{pay_tm_cap}}<span *ngIf="paytmverified"
+                                                                                class="verified">{{verified_cap}}</span><span
+                                                                                *ngIf="!paytmverified"
+                                                                                class="not-verified">{{not_verified_cap}}</span></span>
+                                                                    </mat-panel-title>
+                                                                </mat-expansion-panel-header>
+                                                                <div class='paytm-det row ynw-common-form-nm'>
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group mobile-field">
+                                                                            <!-- <label class="caption">Enter 10 digits mobile
                                                                                         number
                                                                                         *</label> -->
-                                                                                    <mat-form-field>
-                                                                                        <div class="input-group">
-                                                                                            <!-- <div
+                                                                            <mat-form-field>
+                                                                                <div class="input-group">
+                                                                                    <!-- <div
                                                                                                 class="input-group-prepend mob-prefix">
                                                                                                 <span class="input-group-text"
                                                                                                     id="">{{mob_prefix_cap}}</span>
                                                                                             </div> -->
-                                                                                            <input class="form-control"
-                                                                                                maxlength="10" matInput #paymobref
-                                                                                                [(ngModel)]="paytmmobile" placeholder="Enter 10 digits mobile
+                                                                                    <input class="form-control"
+                                                                                        maxlength="10" matInput
+                                                                                        #paymobref
+                                                                                        [(ngModel)]="paytmmobile"
+                                                                                        placeholder="Enter 10 digits mobile
                                                                                                 number(+91)"
-                                                                                                (keypress)="resetApi('paytmmobile')"
-                                                                                                autocomplete="off"
-                                                                                                [disabled]="!ineditMode"
-                                                                                                (blur)="paytmBlur()" tabindex="2">
-                                                                                        </div>
-                                                                                    </mat-form-field>
-                                                                                    <app-field-error-display *ngIf= "showError['paytmmobile']"
-                                                                                        [displayError]="showError['paytmmobile']['status']"
-                                                                                        [errorMsg]="showError['paytmmobile']['msg']">
-                                                                                    </app-field-error-display>
-           
+                                                                                        (keypress)="resetApi('paytmmobile')"
+                                                                                        autocomplete="off"
+                                                                                        [disabled]="!ineditMode"
+                                                                                        (blur)="paytmBlur()"
+                                                                                        tabindex="2">
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="form-group">
-                                                                                    <!-- <label class="caption">Merchant Id *</label> -->
-                                                                                    <mat-form-field>
-                                                                                        <input matInput #paytmidref
-                                                                                            [(ngModel)]="paytmMerchantId" placeholder="Merchant Id *"
-                                                                                            (keypress)="resetApi('paytmMerchantId')"
-                                                                                            autocomplete="off"
-                                                                                            [disabled]="!ineditMode"
-                                                                                            (blur)="paytmMidBlur()" tabindex="3">
-                                                                                    </mat-form-field>
-                                                                                    <app-field-error-display *ngIf= "showError['paytmMerchantId']"
-                                                                                        [displayError]="showError['paytmMerchantId']['status']"
-                                                                                        [errorMsg]="showError['paytmMerchantId']['msg']">
-                                                                                    </app-field-error-display>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="form-group">
-                                                                                    <!-- <label class="caption">Merchant Key *</label> -->
-                                                                                    <mat-form-field>
-                                                                                        <input matInput #paytmmkeyref
-                                                                                            [(ngModel)]="paytmMerchantKey"
-                                                                                            (keypress)="resetApi('paytmMerchantKey')" placeholder="Merchant Key *"
-                                                                                            autocomplete="off"
-                                                                                            [disabled]="!ineditMode"
-                                                                                            (blur)="paytmMkeyBlur()" tabindex="4">
-                                                                                    </mat-form-field>
-                                                                                    <app-field-error-display *ngIf= "showError['paytmMerchantKey']"
-                                                                                        [displayError]="showError['paytmMerchantKey']['status']"
-                                                                                        [errorMsg]="showError['paytmMerchantKey']['msg']">
-                                                                                    </app-field-error-display>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="form-group">
-                                                                                    <!-- <label class="caption">Website Web *</label> -->
-                                                                                    <mat-form-field>
-                                                                                        <input matInput #paytmWebsitewebref
-                                                                                            [(ngModel)]="paytmWebsiteWeb"
-                                                                                            (keypress)="resetApi('paytmWebsiteWeb')" placeholder="Website Web *"
-                                                                                            autocomplete="off"
-                                                                                            (blur)="paytmwebsitewebBlur()"
-                                                                                            [disabled]="!ineditMode" tabindex="3">
-                                                                                    </mat-form-field>
-                                                                                    <app-field-error-display  *ngIf= "showError['paytmWebsiteWeb']"
-                                                                                        [displayError]="showError['paytmWebsiteWeb']['status']"
-                                                                                        [errorMsg]="showError['paytmWebsiteWeb']['msg']">
-                                                                                    </app-field-error-display>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="form-group">
-                                                                                    <!-- <label class="caption">Website App *</label> -->
-                                                                                    <mat-form-field>
-                                                                                        <input matInput #paytmWebsiteappref
-                                                                                            [(ngModel)]="paytmWebsiteApp"
-                                                                                            (keypress)="resetApi('paytmWebsiteApp')" placeholder="Website App *"
-                                                                                            autocomplete="off"
-                                                                                            (blur)="paytmwebsiteAppBlur()"
-                                                                                            [disabled]="!ineditMode" tabindex="3">
-                                                                                    </mat-form-field>
-                                                                                    <app-field-error-display *ngIf= "showError['paytmWebsiteApp']"
-                                                                                        [displayError]="showError['paytmWebsiteApp']['status']"
-                                                                                        [errorMsg]="showError['paytmWebsiteApp']['msg']">
-                                                                                    </app-field-error-display>
-                                                                                </div>
-                                                                            </div>
-           
-           
-                                                                            <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="form-group">
-                                                                                    <!-- <label class="caption">Industry Type *</label> -->
-                                                                                    <mat-form-field>
-                                                                                        <input matInput #paytmIndustryTypeidref
-                                                                                            [(ngModel)]="paytmIndustryType"
-                                                                                            (keypress)="resetApi('paytmIndustryType')" placeholder="Industry Type *"
-                                                                                            autocomplete="off"
-                                                                                            (blur)="paytmindustrytypeBlur()"
-                                                                                            [disabled]="!ineditMode" tabindex="3">
-                                                                                    </mat-form-field>
-                                                                                    <app-field-error-display *ngIf= "showError['paytmIndustryType']"
-                                                                                        [displayError]="showError['paytmIndustryType']['status']"
-                                                                                        [errorMsg]="showError['paytmIndustryType']['msg']">
-                                                                                    </app-field-error-display>
-                                                                                </div>
-                                                                            </div>
-                                                                                <div class="col-sm-6 col-md-4 col-lg-4 col-12">
-                                                                                <div class="actiondiv"
-                                                        *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
-                                                        <button type="button" class="cs-btn bt2" (click)="resetInfo ('paytm')"
-                                                            *ngIf="ineditMode" tabindex="15">Reset</button>&nbsp;
-                                                        <button type="button"  class="cs-btn bt1"
-                                                            (click)="savePaySettings('payTm')" *ngIf="ineditMode"
-                                                            tabindex="14">Save</button>
-                                                       
-                                                    </div>
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['paytmmobile']"
+                                                                                [displayError]="showError['paytmmobile']['status']"
+                                                                                [errorMsg]="showError['paytmmobile']['msg']">
+                                                                            </app-field-error-display>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">Merchant Id *</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput #paytmidref
+                                                                                    [(ngModel)]="paytmMerchantId"
+                                                                                    placeholder="Merchant Id *"
+                                                                                    (keypress)="resetApi('paytmMerchantId')"
+                                                                                    autocomplete="off"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    (blur)="paytmMidBlur()"
+                                                                                    tabindex="3">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['paytmMerchantId']"
+                                                                                [displayError]="showError['paytmMerchantId']['status']"
+                                                                                [errorMsg]="showError['paytmMerchantId']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">Merchant Key *</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput #paytmmkeyref
+                                                                                    [(ngModel)]="paytmMerchantKey"
+                                                                                    (keypress)="resetApi('paytmMerchantKey')"
+                                                                                    placeholder="Merchant Key *"
+                                                                                    autocomplete="off"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    (blur)="paytmMkeyBlur()"
+                                                                                    tabindex="4">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['paytmMerchantKey']"
+                                                                                [displayError]="showError['paytmMerchantKey']['status']"
+                                                                                [errorMsg]="showError['paytmMerchantKey']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">Website Web *</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput #paytmWebsitewebref
+                                                                                    [(ngModel)]="paytmWebsiteWeb"
+                                                                                    (keypress)="resetApi('paytmWebsiteWeb')"
+                                                                                    placeholder="Website Web *"
+                                                                                    autocomplete="off"
+                                                                                    (blur)="paytmwebsitewebBlur()"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    tabindex="3">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['paytmWebsiteWeb']"
+                                                                                [displayError]="showError['paytmWebsiteWeb']['status']"
+                                                                                [errorMsg]="showError['paytmWebsiteWeb']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">Website App *</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput #paytmWebsiteappref
+                                                                                    [(ngModel)]="paytmWebsiteApp"
+                                                                                    (keypress)="resetApi('paytmWebsiteApp')"
+                                                                                    placeholder="Website App *"
+                                                                                    autocomplete="off"
+                                                                                    (blur)="paytmwebsiteAppBlur()"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    tabindex="3">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['paytmWebsiteApp']"
+                                                                                [displayError]="showError['paytmWebsiteApp']['status']"
+                                                                                [errorMsg]="showError['paytmWebsiteApp']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">Industry Type *</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput #paytmIndustryTypeidref
+                                                                                    [(ngModel)]="paytmIndustryType"
+                                                                                    (keypress)="resetApi('paytmIndustryType')"
+                                                                                    placeholder="Industry Type *"
+                                                                                    autocomplete="off"
+                                                                                    (blur)="paytmindustrytypeBlur()"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    tabindex="3">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['paytmIndustryType']"
+                                                                                [displayError]="showError['paytmIndustryType']['status']"
+                                                                                [errorMsg]="showError['paytmIndustryType']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-md-4 col-lg-4 col-12">
+                                                                        <div class="actiondiv"
+                                                                            *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
+                                                                            <button type="button" class="cs-btn bt2"
+                                                                                (click)="resetInfo ('paytm')"
+                                                                                *ngIf="ineditMode"
+                                                                                tabindex="15">Reset</button>&nbsp;
+                                                                            <button type="button" class="cs-btn bt1"
+                                                                                (click)="savePaySettings('payTm')"
+                                                                                *ngIf="ineditMode"
+                                                                                tabindex="14">Save</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </mat-expansion-panel>
+                                                        </mat-accordion>
+                                                        <mat-accordion>
+                                                            <mat-expansion-panel [expanded]="false">
+                                                                <mat-expansion-panel-header>
+                                                                    <mat-panel-title>
+                                                                        <span> {{cc_dc_netbanking_cap}}<span
+                                                                                *ngIf="payuverified"
+                                                                                class="verified">{{verified_cap}}</span><span
+                                                                                *ngIf="!payuverified"
+                                                                                class="not-verified">{{not_verified_cap}}</span>
+                                                                        </span>
+                                                                    </mat-panel-title>
+                                                                </mat-expansion-panel-header>
+                                                                <div class='cc-det ynw-common-form-nm'>
+
+                                                                    <div class='bank-outer'>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{account_holder_name_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput #acholdernameref
+                                                                                    [(ngModel)]="bankacname"
+                                                                                    (change)="resetApi('bankacname')"
+                                                                                    placeholder="{{account_holder_name_cap}}"
+                                                                                    autocomplete="off"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    maxlength="50"
+                                                                                    (blur)="acholderNameBlur()"
+                                                                                    tabindex="5">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankacname']"
+                                                                                [displayError]="showError['bankacname']['status']"
+                                                                                [errorMsg]="showError['bankacname']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{bank_account_number_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput
+                                                                                    [(ngModel)]="bankacnumber"
+                                                                                    (change)="resetApi('bankacnumber')"
+                                                                                    placeholder="{{bank_account_number_cap}}"
+                                                                                    maxlength="18" autocomplete="off"
+                                                                                    (keypress)="removSpace($event)"
+                                                                                    (blur)="bankAcnumberBlur()"
+                                                                                    tabindex="6">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankacnumber']"
+                                                                                [displayError]="showError['bankacnumber']['status']"
+                                                                                [errorMsg]="showError['bankacnumber']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">{{bank_name_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput [(ngModel)]="bankname"
+                                                                                    (change)="resetApi('bankname')"
+                                                                                    placeholder="{{bank_name_cap}}"
+                                                                                    autocomplete="off"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    maxlength="50"
+                                                                                    (blur)="bankNameBlur()"
+                                                                                    tabindex="8">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankname']"
+                                                                                [displayError]="showError['bankname']['status']"
+                                                                                [errorMsg]="showError['bankname']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label class="caption">{{ifsc_code_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput [(ngModel)]="bankifsc"
+                                                                                    (change)="resetApi('bankifsc')"
+                                                                                    placeholder="{{ifsc_code_cap}}"
+                                                                                    autocomplete="off"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    maxlength="11" (blur)="ifscBlur()"
+                                                                                    tabindex="9">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankifsc']"
+                                                                                [displayError]="showError['bankifsc']['status']"
+                                                                                [errorMsg]="showError['bankifsc']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{branch_name_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput [(ngModel)]="bankbranch"
+                                                                                    (change)="resetApi('bankbranch')"
+                                                                                    placeholder="{{branch_name_cap}}"
+                                                                                    maxlength="50" autocomplete="off"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    (blur)="bankBranchBlur()"
+                                                                                    tabindex="11">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankbranch']"
+                                                                                [displayError]="showError['bankbranch']['status']"
+                                                                                [errorMsg]="showError['bankbranch']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{business_filing_status_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <mat-select [(ngModel)]="bankfiling"
+                                                                                    (selectionChange)="resetApi('bankfiling')"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    tabindex="12">
+                                                                                    <mat-option value="">
+                                                                                        {{business_filing_status_cap}}
+                                                                                    </mat-option>
+                                                                                    <mat-option value="Proprietorship">
+                                                                                        {{proprietorship_cap}}
+                                                                                    </mat-option>
+                                                                                    <mat-option value="Individual">
+                                                                                        {{individual_cap}}</mat-option>
+                                                                                    <mat-option value="Partnership">
+                                                                                        {{partnership_cap}}</mat-option>
+                                                                                    <mat-option value="Privatelimited">
+                                                                                        {{pvt_ltd_cap}}</mat-option>
+                                                                                    <mat-option value="PublicLimited">
+                                                                                        {{public_ltd_cap}}</mat-option>
+                                                                                    <mat-option value="LLP">{{llp_cap}}
+                                                                                    </mat-option>
+                                                                                    <mat-option value="Trust">
+                                                                                        {{trust_cap}}
+                                                                                    </mat-option>
+                                                                                    <mat-option value="Societies">
+                                                                                        {{societies_cap}}</mat-option>
+                                                                                </mat-select>
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankfiling']"
+                                                                                [displayError]="showError['bankfiling']['status']"
+                                                                                [errorMsg]="showError['bankfiling']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{account_type_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <mat-select [(ngModel)]="bankactype"
+                                                                                    (selectionChange)="resetApi('bankactype')"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    tabindex="13">
+                                                                                    <mat-option value="">
+                                                                                        {{account_type_cap}}
+                                                                                    </mat-option>
+                                                                                    <mat-option value="Current">
+                                                                                        {{current_cap}}
+                                                                                    </mat-option>
+                                                                                    <mat-option value="Saving">
+                                                                                        {{savings_cap}}
+                                                                                    </mat-option>
+                                                                                </mat-select>
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['bankactype']"
+                                                                                [displayError]="showError['bankactype']['status']"
+                                                                                [errorMsg]="showError['bankactype']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{pan_card_number_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput [(ngModel)]="pannumber"
+                                                                                    (change)="resetApi('pannumber')"
+                                                                                    autocomplete="off"
+                                                                                    placeholder="{{pan_card_number_cap}}"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    (blur)="panCardBlur()"
+                                                                                    (keypress)="removSpace($event)"
+                                                                                    tabindex="7">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['pannumber']"
+                                                                                [displayError]="showError['pannumber']['status']"
+                                                                                [errorMsg]="showError['pannumber']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <!-- <label
+                                                                                            class="caption">{{name_on_pan_card_cap}}</label> -->
+                                                                            <mat-form-field>
+                                                                                <input matInput [(ngModel)]="panname"
+                                                                                    (change)="resetApi('panname')"
+                                                                                    autocomplete="off"
+                                                                                    placeholder="{{name_on_pan_card_cap}}"
+                                                                                    [disabled]="!ineditMode"
+                                                                                    maxlength="50"
+                                                                                    (blur)="panNameBlur()"
+                                                                                    tabindex="10">
+                                                                            </mat-form-field>
+                                                                            <app-field-error-display
+                                                                                *ngIf="showError['panname']"
+                                                                                [displayError]="showError['panname']['status']"
+                                                                                [errorMsg]="showError['panname']['msg']">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <div class="form-group"></div>
+                                                                        <div class="form-group">
+                                                                            <div class="actiondiv"
+                                                                                *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
+                                                                                <button type="button" class="cs-btn bt2"
+                                                                                    (click)="resetInfo ('cc')"
+                                                                                    *ngIf="ineditMode"
+                                                                                    tabindex="15">Reset</button>&nbsp;
+                                                                                <button type="button" class="cs-btn bt1"
+                                                                                    (click)="savePaySettings('cc')"
+                                                                                    *ngIf="ineditMode"
+                                                                                    tabindex="14">Save</button>
                                                                             </div>
                                                                         </div>
-
-                                                                    </mat-expansion-panel>
-                                                                </mat-accordion>
-                                                                <mat-accordion>
-                                                                        <mat-expansion-panel [expanded]="false">
-                                                                          <mat-expansion-panel-header>
-                                                                            <mat-panel-title>
-                                                                              <span> {{cc_dc_netbanking_cap}}<span *ngIf="payuverified"
-                                                                    class="verified">{{verified_cap}}</span><span
-                                                                    *ngIf="!payuverified"
-                                                                    class="not-verified">{{not_verified_cap}}</span> </span>
-                                                                            </mat-panel-title>
-                                                                          </mat-expansion-panel-header>
-                                                                          <div class='cc-det ynw-common-form-nm'>
-                                                               
-                                                                                <div class='bank-outer'>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{account_holder_name_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput #acholdernameref
-                                                                                                [(ngModel)]="bankacname"
-                                                                                                (change)="resetApi('bankacname')" placeholder="{{account_holder_name_cap}}"
-                                                                                                autocomplete="off"
-                                                                                                [disabled]="!ineditMode" maxlength="50"
-                                                                                                (blur)="acholderNameBlur()"
-                                                                                                tabindex="5">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankacname']"
-                                                                                            [displayError]="showError['bankacname']['status']"
-                                                                                            [errorMsg]="showError['bankacname']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{bank_account_number_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput [(ngModel)]="bankacnumber"
-                                                                                                (change)="resetApi('bankacnumber')" placeholder="{{bank_account_number_cap}}"
-                                                                                                maxlength="18" autocomplete="off"
-                                                                                                (keypress)="removSpace($event)"
-                                                                                                (blur)="bankAcnumberBlur()"
-                                                                                                tabindex="6">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankacnumber']"
-                                                                                            [displayError]="showError['bankacnumber']['status']"
-                                                                                            [errorMsg]="showError['bankacnumber']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label class="caption">{{bank_name_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput [(ngModel)]="bankname"
-                                                                                                (change)="resetApi('bankname')" placeholder="{{bank_name_cap}}"
-                                                                                                autocomplete="off"
-                                                                                                [disabled]="!ineditMode" maxlength="50"
-                                                                                                (blur)="bankNameBlur()" tabindex="8">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankname']"
-                                                                                            [displayError]="showError['bankname']['status']"
-                                                                                            [errorMsg]="showError['bankname']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label class="caption">{{ifsc_code_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput [(ngModel)]="bankifsc"
-                                                                                                (change)="resetApi('bankifsc')" placeholder="{{ifsc_code_cap}}"
-                                                                                                autocomplete="off"
-                                                                                                [disabled]="!ineditMode" maxlength="11"
-                                                                                                (blur)="ifscBlur()" tabindex="9">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankifsc']"
-                                                                                            [displayError]="showError['bankifsc']['status']"
-                                                                                            [errorMsg]="showError['bankifsc']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{branch_name_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput [(ngModel)]="bankbranch"
-                                                                                                (change)="resetApi('bankbranch')" placeholder="{{branch_name_cap}}"
-                                                                                                maxlength="50" autocomplete="off"
-                                                                                                [disabled]="!ineditMode"
-                                                                                                (blur)="bankBranchBlur()" tabindex="11">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankbranch']"
-                                                                                            [displayError]="showError['bankbranch']['status']"
-                                                                                            [errorMsg]="showError['bankbranch']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{business_filing_status_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <mat-select [(ngModel)]="bankfiling"
-                                                                                                (selectionChange)="resetApi('bankfiling')"
-                                                                                                [disabled]="!ineditMode" tabindex="12">
-                                                                                                <mat-option value="">{{business_filing_status_cap}}
-                                                                                                </mat-option>
-                                                                                                <mat-option value="Proprietorship">
-                                                                                                    {{proprietorship_cap}}</mat-option>
-                                                                                                <mat-option value="Individual">
-                                                                                                    {{individual_cap}}</mat-option>
-                                                                                                <mat-option value="Partnership">
-                                                                                                    {{partnership_cap}}</mat-option>
-                                                                                                <mat-option value="Privatelimited">
-                                                                                                    {{pvt_ltd_cap}}</mat-option>
-                                                                                                <mat-option value="PublicLimited">
-                                                                                                    {{public_ltd_cap}}</mat-option>
-                                                                                                <mat-option value="LLP">{{llp_cap}}
-                                                                                                </mat-option>
-                                                                                                <mat-option value="Trust">{{trust_cap}}
-                                                                                                </mat-option>
-                                                                                                <mat-option value="Societies">
-                                                                                                    {{societies_cap}}</mat-option>
-                                                                                            </mat-select>
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankfiling']"
-                                                                                            [displayError]="showError['bankfiling']['status']"
-                                                                                            [errorMsg]="showError['bankfiling']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{account_type_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <mat-select [(ngModel)]="bankactype"
-                                                                                                (selectionChange)="resetApi('bankactype')"
-                                                                                                [disabled]="!ineditMode" tabindex="13">
-                                                                                                <mat-option value="">{{account_type_cap}}
-                                                                                                </mat-option>
-                                                                                                <mat-option value="Current">
-                                                                                                    {{current_cap}}
-                                                                                                </mat-option>
-                                                                                                <mat-option value="Saving">
-                                                                                                    {{savings_cap}}
-                                                                                                </mat-option>
-                                                                                            </mat-select>
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['bankactype']"
-                                                                                            [displayError]="showError['bankactype']['status']"
-                                                                                            [errorMsg]="showError['bankactype']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{pan_card_number_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput [(ngModel)]="pannumber"
-                                                                                                (change)="resetApi('pannumber')"
-                                                                                                autocomplete="off" placeholder="{{pan_card_number_cap}}"
-                                                                                                [disabled]="!ineditMode"
-                                                                                                (blur)="panCardBlur()"
-                                                                                                (keypress)="removSpace($event)"
-                                                                                                tabindex="7">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['pannumber']"
-                                                                                            [displayError]="showError['pannumber']['status']"
-                                                                                            [errorMsg]="showError['pannumber']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <!-- <label
-                                                                                            class="caption">{{name_on_pan_card_cap}}</label> -->
-                                                                                        <mat-form-field>
-                                                                                            <input matInput [(ngModel)]="panname"
-                                                                                                (change)="resetApi('panname')"
-                                                                                                autocomplete="off" placeholder="{{name_on_pan_card_cap}}"
-                                                                                                [disabled]="!ineditMode" maxlength="50"
-                                                                                                (blur)="panNameBlur()" tabindex="10">
-                                                                                        </mat-form-field>
-                                                                                        <app-field-error-display *ngIf= "showError['panname']"
-                                                                                            [displayError]="showError['panname']['status']"
-                                                                                            [errorMsg]="showError['panname']['msg']">
-                                                                                        </app-field-error-display>
-                                                                                    </div>
-                                                                                    <div class="form-group"></div>
-                                                                                    <div class="form-group">
-                                                                                    <div class="actiondiv"
-                                                        *ngIf="saveEnabled && emailidVerified && profileQueryExecuted">
-                                                        <button type="button" class="cs-btn bt2" (click)="resetInfo ('cc')"
-                                                            *ngIf="ineditMode" tabindex="15">Reset</button>&nbsp;
-                                                        <button type="button"  class="cs-btn bt1"
-                                                            (click)="savePaySettings('cc')" *ngIf="ineditMode"
-                                                            tabindex="14">Save</button>
-                                                        </div>
-                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </mat-expansion-panel>
-                                                                    </mat-accordion>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-expansion-panel>
+                                                        </mat-accordion>
                                                         <!-- <div class='paytm-outer patm_txtgrp'>
                                                             <div class="form-group">
                                                                 <mat-checkbox class="pay-chk" [checked]="paytmenabled"
