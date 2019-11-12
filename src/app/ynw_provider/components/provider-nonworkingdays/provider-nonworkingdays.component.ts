@@ -64,7 +64,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
     this.domain = user.sector;
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.getNonworkingdays();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->nonworking' };
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
@@ -79,7 +79,11 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
       this.remholdialogRef.close();
     }
   }
-
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->nonworking']);
+    }
+}
   getNonworkingdays() {
     this.provider_servicesobj.getProviderNonworkingdays()
       .subscribe(data => {

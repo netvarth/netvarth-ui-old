@@ -66,7 +66,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     
     this.getitems();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': '/provider' + this.domain + '/help' };
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {
@@ -83,6 +83,12 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
       this.removeitemdialogRef.close();
     }
   }
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
+    }
+}
+
   getitems() {
     this.provider_servicesobj.getProviderItems()
       .subscribe(data => {
