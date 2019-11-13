@@ -216,7 +216,7 @@ export const Messages = {
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
   'COUPON_TOOPTIP': 'Click here to see coupons offered by Jaldee',
-  'JDN_TOOPTIP' : 'You will get 5% for provider',
+  'JDN_TOOPTIP': 'You will get 5% for provider',
   'REF_TOOPTIP': 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
@@ -771,7 +771,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
-  'NON_WORK_DAY_OR_HR_CAP':'Non Working Day/Hour',
+  'NON_WORK_DAY_OR_HR_CAP': 'Non Working Day/Hour',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -1389,10 +1389,10 @@ export const Messages = {
   'JDN_CAP': 'JDN',
   'DISPLAYBOARD_HEADING': 'Displayboard',
   'DISPLAYBOARD__INHELP': 'display help',
-  'QSET_ADD' : 'Q-set added successfully',
-  'QSET_UPDATE' : 'Q-set updated successfully',
-  'DISPLAYBOARD_ADD' : 'Displayboard added successfully',
-  'DISPLAYBOARD_UPDATE' : 'Displayboard updated successfully',
+  'QSET_ADD': 'Q-set added successfully',
+  'QSET_UPDATE': 'Q-set updated successfully',
+  'DISPLAYBOARD_ADD': 'Displayboard added successfully',
+  'DISPLAYBOARD_UPDATE': 'Displayboard updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDS': 'Displayboards',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
@@ -1401,5 +1401,7 @@ export const Messages = {
   'JDN_CREATED': 'Jdn enabled successfully',
   'JDN_UPDATED': 'Jdn updated successfully',
   'JDN_DISABLED': 'Jdn disabled successfully',
+  'SUBSCRIBE': 'Subscribe',
+  'UNSUBSCRIBE': 'Unsubscribe'
 };
 

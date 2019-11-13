@@ -5750,6 +5750,8 @@ li.separator.setsplit {
   padding:5px !important;
   font-size:1rem !important;
   height: 60px;
+  background: #f7f7f7 !important;
+  margin-bottom: 10px !important;
 }
 .history .info-box, .future .info-box {min-height: auto !important;}
 .info-box-icon.cancelled {background: #f67676 !important;}
@@ -5812,4 +5814,7 @@ background-color:#fff !important;
   background: #ffc107;
   margin-right: 5px;
   padding: 2px;
+}
+.widget-user-header h4 {
+  text-decoration: underline !important;
 }

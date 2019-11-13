@@ -11,12 +11,22 @@
                         <div [class.disabledJdn]="status === 'DISABLED'">
                             <span class="lnk" style="font-weight: bold;">JDN({{jdn_full_cap}})</span>&nbsp;
                             <span class="ctrl" *ngIf="status === 'ENABLED'||status === 'DISABLED'">
-                                <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)">
-                                </mat-slide-toggle>
+                                <!-- <mat-slide-toggle [(ngModel)]="jdn_status" (change)="handlejdn_status($event)">
+                                </mat-slide-toggle> -->
                             </span>
+                            <!-- <span class="btn-primary-n" (click)="handlejdn_status(status)">
+                                {{btn_msg}}
+                              </span> -->
+                            <span class="ct-r ml-auto">
+                                <button class="cs-btn bt3 off" *ngIf="status === 'ENABLED'" style="padding: 5px 30px;"
+                                    (click)="handlejdn_status(status)">{{btn_msg}}</button>
+                                <button class="cs-btn bt3 on" *ngIf="status === 'DISABLED'" style="padding: 5px 30px;"
+                                    (click)="handlejdn_status(status)">{{btn_msg}}</button>
+                            </span>
+
                             <!-- <span class="editbt" style="margin-left: 20px;" *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span> -->
-                            <p *ngIf="status ==='ENABLED'">On</p>
-                            <p *ngIf="status === 'DISABLED'">Off</p>
+                            <!-- <p *ngIf="status ==='ENABLED'">On</p>
+                            <p *ngIf="status === 'DISABLED'">Off</p> -->
 
                             <div *ngIf="jdnType==='Label'; else elseBlock">
                                 <!-- <div >  <span class="editbt"  *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"></span></div>  -->
@@ -95,14 +105,14 @@
                         <mat-dialog-actions>
                             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                                 <button mat-button *ngIf="status !='ENABLED' && status !='DISABLED'" (click)="save()"
-                                class="cs-btn bt1" style="margin-right: 10px;">Enable JDN
-                            </button>
-                            <button type="button" style="margin-right: 10px;" (click)="cancel()"
-                                *ngIf="status != 'DISABLED' && rewrite ==='edit'" class="cs-btn bt2"
-                                [disabled]="disableButton">cancel</button>
-                            <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
-                                class="cs-btn bt1">update
-                            </button>
+                                    class="cs-btn bt1" style="margin-right: 10px;">Enable JDN
+                                </button>
+                                <button type="button" style="margin-right: 10px;" (click)="cancel()"
+                                    *ngIf="status != 'DISABLED' && rewrite ==='edit'" class="cs-btn bt2"
+                                    [disabled]="disableButton">cancel</button>
+                                <button mat-button *ngIf="status === 'ENABLED' && rewrite ==='edit'" (click)="update()"
+                                    class="cs-btn bt1">update
+                                </button>
                             </div>
                             <!-- <button mat-button *ngIf="status === 'ENABLED'&& rewrite !='edit'" (click)="edit('edit')"
                                 class="cs-btn bt1" style="margin-right: 10px;">edit
