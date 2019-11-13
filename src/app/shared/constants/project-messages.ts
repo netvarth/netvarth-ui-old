@@ -903,7 +903,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-license-detail
   'INVOICE_CAP': 'Invoice',
-  'STATMENT_CAP': 'Statment',
+  'STATMENT_CAP': 'Statement',
   'INVOICE_SUMMRY_CAP': 'Invoice Summary',
   'SERV_PERIOD_CAP': 'Billing Period',
   'GATEWAY_CAP': 'Payment Gateway',

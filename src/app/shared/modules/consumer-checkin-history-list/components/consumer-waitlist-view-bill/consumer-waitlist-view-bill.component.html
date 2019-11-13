@@ -69,7 +69,8 @@
                                 <div class="list-content">
                                     <div class="c-row one">
                                         <div class="name">
-                                            {{item.itemName | capitalizeFirst}} @ {{item.price}} <span
+                                            {{item.itemName | capitalizeFirst}} - {{item.price |
+                                                currency:'&#8377; '}} <span
                                                 [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
                                                 *ngIf="item.GSTpercentage > 0"><sup>Tax</sup></span>
                                         </div>
