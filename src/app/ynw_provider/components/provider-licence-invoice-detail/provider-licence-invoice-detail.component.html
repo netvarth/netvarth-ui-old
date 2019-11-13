@@ -121,20 +121,20 @@
 
                 <tr>
                     <td ><strong>Previous Balance Due</strong></td>
-                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}  </td>
+                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td>
 
                   </tr> 
               
     
                       <tr [hidden]="previousStatements.addonDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let addon of previousStatements.addonDetailsArray">
                         <td >{{addon.addonName}}</td>
-                        <td style="text-align: right">{{addon.amount| currency: 'INR':'symbol':'.2-2' }} <sub *ngIf="addon.discountTotal"> <a> (-  {{addon.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</a></sub></td>
+                        <td style="text-align: right">{{addon.amount| currency: 'INR':'symbol':'.2-2' }} <sub *ngIf="addon.discountTotal">(-  {{addon.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>
                       
     
                       </tr>
                       <tr [hidden]="previousStatements.licensePkgDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let license of previousStatements.licensePkgDetailsArray">
                         <td >{{license.licenseName}}</td>
-                        <td style="text-align: right">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal"> <a> (- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</a></sub></td>                      </tr>
+                        <td style="text-align: right">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal">(- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>                      </tr>
                     
               
                   <tr>
@@ -148,7 +148,7 @@
     </div>
     <div *ngIf="licenseDiscounts">
         <a (click)="toggleDiscountDetails();">
-          <span> {{discountDetailsTxt}}</span>
+          <span class="pointlist"> {{discountDetailsTxt}}</span>
         </a>
         <div *ngIf="show">
           <div class="form-row">
