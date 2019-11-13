@@ -63,7 +63,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   ) { }
   ngOnInit() {
     // this.getAlertList();
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
     this.alertSelAck = 'false'; // default becuase maximise from footer alert panel
     this.alertSeldate = '';
@@ -71,7 +71,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.holdalertSelAck = this.alertSelAck;
     this.holdalertSeldate = this.alertSeldate;
     this.getAlertListTotalCnt(this.alertSelAck, '');
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemfromSessionStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
   }
   getAlertListTotalCnt(ackStatus, sdate) {

@@ -50,7 +50,7 @@ export class POSComponent implements OnInit {
 
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
     this.getpaymentDetails();
     this.getPOSSettings();

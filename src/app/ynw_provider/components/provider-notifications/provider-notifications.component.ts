@@ -57,7 +57,7 @@ export class ProviderNotificationsComponent implements OnInit {
     public provider_services: ProviderServices) { }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->notifications' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');

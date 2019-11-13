@@ -186,7 +186,8 @@ export class SharedFunctions {
   }
 
   public setLoginData(data, post_data, mod) {
-    localStorage.setItem('ynw-user', JSON.stringify(data));
+    // localStorage.setItem('ynw-user', JSON.stringify(data));
+    this.setitemOnSessionStorage('ynw-user', data);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
 
@@ -240,13 +241,24 @@ export class SharedFunctions {
     localStorage.removeItem(itemname);
   }
 
+  public setitemOnSessionStorage(itemname, itemvalue) {
+    sessionStorage.setItem(itemname, JSON.stringify(itemvalue));
+  }
+  public getitemfromSessionStorage(itemname) { // function to get local storage item value
+    if (localStorage.getItem(itemname) !== 'undefined') {
+      return JSON.parse(sessionStorage.getItem(itemname));
+    }
+  }
+  public removeitemfromSessoinStorage(itemname) {
+    localStorage.removeItem(itemname);
+  }
+
   public setItemOnCookie(cname, cvalue, exdays = 30) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     const expires = 'expires=' + d.toUTCString();
     document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
   }
-
   public getItemOnCookie(cname) {
     const name = cname + '=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -753,7 +765,7 @@ export class SharedFunctions {
       buss_det.bss = subsector;
       buss_det.logo = logo;
     }
-    this.setitemonLocalStorage('ynwbp', buss_det);
+    this.setitemOnSessionStorage('ynwbp', buss_det);
   }
   retSubSectorNameifRequired(domain, subdomainname) {
     const bprof = this.getitemfromLocalStorage('ynw-bconf');

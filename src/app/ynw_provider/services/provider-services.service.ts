@@ -774,5 +774,9 @@ export class ProviderServices {
     const url = 'provider/salesChannel/' + id;
     return this.servicemeta.httpPost(url);
   }
+  manageProvider(accountId) {
+    const url = 'provider/branch/manage/' + accountId;
+    return this.servicemeta.httpPost(url);
+  }
 }
 

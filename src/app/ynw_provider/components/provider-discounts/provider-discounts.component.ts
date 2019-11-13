@@ -56,9 +56,9 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->discount' };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');

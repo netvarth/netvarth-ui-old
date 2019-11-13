@@ -100,15 +100,15 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.route.params.subscribe((data) => {
             this.type = data.type;
             if (this.type === 'upgrade') {
-                const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
                 this.current_lic = ynw_user.accountLicenseDetails.accountLicense.displayName;
                 this.showupgradeLicense();
             }
         });
     }
     ngOnInit() {
-        this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
         this.loading = true;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
@@ -157,9 +157,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.currentlicense_details = data;
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
-                const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
-                this.sharedfunctionObj.setitemonLocalStorage('ynw-user', ynw_user);
+                this.sharedfunctionObj.setitemOnSessionStorage('ynw-user', ynw_user);
                 if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
                     const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
                     const end_date = (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;

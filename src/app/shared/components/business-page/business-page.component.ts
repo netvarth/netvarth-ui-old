@@ -189,7 +189,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         res => {
           this.server_date = res;
           this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
-          const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+          const activeUser = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
           if (activeUser) {
             this.isLoggedIn = true;
             this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -1098,7 +1098,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   getDoctors() {
-    const userobj = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const userobj = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
     const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.latitude = loc_det.lat;
     this.longitude = loc_det.lon;

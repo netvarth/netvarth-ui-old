@@ -109,7 +109,7 @@ export class HomeserviceServiceDetailComponent implements OnInit {
         return false;
     }
     getDomainSubdomainSettings() {
-        const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+        const user_data = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
         return new Promise((resolve, reject) => {

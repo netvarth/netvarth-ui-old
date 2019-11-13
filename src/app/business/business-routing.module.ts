@@ -13,6 +13,7 @@ import { ChangePasswordComponent } from '../shared/modules/change-password/chang
 import { ChangeMobileComponent } from '../shared/modules/change-mobile/change-mobile.component';
 import { ProviderMembersComponent } from '../ynw_provider/components/provider-members/provider-members.component';
 import { ProviderbWizardComponent } from '../ynw_provider/components/provider-bwizard/provider-bwizard.component';
+import { ManageProviderComponent } from './home/manage-provider/manage-provider.component';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
       { path: 'check-ins', loadChildren: '../business/modules/check-ins/check-ins.module#CheckinsModule'},
-      { path: 'bwizard', component: ProviderbWizardComponent }
+      { path: 'bwizard', component: ProviderbWizardComponent },
+      { path: 'manage/:id', component: ManageProviderComponent}
     ]
   }
 ];

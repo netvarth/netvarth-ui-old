@@ -43,7 +43,7 @@ export class DisplayboardQSetComponent implements OnInit {
             'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
         };
         this.getDisplayboardQsets();
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
     }
     getDisplayboardQsets() {

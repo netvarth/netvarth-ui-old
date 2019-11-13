@@ -26,7 +26,7 @@ export class MiscellaneousComponent implements OnInit {
 
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
     }
 

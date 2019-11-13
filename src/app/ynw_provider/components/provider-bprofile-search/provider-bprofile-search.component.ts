@@ -283,7 +283,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
@@ -407,11 +407,11 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
               }
             }
           }
-          const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
+          const loginuserdata = this.sharedfunctionobj.getitemfromSessionStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionobj.setitemonLocalStorage('ynw-user', loginuserdata);
+          this.sharedfunctionobj.setitemOnSessionStorage('ynw-user', loginuserdata);
 
           this.serviceSector = data['serviceSector']['displayName'] || null;
           this.subdomain = this.bProfile['serviceSubSector']['subDomain'];

@@ -53,7 +53,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         private dialog: MatDialog
     ) { }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.setPrivacyDetails();

@@ -208,7 +208,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-    const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const activeUser = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -1104,7 +1104,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getDoctors() {
-    const userobj = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const userobj = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
     const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.latitude = loc_det.lat;
     this.longitude = loc_det.lon;

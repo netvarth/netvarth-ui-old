@@ -46,7 +46,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);

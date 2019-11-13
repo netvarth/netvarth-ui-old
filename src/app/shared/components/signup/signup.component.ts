@@ -85,7 +85,7 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ynwUser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.ynwUser = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     if (this.ynw_credentials) {
       this.loginId = this.ynw_credentials.loginId;

@@ -47,7 +47,7 @@ export class DisplayboardsComponent implements OnInit {
             'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
     }
     getDisplayboardLayouts() {

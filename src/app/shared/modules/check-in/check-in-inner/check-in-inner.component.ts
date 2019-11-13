@@ -176,7 +176,7 @@ export class CheckInInnerComponent implements OnInit {
     this.api_loading = false;
 
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-    const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const activeUser = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
@@ -192,7 +192,7 @@ export class CheckInInnerComponent implements OnInit {
     this.maxsize = 1;
     this.step = 1;
     this.getProfile();
-    this.loggedinuser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    this.loggedinuser = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
     this.gets3curl();
     this.getFamilyMembers();
     // this.consumerNote = '';

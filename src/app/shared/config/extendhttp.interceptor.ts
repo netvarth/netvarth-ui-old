@@ -152,7 +152,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // this.router.navigate(['']);
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
-                  return next.handle(this.updateHeader(req, url));
+                  // return next.handle(this.updateHeader(req, url));
+                  window.location.reload();
+                  return EMPTY;
                 })
               );
             } else if (error.status === 405) {
@@ -172,7 +174,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return EMPTY;
               // return throwError(error);
             } else if (error.status === 401) {
-              this.shared_functions.logout();
+              // this.shared_functions.logout();
               return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
@@ -198,6 +200,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
+    req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
     req = req.clone({ url: url, responseType: 'json' });
     return req;

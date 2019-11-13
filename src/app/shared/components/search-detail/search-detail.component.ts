@@ -199,12 +199,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.setEnvironment(false);
           });
       });
-    const activeUser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const activeUser = this.shared_functions.getitemfromSessionStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
     this.nosearch_results = false;
-    this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
+    this.retscrolltop = this.shared_functions.getitemfromSessionStorage('sctop') || 0;
     this.shared_functions.setitemonLocalStorage('sctop', 0);
   }
   stringToInt(stringVal) {
@@ -1346,7 +1346,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (textstr !== '') {
       textstr = ' ' + textstr;
     }
-    const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const userobj = this.shared_functions.getitemfromSessionStorage('ynw-user');
     let testUser = false;
     if (userobj !== null) {
       const phno = (userobj.primaryPhoneNumber.toString());
@@ -1603,7 +1603,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
       // check whether logged in as consumer
-      this.shared_functions.setitemonLocalStorage('sctop', this.scrolltop);
+      this.shared_functions.setitemOnSessionStorage('sctop', this.scrolltop);
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {

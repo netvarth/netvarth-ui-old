@@ -145,11 +145,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
           this.bProfile = data;
           this.provider_datastorageobj.set('bProfile', data);
           // getting the user details saved in local storage
-          const loginuserdata = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+          const loginuserdata = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionObj.setitemonLocalStorage('ynw-user', loginuserdata);
+          this.sharedfunctionObj.setitemOnSessionStorage('ynw-user', loginuserdata);
         },
         () => {
 

@@ -61,7 +61,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'bprofile']);
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
+    const bdetails = this.shared_functions.getitemfromSessionStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -159,7 +159,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       });
   }
   setLicense() {
-    const cuser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const cuser = this.shared_functions.getitemfromSessionStorage('ynw-user');
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {
@@ -272,6 +272,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
+  }
+  manageProvider(accountId) {
+    window.open('#/provider/manage/' + accountId , '_blank');
   }
 }
 

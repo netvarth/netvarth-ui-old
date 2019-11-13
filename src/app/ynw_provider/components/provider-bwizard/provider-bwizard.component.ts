@@ -237,7 +237,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   getUserdetails() {
-    this.userdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.userdet = this.shared_functions.getitemfromSessionStorage('ynw-user');
   }
 
   showStep(changetostep) {
@@ -1018,7 +1018,7 @@ export class ProviderbWizardComponent implements OnInit {
     }
   }
   getDomainSubdomainSettings() {
-    const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     this.provider_services.domainSubdomainSettings(domain, sub_domain)

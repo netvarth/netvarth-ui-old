@@ -84,7 +84,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
+    const bdetails = this.shared_functions.getitemfromSessionStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -108,7 +108,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider/settings/miscellaneous/holidays']);
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();

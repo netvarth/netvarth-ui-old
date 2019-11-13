@@ -122,8 +122,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.api_loading = true;
-        if (this.shared_Functionsobj.getitemfromLocalStorage('loc_id')) {
-            this.selected_location = this.shared_Functionsobj.getitemfromLocalStorage('loc_id');
+        if (this.shared_Functionsobj.getitemfromSessionStorage('loc_id')) {
+            this.selected_location = this.shared_Functionsobj.getitemfromSessionStorage('loc_id');
         }
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-time_windows', 'subKey': '', 'classname': 'b-queue',

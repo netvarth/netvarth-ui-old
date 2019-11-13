@@ -46,7 +46,7 @@ export class JDNComponent implements OnInit {
 
     }
     ngOnInit() {
-        const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
         const sub_domain = user_data.subSector || null;
         this.shared_services.getFeatures(sub_domain)
             .subscribe(data => {

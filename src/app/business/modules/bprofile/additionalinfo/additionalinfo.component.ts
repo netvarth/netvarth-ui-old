@@ -66,7 +66,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
       }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
@@ -85,11 +85,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 data => {
                     this.bProfile = data;
                     this.provider_datastorage.set('bProfile', data);
-                    const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
+                    const loginuserdata = this.sharedfunctionobj.getitemfromSessionStorage('ynw-user');
                     // setting the status of the customer from the profile details obtained from the API call
                     loginuserdata.accStatus = this.bProfile.status;
                     // Updating the status (ACTIVE / INACTIVE) in the local storage
-                    this.sharedfunctionobj.setitemonLocalStorage('ynw-user', loginuserdata);
+                    this.sharedfunctionobj.setitemOnSessionStorage('ynw-user', loginuserdata);
 
                     this.serviceSector = data['serviceSector']['displayName'] || null;
                     this.subdomain = this.bProfile['serviceSubSector']['subDomain'];

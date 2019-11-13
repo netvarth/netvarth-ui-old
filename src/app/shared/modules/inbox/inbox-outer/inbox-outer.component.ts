@@ -25,7 +25,7 @@ export class InboxOuterComponent implements OnInit {
     private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
-    this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.userDet = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.getInboxMessages();
   }
 

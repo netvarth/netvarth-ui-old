@@ -51,10 +51,10 @@ export class ProvidertaxSettingsComponent implements OnInit {
 
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
-        this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        this.isCheckin = this.shared_functions.getitemfromSessionStorage('isCheckin');
         this.resetApi();
         this.getTaxpercentage();
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->tax-settings' };
