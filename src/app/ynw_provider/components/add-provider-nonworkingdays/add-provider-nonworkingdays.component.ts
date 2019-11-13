@@ -16,6 +16,7 @@ import * as moment from 'moment';
 export class AddProviderNonworkingdaysComponent implements OnInit {
 
   non_working_day_cap = Messages.NON_WORK_DAY_HI_CAP;
+  non_working_day_or_hr_cap = Messages.NON_WORK_DAY_OR_HR_CAP; 
   reason_cap = Messages.REASON_CAP;
   start_time_cap = Messages.START_TIME_CAP;
   end_time_cap = Messages.END_TIME_CAP;

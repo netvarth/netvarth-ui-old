@@ -771,6 +771,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
+  'NON_WORK_DAY_OR_HR_CAP':'Non Working Day/Hour',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill

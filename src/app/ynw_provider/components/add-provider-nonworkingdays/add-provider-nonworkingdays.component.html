@@ -1,6 +1,6 @@
 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
-  <h1 class="mat-dialog-title">{{non_working_day_cap}}
+  <h1 class="mat-dialog-title">{{non_working_day_or_hr_cap}}
     <button #queue mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -11,7 +11,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     <div class="form-group col-md-4 no-padding">
       <mat-form-field class="selctDte">
         <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'add'" formControlName="selectdate"
-          [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Select Date (DD/MM/YYYY)">
+          [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date">
         <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'edit'" formControlName="selectdate"
           [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date (DD/MM/YYYY)">
         <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
@@ -24,7 +24,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     <div class="form-group">
       <mat-form-field>
         <input type="text" matInput id="reason" formControlName="reason" class="form-control" autocomplete="off"
-          placeholder="Mention the cause *">
+          placeholder="Mention the reason *">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'reason')" [errorMsgs]="fed_service.getErrorMessage(amForm,'reason',
     {

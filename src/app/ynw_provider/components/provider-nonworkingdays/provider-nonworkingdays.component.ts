@@ -40,7 +40,7 @@ export class ProviderNonworkingdaysComponent implements OnInit, OnDestroy {
       title: 'Miscellaneous'
   },
     {
-      title: 'Non Working Days',
+      title: 'Non Working Day/Hour',
       url: '/provider/settings/miscellaneous/holidays'
     }
   ];
