@@ -38,6 +38,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   coupons_cap = Messages.COUPONS_CAP;
   miscellaneous_cap = Messages.MISCELLANEOUS_CAP;
   non_work_cap = Messages.NON_WORKING_CAP;
+  non_wrk_day_hr_cap = Messages.NON_WORK_DAY_OR_HR_CAP;
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
