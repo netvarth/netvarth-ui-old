@@ -25,18 +25,17 @@ export class ProviderSkinsComponent implements OnInit {
   ];
   domain: any;
   constructor(private shared_functions: SharedFunctions,
-    private routerobj: Router,) {
+    private routerobj: Router, ) {
   }
   ngOnInit() {
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = user.sector;
   }
   skinSelected(skin) {
     this.shared_functions.sendMessage({ ttype: 'skin', selectedSkin: skin });
   }
-  performActions(action) {
-        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->themes']);
+  performActions() {
+    this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->themes']);
+  }
 }
-}
- 

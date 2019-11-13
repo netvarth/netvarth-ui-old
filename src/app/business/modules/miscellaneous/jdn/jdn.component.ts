@@ -4,7 +4,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 
 @Component({
@@ -196,8 +196,7 @@ export class JDNComponent implements OnInit {
             disableClose: true,
             data: {
                 'message': confirm_msg,
-                'heading': 'Confirm',
-                'type': 'ok/cancel'
+                'heading': 'Confirm'
             }
         });
         confirmdialog.afterClosed().subscribe(result => {
