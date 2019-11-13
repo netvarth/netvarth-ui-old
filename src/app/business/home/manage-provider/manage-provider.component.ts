@@ -22,6 +22,7 @@ export class ManageProviderComponent implements OnInit {
             data => {
                 console.log(data);
                 this.sharedFunctions.setitemOnSessionStorage('tabId', data);
+                this.router.navigate(['/provider/check-ins']);
 
         }, error => {
             console.log(error);
