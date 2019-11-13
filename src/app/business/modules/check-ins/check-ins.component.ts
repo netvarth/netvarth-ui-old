@@ -268,6 +268,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
     this.getDomainSubdomainSettings();
+    this.getPos();
     this.getServiceList();
     // this.getLocationList();
     this.getLabel();
@@ -1274,7 +1275,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
         .subscribe(
           (data: any) => {
-            this.pos = data.pos;
+            //this.pos = data.pos;
             if (data.serviceBillable === false) {
               this.isServiceBillable = false;
               this.hideServiceBillCount = 1;
@@ -1289,6 +1290,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     });
   }
+    getPos(){
+      this.provider_services.getProviderPOSStatus().subscribe(data => {
+        this.pos = data['enablepos'];
+      });
+    }
   getAppxTime(waitlist) {
     return this.shared_functions.providerConvertMinutesToHourMinute(waitlist.appxWaitingTime);
   }
@@ -1571,5 +1577,50 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.section_history[index] = !this.section_history[index];
         break;
     }
+  }
+
+  printCheckin(checkinlist){
+
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    let checkin_html = '';
+    checkin_html += '<table width="100%">';
+    checkin_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:10pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + 'Checkin Receipt' + '</td></tr>';
+    checkin_html += '	<tr><td style="border:2px solid #ddd;border-radius:3px;padding:5px;">';
+    checkin_html += '<table width="100%">';
+    checkin_html += '	<tr style="line-height:20px;">';
+    if(checkinlist.token){
+    checkin_html += '<td width="50%"	style="color:#000000;font-size:25pt; font-family:"Ubuntu, Arial,sans-serif;">Token No:' + checkinlist.token + '</td>';
+    }
+    
+    checkin_html += '	</tr>';
+    checkin_html += '<td width="50%"	style="color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Name:' + checkinlist.consumer.userProfile.firstName +' '+ checkinlist.consumer.userProfile.lastName + '</td>';
+    checkin_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Date&Time:' +checkinlist.date+' '+checkinlist.checkInTime+ '</td>';
+    checkin_html += '	<tr>';
+    for(const user of checkinlist.waitlistingFor){
+      checkin_html += '<td width="50%"	style="color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Checkin For:' + user.firstName + ' ' + user.lastName +'</td>';
+    }
+    if(checkinlist.personsAhead){
+      checkin_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Persons Ahead:' + checkinlist.personsAhead + '</td>';
+    }
+    
+    checkin_html += '</td>';
+    checkin_html += '	</tr>';
+    checkin_html += '</table>';
+    checkin_html += '	</td></tr>';
+    checkin_html += '</table>';
+    printWindow.document.write('<html><head><title></title>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(checkin_html);
+    printWindow.document.write('</body></html>');
+    printWindow.moveTo(0, 0);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+
   }
 }

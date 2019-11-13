@@ -380,6 +380,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
       // start and end date validations
       const cdate = new Date();
+      //const dateWithzone = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+      
       let mon;
        mon = (cdate.getMonth() + 1);
 
