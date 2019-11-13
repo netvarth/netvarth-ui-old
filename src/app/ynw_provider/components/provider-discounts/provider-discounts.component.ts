@@ -60,7 +60,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     this.domain = user.sector;
     this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->discount' };
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
 
@@ -83,6 +83,12 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
         this.query_executed = true;
       });
   }
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/billing->discount']);
+    }
+}
+
   addDiscounts() {
     this.accountdialogRef = this.dialog.open(AddProviderDiscountsComponent, {
       width: '50%',

@@ -52,6 +52,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     success_error = null;
     selitem_pic = '';
     image_remaining_cnt = 0;
+    breadcrumb_moreoptions: any = [];
     domain;
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -83,6 +84,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
+        // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
@@ -122,6 +124,8 @@ export class MediaComponent implements OnInit, OnDestroy {
             this.delgaldialogRef.close();
         }
     }
+    
+
     handleGalleryImages() {
         this.gallerydialogRef = this.dialog.open(ProviderBprofileSearchGalleryComponent, {
             width: '50%',

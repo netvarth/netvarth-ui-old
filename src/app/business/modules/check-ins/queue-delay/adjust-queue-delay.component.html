@@ -58,8 +58,10 @@ onSubmit(amForm.value)" class="ynw-common-form">
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>
+    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+      <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>
     <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}</button>
+    </div>
   </mat-dialog-actions>
 
 

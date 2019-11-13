@@ -110,24 +110,28 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     futureQcountCaption: any = [];
     todayQLoading: any = [];
     scheduleLoading: any = [];
+    domain: any;
 
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
+        public shared_functions: SharedFunctions,
         private router: Router,
+        private routerobj: Router,
         public provider_shared_functions: ProviderSharedFuctions,
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
         private fb: FormBuilder) { }
 
     ngOnInit() {
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
         this.api_loading = true;
         if (this.shared_Functionsobj.getitemfromSessionStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemfromSessionStorage('loc_id');
         }
         this.breadcrumb_moreoptions = {
-            'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-time_windows', 'subKey': '', 'classname': 'b-queue',
-            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }]
+            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' },{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.initializeQs();
@@ -645,8 +649,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     /**
      * ------------------------
      */
-    performActions() {
-        this.addEditProviderQueue('add');
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
+        }
+        else{this.addEditProviderQueue('add');}
+        
     }
     /**
      * Method to change same day online checkin status

@@ -1511,7 +1511,7 @@
         <li>Service status is enabled by default. Only enabled services are
         available for customers
         to
-        proceed with the order process.</li>
+        proceed with the ordering process.</li>
         <li>The provider, at his/her convenience, can enable/disable the status of
         any
         service by
@@ -1674,7 +1674,7 @@
         <li>The status of working hours can be enabled/disabled. The enabled working
         hours are open
         to
-        customers for the order process.</li>
+        customers for the ordering process.</li>
         <li>providers can enable or disable <strong>same day online order</strong>
         or
         <strong>future
@@ -1771,7 +1771,7 @@
         </div>
         </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
+        <!-- <mat-accordion>
                 <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                         class="accordion">
@@ -1786,7 +1786,7 @@
                     </div>
         
                 </mat-expansion-panel>
-            </mat-accordion>
+            </mat-accordion> -->
         </mat-expansion-panel>
         </mat-accordion>
         <!-- next -->
@@ -1799,7 +1799,7 @@
         </mat-expansion-panel-header>
         <div class="helpcontent">
         <ul class="ul-normal">
-        <li>A provider can create and order a customer for service.</li>
+        <li>A provider can create a customer and can place orders for customers.</li>
         <li>To search for a customer and to check whether he/she has already been registered
         with
         Jaldee, the provider can use the customer's mobile number, his/her first
@@ -1813,7 +1813,7 @@
         </ul>
         <div class="box-indent">
         <ul class="ul-normal">
-        <li>In the order/get token window, first, select the service from the
+        <li>In the Order/Get token window, first, select the service from the
         drop-down menu
         that
         a customer wishes to avail. In case, the provider has only one default
@@ -1821,7 +1821,7 @@
         then
         there
         will be no drop-down menu.</li>
-        <li>Order/Get Token/Order window has a feature to add or change a family
+        <li>Order/Get token window has a feature to add or change a family
         member whom the
         customer wishes to do a order for. Click “Add/Change Member” to add a new
         member
@@ -1830,28 +1830,16 @@
         added, it can
         be
         directly selected from the list of members.</li>
-        <li><strong>Multiple persons can be selected from Add/Change member to proceed
-        with a
-        single
-        order.</strong></li>
-        <li>If a customer has any note, the provider can click <strong>“If you have a
-        note,
-        Click
-        here
-        (+)” to write the message in the textbox.</strong></li>
-        <li>With all this information the provider can now proceed with the order
-        process of
-        the
-        walk-in customer by clicking on <strong>“Confirm Order”.</strong></li>
+        <li>To order food, click <strong>“To place your order, Click here (+)”</strong> and
+            enter item number, item name and item quantity in the textbox.</li>
+        <li>With all this information the provider can now proceed with placing
+            the order for the walk-in customer by clicking on <strong>“Confirm”</strong>.</li>
         <li>Push message will be sent to the customer's mobile and an email notification
         to the
         registered email address regarding the information of order.</li>
-        <li>Future order can be done in the same way as that of order. The only
-        difference
-        between these orderns is that the provider needs to select a date of
-        orders in
-        the
-        Future order.</li>
+        <li>Future order can be done in the same way as that of ordering for the
+            same day. The only difference is that the provider has to choose a date
+            from the order window.</li>
         </ul>
         </div>
         </div>
@@ -1883,14 +1871,14 @@
         </mat-expansion-panel>
         </mat-accordion>
         <!-- next -->
-        <mat-accordion>
+        <!-- <mat-accordion>
         <mat-expansion-panel [expanded]='false'>
         <mat-expansion-panel-header class="accordion">
         <mat-panel-title class="accordion-title" (click)="handleScroll('kiosk', 'kiosk')">
         Kiosk
         </mat-panel-title>
         </mat-expansion-panel-header>
-        <div>
+        <div class="helpcontent">
         <span>The Jaldee Kiosk feature allows a provider to place a Tablet/PC/Laptop/Other
         Machines which
         is
@@ -2024,7 +2012,7 @@
         </div>
         </div>
         </mat-expansion-panel>
-        </mat-accordion>
+        </mat-accordion> -->
         <!-- next -->
         <mat-accordion>
         <mat-expansion-panel [expanded]="showlicense">
@@ -2907,7 +2895,7 @@
         
         </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
+        <!-- <mat-accordion>
                 <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                         class="accordion">
@@ -2921,7 +2909,7 @@
                     <div></div>
         
                 </mat-expansion-panel>
-            </mat-accordion>
+            </mat-accordion> -->
             <mat-accordion>
                 <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -2933,7 +2921,33 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
         
-                    <div></div>
+                    <div class="helpcontent">
+                            <h6><strong>Jaldee Discount Network</strong><br></h6>
+                            Better pricing doesn’t always have to be dropping your prices instantly, but a subtle art of offering deals and discounts to your services will definitely make it appear you are offering a better price to your customers. Jaldee features <strong>JALDEE DISCOUNT NETWORK</strong> , which is a type of provider discount which will be applied on every bill generated by JDN assured provider.<br>
+                            <u><strong>How to set  JALDEE DISCOUNT NETWORK in Jaldee?
+                                </strong></u>
+                                <ul>
+                                    <li>Choose one of the discount percentage which will be applied to the total bill amount.
+                                        <ul>
+                                            <li>5%</li>
+                                            <li>10%</li>
+                                            <li>20%</li>
+                                        </ul>
+                                    </li>
+                                    <li>With respect to the discount percentage chosen, Maximum Discount is automatically filled with an amount, you can edit the value only to a higher amount if you want. Discounts and respective maximum discount amount is shown below:
+                                        <ul>
+                                            <li>5% - 100</li>
+                                            <li>10% - 200</li>
+                                            <li>20% - 300</li>
+                                        </ul>
+                                    </li>
+                                    <li>And if you have any note about the discount created write in the <strong>"Note"</strong> section.
+                                        </li>
+                                </ul>
+                                Once JDN is created by the provider, the provider profile in customer dashboard shows <strong><i>JDN Assured</i></strong> label with which customers get to know the discount offered by a particular provider. And when a customer checks-in for a provider profile with JDN assured feature, the customer gets  a fixed discount on the total bill amount.
+    
+    
+                        </div>
         
                 </mat-expansion-panel>
             </mat-accordion>
@@ -3038,20 +3052,19 @@
         the
         working
         hour from the dashboard.</li>
-        <li>Here the provider can see a list of customers who have checked
-        in
+        <li>Here the provider can see a list of customers who have ordered
         (Online
         or
         Walk-in ).</li>
         <li>In some cases, a “cloud symbol” is prefixed to a name, it means
         that the
-        customer has checked in online. </li>
+        customer has ordered online. </li>
         <li>To view the order details of a customer, provider can click on
         the name
         of
         the customer. Order history, communication history, and
         history of
-        private notes are listed here. In addition to that, the user can
+        private notes are listed here. In addition to that, the provider can
         cancel
         a
         customer's order and inform this through <strong>Send
@@ -3065,7 +3078,7 @@
         individual orders wait time from the order details.</li>
         <li>Each of the customer's <strong>Name, Wait Time</strong> and
         <strong>Service</strong> is displayed here.</li>
-        <li>The three dots menu in the right side of order has the
+        <li>The three dots menu on the right side of order has the
         following
         options:
         </li>
@@ -4059,7 +4072,7 @@
         </div>
         </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
+        <!-- <mat-accordion>
                 <mat-expansion-panel [expanded]='showhomeservice'>
                 <mat-expansion-panel-header class="accordion">
                 <mat-panel-title class="accordion-title"
@@ -4102,7 +4115,7 @@
                 </mat-expansion-panel>
                 </mat-accordion>
                 </mat-expansion-panel>
-                </mat-accordion>
+                </mat-accordion> -->
                
         </div>
         </div>

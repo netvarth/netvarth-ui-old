@@ -90,7 +90,7 @@ export class CustomersListComponent implements OnInit {
         const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         this.domain = user.sector;
         this.getCustomersList(true);
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     }
     filterClicked(type) {

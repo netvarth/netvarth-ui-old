@@ -122,7 +122,7 @@
                                         *ngIf="normal_customid_show==2 && showCustomId">
                                         <span class="cs-btn bt3" (click)="editCustomId()">{{add_it_cap}}</span>
                                     </div>
-                                    <div class="no-dta"
+                                    <div style="display: contents;"
                                         *ngIf="normal_customid_show==2 && !showCustomId">
                                         <!-- Upgrade your license package to Gold or higher to avail this feature. -->
                                         You are not allowed to do this operation. Please upgrade license package
@@ -419,7 +419,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoSpecializations()">
-                        <h2>Specializations <i *ngIf="reqFields.specialization" class="req-flds-cap">required fields missing</i></h2>
+                        <h2>Specializations <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing</i></h2>
                         <span class="form-level-settings">{{frm_specialization_cap}}<a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('specializations', $event)">Learn

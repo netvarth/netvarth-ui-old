@@ -5569,11 +5569,11 @@ li.separator.setsplit {
 
 .info-box-content {
   padding: 0 !important;
-  margin-left: 90px !important;
+  /* margin-left: 90px !important; */
 }
 .today .info-box-content {
   padding: 0 !important;
-  margin-left: 60px !important;
+  margin-left: 60px;
 }
 .today .info-box {
   min-height: auto !important;
@@ -5586,7 +5586,7 @@ li.separator.setsplit {
 }
 
 .dashboard .chkins .box {
-  border: 1px solid #d2d6de;
+  border: none;
 }
 
 .info-box-icon .tkn {
@@ -5601,8 +5601,15 @@ li.separator.setsplit {
   width: 90px !important;
   background: #f7f7f7 !important;
 }
+
+.today .info-box-icon {
+    height: 55px !important;
+    min-height: 55px !important;
+  
+}
 .today .info-box-icon {
   width: 60px !important;
+  border-radius: 50px !important;
 }
 
 .info-box-icon-right {
@@ -5641,8 +5648,14 @@ li.separator.setsplit {
   margin-left: 5px !important;
   font-weight: bold;
 }
-.today .btn-more,.today .btn-play {
+/* .today .btn-more,.today .btn-play,
+.future .btn-more,.future .btn-play,
+.history .btn-more,.history .btn-play {
   padding: 10px 15px 10px 15px !important;
+} */
+.dashboard .future .chkins,
+.dashboard .history .chkins {
+  background: white !important;
 }
 .btn-message {
   border-radius: 3px;
@@ -5740,3 +5753,63 @@ li.separator.setsplit {
 }
 .history .info-box, .future .info-box {min-height: auto !important;}
 .info-box-icon.cancelled {background: #f67676 !important;}
+.bdstyle{
+  margin-left: 20px
+}
+/* consumer help */
+.cons-help{
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  word-wrap: break-word !important;
+}
+.cons-content-card{
+position: relative !important;
+display: flex !important;
+flex-direction: column !important;
+min-width: 0 !important;
+word-wrap: break-word !important;
+background-color:#fff !important;
+}
+.dashboard-wait {
+  font-size: 0.80rem !important;
+  margin-top: 20px !important;
+  height: 30px !important;
+}
+.tkn-leftbox {
+  margin-left: 10px !important;
+}
+.sm-align{
+  margin-top: 20px !important;
+ }
+ .jdnpercent {
+ margin-right: 50px;
+ }
+ .footer_info{
+   font-weight: 400;
+   font-size: 13px;
+ }
+.statusstyle {
+  background: #3c8dbc;
+  color: white;
+}
+@media only screen and (max-width: 1102px) {
+  .filterStatus {
+    font-size: x-small !important;
+    padding: 0px !important;
+  }
+}
+@media only screen and (max-width: 408px) {
+  .dashboard .chkins .paid-f,
+  .dashboard .chkins .paid-h {
+    display: block;
+  }
+}
+
+.addservice-tooltip .icon-bell{
+  border-radius: 50px;
+  background: #ffc107;
+  margin-right: 5px;
+  padding: 2px;
+}

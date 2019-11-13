@@ -58,8 +58,10 @@
       </mat-dialog-content>
 
       <mat-dialog-actions>
-        <button type="button" class="cs-btn bt2" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
+        <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+          <button type="button" class="cs-btn bt2" (click)="doCancelEmailOTP()">{{cancel_btn_cap}}</button>
         <button mat-button [disabled]="!email_form.valid" class="cs-btn bt1">{{resend_btn_cap}}</button>
+        </div>
       </mat-dialog-actions>
     </form>
   </div>

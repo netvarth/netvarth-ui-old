@@ -57,7 +57,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
         this.isCheckin = this.shared_functions.getitemfromSessionStorage('isCheckin');
         this.resetApi();
         this.getTaxpercentage();
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->tax-settings' };
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     }
 
     getTaxpercentage() {
@@ -150,6 +150,13 @@ export class ProvidertaxSettingsComponent implements OnInit {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
       }
+
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/billing->tax-settings']);
+        }
+    }
+
     changeTaxStatus(event) {
         const status = (event.checked) ? 'enable' : 'disable';
         this.provider_services.updateTax(status)

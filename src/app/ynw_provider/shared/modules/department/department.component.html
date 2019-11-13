@@ -65,7 +65,7 @@ onSubmit(deptForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
                     </app-field-error-display>
                     <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
                 </div>
-                <div class="actiondiv" style="margin-bottom:30px">
+                <div class="actiondiv" style="margin-bottom:30px;display: inline-flex;">
                     <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
                     <button type="submit" mat-button [disabled]="!deptForm.valid || savedisabled"
                         class="cs-btn bt1">{{button_title}}</button>

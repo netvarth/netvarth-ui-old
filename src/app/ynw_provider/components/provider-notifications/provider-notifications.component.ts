@@ -59,7 +59,7 @@ export class ProviderNotificationsComponent implements OnInit {
   ngOnInit() {
     const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'miscellaneous->notifications' };
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     this.getNotificationList();
   }
@@ -75,6 +75,11 @@ export class ProviderNotificationsComponent implements OnInit {
         }
       );
   }
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+    }
+}
   setNotificationList(notificationList: any): any {
     if (notificationList.length !== 0) {
       for (const notifyList of notificationList) {

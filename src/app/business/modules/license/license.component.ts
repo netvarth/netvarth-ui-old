@@ -75,7 +75,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     upgradablepackages = [];
     addonTooltip = ''; 
     breadcrumb_moreoptions = { 
-           'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
+           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     upgradedialogRef;
     active_user;
     lichistorydialogRef;
@@ -412,7 +412,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': 'Are you sure you wanted to change the subscription ?'
+                'message': 'Are you sure you want to change the subscription ?'
             }
         });
         this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {

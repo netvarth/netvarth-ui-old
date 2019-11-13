@@ -64,7 +64,7 @@
               <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
                 (keyup)="focusInput($event, Fdate)" class="genTextHeight" [hidden]="!filters['email']">
               <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
-                class="genMarginLeft genTextHeight stdbtn btn_black qo_bt">
+                class="genMarginLeft genTextHeight btn_black qo_bt">
             </div>
           </div>
           <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers">

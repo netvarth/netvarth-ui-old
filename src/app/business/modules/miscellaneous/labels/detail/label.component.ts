@@ -37,7 +37,7 @@ export class LabelComponent implements OnInit {
             url: '/provider/settings'
         },
         {
-            title: 'Miscellanous',
+            title: 'Miscellaneous',
             url: '/provider/settings/miscellaneous'
         },
         {

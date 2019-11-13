@@ -13,6 +13,8 @@ import { FormMessageDisplayService } from '../form-message-display/form-message-
 import { SharedFunctions } from '../../functions/shared-functions';
 import { SharedServices } from '../../services/shared-services';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Router } from '@angular/router';
+import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -49,6 +51,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     add_now_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     serv_status = Messages.SERVICE_STATUS_CAP;
     photo_cap = Messages.SERVICE_PHOTO_CAP;
+    tooltip = Messages.NEW_SERVICE_TOOLTIP;
     rupee_symbol = '₹';
     base_licence = false;
     button_title = 'Save';
@@ -73,12 +76,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
     departments: any = [];
     filterDepart = false;
     departmentName;
+    bprofile: any = [];
+    locationExists = false;
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
         public servicesService: ServicesService,
         public shared_service: SharedServices,
-        public provider_services: ProviderServices) {
+        public provider_services: ProviderServices,
+        private provider_datastorage: ProviderDataStorageService,
+        public router: Router) {
         this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
@@ -172,6 +179,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.end_service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
+        this.getBusinessProfile();
     }
     ngOnDestroy() {
         this.serviceSubscription.unsubscribe();
@@ -303,4 +311,26 @@ export class ServiceComponent implements OnInit, OnDestroy {
     advancedClick() {
         (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
     }
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                data => {
+                    this.bprofile = data;
+                    if (this.bprofile.baseLocation) {
+                        this.locationExists = true;
+                    } else {
+                        this.locationExists = false;
+                    }
+                    this.provider_datastorage.set('bProfile', data);
+
+                });
+    }
+    gotoManageQueue() {
+        if (this.locationExists) {
+            this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
+        } else {
+            this.sharedFunctons.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+        }
+    }
+
 }

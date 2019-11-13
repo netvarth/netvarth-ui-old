@@ -183,7 +183,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   qty = '';
   breadcrumbs = [
     {
-      title: 'Check-ins',
+      title: 'Dashboard',
       url: '/provider/check-ins'
     },
     {
@@ -206,6 +206,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountDisplayNotes = false;
   changedDate;
   abc: any;
+  isService;
+  mode;
+  isItem;
 
   constructor(
     private dialog: MatDialog,
@@ -460,8 +463,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             resolve();
           },
           error => {
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            reject(error);
+            this.discounts = [];
+            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // reject(error);
           }
         );
     });
@@ -552,6 +556,25 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.itemServiceSearch.reset();
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
   }
+getAddedServcOrItem(name){
+  if(name){
+  this.isService = false;
+  this.isItem = false ;
+    for (let i = 0; i < this.all_services.length; i++) {
+    if (this.all_services[i].name === name) {
+      this.isService = true;
+      break;
+    }
+  }
+  for (let i = 0; i < this.items.length; i++) {
+    if (this.items[i].displayName === name) {
+      this.isItem = true;
+      break;
+    }
+  }
+}
+}
+
   /**
    * Returns Service Id
    * @param serviceName Service Name
@@ -669,13 +692,27 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showDisplaynoteSection = false;
     this.showPrivatenoteSection = true;
   }
+
+  itemServiceManualAdd(type, name){
+    if(type === ''){
+      this.getAddedServcOrItem(name.value);
+      if(this.isService){
+        type = 'Services';
+      }else if(this.isItem){
+        type = 'Items';
+      }
+     this.itemServiceSelected(type, name.value)
+    }
+  }
   /**
    * Set Item/Service
    * @param type Category Services/Items
    * @param name Service/Item Name
    */
   itemServiceSelected(type, name) {
+    
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
+    
     if (type === 'Services') {
       this.selectedItemService = name;
       this.curSelItm.indx = this.getSelectedServiceId(name);

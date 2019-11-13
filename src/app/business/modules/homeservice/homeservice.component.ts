@@ -61,7 +61,7 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
     }
     frm_set_ser_cap = '';
     breadcrumb_moreoptions = { 
-        'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]};
+        'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     ngOnInit() {

@@ -1,7 +1,7 @@
 <section>
     <!-- <app-provider-subheader [isCheckin]="isCheckin" [activeTab]="'settings'"></app-provider-subheader> -->
     <!-- Subheader section -->
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 
 <section>
@@ -27,7 +27,9 @@
                                                 <th>{{date_cap}}</th>
                                                 <th>{{reason_cap}}</th>
                                                 <th>{{time_cap}}</th>
-                                                <th><span class="addbt" (click)="addHolidays()"></span></th>
+                                                <th>
+                                                    <!-- <span class="addbt" (click)="addHolidays()"></span> -->  
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>

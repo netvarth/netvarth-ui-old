@@ -486,10 +486,11 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
-          console.log(this.userData);
-          this.userEmail = this.userData.userProfile.email || '';
           this.userPhone = this.userData.userProfile.primaryMobileNo || '';
           this.consumerPhoneNo = this.userPhone;
+          if (this.userData.userProfile !== undefined) {
+            this.userEmail = this.userData.userProfile.email || '';
+          }
           if (this.userEmail) {
             this.emailExist = true;
           } else {

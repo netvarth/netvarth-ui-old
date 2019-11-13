@@ -98,6 +98,7 @@
 														<input type="text" #itemservicesearch
 															aria-label="Number" matInput
 															[formControl]="itemServiceSearch"
+															(keyup)="itemServiceManualAdd('',itemServiceSearch)"
 															[matAutocomplete]="auto">
 														<mat-autocomplete #auto="matAutocomplete">
 															<ng-container
@@ -110,7 +111,7 @@
 																		<mat-option
 																			*ngFor="let value of group.values; let i = index"
 																			[value]="value"
-																			(keyup)="itemServiceSelected(group.type,value)"
+																			
 																			(onSelectionChange)="itemServiceSelected(group.type,value)">
 																			{{ value }} <span
 																				class="bill_item_service">{{(group.type=='Items')? 'Item' : 'Service'}}</span>
@@ -409,8 +410,8 @@
 									<div class="list-content">
 										<div class="c-row one">
 											<div class="name">
-												{{service.serviceName | capitalizeFirst}} @
-												{{service.price}} <sup
+												{{service.serviceName | capitalizeFirst}} -
+												{{service.price | currency:'&#8377; '}} <sup
 													[matTooltipClass]="tooltipcls"
 													[matTooltip]="'Taxable'"
 													*ngIf="service.GSTpercentage > 0">Tax</sup>

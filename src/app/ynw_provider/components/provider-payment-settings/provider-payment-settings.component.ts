@@ -116,6 +116,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     ];
     licenseMetadata: any = [];
     licenseMetrics: any = [];
+    api_loading = false;
     /**
      * Constructor
      * @param provider_services ProviderServices
@@ -133,7 +134,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
 
     ) {
         this.shared_functions.getMessage().subscribe(data => {
-            this.getLicensemetrics();
             switch (data.ttype) {
                 case 'upgradelicence':
                     this.getLicensemetrics();
@@ -148,13 +148,14 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     ngOnInit() {
         this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        this.getLicensemetrics();
         this.domain = user.sector;
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'payment' };
         this.activeLicPkg = this.shared_functions.getitemfromSessionStorage('ynw-user').accountLicenseDetails.accountLicense.name;
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         // this.getLicenseMetrics();
@@ -167,6 +168,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/billing->payment-settings']);
+        }
     }
 
     /**
@@ -285,7 +291,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getPaymentSettings()
             .subscribe(data => {
                 this.paySettings = data;
-                console.log(this.paySettings);
                 this.initPaymentSettings(this.paySettings, 0);
             });
         if (showmsg === 1) {
@@ -352,7 +357,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      * @param status enable/disable
      */
     saveAccountPaymentSettings(status) {
-        console.log(status);
         this.provider_services.setPaymentAccountSettings(status)
             .subscribe(() => {
                 this.getPaymentSettings(1);
@@ -374,7 +378,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
         const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
         const blankpattern = projectConstants.VALIDATOR_BLANK;
-        console.log(this.paytmenabled);
         if (source === 'payTm') {
             postData['payTm'] = true;
             // this.paytmBlur();
@@ -436,7 +439,6 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
         if (!this.errorExist) {
             this.saveEnabled = false;
-            console.log(postData);
             this.provider_services.setPaymentSettings(postData)
                 .subscribe(() => {
                     this.getPaymentSettings(1);
@@ -654,6 +656,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
 
     getLicensemetrics() {
+        this.api_loading = true;
         let pkgId;
         const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
         if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
@@ -662,25 +665,32 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.provider_services.getLicenseMetadata().subscribe(data => {
             this.licenseMetadata = data;
         });
-        this.provider_services.getLicenseMetrics().subscribe(data => {
-            this.licenseMetrics = data;
-            for (let i = 0; i < this.licenseMetrics.length; i++) {
-                for (let j = 0; j < this.licenseMetadata.length; j++) {
-                    if (this.licenseMetrics[i].displayName === 'Jaldee Pay/Billing') {
-                        if (this.licenseMetadata[j].pkgId === pkgId) {
-                            for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
-                                if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {
-                                    if (this.licenseMetadata[j].metrics[k].anyTimeValue === 'true') {
-                                        this.jPay_Billing = true;
-                                    } else {
-                                        this.jPay_Billing = false;
+        setTimeout(() => {
+            this.provider_services.getLicenseMetrics().subscribe(data => {
+                this.licenseMetrics = data;
+                for (let i = 0; i < this.licenseMetrics.length; i++) {
+                    for (let j = 0; j < this.licenseMetadata.length; j++) {
+                        if (this.licenseMetrics[i].displayName === 'Jaldee Pay/Billing') {
+                            if (this.licenseMetadata[j].pkgId === pkgId) {
+                                for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
+                                    if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {
+                                        if (this.licenseMetadata[j].metrics[k].anyTimeValue === 'true') {
+                                            this.jPay_Billing = true;
+                                            return;
+                                        } else {
+                                            this.jPay_Billing = false;
+                                            return;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }, 1000);
+        setTimeout(() => {
+            this.api_loading = false;
+        }, 1000);
     }
 }

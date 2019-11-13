@@ -77,7 +77,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
-    this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'billing->coupon' };
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
   }
   ngOnDestroy() {
@@ -102,6 +102,11 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
           // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
+  performActions(action) {
+    if (action === 'learnmore') {
+        this.routerobj.navigate(['/provider/' + this.domain + '/billing->coupon']);
+    }
+}
   getJaldeeCoupons() {
     this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
       .subscribe(data => {

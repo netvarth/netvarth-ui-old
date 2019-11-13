@@ -12,6 +12,7 @@ export class SaleschannelComponent implements OnInit {
     id;
     api_error = null;
     api_success = null;
+    breadcrumb_moreoptions: any = [];
     breadcrumbs = [
         {
             title: 'Settings',
@@ -25,12 +26,18 @@ export class SaleschannelComponent implements OnInit {
             title: 'Sales Channel'
         }
     ];
+    domain: any;
     constructor(private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
+        private routerobj: Router,
+        public shared_functions: SharedFunctions,
         private router: Router, ) {
 
     }
     ngOnInit() {
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.domain = user.sector;
     }
     addSalesCode(id) {
         this.provider_services.addSalesCode(id).subscribe(
@@ -46,5 +53,10 @@ export class SaleschannelComponent implements OnInit {
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->saleschannel']);
+        }
     }
 }

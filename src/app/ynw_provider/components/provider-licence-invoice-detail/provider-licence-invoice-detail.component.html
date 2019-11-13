@@ -112,7 +112,7 @@
 
                   </tr>
                 <tr class="invoice-discount" *ngFor="let discount of latestInvoiceDiscount">
-                    <td style="text-align: right">{{discount.name}} <span class="invoice-head"
+                    <td style="text-align: left">{{discount.name}} <span
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
                     <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
@@ -121,7 +121,7 @@
 
                 <tr>
                     <td ><strong>Previous Balance Due</strong></td>
-                    <td class="previousDue" (click)="togglePreviousDue();">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}  </td>
+                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}  </td>
 
                   </tr> 
               
@@ -157,9 +157,9 @@
               <table class="table table-striped">
                 <thead>
                   <th>Applied Date </th>
-                  <th>Name </th>
-                  <th>Description</th>
-                  <th>Type</th>
+                  <th>Name</th>
+                  <th style="padding-left: 10px;">Description</th>
+                  <th style="text-align: center;">Type</th>
                   <th>Discount Value</th>
                   <th>Discounted Amount</th>
   
@@ -318,10 +318,12 @@
 
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="payMentShow == 1 && !loading">
+    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
     <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disablebutton">{{cancel_btn}}</button>
     <button type="button" mat-button class="cs-btn bt1" [disabled]="!pay_data.amount || pay_data.amount == 0 ||
     !pay_data.uuid || payment_loading || disablebutton" (click)="makePayment()"
         *ngIf="source != 'payment-history'">{{make_payment}}</button>
+   </div>
     <!-- <button type="button" mat-button class="cs-btn bt1" (click)="printMe()">Print</button> -->
 </mat-dialog-actions>
 

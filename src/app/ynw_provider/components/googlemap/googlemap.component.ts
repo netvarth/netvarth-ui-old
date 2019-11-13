@@ -174,7 +174,8 @@ export class GoogleMapComponent implements OnInit {
         this.getAddressonDragorClick();
       },
         error => {
-
+          this.setLocationtoMap();
+          this.getAddressonDragorClick();
         });
     }
   }

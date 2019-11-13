@@ -40,7 +40,7 @@ export class DisplayboardQSetComponent implements OnInit {
 
     ngOnInit() {
         this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': 'Learn More', 'type': 'learnmore' }]
+            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardQsets();
         const user = this.shared_functions.getitemfromSessionStorage('ynw-user');

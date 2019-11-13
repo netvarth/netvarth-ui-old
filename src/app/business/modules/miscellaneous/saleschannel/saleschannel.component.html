@@ -1,5 +1,5 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section>
     <div class="content loc-list">
@@ -19,7 +19,7 @@
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>
-                                        <div class="actiondiv labelsave">
+                                        <div class="actiondiv labelsave" style="display: inline-flex;">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">Cancel</button>
                                             &nbsp;

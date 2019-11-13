@@ -101,7 +101,7 @@ export const Messages = {
   'LABEL_UPDATED': 'Label updated successfully',
   'LABEL_ADDED': 'Label created successfully',
   'SERVICE_ADDED1': 'New service added successfully',
-  'SERVICE_ADDED2': 'Please add this service to the relevant working hours by editing it.',
+  'SERVICE_ADDED2': 'Please add this service to the relevant Queues by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
   'SERVICE_PRE_PAY_ERROR': 'Enable [customer] self pay button under payment settings to collect prepayment for this service.',
@@ -117,7 +117,7 @@ export const Messages = {
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
-  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant working hours by editing it',
+  'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant Queues by editing it',
   'WAITLIST_TURNTIME_INVALID': 'Please enter a valid waiting time',
   // Inbox
   'MESSAGE_SENT': 'Message sent successfully',
@@ -405,6 +405,7 @@ export const Messages = {
   'AT_THIS_LOC_CAP': 'at this location',
   'GET_DIRECTIONS_CAP': 'Get Directions',
   'WORKING_HRS_CAP': 'Queues',
+  'GENERAL_WORKING_HRS_CAP': 'General working hours',
   'SERV_OFFERED_CAP': 'Services Offered',
   'COUPONS_OFFERED_CAP': 'Coupons Offered',
   'SERVPRICE_CAP': 'Price ',
@@ -484,7 +485,7 @@ export const Messages = {
   'SERV_TIME_WINDOW_CAP': 'Queue',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
-  'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not accepted ',
+  'NOT_ACCEPTED_THIS_DATE_CAP': 'for this service is not available at the moment. Please try for a different time/date',
   'NEEDS_PREPAYMENT_FOR_CAP': 'This service needs prepayment for',
   'PRE_PAYMENT_AMNT_CAP': 'Pre Payment Amount:',
   'NO_PAY_MODES_AVAIL_CAP': 'Sorry no payment modes available',
@@ -750,7 +751,7 @@ export const Messages = {
   'PRO_SERVICE_CAP': 'Service',
   'PRO_STATUS_CAP': 'Status',
   'NOTE_CAP': 'Note',
-  'CHANGE_STATUS_CAP': 'Change Status to',
+  'CHANGE_STATUS_CAP': 'Change to',
   'ADD_NOTE_CAP': 'Add Note',
   'PRO_AVAILABLE_CAP': 'available',
   'NO_SERVICE_CAP': 'No service time-windows available',
@@ -770,6 +771,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
+  'NON_WORK_DAY_OR_HR_CAP':'Non Working Day/Hour',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill

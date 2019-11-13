@@ -1662,7 +1662,7 @@
         
         </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
+        <!-- <mat-accordion>
                 <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                         class="accordion">
@@ -1677,7 +1677,7 @@
                     </div>
         
                 </mat-expansion-panel>
-            </mat-accordion>
+            </mat-accordion> -->
         </mat-expansion-panel>
         </mat-accordion>
         <!-- next -->
@@ -1776,14 +1776,14 @@
         </mat-expansion-panel>
         </mat-accordion>
         <!-- next -->
-        <mat-accordion>
+        <!-- <mat-accordion>
         <mat-expansion-panel [expanded]='false'>
         <mat-expansion-panel-header class="accordion">
         <mat-panel-title class="accordion-title" (click)="handleScroll('kiosk', 'kiosk')">
         Kiosk
         </mat-panel-title>
         </mat-expansion-panel-header>
-        <div>
+        <div class="helpcontent">
         <span>The Jaldee Kiosk feature allows a provider to place a Tablet/PC/Laptop/Other
         Machines which
         is
@@ -1918,7 +1918,7 @@
         </div>
         </div>
         </mat-expansion-panel>
-        </mat-accordion>
+        </mat-accordion> -->
         <!-- next -->
         <mat-accordion>
         <mat-expansion-panel [expanded]='showlicense'>
@@ -2061,9 +2061,9 @@
             payment
             date.
         </li>
-        <li>An invoice is generated on a monthly basis.</li>
+        <li>An statement is generated on a monthly basis.</li>
         <li>For example, if a provider has created a profile on 10th
-            January then all invoices will be
+            January then all statements will be
             generated
             on a monthly basis i.e. on 10th of each month. In case,
             the provider buys add-on and
@@ -2076,7 +2076,7 @@
             the same “10↔10” bill cycle will
             continue from
             next month. This billing cycle will include License and
-            Addon amount in a single invoice
+            Addon amount in a single statement
             until the
             license or Add-on gets upgraded/downgraded.<br><br>
             <p><strong>*To downgrade the existing license package, a
@@ -2088,14 +2088,14 @@
                         class="linkb">support@jaldee.com</span>.</strong>
             </p>
         </li>
-        <li>An invoice is generated when an addon is included in a
+        <li>An statement is generated when an addon is included in a
             subscription using
             <strong>“ADD-ON(+)”</strong> option.</li>
         <li>When a provider click on the <strong>“Pay”</strong>
             button
             <strong>(Silver and Higher
                 grades),</strong> he/she can see the generated
-            invoices. To proceed with payment
+                statements. To proceed with payment
             from
             here,
             click on <strong>“Make Payment”</strong>. This redirects
@@ -2113,7 +2113,7 @@
                 class="linkb">www.jaldee.com</span> to complete the
             invoice payment.
         </li>
-        <li>The invoice is generated every month on the same date of
+        <li>The statement is generated every month on the same date of
             profile creation, whether or
             not
             the
@@ -2121,13 +2121,13 @@
         <li>The license gets upgraded as soon as a provider clicks
             on
             license upgrade button, but the
-            invoice
+            statement
             gets generated from the next month and the amount is
             calculated based on the daily usage
             of
             the
             license package.</li>
-        <li>An email will be sent to the provider upon each invoice
+        <li>An email will be sent to the provider upon each statement
             generation.</li>
         </ul>
         </div>
@@ -2805,7 +2805,7 @@
         
         </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
+        <!-- <mat-accordion>
                 <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
                         class="accordion">
@@ -2819,7 +2819,7 @@
                     <div></div>
         
                 </mat-expansion-panel>
-            </mat-accordion>
+            </mat-accordion> -->
             <mat-accordion>
                 <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -2831,7 +2831,33 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
         
-                    <div></div>
+                    <div class="helpcontent">
+                        <h6><strong>Jaldee Discount Network</strong><br></h6>
+                        Better pricing doesn’t always have to be dropping your prices instantly, but a subtle art of offering deals and discounts to your services will definitely make it appear you are offering a better price to your customers. Jaldee features <strong>JALDEE DISCOUNT NETWORK</strong> , which is a type of provider discount which will be applied on every bill generated by JDN assured provider.<br>
+                        <u><strong>How to set  JALDEE DISCOUNT NETWORK in Jaldee?
+                            </strong></u>
+                            <ul>
+                                <li>Choose one of the discount percentage which will be applied to the total bill amount.
+                                    <ul>
+                                        <li>5%</li>
+                                        <li>10%</li>
+                                        <li>20%</li>
+                                    </ul>
+                                </li>
+                                <li>With respect to the discount percentage chosen, Maximum Discount is automatically filled with an amount, you can edit the value only to a higher amount if you want. Discounts and respective maximum discount amount is shown below:
+                                    <ul>
+                                        <li>5% - 100</li>
+                                        <li>10% - 200</li>
+                                        <li>20% - 300</li>
+                                    </ul>
+                                </li>
+                                <li>And if you have any note about the discount created write in the <strong>"Note"</strong> section.
+                                    </li>
+                            </ul>
+                            Once JDN is created by the provider, the provider profile in customer dashboard shows <strong><i>JDN Assured</i></strong> label with which customers get to know the discount offered by a particular provider. And when a customer checks-in for a provider profile with JDN assured feature, the customer gets  a fixed discount on the total bill amount.
+
+
+                    </div>
         
                 </mat-expansion-panel>
             </mat-accordion>
@@ -3425,7 +3451,7 @@
         <div class="helpcontent">
         <h6>PAYMENTS</h6>
         <section>
-        <span>In this section, a doctor can select the payment mode with which
+        <span>In this section, a provider can select the payment mode with which
         he/she wishes
         to
         accept/settle payments.
@@ -3979,7 +4005,7 @@
         </div>
         </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
+        <!-- <mat-accordion>
         <mat-expansion-panel [expanded]='showhomeservice'>
         <mat-expansion-panel-header class="accordion">
         <mat-panel-title class="accordion-title"
@@ -4022,7 +4048,7 @@
         </mat-expansion-panel>
         </mat-accordion>
         </mat-expansion-panel>
-        </mat-accordion>
+        </mat-accordion> -->
         
         </div>
         </div>

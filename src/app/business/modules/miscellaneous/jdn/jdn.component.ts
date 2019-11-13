@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -40,39 +41,48 @@ export class JDNComponent implements OnInit {
     maximumDiscount1: any;
     maximumDiscount2: any;
     maximumDiscount3: any;
+    rupee_symbol = '₹';
+    breadcrumb_moreoptions: any = [];
     constructor(
         private shared_services: SharedServices,
+        private routerobj: Router,
         private shared_functions: SharedFunctions) {
 
     }
     ngOnInit() {
         const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        this.domain = user_data.sector;
         const sub_domain = user_data.subSector || null;
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.shared_services.getFeatures(sub_domain)
             .subscribe(data => {
                 this.jdn = data;
                 if (this.jdn && this.jdn.features.JDN) {
+                    console.log(this.jdn.features.JDN);
                     this.jdnType = this.jdn.features.JDN.JDNType;
                     this.jdnPercentage = this.jdn.features.JDN.JDNPercent;
-                    if(this.jdnPercentage){
-                    for(let option of  this.jdnPercentage){
-                        if(option.percentage === 5){
-                            this.maximumDiscount1 = option.maxDiscount;
-                        }
-                        else if(option.percentage === 10){
-                            this.maximumDiscount2 = option.maxDiscount;
-                        }
-                        else{
-                            this.maximumDiscount3 = option.maxDiscount;
-                        }
-                        
+                    if (this.jdnPercentage) {
+                        for (const option of this.jdnPercentage) {
+                            if (option.percentage === 5) {
+                                this.maximumDiscount1 = option.maxDiscount;
+                            } else if (option.percentage === 10) {
+                                this.maximumDiscount2 = option.maxDiscount;
+                            } else {
+                                this.maximumDiscount3 = option.maxDiscount;
+                            }
 
+
+                        }
                     }
-                }
                 }
 
             });
         this.getJdn();
+    }
+    performActions(action) {
+        if (action === 'learnmore') {
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->jdn']);
+        }
     }
 
     fillJdnfields(data) {
@@ -120,7 +130,7 @@ export class JDNComponent implements OnInit {
             );
 
     }
-    
+
     radioChange(event) {
         if (event.value === 5) {
             this.jdnmaxDiscounttext = this.maximumDiscount1;
@@ -215,7 +225,7 @@ export class JDNComponent implements OnInit {
                 }
             });
     }
- 
+
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
