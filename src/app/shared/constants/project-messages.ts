@@ -76,6 +76,8 @@ export const Messages = {
   'BPROFILE_PRIVACY_PHONELABEL_REQ': 'Phone label should not be blank',
   'BPROFILE_PRIVACY_PHONE_INVALID': 'Please enter a valid mobile phone number',
   'BPROFILE_PRIVACY_PHONE_10DIGITS': 'Mobile number should have 10 digits',
+  'BPROFILE_PRIVACY_PHONE_DUPLICATE': 'Phone number already exists',
+  'BPROFILE_PRIVACY_EMAIL_DUPLICATE': 'Email already exists',
   'BPROFILE_PRIVACY_EMAILLABEL_REQ': 'Email label should not be blank',
   'BPROFILE_PRIVACY_PHONE_DELETE': 'Do you really want to remove the Mobile no "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_DELETE': 'Do you really want to remove the Email id "[DATA]" and its details?',
