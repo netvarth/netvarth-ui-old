@@ -515,7 +515,7 @@ export class ProviderbWizardComponent implements OnInit {
         break;
     }
   }
- 
+
   isAvailableNow() {
     this.provider_services.isAvailableNow()
       .subscribe(data => {
@@ -531,9 +531,9 @@ export class ProviderbWizardComponent implements OnInit {
   onSubmit(form_data) {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
-    if (form_data.serviceDuration === '') {
-      form_data['serviceDuration'] = 0;
-    }
+    // if (form_data.serviceDuration === '') {
+    //   form_data['serviceDuration'] = 0;
+    // }
     if (!this.isServiceBillable) {
       form_data['totalAmount'] = 0;
       form_data['isPrePayment'] = false;
@@ -552,7 +552,7 @@ export class ProviderbWizardComponent implements OnInit {
     this.duration.hour = Math.floor(time / 60);
     this.duration.minute = time % 60;
     this.amForm.get('serviceDuration').setValue(this.duration);
-}
+  }
   wizardPageShowDecision(curstep, changetostep) {
     let changerequired = false;
     let changeid = -1;
@@ -717,7 +717,7 @@ export class ProviderbWizardComponent implements OnInit {
               }
             }
             const addr = result['address'] || null;
-              this.wizard_data_holder['location'] = result['location'];
+            this.wizard_data_holder['location'] = result['location'];
           }
         }
       }
@@ -881,20 +881,19 @@ export class ProviderbWizardComponent implements OnInit {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        serviceDuration: [0, Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         notification: [false]
       });
     } else {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        serviceDuration: [0, Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
         taxable: [false],
         notification: [false]
       });
-      this.convertTime(this.amForm['serviceDuration']);
     }
   }
   setDescFocus() {
@@ -974,6 +973,7 @@ export class ProviderbWizardComponent implements OnInit {
         'notification': false,
       });
     }
+    this.convertTime(data['serviceDuration']);
     this.changeNotification();
     this.changePrepayment();
   }
