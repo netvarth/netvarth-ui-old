@@ -371,7 +371,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	<tr >';
       bill_html += '<td width="50%"';
       bill_html += '	style="text-align:left;font-weight:bold;">';
-      bill_html += service.serviceName + ' @ &#x20b9;' + parseFloat(service.price).toFixed(2);
+      bill_html += service.serviceName + ' &#x20b9;' + parseFloat(service.price).toFixed(2);
       if (service.getGSTpercentage > 0) {
         bill_html += '<span style="font-size: .60rem;;font-weight: 600;color: #fda60d;"><sup> Tax</sup></span>';
       }
