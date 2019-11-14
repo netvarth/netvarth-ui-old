@@ -1,5 +1,6 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb *ngIf="!apiloading" (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
+    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
     <div class="content w-manager settings comn-cls lic-page">
@@ -13,10 +14,11 @@
                                     <mat-expansion-panel-header class="min90">
                                         <mat-panel-title class="block-level">
                                             {{privacy_sett_cap}}
-                                            <p class="form-level-settings">{{frm_privacy_cap}}<a
+                                            <p class="form-level-settings">{{frm_privacy_cap}}
+                                                <!-- <a
                                                     class="learnmore-pointer" id="customer-help"
                                                     (click)="learnmore_clicked('privacy-settings', $event)">Learn
-                                                    More</a>
+                                                    More</a> -->
                                             </p>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>

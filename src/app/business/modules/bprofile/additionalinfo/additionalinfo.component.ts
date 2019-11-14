@@ -68,7 +68,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
+        this.breadcrumb_moreoptions ={  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
     }
@@ -304,7 +304,9 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
         return retfield;
     }
-
+    performActions() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->additional-info']);   
+      }
     getFieldDetails(passedArray, fieldvalue, fieldname) {
         let retfield;
         if (fieldvalue !== undefined) {

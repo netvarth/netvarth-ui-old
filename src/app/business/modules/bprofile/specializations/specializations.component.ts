@@ -49,15 +49,20 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
+        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.initSpecializations();
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.domain = user.sector;
     }
     // learnmore_clicked(parent, child) {}
+    performActions() {
+        
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->specializations']);
+        
+      }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->']);
       }
     initSpecializations() {
         this.bProfile = [];

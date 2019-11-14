@@ -8,9 +8,11 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="card">
-                    <p class="form-level-settings">{{frm_dicounts_cap}}<a class="learnmore-pointer" id="customer-help"
+                    <p class="form-level-settings">{{frm_dicounts_cap}}
+                        <!-- <a class="learnmore-pointer" id="customer-help"
                             (click)="learnmore_clicked('discount', $event)">Learn
-                            More</a></p>
+                            More</a> -->
+                        </p>
 
                     <div class="no-dta" *ngIf="discount_list.length ==0 && query_executed == true">
                         <p>{{emptyMsg}}</p>
