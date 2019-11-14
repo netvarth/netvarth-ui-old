@@ -614,11 +614,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
-      this.pos = data['enablepos'];
-    });
-  }
+  // getPos() {
+  //   this.provider_services.getProviderPOSStatus().subscribe(data => {
+  //     this.pos = data['enablepos'];
+  //   });
+  // }
   getQueueListByDate() {
     this.load_queue = 0;
     if (this.selected_location.id) {
@@ -1689,4 +1689,5 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (status === 'cancelled') {
       this.cancelledPanel = true;
     }
+}
 }

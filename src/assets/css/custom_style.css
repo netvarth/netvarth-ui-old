@@ -5813,3 +5813,7 @@ background-color:#fff !important;
   margin-right: 5px;
   padding: 2px;
 }
+.trackIcons{
+list-style: none;
+display: flex;
+}
