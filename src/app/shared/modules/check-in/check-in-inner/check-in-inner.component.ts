@@ -1,13 +1,8 @@
 import { Component, Input, Output, Inject, OnInit, EventEmitter } from '@angular/core';
-
 import { Router } from '@angular/router';
-
 import { DomSanitizer } from '@angular/platform-browser';
-
 import { DOCUMENT } from '@angular/common';
-
 import { FormMessageDisplayService } from '../../../modules/form-message-display/form-message-display.service';
-
 import { SharedServices } from '../../../services/shared-services';
 
 import { SharedFunctions } from '../../../functions/shared-functions';
