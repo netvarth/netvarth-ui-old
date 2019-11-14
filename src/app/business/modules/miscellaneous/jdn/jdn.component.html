@@ -96,7 +96,7 @@
                                     *ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
                                 <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdndisplayNote}}</span>
                                 <textarea style="width: 50%" *ngIf="rewrite ==='edit' || status ==='Create'"
-                                    [disabled]="status === 'DISABLED'" placeholder="Enter Display Note *"
+                                    [disabled]="status === 'DISABLED'" placeholder="Enter Display Note"
                                     class="form-control" [(ngModel)]="jdndisplayNote" id="jdndisplayNote"
                                     maxlength="500">
                             </textarea>

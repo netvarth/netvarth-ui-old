@@ -119,6 +119,24 @@
                                     remaining</span>
                             </div>
                             <div class="form-group" *ngIf="isServiceBillable">
+                                <ng-container class="example-full-width">
+                                    <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
+                                    <!-- <mat-form-field> -->
+                                    <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
+                                        placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
+                                    <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
+                                    </ngb-timepicker>
+                                    <!-- </mat-form-field> -->
+                                    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
+                                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
+                    {'required' : 'Please enter estimated duration.',
+                    'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
+                    'maxlength' : 'Only 10 digits are allowed'
+                  })"> </app-field-error-display> -->
+                                </ng-container>
+                            </div>
+                            <!-- <div class="form-group" *ngIf="isServiceBillable">
                                 <label>{{est_duration_cap}} *</label>
                                 <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
                                     type="text" class="form-control number-ip-sm" id="estimated_duration"
@@ -132,7 +150,7 @@
             })">
 
                                 </app-field-error-display>
-                            </div>
+                            </div> -->
                             <div class="form-group" *ngIf="isServiceBillable">
                                 <label>{{service_price_cap}} ({{rupee_symbol}})</label>
                                 <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"

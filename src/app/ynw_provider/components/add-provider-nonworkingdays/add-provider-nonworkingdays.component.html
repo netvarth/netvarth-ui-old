@@ -8,12 +8,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
   <app-common-innerloading-spinner *ngIf="api_loading1">
   </app-common-innerloading-spinner>
   <mat-dialog-content *ngIf="!api_loading1">
-    <div class="form-group col-md-4 no-padding">
+    <div class="form-group col-md-4 no-padding nonworking">
       <mat-form-field class="selctDte">
         <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'add'" formControlName="selectdate"
           [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date">
         <input type="text" matInput [matDatepicker]="picker" *ngIf="data.type === 'edit'" formControlName="selectdate"
-          [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date (DD/MM/YYYY)">
+          [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Selected Date">
         <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="data.type === 'add'"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
       </mat-form-field>

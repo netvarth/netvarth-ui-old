@@ -1398,9 +1398,9 @@ export const Messages = {
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
 
   // JDN
-  'JDN_CREATED': 'Jdn enabled successfully',
-  'JDN_UPDATED': 'Jdn updated successfully',
-  'JDN_DISABLED': 'Jdn disabled successfully',
+  'JDN_CREATED': 'JDN enabled successfully',
+  'JDN_UPDATED': 'JDN updated successfully',
+  'JDN_DISABLED': 'JDN disabled successfully',
   'SUBSCRIBE': 'Subscribe',
   'UNSUBSCRIBE': 'Unsubscribe'
 };
