@@ -174,7 +174,14 @@ export class ProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-      this.ph_arr.push(curphone);
+
+     if( this.ph_arr.indexOf(curphone)==-1){
+        this.ph_arr.push(curphone);
+     }
+     else{
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+      //'Phone number already exists'
+     }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
     }
@@ -195,7 +202,13 @@ export class ProviderNotificationsComponent implements OnInit {
         // 'Please enter a valid email id';
         return;
       }
-      this.em_arr.push(curemail);
+      if( this.em_arr.indexOf(curemail)==-1){
+        this.em_arr.push(curemail);
+     }
+     else{
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+      //'Email already exists'
+     }
       this.okCheckinStatus = true;
       this.notifyemail = '';
     }
