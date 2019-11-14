@@ -5818,3 +5818,17 @@ background-color:#fff !important;
 .widget-user-header h4 {
   text-decoration: underline !important;
 }
+.statemnt{
+  margin-left: 70px !important;
+ }
+ .nonworking .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:disabled {
+ background: none !important;
+ }
+ /* @media only screen and (max-width: 792px) {
+  .jdn_discount {
+    width: 20% !important;
+  }
+ }
+ .jdn_discount {
+  width: 10% !important;
+ } */
