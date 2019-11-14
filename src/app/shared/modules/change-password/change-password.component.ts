@@ -30,6 +30,7 @@ export class ChangePasswordComponent implements OnInit {
   api_error = null;
   api_success = null;
   curtype;
+  isBusinessowner = false;
   breadcrumbs_init = [
     {
       title: 'Change Password',
@@ -46,16 +47,26 @@ export class ChangePasswordComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isBusinessowner = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
+    console.log(this.isBusinessowner);
+    if (this.isBusinessowner) {
     this.spForm = this.fb.group({
       old_password: ['', Validators.compose(
         [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
       new_password: ['', Validators.compose(
         [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
       confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-
     });
-
+  } else {
+    this.spForm = this.fb.group({
+      old_password: ['', Validators.compose(
+        [Validators.required])],
+      new_password: ['', Validators.compose(
+        [Validators.required])],
+      confirm_password: ['', Validators.compose([Validators.required])],
+    });
+  }
   }
 
   onSubmit(sub_data) {

@@ -43,7 +43,7 @@ export class GoogleMapComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private _ngZone: NgZone, public shared_service: SharedServices
   ) {
-    if (data.passloc.lat !== '' && data.passloc.lon !== '') {
+    if (data.passloc.lat && data.passloc.lon) {
       this.lat_lng.latitude = parseFloat(data.passloc.lat);
       this.lat_lng.longitude = parseFloat(data.passloc.lon);
     }
@@ -52,7 +52,7 @@ export class GoogleMapComponent implements OnInit {
   ngOnInit() {
     // if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
     if (this.data.passloc.lat && this.data.passloc.lon) {
-      this.setLocationtoMap();
+     this.setLocationtoMap();
       this.getAddressonDragorClick('edit');
     } else {
       this.getCurrentLocation();
