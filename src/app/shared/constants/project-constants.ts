@@ -184,9 +184,9 @@ export const projectConstants = {
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
-    'all': 'Public(All can see)',
+    'all': 'Public (All can see)',
     'customersOnly': 'Customer',
-    'self': 'Private(None can see)'
+    'self': 'Private (None can see)'
   },
   TOOLTIP_CLS: 'ynwtooltipcls',
   TOOLTIP_PRIVACYPHONE: 'Example : Cell Phone,  Mobile, Emergency, Main Line, others etc',

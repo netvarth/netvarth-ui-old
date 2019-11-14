@@ -5824,11 +5824,21 @@ background-color:#fff !important;
  .nonworking .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:disabled {
  background: none !important;
  }
- /* @media only screen and (max-width: 792px) {
-  .jdn_discount {
-    width: 20% !important;
+ @media only screen and (min-width: 501px) {
+  .jdn_discount input {
+    width: 15% !important;
   }
  }
- .jdn_discount {
-  width: 10% !important;
- } */
+ @media only screen and (max-width: 500px) {
+  .jdn_discount input{
+    width: 50% !important;
+  }
+ }
+ .bt_attach{
+  height: auto;
+  background: transparent;
+  padding: 5px 15px;
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 600;
+ }

@@ -70,12 +70,12 @@
                                             </mat-radio-button>
                                         </mat-radio-group>
                                         <!-- <mat-form-field> -->
-                                        <div class="form-group">
+                                        <div class="form-group jdn_discount">
                                             <label style="margin-top: 10px;" class="col-form-label"
                                                 *ngIf="rewrite ==='edit'|| status ==='Create'">Maximum Discount
                                                 ({{rupee_symbol}})</label>
                                             <!-- <span *ngIf="rewrite !='edit'&& status !='Create'">{{jdnmaxDiscounttext}}</span> -->
-                                            <input style="width: 10%" *ngIf="rewrite ==='edit' || status ==='Create'"
+                                            <input *ngIf="rewrite ==='edit' || status ==='Create'"
                                                 [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
                                                 (keyup)="isvalid($event)" matInput class="form-control"
                                                 [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext">
