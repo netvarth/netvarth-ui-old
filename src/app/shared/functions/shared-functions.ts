@@ -69,6 +69,7 @@ export class SharedFunctions {
       this.shared_service.ConsumerLogout()
         .subscribe(data => {
           this.clearLocalstorage();
+          this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -84,6 +85,7 @@ export class SharedFunctions {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
           this.clearLocalstorage();
+          this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -205,7 +207,12 @@ export class SharedFunctions {
       }
     }
   }
-
+public clearSessionStorage() {
+  for (let index = 0; index < sessionStorage.length; index++) {
+    sessionStorage.removeItem(sessionStorage.key(index));
+    index = index - 1; // manage index after remove
+  }
+}
   public checkLogin() {
     const login = (localStorage.getItem('ynw-credentials')) ? true : false;
     return login;
@@ -249,7 +256,7 @@ export class SharedFunctions {
       return JSON.parse(sessionStorage.getItem(itemname));
     }
   }
-  public removeitemfromSessoinStorage(itemname) {
+  public removeitemfromSessionStorage(itemname) {
     localStorage.removeItem(itemname);
   }
 
@@ -308,7 +315,7 @@ export class SharedFunctions {
 
   public getProfile() {
     const promise = new Promise((resolve, reject) => {
-      const user = JSON.parse(localStorage.getItem('ynw-user'));
+      const user = this.getitemfromSessionStorage('ynw-user');
       if (!user.id) {
         this.router.navigate(['logout']);
       }

@@ -390,7 +390,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.getServiceByLocationid(this.locationjson[i].id, i);
               // this.getProviderDepart(this.provider_bussiness_id);
               this.locationjson[i]['checkins'] = [];
-              if (localStorage.getItem('ynw-user')) {
+              if (this.sharedFunctionobj.getitemfromSessionStorage('ynw-user')) {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
@@ -952,9 +952,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                   this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                }
-                
-                else {
+                } else {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {

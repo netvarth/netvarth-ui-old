@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../services/provider-services.service';
 import { AddProviderMemberComponent } from '../add-provider-member/add-provider-member.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-members',
@@ -19,14 +20,14 @@ export class ProviderMembersComponent implements OnInit {
   query_executed = false;
 
   constructor(private provider_servicesobj: ProviderServices,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog, private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
     this.getMembers();
   }
 
   getMembers() {
-    const userdet = JSON.parse(localStorage.getItem('ynw-user'));
+    const userdet = this.shared_functions.getitemfromSessionStorage('ynw-user');
     this.provider_servicesobj.getMembers(userdet.id)
       .subscribe(data => {
         this.member_list = data;

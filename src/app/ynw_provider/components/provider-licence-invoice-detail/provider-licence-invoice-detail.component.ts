@@ -132,7 +132,6 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
               this.latestInvoiceDiscount.push(discountObj);
               this.discounts.push(discountObj);
             });
-           
           }
           if (this.invoice.mergedStatements) {
             this.checkPreviousStatements(this.invoice.mergedStatements);

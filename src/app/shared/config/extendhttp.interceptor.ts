@@ -60,8 +60,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       // Hit refresh-token API passing the refresh token stored into the request
       // to get new access token and refresh token pair
       // this.sessionService.refreshToken().subscribe(this._refreshSubject);
-
+      this.shared_functions.removeitemfromSessionStorage('tabId');
       const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+      if (!ynw_user) {
+        this.router.navigate(['']);
+      }
       const phone_number = ynw_user.loginId;
       const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
       const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
@@ -112,6 +115,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    req.headers.delete('tab');
+    // req.headers.delete('Hybrid-Version');
+    if (!this.shared_functions.getitemfromLocalStorage('ynw-credentials')) {
+      this.shared_functions.removeitemfromSessionStorage('tabId');
+    }
     if (this.stopThisRequest) {
       return EMPTY;
     }
@@ -120,6 +128,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     const url = base_url + req.url;
     if (this.checkUrl(url)) {
+      this.shared_functions.removeitemfromSessionStorage('tabId');
+      req.headers.set('tab', '');
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
@@ -152,9 +162,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // this.router.navigate(['']);
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
-                  // return next.handle(this.updateHeader(req, url));
-                  window.location.reload();
-                  return EMPTY;
+                  return next.handle(this.updateHeader(req, url));
                 })
               );
             } else if (error.status === 405) {
@@ -174,7 +182,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return EMPTY;
               // return throwError(error);
             } else if (error.status === 401) {
-              // this.shared_functions.logout();
+              this.shared_functions.logout();
               return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
@@ -200,8 +208,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
+    console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
+    if (this.shared_functions.getitemfromSessionStorage('tabId')) {
+      req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
+    } else {
+      req.headers.delete('tab');
+    }
     req = req.clone({ url: url, responseType: 'json' });
     return req;
   }
