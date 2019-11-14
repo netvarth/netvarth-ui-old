@@ -1,138 +1,142 @@
 <section>
   <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-<section class="dashboard content report">
-  <div class="col-md-12 no-padding-small">
-    <div class="row">
-      <div class="card w-dta">
-        <div class="dash-list">
-          <h6>{{reimburse_report_cap}}</h6>
-          <div class="table-outer d-tbl report-table">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>{{report_id_cap}}</th>
-                  <th>{{time_period_cap}}</th>
-                  <th>{{coup_use_cap}}</th>
-                  <th>{{j_acc_cap}}</th>
-                  <th>{{coupon_amt_cap}}</th>
-                  <th>{{reimburse_amt_cap}}</th>
-                  <th>{{status_cap}}</th>
-                  <th class="filter-fx-col">
-                    <table class="fltr-tbl">
-                      <tr>
-                        <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
-                          [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
-                          <img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" />
-                        </td>
-                        <td>
-                          <span>
-                            <i class="icon-filter-one" (click)="toggleFilter()" *ngIf="open_filter === true"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                            <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="filtericonTooltip" *ngIf="open_filter === false"></i>
-                          </span>
-                        </td>
-                      </tr>
-                    </table>
-                  </th>
-                </tr>
-              </thead>
-              <tbody style="border-bottom: 2px solid #ddd">
-                <tr>
-                  <td colspan="8" *ngIf="open_filter === true" class="tble-filtr-td">
-                    <div id="customers-filter-toolbar" class="box-content filter-toolbar">
 
-                      <a [class.button_filter]="filters['from_date']" (click)="filterClicked('from_date')"
-                        class="anchorbutton remMarginRight genMarginLeft" name="from_date"
-                        id="btn_date_filter_id"><span>{{date_from_cap}}</span></a>
-                      <input type="text" [(ngModel)]="filter.from_date" [min]="minday" [matDatepicker]="picker1" #Fdate
-                        (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['from_date']"
-                        (blur)="doSearch()">
-                      <mat-datepicker-toggle matSuffix [for]="picker1" [hidden]="!filters['from_date']">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker1 [hidden]="!filters['from_date']"></mat-datepicker>
+<section>
+  <div class="content">
+    <div class="dashboard audit">
+      <div class="col-md-12 no-padding-small">
+        <div class="row">
+          <div class="card w-dta">
+            <h6>{{reimburse_report_cap}}</h6>
+            <div class="table-responsive dash-list">
+              <table class="table">
+                <thead>
+                  <tr tble-filtr-tr>
+                    <th>{{report_id_cap}}</th>
+                    <th>{{time_period_cap}}</th>
+                    <th>{{coup_use_cap}}</th>
+                    <th>{{j_acc_cap}}</th>
+                    <th>{{coupon_amt_cap}}</th>
+                    <th>{{reimburse_amt_cap}}</th>
+                    <th>{{status_cap}}</th>
+                    <th>
+                      <table class="fltr-tbl">
+                        <tr>
+                          <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
+                            [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
+                            <img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" />
+                          </td>
+                          <td>
+                            <span>
+                              <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                              <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
+                      <div id="customers-filter-toolbar" class="box-content filter-toolbar">
 
-                      <a [class.button_filter]="filters['to_date']" (click)="filterClicked('to_date')"
-                        class="anchorbutton remMarginRight genMarginLeft" name="to_date"
-                        id="btn_date_filter_id"><span>{{date_to_cap}}</span></a>
-                      <input type="text" [(ngModel)]="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
-                        (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['to_date']"
-                        (blur)="doSearch()">
-                      <mat-datepicker-toggle matSuffix [for]="picker2" [hidden]="!filters['to_date']">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker2 [hidden]="!filters['to_date']"></mat-datepicker>
+                        <a [class.button_filter]="filters['from_date']" (click)="filterClicked('from_date')"
+                          class="anchorbutton remMarginRight genMarginLeft" name="from_date"
+                          id="btn_date_filter_id"><span>{{date_from_cap}}</span></a>
+                        <input type="text" [(ngModel)]="filter.from_date" [min]="minday" [matDatepicker]="picker1"
+                          #Fdate (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['from_date']"
+                          (blur)="doSearch()">
+                        <mat-datepicker-toggle matSuffix [for]="picker1" [hidden]="!filters['from_date']">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker1 [hidden]="!filters['from_date']"></mat-datepicker>
 
-                      <a [class.button_filter]="filters['ack_status']" (click)="filterClicked('ack_status')"
-                        class="anchorbutton remMarginRight genMarginLeft" name="pay_status"
-                        id="btn_first_name_filter_id"><span>{{status_cap}}</span></a>
-                      <mat-form-field *ngIf="filters['ack_status']">
-                        <mat-select [(value)]="filter.pay_status" #Fstatus>
-                          <mat-option (click)="setFilterData('status', 'all')" [value]="'all'">
-                            {{all_cap}}
-                          </mat-option>
-                          <mat-option *ngFor="let status of report_status_filter"
-                            (click)="setFilterData('status', status.value)" [value]="status.value">
-                            {{status.displayName}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                        <a [class.button_filter]="filters['to_date']" (click)="filterClicked('to_date')"
+                          class="anchorbutton remMarginRight genMarginLeft" name="to_date"
+                          id="btn_date_filter_id"><span>{{date_to_cap}}</span></a>
+                        <input type="text" [(ngModel)]="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
+                          (dateChange)="doSearch()" class="genTextHeight" [hidden]="!filters['to_date']"
+                          (blur)="doSearch()">
+                        <mat-datepicker-toggle matSuffix [for]="picker2" [hidden]="!filters['to_date']">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker2 [hidden]="!filters['to_date']"></mat-datepicker>
 
-                      <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
-                        class="genMarginLeft genTextHeight btn_black qo_bt">
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr *ngFor="let report of couponreport">
-                  <td data-title="Report Id" class="name pointer-cursor" (click)="reportView(report.invoiceId)">
-                    {{report.invoiceId}}</td>
-                  <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
-                    - {{formatDateDisplay(report.reportEndDate)}}</td>
-                  <td data-title="Coupons Used">
-                    <span *ngIf="!report.listOfJaldeeCoupons">-</span>
-                    <span *ngIf="report.listOfJaldeeCoupons">
-                      <span *ngFor="let jcoupon of getJSONfromString(report.listOfJaldeeCoupons) | keyvalue">
-                        {{jcoupon.key}}
+                        <a [class.button_filter]="filters['ack_status']" (click)="filterClicked('ack_status')"
+                          class="anchorbutton remMarginRight genMarginLeft" name="pay_status"
+                          id="btn_first_name_filter_id"><span>{{status_cap}}</span></a>
+                        <mat-form-field *ngIf="filters['ack_status']">
+                          <mat-select [(value)]="filter.pay_status" #Fstatus>
+                            <mat-option (click)="setFilterData('status', 'all')" [value]="'all'">
+                              {{all_cap}}
+                            </mat-option>
+                            <mat-option *ngFor="let status of report_status_filter"
+                              (click)="setFilterData('status', status.value)" [value]="status.value">
+                              {{status.displayName}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
+                          class="genMarginLeft genTextHeight btn_black qo_bt">
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <ng-container *ngIf="couponreport.length == 0">
+                    <tr>
+                      <td class="nodatafound" colspan="5">{{no_reports_msg}}</td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngFor="let report of couponreport">
+                    <td data-title="Report Id" class="name pointer-cursor" (click)="reportView(report.invoiceId)">
+                      {{report.invoiceId}}</td>
+                    <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
+                      - {{formatDateDisplay(report.reportEndDate)}}</td>
+                    <td data-title="Coupons Used">
+                      <span *ngIf="!report.listOfJaldeeCoupons">-</span>
+                      <span *ngIf="report.listOfJaldeeCoupons">
+                        <span *ngFor="let jcoupon of getJSONfromString(report.listOfJaldeeCoupons) | keyvalue">
+                          {{jcoupon.key}}
+                        </span>
                       </span>
-                    </span>
-                  </td>
-                  <td data-title="Jaldee Bank">{{report.subTotalJaldeeBank}}</td>
-                  <td data-title="Coupon Amount">{{report.subTotalJaldeeCoupons}}</td>
-                  <td data-title="Reimbursable Amount">{{report.grantTotal}}</td>
-                  <td data-title="Status">
-                    {{report_statuses[report.status]}}
-                  </td>
-                  <td class="action">
-                    <span class="mbt" *ngIf="report.status=='PAYMENTPENDING'">
-                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                      </button>
-                      <mat-menu #menu="matMenu">
-                        <button type="button" (click)="openrequestModal(report.invoiceId)" mat-menu-item>
-                          <span>{{req_payment_cap}}</span>
+                    </td>
+                    <td data-title="Jaldee Bank">{{report.subTotalJaldeeBank}}</td>
+                    <td data-title="Coupon Amount">{{report.subTotalJaldeeCoupons}}</td>
+                    <td data-title="Reimbursable Amount">{{report.grantTotal}}</td>
+                    <td data-title="Status">
+                      {{report_statuses[report.status]}}
+                    </td>
+                    <td class="action">
+                      <span class="mbt" *ngIf="report.status=='PAYMENTPENDING'">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
                         </button>
-                      </mat-menu>
-                    </span>
-                    <span class="mbt-mobile-show" *ngIf="report.status=='PAYMENTPENDING'">
-                      <button type="button" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</button>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="search_paging">
-              <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" (click)="openrequestModal(report.invoiceId)" mat-menu-item>
+                            <span>{{req_payment_cap}}</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+                      <span class="mbt-mobile-show" *ngIf="report.status=='PAYMENTPENDING'">
+                        <button type="button" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="search_paging">
+                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                  (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+              </div>
             </div>
           </div>
+
         </div>
-        <ng-container>
-          <div class="qlst no-dta" *ngIf="couponreport.length == 0">
-            {{no_reports_msg}}
-          </div>
-        </ng-container>
       </div>
     </div>
   </div>
