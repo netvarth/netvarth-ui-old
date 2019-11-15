@@ -27,17 +27,19 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
             <div class="form-group mobile-field">
                 <p class="form-level-settings" *ngIf="source=='createCustomer'">
                     {{frm_create_customer_cap_one}}{{frm_create_customer_cap_two}}{{frm_create_customer_cap_three}}</p>
-                <mat-form-field>
-
-                    <div class="input-group">
-                        <div class="input-group-prepend mob-prefix">
-                            <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-                        </div>
-                        <input matInput type="text" class="form-control" id="mobile_number"
-                            (keypress)="isNumeric($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
-                            autocomplete="off" maxlength=10>
+                    <div style="display: flex;">
+                            <div class="input-group-prepend mob-prefix">
+                                    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                </div>
+                        <mat-form-field> 
+                            <div>     
+                                <input matInput type="text" class="form-control" id="mobile_number"
+                                    (keypress)="isNumeric($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
+                                    autocomplete="off" maxlength=10>
+                            </div>
+                        </mat-form-field>
                     </div>
-                </mat-form-field>
+
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
             'required' : 'Mobile number is required',
