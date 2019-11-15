@@ -6,12 +6,14 @@
 
 <section>
     <div class="content comn-cls">
-        <div class="col-md-12">
+        <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card">
-                    <p class="form-level-settings">{{frm_items_cap}}<a class="learnmore-pointer" id="customer-help"
+                    <p class="form-level-settings">{{frm_items_cap}}
+                        <!-- <a class="learnmore-pointer" id="customer-help"
                             (click)="learnmore_clicked('items', $event)">Learn
-                            More</a></p>
+                            More</a> -->
+                        </p>
                     <div class="no-dta" *ngIf="item_list.length ==0 && query_executed == true">
                         <p>{{emptyMsg}}</p>
                         <span class="cs-btn bt3" (click)="addItem()">{{add_item_cap}}</span>

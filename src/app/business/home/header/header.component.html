@@ -7,7 +7,7 @@
     <span class="logo-lg"><img src="assets/images/jaldee-logo.png" alt="Jaldee"></span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" role="navigation" (click)="closeMenu()">
+  <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
       <span class="sr-only">Toggle navigation</span>
@@ -184,7 +184,7 @@
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
-            <li class="user-header pointer-cursor" (click)="gotoProfile()">
+            <li class="user-header pointer-cursor" style="height: 179px !important;" (click)="gotoProfile()">
               <img [src]="blogo" class="img-circle" alt="User Image">
 
               <p>

@@ -6,12 +6,14 @@
 
 <section>
     <div class="content comn-cls">
-        <div class="col-md-12">
+        <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card">
-                    <p class="form-level-settings">{{frm_non_wrkg_cap}}<a class="learnmore-pointer" id="customer-help"
+                    <p class="form-level-settings">{{frm_non_wrkg_cap}}
+                        <!-- <a class="learnmore-pointer" id="customer-help"
                             (click)="learnmore_clicked('nonworking', $event)">Learn
-                            More</a></p>
+                            More</a> -->
+                        </p>
                     <div class="no-dta" *ngIf="nonworking_list.length ==0 && query_executed == true">
                         <p>{{emptyMsg}}</p>
                         <span class="cs-btn bt3" (click)="addHolidays()">{{add_cap}} {{non_working_cap}}</span>

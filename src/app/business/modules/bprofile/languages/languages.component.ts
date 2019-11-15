@@ -48,7 +48,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
+        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
         this.getSpokenLanguages();
         this.setLanguages();
@@ -56,6 +56,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
+      }
+      performActions() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->languages-known']);   
       }
     setLanguages() {
         this.bProfile = [];

@@ -5,7 +5,7 @@
     <div class="content settings">
         <div class="row">
             <div class="col-md-12 no-padding">
-                <div class="col-md-6 col-lg-4 col-12 set-block">
+                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -23,7 +23,7 @@
                                             </mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="search_status">{{search_statusstr}}</p>
-                                        <p class="settings_info">Manage your profile visibility</p>
+                                        <p class="settings_info">Turn it on to enable your profile’s visibility in customer’s search result.</p>
                                     </a></li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk" style="display: flex;">Online
                                             Profile
@@ -72,7 +72,7 @@
                     </div>
                     <!-- /.widget-user -->
                 </div>
-                <div class="col-md-6 col-lg-4 col-12 set-block">
+                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4 col-12 set-block">
+                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
@@ -141,7 +141,7 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-ul">
-                                <li class="form-level-settings"><a>{{frm_bill_cap}}. {{frm_pay_cap}}</a></li>
+                                <li class="form-level-settings"><a>{{frm_bill_cap}}.</a></li>
                                 <li><a>Billing/POS <span class="pull-right">
                                             <mat-slide-toggle [(ngModel)]="pos_status"
                                                 (change)="handle_posStatus($event)">
@@ -168,7 +168,7 @@
                                 <li (click)="redirecTo('coupons')"><a class="pointer-cursor"><span
                                             class="lnk">{{coupons_cap}}
                                         </span>
-                                        <p class="settings_info">Create your coupons and details here.</p>
+                                        <p class="settings_info">View all the coupons available here.</p>
                                     </a>
                                 </li>
                                 <li class="separator setsplit"></li>
@@ -280,7 +280,7 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="col-md-6 col-lg-4 col-12 set-block">
+                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
@@ -298,7 +298,7 @@
                                 </li>
                                 <li (click)="redirecTo('notifications')"><a class="pointer-cursor"><span
                                             class="lnk">{{notification_cap}}</span>
-                                        <p class="settings_info">Manage your notifications here</p>
+                                        <p class="settings_info">Unavailability of your services on particular days (holidays), mention here.</p>
                                     </a>
                                 </li>
                                 <!-- <li (click)="redirecTo('labels')"><a class="pointer-cursor">

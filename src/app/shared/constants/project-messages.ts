@@ -76,6 +76,8 @@ export const Messages = {
   'BPROFILE_PRIVACY_PHONELABEL_REQ': 'Phone label should not be blank',
   'BPROFILE_PRIVACY_PHONE_INVALID': 'Please enter a valid mobile phone number',
   'BPROFILE_PRIVACY_PHONE_10DIGITS': 'Mobile number should have 10 digits',
+  'BPROFILE_PRIVACY_PHONE_DUPLICATE': 'Phone number already exists',
+  'BPROFILE_PRIVACY_EMAIL_DUPLICATE': 'Email already exists',
   'BPROFILE_PRIVACY_EMAILLABEL_REQ': 'Email label should not be blank',
   'BPROFILE_PRIVACY_PHONE_DELETE': 'Do you really want to remove the Mobile no "[DATA]" and its details?',
   'BPROFILE_PRIVACY_EMAIL_DELETE': 'Do you really want to remove the Email id "[DATA]" and its details?',
@@ -216,7 +218,7 @@ export const Messages = {
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
   'COUPON_TOOPTIP': 'Click here to see coupons offered by Jaldee',
-  'JDN_TOOPTIP' : 'You will get 5% for provider',
+  'JDN_TOOPTIP': 'You will get 5% for provider',
   'REF_TOOPTIP': 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
@@ -771,7 +773,7 @@ export const Messages = {
 
   // App-ynw_provider-components-add-provider-coupons
   'NON_WORK_DAY_HI_CAP': 'Non Working Day',
-  'NON_WORK_DAY_OR_HR_CAP':'Non Working Day/Hour',
+  'NON_WORK_DAY_OR_HR_CAP': 'Non Working Day/Hour',
   'REASON_CAP': 'Reason',
 
   // App-ynw_provider-components-add-provider-waitlist-checkin-bill
@@ -1115,7 +1117,7 @@ export const Messages = {
   'WIZ_GOOGLE_MAP_URL_CAP': 'Google Map URL',
   'WIZ_USED_FIND_EXACT_LOC_CAP': 'This can be used to find the exact location',
   'WIZ_BACK_CAP': 'Back',
-  'WIZ_WORKING_HOURS_CAP': 'Queue',
+  'WIZ_WORKING_HOURS_CAP': 'General location hours',
   'WIZ_SHOWS_B_HOURS_CAP': 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP': 'Public Search',
   'WIZ_TURN_ON_OFF_CAP': 'Enable the Public Search here. This salient feature allows your profile to be displayed in the [customer] search.',
@@ -1274,27 +1276,28 @@ export const Messages = {
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
-  'FRM_LEVEL_PROFILE_MSG': 'Update your business profile (such as location, working hours, specialization, languages, etc..) here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Manage your waitlist settings and enable/disable check-ins, for today/future.',
+  'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable “Online Check-in” and also book a future date for customer’s check-in here.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
-  'FRM_LEVEL_MISC_MSG': 'Manage your non working days here',
+  'FRM_LEVEL_MISC_MSG': 'Other features can be mentioned here',
 
   // form-level-provider-bprofile-search
   'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. Unless you enable, the patients won\'t be able to view your profile in their search result. Turning off Public Search will not restrict consumers from online check-ins.',
   'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
+  'FRM_LEVEL_PUBLIC_SEARCH':'Turn it on to enable your profile’s visibility in customer’s search result.',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
   'FRM_LEVEL_LOC_MSG': 'Manage your business location details here.',
   'FRM_LEVEL_LOC_AMENITIES_MSG': 'Manage the location benefits that are offered to your [customer]s.',
   'FRM_LEVEL_WORKING_MSG': 'Details of your business hours are shown here.',
-  'FRM_LEVEL_PRIVACY_MSG': 'Manage the privacy of your contact details here.',
+  'FRM_LEVEL_PRIVACY_MSG': 'Manage your contact related information here. Option to keep your information restricted is available.',
   'FRM_LEVEL_SPEC_MSG': 'Mention your specializations here.',
-  'FRM_LEVEL_LANG_MSG': 'Add languages you know, to increase visibility.',
-  'FRM_LEVEL_ADDITIONAL_MSG': 'Add more details of your business for your [customer] to see.',
+  'FRM_LEVEL_LANG_MSG': 'To widen your customer base, add different languages known to you here.',
+  'FRM_LEVEL_ADDITIONAL_MSG': 'Add other details of you or your business so that customers can understand you more.',
   'FRM_LEVEL_VERI_MSG': 'To upgrade verification level contact Jaldee.',
   'FRM_LEVEL_GALLERY_MSG': 'Add images and catchy captions to boost your [customer]\'s check-ins',
   'FRM_LEVEL_SOCIAL_MSG': 'To connect with [customer]s on your social media platform, add your social media links here.',
@@ -1311,8 +1314,8 @@ export const Messages = {
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
 
   // form-level-provider-license and invoice
-  'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage usage and payment history of your jaldee license, and upgrade license here.',
-  'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'Click here to avail additional features.',
+  'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
+  'FRM_LEVEL_PROVIDER_LIC_ADDON_MSG': 'To avail the additional features of Jaldee.com, click here. ',
   'FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG': 'Add relevant keywords to increase your visibility to your [customer].',
 
   // form-level-provider-coupons
@@ -1371,7 +1374,7 @@ export const Messages = {
   'NO_RESULT_FOUND': 'No results found',
   'TOKEN': 'Token',
   'COUPON_UPGRADE_LICENSE': 'You are not allowed to do this operation. Please upgrade license package',
-  'WAITLIST_CAP': 'You can create multiple working hours here. We do not allow same working hours in two locations.',
+  'WAITLIST_CAP': 'You can create multiple working hours here.',
   'WORK_ON_CAP': 'Enabled',
   'WORK_OFF_CAP': 'Disabled',
   'ENABLE_MSG_CAP': 'If the status is disabled, online check ins cannot be done for this schedule.',
@@ -1389,17 +1392,19 @@ export const Messages = {
   'JDN_CAP': 'JDN',
   'DISPLAYBOARD_HEADING': 'Displayboard',
   'DISPLAYBOARD__INHELP': 'display help',
-  'QSET_ADD' : 'Q-set added successfully',
-  'QSET_UPDATE' : 'Q-set updated successfully',
-  'DISPLAYBOARD_ADD' : 'Displayboard added successfully',
-  'DISPLAYBOARD_UPDATE' : 'Displayboard updated successfully',
+  'QSET_ADD': 'Q-set added successfully',
+  'QSET_UPDATE': 'Q-set updated successfully',
+  'DISPLAYBOARD_ADD': 'Displayboard added successfully',
+  'DISPLAYBOARD_UPDATE': 'Displayboard updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDS': 'Displayboards',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
 
   // JDN
-  'JDN_CREATED': 'Jdn enabled successfully',
-  'JDN_UPDATED': 'Jdn updated successfully',
-  'JDN_DISABLED': 'Jdn disabled successfully',
+  'JDN_CREATED': 'JDN enabled successfully',
+  'JDN_UPDATED': 'JDN updated successfully',
+  'JDN_DISABLED': 'JDN disabled successfully',
+  'SUBSCRIBE': 'Subscribe',
+  'UNSUBSCRIBE': 'Unsubscribe'
 };
 

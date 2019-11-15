@@ -1,9 +1,10 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+    <app-breadcrumb *ngIf="!apiloading" (performAction)="performActions()" [breadcrumbs]="breadcrumbs"
+    [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
 </section>
 <section>
     <div class="content w-manager settings comn-cls lic-page">
-        <div class="col-md-12">
+        <div class="col-md-12 no-padding-small">
             <div class="w-dta">
                 <div class="row">
                     <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
@@ -13,11 +14,12 @@
                                     <mat-expansion-panel-header class="min90">
                                         <mat-panel-title class="block-level">
                                             {{lang_known_cap}}
-                                            <p class="form-level-settings">{{frm_lang_cap}}<a
+                                             <p class="form-level-settings">{{frm_lang_cap}}
+                                                 <!-- <a
                                                     class="learnmore-pointer" id="customer-help"
                                                     (click)="learnmore_clicked('languages-known', $event)">Learn
-                                                    More</a>
-                                            </p>
+                                                    More</a> -->
+                                            </p> 
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="no-dta" *ngIf="normal_language_show==1">

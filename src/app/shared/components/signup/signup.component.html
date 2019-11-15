@@ -8,15 +8,20 @@ onSubmit()" (keyup)="resetApiErrors()">
   <div class="mat-dialog-content" *ngIf="step==1">
     <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
       <div class="form-group mob-prefx mobile-field">
-        <mat-form-field>
-          <div class="input-group">
+        
+        <div style="display: flex;">
             <div class="input-group-prepend mob-prefix">
-              <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                </div>
+        <mat-form-field> 
+            <div>     
+                <input type="text" matInput class="form-control" id="phonenumber" formControlName="phonenumber"
+                autocomplete="off" placeholder="{{mobile_no_cap}} *" maxlength=10>
             </div>
-            <input type="text" matInput class="form-control" id="phonenumber" formControlName="phonenumber"
-              autocomplete="off" placeholder="{{mobile_no_cap}} *" maxlength=10>
-          </div>
         </mat-form-field>
+    </div>
+
+
         <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
   {
     'required' : 'Mobile number is required',

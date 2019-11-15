@@ -79,7 +79,7 @@ export class ProviderbWizardComponent implements OnInit {
   description_cap = Messages.DESCRIPTION_CAP;
   price_cap = Messages.PRICE_CAP;
   service_name_cap = Messages.SERVICE_NAME_CAP;
-  est_duration_cap = Messages.EST_DURATION_CAP;
+  est_duration_cap = Messages.SERVICE_DURATION_CAP;
   enable_prepayment_cap = Messages.ENABLE_PREPAYMENT_CAP;
   prepayment_cap = Messages.PREPAYMENT_CAP;
   tax_applicable_cap = Messages.TAX_APPLICABLE_CAP;
@@ -189,13 +189,14 @@ export class ProviderbWizardComponent implements OnInit {
   longerror_Exists = false;
   qAvailability: any = [];
   loadCompleted = false;
-
+  duration = { hour: 0, minute: 0 };
   constructor(
     private fb: FormBuilder,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
     public fed_service: FormMessageDisplayService,
+    public shared_service: SharedServices,
     private dialog: MatDialog,
     private routerobj: Router, private qservice: QuestionService,
     @Inject(DOCUMENT) public document
@@ -530,9 +531,9 @@ export class ProviderbWizardComponent implements OnInit {
   onSubmit(form_data) {
     this.resetApiErrors();
     form_data.bType = 'Waitlist';
-    if (form_data.serviceDuration === '') {
-      form_data['serviceDuration'] = 0;
-    }
+    // if (form_data.serviceDuration === '') {
+    //   form_data['serviceDuration'] = 0;
+    // }
     if (!this.isServiceBillable) {
       form_data['totalAmount'] = 0;
       form_data['isPrePayment'] = false;
@@ -543,7 +544,14 @@ export class ProviderbWizardComponent implements OnInit {
       form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
     }
     form_data.id = this.service.id;
+    const duration = this.shared_service.getTimeinMin(form_data.serviceDuration);
+    form_data.serviceDuration = duration;
     this.updateService(form_data);
+  }
+  convertTime(time) {
+    this.duration.hour = Math.floor(time / 60);
+    this.duration.minute = time % 60;
+    this.amForm.get('serviceDuration').setValue(this.duration);
   }
   wizardPageShowDecision(curstep, changetostep) {
     let changerequired = false;
@@ -709,7 +717,7 @@ export class ProviderbWizardComponent implements OnInit {
               }
             }
             const addr = result['address'] || null;
-              this.wizard_data_holder['location'] = result['location'];
+            this.wizard_data_holder['location'] = result['location'];
           }
         }
       }
@@ -873,14 +881,14 @@ export class ProviderbWizardComponent implements OnInit {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        serviceDuration: [0, Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         notification: [false]
       });
     } else {
       this.amForm = this.fb.group({
         name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         description: ['', Validators.compose([Validators.maxLength(500)])],
-        serviceDuration: [0, Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
+        serviceDuration: ['', Validators.compose([Validators.required, Validators.pattern(this.number_pattern), Validators.maxLength(10)])],
         totalAmount: ['', Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern), Validators.maxLength(10)])],
         isPrePayment: [{ 'value': false, 'disabled': this.base_licence }],
         taxable: [false],
@@ -965,6 +973,7 @@ export class ProviderbWizardComponent implements OnInit {
         'notification': false,
       });
     }
+    this.convertTime(data['serviceDuration']);
     this.changeNotification();
     this.changePrepayment();
   }

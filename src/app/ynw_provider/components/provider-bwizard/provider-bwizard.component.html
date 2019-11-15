@@ -1,65 +1,201 @@
 <section>
-    <div class="col-md-12">
-        <!-- Step 0 -->
-        <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
-            <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="pt-top">
-                <h1>{{congradulations_cap}} {{userdet.userName}}!</h1>
-                <p>{{frm_wiz_one_cap}}</p>
-                <p>{{frm_wiz_two_cap}}</p>
-                <p>{{frm_wiz_three_cap}}</p>
-                <p>{{frm_wiz_four_cap}}</p>
+        <div class="col-md-12 no-padding-small">
+            <!-- Step 0 -->
+            <div *ngIf="active_step==0" class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
+                <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                <div class="pt-top">
+                    <h1>{{congradulations_cap}} {{userdet.userName}}!</h1>
+                    <p>{{frm_wiz_one_cap}}</p>
+                    <p>{{frm_wiz_two_cap}}</p>
+                    <p>{{frm_wiz_three_cap}}</p>
+                    <p>{{frm_wiz_four_cap}}</p>
+                </div>
+                <div class="pt-btm">
+                    <ul class="ico">
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="profileTooltip" data-icon="l"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="settingsTooltip" data-icon="D"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="locationTooltip" data-icon="k"></span></li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="workinghourTooltip" data-icon="1"></span>
+                        </li>
+                        <li><span [matTooltipClass]="tooltipcls" [matTooltip]="searchTooltip" data-icon="d"></span></li>
+                    </ul>
+                    <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i
+                            class="icon icon-angle-right"></i>
+                    </span>
+                    <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself. <b>
+                            Skip</b>
+                    </p>
+                </div>
             </div>
-            <div class="pt-btm">
-                <ul class="ico">
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="profileTooltip" data-icon="l"></span></li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="settingsTooltip" data-icon="D"></span></li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="locationTooltip" data-icon="k"></span></li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="workinghourTooltip" data-icon="1"></span>
-                    </li>
-                    <li><span [matTooltipClass]="tooltipcls" [matTooltip]="searchTooltip" data-icon="d"></span></li>
-                </ul>
-                <span class="cs-btn lg-btn" *ngIf="!loading_active" (click)="showStep(1)">{{get_start_cap}} <i
-                        class="icon icon-angle-right"></i>
-                </span>
-                <p class="normal-link" *ngIf="!loading_active" (click)="skipMe()">I will explore myself. <b>
-                        Skip</b>
-                </p>
+    
+            <!-- Step 1 -->
+            <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>{{profile_name_summary_cap}}</h1>
+                    </div>
+                    <div class="content row">
+                        <div class="form-group">
+                            <P class="form-level-settings">
+                                {{frm_wiz_five_cap}}{{frm_wiz_five1_cap |  capitalizeFirst}}{{frm_wiz_five2_cap}} </P>
+                            <label>{{business_name_cap}}</label>
+                            <input type="text" class="form-control" id="bnameId" maxlength="50"
+                                [(ngModel)]="wizard_data_holder['name']" name="providername"
+                                placeholder={{name_placeholder}} (keyup)="handlekeyup('bussnesnmerror')" autocomplete="off">
+                            <div class="sts-msg error" *ngIf="bussnesnmerror!=''">{{bussnesnmerror}}</div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>{{profile_summary_cap}}</label>
+                            <textarea class="form-control" id="" rows="3" maxlength="2000"
+                                placeholder="Enter brief summary (max 2000 characters)"
+                                [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
+                        </div>
+                    </div>
+    
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-md-6 col-12 status">
+                                <ul class="status-pnt">
+                                    <li class="active"></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 col-12 control">
+                                <button type="button" (click)="showStep(2)" class="cs-btn bt1"
+                                    *ngIf="!loading_active">{{next_cap}}</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-
-        <!-- Step 1 -->
-        <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
-            <form action="">
+            <!-- Step 2 -->
+            <div *ngIf="active_step==2"
+                class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto wiz-service">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
-                    <h1>{{profile_name_summary_cap}}</h1>
+                    <h1>Service</h1>
                 </div>
                 <div class="content row">
-                    <div class="form-group">
-                        <P class="form-level-settings">
-                            {{frm_wiz_five_cap}}{{frm_wiz_five1_cap |  capitalizeFirst}}{{frm_wiz_five2_cap}} </P>
-                        <label>{{business_name_cap}}</label>
-                        <input type="text" class="form-control" id="bnameId" maxlength="50"
-                            [(ngModel)]="wizard_data_holder['name']" name="providername"
-                            placeholder={{name_placeholder}} (keyup)="handlekeyup('bussnesnmerror')" autocomplete="off">
-                        <div class="sts-msg error" *ngIf="bussnesnmerror!=''">{{bussnesnmerror}}</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{profile_summary_cap}}</label>
-                        <textarea class="form-control" id="" rows="3" maxlength="2000"
-                            placeholder="Enter brief summary (max 2000 characters)"
-                            [(ngModel)]="wizard_data_holder['summary']" name="providersummary"></textarea>
+                    <div class="flds col-12 col-sm-12">
+                        <ng-container>
+                            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+                                    onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="">
+                                <p class="form-level-settings">{{add_more_services_in_set_cap}} </p>
+                                <p *ngIf="userdet['sector'] === 'foodJoints'" class="form-level-settings">
+                                    {{foodServc_frmsentns}}</p>
+                                <div class="form-group">
+                                    <label>{{service_name_cap}}</label>
+                                    <input type="text" class="form-control" id="service_name"
+                                        placeholder="{{service_name_cap}}" formControlName="name" autocomplete="off">
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
+                                        [errorMsg]="fed_service.getErrorMessage(amForm,'name',
+                  {
+                    'required' : 'Please enter the service name.',
+                    'maxlength' : 'Name can contain only 100 characters'
+                  })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" id="description" placeholder="Briefly describe service"
+                                        formControlName="description" (keyup)="setCharCount($event)"
+                                        (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
+                                        [errorMsg]="fed_service.getErrorMessage(amForm,'description',
+                  {
+                    'required' : 'Please enter the service description.',
+                    'maxlength' : 'Description can contain only 500 characters'
+                  })">
+                                    </app-field-error-display>
+                                    <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                        characters
+                                        remaining</span>
+                                </div>
+                                <div class="form-group" *ngIf="isServiceBillable">
+                                    <ng-container class="example-full-width">
+                                        <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
+                                        <!-- <mat-form-field> -->
+                                        <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                                            maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
+                                            placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
+                                        <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
+                                        </ngb-timepicker>
+                                        <!-- </mat-form-field> -->
+                                        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
+                                        [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
+                        {'required' : 'Please enter estimated duration.',
+                        'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
+                        'maxlength' : 'Only 10 digits are allowed'
+                      })"> </app-field-error-display> -->
+                                    </ng-container>
+                                </div>
+                                <!-- <div class="form-group" *ngIf="isServiceBillable">
+                                    <label>{{est_duration_cap}} *</label>
+                                    <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                                        type="text" class="form-control number-ip-sm" id="estimated_duration"
+                                        placeholder="{{est_duration_cap}}" formControlName="serviceDuration"
+                                        autocomplete="off">
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
+                  {'required' : 'Please enter estimated duration.',
+                  'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
+                  'maxlength' : 'Only 10 digits are allowed'
+                })">
+    
+                                    </app-field-error-display>
+                                </div> -->
+                                <div class="form-group" *ngIf="isServiceBillable">
+                                    <label>{{service_price_cap}} ({{rupee_symbol}})</label>
+                                    <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                                        type="text" class="form-control number-ip-sm" id="price"
+                                        placeholder="{{service_price_cap}} ({{rupee_symbol}}) *"
+                                        formControlName="totalAmount" autocomplete="off">
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
+                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
+                  {'required' : 'Please enter price',
+                  'pattern' : 'Enter a valid price',
+                  'maxlength' : 'Only 10 digits are allowed'})">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group inline" *ngIf="isServiceBillable">
+                                    <label class="col-form-label">{{enable_prepayment_cap}}</label>
+                                    <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
+                                        (change)="changePrepayment()">
+                                    </mat-slide-toggle>
+                                </div>
+                                <ng-container *ngIf="isServiceBillable">
+                                    <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
+                                        <label>{{Amount_value_cap}} ({{rupee_symbol}})</label>
+                                        <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)"
+                                            (keyup)="isvalid($event)" type="text" class="form-control amount_box"
+                                            id="prepayment_amount" placeholder="Amount ({{rupee_symbol}})*"
+                                            formControlName="minPrePaymentAmount" autocomplete="off">
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
+                                            [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
+                    {'required' : 'Please enter prepayment amount',
+                    'pattern' : 'Enter a valid amount'})">
+                                        </app-field-error-display><br>
+                                        <span class="info-lst form-level-settings">{{remem_msg}}</span>
+                                    </div>
+                                </ng-container>
+                            </form>
+                        </ng-container>
                     </div>
                 </div>
-
                 <div class="footer">
                     <div class="row">
                         <div class="col-md-6 col-12 status">
                             <ul class="status-pnt">
-                                <li class="active"></li>
                                 <li></li>
+                                <li class="active"></li>
                                 <li></li>
                                 <li></li>
                                 <li></li>
@@ -67,200 +203,135 @@
                             </ul>
                         </div>
                         <div class="col-md-6 col-12 control">
-                            <button type="button" (click)="showStep(2)" class="cs-btn bt1"
+                            <button (click)="showStep(1) " type="button" class="cs-btn bt2"
+                                *ngIf="!loading_active">{{back_cap}}</button>
+                            <button (click)="onSubmit(amForm.value)" type="button" class="cs-btn bt1"
                                 *ngIf="!loading_active">{{next_cap}}</button>
                             <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
-        <!-- Step 2 -->
-        <div *ngIf="active_step==2"
-            class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto wiz-service">
-            <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="header">
-                <h1>Service</h1>
             </div>
-            <div class="content row">
-                <div class="flds col-12 col-sm-12">
-                    <ng-container>
-                        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-                                onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="">
-                            <p class="form-level-settings">{{add_more_services_in_set_cap}} </p>
-                            <p *ngIf="userdet['sector'] === 'foodJoints'" class="form-level-settings">
-                                {{foodServc_frmsentns}}</p>
-                            <div class="form-group">
-                                <label>{{service_name_cap}}</label>
-                                <input type="text" class="form-control" id="service_name"
-                                    placeholder="{{service_name_cap}}" formControlName="name" autocomplete="off">
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')"
-                                    [errorMsg]="fed_service.getErrorMessage(amForm,'name',
-              {
-                'required' : 'Please enter the service name.',
-                'maxlength' : 'Name can contain only 100 characters'
-              })">
-                                </app-field-error-display>
+            <!-- Step 3 -->
+            <div *ngIf="active_step==3" class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>{{location_cap}}</h1>
+                    </div>
+                    <div class="content row ynw-common-form-nm">
+                        <div class="flds col-12 col-sm-12">
+                            <div class="form-group mapselection">
+                                <p class="form-level-settings">{{frm_wiz_six_cap}}<span
+                                        class="form-level-settings display-block"
+                                        *ngIf="multipeLocationAllowed">{{add_more_loc_in_set_cap}}</span></p>
+                                <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i
+                                        data-icon="j"></i>{{choose_loc_cap}}</button>
+                                <span class="expl">{{loc_not_avail_cap}}</span>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <textarea class="form-control" id="description" placeholder="Briefly describe service"
-                                    formControlName="description" (keyup)="setCharCount($event)"
-                                    (focus)="setDescFocus()" (blur)="lostDescFocus()" maxlength="500"> </textarea>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')"
-                                    [errorMsg]="fed_service.getErrorMessage(amForm,'description',
-              {
-                'required' : 'Please enter the service description.',
-                'maxlength' : 'Description can contain only 500 characters'
-              })">
-                                </app-field-error-display>
-                                <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
-                                    characters
-                                    remaining</span>
-                            </div>
-                            <div class="form-group" *ngIf="isServiceBillable">
-                                <label>{{est_duration_cap}} *</label>
-                                <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
-                                    type="text" class="form-control number-ip-sm" id="estimated_duration"
-                                    placeholder="{{est_duration_cap}}" formControlName="serviceDuration"
-                                    autocomplete="off">
-                                <app-field-error-display
-                                    [displayError]="fed_service.isFieldValid(amForm,'serviceDuration')" [errorMsgs]="fed_service.getErrorMessage(amForm,'serviceDuration',
-              {'required' : 'Please enter estimated duration.',
-              'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
-              'maxlength' : 'Only 10 digits are allowed'
-            })">
-
-                                </app-field-error-display>
-                            </div>
-                            <div class="form-group" *ngIf="isServiceBillable">
-                                <label>{{service_price_cap}} ({{rupee_symbol}})</label>
-                                <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
-                                    type="text" class="form-control number-ip-sm" id="price"
-                                    placeholder="{{service_price_cap}} ({{rupee_symbol}}) *"
-                                    formControlName="totalAmount" autocomplete="off">
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'totalAmount')"
-                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'totalAmount',
-              {'required' : 'Please enter price',
-              'pattern' : 'Enter a valid price',
-              'maxlength' : 'Only 10 digits are allowed'})">
-                                </app-field-error-display>
-                            </div>
-                            <div class="form-group inline" *ngIf="isServiceBillable">
-                                <label class="col-form-label">{{enable_prepayment_cap}}</label>
-                                <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
-                                    (change)="changePrepayment()">
-                                </mat-slide-toggle>
-                            </div>
-                            <ng-container *ngIf="isServiceBillable">
-                                <div class="form-group" *ngIf="amForm.get('isPrePayment').value === true">
-                                    <label>{{Amount_value_cap}} ({{rupee_symbol}})</label>
-                                    <input min="0" max={{maxlimit}} (keypress)="isNumeric($event)"
-                                        (keyup)="isvalid($event)" type="text" class="form-control amount_box"
-                                        id="prepayment_amount" placeholder="Amount ({{rupee_symbol}})*"
-                                        formControlName="minPrePaymentAmount" autocomplete="off">
-                                    <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(amForm,'minPrePaymentAmount')"
-                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'minPrePaymentAmount',
-                {'required' : 'Please enter prepayment amount',
-                'pattern' : 'Enter a valid amount'})">
-                                    </app-field-error-display><br>
-                                    <span class="info-lst form-level-settings">{{remem_msg}}</span>
+                                <label>{{gps_coordinates_cap}}</label>
+                                <span class="expl">{{gps_coordinated_needeed_cap}}
+                                    {{customer_label}}{{mob_for_loc_proximity_cap}}</span>
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="blatId"
+                                                [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
+                                                autocomplete="off" (keyup)="handlekeyup('coord_error')"></mat-form-field>
+                                        <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <mat-form-field><input matInput type="text" class="form-control" id=""
+                                                [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"
+                                                autocomplete="off" (keyup)="handlekeyup('coord_error')">
+                                        </mat-form-field>
+                                        <div class="sts-msg error" *ngIf="longerror_Exists">{{longi_error}}</div>
+                                    </div>
                                 </div>
-                            </ng-container>
-                        </form>
-                    </ng-container>
-                </div>
-            </div>
-            <div class="footer">
-                <div class="row">
-                    <div class="col-md-6 col-12 status">
-                        <ul class="status-pnt">
-                            <li></li>
-                            <li class="active"></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
+                                <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{address_cap}}</label>
+                                <span class="expl">Enter your Business address</span>
+                                <textarea class="form-control"
+                                    placeholder="This is what your {{customer_label}}s see when they search online"
+                                    id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address"
+                                    (keyup)="handlekeyup('address_error')" #locaddress></textarea>
+                                <div class="sts-msg error" *ngIf="address_error!=''">{{address_error}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{loc_name_cap}} *</label>
+                                <span class="expl">{{disp_name_loc_cap}} {{customer_label}}s.</span>
+                                <mat-form-field>
+                                    <input matInput type="text" class="form-control" id=""
+                                        [(ngModel)]="wizard_data_holder['location']" name="location"
+                                        placeholder="This is what your {{customer_label}}s see when they search online"
+                                        autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
+                                </mat-form-field>
+                                <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{google_map_url_cap}}</label>
+                                <span class="expl">{{used_find_exact_loc}}</span>
+                                <input matInput type="text" class="form-control nofocus" id=""
+                                    [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder=""
+                                    autocomplete="off" readonly tabindex="-1">
+                                <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 col-12 control">
-                        <button (click)="showStep(1) " type="button" class="cs-btn bt2"
-                            *ngIf="!loading_active">{{back_cap}}</button>
-                        <button (click)="onSubmit(amForm.value)" type="button" class="cs-btn bt1"
-                            *ngIf="!loading_active">{{next_cap}}</button>
-                        <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-md-6 col-12 status">
+                                <ul class="status-pnt">
+                                    <li></li>
+                                    <li></li>
+                                    <li class="active"></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 col-12 control">
+                                <button type="button" (click)="showStep(2)" class="cs-btn bt2"
+                                    *ngIf="!loading_active">{{back_cap}}</button>
+                                <button type="button" (click)="showStep(4)" class="cs-btn bt1"
+                                    *ngIf="!loading_active">{{next_cap}}</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </div>
-        <!-- Step 3 -->
-        <div *ngIf="active_step==3" class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
-            <form action="">
+            <!-- Step 4 -->
+            <div *ngIf="active_step==4" class="is-bx step3 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
-                    <h1>{{location_cap}}</h1>
+                    <h1>{{working_hrs_cap}}</h1>
                 </div>
-                <div class="content row ynw-common-form-nm">
-                    <div class="flds col-12 col-sm-12">
-                        <div class="form-group mapselection">
-                            <p class="form-level-settings">{{frm_wiz_six_cap}}<span
-                                    class="form-level-settings display-block"
-                                    *ngIf="multipeLocationAllowed">{{add_more_loc_in_set_cap}}</span></p>
-                            <button type="button" (click)="showGooglemap()" class="cs-btn bt3"><i
-                                    data-icon="j"></i>{{choose_loc_cap}}</button>
-                            <span class="expl">{{loc_not_avail_cap}}</span>
-                        </div>
+                <div class="content row">
+                    <div class="flds">
+                        <p class="form-level-settings" *ngIf="bProfile.baseLocation && bProfile.baseLocation.place">
+                            {{add_more_queue_in_set_cap}} for {{bProfile.baseLocation.place}}</p>
+                        <p class="form-level-settings" *ngIf="!bProfile.baseLocation">{{add_more_queue_in_set_cap}}</p>
                         <div class="form-group">
-                            <label>{{gps_coordinates_cap}}</label>
-                            <span class="expl">{{gps_coordinated_needeed_cap}}
-                                {{customer_label}}{{mob_for_loc_proximity_cap}}</span>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <mat-form-field>
-                                        <input matInput type="text" class="form-control" id="blatId"
-                                            [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
-                                            autocomplete="off" (keyup)="handlekeyup('coord_error')"></mat-form-field>
-                                    <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
-                                </div>
-                                <div class="col-md-6 col-12">
-                                    <mat-form-field><input matInput type="text" class="form-control" id=""
-                                            [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"
-                                            autocomplete="off" (keyup)="handlekeyup('coord_error')">
-                                    </mat-form-field>
-                                    <div class="sts-msg error" *ngIf="longerror_Exists">{{longi_error}}</div>
-                                </div>
-                            </div>
-                            <div class="sts-msg error" *ngIf="coord_error!=''">{{coord_error}}</div>
+                            <label class="title16">{{working_hrs_cap}}</label>
+                            <span class="expl">{{shows_b_hrs_cap}} </span>
+                            <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
+                                <li *ngFor="let schedule of display_schedule">
+                                    <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
+                                </li>
+                            </ul>
+                            <span class="cs-btn bt3" (click)="changeSchedule_clicked()"
+                                *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0)
+                                    ? 'Change Schedule': 'Add Schedule'}}</span>
                         </div>
-                        <div class="form-group">
-                            <label>{{address_cap}}</label>
-                            <span class="expl">Enter your Business address</span>
-                            <textarea class="form-control"
-                                placeholder="This is what your {{customer_label}}s see when they search online"
-                                id="locaddress" [(ngModel)]="wizard_data_holder['address']" name="address"
-                                (keyup)="handlekeyup('address_error')" #locaddress></textarea>
-                            <div class="sts-msg error" *ngIf="address_error!=''">{{address_error}}</div>
-                        </div>
-                        <div class="form-group">
-                            <label>{{loc_name_cap}} *</label>
-                            <span class="expl">{{disp_name_loc_cap}} {{customer_label}}s.</span>
-                            <mat-form-field>
-                                <input matInput type="text" class="form-control" id=""
-                                    [(ngModel)]="wizard_data_holder['location']" name="location"
-                                    placeholder="This is what your {{customer_label}}s see when they search online"
-                                    autocomplete="off" maxlength="50" (keyup)="handlekeyup('locname_error')">
-                            </mat-form-field>
-                            <div class="sts-msg error" *ngIf="locname_error!=''">{{locname_error}}</div>
-                        </div>
-                        <div class="form-group">
-                            <label>{{google_map_url_cap}}</label>
-                            <span class="expl">{{used_find_exact_loc}}</span>
-                            <input matInput type="text" class="form-control nofocus" id=""
-                                [(ngModel)]="wizard_data_holder['mapurl']" name="mapurl" placeholder=""
-                                autocomplete="off" readonly tabindex="-1">
-                            <div class="sts-msg error" *ngIf="gurl_error!=''">{{gurl_error}}</div>
-                        </div>
+                        <app-provider-schedule [Isource]="'wizard'" *ngIf="ischange_schedule_clicked == true"
+                            [existingSchedules]="schedule_arr" providerStatus="INACTIVE"
+                            (saveScheduleClick)="handlesSaveschedule($event)"
+                            (cancelScheduleClick)="handleCancelschedule($event)"
+                            (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>
                     </div>
                 </div>
                 <div class="footer">
@@ -269,431 +340,281 @@
                             <ul class="status-pnt">
                                 <li></li>
                                 <li></li>
-                                <li class="active"></li>
                                 <li></li>
+                                <li class="active"></li>
                                 <li></li>
                                 <li></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-12 control">
-                            <button type="button" (click)="showStep(2)" class="cs-btn bt2"
-                                *ngIf="!loading_active">{{back_cap}}</button>
-                            <button type="button" (click)="showStep(4)" class="cs-btn bt1"
-                                *ngIf="!loading_active">{{next_cap}}</button>
+                            <button (click)="showStep(3) " type="button" class="cs-btn bt2"
+                                *ngIf="!loading_active && !disablebuttonsInSchedule">{{back_cap}}</button>
+                            <button (click)="showStep(5) " type="button" class="cs-btn bt1"
+                                *ngIf="!loading_active && !disablebuttonsInSchedule">{{next_cap}}</button>
                             <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
-        <!-- Step 4 -->
-        <div *ngIf="active_step==4" class="is-bx step3 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
-            <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="header">
-                <h1>{{working_hrs_cap}}</h1>
             </div>
-            <div class="content row">
-                <div class="flds">
-                    <p class="form-level-settings" *ngIf="bProfile.baseLocation && bProfile.baseLocation.place">
-                        {{add_more_queue_in_set_cap}} for {{bProfile.baseLocation.place}}</p>
-                    <p class="form-level-settings" *ngIf="!bProfile.baseLocation">{{add_more_queue_in_set_cap}}</p>
-                    <div class="form-group">
-                        <label class="title16">{{working_hrs_cap}}</label>
-                        <span class="expl">{{shows_b_hrs_cap}} </span>
-                        <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
-                            <li *ngFor="let schedule of display_schedule">
-                                <span class="day">{{schedule.dstr}}</span> <span class="time">{{schedule.time}}</span>
-                            </li>
-                        </ul>
-                        <span class="cs-btn bt3" (click)="changeSchedule_clicked()"
-                            *ngIf="ischange_schedule_clicked == false">{{(display_schedule.length>0)
-                                ? 'Change Schedule': 'Add Schedule'}}</span>
-                    </div>
-                    <app-provider-schedule [Isource]="'wizard'" *ngIf="ischange_schedule_clicked == true"
-                        [existingSchedules]="schedule_arr" providerStatus="INACTIVE"
-                        (saveScheduleClick)="handlesSaveschedule($event)"
-                        (cancelScheduleClick)="handleCancelschedule($event)"
-                        (addeditScheduleClick)="handleaddeditscheduleclicked($event)"></app-provider-schedule>
+    
+            <!-- Step 5 -->
+            <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+                <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                <div class="header">
+                    <h1>Additional info</h1>
                 </div>
-            </div>
-            <div class="footer">
-                <div class="row">
-                    <div class="col-md-6 col-12 status">
-                        <ul class="status-pnt">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li class="active"></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-12 control">
-                        <button (click)="showStep(3) " type="button" class="cs-btn bt2"
-                            *ngIf="!loading_active && !disablebuttonsInSchedule">{{back_cap}}</button>
-                        <button (click)="showStep(5) " type="button" class="cs-btn bt1"
-                            *ngIf="!loading_active && !disablebuttonsInSchedule">{{next_cap}}</button>
-                        <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Step 5 -->
-        <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
-            <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="header">
-                <h1>Additional info</h1>
-            </div>
-            <div class="content row">
-                <div class="flds col-12">
-                    <p class="form-level-settings">Additional information required to enable public search for your
-                        profile visibility to every one.
-                    </p>
-                    <div class="form-group">
-                        <!-- Specilaizations -->
-                        <div style="margin-bottom: 20px">
-                            <div style="display: flex">
-                                <div style="margin-bottom: 10px; margin-top: 5px">
-                                    <b> Specialization * </b>
+                <div class="content row">
+                    <div class="flds col-12">
+                        <p class="form-level-settings">Additional information required to enable public search for your
+                            profile visibility to every one.
+                        </p>
+                        <div class="form-group">
+                            <!-- Specilaizations -->
+                            <div style="margin-bottom: 20px">
+                                <div style="display: flex">
+                                    <div style="margin-bottom: 10px; margin-top: 5px">
+                                        <b> Specialization * </b>
+                                    </div>
+                                    <div *ngIf="showAddbtn && showSpecial">
+                                        <mat-panel-description class="acc-plus-btn">
+                                            <button mat-icon-button (click)="handleSpecialization()">
+                                                <mat-icon style="color: #00aef2">{{add_circle_outline}}</mat-icon>
+                                            </button>
+                                        </mat-panel-description>
+                                    </div>
+                                    <span class="editbt" style="color: #00aef2; background: white"
+                                        *ngIf="!showAddbtn && showSpecial" (click)="handleSpecialization()"></span>
                                 </div>
-                                <div *ngIf="showAddbtn && showSpecial">
+                                <p class="form-level-settings" *ngIf="!showSpecial">{{speclization_caps}}</p>
+    
+                                <div *ngIf="!showSpecial" style="margin-bottom: 20px">
+                                    <div class="specialization-wizard">
+                                        <mat-dialog-content style="overflow: visible">
+                                            <div class="specializationouter" *ngIf="specialization_arr.length > 0">
+                                                <div *ngFor="let spec of specialization_arr">
+                                                    <mat-checkbox (change)="specializationSel(spec.name)"
+                                                        [checked]="checkspecializationExists(spec.name)">
+                                                        {{spec.displayName}}
+                                                    </mat-checkbox>
+                                                </div>
+                                            </div>
+                                        </mat-dialog-content>
+                                    </div>
+                                    <mat-dialog-actions>
+                                        <button type="button" class="btnstyle cs-btn bt2"
+                                            (click)="cancel()">{{cancel_btn_cap}}</button>
+                                        <button (click)="saveSpecializations()" type="button" class="btnstyle cs-btn bt1"
+                                            [disabled]="specialization_arr.length==0">{{save_btn_cap}}</button>
+                                    </mat-dialog-actions>
+                                </div>
+                                <div class="p0 w-dta active">
+                                    <div class="special-dta" *ngIf="showSpecial && loadCompleted">
+                                        <div class="special" *ngFor="let spec of bProfile.specialization">
+                                            {{getSpecializationName(spec)}}
+                                        </div>
+                                    </div>
+                                    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="!loadCompleted">
+                                    </app-common-innerloading-spinner>
+                                </div>
+                            </div>
+    
+                            <!-- Virtual fields -->
+                            <div class="acc-cont" *ngFor="let fields of subdomain_fields">
+                                <div *ngIf="fields.mandatory">
+                                    <div style="display: flex">
+                                        <div style="margin-bottom: 10px; margin-top: 5px">
+                                            <b> {{fields.displayName}} *</b>
+                                        </div>
+                                        <mat-panel-description class="acc-plus-btn">
+                                            <button mat-icon-button *ngIf="!fields['value']"
+                                                (click)="addDynamicField(fields, 'subdomain_questions')">
+                                                <mat-icon style="color: #00aef2; margin-top: 5px">{{add_circle_outline}}
+                                                </mat-icon>
+                                            </button>
+                                        </mat-panel-description>
+                                    </div>
+                                    <ng-container [ngSwitch]="fields.dataType">
+                                        <ng-container *ngSwitchCase="'Gender'">
+                                            <div class="cont-btn" style="display: flex">
+                                                <p> {{fields.value | capitalizeFirst}}</p>
+                                                <span style="color: #00aef2; background: white"
+                                                    *ngIf="fields.value && !showAddSection1" class="editbt"
+                                                    (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                            </div>
+    
+    
+                                            <div *ngIf="showAddSection1" class="ynw-common-form-nm"
+                                                style="margin-bottom: 10px">
+                                                <app-dynamic-form (retonFormSubmit)="onSubDomainFormSubmit($event)"
+                                                    [questions]="field" (cancelClick)="handleCancel($event)"
+                                                    [origin]="origins"
+                                                    *ngIf="que_type=='subdomain_questions' && field.length > 0">
+                                                </app-dynamic-form>
+                                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                        errorMsg="{{api_error}}"></app-field-error-display> -->
+                                            </div>
+    
+                                        </ng-container>
+    
+                                        <ng-container *ngSwitchCase="'DataGrid'">
+                                            <div class="table-outer">
+                                                <table class="table table-striped" *ngIf="fields['value']">
+                                                    <thead class="cf">
+                                                        <tr>
+                                                            <th class="cth" *ngFor="let column of fields.Columns">
+                                                                {{column.displayName}} </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let row of fields.value;let i = index">
+                                                            <td *ngFor="let column of fields.Columns;let j = index"
+                                                                [attr.data-title]="fields.Columns[j].displayName">
+                                                                {{row[column.key]}}</td>
+                                                            <td class="action"><span class="mbt">
+                                                                    <button type="button" mat-icon-button
+                                                                        [matMenuTriggerFor]="menu">
+                                                                        <mat-icon>more_vert</mat-icon>
+                                                                    </button>
+                                                                    <mat-menu #menu="matMenu">
+                                                                        <button type="button" mat-menu-item
+                                                                            (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
+                                                                            <i class="icon-edit"></i>
+                                                                            <span>Edit</span>
+                                                                        </button>
+                                                                        <button type="button" mat-menu-item
+                                                                            (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
+                                                                            <i class="icon-delete"></i>
+                                                                            <span>{{delete_btn}}</span>
+                                                                        </button>
+                                                                    </mat-menu>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div style="text-align: center" *ngIf="fields['value']">
+                                                    <mat-panel-description class="acc-plus-btn">
+                                                        <button mat-icon-button
+                                                            (click)="editGridDynamicField(fields.name,'subdomain_questions', null)">
+                                                            <mat-icon style="color: #00aef2">{{add_circle_outline}}
+                                                            </mat-icon>
+                                                        </button>
+                                                    </mat-panel-description>
+                                                </div>
+                                            </div>
+    
+                                            <div *ngIf="showAddSection" class="ynw-common-form-nm"
+                                                style="margin-bottom: 10px">
+                                                <app-dynamic-form (retonFormSubmit)="onSubDomainFormSubmit($event)"
+                                                    [questions]="field" (cancelClick)="handlegridCancel($event)"
+                                                    [origin]="origins"
+                                                    *ngIf="que_type=='subdomain_questions' && field.length > 0">
+                                                </app-dynamic-form>
+                                                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                        errorMsg="{{api_error}}"></app-field-error-display> -->
+                                            </div>
+    
+    
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="acc-cont" *ngFor="let fields of domain_fields">
+                                <div *ngIf="fields.mandatory">
+                                    <b> {{fields.displayName}} *</b>
+    
                                     <mat-panel-description class="acc-plus-btn">
-                                        <button mat-icon-button (click)="handleSpecialization()">
+                                        <button mat-icon-button *ngIf="!fields['value']"
+                                            (click)="addDynamicField(fields, 'domain_questions')">
                                             <mat-icon style="color: #00aef2">{{add_circle_outline}}</mat-icon>
                                         </button>
                                     </mat-panel-description>
-                                </div>
-                                <span class="editbt" style="color: #00aef2; background: white"
-                                    *ngIf="!showAddbtn && showSpecial" (click)="handleSpecialization()"></span>
-                            </div>
-                            <p class="form-level-settings" *ngIf="!showSpecial">{{speclization_caps}}</p>
-
-                            <div *ngIf="!showSpecial" style="margin-bottom: 20px">
-                                <div class="specialization-wizard">
-                                    <mat-dialog-content style="overflow: visible">
-                                        <div class="specializationouter" *ngIf="specialization_arr.length > 0">
-                                            <div *ngFor="let spec of specialization_arr">
-                                                <mat-checkbox (change)="specializationSel(spec.name)"
-                                                    [checked]="checkspecializationExists(spec.name)">
-                                                    {{spec.displayName}}
-                                                </mat-checkbox>
+    
+                                    <ng-container [ngSwitch]="fields.dataType">
+                                        <ng-container *ngSwitchCase="'Gender'">
+                                            <div class="cont-btn">
+                                                <p> {{fields.value | capitalizeFirst}}</p>
+                                                <span style="color: #00aef2; background: white" class="editbt"
+                                                    *ngIf="fields.value && !showAddSection1"
+                                                    (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                             </div>
-                                        </div>
-                                    </mat-dialog-content>
-                                </div>
-                                <mat-dialog-actions>
-                                    <button type="button" class="btnstyle cs-btn bt2"
-                                        (click)="cancel()">{{cancel_btn_cap}}</button>
-                                    <button (click)="saveSpecializations()" type="button" class="btnstyle cs-btn bt1"
-                                        [disabled]="specialization_arr.length==0">{{save_btn_cap}}</button>
-                                </mat-dialog-actions>
-                            </div>
-                            <div class="p0 w-dta active">
-                                <div class="special-dta" *ngIf="showSpecial && loadCompleted">
-                                    <div class="special" *ngFor="let spec of bProfile.specialization">
-                                        {{getSpecializationName(spec)}}
-                                    </div>
-                                </div>
-                                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="!loadCompleted">
-                                </app-common-innerloading-spinner>
-                            </div>
-                        </div>
-
-                        <!-- Virtual fields -->
-                        <div class="acc-cont" *ngFor="let fields of subdomain_fields">
-                            <div *ngIf="fields.mandatory">
-                                <div style="display: flex">
-                                    <div style="margin-bottom: 10px; margin-top: 5px">
-                                        <b> {{fields.displayName}} *</b>
-                                    </div>
-                                    <mat-panel-description class="acc-plus-btn">
-                                        <button mat-icon-button *ngIf="!fields['value']"
-                                            (click)="addDynamicField(fields, 'subdomain_questions')">
-                                            <mat-icon style="color: #00aef2; margin-top: 5px">{{add_circle_outline}}
-                                            </mat-icon>
-                                        </button>
-                                    </mat-panel-description>
-                                </div>
-                                <ng-container [ngSwitch]="fields.dataType">
-                                    <ng-container *ngSwitchCase="'Gender'">
-                                        <div class="cont-btn" style="display: flex">
-                                            <p> {{fields.value | capitalizeFirst}}</p>
-                                            <span style="color: #00aef2; background: white"
-                                                *ngIf="fields.value && !showAddSection1" class="editbt"
-                                                (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                        </div>
-
-
-                                        <div *ngIf="showAddSection1" class="ynw-common-form-nm"
-                                            style="margin-bottom: 10px">
-                                            <app-dynamic-form (retonFormSubmit)="onSubDomainFormSubmit($event)"
-                                                [questions]="field" (cancelClick)="handleCancel($event)"
-                                                [origin]="origins"
-                                                *ngIf="que_type=='subdomain_questions' && field.length > 0">
-                                            </app-dynamic-form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
-                                        </div>
-
-                                    </ng-container>
-
-                                    <ng-container *ngSwitchCase="'DataGrid'">
-                                        <div class="table-outer">
-                                            <table class="table table-striped" *ngIf="fields['value']">
-                                                <thead class="cf">
-                                                    <tr>
-                                                        <th class="cth" *ngFor="let column of fields.Columns">
-                                                            {{column.displayName}} </th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let row of fields.value;let i = index">
-                                                        <td *ngFor="let column of fields.Columns;let j = index"
-                                                            [attr.data-title]="fields.Columns[j].displayName">
-                                                            {{row[column.key]}}</td>
-                                                        <td class="action"><span class="mbt">
-                                                                <button type="button" mat-icon-button
-                                                                    [matMenuTriggerFor]="menu">
-                                                                    <mat-icon>more_vert</mat-icon>
-                                                                </button>
-                                                                <mat-menu #menu="matMenu">
-                                                                    <button type="button" mat-menu-item
-                                                                        (click)="editGridDynamicField(fields.name,'subdomain_questions', i)">
-                                                                        <i class="icon-edit"></i>
-                                                                        <span>Edit</span>
-                                                                    </button>
-                                                                    <button type="button" mat-menu-item
-                                                                        (click)="deleteGridDynamicField(fields.name, 'subdomain_questions', i)">
-                                                                        <i class="icon-delete"></i>
-                                                                        <span>{{delete_btn}}</span>
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div style="text-align: center" *ngIf="fields['value']">
-                                                <mat-panel-description class="acc-plus-btn">
-                                                    <button mat-icon-button
-                                                        (click)="editGridDynamicField(fields.name,'subdomain_questions', null)">
-                                                        <mat-icon style="color: #00aef2">{{add_circle_outline}}
-                                                        </mat-icon>
-                                                    </button>
-                                                </mat-panel-description>
-                                            </div>
-                                        </div>
-
-                                        <div *ngIf="showAddSection" class="ynw-common-form-nm"
-                                            style="margin-bottom: 10px">
-                                            <app-dynamic-form (retonFormSubmit)="onSubDomainFormSubmit($event)"
-                                                [questions]="field" (cancelClick)="handlegridCancel($event)"
-                                                [origin]="origins"
-                                                *ngIf="que_type=='subdomain_questions' && field.length > 0">
-                                            </app-dynamic-form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
-                                        </div>
-
-
-                                    </ng-container>
-                                </ng-container>
-                            </div>
-                        </div>
-                        <div class="acc-cont" *ngFor="let fields of domain_fields">
-                            <div *ngIf="fields.mandatory">
-                                <b> {{fields.displayName}} *</b>
-
-                                <mat-panel-description class="acc-plus-btn">
-                                    <button mat-icon-button *ngIf="!fields['value']"
-                                        (click)="addDynamicField(fields, 'domain_questions')">
-                                        <mat-icon style="color: #00aef2">{{add_circle_outline}}</mat-icon>
-                                    </button>
-                                </mat-panel-description>
-
-                                <ng-container [ngSwitch]="fields.dataType">
-                                    <ng-container *ngSwitchCase="'Gender'">
-                                        <div class="cont-btn">
-                                            <p> {{fields.value | capitalizeFirst}}</p>
-                                            <span style="color: #00aef2; background: white" class="editbt"
-                                                *ngIf="fields.value && !showAddSection1"
-                                                (click)="editDynamicField(fields.name, 'domain_questions')"></span>
-                                        </div>
-
-                                        <div *ngIf="showAddSection1" class="ynw-common-form-nm">
-                                            <app-dynamic-form (retonFormSubmit)="onDomainFormSubmit($event)"
-                                                [questions]="field" (cancelClick)="handleCancel($event)"
-                                                [origin]="origins"
-                                                *ngIf="que_type=='domain_questions' && field.length > 0">
-                                            </app-dynamic-form>
-                                            <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
-                                                    errorMsg="{{api_error}}"></app-field-error-display> -->
-                                        </div>
-
-                                    </ng-container>
-
-                                    <ng-container *ngSwitchCase="'DataGrid'">
-                                        <div class="table-outer">
-                                            <table class="table table-striped">
-                                                <thead class="cf">
-                                                    <tr>
-                                                        <th class="cth" *ngFor="let column of fields.Columns">
-                                                            {{column.displayName}} </th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let row of fields.value;let i = index">
-                                                        <td *ngFor="let column of fields.Columns;let j = index"
-                                                            [attr.data-title]="fields.Columns[j].displayName">
-                                                            {{row[column.key]}}</td>
-                                                        <td class="action"><span class="mbt">
-                                                                <button type="button" mat-icon-button
-                                                                    [matMenuTriggerFor]="menu">
-                                                                    <mat-icon>more_vert</mat-icon>
-                                                                </button>
-                                                                <mat-menu #menu="matMenu">
-                                                                    <button type="button" mat-menu-item
-                                                                        (click)="editGridDynamicField(fields.name,'domain_questions', i)">
-                                                                        <i class="icon-edit"></i>
-                                                                        <span>Edit</span>
-                                                                    </button>
-                                                                    <button type="button" mat-menu-item
-                                                                        (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
-                                                                        <i class="icon-delete"></i>
-                                                                        <span>{{delete_btn}}</span>
-                                                                    </button>
-                                                                </mat-menu>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div style="text-align: center" *ngIf="fields['value']">
-                                                <mat-panel-description class="acc-plus-btn">
-                                                    <button mat-icon-button
-                                                        (click)="editGridDynamicField(fields.name,'domain_questions', null)">
-                                                        <mat-icon style="color: #00aef2">{{add_circle_outline}}
-                                                        </mat-icon>
-                                                    </button>
-                                                </mat-panel-description>
-                                            </div>
-
-                                            <div *ngIf="showAddSection" class="ynw-common-form-nm"
-                                                style="margin-bottom: 10px">
+    
+                                            <div *ngIf="showAddSection1" class="ynw-common-form-nm">
                                                 <app-dynamic-form (retonFormSubmit)="onDomainFormSubmit($event)"
-                                                    [questions]="field" (cancelClick)="handlegridCancel($event)"
+                                                    [questions]="field" (cancelClick)="handleCancel($event)"
                                                     [origin]="origins"
                                                     *ngIf="que_type=='domain_questions' && field.length > 0">
                                                 </app-dynamic-form>
                                                 <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
                                                         errorMsg="{{api_error}}"></app-field-error-display> -->
                                             </div>
-
-                                        </div>
+    
+                                        </ng-container>
+    
+                                        <ng-container *ngSwitchCase="'DataGrid'">
+                                            <div class="table-outer">
+                                                <table class="table table-striped">
+                                                    <thead class="cf">
+                                                        <tr>
+                                                            <th class="cth" *ngFor="let column of fields.Columns">
+                                                                {{column.displayName}} </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let row of fields.value;let i = index">
+                                                            <td *ngFor="let column of fields.Columns;let j = index"
+                                                                [attr.data-title]="fields.Columns[j].displayName">
+                                                                {{row[column.key]}}</td>
+                                                            <td class="action"><span class="mbt">
+                                                                    <button type="button" mat-icon-button
+                                                                        [matMenuTriggerFor]="menu">
+                                                                        <mat-icon>more_vert</mat-icon>
+                                                                    </button>
+                                                                    <mat-menu #menu="matMenu">
+                                                                        <button type="button" mat-menu-item
+                                                                            (click)="editGridDynamicField(fields.name,'domain_questions', i)">
+                                                                            <i class="icon-edit"></i>
+                                                                            <span>Edit</span>
+                                                                        </button>
+                                                                        <button type="button" mat-menu-item
+                                                                            (click)="deleteGridDynamicField(fields.name, 'domain_questions', i)">
+                                                                            <i class="icon-delete"></i>
+                                                                            <span>{{delete_btn}}</span>
+                                                                        </button>
+                                                                    </mat-menu>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div style="text-align: center" *ngIf="fields['value']">
+                                                    <mat-panel-description class="acc-plus-btn">
+                                                        <button mat-icon-button
+                                                            (click)="editGridDynamicField(fields.name,'domain_questions', null)">
+                                                            <mat-icon style="color: #00aef2">{{add_circle_outline}}
+                                                            </mat-icon>
+                                                        </button>
+                                                    </mat-panel-description>
+                                                </div>
+    
+                                                <div *ngIf="showAddSection" class="ynw-common-form-nm"
+                                                    style="margin-bottom: 10px">
+                                                    <app-dynamic-form (retonFormSubmit)="onDomainFormSubmit($event)"
+                                                        [questions]="field" (cancelClick)="handlegridCancel($event)"
+                                                        [origin]="origins"
+                                                        *ngIf="que_type=='domain_questions' && field.length > 0">
+                                                    </app-dynamic-form>
+                                                    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error"
+                                                            errorMsg="{{api_error}}"></app-field-error-display> -->
+                                                </div>
+    
+                                            </div>
+                                        </ng-container>
                                     </ng-container>
-                                </ng-container>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer">
-                <div class="row">
-                    <div class="col-md-6 col-12 status">
-                        <ul class="status-pnt">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li class="active"></li>
-                            <li></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-12 control">
-                        <button type="button" (click)="showStep(4)" class="cs-btn bt2"
-                            *ngIf="!loading_active">{{back_cap}}</button>
-                        <button type="button" (click)="showStep(6)" class="cs-btn bt1"
-                            *ngIf="!loading_active">{{next_cap}}</button>
-                        <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Step 6 -->
-        <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
-            <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
-            <div class="header">
-                <h1>{{public_search_cap}}</h1>
-            </div>
-            <div class="content row">
-                <div class="flds col-12">
-                    <p class="form-level-settings">{{turn_on_off_cap}} {{turn_on_of}}</p>
-                    <div class="form-group">
-                        <label class="mb20">{{prof_searchable_viewable_cap}}</label>
-
-                        <mat-radio-group [(ngModel)]="search_status" ngDefaultControl>
-                            <div class="rdo ton" [class.active]="search_status === 'ENABLE'">
-                                <mat-radio-button [value]="'ENABLE'" (change)="handle_searchstatus('ENABLE')">
-                                </mat-radio-button>
-                                <label for="" (click)="handle_searchstatus('ENABLE')">
-                                    {{turnon_pub_search_cap}}
-                                    <span>{{your_pro_visible_cap}} {{customer_label}}{{online_at_cap}}
-                                        <strong>{{jaldee_com_cap}}</strong></span>
-                                </label>
-                            </div>
-                            <div class="rdo toff" [class.active]="search_status === 'DISABLE'">
-                                <mat-radio-button [value]="'DISABLE'" (change)="handle_searchstatus('DISABLE')">
-                                </mat-radio-button>
-                                <label for="" (click)="handle_searchstatus('DISABLE')">
-                                    {{turnoff_publ_search_cap}}
-                                    <span>{{prof_not_visible_cap}} {{customer_label}}{{online_at_cap}}
-                                        <strong>{{jaldee_com_cap}}</strong>.</span>
-                                </label>
-                            </div>
-                        </mat-radio-group>
-                    </div>
-                </div>
-            </div>
-            <div class="footer">
-                <div class="row">
-                    <div class="col-md-6 col-12 status">
-                        <ul class="status-pnt">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li class="active"></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-12 control">
-                        <button type="button" (click)="showStep(5)" class="cs-btn bt2"
-                            *ngIf="!loading_active">{{back_cap}}</button>
-                        <button type="button" (click)="checkClose()" class="cs-btn bt1"
-                            *ngIf="!loading_active">{{next_cap}}</button>
-                        <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Step 7 -->
-        <div *ngIf="active_step==7" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
-            <form action="">
-                <span (click)="redirecttoProfile()" class="close-btn" data-icon="i"></span>
-                <div class="header">
-                    <h1>{{public_search_cap}}</h1>
-                </div>
-                <div class="content row">
-                    <div class="flds col-12">
-                        <div class="wbox">
-                            <div class="bx-ico"><i data-icon="m"></i></div>
-                            <div class="bx-copy">{{some_info_missing_cap}} <span
-                                    (click)="redirecttoProfile()">{{settings_cap}}</span>
-                                {{complete_your_pro_cap}} <strong>{{pub_search_cap}}</strong></div>
                         </div>
                     </div>
                 </div>
@@ -704,19 +625,116 @@
                                 <li></li>
                                 <li></li>
                                 <li></li>
+                                <li></li>
                                 <li class="active"></li>
+                                <li></li>
                             </ul>
                         </div>
                         <div class="col-md-6 col-12 control">
-                            <button type="button" (click)="showStep(6)" class="cs-btn bt2"
+                            <button type="button" (click)="showStep(4)" class="cs-btn bt2"
                                 *ngIf="!loading_active">{{back_cap}}</button>
-                            <button type="button" (click)="redirecttoProfile()" class="cs-btn bt1"
+                            <button type="button" (click)="showStep(6)" class="cs-btn bt1"
                                 *ngIf="!loading_active">{{next_cap}}</button>
                             <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+    
+            <!-- Step 6 -->
+            <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+                <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
+                <div class="header">
+                    <h1>{{public_search_cap}}</h1>
+                </div>
+                <div class="content row">
+                    <div class="flds col-12">
+                        <p class="form-level-settings">{{turn_on_off_cap}} {{turn_on_of}}</p>
+                        <div class="form-group">
+                            <label class="mb20">{{prof_searchable_viewable_cap}}</label>
+    
+                            <mat-radio-group [(ngModel)]="search_status" ngDefaultControl>
+                                <div class="rdo ton" [class.active]="search_status === 'ENABLE'">
+                                    <mat-radio-button [value]="'ENABLE'" (change)="handle_searchstatus('ENABLE')">
+                                    </mat-radio-button>
+                                    <label for="" (click)="handle_searchstatus('ENABLE')">
+                                        {{turnon_pub_search_cap}}
+                                        <span>{{your_pro_visible_cap}} {{customer_label}}{{online_at_cap}}
+                                            <strong>{{jaldee_com_cap}}</strong></span>
+                                    </label>
+                                </div>
+                                <div class="rdo toff" [class.active]="search_status === 'DISABLE'">
+                                    <mat-radio-button [value]="'DISABLE'" (change)="handle_searchstatus('DISABLE')">
+                                    </mat-radio-button>
+                                    <label for="" (click)="handle_searchstatus('DISABLE')">
+                                        {{turnoff_publ_search_cap}}
+                                        <span>{{prof_not_visible_cap}} {{customer_label}}{{online_at_cap}}
+                                            <strong>{{jaldee_com_cap}}</strong>.</span>
+                                    </label>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-md-6 col-12 status">
+                            <ul class="status-pnt">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li class="active"></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 col-12 control">
+                            <button type="button" (click)="showStep(5)" class="cs-btn bt2"
+                                *ngIf="!loading_active">{{back_cap}}</button>
+                            <button type="button" (click)="checkClose()" class="cs-btn bt1"
+                                *ngIf="!loading_active">{{next_cap}}</button>
+                            <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Step 7 -->
+            <div *ngIf="active_step==7" class="is-bx step4 col-12 col-sm-12 col-lg-8 col-xl-8 ml-auto mr-auto">
+                <form action="">
+                    <span (click)="redirecttoProfile()" class="close-btn" data-icon="i"></span>
+                    <div class="header">
+                        <h1>{{public_search_cap}}</h1>
+                    </div>
+                    <div class="content row">
+                        <div class="flds col-12">
+                            <div class="wbox">
+                                <div class="bx-ico"><i data-icon="m"></i></div>
+                                <div class="bx-copy">{{some_info_missing_cap}} <span
+                                        (click)="redirecttoProfile()">{{settings_cap}}</span>
+                                    {{complete_your_pro_cap}} <strong>{{pub_search_cap}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="row">
+                            <div class="col-md-6 col-12 status">
+                                <ul class="status-pnt">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li class="active"></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 col-12 control">
+                                <button type="button" (click)="showStep(6)" class="cs-btn bt2"
+                                    *ngIf="!loading_active">{{back_cap}}</button>
+                                <button type="button" (click)="redirecttoProfile()" class="cs-btn bt1"
+                                    *ngIf="!loading_active">{{next_cap}}</button>
+                                <mat-spinner *ngIf="loading_active" [diameter]="40"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>

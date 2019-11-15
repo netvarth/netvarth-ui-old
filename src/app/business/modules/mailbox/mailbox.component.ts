@@ -165,7 +165,9 @@ export class MailboxComponent implements OnInit, OnDestroy {
             const communications = {
                 communicationMessage: messageToSend
             };
-            this.providerToConsumerNoteAdd(communications, userId);
+            if (userId) {
+                this.providerToConsumerNoteAdd(communications, userId);
+            }
         }
     }
     getReceiverId(inboxList) {
@@ -173,6 +175,9 @@ export class MailboxComponent implements OnInit, OnDestroy {
         inboxList.forEach(element => {
             if (element.ownerId === this.user_id) {
                 receiverid = element.receiverId;
+                return false;
+            } else if (element.receiverId === this.user_id) {
+                receiverid = element.ownerId;
                 return false;
             }
         });

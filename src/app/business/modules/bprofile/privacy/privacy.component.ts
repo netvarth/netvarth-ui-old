@@ -55,7 +55,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
+        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.setPrivacyDetails();
     }
     ngOnDestroy() {
@@ -80,6 +80,9 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
     }
+    performActions() {
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->privacy-settings']);   
+      }
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {

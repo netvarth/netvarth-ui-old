@@ -3,7 +3,7 @@
 
     <div *ngIf="!api_loading1">
         <div (click)="addScheduleSelection()" *ngIf="!show_schedule_selection && providerStatus==='INACTIVE'"
-            class="loc-add-btn"><i class="fa fa-plus-circle pointlist"></i></div>
+            class="loc-add-btn"><i class="fa fa-plus-circle pointlist loc_bt"></i></div>
         <ul class="whrs">
             <li *ngFor="let schedule of display_schedule; let i = index"
                 [class.beingedited]="isbeingEdited(schedule.indx)">

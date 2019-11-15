@@ -10,7 +10,7 @@
 <div class="col-md-12" style="display: block;padding: 0px;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 no-padding-small">
                 <div *ngFor="let row of createRange(boardRows)">
                     <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}}"
                         [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}"
