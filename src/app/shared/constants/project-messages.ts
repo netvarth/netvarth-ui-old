@@ -1117,7 +1117,7 @@ export const Messages = {
   'WIZ_GOOGLE_MAP_URL_CAP': 'Google Map URL',
   'WIZ_USED_FIND_EXACT_LOC_CAP': 'This can be used to find the exact location',
   'WIZ_BACK_CAP': 'Back',
-  'WIZ_WORKING_HOURS_CAP': 'Queue',
+  'WIZ_WORKING_HOURS_CAP': 'General location hours',
   'WIZ_SHOWS_B_HOURS_CAP': 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP': 'Public Search',
   'WIZ_TURN_ON_OFF_CAP': 'Enable the Public Search here. This salient feature allows your profile to be displayed in the [customer] search.',
