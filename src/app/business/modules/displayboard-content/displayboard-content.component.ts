@@ -56,7 +56,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     }
 
     getBusinessdetFromLocalstorage() {
-        const bdetails = this.shared_functions.getitemfromSessionStorage('ynwbp');
+        const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
         if (bdetails) {
           this.bname = bdetails.bn || '';
           this.blogo = bdetails.logo || '';

@@ -87,7 +87,7 @@ export class CustomersListComponent implements OnInit {
         this.checkedin_label = Messages.CHECKED_IN_LABEL;
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getCustomersList(true);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};

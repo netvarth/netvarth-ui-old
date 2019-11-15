@@ -49,9 +49,9 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
     this.getTotalAllowedAdwordsCnt();
     this.frm_adword_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG.replace('[customer]', this.customer_label);

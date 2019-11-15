@@ -33,7 +33,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
     this.grid_row_index = this.data['grid_row_index'];

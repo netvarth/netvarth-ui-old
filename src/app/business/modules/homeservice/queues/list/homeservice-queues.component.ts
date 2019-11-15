@@ -124,7 +124,7 @@ export class HomeserviceQueuesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.api_loading = true;
-        this.selected_location = this.shared_Functionsobj.getitemfromSessionStorage('loc_id');
+        this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-time_windows', 'subKey': '', 'classname': 'b-queue',
             'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }]

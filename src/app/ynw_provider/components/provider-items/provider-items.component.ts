@@ -61,9 +61,9 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     
     this.getitems();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};

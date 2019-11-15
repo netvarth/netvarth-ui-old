@@ -242,7 +242,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
   setLicense() {
-    const cuser = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {
@@ -287,7 +287,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/consumer/faq']);
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemfromSessionStorage('ynwbp');
+    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -296,7 +296,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   getUserdetails() {
-    this.userdet = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    this.userdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (this.userdet) {
       if (this.shared_functions.checkLogin()) {
         this.ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -482,7 +482,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       );
   }
   createProviderAccount() {
-    const ynw = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const ynw = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const firstname = ynw.firstName;
     const lastname = ynw.lastName;
     const mobile = ynw.primaryPhoneNumber;

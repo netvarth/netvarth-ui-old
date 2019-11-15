@@ -13,7 +13,7 @@ export class ProviderResolver implements Resolve<{}> {
     private shared_functions: SharedFunctions) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain =  user_data.subSector || null;
     if (domain && sub_domain) {

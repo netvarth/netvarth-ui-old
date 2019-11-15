@@ -66,9 +66,9 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     ngOnInit() {
-        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-        this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.loading = true;
         this.getBusinessProfile();
         this.getWaitlistMgr();

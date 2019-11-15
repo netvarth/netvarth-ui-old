@@ -110,7 +110,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
     this.getDomainSubdomainSettings();
     this.api_loading = false;
     this.service_notify_cap = Messages.SERVICE_NOTIFY_CAP.replace('[customer]', this.customer_label);
-    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.type = this.data.type;
   }
   setDescFocus() {
@@ -510,7 +510,7 @@ export class AddProviderWaitlistServiceComponent implements OnInit {
 
   getDomainSubdomainSettings() {
     this.api_loading1 = true;
-    const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     this.provider_services.domainSubdomainSettings(domain, sub_domain)

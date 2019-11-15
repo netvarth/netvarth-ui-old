@@ -50,7 +50,7 @@ export class JDNComponent implements OnInit {
 
     }
     ngOnInit() {
-        const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user_data.sector;
         const sub_domain = user_data.subSector || null;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };

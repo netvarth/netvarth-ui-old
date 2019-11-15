@@ -103,11 +103,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
   ngOnInit() {
     this.api_loading = true;
-    this.pdtype = this.shared_Functionsobj.getitemfromSessionStorage('pdtyp');
+    this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
     }
-    this.userDet = this.shared_Functionsobj.getitemfromSessionStorage('ynw-user');
+    this.userDet = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
       // this.getWaitlistDetail();
       this.getProviderSettings();

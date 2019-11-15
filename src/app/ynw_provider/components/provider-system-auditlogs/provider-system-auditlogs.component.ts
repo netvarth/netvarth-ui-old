@@ -73,7 +73,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
 
   ngOnInit() {
     // this.getAuditList();\
-    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.logSelcat = '';
     this.logSelsubcat = '';

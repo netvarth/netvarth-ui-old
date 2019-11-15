@@ -63,7 +63,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   ) { }
   ngOnInit() {
     // this.getAlertList();
-    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.alertSelAck = 'false'; // default becuase maximise from footer alert panel
     this.alertSeldate = '';

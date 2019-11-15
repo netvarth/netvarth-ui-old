@@ -122,7 +122,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
 
     getDomainSubdomainSettings() {
         this.api_loading = true;
-        const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
         this.provider_services.domainSubdomainSettings(domain, sub_domain)

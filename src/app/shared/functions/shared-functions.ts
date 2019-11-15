@@ -189,7 +189,7 @@ export class SharedFunctions {
 
   public setLoginData(data, post_data, mod) {
     // localStorage.setItem('ynw-user', JSON.stringify(data));
-    this.setitemOnSessionStorage('ynw-user', data);
+    this.setitemToGroupStorage('ynw-user', data);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
 
@@ -252,12 +252,51 @@ public clearSessionStorage() {
     sessionStorage.setItem(itemname, JSON.stringify(itemvalue));
   }
   public getitemfromSessionStorage(itemname) { // function to get local storage item value
-    if (localStorage.getItem(itemname) !== 'undefined') {
+    if (sessionStorage.getItem(itemname) !== 'undefined') {
       return JSON.parse(sessionStorage.getItem(itemname));
     }
   }
   public removeitemfromSessionStorage(itemname) {
     localStorage.removeItem(itemname);
+  }
+
+  public getGroup() {
+    if (this.getitemfromSessionStorage('tabId')) {
+      return this.getitemfromSessionStorage('accoutid');
+    } else {
+      return 0;
+    }
+  }
+  public setitemToGroupStorage(itemname, itemvalue) {
+    const group = this.getGroup();
+    let groupObj = {};
+    console.log(group);
+    if (localStorage.getItem(group)) {
+      groupObj = JSON.parse(localStorage.getItem(group));
+      if (groupObj) {
+        groupObj[itemname] = itemvalue;
+      }
+    } else {
+      groupObj[itemname] = itemvalue;
+    }
+    localStorage.setItem(group, JSON.stringify(groupObj));
+  }
+  public getitemFromGroupStorage(itemname) {
+    const group = this.getGroup();
+    if (localStorage.getItem(group)) {
+      const groupObj = JSON.parse(localStorage.getItem(group));
+      if (groupObj[itemname]) {
+        return groupObj[itemname];
+      }
+    }
+  }
+  public removeitemFromGroupStorage(itemname) {
+    const group = this.getGroup();
+    const groupObj = JSON.parse(localStorage.getItem(group));
+    if (groupObj[itemname]) {
+      delete groupObj[itemname];
+      localStorage.setItem(group, JSON.stringify(groupObj));
+    }
   }
 
   public setItemOnCookie(cname, cvalue, exdays = 30) {
@@ -315,7 +354,7 @@ public clearSessionStorage() {
 
   public getProfile() {
     const promise = new Promise((resolve, reject) => {
-      const user = this.getitemfromSessionStorage('ynw-user');
+      const user = this.getitemFromGroupStorage('ynw-user');
       if (!user.id) {
         this.router.navigate(['logout']);
       }
@@ -756,7 +795,7 @@ public clearSessionStorage() {
 
   setBusinessDetailsforHeaderDisp(bname, sector, subsector, logo, forcelogoblank?) {
     const buss_det = { 'bn': '', 'bs': '', 'bss': '', 'logo': '' };
-    const exist_det = this.getitemfromLocalStorage('ynwbp');
+    const exist_det = this.getitemFromGroupStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
       buss_det.bs = sector || '';
@@ -772,7 +811,7 @@ public clearSessionStorage() {
       buss_det.bss = subsector;
       buss_det.logo = logo;
     }
-    this.setitemOnSessionStorage('ynwbp', buss_det);
+    this.setitemToGroupStorage('ynwbp', buss_det);
   }
   retSubSectorNameifRequired(domain, subdomainname) {
     const bprof = this.getitemfromLocalStorage('ynw-bconf');

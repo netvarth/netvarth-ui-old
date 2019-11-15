@@ -63,7 +63,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       this.shared_functions.removeitemfromSessionStorage('tabId');
       const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
       if (!ynw_user) {
-        this.router.navigate(['']);
+        window.location.reload();
       }
       const phone_number = ynw_user.loginId;
       const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
@@ -115,11 +115,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    req.headers.delete('tab');
-    // req.headers.delete('Hybrid-Version');
-    if (!this.shared_functions.getitemfromLocalStorage('ynw-credentials')) {
-      this.shared_functions.removeitemfromSessionStorage('tabId');
-    }
     if (this.stopThisRequest) {
       return EMPTY;
     }
@@ -128,8 +123,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     const url = base_url + req.url;
     if (this.checkUrl(url)) {
-      this.shared_functions.removeitemfromSessionStorage('tabId');
-      req.headers.set('tab', '');
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {

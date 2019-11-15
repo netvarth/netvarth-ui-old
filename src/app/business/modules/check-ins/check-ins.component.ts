@@ -275,8 +275,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
-    const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.getDomainSubdomainSettings();
     this.getPos();
@@ -298,11 +298,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           ).subscribe((e: any) => {
             this.returnedFromCheckDetails = (e[0].urlAfterRedirects.includes('/provider/check-ins/'));
           });
-        const savedtype = this.shared_functions.getitemfromSessionStorage('pdtyp');
+        const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
         if (savedtype !== undefined && savedtype !== null) {
           this.time_type = savedtype;
         }
-        const stattype = this.shared_functions.getitemfromSessionStorage('pdStyp'); // To get the active tab
+        const stattype = this.shared_functions.getitemFromGroupStorage('pdStyp'); // To get the active tab
         if (stattype !== undefined && stattype !== null && stattype !== '') {
           this.status_type = stattype;
         }
@@ -319,7 +319,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   cdate: today,
                   bdata: this.holdbdata
                 };
-                this.shared_functions.setitemOnSessionStorage('ynw-bconf', postdata);
+                this.shared_functions.setitemToGroupStorage('ynw-bconf', postdata);
                 this.getBusinessProfile();
               }
             );
@@ -334,7 +334,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
         this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
-          const ynw = this.shared_functions.getitemfromSessionStorage('loc_id');
+          const ynw = this.shared_functions.getitemFromGroupStorage('loc_id');
           switch (message.ttype) {
             case 'location_change': {
               this.changeLocation(ynw);
@@ -359,7 +359,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 self.locations.push(loc);
               }
             }
-            const cookie_location_id = self.shared_functions.getitemfromSessionStorage('provider_selected_location'); // same in provider checkin button page
+            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
             if (cookie_location_id === '') {
               if (self.locations[0]) {
                 self.changeLocation(self.locations[0]);
@@ -402,9 +402,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   changeSelectedLocation(location) {
     this.selected_location = location;
     if (this.selected_location) {
-      this.shared_functions.setitemOnSessionStorage('provider_selected_location', this.selected_location.id);
+      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    this.shared_functions.setitemOnSessionStorage('loc_id', this.selected_location);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
     // const pdata = { 'ttype': 'location_change' };
     // this.shared_functions.sendSwitchMessage(pdata);
   }
@@ -585,7 +585,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
             return;
           }
-          const getsavedqueueid = this.shared_functions.getitemfromSessionStorage('pdq');
+          const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
           if (!getsavedqueueid) {
             const selid = this.findCurrentActiveQueue(this.all_queues);
             this.selectedQueue(this.all_queues[selid]);
@@ -628,7 +628,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           (data: any) => {
             const Cqueues = data;
             this.queues = [];
-            const savedQ = this.shared_functions.getitemfromSessionStorage('pdq') || '';
+            const savedQ = this.shared_functions.getitemFromGroupStorage('pdq') || '';
             const savedQok = [];
             let indx = 0;
             for (const que of Cqueues) {
@@ -704,7 +704,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   changeLocation(location) {
     this.selected_location = location;
-    this.shared_functions.setitemOnSessionStorage('provider_selected_location', this.selected_location.id);
+    this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
     this.today_waitlist_count = 0;
@@ -721,7 +721,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedQueue(selected_queue) {
     if (selected_queue.id) {
       this.sel_queue_indx = selected_queue.qindx;
-      this.shared_functions.setitemOnSessionStorage('pdq', selected_queue.id);
+      this.shared_functions.setitemToGroupStorage('pdq', selected_queue.id);
     }
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
@@ -780,7 +780,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getTodayCheckinCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemfromSessionStorage('pdq');
+    const queueid = this.shared_functions.getitemFromGroupStorage('pdq');
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {
@@ -958,7 +958,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.check_in_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
-    this.shared_functions.setitemOnSessionStorage('pdtyp', this.time_type);
+    this.shared_functions.setitemToGroupStorage('pdtyp', this.time_type);
     this.section_cancel = [];
     this.section_complete = [];
     this.section_start = [];
@@ -969,7 +969,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.removeitemfromLocalStorage('hP');
       this.shared_functions.removeitemfromLocalStorage('hPFil');
     }
-    const stype = this.shared_functions.getitemfromSessionStorage('pdStyp');
+    const stype = this.shared_functions.getitemFromGroupStorage('pdStyp');
     if (stype) {
       this.status_type = stype;
     } else {
@@ -1003,8 +1003,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   loadApiSwitch(source) {
     let chkSrc = true;
     if (source === 'changeLocation' && this.time_type === 0) {
-      const hisPage = this.shared_functions.getitemfromSessionStorage('hP');
-      const hFilter = this.shared_functions.getitemfromSessionStorage('hPFil');
+      const hisPage = this.shared_functions.getitemFromGroupStorage('hP');
+      const hFilter = this.shared_functions.getitemFromGroupStorage('hPFil');
       if (hisPage !== null) {
         this.filter = hFilter;
         this.pagination.startpageval = hisPage;
@@ -1084,7 +1084,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.showTime = false;
     }
-    this.shared_functions.setitemOnSessionStorage('pdStyp', this.status_type);
+    this.shared_functions.setitemToGroupStorage('pdStyp', this.status_type);
     let status: any = this.status_type;
     switch (type) {
       case 'all': status = ['checkedIn', 'arrived'];
@@ -1245,8 +1245,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   goCheckinDetail(checkin) {
     if (this.time_type === 0) {
-      this.shared_functions.setitemOnSessionStorage('hP', this.filter.page || 1);
-      this.shared_functions.setitemOnSessionStorage('hPFil', this.filter);
+      this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
+      this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
   }
@@ -1275,8 +1275,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    this.shared_functions.setitemOnSessionStorage('hP', pg);
-    this.shared_functions.setitemOnSessionStorage('hPFil', this.filter);
+    this.shared_functions.setitemToGroupStorage('hP', pg);
+    this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     this.doSearch();
   }
   addConsumerInboxMessage(waitlist) {
@@ -1305,7 +1305,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getDomainSubdomainSettings() {
-    const user_data = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {
@@ -1461,7 +1461,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   createCheckin(user_data) {
     const post_data = {};
     // let selected_location = null;
-    // const cookie_location_id = this.shared_functions.getitemfromSessionStorage('provider_selected_location'); // same in provider home page
+    // const cookie_location_id = this.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider home page
     // if (cookie_location_id === '') {
     //   if (this.locations[0]) {
     //     selected_location = this.locations[0];

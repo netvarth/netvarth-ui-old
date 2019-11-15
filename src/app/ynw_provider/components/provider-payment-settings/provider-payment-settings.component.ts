@@ -146,15 +146,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
-        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.getLicensemetrics();
         this.domain = user.sector;
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
-        this.activeLicPkg = this.shared_functions.getitemfromSessionStorage('ynw-user').accountLicenseDetails.accountLicense.name;
+        this.activeLicPkg = this.shared_functions.getitemFromGroupStorage('ynw-user').accountLicenseDetails.accountLicense.name;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
@@ -658,7 +658,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     getLicensemetrics() {
         this.api_loading = true;
         let pkgId;
-        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
             pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
         }

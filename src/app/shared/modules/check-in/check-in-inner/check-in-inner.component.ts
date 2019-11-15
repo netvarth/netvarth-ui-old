@@ -373,7 +373,7 @@ export class CheckInInnerComponent implements OnInit {
 
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
 
-    const activeUser = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
+    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
 
     if (activeUser) {
 
@@ -405,7 +405,7 @@ export class CheckInInnerComponent implements OnInit {
 
     this.getProfile();
 
-    this.loggedinuser = this.sharedFunctionobj.getitemfromSessionStorage('ynw-user');
+    this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
 
     this.gets3curl();
 
@@ -1075,7 +1075,7 @@ export class CheckInInnerComponent implements OnInit {
 
               // this.sharedFunctionobj.openSnackBar(Messages.PROFILE_UPDATE);
 
-              //resolve();
+              // resolve();
 
             },
 
@@ -2918,17 +2918,8 @@ export class CheckInInnerComponent implements OnInit {
     };
 
     this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
-
       .subscribe(data => {
-
         console.log(data);
-
       });
-
   }
-
-
-
-
-
 }

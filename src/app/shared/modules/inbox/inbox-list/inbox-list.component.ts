@@ -68,7 +68,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
           }
         );
     } else {
-      const userDet = this.shared_functions.getitemfromSessionStorage('ynw-user');
+      const userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
       this.user_id = userDet.id;
       this.loading = false;
     }

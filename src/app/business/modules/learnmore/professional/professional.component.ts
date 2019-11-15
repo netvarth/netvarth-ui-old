@@ -88,9 +88,9 @@ export class ProfessionalCareComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+   this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
-    //console.log(this.domain);
+    // console.log(this.domain);
     if (this.target) {
       // this.triggerScrollTo(this.target);
     }

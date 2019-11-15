@@ -51,7 +51,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
 
   ngOnInit() {
     const reasons_list = [];
-    const type = this.sharedfunctionObj.getitemfromSessionStorage('pdtyp');
+    const type = this.sharedfunctionObj.getitemFromGroupStorage('pdtyp');
     const reasons = projectConstants.WAITLIST_CANCEL_RESON;
     for (let i = 0; i < reasons.length; i++) {
       if (type !== reasons[i].type) {

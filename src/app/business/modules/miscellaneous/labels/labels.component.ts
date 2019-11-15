@@ -40,7 +40,7 @@ export class LabelsComponent implements OnInit {
         };
 
         this.getLabels();
-        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     getLabels() {

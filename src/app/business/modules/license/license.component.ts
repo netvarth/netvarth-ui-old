@@ -73,9 +73,10 @@ export class LicenseComponent implements OnInit, OnDestroy {
     loading = true;
     loadingTb = false;
     upgradablepackages = [];
-    addonTooltip = ''; 
-    breadcrumb_moreoptions = { 
-           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+    addonTooltip = '';
+    breadcrumb_moreoptions = {
+        'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
+    };
     upgradedialogRef;
     active_user;
     lichistorydialogRef;
@@ -100,16 +101,16 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.route.params.subscribe((data) => {
             this.type = data.type;
             if (this.type === 'upgrade') {
-                const ynw_user = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 this.current_lic = ynw_user.accountLicenseDetails.accountLicense.displayName;
                 this.showupgradeLicense();
             }
         });
     }
     ngOnInit() {
-        this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
-        const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
-    this.domain = user.sector;
+        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
         this.loading = true;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         // this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
@@ -157,9 +158,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.currentlicense_details = data;
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
-                const ynw_user = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
-                this.sharedfunctionObj.setitemOnSessionStorage('ynw-user', ynw_user);
+                this.sharedfunctionObj.setitemToGroupStorage('ynw-user', ynw_user);
                 if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
                     const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
                     const end_date = (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;
@@ -285,23 +286,22 @@ export class LicenseComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    
+
     getSubscriptionDetail() {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
                 data => {
                     this.license_sub = data;
-                   console.log(this.license_sub);
+                    console.log(this.license_sub);
                     this.licensePlan = this.license_sub.licSubType;
-                    if(this.license_sub.subscriptionTo){
-                   this.statusOfLicense = this.license_sub.subscriptionTo;
-                }
-                // if(this.license_sub.pendingStmtCount){
-                //     this.pendingStatus = this.license_sub.pendingStmtCount;
-                // }
-                //console.log(this.pendingStatus);
-                    
+                    if (this.license_sub.subscriptionTo) {
+                        this.statusOfLicense = this.license_sub.subscriptionTo;
+                    }
+                    // if(this.license_sub.pendingStmtCount){
+                    //     this.pendingStatus = this.license_sub.pendingStmtCount;
+                    // }
+
                     this.getLicenseMetaData();
                 },
                 error => {
@@ -341,11 +341,14 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                     ];
                                 }
                                 this.license_upgarde_sub = license_meta;
-                                for (let details of this.license_upgarde_sub['next_sub']) {
                                 console.log(this.license_upgarde_sub);
-                                this.annualMonthAmount = details.amount;
+                                if (this.license_upgarde_sub['next_sub']) {
+                                    for (const details of this.license_upgarde_sub['next_sub']) {
+                                        console.log(this.license_upgarde_sub);
+                                        this.annualMonthAmount = details.amount;
+                                    }
+                                }
                             }
-                        }
                         }
                     }
                 },
@@ -359,7 +362,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.getLicenseDetails('update');
-                    //this.getSubscriptionDetail();
+                    // this.getSubscriptionDetail();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

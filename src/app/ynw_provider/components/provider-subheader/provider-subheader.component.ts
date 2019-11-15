@@ -76,9 +76,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   calculationmode;
   showToken = false;
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.getLocationList();
-    this.selected_location = this.shared_functions.getitemfromSessionStorage('loc_id');
+    this.selected_location = this.shared_functions.getitemFromGroupStorage('loc_id');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     if (!this.server_date) {
       this.setSystemDate();
@@ -177,7 +177,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   createCheckin(user_data) {
     const post_data = {};
     let selected_location = null;
-    const cookie_location_id = this.shared_functions.getitemfromSessionStorage('provider_selected_location'); // same in provider home page
+    const cookie_location_id = this.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider home page
     if (cookie_location_id === '') {
       if (this.locations[0]) {
         selected_location = this.locations[0];
@@ -385,9 +385,9 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
   changeLocation(location) {
     this.selected_location = location;
     if (this.selected_location) {
-      this.shared_functions.setitemOnSessionStorage('provider_selected_location', this.selected_location.id);
+      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    this.shared_functions.setitemOnSessionStorage('loc_id', this.selected_location);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
     const pdata = { 'ttype': 'location_change' };
     this.shared_functions.sendSwitchMessage(pdata);
   }
@@ -408,7 +408,7 @@ export class ProviderSubeaderComponent implements OnInit, OnDestroy {
               this.locations.push(loc);
             }
           }
-          const cookie_location_id = this.shared_functions.getitemfromSessionStorage('provider_selected_location'); // same in provider checkin button page
+          const cookie_location_id = this.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
           if (cookie_location_id === '') {
             if (this.locations[0]) {
               this.changeLocation(this.locations[0]);

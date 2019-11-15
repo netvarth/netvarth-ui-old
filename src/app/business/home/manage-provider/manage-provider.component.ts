@@ -19,9 +19,11 @@ export class ManageProviderComponent implements OnInit {
     }
     ngOnInit() {
         this.provider_service.manageProvider(this.accountId).subscribe(
-            data => {
+            (data: any) => {
                 console.log(data);
-                this.sharedFunctions.setitemOnSessionStorage('tabId', data);
+                this.sharedFunctions.setitemOnSessionStorage('tabId', data.tabId);
+                this.sharedFunctions.setitemOnSessionStorage('accoutid', this.accountId);
+                this.sharedFunctions.setitemToGroupStorage('ynw-user', data);
                 this.router.navigate(['/provider/check-ins']);
 
         }, error => {

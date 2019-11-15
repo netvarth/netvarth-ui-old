@@ -226,7 +226,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   ngOnInit() {
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
-    const bdetails = this.sharedfunctionObj.getitemfromSessionStorage('ynwbp');
+    const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -398,7 +398,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   //   return errMsgs;
   // }
   getDomainSubdomainSettings() {
-    const user_data = this.sharedfunctionObj.getitemfromSessionStorage('ynw-user');
+    const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {

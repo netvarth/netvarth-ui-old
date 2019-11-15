@@ -61,7 +61,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'bprofile']);
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemfromSessionStorage('ynwbp');
+    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -159,7 +159,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       });
   }
   setLicense() {
-    const cuser = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {

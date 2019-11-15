@@ -27,7 +27,7 @@ export class ProviderMembersComponent implements OnInit {
   }
 
   getMembers() {
-    const userdet = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    const userdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.provider_servicesobj.getMembers(userdet.id)
       .subscribe(data => {
         this.member_list = data;

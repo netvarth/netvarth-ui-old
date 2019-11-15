@@ -54,8 +54,8 @@ export class AuthGuardHome implements CanActivate {
   canActivate() {
     let credentials = null;
     let userType = null;
-    if (localStorage.getItem('ynw-credentials') && this.shared_functions.getitemfromSessionStorage('ynw-user') ) {
-      credentials = this.shared_functions.getitemfromSessionStorage('ynw-user');
+    if (localStorage.getItem('ynw-credentials') && this.shared_functions.getitemFromGroupStorage('ynw-user') ) {
+      credentials = this.shared_functions.getitemFromGroupStorage('ynw-user');
       userType = credentials['userType'];
       if (localStorage.getItem('isBusinessOwner') === 'true' || userType === 3) {
         this.router.navigate(['/provider/check-ins/']);
@@ -74,8 +74,8 @@ export class AuthGuardProviderHome implements CanActivate {
   constructor(private router: Router, private shared_functions: SharedFunctions) { }
   canActivate() {
     if (localStorage.getItem('ynw-credentials')
-      && this.shared_functions.getitemfromSessionStorage('ynw-user')) {
-      const user = this.shared_functions.getitemfromSessionStorage('ynw-user');
+      && this.shared_functions.getitemFromGroupStorage('ynw-user')) {
+      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
       if (user.accStatus === 'ACTIVE') {
         return true;
       } else {

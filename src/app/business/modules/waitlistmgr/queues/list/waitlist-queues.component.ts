@@ -127,8 +127,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        if (this.shared_Functionsobj.getitemfromSessionStorage('loc_id')) {
-            this.selected_location = this.shared_Functionsobj.getitemfromSessionStorage('loc_id');
+        if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
+            this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
         this.breadcrumb_moreoptions = {
             'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' },{ 'title': 'Help', 'type': 'learnmore' }]
