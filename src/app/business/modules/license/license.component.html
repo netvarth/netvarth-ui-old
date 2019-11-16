@@ -37,14 +37,22 @@
                                 <div class="lc1-1">
                                     <div class="outer" *ngIf="currentlicense_details.accountLicense">
                                         <div class="lc-box">
-                                            <div class="col-md-12"><span class="amount">License Status <i
-                                                        class="fa fa-exclamation-triangle" aria-hidden="true"
-                                                        *ngIf="invoices[0].licensePaymentStatus =='NotPaid'"
-                                                        style="color: orange;"></i><i class="fa fa-exclamation-triangle"
-                                                        aria-hidden="true"
-                                                        *ngIf="invoices[0].licensePaymentStatus =='Paid'"
-                                                        style="color: green;"></i>
-                                                </span>
+                                            <div class="col-md-12">
+                                                    <div class="lc4-1">
+                                                            <div class="lt mgn-bt-10">
+                                                                <div>
+                                                                    <span class="amount">License Status  &nbsp; <i
+                                                                        class="fa fa-exclamation-triangle" aria-hidden="true"
+                                                                        *ngIf="invoices[0].licensePaymentStatus =='NotPaid'"
+                                                                        style="color: orange;"> &nbsp; Not Paid</i><i class="fa fa-exclamation-triangle"
+                                                                        aria-hidden="true"
+                                                                        *ngIf="invoices[0].licensePaymentStatus =='Paid'"
+                                                                        style="color: green;">&nbsp; Paid</i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                         
                                                 <div class="lc4-1" *ngIf="currentlicense_details.dueAmount > 0">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
