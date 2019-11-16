@@ -1420,7 +1420,7 @@ sup {
 @media only screen and (max-width: 769px) {
   .bcrumb {
     margin-bottom: 5px !important;
-    font-size: 1rem !important
+    font-size: small !important
   }
 }
 
@@ -5845,8 +5845,3 @@ background-color:#fff !important;
  .loc_bt{
   margin-left: 60px
  }
- @media (max-width: 767px) {
- .bcrumb {
-    font-size: small !important;
-  }
-}
