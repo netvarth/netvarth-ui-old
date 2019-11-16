@@ -79,7 +79,7 @@ export class BusinessComponent implements OnInit {
     this.getBusinessProfile();
     this.activeSkin = this.shared_functions.getitemfromLocalStorage('activeSkin');
     if (!this.activeSkin) {
-      this.activeSkin = 'skin-jaldee';
+      this.activeSkin = 'skin-blue';
     }
   }
   getProviderLogo(bname = '', bsector = '', bsubsector = '') {

@@ -188,7 +188,7 @@ export class JDNComponent implements OnInit {
         if (status === 'DISABLED') {
             confirm_msg = 'You are joining JDN (Jaldee Discount Network) lifetime membership of ₹ 499. Please visit learnmore for more info';
         } else {
-            confirm_msg = 'Are you sure to unsubscribe your JDN lifetime membership? If you wish to subscribe you have to pay again';
+            confirm_msg = 'Are you sure to unsubscribe your JDN lifetime membership? If you wish to resubscribe you have to pay again';
         }
         const confirmdialog = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
