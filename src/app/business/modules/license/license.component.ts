@@ -11,9 +11,8 @@ import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-
-import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import * as moment from 'moment';
 @Component({
     selector: 'app-license',
     templateUrl: './license.component.html',
@@ -81,12 +80,15 @@ export class LicenseComponent implements OnInit, OnDestroy {
     lichistorydialogRef;
     licenseusedialogRef;
     invoicedialogRef;
+    licenseupgardedialogRef;
     upgradesubscriptdialogRef;
     domain;
     statusOfLicense = 0;
     licensePlan;
     annualMonthAmount;
     pendingStatus = 0;
+    effectivedate: any = [];
+    changelicence = false;
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions,
@@ -137,6 +139,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
         if (this.upgradesubscriptdialogRef) {
             this.upgradesubscriptdialogRef.close();
         }
+        if (this.licenseupgardedialogRef) {
+            this.licenseupgardedialogRef.close();
+        }
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
@@ -168,7 +173,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                         valid_till = end_date.diff(start_date, 'days');
                         valid_till = (valid_till < 0) ? 0 : valid_till;
                     }
-                    this.license_message = valid_till + ' day trial, till ' + end_date.format('ll');
+                    this.license_message = valid_till + ' days trial, till ' + end_date.format('ll');
                 }
             });
         if (call_type === 'update') {
@@ -285,7 +290,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    
     getSubscriptionDetail() {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()
@@ -294,14 +298,13 @@ export class LicenseComponent implements OnInit, OnDestroy {
                     this.license_sub = data;
                    console.log(this.license_sub);
                     this.licensePlan = this.license_sub.licSubType;
-                    if(this.license_sub.subscriptionTo){
+                    if (this.license_sub.subscriptionTo) {
                    this.statusOfLicense = this.license_sub.subscriptionTo;
                 }
                 // if(this.license_sub.pendingStmtCount){
                 //     this.pendingStatus = this.license_sub.pendingStmtCount;
                 // }
-                //console.log(this.pendingStatus);
-                    
+
                     this.getLicenseMetaData();
                 },
                 error => {
@@ -405,8 +408,15 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.invoicedialogRef.afterClosed().subscribe(() => {
         });
     }
+    getbillCycle() {
+        this.changelicence = true;
+        this.effectivedate = this.provider_servicesobj.getbillCycle()
+          .subscribe(data => {
+            this.effectivedate = data;
+          });
+      }
 
-    doUpgradeSubcription(value) {
+      doUpgradeSubcription(value) {
         this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -417,10 +427,27 @@ export class LicenseComponent implements OnInit, OnDestroy {
         });
         this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {
             if (result) {
+                console.log(result);
                 this.updateSubscription(value);
             }
+            this.changelicence = false;
         });
     }
+    // getbillCycle() {
+    //     this.licenseupgardedialogRef = this.dialog.open(LicenseSubscriptionComponent, {
+    //         width: '50%',
+    //         data: {
+    //         },
+    //         panelClass: ['popup-class', 'commonpopupmainclass'],
+    //         disableClose: true
+    //     });
+    //     // this.invoicedialogRef.afterClosed().subscribe(() => {
+    //     // });
+    // }
+    cancelAssignServices() {
+        this.changelicence = false;
+    }
+    
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);

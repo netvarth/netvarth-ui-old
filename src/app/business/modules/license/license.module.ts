@@ -38,7 +38,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
-        ProviderLicenceInvoiceDetailComponent
+        ProviderLicenceInvoiceDetailComponent,
     ],
     entryComponents: [
         AddproviderAddonComponent,
@@ -46,7 +46,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
-        ProviderLicenceInvoiceDetailComponent
+        ProviderLicenceInvoiceDetailComponent,
     ],
     exports: [LicenseComponent]
 })

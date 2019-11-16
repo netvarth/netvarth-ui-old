@@ -1,10 +1,11 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
-</section> 
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+        (performAction)="performActions($event)"></app-breadcrumb>
+</section>
 <section>
-    <div class="content w-manager settings comn-cls lic-page">
+    <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
         <div class="col-md-12 no-padding-small">
-            <div class="w-dta"> 
+            <div class="w-dta">
                 <div class="row">
                     <div class="copy one col-xs-12 col-sm-12 no-padding">
                         <div class="pay-section card" *ngIf="loading">
@@ -35,21 +36,118 @@
                             <div class="lc11" style="padding: 5px;">
                                 <div class="lc1-1">
                                     <div class="outer" *ngIf="currentlicense_details.accountLicense">
-                                        <div class="lc-box" >
-                                            <div class="tp"><h5>Subscription</h5>
-                                           
-                                                <span class="ttle">You are currently subscribed to the <span
+                                        <div class="lc-box">
+                                            <div class="col-md-12"><span class="amount">License Status <i
+                                                        class="fa fa-exclamation-triangle" aria-hidden="true"
+                                                        *ngIf="invoices[0].licensePaymentStatus =='NotPaid'"
+                                                        style="color: orange;"></i><i class="fa fa-exclamation-triangle"
+                                                        aria-hidden="true"
+                                                        *ngIf="invoices[0].licensePaymentStatus =='Paid'"
+                                                        style="color: green;"></i>
+                                                </span>
+                                                <div class="lc4-1" *ngIf="currentlicense_details.dueAmount > 0">
+                                                    <div class="lt mgn-bt-10">
+                                                        <div>
+                                                            <span class="amount">{{due_amt}} : <strong>{{currentlicense_details.dueAmount
+                                                                        | currency:'&#8377; '}}</strong>
+                                                            </span> <span class="amount" *ngIf="invoices.length != 0">
+                                                                <strong> - {{currentlicense_details.nextPaymentOn
+                                                                        | date: dateFormat }}</strong>
+                                                            </span>&nbsp;
+                                                            <span class="cs-btn bt3" (click)="showUnpaidInvoice()"
+                                                                *ngIf="invoices.length != 0">{{pay_button}}</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="lc4-1">
+                                                    <div class="lt mgn-bt-10">
+                                                        <div>
+                                                            <span class="amount">Type : <strong>{{licensePlan}}</strong>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="lc4-1">
+                                                    <div class="lt mgn-bt-10">
+                                                        <div>
+                                                            <span class="amount">Package :
+                                                                <strong>{{currentlicense_details.accountLicense.displayName}}</strong>
+                                                            </span>&nbsp;
+                                                            <span style="padding-left: 30px;"
+                                                                class="cs-btn bt3" (click)="showupgradeLicense()"
+                                                                *ngIf="upgradablepackages.length > 0">{{upgrade_license}}
+                                                                <span><i data-icon="B" id="customer-help"
+                                                                        (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span>
+                                                            <!-- <span style="margin-top: -10px; padding-left: 10px;"><span class="cs-btn bt1 upgrade" (click)="showupgradeLicense()"
+                                                                *ngIf="upgradablepackages.length > 0">{{upgrade_license}}
+                                                                <span ><i data-icon="B"
+                                                                        id="customer-help"
+                                                                        (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span></span> -->
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="colum col-md-12">
+                                                    <div class="lc4-1 mgn-bt-10" style="margin-top: 10px;">
+                                                        <div class="lt"
+                                                            *ngIf="licensePlan == 'Monthly' && statusOfLicense == 0">
+                                                            Jaldee Recommends , <span (click)="getbillCycle()"><span
+                                                                    style="color: deepskyblue"
+                                                                    class="pointlist"><u>Switch to
+                                                                        annual</u></span></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12  lc4-1 mgn-bt-10" *ngIf="changelicence">
+                                                        <div class="lt">
+                                                            <div><label><strong>Effective from :</strong> </label>
+                                                                {{effectivedate  | date: dateFormat}}</div> <span
+                                                                class="lc3-2 lcd">
+                                                                <span class="t_c cs-btn bt10">T & C Apply</span>
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <button class="cs-btn bt1"
+                                                                style="margin-right:10px; margin-top: 30px;"
+                                                                (click)="cancelAssignServices()">Cancel</button>
+                                                            <button class="cs-btn bt1" style="margin-top: 30px;"
+                                                                (click)="doUpgradeSubcription('Annual')">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="lc4-1 mgn-bt-10" *ngIf="licensePlan == 'Monthly' && statusOfLicense == 1">
+                                                        <div class="lt">
+                                                            You changed your license package to annual
+                                                            . The invoice for this
+                                                            transaction will be generated in next business cycle.
+                                                            If you need to <span style="color: deepskyblue" class="pointlist"
+                                                                (click)="doUpgradeSubcription('Monthly')"><u>Cancel annual
+                                                                    subscription</u></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc4-1 mgn-bt-10" *ngIf="licensePlan == 'Annual' && pendingStatus == 1">
+                                                        <div class="lt">
+                                                            You changed your license package to monthly
+                                                            . The invoice for this
+                                                            transaction will be generated in next business cycle.
+                                                            If you need to cancel <span style="color: deepskyblue"
+                                                                (click)="doUpgradeSubcription('Annual')">Click here</span>
+                                                        </div>
+                                                    </div>
+                                                <!-- <span class="ttle">You are currently subscribed to the <span
                                                         class="pkg">{{currentlicense_details.accountLicense.displayName}} License (<span style="color: #0edcb8;">{{licensePlan}}</span>)</span>plan 
                                                         
                                                     <span class="warning"
-                                                        *ngIf="license_message != ''">{{license_message}}</span></span>
-                                                        <!-- <div *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
+                                                        *ngIf="license_message != ''">{{license_message}}</span></span> -->
+                                                <!-- <div *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
                                                     <div style="margin-top: 5px;" *ngFor="let sub of license_upgarde_sub['next_sub']"> -->
-                                                        <div>
-                                                            <div>
-                                                        <span *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 0" >Change plan to 
-                                                            <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly</button></span>
-                                                            <span *ngIf= "licensePlan == 'Annual' && statusOfLicense == 0"> Contact Admin if you need to change this to monthly
+                                                <div>
+                                                    <div>
+                                                        <!-- <span *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 0" >Change plan to 
+                                                            <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly</button></span> -->
+                                                        <span *ngIf="licensePlan == 'Annual' && statusOfLicense == 0">
+                                                            Contact Admin if you need to change this to monthly
                                                             <!-- <span   *ngIf= "statusOfLicense == 1" >Yearly({{sub['amount'] | currency:'INR':'symbol':'.2-2'}})</span> -->
                                                         </span>
                                                     </div>
@@ -57,42 +155,16 @@
                                             </div>
                                         </div>
                                         <div>
-                                        <div class="col-md-3 " style="font-weight: 600;">{{currentlicense_details.accountLicense.displayName}}</div>
-                                        <div class="col-md-2" >{{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</div>
-                                        <div class="col-md-2" style="margin-top: -10px;"><span class="cs-btn bt1 upgrade" (click)="showupgradeLicense()"
-                                            *ngIf="upgradablepackages.length > 0">{{upgrade_license}}
-                                            <span ><i data-icon="B"
-                                                    id="customer-help"
-                                                    (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span></div>
-                                                </div>
-                                               
-                    
+                                            <!-- <div class="col-md-3 " style="font-weight: 600;">{{currentlicense_details.accountLicense.displayName}}</div>
+                                        <div class="col-md-2" >{{license_upgarde_sub['price'] | currency:'INR':'symbol':'.2-2'}}</div> -->
+
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
 
-                            
-
-                            
-
-                                <div class="lc4-1 mgn-bt-10"
-                                *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 1">
-                                <div class="lt">
-                                    You changed your license package to annual
-                                    . The invoice for this
-                                    transaction will be generated in next business cycle.
-                                    If you need to cancel <span style="color: deepskyblue" class="pointlist" (click)="doUpgradeSubcription('Monthly')">Click here</span> 
-                                </div>
-                            </div>
-                            <div class="lc4-1 mgn-bt-10"
-                                *ngIf= "licensePlan == 'Annual' && pendingStatus == 1">
-                                <div class="lt">
-                                    You changed your license package to monthly
-                                    . The invoice for this
-                                    transaction will be generated in next business cycle.
-                                    If you need to cancel <span style="color: deepskyblue" (click)="doUpgradeSubcription('Annual')">Click here</span> 
-                                </div>
-                            </div>
                             <!-- <div class="lc11">
                                 <div class="lc1-1">
                                     <div class="outer">
@@ -145,29 +217,29 @@
                             </div>
 
                             </div> -->
-                            <div class="colum">
+                            <div class="">
                                 <div class="lc44">
-                                    <div class="lc4-1 mgn-bt-10"
+                                    <!-- <div class="lc4-1 mgn-bt-10"
                                         *ngIf="currentlicense_details.accountLicense && currentlicense_details.accountLicense.invoicePending">
-                                        <div class="lt">
+                                         <div class="lt">
                                             You changed your package to
                                             {{currentlicense_details.accountLicense.displayName}}. The invoice for this
                                             transaction will be generated in next business cycle.
-                                        </div>
-                                    </div>
+                                        </div> -->
+                                    <!-- </div> -->
                                     <div class="lc4-1" *ngIf="currentlicense_details.dueAmount > 0">
                                         <div class="lt mgn-bt-10">
-                                            <div>
+                                            <!-- <div>
                                                 <span class="amount">{{due_amt}} : <strong>{{currentlicense_details.dueAmount
                                                             | currency:'&#8377; '}}</strong>
                                                 </span>
                                                 <span class="cs-btn bt3" (click)="showUnpaidInvoice()"
                                                     *ngIf="invoices.length != 0">{{pay_button}}</span>
-                                            </div>
-                                            <span class="amount" *ngIf="invoices.length != 0">{{due_date_cap}} :
+                                            </div> -->
+                                            <!-- <span class="amount" *ngIf="invoices.length != 0">{{due_date_cap}} :
                                                 <strong>{{currentlicense_details.nextPaymentOn
                                                         | date: dateFormat }}</strong>
-                                            </span>
+                                            </span> -->
                                         </div>
                                     </div>
                                     <div class="lc4-2">
@@ -232,21 +304,23 @@
                 </div>
             </div>
             <div class="row">
-                    <div class="card p0">
-                        <span class="b-link" (click)="gotoPaymentHistory()">
-                            <h2>Payment History</h2>
-                            <span class="form-level-settings">Here you can see your past payments. <a class="learnmore-pointer"
-                                    id="customer-help" (click)="learnmore_clicked('upgradelicense', $event)">Learn
-                                    More</a></span>
-                        </span>
-                    </div>
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoPaymentHistory()">
+                        <h2>Payment History</h2>
+                        <span class="form-level-settings">Here you can see your past payments. <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('upgradelicense', $event)">Learn
+                                More</a></span>
+                    </span>
                 </div>
+            </div>
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoAddOns()">
                         <h2>AddOns</h2>
-                        <span class="form-level-settings">To avail the additional features of Jaldee.com, click here.  <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('addon', $event)">Learn
+                        <span class="form-level-settings">To avail the additional features of Jaldee.com, click here. <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('addon', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -255,8 +329,9 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoJaldeeKeywords()">
                         <h2>Jaldee Keywords</h2>
-                        <span class="form-level-settings">Add relevant keywords to increase your visibility to your patient. <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('adwords', $event)">Learn
+                        <span class="form-level-settings">Add relevant keywords to increase your visibility to your
+                            patient. <a class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('adwords', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

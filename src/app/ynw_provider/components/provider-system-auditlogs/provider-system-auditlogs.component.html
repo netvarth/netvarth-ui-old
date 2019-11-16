@@ -47,7 +47,7 @@
                                                 <a [class.button_filter]="dateFilter" (click)="filterClicked()"
                                                     class="anchorbutton remMarginRight genMarginLeft" name="date"
                                                     id="btn_date_filter_id"><span>Date</span></a>
-                                                <input type="text" [(ngModel)]="logSeldate" [min]="minday"
+                                                <input type="text" [(ngModel)]="logSeldate" [min]="minday" [max]="tday"
                                                     [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)"
                                                     class="genTextHeight" [hidden]="!dateFilter"
                                                     (blur)="do_search(false)">
