@@ -5845,3 +5845,8 @@ background-color:#fff !important;
  .loc_bt{
   margin-left: 60px
  }
+ @media (min-width: 768px) {
+  .d-md-none {
+    display: none !important;
+  }
+ }

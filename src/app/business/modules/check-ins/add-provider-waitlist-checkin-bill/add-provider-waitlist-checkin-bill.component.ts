@@ -556,24 +556,24 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.itemServiceSearch.reset();
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
   }
-getAddedServcOrItem(name){
-  if(name){
-  this.isService = false;
-  this.isItem = false ;
-    for (let i = 0; i < this.all_services.length; i++) {
-    if (this.all_services[i].name === name) {
-      this.isService = true;
-      break;
+  getAddedServcOrItem(name) {
+    if (name) {
+      this.isService = false;
+      this.isItem = false;
+      for (let i = 0; i < this.all_services.length; i++) {
+        if (this.all_services[i].name === name) {
+          this.isService = true;
+          break;
+        }
+      }
+      for (let i = 0; i < this.items.length; i++) {
+        if (this.items[i].displayName === name) {
+          this.isItem = true;
+          break;
+        }
+      }
     }
   }
-  for (let i = 0; i < this.items.length; i++) {
-    if (this.items[i].displayName === name) {
-      this.isItem = true;
-      break;
-    }
-  }
-}
-}
 
   /**
    * Returns Service Id
@@ -693,15 +693,15 @@ getAddedServcOrItem(name){
     this.showPrivatenoteSection = true;
   }
 
-  itemServiceManualAdd(type, name){
-    if(type === ''){
+  itemServiceManualAdd(type, name) {
+    if (type === '') {
       this.getAddedServcOrItem(name.value);
-      if(this.isService){
+      if (this.isService) {
         type = 'Services';
-      }else if(this.isItem){
+      } else if (this.isItem) {
         type = 'Items';
       }
-     this.itemServiceSelected(type, name.value)
+      this.itemServiceSelected(type, name.value)
     }
   }
   /**
@@ -710,9 +710,9 @@ getAddedServcOrItem(name){
    * @param name Service/Item Name
    */
   itemServiceSelected(type, name) {
-    
+
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
-    
+
     if (type === 'Services') {
       this.selectedItemService = name;
       this.curSelItm.indx = this.getSelectedServiceId(name);
@@ -733,26 +733,28 @@ getAddedServcOrItem(name){
    */
   applyAction(action, uuid, data) {
     return new Promise((resolve, reject) => {
-      this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
-        (billInfo => {
-          this.bill_data = billInfo;
-          this.getPrePaymentDetails();
-          this.hideWorkBench();
-          this.actiontype = null;
-          this.curSelItm.typ = 'Services';
-          this.curSelItm.qty = 1;
-          this.getWaitlistBill();
-          resolve();
-        },
-          error => {
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            this.disableButton = false;
-            this.disableDiscountbtn = false;
-            this.disableCouponbtn = false;
-            this.disableitembtn = false;
-            this.disableJCouponbtn = false;
-            reject(error);
-          });
+      if (uuid) {
+        this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
+          (billInfo => {
+            this.bill_data = billInfo;
+            this.getPrePaymentDetails();
+            this.hideWorkBench();
+            this.actiontype = null;
+            this.curSelItm.typ = 'Services';
+            this.curSelItm.qty = 1;
+            this.getWaitlistBill();
+            resolve();
+          },
+            error => {
+              this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.disableButton = false;
+              this.disableDiscountbtn = false;
+              this.disableCouponbtn = false;
+              this.disableitembtn = false;
+              this.disableJCouponbtn = false;
+              reject(error);
+            });
+      }
     });
   }
   isNumeric(evt) {
@@ -791,14 +793,16 @@ getAddedServcOrItem(name){
         action = 'removeItem';
       }
     }
-    this.provider_services.setWaitlistBill(action, this.bill_data.uuid, data, null).subscribe
-      (billInfo => {
-        this.bill_data = billInfo;
-        this.hideAddItem();
-        this.getWaitlistBill();
-      }, error => {
-        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+    if (this.bill_data.uuid) {
+      this.provider_services.setWaitlistBill(action, this.bill_data.uuid, data, null).subscribe
+        (billInfo => {
+          this.bill_data = billInfo;
+          this.hideAddItem();
+          this.getWaitlistBill();
+        }, error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+    }
     this.itemServiceSearch.reset();
     this.curSelItm = { indx: 0, typ: '', qty: 1 };
   }
