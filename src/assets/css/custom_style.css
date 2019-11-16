@@ -5845,3 +5845,8 @@ background-color:#fff !important;
  .loc_bt{
   margin-left: 60px
  }
+ @media (max-width: 767px) {
+ .bcrumb {
+    font-size: small !important;
+  }
+}

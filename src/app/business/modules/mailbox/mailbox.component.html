@@ -83,7 +83,7 @@
                                                             [ngModelOptions]="{standalone: true}">
                                                         <span class="input-group-btn">
                                                             <button
-                                                                *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message"
+                                                                *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message && selectedMessage[parentIndex].message.waitlistid"
                                                                 class="btn btn-warning btn-flat"
                                                                 (click)="logofile.click()">
                                                                 <input #logofile type="file" accept="image/*"
