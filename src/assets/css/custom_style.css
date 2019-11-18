@@ -5881,3 +5881,10 @@ background-color:#fff !important;
     width: 180px !important;
   }
 }
+.mci-warning {
+  color: red;
+  margin-left: 10px;
+}
+.payment-status{
+  padding: 0px !important;
+}
