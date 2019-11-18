@@ -5850,3 +5850,9 @@ background-color:#fff !important;
     display: none !important;
   }
  }
+ @media (max-width: 320px) {
+  .ln-hgt-40 {
+    font-size: smaller !important;
+    line-height: 40px;
+  }
+}
