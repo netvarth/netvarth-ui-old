@@ -89,6 +89,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     pendingStatus = 0;
     effectivedate: any = [];
     changelicence = false;
+    annualdiscount: any = [];
+
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private sharedfunctionObj: SharedFunctions,
@@ -122,6 +124,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.getUpgradablePackages();
         this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
         this.loading = false;
+        this.getAnnualDiscount();
     }
     ngOnDestroy() {
         if (this.upgradedialogRef) {
@@ -173,7 +176,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                         valid_till = end_date.diff(start_date, 'days');
                         valid_till = (valid_till < 0) ? 0 : valid_till;
                     }
-                    this.license_message = valid_till + ' days trial, till ' + end_date.format('ll');
+                    this.license_message = ' till ' + end_date.format('ll');
                 }
             });
         if (call_type === 'update') {
@@ -296,7 +299,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.license_sub = data;
-                   console.log(this.license_sub);
                     this.licensePlan = this.license_sub.licSubType;
                     if (this.license_sub.subscriptionTo) {
                    this.statusOfLicense = this.license_sub.subscriptionTo;
@@ -345,7 +347,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                 }
                                 this.license_upgarde_sub = license_meta;
                                 for (let details of this.license_upgarde_sub['next_sub']) {
-                                console.log(this.license_upgarde_sub);
                                 this.annualMonthAmount = details.amount;
                             }
                         }
@@ -415,6 +416,12 @@ export class LicenseComponent implements OnInit, OnDestroy {
             this.effectivedate = data;
           });
       }
+      getAnnualDiscount() {
+        this.annualdiscount = this.provider_servicesobj.getAnnualDiscount()
+          .subscribe(data => {
+            this.annualdiscount = data;
+          });
+      }
 
       doUpgradeSubcription(value) {
         this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -427,7 +434,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
         });
         this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
                 this.updateSubscription(value);
             }
             this.changelicence = false;

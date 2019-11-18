@@ -40,7 +40,7 @@
                                             <div class="col-md-12">
                                                     <div class="lc4-1">
                                                             <div class="lt mgn-bt-10">
-                                                                <div>
+                                                                <div *ngFor="let invoice of invoices let i=index">
                                                                     <span class="amount">License Status  &nbsp; <i
                                                                         class="fa fa-exclamation-triangle" aria-hidden="true"
                                                                         *ngIf="invoices[0].licensePaymentStatus =='NotPaid'"
@@ -68,10 +68,18 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="lc4-1">
+                                                <div class="lc4-1" *ngIf ="currentlicense_details.accountLicense.displayName !='Gold - FREE Trial 45 days'">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
                                                             <span class="amount">Type : <strong>{{licensePlan}}</strong>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="lc4-1" *ngIf ="currentlicense_details.accountLicense.displayName =='Gold - FREE Trial 45 days'">
+                                                    <div class="lt mgn-bt-10">
+                                                        <div>
+                                                            <span class="amount">Type : <strong>{{currentlicense_details.accountLicense.type}}</strong>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -81,12 +89,13 @@
                                                         <div>
                                                             <span class="amount">Package :
                                                                 <strong>{{currentlicense_details.accountLicense.displayName}}</strong>
-                                                            </span>&nbsp;
+                                                            </span>&nbsp;    
                                                             <span style="padding-left: 30px;"
                                                                 class="cs-btn bt3" (click)="showupgradeLicense()"
                                                                 *ngIf="upgradablepackages.length > 0">{{upgrade_license}}
                                                                 <span><i data-icon="B" id="customer-help"
                                                                         (click)="learnmore_clicked('upgradelicense', $event)"></i></span></span>
+                                                              
                                                             <!-- <span style="margin-top: -10px; padding-left: 10px;"><span class="cs-btn bt1 upgrade" (click)="showupgradeLicense()"
                                                                 *ngIf="upgradablepackages.length > 0">{{upgrade_license}}
                                                                 <span ><i data-icon="B"
@@ -97,14 +106,14 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="colum col-md-12">
-                                                    <div class="lc4-1 mgn-bt-10" style="margin-top: 10px;">
+                                                <div class="lc4-1 mgn-bt-10 colum " *ngIf ="currentlicense_details.accountLicense.displayName !='Gold - FREE Trial 45 days' && currentlicense_details.accountLicense.displayName !='FREE'">
+                                                    <div style="margin-top: 10px; margin-right: 10px;">
                                                         <div class="lt"
                                                             *ngIf="licensePlan == 'Monthly' && statusOfLicense == 0">
                                                             Jaldee Recommends , <span (click)="getbillCycle()"><span
                                                                     style="color: deepskyblue"
                                                                     class="pointlist"><u>Switch to
-                                                                        annual</u></span></span>
+                                                                        annual</u></span> <span> and get {{annualdiscount}}% discount</span></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12  lc4-1 mgn-bt-10" *ngIf="changelicence">
@@ -129,8 +138,8 @@
                                                             You changed your license package to annual
                                                             . The invoice for this
                                                             transaction will be generated in next business cycle.
-                                                            If you need to <span style="color: deepskyblue" class="pointlist"
-                                                                (click)="doUpgradeSubcription('Monthly')"><u>Cancel annual
+                                                            <span style="color: deepskyblue" class="pointlist"
+                                                                (click)="doUpgradeSubcription('Monthly')"><u> Cancel annual
                                                                     subscription</u></span>
                                                         </div>
                                                     </div>
@@ -143,11 +152,11 @@
                                                                 (click)="doUpgradeSubcription('Annual')">Click here</span>
                                                         </div>
                                                     </div>
-                                                <!-- <span class="ttle">You are currently subscribed to the <span
-                                                        class="pkg">{{currentlicense_details.accountLicense.displayName}} License (<span style="color: #0edcb8;">{{licensePlan}}</span>)</span>plan 
+                                                <span class="ttle" *ngIf="currentlicense_details.accountLicense.displayName =='Gold - FREE Trial 45 days'">You are currently subscribed to the <span
+                                                        class="pkg">{{currentlicense_details.accountLicense.displayName}} License</span> plan 
                                                         
                                                     <span class="warning"
-                                                        *ngIf="license_message != ''">{{license_message}}</span></span> -->
+                                                        *ngIf="license_message != ''">{{license_message}}</span></span>
                                                 <!-- <div *ngIf="license_upgarde_sub['next_sub'] && license_upgarde_sub['next_sub'] != null">
                                                     <div style="margin-top: 5px;" *ngFor="let sub of license_upgarde_sub['next_sub']"> -->
                                                 <div>
