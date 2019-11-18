@@ -206,6 +206,10 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   ngOnInit() {
+    // To hide menu and icons if active page is wizatd
+    const  hideaction = { 'ttype': 'hidemenus', 'value': true};
+    this.shared_functions.sendMessage(hideaction);
+
     this.getDomainSubdomainSettings();
     this.turn_on_off_cap = Messages.WIZ_TURN_ON_OFF_CAP.replace('[customer]', this.customer_label);
     this.turn_on_of = Messages.WIZ_TURN_ON_OF_CAP.replace('[customer]', this.customer_label);
@@ -782,6 +786,8 @@ export class ProviderbWizardComponent implements OnInit {
 
   redirecttoProfile() {
     // this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
+    const  hideaction = { 'ttype': 'hidemenus', 'value': false};
+    this.shared_functions.sendMessage(hideaction);
     this.routerobj.navigate(['provider', 'settings', 'bprofile']);
   }
 

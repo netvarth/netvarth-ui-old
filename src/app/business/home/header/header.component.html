@@ -9,14 +9,14 @@
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
-    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" >
       <span class="sr-only">Toggle navigation</span>
     </a>
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
-        <li class="dropdown messages-menu">
+        <li class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
             <span class="label label-success"
@@ -42,7 +42,7 @@
             </li>
           </ul> -->
         </li>
-        <li class="dropdown notifications-menu">
+        <li class="dropdown notifications-menu" *ngIf="!iswiz">
           <a (click)="gotoAlerts()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
@@ -63,7 +63,7 @@
             <li class="footer"><a href="#" routerLink="alerts">View all</a></li>
           </ul>
         </li>
-        <li class="dropdown tasks-menu">
+        <li class="dropdown tasks-menu" *ngIf="!iswiz">
           <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="icon-license"></i>
           </a>
@@ -97,7 +97,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown tasks-menu">
+        <li class="dropdown tasks-menu" *ngIf="!iswiz">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-checkin"></i>
           </a>
@@ -145,10 +145,10 @@
           <p class="bus-name">{{bname}}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div> -->
-        <li class="dropdown user user-menu">
+        <li class="dropdown user user-menu" >
           <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <img [src]="blogo" class="user-image" alt="User Image">
-            <span class="hidden-xs">{{bname}}</span>
+            <span class="hidden-xs" >{{bname}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
@@ -175,7 +175,7 @@
             </li> -->
             <!-- Menu Footer-->
             <li class="user-footer">
-              <div class="pull-left">
+              <div class="pull-left" *ngIf="!iswiz">
                 <a (click)="redirectto('profile')" class="btn btn-default btn-flat pointer-cursor">Admin Profile</a>
               </div>
               <div class="pull-right">

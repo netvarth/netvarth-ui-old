@@ -31,6 +31,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   bsubsector = '';
   blogo = '';
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  iswiz = false; // is true when active page is wizard
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private _scrollToService: ScrollToService,
@@ -43,6 +44,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
         case 'upgradelicence':
           this.setLicense();
+          break;
+        case 'hidemenus':
+          this.iswiz = message.value;
           break;
       }
       this.getBusinessdetFromLocalstorage();

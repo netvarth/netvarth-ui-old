@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   bsubsector = '';
   blogo = '';
   qAvailability;
+  iswiz = false; // is cur page is wizard
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -35,6 +36,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           break;
         case 'alertCount':
           this.alertCnt = message.alertCnt;
+          break;
+        case 'hidemenus':
+          this.iswiz = message.value;
           break;
         case 'updateuserdetails':
           // this.getUserdetails();
