@@ -120,6 +120,20 @@
         </app-field-error-display>
       </div>
     </div>
+
+
+    <mat-form-field *ngSwitchCase="'date'">
+        <div class="form-group">
+            <input type="text" #date matInput [matDatepicker]="picker" [formControlName]="question.key" (dateChange)="dateChange(date.value)"
+                      [min]="minDate" [max]="maxDate" autocomplete="off" tabindex="-1" placeholder="Choose your date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+          <app-field-error-display *ngIf="question.controlType =='date'" [displayError]="fed_service.isFieldValid(form,question.key)"
+            [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+          </app-field-error-display>
+        </div>
+      </mat-form-field>
+
    
   </ng-container>
 </div>

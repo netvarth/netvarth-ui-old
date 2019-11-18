@@ -7,6 +7,7 @@ import { TextareaQuestion } from './form-textarea';
 import { DataGridQuestion } from './form-datagrid';
 import { RadioQuestion } from './form-radio';
 import { EnumListQuestion } from './form-enumlist';
+import { DatePickerQuestion } from './form.date';
 
 @Injectable()
 export class QuestionService {
@@ -63,12 +64,18 @@ export class QuestionService {
         case 'Enum'   : this.questions.push(this.createDropDownField(que, que.enumeratedConstants)); break;
         case 'EnumList'   : this.questions.push(this.createEnumField(que)); break;
         case 'Boolean'   : this.questions.push(this.createTextField(que, 'checkbox')); break;
+        case 'Date' : this.questions.push(this.createDateField(que)); break;
       }
     }
     // return this.questions;
      return this.questions.sort((a, b) => a.order - b.order);
   }
 
+  createDateField(que) {
+    const obj = this.defaultObj(que);
+    const txt = new DatePickerQuestion(obj);
+    return txt;
+  }
   createTextField(que, type = 'text') {
     const obj = this.defaultObj(que);
     obj['type'] = type;

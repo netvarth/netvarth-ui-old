@@ -6,6 +6,7 @@ import { FormControlService } from './form-control.service';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 @Component({
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html'
@@ -21,7 +22,8 @@ export class DynamicFormQuestionComponent implements OnInit {
   errors = [];
   constructor(private qcs: FormControlService,
     public fed_service: FormMessageDisplayService,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    public dateformat: DateFormatPipe) { }
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
@@ -86,6 +88,13 @@ export class DynamicFormQuestionComponent implements OnInit {
     }
   }
 
+  dateChange(value) {
+    console.log(value);
+    const date = this.dateformat.transformTomciDate(value);
+    console.log(date);
+    this.form.controls[this.question.key].setValue(value);
+    // this.form.controls[this.question.key].setValue(date);
+  }
   onFieldBlur(question) {
 
     if (question.type !== 'url' &&
