@@ -63,7 +63,7 @@
                                                                 <a class="mg-10" target="_blank"
                                                                     [href]="attachment.s3path"
                                                                     *ngFor="let attachment of inbox.attachments"><img
-                                                                        [src]="attachment.thumbPath"
+                                                                        [src]="getThumbUrl(attachment)"
                                                                         style="width:100px; height:100px" /></a>
                                                             </div>
                                                         </div>

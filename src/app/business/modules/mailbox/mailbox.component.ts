@@ -346,4 +346,11 @@ export class MailboxComponent implements OnInit, OnDestroy {
             this.showCaptionBox[parentIndex][index] = false;
         }
     }
+    getThumbUrl(attachment) {
+        if (attachment.s3path.indexOf('.pdf') !== -1) {
+            return attachment.thumbPath;
+        } else {
+            return attachment.s3path;
+        }
+    }
 }
