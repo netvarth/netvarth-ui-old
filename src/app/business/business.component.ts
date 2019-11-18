@@ -35,8 +35,14 @@ export class BusinessComponent implements OnInit {
 
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (router.url === '\/provider') {
-          router.navigate(['provider', 'check-ins']);
+        if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
+          setTimeout(() => {
+            if (this.shared_functions.getitemfromLocalStorage('isCheckin') === 0) {
+              router.navigate(['provider', 'check-ins']);
+            } else {
+              router.navigate(['provider', 'settings', 'bprofile']);
+            }
+          }, 500);
         }
       }
     });

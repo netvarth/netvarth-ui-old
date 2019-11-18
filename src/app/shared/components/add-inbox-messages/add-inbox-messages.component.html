@@ -30,10 +30,10 @@
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button type="button" mat-menu-item (click)="captionMenuClicked(i)">
+                            <!-- <button type="button" mat-menu-item (click)="captionMenuClicked(i)">
                                 <i class="icon-edit"></i>
                                 <span>Add caption</span>
-                            </button>
+                            </button> -->
                             <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
                                 <i class="icon-delete"></i>
                                 <span>delete</span>
@@ -64,7 +64,7 @@
             <button type="button" *ngIf="source=='consumer-waitlist' || source=='provider-waitlist'" class="cs-btn btn-attach bt_attach"
                 (click)="logofile.click()" [matTooltip]="'Attach files'">
                 <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
-                <input #logofile type="file" accept="" style="display:none;" multiple
+                <input #logofile type="file" accept="image/*,application/pdf" style="display:none;" multiple
                     (change)="filesSelected($event)">
                 <span><i class="material-icons">attach_file</i></span>
             </button>

@@ -3,6 +3,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { projectConstants } from '../../../shared/constants/project-constants';
+import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 
 @Component({
   selector: 'app-menu',
@@ -22,11 +25,14 @@ export class MenuComponent implements OnInit, OnDestroy {
   blogo = '';
   qAvailability;
   iswiz = false; // is cur page is wizard
+  isCheckin;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    public provider_services: ProviderServices,
+    private provider_shared_functions: ProviderSharedFuctions
   ) {
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
@@ -102,6 +108,44 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'sidebar-open');
     }
   }
+
+  dashboardClicked() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.renderer.removeClass(document.body, 'sidebar-open');
+    }
+    if (this.isCheckinActive()) {
+      this.router.navigate(['/check-ins']);
+    }
+  }
+  isCheckinActive() {
+    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
+      if (this.isCheckin === 0 || this.isCheckin > 3) {
+        return true;
+      } else {
+        this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+        return false;
+      }
+    } else {
+      this.provider_services.getBussinessProfile()
+        .subscribe(
+          data => {
+            this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
+            this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+            if (this.isCheckin === 0) {
+              return true;
+            } else {
+              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              return false;
+            }
+          },
+          () => {
+          }
+        );
+    }
+  }
+
   gotoHelp() {
     this.router.navigate(['/provider/' + this.domain + '/help']);
   }

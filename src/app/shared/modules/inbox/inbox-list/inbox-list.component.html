@@ -52,7 +52,7 @@
                     </div>
                     <div class="thumbnails mt10 mb10" *ngIf="message.attachements">
                         <a class="mg-10" target="_blank" [href]="attachment.s3path"
-                            *ngFor="let attachment of message.attachements"><img [src]="attachment.s3path"
+                            *ngFor="let attachment of message.attachements"><img [src]="attachment.thumbPath"
                                 style="width:100px; height:100px" /></a>
                     </div>
                     <div class="action">

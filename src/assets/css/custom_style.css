@@ -5850,9 +5850,29 @@ background-color:#fff !important;
     display: none !important;
   }
  }
- @media (max-width: 320px) {
+  @media (max-width: 320px) {
   .ln-hgt-40 {
     font-size: smaller !important;
     line-height: 40px;
+  }
+}
+ .invoice .amount-pay {
+  font-size: 20px; 
+  font-weight: 600;
+ }
+ @media only screen and (max-width: 440px) {
+   .invoice {
+     padding: 10px !important;
+   }
+  .invoice .amount-pay {
+    font-size: 15px !important; 
+   }
+ }
+@media only screen and (min-width: 600px) {
+ .align-style .left-align {
+   float: left;
+ }
+ .align-style .right-align {
+  float: right;
   }
 }

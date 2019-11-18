@@ -101,7 +101,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.createForm();
                     } else {
                         this.service_data = this.service;
-                        this.getDepartments(this.service.department);
+                        if (this.action === 'show') {
+                            this.getDepartments(this.service.department);
+                        }
                         if (this.service_data) {
                             if (this.service_data.status === 'ACTIVE') {
                                 this.servstatus = true;
@@ -190,6 +192,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.servicesService.actionPerformed(serviceActionModel);
     }
     getDepartments(deptid?) {
+        this.departments = [];
         this.provider_services.getDepartments()
             .subscribe(
                 data => {

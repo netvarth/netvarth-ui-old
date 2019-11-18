@@ -21,8 +21,8 @@
     </div>
     <div style="border-bottom:1px solid #ddd"></div>
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-6" *ngIf="!loading" style="float: left">
+        <div class="row align-style">
+            <div class="col-md-6 left-align">
                 <div class="invoice">
                     <div class="outer">
                         <div class="ivc">
@@ -39,25 +39,20 @@
                 </div>
             </div>
 
-            <div class="col-md-6 rightalign">
+            <div class="col-md-6 right-align">
                 <div class="invoice">
                     <div class="outer">
                         <div class="ivc">
                             <div class="label" style="margin-top: 8px">{{serv_period}}</div>
-                            <div class="result">{{invoice.periodFrom | date: dateFormat}} - {{invoice.periodTo | date:
-                                        dateFormat}}</div>
+                            <div class="result">{{invoice.periodFrom | date: dateFormat}}<span *ngIf="invoice.periodTo"> - {{invoice.periodTo | date:
+                                        dateFormat}}</span></div>
                         </div>
-                    </div>
-                </div>
-                <div class="invoice">
-                    <div class="outer">
                         <div class="ivc">
-                            <div class="label" style="margin-top: 8px">Due On</div>
-                            <div class="result">{{invoice.dueDate | date: dateFormat}}</div>
-                        </div>
+                                <div class="label" style="margin-top: 8px">Due On</div>
+                                <div class="result">{{invoice.dueDate | date: dateFormat}}</div>
+                            </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -65,7 +60,7 @@
         <div style="border-bottom:2px solid #ddd"></div>
         <div class="invoice" style="margin: 5px">
 
-            <span  style="font-size: 20px; font-weight: 600">
+            <span class="amount-pay">
                 <span *ngIf="source !== 'payment-history'"> Amount to pay</span>
                 <span *ngIf="source === 'payment-history'"> Amount paid</span>
                 <span class="result"
@@ -121,7 +116,7 @@
 
                 <tr>
                     <td ><strong>Previous Balance Due</strong></td>
-                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td>
+                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist" style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td>
 
                   </tr> 
               
@@ -148,12 +143,12 @@
     </div>
     <div *ngIf="licenseDiscounts">
         <a (click)="toggleDiscountDetails();">
-          <span class="pointlist"> {{discountDetailsTxt}}</span>
+          <span class="pointlist" style="text-decoration: underline;"> {{discountDetailsTxt}}</span>
         </a>
-        <div *ngIf="show">
+        <div *ngIf="show" style="margin-top: 10px;">
           <div class="form-row">
   
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12 table-responsive">
               <table class="table table-striped">
                 <thead>
                   <th>Applied Date </th>
