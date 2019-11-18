@@ -20,7 +20,7 @@
     </mat-dialog-content>
     <mat-dialog-actions>
         <ng-container *ngIf="selectedMessage">
-            <div class="row col-md-12" *ngFor="let item of selectedMessage.files; let i = index">
+            <div class="row col-md-12" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
                 <div class="col-md-7">
                     <span class="ln-hgt-40">{{item.name}}</span>
                 </div>
@@ -66,7 +66,7 @@
                 <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
                 <input #logofile type="file" accept="" style="display:none;" multiple
                     (change)="filesSelected($event)">
-                <span><i class="fa fa-paperclip"></i></span>
+                <span><i class="material-icons">attach_file</i></span>
             </button>
         </div>
     </mat-dialog-actions>
