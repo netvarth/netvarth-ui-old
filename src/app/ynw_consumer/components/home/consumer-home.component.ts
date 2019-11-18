@@ -97,6 +97,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   cronHandle: Subscription;
   countercronHandle: Subscription;
+  tracksubscription: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
   counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
@@ -129,13 +130,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   nextAvailDate;
   terminologiesJson: any = [];
   mins;
+  trackData: any;
+  distance: any;
+  KmOrMe: any;
+  travelTime: any;
+  timeUnit: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog, private router: Router,
     public sharedfunctionObj: SharedFunctions,
     @Inject(DOCUMENT) public document,
-    public _sanitizer: DomSanitizer) { }
+    public _sanitizer: DomSanitizer) {
+  }
   public carouselOne: NgxCarousel;
 
   ngOnInit() {
@@ -248,7 +255,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
-           // console.log(waitlist);
+            console.log(waitlist);
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
@@ -290,12 +297,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   getAppxTime(waitlist) {
-    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '','timenow':'','timeslot':'', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
+    const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timenow': '', 'timeslot': '', 'autoreq': false, 'time_inmins': waitlist.appxWaitingTime, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (waitlist.waitlistStatus !== 'cancelled') {
       if (waitlist.hasOwnProperty('serviceTime') || waitlist.calculationMode === 'NoCalc') {
         appx_ret.caption = 'Checked in for'; // 'Check-In Time';
         if (waitlist.calculationMode === 'NoCalc') {
-          appx_ret.time =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
+          appx_ret.time = waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime;
         } else {
           appx_ret.time = waitlist.serviceTime;
         }
@@ -307,16 +314,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         if (today.valueOf() < waitlist_date.valueOf()) {
           appx_ret.date = waitlist.date;
           appx_ret.date_type = 'date';
-          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
+          appx_ret.timeslot = waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime;
         } else {
           appx_ret.date = 'Today';
           appx_ret.date_type = 'string';
-          appx_ret.timeslot =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
+          appx_ret.timeslot = waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime;
         }
       } else {
         if (waitlist.appxWaitingTime === 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
-          appx_ret.time =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
+          appx_ret.time = waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime;
           appx_ret.timenow = 'Now';
         } else if (waitlist.appxWaitingTime !== 0) {
           appx_ret.caption = this.estimatesmallCaption; // 'Estimated Time';
@@ -331,7 +338,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       let t2;
       appx_ret.caption = 'Checked in for';
       appx_ret.date = waitlist.date;
-      appx_ret.time =  waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime ;
+      appx_ret.time = waitlist.queue.queueStartTime + ' - ' + waitlist.queue.queueEndTime;
       appx_ret.cancelled_date = moment(waitlist.statusUpdatedTime, 'YYYY-MM-DD').format();
       time = waitlist.statusUpdatedTime.split('-');
       time1 = time[2].trim();
@@ -368,7 +375,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
 
-  
 
   getHistroy() {
     this.loadcomplete.history = false;
@@ -904,7 +910,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         'details': waitlist,
-        'origin' : 'consumer'
+        'origin': 'consumer'
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
@@ -933,7 +939,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 disableClose: true,
                 data: {
                   'details': payData,
-                  'origin' : 'consumer'
+                  'origin': 'consumer'
                 }
               });
 
@@ -941,20 +947,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
 
               // this.shared_services.consumerPayment(payData)
-              //   .subscribe(pData => {
-              //     if (pData['response']) {
-              //       this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-              //       this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-              //       setTimeout(() => {
-              //         this.document.getElementById('payuform').submit();
-              //       }, 2000);
-              //     } else {
-              //       this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-              //     }
-              //   },
-              //     error => {
-              //       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              //     });
+              // .subscribe(pData => {
+              // if (pData['response']) {
+              // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+              // this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+              // setTimeout(() => {
+              // this.document.getElementById('payuform').submit();
+              // }, 2000);
+              // } else {
+              // this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+              // }
+              // },
+              // error => {
+              // this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              // });
             } else {
               this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
             }
@@ -964,7 +970,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         error => {
         });
   }
-  
   getTerminologyTerm(term) {
     if (this.terminologiesJson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
@@ -977,5 +982,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       return term;
     }
   }
+
 
 }

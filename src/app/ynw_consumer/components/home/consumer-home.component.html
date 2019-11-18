@@ -22,9 +22,7 @@
                                             class="icon-location" matTooltip="Click to navigate">
                                         </a></span>
                                 </div>
-                                <div style="background-color: cadetblue;width: 100px;height: 40px;">
-
-                                </div>
+                                
                                 <div class="status-outer">
                                     <!-- <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
                                         {{status_cancelled_cap}}
@@ -124,6 +122,29 @@
                                     *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
                                     <span class="paytext"><span>Amount Due : <span>&#8377; </span>{{waitlist.amountDue}} </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(waitlist)">Pay</a></span>
+                                </div>
+                                <div *ngIf="waitlist.jaldeeWaitlistDistanceTime" style="background-color: cadetblue;">
+                                    <div>
+                                    <span class="persons"><span>Distance :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance}}
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'KILOMETER'">Km</span>
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'METER'">M</span>
+                                </span>
+                            </div>
+                            <div>
+                                    <span class="persons"><span>Travel time :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit}}
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.unit == 'MINUTES'">Minutes</span>
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.unit == 'HOURES'">Houres</span>
+                                </span>
+                            </div>
+                            <div>
+                                <ul class="trackIcons">
+                                    <li matTooltip="Driving"  [class.driving]="driving" (click)="getTravelMod('DRIVING')"><div class="travelmodeicon"><i
+                                            class="fa fa-car" [class.walking]="walking" aria-hidden="true"></i></div></li>
+                                    <li matTooltip="Walking"  (click)="getTravelMod('WALKING')"><div class="travelmodeicon"><img
+                                            src="./assets/images/walking.png" alt="" style="width: 15px;height:15px;" /></div></li>
+                                </ul> 
+                        </div>
+                               
                                 </div>
                             </div>
                             <div class="rt">
