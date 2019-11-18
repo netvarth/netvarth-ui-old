@@ -5876,3 +5876,8 @@ background-color:#fff !important;
   float: right;
   }
 }
+@media (max-width: 784px) {
+  .prov-bill-disc {
+    width: 180px !important;
+  }
+}
