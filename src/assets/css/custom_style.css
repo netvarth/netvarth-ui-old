@@ -5900,8 +5900,7 @@ background-color:#fff !important;
 .sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available{margin-left: -5px;}
 .sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available i{font-size: 0.8rem;}
 .btst{
-  background: #3c8dbc !important;
-  color: white !important;
+border-color: #3c8dbc !important;
 }
 .sc-t{
   border-bottom: none !important;
