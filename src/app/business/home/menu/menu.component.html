@@ -21,11 +21,11 @@
   
           <div (click)="closeMenu();btnAvailableClicked()" class="pointer-cursor available">
             <div class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
-              <i class="fa fa-circle text-success"></i> <span>I am available online</span> <br />
-              <span>until {{qAvailability.timeRange.eTime}}</span>
+              <i class="fa fa-circle text-success"></i> <span class="avail">I am available online</span> <br />
+              <span class="avail">until {{qAvailability.timeRange.eTime}}</span>
             </div>
             <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-              <i class="fa fa-circle disabled"></i> I am not available now
+              <i class="fa fa-circle disabled"></i><span class="avail"> I am not available now </span>
             </div>
             <!-- <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
                 Today I'm available <br/>

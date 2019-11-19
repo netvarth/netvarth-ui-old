@@ -5891,3 +5891,6 @@ background-color:#fff !important;
 .setings{
   font-weight: 600 !important;
 }
+.sidebar-mini.sidebar-collapse .main-sidebar .available .avail{display:none}
+.sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available{margin-left: -5px;}
+.sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available i{font-size: 0.8rem;}
