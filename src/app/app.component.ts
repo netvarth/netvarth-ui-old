@@ -10,3 +10,4 @@ export class AppComponent {
   public isShowingRouteLoadIndicator: boolean;
   title = 'app';
 }
+

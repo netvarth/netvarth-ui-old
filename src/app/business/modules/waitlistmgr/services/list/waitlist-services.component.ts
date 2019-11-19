@@ -42,7 +42,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
         this.getDomainSubdomainSettings();
@@ -60,8 +60,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         if (action === 'addservice') {
             this.router.navigate(['provider', 'settings', 'q-manager',
                 'services', 'add']);
-        }
-        else if (action === 'learnmore'){
+        } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-services']);
         }
     }

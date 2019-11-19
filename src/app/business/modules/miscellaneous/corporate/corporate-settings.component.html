@@ -1,0 +1,70 @@
+<section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager corp">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0" *ngIf="loading">
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                </div>
+                <div class="card ynw-common-form-nm" *ngIf="!loading">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                            <p class="form-level-settings">you can join to a corporate or create your own corporate here
+                            </p>
+                            <p>Do you want to become a corporate</p>
+                            <mat-radio-group [(ngModel)]="corpType">
+                                <mat-radio-button value="join">Join Corporate</mat-radio-button><br />
+                                <div class="col-md-12" *ngIf="corpType === 'join'">
+                                    <div class="form-group col-md-5 col-xs-12 col-sm-12">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="corpId"
+                                                placeholder="Enter Corp. Id" [(ngModel)]="corpId"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                                        <div class="actiondiv labelsave">
+                                            <button (click)="onSubmitJoinCorp(corpId)" type="button" mat-button
+                                                [disabled]="savedisabled" class="cs-btn bt2">{{save_btn_cap}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-radio-button value="create">Create Corporate</mat-radio-button>
+                                <div class="col-md-12" *ngIf="corpType === 'create'">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                        <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="corpName"
+                                                    placeholder="Enter Corp. Name" [(ngModel)]="corporateName"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="corpCode"
+                                                    placeholder="Enter Corp. Code" [(ngModel)]="corporateCode"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                        </div>                                    
+                                        <div class="clearfix"></div>
+                                        <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                                            <div class="actiondiv labelsave">
+                                                <button (click)="onSubmitCreateCorp(corporateName,corporateCode )" type="button" mat-button
+                                                    [disabled]="savedisabled"
+                                                    class="cs-btn bt2">{{save_btn_cap}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

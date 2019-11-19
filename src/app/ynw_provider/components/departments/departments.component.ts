@@ -38,13 +38,13 @@ export class DepartmentsComponent implements OnInit {
 
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.loading = true;
         this.getDepartments();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-departments', 'subKey': 'timewindow', 'classname': 'b-queue',
-            'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' },{ 'title': 'Help', 'type': 'learnmore' }]
+            'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' }, { 'title': 'Help', 'type': 'learnmore' }]
         };
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         // this.loading = false;
@@ -94,8 +94,7 @@ export class DepartmentsComponent implements OnInit {
         if (action === 'addDepartment') {
             this.router.navigate(['provider', 'settings', 'q-manager',
                 'department', 'add']);
-        }
-        else if (action === 'learnmore') {
+        } else if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-departments']);
 
         }

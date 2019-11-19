@@ -25,7 +25,9 @@ const routes: Routes = [
       component: JDNComponent
     },
     { path: 'labels', loadChildren: './labels/labels.module#LabelsModule'},
-    { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' }
+    { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' },
+    { path: 'users', loadChildren: './users/users.module#UsersModule' },
+    { path: 'corporate', loadChildren: './corporate/corporate.module#CorporateModule' }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

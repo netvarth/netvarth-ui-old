@@ -273,8 +273,5 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-  manageProvider(accountId) {
-    window.open('#/provider/manage/' + accountId , '_blank');
-  }
 }
 

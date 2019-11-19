@@ -124,14 +124,14 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private fb: FormBuilder) { }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
         if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
             this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         }
         this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' },{ 'title': 'Help', 'type': 'learnmore' }]
+            'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }, { 'title': 'Help', 'type': 'learnmore' }]
         };
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.initializeQs();
@@ -325,12 +325,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             }
                             let display_schedule = [];
                             display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-                           // alert(JSON.stringify(display_schedule));
+                            // alert(JSON.stringify(display_schedule));
                             allQs[ii]['displayschedule'] = display_schedule;
                             // replace instancequeue with new flag
                             if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
                                 this.todaysQs.push(allQs[ii]);
-                               console.log(this.todaysQs);
+                                console.log(this.todaysQs);
                             }
                             if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);
@@ -652,9 +652,9 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
+        } else {
+            this.addEditProviderQueue('add');
         }
-        else{this.addEditProviderQueue('add');}
-        
     }
     /**
      * Method to change same day online checkin status

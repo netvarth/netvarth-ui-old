@@ -109,6 +109,7 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
+          this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);

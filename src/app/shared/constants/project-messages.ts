@@ -1405,6 +1405,9 @@ export const Messages = {
   'JDN_UPDATED': 'JDN updated successfully',
   'JDN_DISABLED': 'JDN disabled successfully',
   'SUBSCRIBE': 'Subscribe',
-  'UNSUBSCRIBE': 'Unsubscribe'
+  'UNSUBSCRIBE': 'Unsubscribe',
+  'BRANCHUSER_ADDED': 'Branch user created successfully',
+  'JOINCORP_SUCCESS': 'You joined as a corporate',
+  'CREATECORP_SUCCESS': 'Corporate created successfully'
 };
 

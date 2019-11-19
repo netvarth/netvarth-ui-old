@@ -778,5 +778,21 @@ export class ProviderServices {
     const url = 'provider/branch/manage/' + accountId;
     return this.servicemeta.httpPost(url);
   }
+  getBranchSPs(branchId) {
+    const url = 'provider/branch/' + branchId + '/accounts';
+    return this.servicemeta.httpGet(url);
+  }
+  createBranchSP(post_data) {
+    const url = 'provider/branch/createSp';
+    return this.servicemeta.httpPost(url, post_data);
+  }
+  joinCorp(corpUid) {
+    const url = 'provider/corp/joinCorp/' + corpUid;
+    return this.servicemeta.httpPost(url);
+  }
+  createCorp (post_data) {
+    const url = 'provider/corp/switchToCorp';
+    return this.servicemeta.httpPost(url, post_data);
+  }
 }
 

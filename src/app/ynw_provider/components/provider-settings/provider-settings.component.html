@@ -317,10 +317,22 @@
                                         <p class="settings_info">Sales channel options</p>
                                     </a>
                                 </li>
+                                <li (click)="redirecTo('corporate')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk">Corporate Settings</span>
+                                        <p class="settings_info">Manage your branch, corporate here</p>
+                                    </a>
+                                </li>
                                 <li (click)="redirecTo('skins')">
                                     <a class="pointer-cursor">
                                         <span class="lnk">Themes</span>
                                         <p class="settings_info">Customize your themes</p>
+                                    </a>
+                                </li>
+                                <li (click)="redirecTo('users')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk">Branch SPs</span>
+                                        <p class="settings_info">Manage your service providers</p>
                                     </a>
                                 </li>
                             </ul>

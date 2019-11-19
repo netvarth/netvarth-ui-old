@@ -29,7 +29,12 @@ export class MiscellaneousComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
-
+    gotobranchsps() {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+    }
+    gotocorporate () {
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
+    }
     gotoNonworkingDays() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
     }
