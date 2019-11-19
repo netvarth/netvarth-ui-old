@@ -230,5 +230,11 @@ export class JDNComponent implements OnInit {
         this.api_error = null;
         this.api_success = null;
     }
+    isvalid(evt) {
+        return this.shared_functions.isValid(evt);
+    }
+    isNumeric(evt) {
+        return this.shared_functions.isNumeric(evt);
+    }
 }
 
