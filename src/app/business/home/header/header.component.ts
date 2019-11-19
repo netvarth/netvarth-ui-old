@@ -32,6 +32,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   blogo = '';
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   iswiz = false; // is true when active page is wizard
+  qAvailability;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private _scrollToService: ScrollToService,
@@ -48,6 +49,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'hidemenus':
           this.iswiz = message.value;
           break;
+          case 'instant_q':
+            this.qAvailability = message.qAvailability;
+            break;
       }
       this.getBusinessdetFromLocalstorage();
     });
@@ -58,6 +62,15 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'sidebar-open');
     }
   }
+  isAvailableNow() {
+    this.shared_service.isAvailableNow()
+      .subscribe(data => {
+        this.qAvailability = data;
+      },
+        () => {
+        });
+  }
+
   gotoActiveHome() {
     this.router.navigate(['provider', 'check-ins']);
   }
@@ -70,10 +83,11 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
       this.bsubsector = bdetails.bss || '';
-      this.blogo = bdetails.logo || 'img-null.svg';
+      this.blogo = bdetails.logo || '../../../assets/images/img-null.svg';
     }
   }
   ngOnInit() {
+    this.isAvailableNow();
     this.showCheckinED();
     this.getLicenseDetails();
     this.setLicense();
