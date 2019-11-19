@@ -50,6 +50,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     grandTotal;
     netTotal;
     appliedDiscount;
+    showAmounts = true;
     frm_lic_cap = Messages.FRM_LEVEL_PROVIDER_LICE_MSG;
     frm_addon_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADDON_MSG;
     breadcrumbs = [
@@ -317,6 +318,10 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                 this.grandTotal = meta['price'] * 12;
                                 this.appliedDiscount = this.grandTotal * (this.annualdiscount / 100);
                                 this.netTotal = this.grandTotal - this.appliedDiscount;
+                                console.log(meta['type'] + ':' + meta['pkgId']);
+                                if (meta['type'] === 'Trial' || meta['pkgId'] === 1) {
+                                    this.showAmounts = false;
+                                }
                                 return false;
                                 // license_meta['price'] = meta['price'] || 0;
                                 // license_meta['discPercFor12Months'] = meta['discPercFor12Months'] || 0;
@@ -420,7 +425,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         return new Promise(function (resolve, reject) {
             _this.provider_servicesobj.getAnnualDiscountPercentage()
                 .subscribe(
-                    data => {                        
+                    data => {
                         resolve(data);
                     },
                     () => {
