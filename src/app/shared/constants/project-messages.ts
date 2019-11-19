@@ -241,6 +241,7 @@ export const Messages = {
   'WORKINGHOUR_TOOLTIP': 'Working Hour',
   'SEARCH_TOOLTIP': 'Search',
   'SORT_TOOLTIP': 'Sort By',
+  'FILE_TOOLTIP': 'Attachments',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
