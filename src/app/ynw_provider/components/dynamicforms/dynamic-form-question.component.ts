@@ -88,13 +88,13 @@ export class DynamicFormQuestionComponent implements OnInit {
     }
   }
 
-  dateChange(value) {
-    console.log(value);
-    const date = this.dateformat.transformTomciDate(value);
-    console.log(date);
-    this.form.controls[this.question.key].setValue(value);
-    // this.form.controls[this.question.key].setValue(date);
-  }
+  // dateChange(value) {
+  //   console.log(value);
+  //   const date = this.dateformat.transformTomciDate(value);
+  //   console.log(date);
+  //   this.form.controls[this.question.key].setValue(value);
+  //   // this.form.controls[this.question.key].setValue(date);
+  // }
   onFieldBlur(question) {
 
     if (question.type !== 'url' &&

@@ -195,12 +195,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                                 this.bProfile = data;
                                 if (type === 'domain_questions') {
                                     this.getDomainVirtualFields();
-                                    // commented bcoz update not effect without refresh
-                                    // this.domain_fields = this.setFieldValue(this.domain_fields, null);
                                 } else {
-                                    // commented bcoz update not effect without refresh
                                     this.getSubDomainVirtualFields();
-                                    // this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
                                 }
                             },
                             () => {
@@ -244,8 +240,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                                 }
                             }
                         }
-                    }
-                    // normal_subdomainfield_show = 4 // no data
+                    }                
                 }
             );
     }
