@@ -17,927 +17,931 @@ import { LivetrackComponent } from '../live-track/livetrack.component';
 
 @Component({
 
- selector: 'app-check-in-inner',
- templateUrl: './check-in-inner.component.html',
+  selector: 'app-check-in-inner',
+  templateUrl: './check-in-inner.component.html',
 
 })
 
 export class CheckInInnerComponent implements OnInit {
 
- select_service_cap = Messages.SELECT_SER_CAP;
- select_deptment_cap = Messages.SELECT_DEPT_CAP;
- no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
- add_change_member = Messages.ADD_CHANGE_MEMBER;
- date_cap = Messages.DATE_CAP;
- serv_time_window_cap = Messages.SERV_TIME_WINDOW_CAP;
- enter_party_size_cap = Messages.ENTER_PARTY_SIZE;
- have_note_click_here = '';
- not_accepted_for_this_date = Messages.NOT_ACCEPTED_THIS_DATE_CAP;
- service_needs_prepayment = Messages.NEEDS_PREPAYMENT_FOR_CAP;
- prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
- no_pay_modes_avail_cap = Messages.NO_PAY_MODES_AVAIL_CAP;
- apply_cap = Messages.APPLY_CAP;
- select_the_cap = Messages.SELECT_THE_CAP;
- member_cap = Messages.MEMBER_CAPTION;
- members_cap = Messages.MEMBERS_CAP;
- for_whom_the_cap = Messages.FOR_WHOM_CAP;
- is_beingmade_cap = Messages.IS_BEING_MADE_CAP;
- add_member_cap = Messages.ADD_MEMBER_CAP;
- for_cap = Messages.FOR_CAP;
- today_cap = Messages.TODAY_CAP;
- persons_ahead_cap = Messages.PERS_AHEAD;
- back_to_cap = Messages.BACK_TO_CAP;
- cancel_btn = Messages.CANCEL_BTN;
- save_member_cap = Messages.SAVE_MEMBER_BTN;
- applied_inbilltime = Messages.APPLIED_INBILLTIME;
- token = Messages.TOKEN;
- get_token_cap;
- domain;
- note_placeholder;
- s3url;
- provider_id;
- api_success = null;
- api_error = null;
- api_cp_error = null;
- partyapi_error = null;
- services: any = [];
- servicesjson: any = [];
- serviceslist: any = [];
- galleryjson: any = [];
- settingsjson: any = [];
- locationjson: any = [];
- terminologiesjson: any = [];
- queuejson: any = [];
- businessjson: any = [];
- familymembers: any = [];
- partysizejson: any = [];
- s3CouponsList: any = [];
- sel_loc;
- sel_ser;
- sel_ser_det: any = [];
- prepaymentAmount = 0;
- sel_que;
- search_obj;
- checkinenable = false;
- checkindisablemsg = '';
- pass_loc;
- sel_queue_id;
- sel_queue_waitingmins;
- sel_queue_servicetime = '';
- sel_queue_name;
- sel_queue_timecaption;
- sel_queue_indx;
- sel_queue_det;
- sel_queue_personaahead = 0;
- calc_mode;
- showfuturediv;
- multipleMembers_allowed = false;
- partySize = false;
- partySizeRequired = null;
- maxPartySize = 1;
- revealphonenumber;
- today;
- minDate;
- maxDate;
- consumerNote = '';
- enterd_partySize = 1;
- holdenterd_partySize = 0;
- showCreateMember = false;
- sel_checkindate;
- hold_sel_checkindate;
- sel_dayname;
- account_id;
- retval;
- futuredate_allowed = false;
- step;
- waitlist_for: any = [];
- holdwaitlist_for: any = [];
- paymentModes: any = [];
- payModesExists = false;
- payModesQueried = false;
- loggedinuser;
- maxsize;
- paytype = '';
- isFuturedate = false;
- addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
- payment_popup = null;
- dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
- fromKiosk = false;
- customer_data: any = [];
- page_source = null;
- main_heading;
- dispCustomernote = false;
- dispCustomerEmail = false;
- CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
- queueQryExecuted = false;
- todaydate;
- estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
- nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
- checkinCaption = Messages.CHECKIN_TIME_CAPTION;
- checkinsCaption = Messages.CHECKINS_TIME_CAPTION;
- checkinLabel;
- CheckedinLabel;
- ddate;
- selected_coupons: any = [];
- selected_coupon;
- coupon_status = null;
- couponsList: any = [];
- @Input() data: any = [];
- @Output() returntoParent = new EventEmitter<any>();
- isfirstCheckinOffer;
- showCouponWB: boolean;
- couponvalid = true;
- server_date;
- api_loading1 = true;
- api_loading = true;
- departmentlist: any = [];
- departments: any = [];
- selected_dept;
- deptLength;
- filterDepart = false;
- confrmshow = false;
- userData: any = [];
- userEmail;
- userPhone;
- emailExist = false;
- payEmail;
- payEmail1;
- emailerror = null;
- email1error = null;
- phoneerror = null;
- edit = true;
- selected_phone;
- consumerPhoneNo;
- trackUuid;
- liveTrack = false;
- source: any = [];
- travelMode = 'DRIVING';
- notifyTime = 'ONEHOUR';
- shareLoc;
- lat_lng = {
- latitude: 0,
- longitude: 0
- };
- 
+  select_service_cap = Messages.SELECT_SER_CAP;
+  select_deptment_cap = Messages.SELECT_DEPT_CAP;
+  no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
+  add_change_member = Messages.ADD_CHANGE_MEMBER;
+  date_cap = Messages.DATE_CAP;
+  serv_time_window_cap = Messages.SERV_TIME_WINDOW_CAP;
+  enter_party_size_cap = Messages.ENTER_PARTY_SIZE;
+  have_note_click_here = '';
+  not_accepted_for_this_date = Messages.NOT_ACCEPTED_THIS_DATE_CAP;
+  service_needs_prepayment = Messages.NEEDS_PREPAYMENT_FOR_CAP;
+  prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
+  no_pay_modes_avail_cap = Messages.NO_PAY_MODES_AVAIL_CAP;
+  apply_cap = Messages.APPLY_CAP;
+  select_the_cap = Messages.SELECT_THE_CAP;
+  member_cap = Messages.MEMBER_CAPTION;
+  members_cap = Messages.MEMBERS_CAP;
+  for_whom_the_cap = Messages.FOR_WHOM_CAP;
+  is_beingmade_cap = Messages.IS_BEING_MADE_CAP;
+  add_member_cap = Messages.ADD_MEMBER_CAP;
+  for_cap = Messages.FOR_CAP;
+  today_cap = Messages.TODAY_CAP;
+  persons_ahead_cap = Messages.PERS_AHEAD;
+  back_to_cap = Messages.BACK_TO_CAP;
+  cancel_btn = Messages.CANCEL_BTN;
+  save_member_cap = Messages.SAVE_MEMBER_BTN;
+  applied_inbilltime = Messages.APPLIED_INBILLTIME;
+  token = Messages.TOKEN;
+  get_token_cap;
+  domain;
+  note_placeholder;
+  s3url;
+  provider_id;
+  api_success = null;
+  api_error = null;
+  api_cp_error = null;
+  partyapi_error = null;
+  services: any = [];
+  servicesjson: any = [];
+  serviceslist: any = [];
+  galleryjson: any = [];
+  settingsjson: any = [];
+  locationjson: any = [];
+  terminologiesjson: any = [];
+  queuejson: any = [];
+  businessjson: any = [];
+  familymembers: any = [];
+  partysizejson: any = [];
+  s3CouponsList: any = [];
+  sel_loc;
+  sel_ser;
+  sel_ser_det: any = [];
+  prepaymentAmount = 0;
+  sel_que;
+  search_obj;
+  checkinenable = false;
+  checkindisablemsg = '';
+  pass_loc;
+  sel_queue_id;
+  sel_queue_waitingmins;
+  sel_queue_servicetime = '';
+  sel_queue_name;
+  sel_queue_timecaption;
+  sel_queue_indx;
+  sel_queue_det;
+  sel_queue_personaahead = 0;
+  calc_mode;
+  showfuturediv;
+  multipleMembers_allowed = false;
+  partySize = false;
+  partySizeRequired = null;
+  maxPartySize = 1;
+  revealphonenumber;
+  today;
+  minDate;
+  maxDate;
+  consumerNote = '';
+  enterd_partySize = 1;
+  holdenterd_partySize = 0;
+  showCreateMember = false;
+  sel_checkindate;
+  hold_sel_checkindate;
+  sel_dayname;
+  account_id;
+  retval;
+  futuredate_allowed = false;
+  step;
+  waitlist_for: any = [];
+  holdwaitlist_for: any = [];
+  paymentModes: any = [];
+  payModesExists = false;
+  payModesQueried = false;
+  loggedinuser;
+  maxsize;
+  paytype = '';
+  isFuturedate = false;
+  addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
+  payment_popup = null;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  fromKiosk = false;
+  customer_data: any = [];
+  page_source = null;
+  main_heading;
+  dispCustomernote = false;
+  dispCustomerEmail = false;
+  CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
+  queueQryExecuted = false;
+  todaydate;
+  estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
+  nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
+  checkinCaption = Messages.CHECKIN_TIME_CAPTION;
+  checkinsCaption = Messages.CHECKINS_TIME_CAPTION;
+  checkinLabel;
+  CheckedinLabel;
+  ddate;
+  selected_coupons: any = [];
+  selected_coupon;
+  coupon_status = null;
+  couponsList: any = [];
+  @Input() data: any = [];
+  @Output() returntoParent = new EventEmitter<any>();
+  isfirstCheckinOffer;
+  showCouponWB: boolean;
+  couponvalid = true;
+  server_date;
+  api_loading1 = true;
+  api_loading = true;
+  departmentlist: any = [];
+  departments: any = [];
+  selected_dept;
+  deptLength;
+  filterDepart = false;
+  confrmshow = false;
+  userData: any = [];
+  userEmail;
+  userPhone;
+  emailExist = false;
+  payEmail;
+  payEmail1;
+  emailerror = null;
+  email1error = null;
+  phoneerror = null;
+  edit = true;
+  selected_phone;
+  consumerPhoneNo;
+  trackUuid;
+  liveTrack = false;
+  source: any = [];
+  travelMode = 'DRIVING';
+  notifyTime = 'ONEHOUR';
+  shareLoc;
+  lat_lng = {
+    latitude: 0,
+    longitude: 0
+  };
+  driving: boolean;
+  walking: boolean;
 
 
 
- constructor(public fed_service: FormMessageDisplayService,
 
- public shared_services: SharedServices,
+  constructor(public fed_service: FormMessageDisplayService,
 
- public sharedFunctionobj: SharedFunctions,
+    public shared_services: SharedServices,
 
- public router: Router,
+    public sharedFunctionobj: SharedFunctions,
 
- public provider_datastorage: CommonDataStorageService,
+    public router: Router,
 
- public dialogRef: MatDialogRef<CheckInInnerComponent>,
+    public provider_datastorage: CommonDataStorageService,
 
- public _sanitizer: DomSanitizer,
+    public dialogRef: MatDialogRef<CheckInInnerComponent>,
 
- private dialog: MatDialog,
+    public _sanitizer: DomSanitizer,
 
- @Inject(DOCUMENT) public document,
+    private dialog: MatDialog,
 
- // @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(DOCUMENT) public document,
 
- ) {
+    // @Inject(MAT_DIALOG_DATA) public data: any,
 
- }
+  ) {
 
- ngOnInit() {
+  }
 
- this.api_loading = false;
+  ngOnInit() {
 
+    this.api_loading = false;
 
 
- this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
 
- const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
 
- if (activeUser) {
+    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
 
- this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    if (activeUser) {
 
- }
+      this.isfirstCheckinOffer = activeUser.firstCheckIn;
 
- this.customer_data = this.data.customer_data || [];
+    }
 
- if (this.data.fromKiosk !== undefined) {
+    this.customer_data = this.data.customer_data || [];
 
- if (this.data.fromKiosk) {
+    if (this.data.fromKiosk !== undefined) {
 
- this.fromKiosk = true;
+      if (this.data.fromKiosk) {
 
- }
+        this.fromKiosk = true;
 
- }
+      }
 
- this.page_source = this.data.moreparams.source;
+    }
 
- this.main_heading = this.checkinLabel; // 'Check-in';
+    this.page_source = this.data.moreparams.source;
 
- this.get_token_cap = Messages.GET_TOKEN;
+    this.main_heading = this.checkinLabel; // 'Check-in';
 
- this.maxsize = 1;
+    this.get_token_cap = Messages.GET_TOKEN;
 
- this.step = 1;
+    this.maxsize = 1;
 
- this.getProfile();
+    this.step = 1;
 
- this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    this.getProfile();
 
- this.gets3curl();
+    this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
 
- this.getFamilyMembers();
- this.getCurrentLocation();
+    this.gets3curl();
 
- // this.consumerNote = '';
+    this.getFamilyMembers();
+    this.getCurrentLocation();
 
- // this.today = new Date(this.server_date.split(' ')[0]);
+    // this.consumerNote = '';
 
- this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    // this.today = new Date(this.server_date.split(' ')[0]);
 
- this.today = new Date(this.today);
+    this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    this.today = new Date(this.today);
 
- this.minDate = new Date(this.minDate);
+    this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- const dd = this.today.getDate();
+    this.minDate = new Date(this.minDate);
 
- const mm = this.today.getMonth() + 1; // January is 0!
+    const dd = this.today.getDate();
 
- const yyyy = this.today.getFullYear();
+    const mm = this.today.getMonth() + 1; // January is 0!
 
- let cday = '';
+    const yyyy = this.today.getFullYear();
 
- if (dd < 10) {
+    let cday = '';
 
- cday = '0' + dd;
+    if (dd < 10) {
 
- } else {
+      cday = '0' + dd;
 
- cday = '' + dd;
+    } else {
 
- }
+      cday = '' + dd;
 
- let cmon;
+    }
 
- if (mm < 10) {
+    let cmon;
 
- cmon = '0' + mm;
+    if (mm < 10) {
 
- } else {
+      cmon = '0' + mm;
 
- cmon = '' + mm;
+    } else {
 
- }
+      cmon = '' + mm;
 
- const dtoday = yyyy + '-' + cmon + '-' + cday;
+    }
 
- this.todaydate = dtoday;
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
 
- this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+    this.todaydate = dtoday;
 
- if (this.page_source === 'provider_checkin') {
+    this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
 
- // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+    if (this.page_source === 'provider_checkin') {
 
- if (this.fromKiosk) {
+      // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
 
- this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
+      if (this.fromKiosk) {
 
- } else {
+        this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
 
- this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
+      } else {
 
- }
+        this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
 
- } else {
+      }
 
- // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+    } else {
 
- this.waitlist_for.push({ id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName });
+      // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
 
- }
+      this.waitlist_for.push({ id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName });
 
- if (this.page_source === 'searchlist_checkin') { // case check-in from search result pages
+    }
 
- this.search_obj = this.data.srchprovider;
+    if (this.page_source === 'searchlist_checkin') { // case check-in from search result pages
 
- if (this.data.dept) {
+      this.search_obj = this.data.srchprovider;
 
- this.provider_id = this.search_obj.unique_id;
+      if (this.data.dept) {
 
- this.sel_queue_id = this.search_obj.waitingtime_res.nextAvailableQueue.id;
+        this.provider_id = this.search_obj.unique_id;
 
- this.sel_loc = this.search_obj.location_id1;
+        this.sel_queue_id = this.search_obj.waitingtime_res.nextAvailableQueue.id;
 
- this.sel_checkindate = this.search_obj.waitingtime_res.nextAvailableQueue.availableDate;
+        this.sel_loc = this.search_obj.location_id1;
 
- } else {
+        this.sel_checkindate = this.search_obj.waitingtime_res.nextAvailableQueue.availableDate;
 
- this.provider_id = this.search_obj.fields.unique_id;
+      } else {
 
- this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
+        this.provider_id = this.search_obj.fields.unique_id;
 
- this.sel_loc = this.search_obj.fields.location_id1;
+        this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
 
- this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
+        this.sel_loc = this.search_obj.fields.location_id1;
 
- }
+        this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
 
- const providarr = this.search_obj.id.split('-');
+      }
 
- this.account_id = providarr[0];
+      const providarr = this.search_obj.id.split('-');
 
- // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
+      this.account_id = providarr[0];
 
- this.minDate = this.sel_checkindate;
+      // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
 
+      this.minDate = this.sel_checkindate;
 
 
- } else if (this.page_source === 'provdet_checkin'
 
- || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
+    } else if (this.page_source === 'provdet_checkin'
 
- // this.search_obj = this.data.srchprovider;
+      || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
 
- this.provider_id = this.data.moreparams.provider.unique_id;
+      // this.search_obj = this.data.srchprovider;
 
- this.account_id = this.data.moreparams.provider.account_id;
+      this.provider_id = this.data.moreparams.provider.unique_id;
 
- const srch_fields = {
+      this.account_id = this.data.moreparams.provider.account_id;
 
- fields: {
+      const srch_fields = {
 
- title: this.data.moreparams.provider.name,
+        fields: {
 
- place1: this.data.moreparams.location.name,
+          title: this.data.moreparams.provider.name,
 
- }
+          place1: this.data.moreparams.location.name,
 
- };
+        }
 
- this.search_obj = srch_fields;
+      };
 
- // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
+      this.search_obj = srch_fields;
 
- this.sel_loc = this.data.moreparams.location.id;
+      // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
 
- if (this.page_source === 'provider_checkin') {
+      this.sel_loc = this.data.moreparams.location.id;
 
- this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+      if (this.page_source === 'provider_checkin') {
 
- } else {
+        this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
 
- this.sel_checkindate = this.data.moreparams.sel_date;
+      } else {
 
- }
+        this.sel_checkindate = this.data.moreparams.sel_date;
 
- this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      }
 
- }
+      this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
 
- if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
+    }
 
- if (this.data.datechangereq) {
+    if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
 
- const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      if (this.data.datechangereq) {
 
+        const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
 
- const seldate_checker = new Date(seldateChecker);
 
+        const seldate_checker = new Date(seldateChecker);
 
 
- const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- const todaydate_checker = new Date(todaydateChecker);
+        const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
+        const todaydate_checker = new Date(todaydateChecker);
 
- // const nextdate = new Date(seldate_checker.setDate(seldate_checker.getDate() + 1));
+        if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
 
- const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          // const nextdate = new Date(seldate_checker.setDate(seldate_checker.getDate() + 1));
 
- const serverdate = moment(server).format();
+          const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- const date1 = new Date(serverdate);
+          const serverdate = moment(server).format();
 
- const nextdate = new Date(seldate_checker.setDate(date1.getDate() + 1));
+          const date1 = new Date(serverdate);
 
+          const nextdate = new Date(seldate_checker.setDate(date1.getDate() + 1));
 
 
- this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
 
- this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
+          this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
 
- this.minDate = new Date(this.minDate.replace(/-/g, '/'));
+          this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
 
- }
+          this.minDate = new Date(this.minDate.replace(/-/g, '/'));
 
- }
+        }
 
+      }
 
 
- }
 
- const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    }
 
- const ddd = new Date(day);
+    const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    const ddd = new Date(day);
 
- this.hold_sel_checkindate = this.sel_checkindate;
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
 
- this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+    this.hold_sel_checkindate = this.sel_checkindate;
 
- if (this.data.moreparams.terminologies) {
+    this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
 
- this.terminologiesjson = this.data.moreparams.terminologies;
+    if (this.data.moreparams.terminologies) {
 
- this.setTerminologyLabels();
+      this.terminologiesjson = this.data.moreparams.terminologies;
 
- }
+      this.setTerminologyLabels();
 
- // if ( this.page_source !== 'provider_checkin') {
+    }
 
- // this.getPaymentModesofProvider(this.account_id);
+    // if ( this.page_source !== 'provider_checkin') {
 
- // }
+    // this.getPaymentModesofProvider(this.account_id);
 
- const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    // }
 
- const date1 = new Date(dt1);
+    const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const date1 = new Date(dt1);
 
- const date2 = new Date(dt2);
+    const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    const date2 = new Date(dt2);
 
- if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
 
- this.isFuturedate = true;
+    if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
 
- }
+      this.isFuturedate = true;
 
- // const retdatedet = this.getQueueDateTimeDetails(this.search_obj.fields.waitingtime_res.nextAvailableQueue);
+    }
 
- // this.sel_queue_det = retdatedet;
+    // const retdatedet = this.getQueueDateTimeDetails(this.search_obj.fields.waitingtime_res.nextAvailableQueue);
 
- this.showfuturediv = false;
+    // this.sel_queue_det = retdatedet;
 
- this.revealphonenumber = true;
+    this.showfuturediv = false;
 
+    this.revealphonenumber = true;
 
 
 
 
- }
 
+  }
 
 
- setTerminologyLabels() {
 
- this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlist']);
+  setTerminologyLabels() {
 
- this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlisted']);
+    this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlist']);
 
- if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
+    this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlisted']);
 
- this.main_heading = this.get_token_cap;
+    if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
 
- } else {
+      this.main_heading = this.get_token_cap;
 
- this.main_heading = this.checkinLabel;
+    } else {
 
- }
+      this.main_heading = this.checkinLabel;
 
- }
+    }
 
- getPaymentModesofProvider(provid) {
+  }
 
- if (this.paymentModes.length === 0) {
+  getPaymentModesofProvider(provid) {
 
- this.shared_services.getPaymentModesofProvider(provid)
+    if (this.paymentModes.length === 0) {
 
- .subscribe(data => {
+      this.shared_services.getPaymentModesofProvider(provid)
 
- this.paymentModes = data;
+        .subscribe(data => {
 
- this.payModesQueried = true;
+          this.paymentModes = data;
 
- if (this.paymentModes.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
+          this.payModesQueried = true;
 
- this.payModesExists = false;
+          if (this.paymentModes.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
 
- } else {
+            this.payModesExists = false;
 
- this.payModesExists = true;
+          } else {
 
- }
+            this.payModesExists = true;
 
- },
+          }
 
- error => {
+        },
 
- this.payModesQueried = true;
+          error => {
 
- this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+            this.payModesQueried = true;
 
- });
+            this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
 
- }
+          });
 
- }
+    }
 
- getFamilyMembers() {
+  }
 
- this.api_loading1 = true;
+  getFamilyMembers() {
 
- let fn;
+    this.api_loading1 = true;
 
- let self_obj;
+    let fn;
 
- if (this.page_source === 'provider_checkin') {
+    let self_obj;
 
- fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+    if (this.page_source === 'provider_checkin') {
 
- if (this.fromKiosk) {
+      fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
 
- self_obj = {
+      if (this.fromKiosk) {
 
- 'userProfile': {
+        self_obj = {
 
- 'id': this.customer_data.id,
+          'userProfile': {
 
- 'firstName': this.customer_data.name,
+            'id': this.customer_data.id,
 
- 'lastName': ''
+            'firstName': this.customer_data.name,
 
- }
+            'lastName': ''
 
- };
+          }
 
- } else {
+        };
 
- self_obj = {
+      } else {
 
- 'userProfile': {
+        self_obj = {
 
- 'id': this.customer_data.id,
+          'userProfile': {
 
- 'firstName': this.customer_data.userProfile.firstName,
+            'id': this.customer_data.id,
 
- 'lastName': this.customer_data.userProfile.lastName
+            'firstName': this.customer_data.userProfile.firstName,
 
- }
+            'lastName': this.customer_data.userProfile.lastName
 
- };
+          }
 
- }
+        };
 
- } else {
+      }
 
- fn = this.shared_services.getConsumerFamilyMembers();
+    } else {
 
- self_obj = {
+      fn = this.shared_services.getConsumerFamilyMembers();
 
- 'userProfile': {
+      self_obj = {
 
- 'id': this.loggedinuser.id,
+        'userProfile': {
 
- 'firstName': this.loggedinuser.firstName,
+          'id': this.loggedinuser.id,
 
- 'lastName': this.loggedinuser.lastName
+          'firstName': this.loggedinuser.firstName,
 
- }
+          'lastName': this.loggedinuser.lastName
 
- };
+        }
 
- }
+      };
 
+    }
 
 
- fn.subscribe(data => {
 
- this.familymembers = [];
+    fn.subscribe(data => {
 
- this.familymembers.push(self_obj);
+      this.familymembers = [];
 
- for (const mem of data) {
+      this.familymembers.push(self_obj);
 
- if (mem.userProfile.id !== self_obj.userProfile.id) {
+      for (const mem of data) {
 
- this.familymembers.push(mem);
+        if (mem.userProfile.id !== self_obj.userProfile.id) {
 
- }
+          this.familymembers.push(mem);
 
- }
+        }
 
- this.api_loading1 = false;
+      }
 
- },
+      this.api_loading1 = false;
 
- () => {
+    },
 
- this.api_loading1 = false;
+      () => {
 
- });
+        this.api_loading1 = false;
 
+      });
 
 
- }
 
- gets3curl() {
+  }
 
- this.api_loading1 = true;
+  gets3curl() {
 
- this.retval = this.sharedFunctionobj.getS3Url()
+    this.api_loading1 = true;
 
- .then(
+    this.retval = this.sharedFunctionobj.getS3Url()
 
- res => {
+      .then(
 
- this.s3url = res;
+        res => {
 
- this.getbusinessprofiledetails_json('businessProfile', true);
+          this.s3url = res;
 
- this.getbusinessprofiledetails_json('settings', true);
+          this.getbusinessprofiledetails_json('businessProfile', true);
 
- this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('settings', true);
 
- if (!this.terminologiesjson) {
+          this.getbusinessprofiledetails_json('coupon', true);
 
- this.getbusinessprofiledetails_json('terminologies', true);
+          if (!this.terminologiesjson) {
 
- } else {
+            this.getbusinessprofiledetails_json('terminologies', true);
 
- if (this.terminologiesjson.length === 0) {
+          } else {
 
- this.getbusinessprofiledetails_json('terminologies', true);
+            if (this.terminologiesjson.length === 0) {
 
- } else {
+              this.getbusinessprofiledetails_json('terminologies', true);
 
- this.provider_datastorage.set('terminologies', this.terminologiesjson);
+            } else {
 
- this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+              this.provider_datastorage.set('terminologies', this.terminologiesjson);
 
- }
+              this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
 
- }
+            }
 
- this.api_loading1 = false;
+          }
 
- },
+          this.api_loading1 = false;
 
- () => {
+        },
 
- this.api_loading1 = false;
+        () => {
 
- }
+          this.api_loading1 = false;
 
- );
+        }
 
- }
+      );
 
+  }
 
 
- // gets the various json files based on the value of "section" parameter
 
- getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  // gets the various json files based on the value of "section" parameter
 
- let UTCstring = null;
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
 
- if (modDateReq) {
+    let UTCstring = null;
 
- UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    if (modDateReq) {
 
- }
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
 
- this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    }
 
- .subscribe(res => {
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
 
- switch (section) {
+      .subscribe(res => {
 
- case 'settings':
+        switch (section) {
 
- this.settingsjson = res;
+          case 'settings':
 
- this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+            this.settingsjson = res;
 
- /*this.maxsize = this.settingsjson.maxPartySize;
+            this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
 
- if (this.maxsize === undefined) {
+            /*this.maxsize = this.settingsjson.maxPartySize;
+           
+            if (this.maxsize === undefined) {
+           
+            this.maxsize = 1;
+           
+            }*/
 
- this.maxsize = 1;
+            break;
 
- }*/
+          case 'terminologies':
 
- break;
+            this.terminologiesjson = res;
 
- case 'terminologies':
+            this.provider_datastorage.set('terminologies', this.terminologiesjson);
 
- this.terminologiesjson = res;
+            this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
 
- this.provider_datastorage.set('terminologies', this.terminologiesjson);
+            this.setTerminologyLabels();
 
- this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+            break;
 
- this.setTerminologyLabels();
+          case 'businessProfile':
 
- break;
+            this.businessjson = res;
 
- case 'businessProfile':
+            this.getProviderDepart(this.businessjson.id);
 
- this.businessjson = res;
+            this.domain = this.businessjson.serviceSector.domain;
 
- this.getProviderDepart(this.businessjson.id);
+            if (this.domain === 'foodJoints') {
 
- this.domain = this.businessjson.serviceSector.domain;
+              this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
 
- if (this.domain === 'foodJoints') {
+              this.note_placeholder = 'Item No Item Name Item Quantity';
 
- this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+            } else {
 
- this.note_placeholder = 'Item No Item Name Item Quantity';
+              this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
 
- } else {
+              this.note_placeholder = '';
 
- this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+            }
 
- this.note_placeholder = '';
+            this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
 
- }
+            break;
 
- this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+          case 'coupon':
 
- break;
+            this.s3CouponsList = res;
 
- case 'coupon':
+            if (this.s3CouponsList.length > 0) {
 
- this.s3CouponsList = res;
+              this.showCouponWB = true;
 
- if (this.s3CouponsList.length > 0) {
+            }
 
- this.showCouponWB = true;
+            break;
 
- }
+        }
 
- break;
+      },
 
- }
+        () => {
 
- },
 
- () => {
 
+        }
 
+      );
 
- }
+  }
 
- );
 
- }
 
+  getProfile() {
 
+    this.sharedFunctionobj.getProfile()
 
- getProfile() {
+      .then(
 
- this.sharedFunctionobj.getProfile()
+        data => {
 
- .then(
+          this.userData = data;
 
- data => {
+          this.userPhone = this.userData.userProfile.primaryMobileNo || '';
 
- this.userData = data;
+          this.consumerPhoneNo = this.userPhone;
 
- this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+          if (this.userData.userProfile !== undefined) {
 
- this.consumerPhoneNo = this.userPhone;
+            this.userEmail = this.userData.userProfile.email || '';
 
- if (this.userData.userProfile !== undefined) {
+          }
 
- this.userEmail = this.userData.userProfile.email || '';
+          if (this.userEmail) {
 
- }
+            this.emailExist = true;
 
- if (this.userEmail) {
+          } else {
 
- this.emailExist = true;
+            this.emailExist = false;
 
- } else {
+          }
 
- this.emailExist = false;
+        });
 
- }
+  }
 
- });
+  addEmail() {
 
- }
+    this.resetApiErrors();
 
- addEmail() {
+    this.resetApi();
 
- this.resetApiErrors();
+    let post_data;
 
- this.resetApi();
+    let passtyp;
 
- let post_data;
+    if (this.payEmail) {
 
- let passtyp;
+      const stat = this.validateEmail(this.payEmail);
 
- if (this.payEmail) {
+      if (!stat) {
 
- const stat = this.validateEmail(this.payEmail);
+        this.emailerror = 'Please enter a valid email.';
 
- if (!stat) {
+      }
 
- this.emailerror = 'Please enter a valid email.';
+    }
 
- }
+    if (this.payEmail1) {
 
- }
+      const stat1 = this.validateEmail(this.payEmail1);
 
- if (this.payEmail1) {
+      if (!stat1) {
 
- const stat1 = this.validateEmail(this.payEmail1);
+        this.email1error = 'Please enter a valid email.';
 
- if (!stat1) {
+      }
 
- this.email1error = 'Please enter a valid email.';
+    }
 
- }
 
- }
 
 
 
+    // return new Promise((resolve) => {
 
 
- // return new Promise((resolve) => {
 
+    if (this.payEmail === this.payEmail1) {
 
+      post_data = {
 
- if (this.payEmail === this.payEmail1) {
+        'id': this.userData.userProfile.id || null,
 
- post_data = {
+        'firstName': this.userData.userProfile.firstName || null,
 
- 'id': this.userData.userProfile.id || null,
+        'lastName': this.userData.userProfile.lastName || null,
 
- 'firstName': this.userData.userProfile.firstName || null,
+        'dob': this.userData.userProfile.dob || null,
 
- 'lastName': this.userData.userProfile.lastName || null,
+        'gender': this.userData.userProfile.gender || null,
 
- 'dob': this.userData.userProfile.dob || null,
+        'email': this.payEmail || ''
 
- 'gender': this.userData.userProfile.gender || null,
+      };
 
- 'email': this.payEmail || ''
+      passtyp = 'consumer';
 
- };
+      if (this.payEmail) {
 
- passtyp = 'consumer';
+        this.shared_services.updateProfile(post_data, passtyp)
 
- if (this.payEmail) {
+          .subscribe(
 
- this.shared_services.updateProfile(post_data, passtyp)
+            () => {
 
- .subscribe(
+              this.getProfile();
 
- () => {
+              // this.api_success = Messages.PROFILE_UPDATE;
 
- this.getProfile();
+              // this.sharedFunctionobj.openSnackBar(Messages.PROFILE_UPDATE);
 
- // this.api_success = Messages.PROFILE_UPDATE;
+              // resolve();
 
- // this.sharedFunctionobj.openSnackBar(Messages.PROFILE_UPDATE);
+            },
 
- // resolve();
+            error => {
 
- },
+              // this.api_error = error.error;
 
- error => {
+              this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
- // this.api_error = error.error;
+            });
 
- this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
 
- });
+    } else {
 
- }
+      this.email1error = 'Email and Re-entered Email do not match';
 
- } else {
+    }
 
- this.email1error = 'Email and Re-entered Email do not match';
+    // });
 
- }
 
- // });
 
 
 
@@ -949,1704 +953,1708 @@ export class CheckInInnerComponent implements OnInit {
 
 
 
+  }
 
+  addPhone() {
 
- }
+    this.resetApiErrors();
 
- addPhone() {
+    this.resetApi();
 
- this.resetApiErrors();
+    const curphone = this.selected_phone;
 
- this.resetApi();
+    const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
 
- const curphone = this.selected_phone;
+    const result = pattern.test(curphone);
 
- const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+    const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
 
- const result = pattern.test(curphone);
+    const result1 = pattern1.test(curphone);
 
- const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+    if (this.selected_phone === '') {
 
- const result1 = pattern1.test(curphone);
+      this.phoneerror = Messages.BPROFILE_PHONENO;
 
- if (this.selected_phone === '') {
+      return;
 
- this.phoneerror = Messages.BPROFILE_PHONENO;
+    } else if (!result) {
 
- return;
+      this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
 
- } else if (!result) {
+      return;
 
- this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+    } else if (!result1) {
 
- return;
+      this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
 
- } else if (!result1) {
+      return;
 
- this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+    } else {
 
- return;
+      this.consumerPhoneNo = this.selected_phone;
 
- } else {
+      this.userPhone = this.selected_phone;
 
- this.consumerPhoneNo = this.selected_phone;
+      this.edit = true;
 
- this.userPhone = this.selected_phone;
+    }
 
- this.edit = true;
+  }
 
- }
+  editPhone() {
 
- }
+    this.edit = false;
 
- editPhone() {
+    this.selected_phone = this.userPhone;
 
- this.edit = false;
+  }
 
- this.selected_phone = this.userPhone;
+  validateEmail(mail) {
 
- }
+    const emailField = mail;
 
- validateEmail(mail) {
+    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
- const emailField = mail;
+    if (reg.test(emailField) === false) {
 
- const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      return false;
 
- if (reg.test(emailField) === false) {
+    }
 
- return false;
+    return true;
 
- }
+  }
 
- return true;
 
- }
 
+  resetApiErrors() {
 
 
- resetApiErrors() {
 
+    this.emailerror = null;
 
+    this.email1error = null;
 
- this.emailerror = null;
+    this.phoneerror = null;
 
- this.email1error = null;
+  }
 
- this.phoneerror = null;
+  setServiceDetails(curservid) {
 
- }
+    let serv;
 
- setServiceDetails(curservid) {
+    for (let i = 0; i < this.servicesjson.length; i++) {
 
- let serv;
+      if (this.servicesjson[i].id === curservid) {
 
- for (let i = 0; i < this.servicesjson.length; i++) {
+        serv = this.servicesjson[i];
 
- if (this.servicesjson[i].id === curservid) {
+      }
 
- serv = this.servicesjson[i];
+    }
 
- }
+    this.sel_ser_det = [];
 
- }
+    // if (serv.serviceDuration) {
 
- this.sel_ser_det = [];
+    this.sel_ser_det = {
 
- // if (serv.serviceDuration) {
+      name: serv.name,
 
- this.sel_ser_det = {
+      duration: serv.serviceDuration,
 
- name: serv.name,
+      description: serv.description,
 
- duration: serv.serviceDuration,
+      price: serv.totalAmount,
 
- description: serv.description,
+      isPrePayment: serv.isPrePayment,
 
- price: serv.totalAmount,
+      minPrePaymentAmount: serv.minPrePaymentAmount,
 
- isPrePayment: serv.isPrePayment,
+      status: serv.status,
 
- minPrePaymentAmount: serv.minPrePaymentAmount,
+      taxable: serv.taxable
 
- status: serv.status,
+    };
 
- taxable: serv.taxable
+    if (this.page_source !== 'provider_checkin') {
 
- };
+      if (serv.isPrePayment) {
 
- if (this.page_source !== 'provider_checkin') {
+        this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
 
- if (serv.isPrePayment) {
+        this.getPaymentModesofProvider(this.account_id);
 
- this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
+      }
 
- this.getPaymentModesofProvider(this.account_id);
+    }
 
- }
+    // }
 
- }
+  }
 
- // }
 
- }
 
+  getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
 
+    this.queueQryExecuted = false;
 
- getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
 
- this.queueQryExecuted = false;
+      .subscribe(data => {
 
- this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+        this.queuejson = data;
 
- .subscribe(data => {
+        this.queueQryExecuted = true;
 
- this.queuejson = data;
+        if (this.queuejson.length > 0) {
 
- this.queueQryExecuted = true;
+          let selindx = 0;
 
- if (this.queuejson.length > 0) {
+          for (let i = 0; i < this.queuejson.length; i++) {
 
- let selindx = 0;
+            if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
 
- for (let i = 0; i < this.queuejson.length; i++) {
+              selindx = i;
 
- if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
+            }
 
- selindx = i;
+          }
 
- }
+          this.sel_queue_id = this.queuejson[selindx].id;
 
- }
+          this.sel_queue_indx = selindx;
 
- this.sel_queue_id = this.queuejson[selindx].id;
+          // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
 
- this.sel_queue_indx = selindx;
+          this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
 
- // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+          this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
 
- this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+          this.sel_queue_name = this.queuejson[selindx].name;
 
- this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
+          this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
 
- this.sel_queue_name = this.queuejson[selindx].name;
+          this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
 
- this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+          this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
 
- this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+          this.setTerminologyLabels();
 
- this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
+        } else {
 
- this.setTerminologyLabels();
+          this.sel_queue_indx = -1;
 
- } else {
+          this.sel_queue_id = 0;
 
- this.sel_queue_indx = -1;
+          this.sel_queue_waitingmins = 0;
 
- this.sel_queue_id = 0;
+          this.sel_queue_servicetime = '';
 
- this.sel_queue_waitingmins = 0;
+          this.sel_queue_name = '';
 
- this.sel_queue_servicetime = '';
+          this.sel_queue_timecaption = '';
 
- this.sel_queue_name = '';
+          this.sel_queue_personaahead = 0;
 
- this.sel_queue_timecaption = '';
+        }
 
- this.sel_queue_personaahead = 0;
+      });
 
- }
+  }
 
- });
 
- }
 
+  handleServiceSel(obj) {
 
+    // this.sel_ser = obj.id;
 
- handleServiceSel(obj) {
+    this.sel_ser = obj;
 
- // this.sel_ser = obj.id;
+    this.setServiceDetails(obj);
 
- this.sel_ser = obj;
+    this.queuejson = [];
 
- this.setServiceDetails(obj);
+    this.sel_queue_id = 0;
 
- this.queuejson = [];
+    this.sel_queue_waitingmins = 0;
 
- this.sel_queue_id = 0;
+    this.sel_queue_servicetime = '';
 
- this.sel_queue_waitingmins = 0;
+    this.sel_queue_personaahead = 0;
 
- this.sel_queue_servicetime = '';
+    this.sel_queue_name = '';
 
- this.sel_queue_personaahead = 0;
+    this.resetApi();
 
- this.sel_queue_name = '';
+    this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
 
- this.resetApi();
+  }
 
- this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+  showConfrmEmail(event) {
 
- }
+    if (event.key !== 'Enter') {
 
- showConfrmEmail(event) {
+      this.confrmshow = true;
 
- if (event.key !== 'Enter') {
+    }
 
- this.confrmshow = true;
+  }
 
- }
 
- }
 
+  isSelectedService(id) {
 
+    let clr = false;
 
- isSelectedService(id) {
+    if (id === this.sel_ser) {
 
- let clr = false;
+      clr = true;
 
- if (id === this.sel_ser) {
+    } else {
 
- clr = true;
+      clr = false;
 
- } else {
+    }
 
- clr = false;
+    return clr;
 
- }
+  }
 
- return clr;
 
- }
 
+  isSelectedQueue(id) {
 
+    let clr = false;
 
- isSelectedQueue(id) {
+    if (id === this.sel_queue_id) {
 
- let clr = false;
+      clr = true;
 
- if (id === this.sel_queue_id) {
+    } else {
 
- clr = true;
+      clr = false;
 
- } else {
+    }
 
- clr = false;
+    return clr;
 
- }
+  }
 
- return clr;
 
- }
 
+  // handleQueueSel(obj) {
 
+  // this.resetApi();
 
- // handleQueueSel(obj) {
+  // // this.queueReloaded = false;
 
- // this.resetApi();
+  // this.sel_queue_id = obj.id;
 
- // // this.queueReloaded = false;
+  // this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
 
- // this.sel_queue_id = obj.id;
+  // this.sel_queue_servicetime = obj.serviceTime || '';
 
- // this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
+  // this.sel_queue_name = obj.name;
 
- // this.sel_queue_servicetime = obj.serviceTime || '';
+  // // this.queueReloaded = true;
 
- // this.sel_queue_name = obj.name;
+  // }
 
- // // this.queueReloaded = true;
 
- // }
 
+  handleQueueSel(mod) {
 
+    this.resetApi();
 
- handleQueueSel(mod) {
+    if (mod === 'next') {
 
- this.resetApi();
+      if ((this.queuejson.length - 1) > this.sel_queue_indx) {
 
- if (mod === 'next') {
+        this.sel_queue_indx = this.sel_queue_indx + 1;
 
- if ((this.queuejson.length - 1) > this.sel_queue_indx) {
+      }
 
- this.sel_queue_indx = this.sel_queue_indx + 1;
+    } else if (mod === 'prev') {
 
- }
+      if ((this.queuejson.length > 0) && (this.sel_queue_indx > 0)) {
 
- } else if (mod === 'prev') {
+        this.sel_queue_indx = this.sel_queue_indx - 1;
 
- if ((this.queuejson.length > 0) && (this.sel_queue_indx > 0)) {
+      }
 
- this.sel_queue_indx = this.sel_queue_indx - 1;
+    }
 
- }
+    if (this.sel_queue_indx !== -1) {
 
- }
+      this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
 
- if (this.sel_queue_indx !== -1) {
+      this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
 
- this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
+      this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
 
- this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
+      this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
 
- this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
+      this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
 
- this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
+      this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
 
- this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+      // this.queueReloaded = true;
 
- this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+    }
 
- // this.queueReloaded = true;
+  }
 
- }
+  handleFuturetoggle() {
 
- }
+    this.showfuturediv = !this.showfuturediv;
 
- handleFuturetoggle() {
+  }
 
- this.showfuturediv = !this.showfuturediv;
 
- }
 
+  isCheckinenable() {
 
+    if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
 
- isCheckinenable() {
+      return true;
 
- if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
+    } else {
 
- return true;
+      return false;
 
- } else {
+    }
 
- return false;
+  }
 
- }
+  revealChk() {
 
- }
+    this.revealphonenumber = !this.revealphonenumber;
 
- revealChk() {
+  }
 
- this.revealphonenumber = !this.revealphonenumber;
 
- }
 
+  handleConsumerNote(vale) {
 
+    this.consumerNote = vale;
 
- handleConsumerNote(vale) {
+  }
 
- this.consumerNote = vale;
+  handleFutureDateChange(e) {
 
- }
+    const tdate = e.targetElement.value;
 
- handleFutureDateChange(e) {
+    const newdate = tdate.split('/').reverse().join('-');
 
- const tdate = e.targetElement.value;
+    const futrDte = new Date(newdate);
 
- const newdate = tdate.split('/').reverse().join('-');
+    // const obtmonth = (e.value._i.month + 1);
 
- const futrDte = new Date(newdate);
+    const obtmonth = (futrDte.getMonth() + 1);
 
- // const obtmonth = (e.value._i.month + 1);
+    let cmonth = '' + obtmonth;
 
- const obtmonth = (futrDte.getMonth() + 1);
+    if (obtmonth < 10) {
 
- let cmonth = '' + obtmonth;
+      cmonth = '0' + obtmonth;
 
- if (obtmonth < 10) {
+    }
 
- cmonth = '0' + obtmonth;
+    const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
 
- }
+    this.sel_checkindate = seldate;
 
- const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+    const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- this.sel_checkindate = seldate;
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
 
- const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const date2 = new Date(dt2);
 
- const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
 
- const date2 = new Date(dt2);
 
+    const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
+    const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
 
- const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const datee2 = new Date(dte2);
 
- const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
 
- const datee2 = new Date(dte2);
 
+    if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
 
+      this.isFuturedate = true;
 
- if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    } else {
 
- this.isFuturedate = true;
+      this.isFuturedate = false;
 
- } else {
+    }
 
- this.isFuturedate = false;
+    this.handleFuturetoggle();
 
- }
+    this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
 
- this.handleFuturetoggle();
+  }
 
- this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+  handleServiceForWhom() {
 
- }
+    this.resetApi();
 
- handleServiceForWhom() {
+    this.holdwaitlist_for = this.waitlist_for;
 
- this.resetApi();
+    this.step = 3;
 
- this.holdwaitlist_for = this.waitlist_for;
+    this.main_heading = 'Family Members';
 
- this.step = 3;
+  }
 
- this.main_heading = 'Family Members';
+  // handleCheckinClicked() {
 
- }
+  // if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin' && !this.emailExist) {
 
- // handleCheckinClicked() {
+  // this.addEmail().then(
 
- // if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin' && !this.emailExist) {
+  // () => {
 
- // this.addEmail().then(
+  // this.confirmCheckin();
 
- // () => {
+  // }
 
- // this.confirmCheckin();
 
- // }
 
+  // );
 
+  // } else {
 
- // );
+  // this.confirmCheckin();
 
- // } else {
+  // }
 
- // this.confirmCheckin();
+  // }
 
- // }
 
- // }
 
+  handleCheckinClicked() {
 
 
- handleCheckinClicked() {
 
+    this.resetApi();
 
+    let error = '';
 
- this.resetApi();
+    // if (this.step === 1) {
 
- let error = '';
+    // this.step = 2;
 
- // if (this.step === 1) {
+    // } else
 
- // this.step = 2;
+    if (this.step === 1) {
 
- // } else
+      if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
 
- if (this.step === 1) {
+        /*if (this.paytype === '') {
+       
+        error = 'Please select the payment mode';
+       
+        }*/
 
- if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
+        this.paytype = 'DC'; // deleberately giving this value as per request from Manikandan.
 
- /*if (this.paytype === '') {
+      }
 
- error = 'Please select the payment mode';
+      if (this.partySizeRequired) {
 
- }*/
+        this.clearerrorParty();
 
- this.paytype = 'DC'; // deleberately giving this value as per request from Manikandan.
+        error = this.validatorPartysize(this.enterd_partySize);
 
- }
+      }
 
- if (this.partySizeRequired) {
+      if (error === '') {
 
- this.clearerrorParty();
+        this.saveCheckin();
 
- error = this.validatorPartysize(this.enterd_partySize);
+      } else {
 
- }
+        this.api_error = error;
 
- if (error === '') {
+      }
 
- this.saveCheckin();
+    }
 
- } else {
+  }
 
- this.api_error = error;
+  getCurrentLocation() {
 
- }
+    if (navigator) {
 
- }
+      navigator.geolocation.getCurrentPosition(pos => {
 
- }
+        this.lat_lng.longitude = +pos.coords.longitude;
 
- getCurrentLocation() {
+        this.lat_lng.latitude = +pos.coords.latitude;
 
- if (navigator) {
+        console.log(this.lat_lng);
 
- navigator.geolocation.getCurrentPosition(pos => {
+      },
 
- this.lat_lng.longitude = +pos.coords.longitude;
+        error => {
 
- this.lat_lng.latitude = +pos.coords.latitude;
 
- console.log(this.lat_lng);
 
- },
+        });
 
- error => {
+    }
 
+  }
 
+  saveCheckin() {
 
- });
+    const waitlistarr = [];
 
- }
+    for (let i = 0; i < this.waitlist_for.length; i++) {
 
- }
+      waitlistarr.push({ id: this.waitlist_for[i].id });
 
- saveCheckin() {
+    }
 
- const waitlistarr = [];
+    const post_Data = {
 
- for (let i = 0; i < this.waitlist_for.length; i++) {
+      'queue': {
 
- waitlistarr.push({ id: this.waitlist_for[i].id });
+        'id': this.sel_queue_id
 
- }
+      },
 
- const post_Data = {
+      'date': this.sel_checkindate,
 
- 'queue': {
+      'service': {
 
- 'id': this.sel_queue_id
+        'id': this.sel_ser
 
- },
+      },
 
- 'date': this.sel_checkindate,
+      'consumerNote': this.consumerNote,
 
- 'service': {
+      'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
 
- 'id': this.sel_ser
+      'coupons': this.selected_coupons
 
- },
+      /*,
+     
+      'revealPhone': this.revealphonenumber*/
 
- 'consumerNote': this.consumerNote,
+    };
 
- 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+    if (this.partySizeRequired) {
 
- 'coupons': this.selected_coupons
+      this.holdenterd_partySize = this.enterd_partySize;
 
- /*,
+      post_Data['partySize'] = Number(this.holdenterd_partySize);
 
- 'revealPhone': this.revealphonenumber*/
+    }
 
- };
 
- if (this.partySizeRequired) {
 
- this.holdenterd_partySize = this.enterd_partySize;
+    if (this.page_source === 'provider_checkin') {
 
- post_Data['partySize'] = Number(this.holdenterd_partySize);
+      post_Data['consumer'] = { id: this.customer_data.id };
 
- }
+      post_Data['ignorePrePayment'] = true;
 
+      this.addCheckInProvider(post_Data);
 
+    } else {
 
- if (this.page_source === 'provider_checkin') {
+      this.addCheckInConsumer(post_Data);
 
- post_Data['consumer'] = { id: this.customer_data.id };
+    }
 
- post_Data['ignorePrePayment'] = true;
+  }
 
- this.addCheckInProvider(post_Data);
 
- } else {
 
- this.addCheckInConsumer(post_Data);
+  addCheckInConsumer(post_Data) {
 
- }
+    post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
 
- }
+    this.api_loading = true;
 
+    this.shared_services.addCheckin(this.account_id, post_Data)
 
+      .subscribe(data => {
 
- addCheckInConsumer(post_Data) {
+        const retData = data;
 
- post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
+        let retUUID;
 
- this.api_loading = true;
+        Object.keys(retData).forEach(key => {
 
- this.shared_services.addCheckin(this.account_id, post_Data)
+          retUUID = retData[key];
 
- .subscribe(data => {
+          this.trackUuid = retData[key];
 
- const retData = data;
+          console.log(this.trackUuid);
 
- let retUUID;
+        });
 
- Object.keys(retData).forEach(key => {
+        if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
 
- retUUID = retData[key];
+          if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
 
- this.trackUuid = retData[key];
+            this.dialogRef.close();
 
- console.log(this.trackUuid);
+            // this.sel_ser_det.minPrePaymentAmount
 
- });
+            const payData = {
 
- if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
+              'amount': this.prepaymentAmount,
 
- if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+              // 'paymentMode': this.paytype,
 
- this.dialogRef.close();
+              'uuid': retUUID,
 
- // this.sel_ser_det.minPrePaymentAmount
+              'accountId': this.account_id,
 
- const payData = {
+              'purpose': 'prePayment'
 
- 'amount': this.prepaymentAmount,
+            };
 
- // 'paymentMode': this.paytype,
 
- 'uuid': retUUID,
 
- 'accountId': this.account_id,
+            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
 
- 'purpose': 'prePayment'
+              width: '50%',
 
- };
+              panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
 
+              disableClose: true,
 
+              data: {
 
- const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+                'details': payData,
 
- width: '50%',
+                'origin': 'consumer'
 
- panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+              }
 
- disableClose: true,
+            });
 
- data: {
+            // this.shared_services.consumerPayment(payData)
 
- 'details': payData,
+            // .subscribe(pData => {
 
- 'origin': 'consumer'
+            // if (pData['response']) {
 
- }
+            // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
 
- });
+            // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
 
- // this.shared_services.consumerPayment(payData)
+            // setTimeout(() => {
 
- // .subscribe(pData => {
+            // this.document.getElementById('payuform').submit();
 
- // if (pData['response']) {
+            // }, 2000);
 
- // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+            // } else {
 
- // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
+            // this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
 
- // setTimeout(() => {
+            // this.api_loading = false;
 
- // this.document.getElementById('payuform').submit();
+            // }
 
- // }, 2000);
+            // },
 
- // } else {
+            // error => {
 
- // this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+            // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
 
- // this.api_loading = false;
+            // this.api_loading = false;
 
- // }
+            // });
 
- // },
+          } else {
 
- // error => {
+            this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
 
- // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+            this.api_loading = false;
 
- // this.api_loading = false;
+          }
 
- // });
+        } else {
 
- } else {
+          if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
 
- this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+            this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
 
- this.api_loading = false;
+          } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
 
- }
+            this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
 
- } else {
+          }
 
- if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+          // setTimeout(() => {
 
- this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+          // this.source['list'] = 'reloadlist';
 
- } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+          // this.source['mode'] = this.page_source;
 
- this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
+          // // this.dialogRef.close('reloadlist');
 
- }
+          // console.log(this.source);
 
- // setTimeout(() => {
+          // this.returntoParent.emit(this.source);
 
- // this.source['list'] = 'reloadlist';
+          // }, projectConstants.TIMEOUT_DELAY);
 
- // this.source['mode'] = this.page_source;
+          // this.router.navigate(['/']);
 
- // // this.dialogRef.close('reloadlist');
+        }
 
- // console.log(this.source);
+        setTimeout(() => {
 
- // this.returntoParent.emit(this.source);
+          this.liveTrack = true;
 
- // }, projectConstants.TIMEOUT_DELAY);
+          this.resetApi();
 
- // this.router.navigate(['/']);
+        }, 2000);
 
- }
 
- setTimeout(() => {
 
- this.liveTrack = true;
+        // const dialogrefd = this.dialog.open(LivetrackComponent, {
 
- this.resetApi();
+        // width: '50%',
 
- }, 2000);
+        // panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
 
+        // disableClose: true,
 
+        // data: {
 
- // const dialogrefd = this.dialog.open(LivetrackComponent, {
+        // 'details': this.trackUuid,
 
- // width: '50%',
+        // 'origin': 'consumer'
 
- // panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        // }
 
- // disableClose: true,
+        // });
 
- // data: {
 
- // 'details': this.trackUuid,
 
- // 'origin': 'consumer'
+      },
 
- // }
+        error => {
 
- // });
+          this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
 
+          this.api_loading = false;
 
+        });
 
- },
+  }
 
- error => {
 
- this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
 
- this.api_loading = false;
+  addCheckInProvider(post_Data) {
 
- });
+    this.api_loading = true;
 
- }
+    this.shared_services.addProviderCheckin(post_Data)
 
+      .subscribe(() => {
 
+        if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
 
- addCheckInProvider(post_Data) {
+          this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
 
- this.api_loading = true;
+        } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
 
- this.shared_services.addProviderCheckin(post_Data)
+          this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
 
- .subscribe(() => {
+        }
 
- if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+        setTimeout(() => {
 
- this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+          this.source['list'] = 'reloadlist';
 
- } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+          this.source['mode'] = this.page_source;
 
- this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
+          // this.dialogRef.close('reloadlist');
 
- }
+          this.returntoParent.emit(this.source);
 
- setTimeout(() => {
+        }, projectConstants.TIMEOUT_DELAY);
 
- this.source['list'] = 'reloadlist';
+      },
 
- this.source['mode'] = this.page_source;
+        error => {
 
- // this.dialogRef.close('reloadlist');
+          this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
 
- this.returntoParent.emit(this.source);
+          this.api_loading = false;
 
- }, projectConstants.TIMEOUT_DELAY);
+        });
 
- },
+  }
 
- error => {
+  handleGoBack(cstep) {
 
- this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+    if (this.page_source !== 'provider_checkin') {
 
- this.api_loading = false;
+      if (this.sel_ser_det.isPrePayment) {
 
- });
+        let len = this.waitlist_for.length;
 
- }
+        if (this.waitlist_for.length === 0) {
 
- handleGoBack(cstep) {
+          len = 1;
 
- if (this.page_source !== 'provider_checkin') {
+        }
 
- if (this.sel_ser_det.isPrePayment) {
+        this.prepaymentAmount = len * this.sel_ser_det.minPrePaymentAmount;
 
- let len = this.waitlist_for.length;
+      }
 
- if (this.waitlist_for.length === 0) {
+    }
 
- len = 1;
+    this.resetApi();
 
- }
+    switch (cstep) {
 
- this.prepaymentAmount = len * this.sel_ser_det.minPrePaymentAmount;
+      case 1:
 
- }
+      case 2:
 
- }
+        if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
 
- this.resetApi();
+          this.main_heading = this.get_token_cap;
 
- switch (cstep) {
+        } else {
 
- case 1:
+          this.main_heading = this.checkinLabel;
 
- case 2:
+        }
 
- if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
+        break;
 
- this.main_heading = this.get_token_cap;
+      case 3:
 
- } else {
+        this.main_heading = 'Family Members';
 
- this.main_heading = this.checkinLabel;
+        this.showCreateMember = false;
 
- }
+        this.addmemberobj.fname = '';
 
- break;
+        this.addmemberobj.lname = '';
 
- case 3:
+        this.addmemberobj.mobile = '';
 
- this.main_heading = 'Family Members';
+        this.addmemberobj.gender = '';
 
- this.showCreateMember = false;
+        this.addmemberobj.dob = '';
 
- this.addmemberobj.fname = '';
+        break;
 
- this.addmemberobj.lname = '';
+    }
 
- this.addmemberobj.mobile = '';
+    this.step = cstep;
 
- this.addmemberobj.gender = '';
+    if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
 
- this.addmemberobj.dob = '';
+      // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
 
- break;
+      if (this.page_source === 'provider_checkin') {
 
- }
+        // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
 
- this.step = cstep;
+        if (this.fromKiosk) {
 
- if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+          this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
 
- // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+        } else {
 
- if (this.page_source === 'provider_checkin') {
+          this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
 
- // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
+        }
 
- if (this.fromKiosk) {
+      } else {
 
- this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
+        // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
 
- } else {
+        this.waitlist_for.push({ id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName });
 
- this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
+      }
 
- }
+    }
 
- } else {
+  }
 
- // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
+  showCheckinButtonCaption() {
 
- this.waitlist_for.push({ id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName });
+    let caption = '';
 
- }
+    caption = 'Confirm';
 
- }
+    return caption;
 
- }
+  }
 
- showCheckinButtonCaption() {
 
- let caption = '';
 
- caption = 'Confirm';
+  handleOneMemberSelect(id, name) {
 
- return caption;
+    this.resetApi();
 
- }
+    this.waitlist_for = [];
 
+    this.waitlist_for.push({ id: id, name: name });
 
+  }
 
- handleOneMemberSelect(id, name) {
 
- this.resetApi();
 
- this.waitlist_for = [];
+  handleMemberSelect(id, name, obj) {
 
- this.waitlist_for.push({ id: id, name: name });
+    this.resetApi();
 
- }
+    if (this.waitlist_for.length === 0) {
 
+      this.waitlist_for.push({ id: id, name: name });
 
+    } else {
 
- handleMemberSelect(id, name, obj) {
+      let exists = false;
 
- this.resetApi();
+      let existindx = -1;
 
- if (this.waitlist_for.length === 0) {
+      for (let i = 0; i < this.waitlist_for.length; i++) {
 
- this.waitlist_for.push({ id: id, name: name });
+        if (this.waitlist_for[i].id === id) {
 
- } else {
+          exists = true;
 
- let exists = false;
+          existindx = i;
 
- let existindx = -1;
+        }
 
- for (let i = 0; i < this.waitlist_for.length; i++) {
+      }
 
- if (this.waitlist_for[i].id === id) {
+      if (exists) {
 
- exists = true;
+        this.waitlist_for.splice(existindx, 1);
 
- existindx = i;
+      } else {
 
- }
+        if (this.ismoreMembersAllowedtopush()) {
 
- }
+          this.waitlist_for.push({ id: id, name: name });
 
- if (exists) {
+        } else {
 
- this.waitlist_for.splice(existindx, 1);
+          obj.source.checked = false; // preventing the current checkbox from being checked
 
- } else {
+          if (this.maxsize > 1) {
 
- if (this.ismoreMembersAllowedtopush()) {
+            this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
 
- this.waitlist_for.push({ id: id, name: name });
+          } else if (this.maxsize === 1) {
 
- } else {
+            this.api_error = 'Only ' + this.maxsize + ' member can be selected';
 
- obj.source.checked = false; // preventing the current checkbox from being checked
+          }
 
- if (this.maxsize > 1) {
+        }
 
- this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
+      }
 
- } else if (this.maxsize === 1) {
+    }
 
- this.api_error = 'Only ' + this.maxsize + ' member can be selected';
+  }
 
- }
+  ismoreMembersAllowedtopush() {
 
- }
+    if (this.maxsize > this.waitlist_for.length) {
 
- }
+      return true;
 
- }
+    } else {
 
- }
+      return false;
 
- ismoreMembersAllowedtopush() {
+    }
 
- if (this.maxsize > this.waitlist_for.length) {
+  }
 
- return true;
+  isChecked(id) {
 
- } else {
+    let retval = false;
 
- return false;
+    if (this.waitlist_for.length > 0) {
 
- }
+      for (let i = 0; i < this.waitlist_for.length; i++) {
 
- }
+        if (this.waitlist_for[i].id === id) {
 
- isChecked(id) {
+          retval = true;
 
- let retval = false;
+        }
 
- if (this.waitlist_for.length > 0) {
+      }
 
- for (let i = 0; i < this.waitlist_for.length; i++) {
+    }
 
- if (this.waitlist_for[i].id === id) {
+    return retval;
 
- retval = true;
+  }
 
- }
 
- }
 
- }
+  addMember() {
 
- return retval;
+    this.resetApi();
 
- }
+    this.showCreateMember = true;
 
+    // this.step = 4; // show add member section
 
+    // this.main_heading = 'Add Family Member';
 
- addMember() {
+  }
 
- this.resetApi();
 
- this.showCreateMember = true;
 
- // this.step = 4; // show add member section
+  resetApi() {
 
- // this.main_heading = 'Add Family Member';
+    this.api_error = null;
 
- }
+    this.api_success = null;
 
+  }
 
 
- resetApi() {
 
- this.api_error = null;
+  handleReturnDetails(obj) {
 
- this.api_success = null;
+    this.resetApi();
 
- }
+    this.addmemberobj.fname = obj.fname || '';
 
+    this.addmemberobj.lname = obj.lname || '';
 
+    this.addmemberobj.mobile = obj.mobile || '';
 
- handleReturnDetails(obj) {
+    this.addmemberobj.gender = obj.gender || '';
 
- this.resetApi();
+    this.addmemberobj.dob = obj.dob || '';
 
- this.addmemberobj.fname = obj.fname || '';
+  }
 
- this.addmemberobj.lname = obj.lname || '';
+  handleSaveMember() {
 
- this.addmemberobj.mobile = obj.mobile || '';
+    this.resetApi();
 
- this.addmemberobj.gender = obj.gender || '';
+    let derror = '';
 
- this.addmemberobj.dob = obj.dob || '';
+    const namepattern = new RegExp(projectConstants.VALIDATOR_CHARONLY);
 
- }
+    const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
 
- handleSaveMember() {
+    const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
 
- this.resetApi();
+    const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
 
- let derror = '';
+    if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
 
- const namepattern = new RegExp(projectConstants.VALIDATOR_CHARONLY);
+      derror = 'Please enter a valid first name';
 
- const phonepattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+    }
 
- const phonecntpattern = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+    if (derror === '' && (!namepattern.test(this.addmemberobj.lname) || blankpattern.test(this.addmemberobj.lname))) {
 
- const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
+      derror = 'Please enter a valid last name';
 
- if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
+    }
 
- derror = 'Please enter a valid first name';
+    if (derror === '') {
 
- }
+      if (this.addmemberobj.mobile !== '') {
 
- if (derror === '' && (!namepattern.test(this.addmemberobj.lname) || blankpattern.test(this.addmemberobj.lname))) {
+        if (!phonepattern.test(this.addmemberobj.mobile)) {
 
- derror = 'Please enter a valid last name';
+          derror = 'Phone number should have only numbers';
 
- }
+        } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
 
- if (derror === '') {
+          derror = 'Enter a 10 digit mobile number';
 
- if (this.addmemberobj.mobile !== '') {
+        }
 
- if (!phonepattern.test(this.addmemberobj.mobile)) {
+      }
 
- derror = 'Phone number should have only numbers';
+    }
 
- } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
+    if (derror === '') {
 
- derror = 'Enter a 10 digit mobile number';
+      const post_data = {
 
- }
+        'userProfile': {
 
- }
+          'firstName': this.addmemberobj.fname,
 
- }
+          'lastName': this.addmemberobj.lname
 
- if (derror === '') {
+        }
 
- const post_data = {
+      };
 
- 'userProfile': {
+      if (this.addmemberobj.mobile !== '') {
 
- 'firstName': this.addmemberobj.fname,
+        post_data.userProfile['primaryMobileNo'] = this.addmemberobj.mobile;
 
- 'lastName': this.addmemberobj.lname
+        post_data.userProfile['countryCode'] = '+91';
 
- }
+      }
 
- };
+      if (this.addmemberobj.gender !== '') {
 
- if (this.addmemberobj.mobile !== '') {
+        post_data.userProfile['gender'] = this.addmemberobj.gender;
 
- post_data.userProfile['primaryMobileNo'] = this.addmemberobj.mobile;
+      }
 
- post_data.userProfile['countryCode'] = '+91';
+      if (this.addmemberobj.dob !== '') {
 
- }
+        post_data.userProfile['dob'] = this.addmemberobj.dob;
 
- if (this.addmemberobj.gender !== '') {
+      }
 
- post_data.userProfile['gender'] = this.addmemberobj.gender;
+      let fn;
 
- }
+      if (this.page_source === 'provider_checkin') {
 
- if (this.addmemberobj.dob !== '') {
+        post_data['parent'] = this.customer_data.id;
 
- post_data.userProfile['dob'] = this.addmemberobj.dob;
+        fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
 
- }
+      } else {
 
- let fn;
+        fn = this.shared_services.addMembers(post_data);
 
- if (this.page_source === 'provider_checkin') {
+      }
 
- post_data['parent'] = this.customer_data.id;
+      fn.subscribe(() => {
 
- fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
+        this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
 
- } else {
+        this.getFamilyMembers();
 
- fn = this.shared_services.addMembers(post_data);
+        setTimeout(() => {
 
- }
+          this.handleGoBack(3);
 
- fn.subscribe(() => {
+        }, projectConstants.TIMEOUT_DELAY);
 
- this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+      },
 
- this.getFamilyMembers();
+        error => {
 
- setTimeout(() => {
+          this.api_error = error.error;
 
- this.handleGoBack(3);
+        });
 
- }, projectConstants.TIMEOUT_DELAY);
 
- },
 
- error => {
+    } else {
 
- this.api_error = error.error;
+      this.api_error = derror;
 
- });
+    }
 
+  }
 
+  handleNote() {
 
- } else {
+    if (this.dispCustomernote) {
 
- this.api_error = derror;
+      this.dispCustomernote = false;
 
- }
+    } else {
 
- }
+      this.dispCustomernote = true;
 
- handleNote() {
+    }
 
- if (this.dispCustomernote) {
+  }
 
- this.dispCustomernote = false;
+  handleEmail() {
 
- } else {
+    if (this.dispCustomerEmail) {
 
- this.dispCustomernote = true;
+      this.dispCustomerEmail = false;
 
- }
+    } else {
 
- }
+      this.dispCustomerEmail = true;
 
- handleEmail() {
+    }
 
- if (this.dispCustomerEmail) {
+  }
 
- this.dispCustomerEmail = false;
 
- } else {
 
- this.dispCustomerEmail = true;
+  calculateDate(days) {
 
- }
+    this.resetApi();
 
- }
+    const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
+    const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
 
+    const newdate = new Date(date);
 
- calculateDate(days) {
+    newdate.setDate(newdate.getDate() + days);
 
- this.resetApi();
+    const dd = newdate.getDate();
 
- const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const mm = newdate.getMonth() + 1;
 
- const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
+    const y = newdate.getFullYear();
 
- const newdate = new Date(date);
+    const ndate1 = y + '-' + mm + '-' + dd;
 
- newdate.setDate(newdate.getDate() + days);
+    const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
 
- const dd = newdate.getDate();
+    const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
 
- const mm = newdate.getMonth() + 1;
+    const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
 
- const y = newdate.getFullYear();
+    const nDt = new Date(ndate);
 
- const ndate1 = y + '-' + mm + '-' + dd;
+    if (nDt.getTime() >= strtDt.getTime()) {
 
- const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
+      this.sel_checkindate = ndate;
 
- const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
+      this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
 
- const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
+    }
 
- const nDt = new Date(ndate);
+    const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- if (nDt.getTime() >= strtDt.getTime()) {
+    const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
 
- this.sel_checkindate = ndate;
+    const date1 = new Date(dt1);
 
- this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- }
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
 
- const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const date2 = new Date(dt2);
 
- const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
+    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
 
- const date1 = new Date(dt1);
+    if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
 
- const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      this.isFuturedate = true;
 
- const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    } else {
 
- const date2 = new Date(dt2);
+      this.isFuturedate = false;
 
- // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    }
 
- if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- this.isFuturedate = true;
+    const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
 
- } else {
+    const ddd = new Date(day);
 
- this.isFuturedate = false;
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
 
- }
+  }
 
- const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+  disableMinus() {
 
- const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
+    const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- const ddd = new Date(day);
+    const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
 
- this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+    const seldate = new Date(seldate2);
 
- }
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
 
- disableMinus() {
+    const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
- const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
 
- const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+    const strtDt = new Date(strtDt2);
 
- const seldate = new Date(seldate2);
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
 
- const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    if (startdate >= selecttdate) {
 
- const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      return true;
 
- const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+    } else {
 
- const strtDt = new Date(strtDt2);
+      return false;
 
- const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    }
 
- if (startdate >= selecttdate) {
+  }
 
- return true;
 
- } else {
 
- return false;
+  // disableMinus(){
 
- }
 
- }
 
+  // const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
+  // const seldate = new Date(moment(seldate1,'YYYY-MM-DD HH:mm').toDate());
 
- // disableMinus(){
+  // const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
 
+  // const strtDt = new Date(new Date(this.hold_sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }));
 
+  // // const strtDt = new Date(strtDate);
 
- // const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+  // const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
 
- // const seldate = new Date(moment(seldate1,'YYYY-MM-DD HH:mm').toDate());
+  // // if (strtDt.getTime() >= seldate.getTime()) {
 
- // const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+  // alert('selecttdate'+selecttdate);
 
- // const strtDt = new Date(new Date(this.hold_sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }));
+  // alert('startdate'+startdate);
 
- // // const strtDt = new Date(strtDate);
+  // if (startdate >= selecttdate) {
 
- // const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+  // return true;
 
- // // if (strtDt.getTime() >= seldate.getTime()) {
+  // } else {
 
- // alert('selecttdate'+selecttdate);
+  // return false;
 
- // alert('startdate'+startdate);
+  // }
 
- // if (startdate >= selecttdate) {
 
- // return true;
 
- // } else {
 
- // return false;
 
- // }
+  // }
 
 
 
+  getPartysizeDetails(domain, subdomain) {
 
+    this.shared_services.getPartysizeDetails(domain, subdomain)
 
- // }
+      .subscribe(data => {
 
+        this.partysizejson = data;
 
+        this.partySize = false;
 
- getPartysizeDetails(domain, subdomain) {
+        this.maxsize = 1;
 
- this.shared_services.getPartysizeDetails(domain, subdomain)
+        if (this.partysizejson.partySize) {
 
- .subscribe(data => {
+          this.partySize = true;
 
- this.partysizejson = data;
+          this.maxsize = (this.partysizejson.maxPartySize) ? this.partysizejson.maxPartySize : 1;
 
- this.partySize = false;
+        }
 
- this.maxsize = 1;
+        if (this.partySize && !this.partysizejson.partySizeForCalculation) { // check whether partysize box is to be displayed to the user
 
- if (this.partysizejson.partySize) {
+          this.partySizeRequired = true;
 
- this.partySize = true;
+        }
 
- this.maxsize = (this.partysizejson.maxPartySize) ? this.partysizejson.maxPartySize : 1;
+        if (this.partysizejson.partySizeForCalculation) { // check whether multiple members are allowed to be selected
 
- }
+          this.multipleMembers_allowed = true;
 
- if (this.partySize && !this.partysizejson.partySizeForCalculation) { // check whether partysize box is to be displayed to the user
+        }
 
- this.partySizeRequired = true;
+      },
 
- }
+        () => {
 
- if (this.partysizejson.partySizeForCalculation) { // check whether multiple members are allowed to be selected
 
- this.multipleMembers_allowed = true;
 
- }
+        });
 
- },
+  }
 
- () => {
+  checkPartySize(pVal) {
 
+    this.clearerrorParty();
 
+    const error = this.validatorPartysize(pVal);
 
- });
+    if (error !== '') {
 
- }
+      this.partyapi_error = error;
 
- checkPartySize(pVal) {
+    }
 
- this.clearerrorParty();
+  }
 
- const error = this.validatorPartysize(pVal);
+  validatorPartysize(pVal) {
 
- if (error !== '') {
+    this.resetApi();
 
- this.partyapi_error = error;
+    let errmsg = '';
 
- }
+    const numbervalidator = projectConstants.VALIDATOR_NUMBERONLY;
 
- }
+    this.enterd_partySize = pVal;
 
- validatorPartysize(pVal) {
+    if (!numbervalidator.test(pVal)) {
 
- this.resetApi();
+      errmsg = 'Please enter a valid party size';
 
- let errmsg = '';
+    } else {
 
- const numbervalidator = projectConstants.VALIDATOR_NUMBERONLY;
+      if (pVal > this.maxsize) {
 
- this.enterd_partySize = pVal;
+        errmsg = 'Sorry ... the maximum party size allowed is ' + this.maxsize;
 
- if (!numbervalidator.test(pVal)) {
+      }
 
- errmsg = 'Please enter a valid party size';
+    }
 
- } else {
+    return errmsg;
 
- if (pVal > this.maxsize) {
+  }
 
- errmsg = 'Sorry ... the maximum party size allowed is ' + this.maxsize;
 
- }
 
- }
+  clearerrorParty() {
 
- return errmsg;
+    this.partyapi_error = '';
 
- }
+  }
 
+  checkCouponExists(couponCode) {
 
+    let found = false;
 
- clearerrorParty() {
+    for (let index = 0; index < this.selected_coupons.length; index++) {
 
- this.partyapi_error = '';
+      if (couponCode === this.selected_coupons[index]) {
 
- }
+        found = true;
 
- checkCouponExists(couponCode) {
+        break;
 
- let found = false;
+      }
 
- for (let index = 0; index < this.selected_coupons.length; index++) {
+    }
 
- if (couponCode === this.selected_coupons[index]) {
+    return found;
 
- found = true;
+  }
 
- break;
+  toggleterms(i) {
 
- }
+    if (this.couponsList[i].showme) {
 
- }
+      this.couponsList[i].showme = false;
 
- return found;
+    } else {
 
- }
+      this.couponsList[i].showme = true;
 
- toggleterms(i) {
+    }
 
- if (this.couponsList[i].showme) {
+  }
 
- this.couponsList[i].showme = false;
+  removeJCoupon(i) {
 
- } else {
+    this.selected_coupons.splice(i, 1);
 
- this.couponsList[i].showme = true;
+    this.couponsList.splice(i, 1);
 
- }
+  }
 
- }
+  removeCoupons() {
 
- removeJCoupon(i) {
+    this.selected_coupons = [];
 
- this.selected_coupons.splice(i, 1);
+    this.couponsList = [];
 
- this.couponsList.splice(i, 1);
+    this.coupon_status = null;
 
- }
+  }
 
- removeCoupons() {
+  clearCouponErrors() {
 
- this.selected_coupons = [];
+    this.couponvalid = true;
 
- this.couponsList = [];
+    this.api_cp_error = null;
 
- this.coupon_status = null;
+  }
 
- }
+  applyCoupons(jCoupon) {
+    this.api_cp_error = null;
+    this.couponvalid = true;
+    const couponInfo = {
+      'couponCode': '',
+      'instructions': ''
+    };
 
- clearCouponErrors() {
+    if (jCoupon) {
+      const jaldeeCoupn = jCoupon.trim();
+      if (this.checkCouponExists(jaldeeCoupn)) {
+        this.api_cp_error = 'Coupon already applied';
+        this.couponvalid = false;
+        return false;
+      }
+      this.couponvalid = false;
+      let found = false;
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
+        }
+      }
+      if (found) {
+        this.couponvalid = true;
+      } else {
+        this.api_cp_error = 'Coupon invalid';
+      }
+    } else {
+      this.api_cp_error = 'Enter a Coupon';
+    }
+  }
 
- this.couponvalid = true;
 
- this.api_cp_error = null;
 
- }
+  getProviderDepart(id) {
+    this.shared_services.getProviderDept(id).
+      subscribe(data => {
+        this.departmentlist = data;
+        this.filterDepart = this.departmentlist.filterByDept;
+        for (let i = 0; i < this.departmentlist['departments'].length; i++) {
+          if (this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
+            if (this.departmentlist['departments'][i].serviceIds.length !== 0) {
+              this.departments.push(this.departmentlist['departments'][i]);
+            }
+          }
+        }
+        this.deptLength = this.departments.length;
+        // this.selected_dept = 'None';
+        if (this.deptLength !== 0) {
+          this.selected_dept = this.departments[0].departmentId;
+          this.handleDeptSelction(this.selected_dept);
+        }
+      });
+  }
 
- applyCoupons(jCoupon) {
- this.api_cp_error = null;
- this.couponvalid = true;
- const couponInfo = {
- 'couponCode': '',
- 'instructions': ''
- };
 
- if (jCoupon) {
- const jaldeeCoupn = jCoupon.trim();
- if (this.checkCouponExists(jaldeeCoupn)) {
- this.api_cp_error = 'Coupon already applied';
- this.couponvalid = false;
- return false;
- }
- this.couponvalid = false;
- let found = false;
- for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
- if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
- this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
- couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
- couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
- this.couponsList.push(couponInfo);
- found = true;
- this.selected_coupon = '';
- break;
- }
- }
- if (found) {
- this.couponvalid = true;
- } else {
- this.api_cp_error = 'Coupon invalid';
- }
- } else {
- this.api_cp_error = 'Enter a Coupon';
- }
- }
 
+  handleDeptSelction(obj) {
+    this.api_error = '';
+    this.selected_dept = obj;
+    if (obj === 'None') {
+      this.servicesjson = this.serviceslist;
+    } else {
+      for (let i = 0; i < this.departmentlist['departments'].length; i++) {
+        if (obj === this.departmentlist['departments'][i].departmentId) {
+          this.services = this.departmentlist['departments'][i].serviceIds;
+        }
+      }
+      const newserviceArray = [];
+      if (this.services) {
+        for (let i = 0; i < this.serviceslist.length; i++) {
+          for (let j = 0; j < this.services.length; j++) {
+            if (this.services[j] === this.serviceslist[i].id) {
+              newserviceArray.push(this.serviceslist[i]);
+            }
+          }
+        }
+        this.servicesjson = newserviceArray;
+      }
+    }
 
+    if (this.servicesjson.length > 0) {
+      this.sel_ser = this.servicesjson[0].id;
+      this.setServiceDetails(this.sel_ser);
+      this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    } else {
+      this.api_error = this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT');
+    }
+  }
 
- getProviderDepart(id) {
- this.shared_services.getProviderDept(id).
- subscribe(data => {
- this.departmentlist = data;
- this.filterDepart = this.departmentlist.filterByDept;
- for (let i = 0; i < this.departmentlist['departments'].length; i++) {
- if (this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
- if (this.departmentlist['departments'][i].serviceIds.length !== 0) {
- this.departments.push(this.departmentlist['departments'][i]);
- }
- }
- }
- this.deptLength = this.departments.length;
- // this.selected_dept = 'None';
- if (this.deptLength !== 0) {
- this.selected_dept = this.departments[0].departmentId;
- this.handleDeptSelction(this.selected_dept);
- }
- });
- }
 
 
+  getServicebyLocationId(locid, pdate) {
+    this.api_loading1 = true;
+    this.resetApi();
+    this.shared_services.getServicesByLocationId(locid)
+      .subscribe(data => {
+        this.servicesjson = data;
+        this.serviceslist = data;
+        this.sel_ser_det = [];
+        if (this.servicesjson.length > 0) {
+          this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+          // this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
+          this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+          this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+        }
+        this.api_loading1 = false;
+      },
+        () => {
+          this.api_loading1 = false;
+          this.sel_ser = '';
+        });
+  }
 
- handleDeptSelction(obj) {
- this.api_error = '';
- this.selected_dept = obj;
- if (obj === 'None') {
- this.servicesjson = this.serviceslist;
- } else {
- for (let i = 0; i < this.departmentlist['departments'].length; i++) {
- if (obj === this.departmentlist['departments'][i].departmentId) {
- this.services = this.departmentlist['departments'][i].serviceIds;
- }
- }
- const newserviceArray = [];
- if (this.services) {
- for (let i = 0; i < this.serviceslist.length; i++) {
- for (let j = 0; j < this.services.length; j++) {
- if (this.services[j] === this.serviceslist[i].id) {
- newserviceArray.push(this.serviceslist[i]);
- }
- }
- }
- this.servicesjson = newserviceArray;
- }
- }
 
- if (this.servicesjson.length > 0) {
- this.sel_ser = this.servicesjson[0].id;
- this.setServiceDetails(this.sel_ser);
- this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
- } else {
- this.api_error = this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT');
- }
- }
 
+  getTravelMod(event) {
+     this.travelMode = event;
+     if (event === 'DRIVING') {
+      this.driving = true;
+      this.walking = false;
+    } else {
+      this.walking = true;
+      this.driving = false;
+    }
+  }
 
+  getNotifyTime(time) {
+    this.notifyTime = time;
+  }
 
- getServicebyLocationId(locid, pdate) {
- this.api_loading1 = true;
- this.resetApi();
- this.shared_services.getServicesByLocationId(locid)
- .subscribe(data => {
- this.servicesjson = data;
- this.serviceslist = data;
- this.sel_ser_det = [];
- if (this.servicesjson.length > 0) {
- this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
- // this.setServiceDetails(this.servicesjson[0]); // setting the details of the first service to the holding variable
- this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
- this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
- }
- this.api_loading1 = false;
- },
- () => {
- this.api_loading1 = false;
- this.sel_ser = '';
- });
- }
 
 
+  saveLiveTrackDetails() {
+    const post_Data = {
+      'jaldeeGeoLocation': {
+        'latitude': this.lat_lng.latitude,
+        'longitude': this.lat_lng.longitude
+      },
+      'travelMode': this.travelMode,
+      'waitlistPhonenumber': this.consumerPhoneNo,
+      'jaldeeStartTimeMod': this.notifyTime,
+      'shareLocStatus': this.shareLoc
 
- getTravelMod(event) {
- console.log(event);
- this.travelMode = event;
- }
+    };
 
- getNotifyTime(time) {
- this.notifyTime = time;
- }
+    this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
+      .subscribe(data => {
+        console.log(data);
+      });
 
-
-
- saveLiveTrackDetails() {
- const post_Data = {
- 'jaldeeGeoLocation': {
- 'latitude': this.lat_lng.latitude,
- 'longitude': this.lat_lng.longitude
- },
- 'travelMode': this.travelMode,
- 'waitlistPhonenumber': this.consumerPhoneNo,
- 'jaldeeStartTimeMod': this.notifyTime,
- 'shareLocStatus': this.shareLoc
-
- };
-
- this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
- .subscribe(data => {
- console.log(data);
- });
-
- }
+  }
 
 
 

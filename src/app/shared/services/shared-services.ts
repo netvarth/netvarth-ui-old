@@ -1965,7 +1965,35 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
 
   }
-
+  unSaveMyLocation(uid, id) {
+    const url = 'consumer/waitlist/unsaveMyLoc/' + uid + '?account=' + id;
+    return this.servicemeta.httpDelete(url);
+  }
+  startLiveTrack(uid, id) {
+    const url = 'consumer/waitlist/start/mystracking/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  stopLiveTrack(uid, id) {
+    const url = 'consumer/waitlist/stop/mystracking/' + uid + '?account=' + id;
+    return this.servicemeta.httpDelete(url);
+  }
+  statusOfLiveTrack(uid, id) {
+    const path = 'consumer/waitlist/status/mystracking/' + uid + '?account=' + id;
+    return this.servicemeta.httpGet(path);
+  }
+  liveLocateChange(uid, id) {
+    const url = 'consumer/waitlist/live/locate/change/waitlist/status/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url);
+  }
+  updateLatLong(uid, id, data) {
+    const url = 'consumer/waitlist/update/latlong/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
+ updateTravelMode(uid, id, data) {
+   console.log(data);
+  const url = 'consumer/waitlist/update/travelmod/' + uid + '?account=' + id;
+  return this.servicemeta.httpPut(url, data);
+ }
 
 
   getTimeinMin(time) {

@@ -135,6 +135,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   KmOrMe: any;
   travelTime: any;
   timeUnit: any;
+  changemode: any = [];
+  lat_lng = {
+    latitude: 0,
+    longitude: 0
+  };
+  driving: boolean;
+  walking: boolean;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -256,6 +263,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let retval;
           for (const waitlist of this.waitlists) {
             console.log(waitlist);
+            this.changemode[i] = false;
+            console.log(this.changemode[i]);
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
@@ -981,6 +990,65 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       return term;
     }
+  }
+  editmodeOn(i) {
+    this.changemode[i] = true;
+  }
+  getTravelMod(uid, id, type,i) {
+    const passdata = {
+      'travelMode': type
+    };
+
+    this.shared_services.updateTravelMode(uid, id, passdata)
+    .subscribe(data => {
+        this.changemode[i] = false;
+              },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+
+  }
+
+  getCurrentLocation() {
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.lat_lng.longitude = +pos.coords.longitude;
+        this.lat_lng.latitude = +pos.coords.latitude;
+        console.log(this.lat_lng);
+
+      },
+        error => {
+
+        });
+
+    }
+
+  }
+  updateLatLong(uid, id, passdata) {
+    this.shared_services.updateLatLong(uid, id, passdata)
+    .subscribe(data => {
+        this.changemode = false;
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+
+  }
+  startTracking(uid, id,i) {
+    this.shared_services.startLiveTrack(uid, id)
+    .subscribe(data => {
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  stopTracking(uid, id,i) {
+    this.shared_services.stopLiveTrack(uid, id)
+    .subscribe(data => {
+      },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
 
 

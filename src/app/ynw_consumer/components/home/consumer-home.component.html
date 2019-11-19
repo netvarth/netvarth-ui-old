@@ -8,7 +8,7 @@
             </h2>
             <div class="outer">
                 <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
-                    <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists">
+                    <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists; let i=index" >
                         <!-- <div class="list"> -->
                         <div class="header">
                             <div class="lt">
@@ -131,19 +131,31 @@
                                 </span>
                             </div>
                             <div>
-                                    <span class="persons"><span>Travel time :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit}}
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.unit == 'MINUTES'">Minutes</span>
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.unit == 'HOURES'">Houres</span>
+                                    <span class="persons"><span>Travel time :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime}}
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'MINUTES'">Minutes</span>
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'HOURES'">Houres</span>
                                 </span>
                             </div>
-                            <div>
+                            <div class="col-md-6"> <label>Selected travel mode is:</label></div>
+                            <div class="col-md-4" *ngIf ="changemode[i] == false"> 
+                                <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">Driving</label>
+                                <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">Walking</label>  
+                                <span (click)="editmodeOn(i)"><i class="icon-edit"></i> </span></div>
+                            <div class="col-md-4" *ngIf = "changemode[i] == true">
                                 <ul class="trackIcons">
-                                    <li matTooltip="Driving"  [class.driving]="driving" (click)="getTravelMod('DRIVING')"><div class="travelmodeicon"><i
+                                    <li matTooltip="Driving"  [class.driving]="driving" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"><div class="travelmodeicon"><i
                                             class="fa fa-car" [class.walking]="walking" aria-hidden="true"></i></div></li>
-                                    <li matTooltip="Walking"  (click)="getTravelMod('WALKING')"><div class="travelmodeicon"><img
+                                    <li matTooltip="Walking"  (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"><div class="travelmodeicon"><img
                                             src="./assets/images/walking.png" alt="" style="width: 15px;height:15px;" /></div></li>
                                 </ul> 
                         </div>
+
+                        <!-- <div >
+                            <label>Live track</label><button mat-button class="cs-btn bt1"
+                            (click)="startTracking(waitlist.ynwUuid,waitlist.provider.id,i)">START</button>
+                            <button mat-button class="cs-btn bt1"
+                            (click)="stopTracking(waitlist.ynwUuid,waitlist.provider.id,i)">STOP</button>
+                    </div> -->
                                
                                 </div>
                             </div>
