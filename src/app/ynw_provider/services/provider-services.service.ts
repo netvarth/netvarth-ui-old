@@ -778,7 +778,7 @@ export class ProviderServices {
     const url = 'provider/license/billing/nextBillCycle';
     return this.servicemeta.httpGet(url);
   }
-  getAnnualDiscount() {
+  getAnnualDiscountPercentage() {
     const url = 'provider/license/annualDiscPct';
     return this.servicemeta.httpGet(url);
   }

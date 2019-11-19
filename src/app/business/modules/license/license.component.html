@@ -41,15 +41,15 @@
                                                 <div class="lc4-1">
                                                     <div class="lt mgn-bt-10">
                                                         <div *ngFor="let invoice of invoices let i=index">
-                                                            <span class="amount">License Status &nbsp; <i
+                                                            <span class="amount">License Status:&nbsp;&nbsp; <i
                                                                     class="fa fa-exclamation-triangle"
-                                                                    aria-hidden="true"
+                                                                    aria-hidden="true"  matTooltip="Services may get disconnected, if not paid"
                                                                     *ngIf="invoices[0].licensePaymentStatus =='NotPaid'"
-                                                                    style="color: orange;"> &nbsp; Not Paid</i><i
+                                                                    style="color: orange;">Not Paid</i><i matTooltip="Services may get disconnected, if not paid"
                                                                     class="fa fa-exclamation-triangle"
                                                                     aria-hidden="true"
                                                                     *ngIf="invoices[0].licensePaymentStatus =='Paid'"
-                                                                    style="color: green;">&nbsp; Paid</i>
+                                                                    style="color: green;">Paid</i>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -58,8 +58,8 @@
                                                 <div class="lc4-1" *ngIf="currentlicense_details.dueAmount > 0">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
-                                                            <span class="amount">{{due_amt}} : <strong>{{currentlicense_details.dueAmount
-                                                                        | currency:'&#8377; '}}</strong>
+                                                            <span class="amount">{{due_amt}}:&nbsp;&nbsp;<strong>{{currentlicense_details.dueAmount
+                                                                        | currency:'&#8377;'}}</strong>
                                                             </span> <span class="amount" *ngIf="invoices.length != 0">
                                                                 <strong> - {{currentlicense_details.nextPaymentOn
                                                                         | date: dateFormat }}</strong>
@@ -70,16 +70,15 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="lc4-1"
-                                                    *ngIf="currentlicense_details.accountLicense.displayName !='Gold - FREE Trial 45 days'">
+                                                <div class="lc4-1">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
-                                                            <span class="amount">Type : <strong>{{licensePlan}}</strong>
+                                                            <span class="amount">Subscription Plan: <strong>{{licenseDisplayName}}</strong>
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="lc4-1"
+                                                <!-- <div class="lc4-1"
                                                     *ngIf="currentlicense_details.accountLicense.displayName =='Gold - FREE Trial 45 days'">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
@@ -88,11 +87,11 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="lc4-1">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
-                                                            <span class="amount">Package :
+                                                            <span class="amount">Package:
                                                                 <strong>{{currentlicense_details.accountLicense.displayName}}</strong>
                                                             </span>&nbsp;
                                                             <span style="padding-left: 30px;" class="cs-btn bt3"
@@ -111,54 +110,58 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="lc4-1 mgn-bt-10 colum "
-                                                    *ngIf="currentlicense_details.accountLicense.displayName !='Gold - FREE Trial 45 days' && currentlicense_details.accountLicense.displayName !='FREE'">
+                                                <div class="lc4-1 mgn-bt-10 colum ">
                                                     <div style="margin-top: 10px; margin-right: 10px;">
                                                         <div class="lt"
-                                                            *ngIf="licensePlan == 'Monthly' && statusOfLicense == 0">
-                                                            Jaldee Recommends , <span (click)="getbillCycle()"><span
-                                                                    style="color: deepskyblue"
-                                                                    class="pointlist"><u>Switch to
-                                                                        annual</u></span> <span> and get
-                                                                    {{annualdiscount}}% discount</span></span>
+                                                            *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0">
+                                                            Jaldee recommends , <span (click)="openAnnualSection()" ><span                                                                   
+                                                                    class="bt3">Switch to
+                                                                        Annual</span> <span> and get
+                                                                    <strong>{{annualdiscount}}%</strong> discount</span></span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12  lc4-1 mgn-bt-10 mgn-up-20 " *ngIf="changelicence">
+                                                    <div class="col-md-12 lc4-1 mgn-bt-10 mgn-up-20 " *ngIf="changelicence">
                                                         <div class="lt">
-                                                            <div><label><strong>Effective from :</strong> </label>
-                                                                {{effectivedate  | date: dateFormat}}</div> <span
+                                                            <div class="ln-hgt-24">Subscription Plan:&nbsp;&nbsp;<strong>Annual</strong></div>
+                                                            <div class="ln-hgt-24">Period:&nbsp;&nbsp;<strong>1 Year</strong> </div>
+                                                            <div class="ln-hgt-24">Effective From:&nbsp;&nbsp;<strong>{{effectivedate  | date: dateFormat}}</strong></div>
+                                                            <div class="ln-hgt-24">Grand Total: &nbsp;&nbsp;<strong>{{grandTotal
+                                                                    | currency:'&#8377;'}}</strong></div>
+                                                            <div class="ln-hgt-24">Applied Discount: &nbsp;&nbsp;<strong>{{appliedDiscount
+                                                                    | currency:'&#8377;'}}</strong></div>
+                                                            <div class="ln-hgt-24">Net Total: &nbsp;&nbsp;<strong>{{netTotal
+                                                                    | currency:'&#8377;'}}</strong></div>
+                                                                 <!-- <span
                                                                 class="lc3-2 lcd">
                                                                 <span class="t_c cs-btn bt10">T & C Apply</span>
-                                                            </span>
+                                                            </span> -->
                                                         </div>
                                                         <div>
                                                             <button class="cs-btn bt1"
                                                                 style="margin-right:10px; margin-top: 30px;"
                                                                 (click)="cancelAssignServices()">Cancel</button>
                                                             <button class="cs-btn bt1" style="margin-top: 30px;"
-                                                                (click)="doUpgradeSubcription('Annual')">Save</button>
+                                                                (click)="doUpgradeSubcription('ANNUAL')">Ok</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="lc4-1 mgn-bt-10"
-                                                    *ngIf="licensePlan == 'Monthly' && statusOfLicense == 1">
+                                                    *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 1">
                                                     <div class="lt">
-                                                        You changed your license package to annual
-                                                        . The invoice for this
-                                                        transaction will be generated in next business cycle.
-                                                        <span style="color: deepskyblue" class="pointlist"
-                                                            (click)="doUpgradeSubcription('Monthly')"><u> Cancel annual
-                                                                subscription</u></span>
+                                                        You changed your license subscription type to <strong>Annual.</strong>
+                                                        The subscription license statement will be generated on {{effectivedate | date: dateFormat}}.
+                                                        <span class="cs-btn bt3"
+                                                            (click)="doUpgradeSubcription('MONTHLY')"> Cancel annual
+                                                                subscription</span>
                                                     </div>
                                                 </div>
                                                 <div class="lc4-1 mgn-bt-10"
-                                                    *ngIf="licensePlan == 'Annual' && pendingStatus == 1">
+                                                    *ngIf="licensePlan == 'ANNUAL' && pendingStatus == 1">
                                                     <div class="lt">
-                                                        You changed your license package to monthly
-                                                        . The invoice for this
-                                                        transaction will be generated in next business cycle.
-                                                        If you need to cancel <span style="color: deepskyblue"
-                                                            (click)="doUpgradeSubcription('Annual')">Click here</span>
+                                                        You changed your license subscription type to <strong>Monthly.</strong>
+                                                        The subscription license statement will be generated on {{effectivedate | date: dateFormat}}.
+                                                        If you need to cancel <span 
+                                                            (click)="doUpgradeSubcription('ANNUAL')">Click here</span>
                                                     </div>
                                                 </div>
                                                 <span class="ttle"
@@ -175,8 +178,8 @@
                                                     <div>
                                                         <!-- <span *ngIf= "licensePlan == 'Monthly' && statusOfLicense == 0" >Change plan to 
                                                             <button class="cs-btn bt1"    (click)="doUpgradeSubcription('Annual')">Yearly</button></span> -->
-                                                        <span *ngIf="licensePlan == 'Annual' && statusOfLicense == 0">
-                                                            Contact Admin if you need to change this to monthly
+                                                        <span *ngIf="licensePlan == 'ANNUAL' && statusOfLicense == 0">
+                                                            For any license related enquiries contact Jaldee Support
                                                             <!-- <span   *ngIf= "statusOfLicense == 1" >Yearly({{sub['amount'] | currency:'INR':'symbol':'.2-2'}})</span> -->
                                                         </span>
                                                     </div>
