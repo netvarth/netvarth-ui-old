@@ -61,13 +61,14 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             });
     }
     ngOnDestroy() {
+        this.subscription.unsubscribe();
         this.serviceSubscription.unsubscribe();
     }
     ngOnInit() {
         this.initServiceParams();
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input.ttype === 'image-upload') {
-                this.provider_services.uploadServiceGallery(this.service_id, input.value)
+                this.provider_services.uploadServiceGallery(input.sourceId, input.value)
                     .subscribe(
                         () => {
                             this.getGalleryImages();

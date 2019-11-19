@@ -774,6 +774,14 @@ export class ProviderServices {
     const url = 'provider/salesChannel/' + id;
     return this.servicemeta.httpPost(url);
   }
+  getbillCycle() {
+    const url = 'provider/license/billing/nextBillCycle';
+    return this.servicemeta.httpGet(url);
+  }
+  getAnnualDiscountPercentage() {
+    const url = 'provider/license/annualDiscPct';
+    return this.servicemeta.httpGet(url);
+  }
   manageProvider(accountId) {
     const url = 'provider/branch/manage/' + accountId;
     return this.servicemeta.httpPost(url);

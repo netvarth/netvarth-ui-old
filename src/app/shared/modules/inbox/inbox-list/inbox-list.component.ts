@@ -36,6 +36,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   cronHandle: Subscription;
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   msgdialogRef;
+  fileTooltip = Messages.FILE_TOOLTIP;
 
   @Input() messages: any;
   @Input() fromsource: any;

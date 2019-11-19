@@ -149,6 +149,7 @@ export const projectConstants = {
     'image/webp'
   ],
   IMAGE_MAX_SIZE: 5000000, // byte
+  FILE_MAX_SIZE: 10000000,
   INTERVAL_TIME: 60000, // byte
   AUTOSUGGEST_MIN_CHAR: 3,  // minimum characters required for autosuggest
   AUTOSUGGEST_LOC_MAX_CNT: 100000, // max number of locations that will be displayed in the autosuggestion
@@ -340,7 +341,7 @@ export const projectConstants = {
     Done: 'Completed',
     Started: 'Started',
     Arrived: 'Arrived',
-    CheckedIn: 'checked in',
+    CheckedIn: 'Checked in',
     Cancelled: 'Cancelled'
   },
   CHECK_IN_STATUSES_FILTER: [
@@ -453,5 +454,11 @@ export const projectConstants = {
       'order': 5,
     }
   ],
-  ADWORDSPLIT: '__'
+  ADWORDSPLIT: '__',
+  FILETYPES_UPLOAD: [
+    'image/jpg',
+    'image/png',
+    'image/jpeg',
+    'application/pdf'
+  ]
 };

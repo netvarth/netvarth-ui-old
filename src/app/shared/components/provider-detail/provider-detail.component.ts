@@ -195,6 +195,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   deptlist: any = [];
   jaldeediscountJson;
   maximumDiscount: any;
+  jdnlength;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -275,8 +276,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
-        console.log(section);
-        console.log(res);
         switch (section) {
           case 'businessProfile': {
             this.socialMedialist = [];
@@ -462,9 +461,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'jaldeediscount':
-            console.log(res);
             this.jaldeediscountJson = res;
-            
+           this.jdnlength = Object.keys(this.jaldeediscountJson).length;
         }
       },
         () => {
@@ -1060,7 +1058,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         jdnList: this.jaldeediscountJson
-       
       }
     });
     this.jdndialogRef.afterClosed().subscribe(() => {

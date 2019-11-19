@@ -240,12 +240,18 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        this.selectedMessage.files.push(file);
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedMessage.base64.push(e.target['result']);
-        };
-        reader.readAsDataURL(file);
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
       }
     }
   }

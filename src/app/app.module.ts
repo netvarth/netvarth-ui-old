@@ -98,7 +98,8 @@ import { DisplayboardLayoutContentModule } from './business/modules/displayboard
     ConsumerRateServicePopupComponent,
     CouponsComponent,
     RequestForComponent,
-    ConsumerPaymentmodeComponent
+    ConsumerPaymentmodeComponent,
+    ForceDialogComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

@@ -42,7 +42,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     ) {
 
     }
-    ngOnChanges() {}
+    ngOnChanges() { }
     ngOnInit() {
         if (this.data.source_id) {
             this.source_id = this.data.source_id;
@@ -52,7 +52,6 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.subscription = this.galleryService.getMessage().subscribe(
             (response) => {
                 if (response.ttype === 'upload') {
-                    console.log(response.ttype);
                     if (response.status === 'success') {
                         this.resetVariables();
                         this.dialogRef.close();
@@ -129,10 +128,10 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         // console.log(JSON.stringify(propertiesDet));
         submit_data.append('properties', blobPropdata);
         // this.uploadApi(submit_data);
-        console.log(submit_data);
         const input = {
             ttype: 'image-upload',
-            value: submit_data
+            value: submit_data,
+            sourceId: this.source_id
         };
         this.galleryService.sendMessage(input);
     }

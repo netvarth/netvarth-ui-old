@@ -9,7 +9,6 @@
                           <div class="th th1">Date/Time</div>
                       </div> -->
         </li>
-
         <li class="ttd" [class.active]="selectedMsg==i" [class.outer-received]="user_id != message.owner.id"
             [class.outer-sent]="user_id == message.owner.id" *ngFor="let message of messages; let i = index">
             <div class="outer" (click)="showMsg(i)">
@@ -17,7 +16,11 @@
                     <span class="icon-inbox-in" *ngIf="user_id != message.owner.id"></span>
                     <span class="icon-inbox-out" *ngIf="user_id == message.owner.id"></span>
                 </div>
-
+                <div class="td td0">
+                    <span class="result" *ngIf="message.attachements" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="fileTooltip"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    </span>
+                </div>
                 <div class="td td3">
                     <div class="label">{{provider_consumer_cap}}</div>
                     <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}
@@ -52,7 +55,7 @@
                     </div>
                     <div class="thumbnails mt10 mb10" *ngIf="message.attachements">
                         <a class="mg-10" target="_blank" [href]="attachment.s3path"
-                            *ngFor="let attachment of message.attachements"><img [src]="attachment.s3path"
+                            *ngFor="let attachment of message.attachements"><img [src]="attachment.thumbPath"
                                 style="width:100px; height:100px" /></a>
                     </div>
                     <div class="action">

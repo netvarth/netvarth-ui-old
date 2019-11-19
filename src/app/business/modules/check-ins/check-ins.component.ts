@@ -1264,7 +1264,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   viewBillPage(checkin) {
-    this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
+    this.provider_services.getWaitlistBill(checkin.ynwUuid)
+      .subscribe(
+        data => {
+          this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+      // this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
   }
   resetPaginationData() {
     this.filter.page = 1;

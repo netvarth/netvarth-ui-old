@@ -15,5 +15,10 @@ export class DateFormatPipe implements PipeTransform {
     value = datePipe.transform(value, 'yyyy-MM-dd');
     return value;
   }
+  transformTomciDate(value: any) {
+    const datePipe = new DatePipe('en-US');
+    value = datePipe.transform(value, 'yyyy/MM/dd');
+    return value;
+  }
 
 }

@@ -97,6 +97,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
+    console.log(this.bname);
+    console.log(this.source);
     this.getTaxpercentage();
     this.loading = true;
     this.payment_status = this.invoice.licensePaymentStatus || null;
@@ -135,7 +137,6 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           }
           if (this.invoice.mergedStatements) {
             this.checkPreviousStatements(this.invoice.mergedStatements);
-            console.log('old statements.........' + JSON.stringify(this.previousStatements));
           }
         },
         error => {

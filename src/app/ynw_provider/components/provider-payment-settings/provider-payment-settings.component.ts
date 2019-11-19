@@ -670,7 +670,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.licenseMetrics = data;
                 for (let i = 0; i < this.licenseMetrics.length; i++) {
                     for (let j = 0; j < this.licenseMetadata.length; j++) {
-                        if (this.licenseMetrics[i].displayName === 'Jaldee Pay/Billing') {
+                        if (this.licenseMetrics[i].name === 'Jaldee_POS_And_Billiing') {
                             if (this.licenseMetadata[j].pkgId === pkgId) {
                                 for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
                                     if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {

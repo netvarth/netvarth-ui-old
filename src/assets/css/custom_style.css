@@ -1420,7 +1420,7 @@ sup {
 @media only screen and (max-width: 769px) {
   .bcrumb {
     margin-bottom: 5px !important;
-    font-size: 1rem !important
+    font-size: small !important
   }
 }
 
@@ -5043,13 +5043,6 @@ i.notavail {
   display: none;
 }
 
-.disabledJdn {
-  /* background: #f2f2f2;
-  border: 3px dashed #ccc !important; */
-  cursor: not-allowed !important;
-  padding: 10px;
-}
-
 .disabled {
   background: #e6e6e6 !important;
   cursor: not-allowed !important;
@@ -5845,6 +5838,85 @@ background-color:#fff !important;
  .loc_bt{
   margin-left: 60px
  }
+  @media (min-width: 768px) {
+  .d-md-none {
+    display: none !important;
+  }
+ }
+  @media (max-width: 320px) {
+  .ln-hgt-40 {
+    font-size: smaller !important;
+    line-height: 40px;
+  }
+}
+ .invoice .amount-pay {
+  font-size: 20px; 
+  font-weight: 600;
+ }
+ @media only screen and (max-width: 440px) {
+   .invoice {
+     padding: 10px !important;
+   }
+  .invoice .amount-pay {
+    font-size: 15px !important; 
+   }
+ }
+@media only screen and (min-width: 600px) {
+ .align-style .left-align {
+   float: left;
+ }
+ .align-style .right-align {
+  float: right;
+  text-align: right;
+  }
+}
+@media (max-width: 784px) {
+  .prov-bill-disc {
+    width: 180px !important;
+  }
+}
+.jdn-pg i.editbt { margin-left: 20px !important;}
+.jdn-title {font-weight: 600 !important;}
+.jdn-pg .bt3{padding: 5px 10px !important}
+.jdn-pg .mat-input-element {
+  border : 1px solid #d2d6de !important;
+}
+@media only screen and (max-width: 374px) {
+  .jdn-pg .bt3{
+    margin-top:10px !important
+  }
+}
+.mci-warning {
+  color: red;
+  margin-left: 10px;
+}
+.payment-status{
+  padding: 0px !important;
+}
+.setings{
+  font-weight: 600 !important;
+}
+.sidebar-mini.sidebar-collapse .main-sidebar .available .avail{display:none}
+.sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available{margin-left: -5px;}
+.sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available i{font-size: 0.8rem;}
+.btst{
+border-color: #3c8dbc !important;
+}
+.sc-t{
+  border-bottom: none !important;
+}
+.instantQ {
+  color: red;
+  font-weight: 400;
+}
+.dropdown-menu .available>a {
+  font-weight: 600;
+  padding: 10px;
+}
+.text-failure {
+  color: red;
+  background: none;
+}
 .trackIcons{
 list-style: none;
 display: flex;

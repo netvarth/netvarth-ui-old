@@ -76,7 +76,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                                 if (logo[0]) {
                                     this.blogo = logo[0].url;
                                 } else {
-                                    this.blogo = 'img-null.svg';
+                                    this.blogo = '../../../assets/images/img-null.svg';
                                 }
                                 this.clogo = '../../../assets/images/avatar5.png';
                             });
@@ -105,7 +105,6 @@ export class MailboxComponent implements OnInit, OnDestroy {
             this.selectedMessage[parentIndex]['message'] = message;
             this.selectedParentIndex = parentIndex;
             this.selectedChildIndex = childIndex;
-            // console.log(this.selectedMessage);
         }
     }
     getInboxMessages() {
@@ -116,14 +115,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     this.messages = data;
                     this.sortMessages();
                     this.generateCustomInbox(data);
-                    this.groupMessages = this.shared_functions.groupBy(this.inboxList, 'username');
+                    this.groupMessages = this.shared_functions.groupBy(this.inboxList, 'accountId');
                     this.inboxUsersList = [];
                     Object.keys(this.groupMessages).forEach(key => {
                         const inboxList = this.groupMessages[key];
                         const timestamp = this.groupMessages[key][0]['timestamp'];
                         const lastmessage = this.groupMessages[key][0]['message'];
                         const inboxUserList = {
-                            userKey: key,
+                            userKey: this.groupMessages[key][0]['username'],
                             inboxList: inboxList.reverse(),
                             latestTime: timestamp,
                             latestMessage: lastmessage
@@ -199,6 +198,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
         let senderName;
         let senderId;
         let messageStatus;
+        let accountId;
         for (const message of messages) {
             senderName = message.owner.userName;
             senderId = message.owner.id;
@@ -208,7 +208,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 senderName = message.receiver.userName;
                 messageStatus = 'out';
             }
+            if (message.accountId === message.owner.id) {
+                accountId = message.receiver.id;
+            }
+            if (message.accountId === message.receiver.id) {
+                accountId = message.owner.id;
+            }
             const inboxData = {
+                accountId: accountId,
                 timestamp: message.timeStamp,
                 username: senderName,
                 service: message.service,
@@ -337,6 +344,13 @@ export class MailboxComponent implements OnInit, OnDestroy {
         if (this.showCaptionBox[parentIndex] && this.showCaptionBox[parentIndex][index]) {
             delete this.activeImageCaption[parentIndex][index];
             this.showCaptionBox[parentIndex][index] = false;
+        }
+    }
+    getThumbUrl(attachment) {
+        if (attachment.s3path.indexOf('.pdf') !== -1) {
+            return attachment.thumbPath;
+        } else {
+            return attachment.s3path;
         }
     }
 }

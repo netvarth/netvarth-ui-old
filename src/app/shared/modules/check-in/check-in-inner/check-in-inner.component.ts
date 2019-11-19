@@ -426,10 +426,8 @@ export class CheckInInnerComponent implements OnInit {
           const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
 
           const serverdate = moment(server).format();
-
-          const date1 = new Date(serverdate);
-
-          const nextdate = new Date(seldate_checker.setDate(date1.getDate() + 1));
+          const servdate = new Date(serverdate);
+          const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
 
 
 
@@ -882,56 +880,34 @@ export class CheckInInnerComponent implements OnInit {
 
 
     // return new Promise((resolve) => {
-
-
-
     if (this.payEmail === this.payEmail1) {
-
       post_data = {
-
         'id': this.userData.userProfile.id || null,
-
         'firstName': this.userData.userProfile.firstName || null,
-
         'lastName': this.userData.userProfile.lastName || null,
-
         'dob': this.userData.userProfile.dob || null,
-
         'gender': this.userData.userProfile.gender || null,
-
         'email': this.payEmail || ''
-
       };
-
       passtyp = 'consumer';
-
       if (this.payEmail) {
-
         this.shared_services.updateProfile(post_data, passtyp)
-
           .subscribe(
-
             () => {
-
               this.getProfile();
-
               // this.api_success = Messages.PROFILE_UPDATE;
-
               // this.sharedFunctionobj.openSnackBar(Messages.PROFILE_UPDATE);
-
               // resolve();
-
             },
-
             error => {
-
               // this.api_error = error.error;
-
               this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-
             });
-
       }
+    } else {
+      this.email1error = 'Email and Re-entered Email do not match';
+    }
+    // });
 
     } else {
 
@@ -1098,69 +1074,39 @@ export class CheckInInnerComponent implements OnInit {
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
 
     this.queueQryExecuted = false;
-
-    this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
-
-      .subscribe(data => {
-
-        this.queuejson = data;
-
-        this.queueQryExecuted = true;
-
-        if (this.queuejson.length > 0) {
-
-          let selindx = 0;
-
-          for (let i = 0; i < this.queuejson.length; i++) {
-
-            if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
-
-              selindx = i;
-
+    if (locid && servid) {
+      this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+        .subscribe(data => {
+          this.queuejson = data;
+          this.queueQryExecuted = true;
+          if (this.queuejson.length > 0) {
+            let selindx = 0;
+            for (let i = 0; i < this.queuejson.length; i++) {
+              if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
+                selindx = i;
+              }
             }
-
+            this.sel_queue_id = this.queuejson[selindx].id;
+            this.sel_queue_indx = selindx;
+            // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+            this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+            this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
+            this.sel_queue_name = this.queuejson[selindx].name;
+            this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+            this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+            this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
+            this.setTerminologyLabels();
+          } else {
+            this.sel_queue_indx = -1;
+            this.sel_queue_id = 0;
+            this.sel_queue_waitingmins = 0;
+            this.sel_queue_servicetime = '';
+            this.sel_queue_name = '';
+            this.sel_queue_timecaption = '';
+            this.sel_queue_personaahead = 0;
           }
-
-          this.sel_queue_id = this.queuejson[selindx].id;
-
-          this.sel_queue_indx = selindx;
-
-          // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-
-          this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
-
-          this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
-
-          this.sel_queue_name = this.queuejson[selindx].name;
-
-          this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-
-          this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-
-          this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-
-          this.setTerminologyLabels();
-
-        } else {
-
-          this.sel_queue_indx = -1;
-
-          this.sel_queue_id = 0;
-
-          this.sel_queue_waitingmins = 0;
-
-          this.sel_queue_servicetime = '';
-
-          this.sel_queue_name = '';
-
-          this.sel_queue_timecaption = '';
-
-          this.sel_queue_personaahead = 0;
-
-        }
-
-      });
-
+        });
+    }
   }
 
 
@@ -1610,9 +1556,7 @@ export class CheckInInnerComponent implements OnInit {
             const payData = {
 
               'amount': this.prepaymentAmount,
-
               // 'paymentMode': this.paytype,
-
               'uuid': retUUID,
 
               'accountId': this.account_id,

@@ -434,6 +434,14 @@
                                         </mat-panel-description>
                                     </div>
                                     <ng-container [ngSwitch]="fields.dataType">
+                                            <ng-container *ngSwitchCase="'TEXT'">
+                                                    <div class="cont-btn">
+                                                        <p> {{fields.value | capitalizeFirst}}</p>
+                                                        <span class="editbt"
+                                                            (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
+                                                    </div>
+                                                </ng-container>
+
                                         <ng-container *ngSwitchCase="'Gender'">
                                             <div class="cont-btn" style="display: flex">
                                                 <p> {{fields.value | capitalizeFirst}}</p>
@@ -532,6 +540,14 @@
                                     </mat-panel-description>
     
                                     <ng-container [ngSwitch]="fields.dataType">
+                                            <ng-container *ngSwitchCase="'TEXT'">
+                                                    <div class="cont-btn">
+                                                        <p> {{fields.value | capitalizeFirst}}</p>
+                                                        <span class="editbt"
+                                                            (click)="editDynamicField(fields.name, 'domain_questions')"></span>
+                                                    </div>
+                                                </ng-container>
+
                                         <ng-container *ngSwitchCase="'Gender'">
                                             <div class="cont-btn">
                                                 <p> {{fields.value | capitalizeFirst}}</p>

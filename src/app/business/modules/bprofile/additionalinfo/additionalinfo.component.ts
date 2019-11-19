@@ -7,6 +7,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',
@@ -36,6 +37,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     edit_cap = Messages.EDIT_BTN;
     delete_btn = Messages.DELETE_BTN;
     domain;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -64,11 +66,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
-      }
+    }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.breadcrumb_moreoptions ={  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
         this.getBusinessProfile();
     }
@@ -79,7 +81,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     }
     getBusinessProfile() {
         this.bProfile = [];
-
         this.getBussinessProfileApi()
             .then(
                 data => {
@@ -90,17 +91,14 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     loginuserdata.accStatus = this.bProfile.status;
                     // Updating the status (ACTIVE / INACTIVE) in the local storage
                     this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
-
                     this.serviceSector = data['serviceSector']['displayName'] || null;
                     this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
                     if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-
                         if (this.bProfile['domainVirtualFields'] &&
                             Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
                             this.normal_domainfield_show = 2;
                         }
                         this.getDomainVirtualFields();
-
                         if (this.bProfile['subDomainVirtualFields'] &&
                             Object.keys(this.bProfile['subDomainVirtualFields']).length === 0) {
                             this.normal_subdomainfield_show = 2;
@@ -114,13 +112,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
 
                 }
             );
-
     }
     // objectKeys(obj) {
     //     return Object.keys(obj);
     //   }
     getDomainVirtualFields() {
-
         this.getVirtualFields(this.bProfile['serviceSector']['domain'])
             .then(
                 data => {
@@ -131,10 +127,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     // normal_domainfield_show = 4 // no data
                 }
             );
-
     }
     addDynamicField(field, type) {
-
         if (field.dataType === 'DataGrid') {
             this.editGridDynamicField(field.name, type, null);
         } else {
@@ -143,20 +137,15 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     }
     editGridDynamicField(field_name, type, index = 0) {
         const field = JSON.parse(JSON.stringify(this.getFieldQuestion(field_name, type)));
-
         // We need to pass only selected row to edit page
         // Create the data for passing to dynamicform
-
         if (index !== null) {
-
             const column = field[0]['columns'][index] || [];
             field[0]['columns'] = [];
             field[0]['columns'].push(column);
-
             const selected_row = field[0]['value'][index] || [];
             field[0]['value'] = [];
             field[0]['value'].push(selected_row);
-
         } else {
             const column = field[0]['columns'][0] || [];
             field[0]['columns'] = [];

@@ -6,6 +6,8 @@ import { FormControlService } from './form-control.service';
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import * as moment from 'moment';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -52,20 +54,35 @@ export class DynamicFormComponent implements OnInit {
   onSubmit() {
     this.api_error = null;
     // this.payLoad = JSON.stringify(this.form.value);
+
+    const curdate = this.findDateField();
     const mon_year_key = this.findYearMonthField();
     if (mon_year_key['year_field'] && mon_year_key['month_field']) {
       const month_year_valid = this.validateMonthAndYear(mon_year_key);
       if (month_year_valid) {
         this.api_error = null;
-
         this.retonFormSubmit.emit(this.form.value);
       } else {
         this.shared_functions.apiErrorAutoHide(this, Messages.YEAR_MONTH_VALID);
       }
+    } else if (curdate) {
+      this.retonFormSubmit.emit(curdate);
     } else {
       this.retonFormSubmit.emit(this.form.value);
     }
     //
+  }
+
+  findDateField() {
+    if (this.questions[0]) {
+      if (this.questions[0]['controlType'] === 'date') {
+        const curdate = moment(this.form.value[this.questions[0]['key']]).format('YYYY/MM/DD');
+        const dateObj = {};
+        dateObj[this.questions[0]['key']] = curdate;
+         return dateObj;
+      }
+    }
+    return null;
   }
 
   findYearMonthField() {

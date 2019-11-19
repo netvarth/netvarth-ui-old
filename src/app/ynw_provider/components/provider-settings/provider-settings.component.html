@@ -25,7 +25,7 @@
                                         <p class="sts" [class.active]="search_status">{{search_statusstr}}</p>
                                         <p class="settings_info">Turn it on to enable your profile’s visibility in customer’s search result.</p>
                                     </a></li>
-                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk" style="display: flex;">Online
+                                <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings" style="display: flex;">Online
                                             Profile
                                             <p *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
                                             class="req-flds-cap">*required fields missing</p></span>
@@ -36,7 +36,7 @@
 
                                 </li>
                                 <li (click)="redirecTo('specializations')"><a class="pointer-cursor"><span style="display: flex;"
-                                            class="lnk">Specializations
+                                            class="lnk setings">Specializations
                                             <p *ngIf="reqFields.specialization" class="req-flds-cap">*required fields missing
                                                 </p></span>
                                         <p class="settings_info">Mention your specializations here</p>
@@ -44,7 +44,7 @@
                                         </p> -->
                                     </a></li>
                                 <li (click)="redirecTo('additionalinfo')"><a class="pointer-cursor"><span style="display: flex;"
-                                            class="lnk">Additional
+                                            class="lnk setings">Additional
                                             Info
                                             <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
                                             class="req-flds-cap">*required fields missing</p></span>
@@ -54,15 +54,15 @@
                                         class="req-flds-cap" style="padding-left: 13px;">required fields missing</p> -->
                                 </li>
                                 <li (click)="redirecTo('privacy')"><a class="pointer-cursor"><span
-                                            class="lnk">Privacy</span>
+                                            class="lnk setings">Privacy</span>
                                         <p class="settings_info">Manage the privacy of your contact details here.</p>
                                     </a></li>
                                 <li (click)="redirecTo('languages')"><a class="pointer-cursor"><span
-                                            class="lnk">Languages
+                                            class="lnk setings">Languages
                                             Known</span>
                                         <p class="settings_info">Add languages you know, to increase visibility.</p>
                                     </a></li>
-                                <li (click)="redirecTo('media')"><a class="pointer-cursor"><span class="lnk">Gallery &
+                                <li (click)="redirecTo('media')"><a class="pointer-cursor"><span class="lnk setings">Gallery &
                                             Social
                                             Media</span>
                                         <p class="settings_info">Add catchy images and social media platforms</p>
@@ -100,23 +100,23 @@
                                         <p class="settings_info">Set up future checkin here</p>
                                     </a></li>
                                 <li (click)="redirecTo('locations')"><a class="pointer-cursor"><span
-                                            class="lnk">{{locName}} <span class="pull-right badge bg-blue"
+                                            class="lnk setings">{{locName}} <span class="pull-right badge bg-blue"
                                                 *ngIf="multipeLocationAllowed == true">{{location_count}}</span></span>
                                         <p class="settings_info">Set up your locations here</p>
                                     </a></li>
                                 <li *ngIf="filterbydepartment" (click)="redirecTo('departments')"><a
-                                        class="pointer-cursor"><span class="lnk">Departments
+                                        class="pointer-cursor"><span class="lnk setings">Departments
                                             <span class="pull-right badge bg-blue">{{departmentCount}}</span></span>
                                         <p class="settings_info">Add departments here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('services')"><a class="pointer-cursor"><span
-                                            class="lnk">{{services_cap}} <span class="pull-right badge bg-blue"
+                                            class="lnk setings">{{services_cap}} <span class="pull-right badge bg-blue"
                                                 *ngIf="multipeLocationAllowed == true">{{service_count}}</span></span>
                                         <p class="settings_info">Add and manage services here</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span class="lnk">{{qs_cap}}
+                                <li (click)="redirecTo('queues')"><a class="pointer-cursor"><span class="lnk setings">{{qs_cap}}
                                             <span class="pull-right badge bg-blue">{{queues_count}}</span></span>
                                         <p class="settings_info">Add and manage your queues here</p>
                                     </a>
@@ -154,19 +154,19 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('items')"><a class="pointer-cursor"><span
-                                            class="lnk">{{items_cap}}
+                                            class="lnk setings">{{items_cap}}
                                             <span class="pull-right badge bg-blue">{{item_count}}</span></span>
                                         <p class="settings_info">Create new items and related information here.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('discounts')"><a class="pointer-cursor"><span
-                                            class="lnk">{{discount_cap}}
+                                            class="lnk setings">{{discount_cap}}
                                             <span class="pull-right badge bg-blue">{{discount_count}}</span></span>
                                         <p class="settings_info">Create your discounts here.</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('coupons')"><a class="pointer-cursor"><span
-                                            class="lnk">{{coupons_cap}}
+                                            class="lnk setings">{{coupons_cap}}
                                         </span>
                                         <p class="settings_info">View all the coupons available here.</p>
                                     </a>
@@ -183,7 +183,7 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('paymentsettings')"><a class="pointer-cursor"><span
-                                            class="lnk">{{payment_setting_cap}}
+                                            class="lnk setings">{{payment_setting_cap}}
                                         </span>
                                         <p class="settings_info">Set up your payment modes here</p>
                                         <div class="payTypeVerify"
@@ -202,7 +202,7 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('taxsettings')"><a class="pointer-cursor"><span
-                                            class="lnk">{{tax_setting_cap}}
+                                            class="lnk setings">{{tax_setting_cap}}
                                         </span>
                                         <p class="settings_info">Set up and turn on tax configuration.</p>
                                     </a>
@@ -292,12 +292,12 @@
                             <ul class="nav nav-stacked set-block-ul">
                                 <li class="form-level-settings"><a>{{frm_mis_cap}}</a></li>
                                 <li (click)="redirecTo('nonworking')"><a class="pointer-cursor"><span
-                                            class="lnk">{{non_wrk_day_hr_cap}}</span> 
+                                            class="lnk setings">{{non_wrk_day_hr_cap}}</span> 
                                         <p class="settings_info">Manage your non working days here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('notifications')"><a class="pointer-cursor"><span
-                                            class="lnk">{{notification_cap}}</span>
+                                            class="lnk setings">{{notification_cap}}</span>
                                         <p class="settings_info">Unavailability of your services on particular days (holidays), mention here.</p>
                                     </a>
                                 </li>
@@ -307,13 +307,13 @@
                                     </a>
                                 </li> -->
                                 <li (click)="redirecTo('jdn')"><a class="pointer-cursor"><span
-                                            class="lnk">{{frm_jdn_short_cap}}
+                                            class="lnk setings">{{frm_jdn_short_cap}}
                                         </span>
                                         <p class="settings_info">Add Jaldee Discount Network here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('saleschannel')"><a class="pointer-cursor"><span
-                                            class="lnk">{{saleschannel_cap}}</span>
+                                            class="lnk setings">{{saleschannel_cap}}</span>
                                         <p class="settings_info">Sales channel options</p>
                                     </a>
                                 </li>
@@ -325,7 +325,7 @@
                                 </li>
                                 <li (click)="redirecTo('skins')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk">Themes</span>
+                                        <span class="lnk setings">Themes</span>
                                         <p class="settings_info">Customize your themes</p>
                                     </a>
                                 </li>

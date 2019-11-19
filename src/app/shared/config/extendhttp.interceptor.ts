@@ -15,6 +15,7 @@ import { throwError, observable, EMPTY } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
 import { retry, delay } from 'rxjs/operators';
+import { version } from '../../../assets/json/version.json';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {

@@ -241,6 +241,7 @@ export const Messages = {
   'WORKINGHOUR_TOOLTIP': 'Working Hour',
   'SEARCH_TOOLTIP': 'Search',
   'SORT_TOOLTIP': 'Sort By',
+  'FILE_TOOLTIP': 'Attachments',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
@@ -920,7 +921,7 @@ export const Messages = {
   'LICENSE_USAGE': 'License Usage',
   'SUBSCRIPTION_CAP': 'Subscription',
   'CURRENTLY_ENROLLED': 'You have currently enrolled to',
-  'DUE_AMT_CAP': 'Due Amount',
+  'DUE_AMT_CAP': 'Next Due',
   'PERIOD_CAP': 'Period',
   'ADD_ON_CAP': 'Add-on',
   'NO_ADDON_CAP': 'No Add-ons exist',

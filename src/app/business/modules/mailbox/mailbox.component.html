@@ -63,7 +63,7 @@
                                                                 <a class="mg-10" target="_blank"
                                                                     [href]="attachment.s3path"
                                                                     *ngFor="let attachment of inbox.attachments"><img
-                                                                        [src]="attachment.s3path"
+                                                                        [src]="getThumbUrl(attachment)"
                                                                         style="width:100px; height:100px" /></a>
                                                             </div>
                                                         </div>
@@ -83,10 +83,10 @@
                                                             [ngModelOptions]="{standalone: true}">
                                                         <span class="input-group-btn">
                                                             <button
-                                                                *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message"
+                                                                *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message && selectedMessage[parentIndex].message.waitlistid"
                                                                 class="btn btn-warning btn-flat"
                                                                 (click)="logofile.click()">
-                                                                <input #logofile type="file" accept="image/*"
+                                                                <input #logofile type="file" accept="image/*,application/pdf"
                                                                     style="display:none;" multiple
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>
