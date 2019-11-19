@@ -5894,3 +5894,7 @@ background-color:#fff !important;
 .sidebar-mini.sidebar-collapse .main-sidebar .available .avail{display:none}
 .sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available{margin-left: -5px;}
 .sidebar-mini.sidebar-collapse .main-sidebar .centeralign .available i{font-size: 0.8rem;}
+.btst{
+  color: white !important;
+  background:  #3c8dbc !important;
+}
