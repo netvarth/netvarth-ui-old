@@ -32,7 +32,10 @@ export class DynamicFormQuestionComponent implements OnInit {
     } else {
       this.placeholder = 'E.g:- https://www.jaldee.com';
     }
-    // if (this.question.controlType === 'datagrid') {
+    if (this.question.controlType === 'date') {
+      this.form.controls[this.question.key].setValue(new Date(this.question.value));
+    }
+      // if (this.question.controlType === 'datagrid') {
     //   if (this.checkGridValue()) {
     //     this.removeRow(0);
     //   }

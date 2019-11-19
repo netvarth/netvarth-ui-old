@@ -44,7 +44,7 @@
                                                         <mat-panel-title>
                                                             {{fields.displayName}}<span *ngIf="fields.mandatory == true"
                                                                 class="red">&nbsp;*</span>
-                                                                <span class="mci-warning" *ngIf="fields.name==='docmci'">
+                                                                <span class="mci-warning" *ngIf="!fields.value && fields.name==='docmci'">
                                                                 <i class="fa fa-exclamation-triangle"
                                                                 aria-hidden="true"> </i>  Fill within 2 weeks </span>
                                                         </mat-panel-title>
@@ -57,14 +57,6 @@
                                                     </mat-expansion-panel-header>
 
                                                     <ng-container [ngSwitch]="fields.dataType">
-
-                                                            <ng-container *ngSwitchCase="'Date'">
-                                                                    <div class="cont-btn">
-                                                                        <p> {{fields.value | capitalizeFirst}}</p>
-                                                                        <span class="editbt"
-                                                                            (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
-                                                                    </div>
-                                                                </ng-container>
 
                                                         <ng-container *ngSwitchCase="'TEXT'">
                                                             <div class="cont-btn">
@@ -120,7 +112,7 @@
 
                                                         <ng-container *ngSwitchCase="'Date'">
                                                             <div class="cont-btn">
-                                                                <p> {{fields.value}}</p>
+                                                                <p> {{fields.value | date:dateFormat}}</p>
                                                                 <span class="editbt"
                                                                     (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                             </div>
@@ -311,7 +303,7 @@
 
                                                         <ng-container *ngSwitchCase="'Date'">
                                                             <div class="cont-btn">
-                                                                <p> {{fields.value}}</p>
+                                                                <p> {{fields.value | date:dateFormat}}</p>
                                                                 <span class="editbt"
                                                                     (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                             </div>

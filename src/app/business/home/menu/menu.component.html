@@ -25,7 +25,7 @@
               <span class="avail">until {{qAvailability.timeRange.eTime}}</span>
             </div>
             <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-              <i class="fa fa-circle disabled"></i><span class="avail"> I am not available now </span>
+              <i class="fa fa-circle text-failure"></i><span class="avail"> I am not available now </span>
             </div>
             <!-- <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
                 Today I'm available <br/>
