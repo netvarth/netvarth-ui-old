@@ -100,24 +100,24 @@
                     <td class="invoice-head" *ngIf="crdt_debtJson.type =='credit'">
                         {{crdt_debtJson.amount | currency:'&#8377; '}}(Cr)</td>
                 </tr>
-                <tr *ngIf="licenseDiscounts">
+                <!-- <tr *ngIf="licenseDiscounts">
 
                     <td ><strong>Discount Details</strong></td>
                     <td ><strong></strong></td>
 
-                  </tr>
+                  </tr> -->
                 <tr class="invoice-discount" *ngFor="let discount of latestInvoiceDiscount">
-                    <td style="text-align: left">{{discount.name}} <span
+                    <td class="invoiceTotal" style="text-align: left">{{discount.name}} <span
                             *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                     </td>
                     <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
                 </tr>
 
 
-                <tr>
-                    <td ><strong>Previous Balance Due</strong></td>
-                    <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist" style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td>
-
+                <tr class="invoice-discount">
+                    <td class="invoiceTotal">Previous Balance </td>
+                    <!-- <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist" style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td> -->
+                    <td class="previousDue" style="text-align: end;">(+){{invoice.balance | currency:'INR':'symbol':'.2-2'}}</td>
                   </tr> 
               
     
@@ -141,7 +141,7 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="licenseDiscounts">
+    <!-- <div *ngIf="licenseDiscounts">
         <a (click)="toggleDiscountDetails();">
           <span class="pointlist" style="text-decoration: underline;"> {{discountDetailsTxt}}</span>
         </a>
@@ -181,7 +181,7 @@
           </div>
   
         </div>
-      </div>
+      </div> -->
 
     <!-- <div class="ivc">
                 <span class="label">{{subsc_pack_cap}}</span> -->

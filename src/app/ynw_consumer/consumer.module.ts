@@ -70,7 +70,6 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
       MembersComponent,
       AddMembersHolderComponent,
       AddManagePrivacyComponent
-      
     ],
     exports: [ConfirmBoxComponent],
     entryComponents: [
@@ -78,7 +77,6 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
       NotificationListBoxComponent,
       AddMembersHolderComponent,
       AddManagePrivacyComponent
-      
     ],
     providers: [
       SharedServices,

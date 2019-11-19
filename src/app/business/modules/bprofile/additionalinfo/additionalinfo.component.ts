@@ -7,6 +7,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',
@@ -36,6 +37,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     edit_cap = Messages.EDIT_BTN;
     delete_btn = Messages.DELETE_BTN;
     domain;
+    dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -240,7 +242,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                                 }
                             }
                         }
-                    }                
+                    }
                 }
             );
     }

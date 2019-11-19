@@ -107,7 +107,8 @@
                                         class="fa fa-angle-left"></i></span>
                                 <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx <= 0"><i
                                         class="fa fa-angle-left disable"></i></span>
-                                <span class="sel-queue"><span class="name">{{sel_queue_name}}</span>
+                                <span class="sel-queue">
+                                    <!-- <span class="name">{{sel_queue_name}}</span> -->
                                     {{sel_queue_timecaption}}</span>
                                 <span class="rightarrow" (click)="handleQueueSel('next')"
                                     *ngIf="(queuejson.length -1) > sel_queue_indx">

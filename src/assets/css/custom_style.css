@@ -5867,6 +5867,7 @@ background-color:#fff !important;
  }
  .align-style .right-align {
   float: right;
+  text-align: right;
   }
 }
 @media (max-width: 784px) {
@@ -5904,4 +5905,16 @@ background-color:#fff !important;
 }
 .sc-t{
   border-bottom: none !important;
+}
+.instantQ {
+  color: red;
+  font-weight: 400;
+}
+.dropdown-menu .available>a {
+  font-weight: 600;
+  padding: 10px;
+}
+.text-failure {
+  color: red;
+  background: none;
 }
