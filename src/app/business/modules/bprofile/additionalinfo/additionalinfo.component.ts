@@ -152,44 +152,30 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             field[0]['columns'].push(column);
             column.map((e) => { delete e.value; });
         }
-
         this.showDynamicFieldPopup(field, type, index);
-
     }
-
     deleteGridDynamicField(field_name, type = 'domain_questions', index = 0) {
         const pre_value = (type === 'domain_questions') ? JSON.parse(JSON.stringify(this.bProfile['domainVirtualFields'])) :
             JSON.parse(JSON.stringify(this.bProfile['subDomainVirtualFields'][0][this.subdomain]));
         // JSON.parse(JSON.stringify used to remove reference
-
         const grid_list = pre_value[field_name] || [];
-
         if (grid_list.length === 1 && index === 0) {
             delete pre_value[field_name];
         } else {
             grid_list.splice(index, 1);
             pre_value[field_name] = grid_list;
         }
-
         if (type === 'domain_questions') {
-
             this.onDomainFormSubmit(pre_value);
-
         } else if (type === 'subdomain_questions') {
             this.onSubDomainFormSubmit(pre_value);
         }
     }
-
     editDynamicField(field_name, type) {
-
         const field = this.getFieldQuestion(field_name, type);
         this.showDynamicFieldPopup(field, type);
-
     }
-
     showDynamicFieldPopup(field, type, grid_row_index = null) {
-
-
         this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -211,12 +197,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                                 this.bProfile = data;
                                 if (type === 'domain_questions') {
                                     this.getDomainVirtualFields();
-                                    // commented bcoz update not effect without refresh
-                                    // this.domain_fields = this.setFieldValue(this.domain_fields, null);
                                 } else {
-                                    // commented bcoz update not effect without refresh
                                     this.getSubDomainVirtualFields();
-                                    // this.subdomain_fields = this.setFieldValue(this.subdomain_fields, this.bProfile['serviceSubSector']['subDomain']);
                                 }
                             },
                             () => {
@@ -240,7 +222,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                         reject();
                     }
                 );
-
         });
     }
     getSubDomainVirtualFields() {
@@ -262,7 +243,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                             }
                         }
                     }
-                    // normal_subdomainfield_show = 4 // no data
                 }
             );
     }
@@ -294,8 +274,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         return retfield;
     }
     performActions() {
-        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->additional-info']);   
-      }
+        this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->additional-info']);
+    }
     getFieldDetails(passedArray, fieldvalue, fieldname) {
         let retfield;
         if (fieldvalue !== undefined) {
@@ -311,7 +291,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         }
         return retfield;
     }
-
     showValueswithComma(fld) {
         let str = '';
         if (fld.value !== undefined) {
@@ -324,32 +303,24 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             return str;
         }
     }
-
     getVirtualFields(domain, subdomin = null) {
         const _this = this;
         return new Promise(function (resolve, reject) {
-
             _this.provider_services.getVirtualFields(domain, subdomin)
                 .subscribe(
                     data => {
-                        console.log(data);
                         const set_data = [];
                         set_data['fields'] = _this.setFieldValue(data, subdomin);
                         set_data['questions'] = _this.service.getQuestions(set_data['fields']);
-
                         resolve(set_data);
                     },
                     () => {
                         reject();
                     }
                 );
-
         });
-
     }
-
     setFieldValue(data, subdomin) {
-
         let fields = [];
         if (subdomin) {
             fields = (this.bProfile['subDomainVirtualFields'] &&
@@ -370,17 +341,13 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     }
                 }
             }
-
             return data;
         } else {
             return data;
         }
     }
-
     getFieldQuestion(field_key = null, type = 'domain_questions') {
-
         const questions = (type === 'subdomain_questions') ? this.subdomain_questions : this.domain_questions;
-
         if (field_key != null) {
             const field = [];
             for (const que of questions) {
@@ -391,9 +358,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             return field;
         }
     }
-
     onDomainFormSubmit(post_data) {
-
         this.provider_services.updateDomainSubDomainFields(post_data,
             this.bProfile['serviceSector']['domain'])
             .subscribe(
@@ -405,11 +370,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
-
     }
-
     onSubDomainFormSubmit(post_data) {
-
         this.provider_services.updateDomainSubDomainFields(post_data, null,
             this.bProfile['serviceSubSector']['subDomain'])
             .subscribe(
@@ -421,7 +383,6 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
-
     }
 
 }
