@@ -115,7 +115,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(document.body, 'sidebar-open');
     }
     if (this.isCheckinActive()) {
-      this.router.navigate(['/check-ins']);
+      this.router.navigate(['/provider/check-ins']);
     }
   }
   isCheckinActive() {
