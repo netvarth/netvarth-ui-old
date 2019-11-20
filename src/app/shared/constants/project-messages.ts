@@ -242,6 +242,7 @@ export const Messages = {
   'SEARCH_TOOLTIP': 'Search',
   'SORT_TOOLTIP': 'Sort By',
   'FILE_TOOLTIP': 'Attachments',
+  'ENBLE_DISABLE_TOOLTIP': 'Enable/Disable [waitlist]s',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
