@@ -1342,12 +1342,10 @@ export class CheckInInnerComponent implements OnInit {
       'waitlistPhonenumber': this.consumerPhoneNo,
       'jaldeeStartTimeMod': this.notifyTime,
       'shareLocStatus': this.shareLoc
-
     };
     this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
       .subscribe(data => {
         console.log(data);
       });
-
   }
 }
