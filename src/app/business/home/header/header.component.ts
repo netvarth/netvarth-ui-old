@@ -151,7 +151,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.getInboxUnreadCnt();
     this.getAlertCount();
   }
-
   getInboxUnreadCnt() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (!usertype) {

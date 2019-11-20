@@ -237,7 +237,6 @@ export class ProviderbWizardComponent implements OnInit {
     this.base_licence = (package_id === 1) ? true : false;
     this.active_step = 0;
     localStorage.removeItem('new_provider');
-
   }
 
   getUserdetails() {

@@ -622,7 +622,6 @@ export class CheckInInnerComponent implements OnInit {
         });
     }
   }
-
   handleServiceSel(obj) {
     // this.sel_ser = obj.id;
     this.sel_ser = obj;

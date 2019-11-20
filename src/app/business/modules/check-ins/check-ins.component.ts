@@ -124,7 +124,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   }; // same in resetFilter Fn
-
   filters = {
     first_name: false,
     last_name: false,
