@@ -1405,6 +1405,7 @@ export const Messages = {
   'JDN_CREATED': 'JDN enabled successfully',
   'JDN_UPDATED': 'JDN updated successfully',
   'JDN_DISABLED': 'JDN disabled successfully',
+  'SC_CREATED': 'Sales Channel Code Added successfully',
   'SUBSCRIBE': 'Subscribe',
   'UNSUBSCRIBE': 'Unsubscribe'
 };
