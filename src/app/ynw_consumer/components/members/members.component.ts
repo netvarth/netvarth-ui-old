@@ -27,7 +27,7 @@ export class MembersComponent implements OnInit {
   change_password_cap = Messages.CHANGE_PASSWORD_CAP;
   change_mob_no_cap = Messages.CHANGE_MOB_CAP;
   add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
-
+curtype;
   member_list: any = [];
   query_executed = false;
   breadcrumbs_init = [
@@ -45,6 +45,7 @@ export class MembersComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.getMembers();
   }
 

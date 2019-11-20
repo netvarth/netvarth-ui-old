@@ -1,9 +1,9 @@
-<section>
+<section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
-<section>
+<section  [ngClass]="{'container': curtype=='consumer'}">
     <div class="content see-pages">
-        <div class="container related-links">
+        <div class="related-links">
             <div class="outer-card">
                 <div class="card">
                     <form [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&

@@ -207,9 +207,8 @@ export class ProviderbWizardComponent implements OnInit {
 
   ngOnInit() {
     // To hide menu and icons if active page is wizatd
-    const  hideaction = { 'ttype': 'hidemenus', 'value': true};
+    const hideaction = { 'ttype': 'hidemenus', 'value': true };
     this.shared_functions.sendMessage(hideaction);
-
     this.getDomainSubdomainSettings();
     this.turn_on_off_cap = Messages.WIZ_TURN_ON_OFF_CAP.replace('[customer]', this.customer_label);
     this.turn_on_of = Messages.WIZ_TURN_ON_OF_CAP.replace('[customer]', this.customer_label);
@@ -238,7 +237,6 @@ export class ProviderbWizardComponent implements OnInit {
     this.base_licence = (package_id === 1) ? true : false;
     this.active_step = 0;
     localStorage.removeItem('new_provider');
-
   }
 
   getUserdetails() {
@@ -786,7 +784,7 @@ export class ProviderbWizardComponent implements OnInit {
 
   redirecttoProfile() {
     // this.routerobj.navigate(['provider', 'settings', 'bprofile-search']);
-    const  hideaction = { 'ttype': 'hidemenus', 'value': false};
+    const hideaction = { 'ttype': 'hidemenus', 'value': false };
     this.shared_functions.sendMessage(hideaction);
     this.routerobj.navigate(['provider', 'settings', 'bprofile']);
   }
@@ -1236,9 +1234,11 @@ export class ProviderbWizardComponent implements OnInit {
       pre_value[field_name] = grid_list;
     }
     if (type === 'domain_questions') {
-      this.onDomainsFormSubmit(pre_value);
+      // this.onDomainsFormSubmit(pre_value);
+      this.onDomainFormSubmit(pre_value);
     } else if (type === 'subdomain_questions') {
-      this.onSubDomainsFormSubmit(pre_value);
+      // this.onSubDomainsFormSubmit(pre_value);
+      this.onSubDomainFormSubmit(pre_value);
     }
   }
 
@@ -1248,35 +1248,35 @@ export class ProviderbWizardComponent implements OnInit {
     this.grid_row_index = grid_row_index;
   }
 
-  onDomainsFormSubmit(post_data) {
-    this.provider_services.updateDomainSubDomainFields(post_data,
-      this.bProfile['serviceSector']['domain'])
-      .subscribe(
-        () => {
-          this.getBusinessProfile();
-        },
-        (error) => {
-          this.getBusinessProfile(); // refresh data ;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-  }
+  // onDomainsFormSubmit(post_data) {
+  //   this.provider_services.updateDomainSubDomainFields(post_data,
+  //     this.bProfile['serviceSector']['domain'])
+  //     .subscribe(
+  //       () => {
+  //         this.getBusinessProfile();
+  //       },
+  //       (error) => {
+  //         this.getBusinessProfile(); // refresh data ;
+  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
 
-  onSubDomainsFormSubmit(post_data) {
-    this.provider_services.updateDomainSubDomainFields(post_data, null,
-      this.bProfile['serviceSubSector']['subDomain'])
-      .subscribe(
-        () => {
-          this.getBusinessProfile();
-          this.showAddSection = false;
-          this.showAddSection1 = false;
-        },
-        (error) => {
-          this.getBusinessProfile(); // refresh data ;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-  }
+  // onSubDomainsFormSubmit(post_data) {
+  //   this.provider_services.updateDomainSubDomainFields(post_data, null,
+  //     this.bProfile['serviceSubSector']['subDomain'])
+  //     .subscribe(
+  //       () => {
+  //         this.getBusinessProfile();
+  //         this.showAddSection = false;
+  //         this.showAddSection1 = false;
+  //       },
+  //       (error) => {
+  //         this.getBusinessProfile(); // refresh data ;
+  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
 
   onDomainFormSubmit(submit_data) {
     this.resetApiErrors();
@@ -1286,7 +1286,8 @@ export class ProviderbWizardComponent implements OnInit {
     this.provider_services.updateDomainSubDomainFields(post_data, this.bProfile['serviceSector']['domain'])
       .subscribe(
         () => {
-          this.onDomainsFormSubmit(submit_data);
+          // this.onDomainsFormSubmit(submit_data);
+          this.getBusinessProfile();
           this.showAddSection = false;
           this.showAddSection1 = false;
         },
@@ -1318,7 +1319,10 @@ export class ProviderbWizardComponent implements OnInit {
       this.bProfile['serviceSubSector']['subDomain'])
       .subscribe(
         () => {
-          this.onSubDomainsFormSubmit(submit_data);
+          // this.onSubDomainsFormSubmit(submit_data);
+          this.getBusinessProfile();
+          this.showAddSection = false;
+          this.showAddSection1 = false;
         },
         error => {
           this.shared_functions.apiErrorAutoHide(this, error);

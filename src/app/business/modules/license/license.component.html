@@ -37,7 +37,8 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small">
                                                 <div class="lc4-1">
                                                     <div class="lt mgn-bt-10">
-                                                        <div *ngFor="let invoice of invoices let i=index">
+                                                        <!-- *ngFor="let invoice of invoices let i=index" -->
+                                                        <div *ngIf="invoices[0]" >
                                                             <span class="amount">License Status:&nbsp;&nbsp; <i
                                                                     class="fa fa-exclamation-triangle"
                                                                     aria-hidden="true"
@@ -99,7 +100,7 @@
                                                         <div class="lt"
                                                             *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0">
                                                             Jaldee recommends <span
-                                                                (click)="openAnnualSection()"><span class="bt3 switchanual_btn">Switch
+                                                                (click)="openAnnualSection()"><span class="bt3 switchanual_btn pointer-cursor">Switch
                                                                     to
                                                                     Annual</span> <span> and get
                                                                     <strong>{{annualdiscount}}%</strong>
@@ -252,7 +253,7 @@
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoAddOns()">
-                        <h2>AddOns</h2>
+                        <h2>Add-ons</h2>
                         <span class="form-level-settings">To avail the additional features of Jaldee.com, click here. <a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('addon', $event)">Learn

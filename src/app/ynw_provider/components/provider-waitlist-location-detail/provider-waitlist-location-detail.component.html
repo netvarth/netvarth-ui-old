@@ -106,15 +106,14 @@
                 </div>
             </div>
 
-            <mat-accordion class="row cst-acc">
+            <mat-accordion class="row cst-acc loc-detail">
                 <mat-expansion-panel class="card p0" hideToggle="{{(queues.length == 0) ? true : false}}"
                     disabled="{{(queues.length == 0) ? true : false}}"
                     expanded="{{(queues.length == 0) ? false : true}}">
                     <mat-expansion-panel-header>
                         <mat-panel-title class="lc-title">
-                            <h5>{{serv_window_cap}} <span class="count">{{queues.length}}</span><span class="addbt"
-                                    (click)="addEditProviderQueue('add')" *ngIf="queues.length == 0"></span></h5>
-
+                            <h5>{{queues_cap}} <span class="count">{{queues.length}}</span><span class="addbt"
+                                    (click)="addEditProviderQueue('add')"></span></h5>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <p class="form-level-settings">{{waitlist_cap}}</p>
@@ -125,13 +124,14 @@
                                     <th>{{serv_window_cap}}</th>
                                     <th>{{schedule_cap}}</th>
                                     <th>{{status_cap}}</th>
-                                    <th><span class="addbt" (click)="addEditProviderQueue('add')"></span></th>
+                                    <th>
+                                        <!-- <span class="addbt" (click)="addEditProviderQueue('add')"></span> -->
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let queue of queues">
-                                    <td data-title="Queues" class="pointer-cursor" (click)="goQueueDetail(queue)"
-                                        [class.disabled]="queue.queueState=='DISABLED'"
+                                <tr *ngFor="let queue of queues" [class.disabled]="queue.queueState=='DISABLED'">
+                                    <td [class.disabled]="queue.queueState=='DISABLED'" data-title="Queue" class="pointer-cursor" (click)="goQueueDetail(queue)"
                                         [matTooltip]="'Click here to view queue'">
                                         {{queue.name | capitalizeFirst}}</td>
                                     <td data-title="Schedule">

@@ -33,6 +33,7 @@ export class ChangeMobileComponent implements OnInit {
   prev_phonenumber;
   step = 1;
   curtype;
+  usertype;
   submit_data = { 'phonenumber': null };
   breadcrumbs_init = [
     {

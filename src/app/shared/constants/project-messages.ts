@@ -218,7 +218,7 @@ export const Messages = {
   'HISTORY_TOOLTIP': 'Your past check-ins',
   'COMM_TOOPTIP': 'Send messages to your provider here',
   'COUPON_TOOPTIP': 'Click here to see coupons offered by Jaldee',
-  'JDN_TOOPTIP': 'You will get 5% for provider',
+  'JDN_TOOPTIP': 'Get upto 20% discount right away !',
   'REF_TOOPTIP': 'Show/hide refined search',
   'CUSTSIGN_TOOPTIP': 'Consumers click here to Login/Join Jaldee',
   'PROVSIGN_TOOPTIP': 'Providers please click here to Register/Login to Jaldee',
@@ -242,6 +242,8 @@ export const Messages = {
   'SEARCH_TOOLTIP': 'Search',
   'SORT_TOOLTIP': 'Sort By',
   'FILE_TOOLTIP': 'Attachments',
+  'ENBLE_DISABLE_TOOLTIP': 'Enable/Disable [waitlist]s',
+  'CUST_NOT_TOOLTIP': '[customer] note',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
@@ -1072,9 +1074,9 @@ export const Messages = {
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP': 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
-  'SEARCH_ADWORDS_CAP': 'Jaldee-KeyWords',
+  'SEARCH_ADWORDS_CAP': 'Jaldee-Keywords',
   'SEARCH_SORRY_CAP': 'Sorry!',
-  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG': 'Currently you do not have any Jaldee-KeyWords. Please upgrade your Licence Package/Add-On',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG': 'Currently you do not have any Jaldee-Keywords. Please upgrade your Licence Package/Add-On',
 
   // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP': 'Gallery',
@@ -1272,7 +1274,7 @@ export const Messages = {
   'SET_PASSWORD_MSG': 'Congratulations! You have become a Jaldee partner! Please set your password to continue sign up process.',
   'PASSWORD_ERR_MSG': 'You haven\'t set your password. Next time you have to go through forgot password',
   'ADWORD_ERRMSG': 'Please enter Jaldee-Keyword',
-  'ADWORD_MAXCOUNT': 'Upgrade your License package for free Jaldee-KeyWords. You can also purchase Jaldee-KeyWords as Add ons',
+  'ADWORD_MAXCOUNT': 'Upgrade your License package for free Jaldee-Keywords. You can also purchase Jaldee-Keywords as Add ons',
 
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
@@ -1405,6 +1407,7 @@ export const Messages = {
   'JDN_CREATED': 'JDN enabled successfully',
   'JDN_UPDATED': 'JDN updated successfully',
   'JDN_DISABLED': 'JDN disabled successfully',
+  'SC_CREATED': 'Sales Channel Code Added successfully',
   'SUBSCRIBE': 'Subscribe',
   'UNSUBSCRIBE': 'Unsubscribe',
   'BRANCHUSER_ADDED': 'Branch user created successfully',

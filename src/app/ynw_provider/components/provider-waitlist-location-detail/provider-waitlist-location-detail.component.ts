@@ -28,6 +28,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
     set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
     schedule_cap = Messages.WAITLIST_SCHEDULE_CAP;
     waitlist_cap = Messages.WAITLIST_CAP;
+    queues_cap = Messages.SERVICE_TIME_CAP;
     location_id = null;
     location_data;
     queues: any = [];
@@ -67,7 +68,6 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         private activated_route: ActivatedRoute,
         private sanitizer: DomSanitizer,
         private provider_shared_functions: ProviderSharedFuctions) {
-
         this.activated_route.params.subscribe(params => {
             this.location_id = params.id;
         });
@@ -125,7 +125,6 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
                         title: this.location_data.place
                     });
                     this.breadcrumbs = breadcrumbs;
-
                     if (this.location_data.lattitude !== '' && this.location_data.longitude !== '') {
                         this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.location_data.lattitude + ',' + this.location_data.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
                     }

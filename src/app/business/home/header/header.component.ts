@@ -31,13 +31,17 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   bsubsector = '';
   blogo = '';
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
+  enable_disable;
   iswiz = false; // is true when active page is wizard
   qAvailability;
+  waitlist_label: any;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
+    private sharedfunctionobj: SharedFunctions,
     private _scrollToService: ScrollToService,
     private renderer: Renderer2,
     public shared_service: SharedServices) {
+    this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'checkin-settings-changed':
@@ -49,9 +53,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'hidemenus':
           this.iswiz = message.value;
           break;
-          case 'instant_q':
-            this.qAvailability = message.qAvailability;
-            break;
+        case 'instant_q':
+          this.qAvailability = message.qAvailability;
+          break;
+        case 'alertCount':
+          this.alertCnt = message.alertCnt;
+          break;
       }
       this.getBusinessdetFromLocalstorage();
     });
@@ -93,6 +100,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.setLicense();
     this.reloadHandler();
     this.getBusinessdetFromLocalstorage();
+    this.enable_disable = Messages.ENBLE_DISABLE_TOOLTIP.replace('[waitlist]', this.waitlist_label);
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
       this.reloadHandler();
     });
@@ -143,7 +151,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.getInboxUnreadCnt();
     this.getAlertCount();
   }
-
   getInboxUnreadCnt() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (!usertype) {

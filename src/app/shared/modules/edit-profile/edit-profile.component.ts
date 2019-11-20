@@ -33,7 +33,6 @@ export class EditProfileComponent implements OnInit {
   change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
   dashboard_cap = Messages.DASHBOARD_TITLE;
-
   editProfileForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -64,7 +63,6 @@ export class EditProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.editProfileForm = this.fb.group({
       first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],

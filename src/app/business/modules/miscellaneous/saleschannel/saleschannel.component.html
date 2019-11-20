@@ -1,5 +1,6 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+        (performAction)="performActions($event)"></app-breadcrumb>
 </section>
 <section>
     <div class="content loc-list">
@@ -12,28 +13,36 @@
                                 <form novalidate (keyup)="resetApiErrors()"
                                     class="ynw-common-form-nm wiz-service labelForm serviceform">
                                     <ng-container>
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input matInput type="text" class="form-control" id="id"
-                                                    placeholder="Enter Sales channel code" [(ngModel)]="id"
-                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="actiondiv labelsave" style="display: inline-flex;">
-                                            <button (click)="onCancel()" type="button"
-                                                class="cs-btn bt2">Cancel</button>
-                                            &nbsp;
-                                            <button (click)="addSalesCode(id)" type="button" mat-button
-                                                class="cs-btn bt2">SET</button>
+                                        <div *ngIf="!sales_code">
+                                            <div class="form-group jdn_discount">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="id"
+                                                        placeholder="Enter Sales channel code" [(ngModel)]="id"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="actiondiv labelsave" style="display: inline-flex;">
+                                                <button (click)="onCancel()" type="button"
+                                                    class="cs-btn bt2">Cancel</button>
+                                                &nbsp;
+                                                <button (click)="addSalesCode(id)" type="button" mat-button
+                                                    class="cs-btn bt2">SET</button>
+                                            </div>
                                         </div>
                                     </ng-container>
                                 </form>
+                            </div>
+                            <div class="content loc-list">
+                                <h3 class="pointer-cursor" *ngIf="sales_code">Sales Channel Code</h3>
+                                <div class="item">
+                                    <div *ngIf="sales_code">{{sales_code}} </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
     </div>
 </section>

@@ -3760,7 +3760,8 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .paysettings .mat-input-element {
-  padding: 10px !important;
+  /* padding: 10px !important; */
+  padding: 15px 0px 4px 5px !important;
 }
 
 .paytm-det .sts-msg.error, .cc-det .sts-msg.error {
@@ -5933,4 +5934,41 @@ display: flex;
  } 
 .walking{
   background-color: darkgrey;
+}
+.upgrade_btn {
+  margin-left: 10px !important;
+}
+@media only screen and (max-width: 671px) {
+  .upgrade_btn {
+    display: table-caption;
+    margin-left: 0px !important;
+    margin-top: 10px !important;
+  }
+}
+@media only screen and (max-width: 456px) {
+  .pay_statment_btn {
+    margin-top: 10px !important;
+  }
+}
+@media only screen and (max-width: 388px) {
+  .switchanual_btn {
+    display: inline-block;
+    margin-top: 10px !important;
+  }
+
+}
+@media only screen and (max-width: 456px) {
+  .cancel_subsc_btn{
+    margin-top: 10px !important;
+  }
+}
+.loc-detail .form-level-settings {
+  padding-left: 20px;
+}
+.bill-content .bill-responsive .c-row,
+.bill-content .bill-responsive .discount-row {
+  margin-right: 0px !important;
+}
+.bill-content .bill-responsive .discount-row .price, .bill-content .bill-responsive .c-row.two .coupon-row .price {
+  flex-basis: 25%!important;
 }

@@ -453,6 +453,9 @@
                                         <span class="icon-first-aid"></span></li>
                                     <li *ngIf="search_result.fields.docambulance_location1==1"
                                         [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
+
+                                    <li *ngIf="search_result.fields.jdn == 1" (click)="openJdn(search_result)"
+                                    [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></li>
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==2"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic'"><img
                                             src="./assets/images/basic.png" alt="Basic"></li>
@@ -475,8 +478,8 @@
                                 <span class="communicate" (click)="communicateHandler(search_result)"
                                     *ngIf="search_result.fields.claimable!=1" [matTooltipClass]="tooltipcls"
                                     [matTooltip]="commTooltip">{{send_messages}}</span>
-                             <span style="cursor: pointer" (click)="openJdn(search_result)" *ngIf="search_result.fields.jdn == 1"><span class="jdn jdn_tooltip" [matTooltipClass]="tooltipcls"
-                               [matTooltip]="jdnTooltip">JDN</span><span class="assured"> Assured</span></span>
+                             <!-- <span style="cursor: pointer" (click)="openJdn(search_result)" *ngIf="search_result.fields.jdn == 1"><span class="jdn jdn_tooltip" [matTooltipClass]="tooltipcls"
+                               [matTooltip]="jdnTooltip"><img height="30" width="30" src="./assets/images/Jaldeeassure'-01.png"></span></span> -->
                                 <span class="claim-business" (click)="claimBusiness(search_result)"
                                     *ngIf="search_result.fields.claimable==1">{{claim_my_business_cap}} <i style="font-size: 1.1rem;" class="fa fa-hand-o-up" aria-hidden="true"></i></span>
                             </div>
