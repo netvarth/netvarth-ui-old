@@ -1,9 +1,9 @@
-<section>
+<section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
   </section>
-  <section>
+  <section [ngClass]="{'container': curtype=='consumer'}">
     <div class="content see-pages">
-      <div class="container">
+      <div class="related-links">
         <div class="outer-card">
           <div class="card">
             <div *ngIf="step==1" class="change-phone-div">
