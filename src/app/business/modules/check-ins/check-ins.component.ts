@@ -110,6 +110,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   section_future: any = [];
   section_history: any = [];
   pos = false;
+  cust_note_tooltip;
   filter = {
     first_name: '',
     last_name: '',
@@ -235,6 +236,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
+    private sharedfunctionobj: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices,
     public dateformat: DateFormatPipe) {
@@ -286,6 +288,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = user.sector;
+    this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
     this.getPos();
     this.getServiceList();

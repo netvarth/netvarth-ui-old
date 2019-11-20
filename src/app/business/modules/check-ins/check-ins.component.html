@@ -679,7 +679,7 @@
                                     <span title="{{arrived_upper}}"
                                       class="pull-left icon-arrived checkin_status icon-btn1 "
                                       *ngIf="checkin.waitlistStatus == 'arrived'"></span>
-                                    <span class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="checkin.consumerNote"
+                                    <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1  pointer-cursor" *ngIf="checkin.consumerNote"
                                       (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
