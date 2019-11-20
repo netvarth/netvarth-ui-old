@@ -69,16 +69,17 @@
                       <span *ngIf="calculationmode=='NoCalc' && showToken">&nbsp; Token</span>
                     </a>
                   </li>
-                  <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
-                    <a (click)="showAdjustDelay()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
-                      data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
-                  </li>
                   <li class="dropdown notifications-menu">
                     <a (click)="searchCustomer('createCustomer')"
                       class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                       <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                     </a>
                   </li>
+                  <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
+                    <a (click)="showAdjustDelay()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                      data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
+                  </li>
+                  
   
                 </ul>
               </div>

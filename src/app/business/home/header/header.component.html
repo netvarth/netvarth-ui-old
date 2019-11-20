@@ -16,8 +16,8 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
-        <li class="dropdown messages-menu" *ngIf="!iswiz">
-          <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+        <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
+          <a  (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
             <span class="label label-success"
               *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
@@ -42,7 +42,7 @@
             </li>
           </ul> -->
         </li>
-        <li class="dropdown notifications-menu" *ngIf="!iswiz">
+        <li [matTooltip]="'Alerts'" class="dropdown notifications-menu" *ngIf="!iswiz">
           <a (click)="gotoAlerts()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
@@ -63,7 +63,7 @@
             <li class="footer"><a href="#" routerLink="alerts">Go to Alerts</a></li>
           </ul>
         </li>
-        <li class="dropdown tasks-menu" *ngIf="!iswiz">
+        <li [matTooltip]="'License Details'" class="dropdown tasks-menu" *ngIf="!iswiz">
           <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="icon-license"></i>
           </a>
@@ -97,7 +97,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown tasks-menu" *ngIf="!iswiz">
+        <li [matTooltip]="enable_disable" class="dropdown tasks-menu" *ngIf="!iswiz">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-checkin"></i>
           </a>

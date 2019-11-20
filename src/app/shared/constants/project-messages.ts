@@ -242,6 +242,7 @@ export const Messages = {
   'SEARCH_TOOLTIP': 'Search',
   'SORT_TOOLTIP': 'Sort By',
   'FILE_TOOLTIP': 'Attachments',
+  'ENBLE_DISABLE_TOOLTIP': 'Enable/Disable [waitlist]s',
   // General
   'SAVE_BTN': 'Save',
   'CANCEL_BTN': 'Cancel',
@@ -1072,9 +1073,9 @@ export const Messages = {
   'PRI_MAIL_ID_IS_VISIBLE_TO_CAP': 'This email is visible to',
 
   // App-ynw_provider-components-provider-bprofile-search-adwords
-  'SEARCH_ADWORDS_CAP': 'Jaldee-KeyWords',
+  'SEARCH_ADWORDS_CAP': 'Jaldee-Keywords',
   'SEARCH_SORRY_CAP': 'Sorry!',
-  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG': 'Currently you do not have any Jaldee-KeyWords. Please upgrade your Licence Package/Add-On',
+  'SEARCH_NOT_HAVE_ANY_ADWORD_MSG': 'Currently you do not have any Jaldee-Keywords. Please upgrade your Licence Package/Add-On',
 
   // App-ynw_provider-components-provider-bprofile-search-gallery
   'SEARCH_GALLERY_CAP': 'Gallery',
@@ -1272,7 +1273,7 @@ export const Messages = {
   'SET_PASSWORD_MSG': 'Congratulations! You have become a Jaldee partner! Please set your password to continue sign up process.',
   'PASSWORD_ERR_MSG': 'You haven\'t set your password. Next time you have to go through forgot password',
   'ADWORD_ERRMSG': 'Please enter Jaldee-Keyword',
-  'ADWORD_MAXCOUNT': 'Upgrade your License package for free Jaldee-KeyWords. You can also purchase Jaldee-KeyWords as Add ons',
+  'ADWORD_MAXCOUNT': 'Upgrade your License package for free Jaldee-Keywords. You can also purchase Jaldee-Keywords as Add ons',
 
   // form-level-common
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
