@@ -313,7 +313,7 @@
                               <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                               </span>
-                              <span class="pull-left cnote icon-btn1 pointer-cursor" *ngIf="checkin.consumerNote"
+                              <span [matTooltip]="cust_note_tooltip" class="pull-left cnote icon-btn1 pointer-cursor" *ngIf="checkin.consumerNote"
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
