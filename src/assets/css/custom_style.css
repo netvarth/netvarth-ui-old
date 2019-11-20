@@ -5948,3 +5948,10 @@ border-color: #3c8dbc !important;
 .loc-detail .form-level-settings {
   padding-left: 20px;
 }
+.bill-content .bill-responsive .c-row,
+.bill-content .bill-responsive .discount-row {
+  margin-right: 0px !important;
+}
+.bill-content .bill-responsive .discount-row .price, .bill-content .bill-responsive .c-row.two .coupon-row .price {
+  flex-basis: 25%!important;
+}
