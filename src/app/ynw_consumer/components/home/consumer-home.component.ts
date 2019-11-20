@@ -142,6 +142,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   };
   driving: boolean;
   walking: boolean;
+  statusOfTrack: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -170,6 +171,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       loop: false,
       easing: 'ease'
     };
+    this.setSystemDate();
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
@@ -261,10 +263,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           const today = new Date(todaydt);
           let i = 0;
           let retval;
+          let pollingTime;
           for (const waitlist of this.waitlists) {
-            console.log(waitlist);
             this.changemode[i] = false;
-            console.log(this.changemode[i]);
+            if(waitlist.jaldeeWaitlistDistanceTime) {
+            pollingTime = waitlist.jaldeeWaitlistDistanceTime.pollingTime;
+            this.liveTrackPolling(waitlist, pollingTime);
+            }
+           this.statusOfLiveTrack(waitlist.ynwUuid, waitlist.provider.id,i);
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
@@ -811,8 +817,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
     checkinTime = moment(list.checkInTime, ['h:mm A']).format('HH:mm:ss');
     currentTime = moment(server_time).format('HH:mm:ss');
-    // console.log('checkinTime' + checkinTime);
-    // console.log('currentTime' + currentTime);
     this.mins = moment.utc(moment(currentTime, 'HH:mm').diff(moment(checkinTime, 'HH:mm'))).format('mm');
     this.mins = 15 - this.mins;
     return this.mins;
@@ -994,7 +998,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   editmodeOn(i) {
     this.changemode[i] = true;
   }
-  getTravelMod(uid, id, type,i) {
+  getTravelMod(uid, id, type, i) {
     const passdata = {
       'travelMode': type
     };
@@ -1008,6 +1012,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       });
 
   }
+  statusOfLiveTrack(ynwUuid,id,i) {
+     this.shared_services.statusOfLiveTrack(ynwUuid, id)
+    .subscribe(data => {
+       this.statusOfTrack[i] = data;
+              },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+
+  }
 
   getCurrentLocation() {
     if (navigator) {
@@ -1015,10 +1029,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.lat_lng.longitude = +pos.coords.longitude;
         this.lat_lng.latitude = +pos.coords.latitude;
         console.log(this.lat_lng);
-
       },
         error => {
-
         });
 
     }
@@ -1027,12 +1039,18 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   updateLatLong(uid, id, passdata) {
     this.shared_services.updateLatLong(uid, id, passdata)
     .subscribe(data => {
-        this.changemode = false;
       },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
 
+  }
+  changeTrackstatus(uid, id, i, event) {
+    if (event.checked === true) {
+      this.startTracking(uid, id, i);
+    } else {
+      this.stopTracking(uid, id, i);
+    }
   }
   startTracking(uid, id,i) {
     this.shared_services.startLiveTrack(uid, id)
@@ -1050,6 +1068,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+  liveTrackPolling(waitlistData,time){
+    let pollingDateTime = waitlistData.date + ' ' + time;
+    let date = moment(pollingDateTime).format("YYYY-MM-DD HH:mm:ss");
+    console.log(date);
+    console.log(this.server_date);
+    if(this.server_date === pollingDateTime) {
+console.log("start polling");
+    }
+    
 
+  }
 
 }

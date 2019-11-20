@@ -123,7 +123,7 @@
                                     <span class="paytext"><span>Amount Due : <span>&#8377; </span>{{waitlist.amountDue}} </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
-                                <div *ngIf="waitlist.jaldeeWaitlistDistanceTime" style="background-color: cadetblue;">
+                                <div *ngIf="waitlist.jaldeeWaitlistDistanceTime" >
                                     <div>
                                     <span class="persons"><span>Distance :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance}}
                                     <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'KILOMETER'">Km</span>
@@ -136,7 +136,7 @@
                                     <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'HOURES'">Houres</span>
                                 </span>
                             </div>
-                            <div class="col-md-6"> <label>Selected travel mode is:</label></div>
+                            <div class="col-md-6"> <label>Travel mode is:</label></div>
                             <div class="col-md-4" *ngIf ="changemode[i] == false"> 
                                 <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">Driving</label>
                                 <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">Walking</label>  
@@ -150,12 +150,12 @@
                                 </ul> 
                         </div>
 
-                        <!-- <div >
-                            <label>Live track</label><button mat-button class="cs-btn bt1"
-                            (click)="startTracking(waitlist.ynwUuid,waitlist.provider.id,i)">START</button>
-                            <button mat-button class="cs-btn bt1"
-                            (click)="stopTracking(waitlist.ynwUuid,waitlist.provider.id,i)">STOP</button>
-                    </div> -->
+                        <div >
+                            <label>Live track</label>
+                            <mat-slide-toggle [checked]="statusOfTrack[i]"
+                          (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)"></mat-slide-toggle>
+                            
+                    </div>
                                
                                 </div>
                             </div>

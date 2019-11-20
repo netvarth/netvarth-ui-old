@@ -526,7 +526,7 @@ export class SharedServices {
   }
  updateTravelMode(uid, id, data) {
    console.log(data);
-  const url = 'consumer/waitlist/update/travelmod/' + uid + '?account=' + id;
+  const url = 'consumer/waitlist/update/travelmode/' + uid + '?account=' + id;
   return this.servicemeta.httpPut(url, data);
  }
 

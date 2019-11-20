@@ -166,7 +166,7 @@ export class CheckInInnerComponent implements OnInit {
   source: any = [];
   travelMode = 'DRIVING';
   notifyTime = 'ONEHOUR';
-  shareLoc;
+  shareLoc = false;
   lat_lng = {
     latitude: 0,
     longitude: 0
