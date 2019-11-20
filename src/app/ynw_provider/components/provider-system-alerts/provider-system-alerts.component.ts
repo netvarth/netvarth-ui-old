@@ -81,6 +81,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.shared_services.getAlertsTotalCnt(ackStatus, sdate)
       .subscribe(data => {
         this.totalCnt = data;
+        this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount', alertCnt: this.totalCnt});
         if (this.totalCnt === 0) {
           this.alertStatus = 2;
           this.alert_details = [];
@@ -195,7 +196,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       .subscribe(() => {
         this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
         this.getAlertListTotalCnt(this.holdalertSelAck || '', this.holdalertSeldate);
-        this.sharedfunctionObj.sendMessage({ 'ttype': 'alert_count_update' });
+        // this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount' });
       },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -49,9 +49,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'hidemenus':
           this.iswiz = message.value;
           break;
-          case 'instant_q':
-            this.qAvailability = message.qAvailability;
-            break;
+        case 'instant_q':
+          this.qAvailability = message.qAvailability;
+          break;
+        case 'alertCount':
+          this.alertCnt = message.alertCnt;
+          break;
       }
       this.getBusinessdetFromLocalstorage();
     });

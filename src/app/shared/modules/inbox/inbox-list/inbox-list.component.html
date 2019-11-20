@@ -22,7 +22,7 @@
                     </span>
                 </div>
                 <div class="td td3">
-                    <div class="label">{{provider_consumer_cap}}</div>
+                    <!-- <div class="label">{{provider_consumer_cap}}</div> -->
                     <div class="result" *ngIf="user_id != message.owner.id">{{message.owner.userName | capitalizeFirst}}
                     </div>
                     <div class="result" *ngIf="user_id != message.receiver.id">
@@ -33,17 +33,17 @@
                             <div class="result">{{(user_id != message.receiver.id) ? (message.receiver.userName  | capitalizeFirst) : 'Me'}}</div>
                           </div> -->
                 <div class="td td2">
-                    <div class="label">{{service_cap}}</div>
+                    <!-- <div class="label">{{service_cap}}</div> -->
                     <div class="result">{{(message.service !== null)? message.service : ' - '}}</div>
                 </div>
                 <div class="td td4">
-                    <div class="label">{{message_cap}}</div>
+                    <!-- <div class="label">{{message_cap}}</div> -->
                     <div class="result">
                         {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:30)+'.....':shared_functions.firstToUpper(message.msg) }}
                     </div>
                 </div>
                 <div class="td td1">
-                    <div class="label">{{date_time_cap}}</div>
+                    <!-- <div class="label">{{date_time_cap}}</div> -->
                     <!-- <div class="result">{{message.timeStamp | date: dateFormat}}</div> -->
                     <div class="result">{{formatDateDisplay(message.timeStamp)}}</div>
                 </div>

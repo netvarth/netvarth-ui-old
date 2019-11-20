@@ -98,7 +98,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
 
                 <ul class="item">
-                    <li *ngFor="let schedule of this.activeQueues"><span class="day">{{schedule.dstr}}</span><span
+                    <li *ngFor="let schedule of this.activeQueues"><span class="day">{{schedule.dstr}}: </span><span
                             class="time">{{schedule.time}}</span></li>
                 </ul>
 

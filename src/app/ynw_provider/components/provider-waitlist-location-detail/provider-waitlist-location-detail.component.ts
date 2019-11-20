@@ -28,6 +28,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
     set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
     schedule_cap = Messages.WAITLIST_SCHEDULE_CAP;
     waitlist_cap = Messages.WAITLIST_CAP;
+    queues_cap = Messages.SERVICE_TIME_CAP;
     location_id = null;
     location_data;
     queues: any = [];

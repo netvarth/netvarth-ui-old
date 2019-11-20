@@ -18,6 +18,7 @@ import { AddProviderCustomerComponent } from '../../../ynw_provider/components/a
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -275,6 +276,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
+    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
+      console.log(this.time_type);
+      if (this.time_type === 1) {
+        this.getTodayCheckIn();
+      }
+      if (this.time_type === 2) {
+        this.getFutureCheckIn();
+      }
+    });
     this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = user.sector;
@@ -287,7 +297,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.breadcrumb_moreoptions = {
           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-
         };
         this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
@@ -392,9 +401,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         selected_location = location;
       }
     }
-
     return (selected_location !== null) ? selected_location : this.locations[0];
-
   }
   selectLocationFromCookies(cookie_location_id) {
     this.changeSelectedLocation(this.selectLocationFromCookie(cookie_location_id));
@@ -1273,7 +1280,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-      // this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
+    // this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
   }
   resetPaginationData() {
     this.filter.page = 1;
@@ -1544,7 +1551,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addLabel() {
     this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
-
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
@@ -1552,7 +1558,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   deleteLabel(label) {
     this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
-
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1628,17 +1633,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
-  // toggled(event) {
-  //   if (!event) {
-  //     if (this.time_type === 1) {
-  //       this.getTodayCheckIn();
-  //     } else if (this.time_type === 2) {
-  //       this.getFutureCheckIn();
-  //     } else if (this.time_type === 0) {
-  //       this.getHistoryCheckIn();
-  //     }
-  //   }
-  // }
+
   filterbyStatus(status) {
     this.filterStatus = false;
     if (this.showStausFilters[status]) {

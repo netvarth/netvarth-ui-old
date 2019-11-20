@@ -5945,3 +5945,6 @@ border-color: #3c8dbc !important;
     margin-top: 10px !important;
   }
 }
+.loc-detail .form-level-settings {
+  padding-left: 20px;
+}

@@ -605,7 +605,8 @@ export class CheckInInnerComponent implements OnInit {
             this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
             this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
             this.sel_queue_name = this.queuejson[selindx].name;
-            this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+            // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+            this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
             this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
             this.setTerminologyLabels();
@@ -687,7 +688,8 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
       this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
       this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
-      this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+      // this.sel_queue_timecaption = '[ ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+      this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
       this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
       // this.queueReloaded = true;
     }
