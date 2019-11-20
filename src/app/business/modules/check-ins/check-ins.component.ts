@@ -277,7 +277,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngOnInit() {
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
-      console.log(this.time_type);
       if (this.time_type === 1) {
         this.getTodayCheckIn();
       }

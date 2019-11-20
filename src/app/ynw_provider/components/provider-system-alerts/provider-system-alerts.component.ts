@@ -124,7 +124,6 @@ export class ProviderSystemAlertComponent implements OnInit {
 }
   clearFilter() {
     this.resetFilter();
-
     this.do_search(false);
     this.filterapplied = false;
 

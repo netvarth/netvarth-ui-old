@@ -68,7 +68,6 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         private activated_route: ActivatedRoute,
         private sanitizer: DomSanitizer,
         private provider_shared_functions: ProviderSharedFuctions) {
-
         this.activated_route.params.subscribe(params => {
             this.location_id = params.id;
         });

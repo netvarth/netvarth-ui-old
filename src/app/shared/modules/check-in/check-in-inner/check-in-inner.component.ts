@@ -661,7 +661,6 @@ export class CheckInInnerComponent implements OnInit {
     }
     return clr;
   }
-
   // handleQueueSel(obj) {
   //   this.resetApi();
   //   // this.queueReloaded = false;
