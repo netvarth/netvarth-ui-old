@@ -3760,7 +3760,8 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .paysettings .mat-input-element {
-  padding: 10px !important;
+  /* padding: 10px !important; */
+  padding: 15px 0px 4px 5px !important;
 }
 
 .paytm-det .sts-msg.error, .cc-det .sts-msg.error {
