@@ -5918,3 +5918,30 @@ border-color: #3c8dbc !important;
   color: red;
   background: none;
 }
+.upgrade_btn {
+  margin-left: 10px !important;
+}
+@media only screen and (max-width: 671px) {
+  .upgrade_btn {
+    display: table-caption;
+    margin-left: 0px !important;
+    margin-top: 10px !important;
+  }
+}
+@media only screen and (max-width: 456px) {
+  .pay_statment_btn {
+    margin-top: 10px !important;
+  }
+}
+@media only screen and (max-width: 388px) {
+  .switchanual_btn {
+    display: inline-block;
+    margin-top: 10px !important;
+  }
+
+}
+@media only screen and (max-width: 456px) {
+  .cancel_subsc_btn{
+    margin-top: 10px !important;
+  }
+}

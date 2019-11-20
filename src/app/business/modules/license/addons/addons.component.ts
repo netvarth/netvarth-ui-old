@@ -33,7 +33,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
             url: '/provider/license'
         },
         {
-            title: 'AddOns'
+            title: 'Add-ons'
         }
     ];
     constructor(
