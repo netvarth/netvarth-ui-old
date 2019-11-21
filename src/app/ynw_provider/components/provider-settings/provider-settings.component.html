@@ -23,7 +23,7 @@
                                             </mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="search_status">{{search_statusstr}}</p>
-                                        <p class="settings_info">Turn it on to enable your profile’s visibility in customer’s search result.</p>
+                                        <p class="settings_info">{{frm_search_cap}}</p>
                                     </a></li>
                                 <li (click)="redirecTo('bprofile')"><a class="pointer-cursor"><span class="lnk setings" style="display: flex;">Online
                                             Profile
@@ -48,7 +48,7 @@
                                             Info
                                             <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
                                             class="req-flds-cap">*required fields missing</p></span>
-                                        <p class="settings_info">Add more details of your business for your client to see</p>
+                                        <p class="settings_info">{{frm_addinfo_cap}}</p>
                                     </a>
                                     <!-- <p *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
                                         class="req-flds-cap" style="padding-left: 13px;">required fields missing</p> -->
