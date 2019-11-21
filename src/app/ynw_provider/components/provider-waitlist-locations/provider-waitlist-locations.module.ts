@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProviderSubeaderModule } from '../provider-subheader/provider-subheader.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { ProviderWaitlistLocationsComponent } from './provider-waitlist-locations.component';
@@ -11,7 +10,6 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
     imports: [
       CommonModule,
       LoadingSpinnerModule,
-      ProviderSubeaderModule,
       BreadCrumbModule,
       MaterialModule,
       CapitalizeFirstPipeModule,

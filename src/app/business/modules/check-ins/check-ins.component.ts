@@ -14,11 +14,11 @@ import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { filter, pairwise } from 'rxjs/operators';
 import { SearchProviderCustomerComponent } from '../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
-import { AddProviderCustomerComponent } from '../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
+import { AddProviderCustomerComponent } from './add-provider-customer/add-provider-customer.component';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -1452,6 +1452,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
         this.createCheckin(result.data);
       } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
+        this.createCustomer(result.data, source);
+      } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
         this.createCustomer(result.data, source);
       }
     });

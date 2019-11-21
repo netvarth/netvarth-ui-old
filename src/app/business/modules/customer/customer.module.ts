@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SearchProviderCustomerComponent } from '../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
-import { AddProviderCustomerComponent } from '../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
+import { AddProviderCustomerComponent } from '../check-ins/add-provider-customer/add-provider-customer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';

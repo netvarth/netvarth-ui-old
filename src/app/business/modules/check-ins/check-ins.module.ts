@@ -15,7 +15,7 @@ import { ProviderWaitlistCheckInDetailComponent } from './provider-waitlist-chec
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
 import { CustomerModule } from '../customer/customer.module';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
-
+import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 @NgModule({
     imports: [
         CheckinsRoutingModule,
@@ -27,7 +27,8 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
         LoadingSpinnerModule,
         Nl2BrPipeModule,
         InboxModule,
-        CustomerModule
+        CustomerModule,
+        FormMessageDisplayModule
     ],
     declarations: [
         CheckInsComponent,

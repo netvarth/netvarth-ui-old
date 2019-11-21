@@ -1,13 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { AddProviderCustomerComponent } from '../../../../ynw_provider/components/add-provider-customer/add-provider-customer.component';
+import { AddProviderCustomerComponent } from '../../check-ins/add-provider-customer/add-provider-customer.component';
 import { SearchProviderCustomerComponent } from '../../../../ynw_provider/components/search-provider-customer/search-provider-customer.component';
 import { MatDialog } from '@angular/material';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html'
