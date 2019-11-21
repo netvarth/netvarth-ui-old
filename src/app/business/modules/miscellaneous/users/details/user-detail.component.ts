@@ -159,9 +159,9 @@ export class BranchUserDetailComponent implements OnInit {
                 'gender': input.gender || null,
                 'email': input.email || '',
                 'countryCode': '+91',
-                'primaryMobileNo': input.phonenumber,
-                'subSector': input.selectedSubDomain.subDomain
+                'primaryMobileNo': input.phonenumber
                 },
+                'subSector': input.selectedSubDomain.subDomain,
                 'commonPassword': input.password,
                 'isAdmin': true
             };
