@@ -63,6 +63,7 @@ import { AdminLoginComponent } from './shared/components/admin/login/login.compo
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
+import { SalesChannelCodeComponent } from './shared/components/sales-chanel/sales-channel-code.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,6 +73,7 @@ import { DisplayboardLayoutContentModule } from './business/modules/displayboard
     EqualValidator,
     SignUpComponent,
     SetPasswordFormComponent,
+    SalesChannelCodeComponent,
     LoginComponent,
     ConfirmBoxComponent,
     ReturnPaymentComponent,

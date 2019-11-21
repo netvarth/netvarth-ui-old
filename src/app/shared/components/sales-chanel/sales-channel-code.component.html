@@ -1,0 +1,58 @@
+<section class="col-md-12" id="container">
+    <div class=" ynw-common-form-nm login-form">
+        <div class="sp-login-cap">
+        </div>
+        <div class="example-container">
+            <div class="col-md-12">
+                <span class="col-md-6 form-group">
+                    <span> Do you have SC code</span>
+                </span>
+                <span class="col-md-6 form-group">
+                    <mat-form-field>
+                        <input class="form-control" matInput [(ngModel)]="sccode">
+                    </mat-form-field>
+                </span>
+            </div>
+            <div class="col-md-12">
+                <span class="col-md-6">
+                    <div class="centeralign">
+                        <button type="button" (click)="handleSalescode()" class="cs-btn bt2">lookup</button>
+                    </div>
+                </span>
+                <span class="col-md-6">
+                    <div *ngIf="salescode"><input (keypress)="isNumeric($event)" placeholder="id"
+                            (keyup)="isvalid($event)" matInput class="form-control" [(ngModel)]="id"></div>
+                    <div *ngIf="salescode">
+                        <input (keypress)="isNumeric($event)" placeholder="Phone number" (keyup)="isvalid($event)"
+                            matInput class="form-control" [(ngModel)]="phonenumber"></div>
+                </span>
+
+
+            </div>
+            <div class="col-md-12">
+                <div class="col-xs-12">
+                    <label class="col-form-label">How did you hear us</label> </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <mat-radio-group [(ngModel)]="hearus">
+                        <mat-radio-button value="google">Google</mat-radio-button>
+                        <mat-radio-button value="fb">Facebook</mat-radio-button>
+                        <mat-radio-button value="twitter">Twitter</mat-radio-button>
+                        <mat-radio-button value="poster">Poster</mat-radio-button>
+                        <mat-radio-button value="someone">Someone</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <!-- <div class="mat-dialog-actions">
+                    <div class="centeralign">
+                        <button type="submit" mat-button [disabled]="!fpForm.valid">{{ok_btn_cap}}</button>
+                    </div>
+                    <div class="forgotpass centeralign" (click)="cancelForgotPassword()">{{back_to_login_cap}}</div>
+                </div> -->
+        </div>
+        <div *ngIf="api_error">
+            <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
+        </div>
+        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+        </app-form-success-display>
+    </div>
+</section>

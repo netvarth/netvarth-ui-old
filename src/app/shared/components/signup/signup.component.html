@@ -182,6 +182,11 @@ onSubmit()" (keyup)="resetApiErrors()">
     (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess">
   </app-otp-form>
 </div>
+<!-- <div class="example-container" *ngIf="step==3">
+  <app-sales-channel-code (retonOtpSubmit)="onOtpSubmit($event)"
+    (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)">
+  </app-sales-channel-code>
+</div> -->
 <div class="example-container" *ngIf="step==3">
   <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
     (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
