@@ -308,7 +308,7 @@
             <div *ngIf="active_step==4" class="is-bx step3 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
-                    <h1>{{working_hrs_cap}}</h1>
+                    <h1>{{working_hr_cap}}</h1>
                 </div>
                 <div class="content row">
                     <div class="flds">
@@ -316,7 +316,7 @@
                             {{add_more_queue_in_set_cap}} for {{bProfile.baseLocation.place}}</p>
                         <p class="form-level-settings" *ngIf="!bProfile.baseLocation">{{add_more_queue_in_set_cap}}</p>
                         <div class="form-group">
-                            <label class="title16">{{working_hrs_cap}}</label>
+                            <label class="title16">{{working_hr_cap}}</label>
                             <span class="expl">{{shows_b_hrs_cap}} </span>
                             <ul class="whrs" *ngIf="ischange_schedule_clicked == false">
                                 <li *ngFor="let schedule of display_schedule">

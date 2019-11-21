@@ -8,7 +8,6 @@ import { ProviderWaitlistComponent } from '../provider-waitlist/provider-waitlis
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { CheckInModule } from '../../../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
-import { ProviderSubeaderModule } from '../provider-subheader/provider-subheader.module';
 import { MaterialModule } from '../../../shared/modules/common/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
@@ -38,7 +37,6 @@ import { DepartmentModule } from '../../shared/modules/department/department.mod
         CheckInModule,
         RouterModule,
         CommonModule,
-        ProviderSubeaderModule,
         MaterialModule,
         FormsModule,
         LoadingSpinnerModule,

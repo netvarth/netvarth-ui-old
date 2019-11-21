@@ -373,7 +373,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      */
     savePaySettings(source) {
         this.resetApi();
-        const postData = { 'dcOrCcOrNb': false, 'payTm': false, 'payU': false };
+        // const postData = { 'dcOrCcOrNb': false, 'payTm': false, 'payU': false };
+        const postData = {};
         postData['onlinePayment'] = this.paystatus;
         const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
         const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
@@ -402,12 +403,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             postData['paytmWebsiteWeb'] = this.paytmWebsiteWeb;
             postData['paytmWebsiteApp'] = this.paytmWebsiteApp;
             postData['paytmIndustryType'] = this.paytmIndustryType;
-        } else {
-            postData.payTm = false;
+            console.log(postData);
         }
+        //  else {
+        //     postData['payTm'] = false;
+        //     console.log(postData);
+        // }
         if (source === 'cc') {
             postData['payU'] = true;
-            postData.dcOrCcOrNb = true;
+            postData['dcOrCcOrNb'] = true;
             this.panCardBlur();
             this.bankAcnumberBlur();
             this.bankNameBlur();
@@ -433,10 +437,14 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             postData['branchCity'] = this.bankbranch;
             postData['businessFilingStatus'] = this.bankfiling;
             postData['accountType'] = this.bankactype;
-        } else {
-            postData.payU = false;
-            postData['dcOrCcOrNb'] = false;
+            console.log(postData);
         }
+        //  else {
+        //     postData['payU'] = false;
+        //     postData['dcOrCcOrNb'] = false;
+        //     console.log(postData);
+        // }
+        console.log(postData);
         if (!this.errorExist) {
             this.saveEnabled = false;
             this.provider_services.setPaymentSettings(postData)
@@ -664,31 +672,22 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
         this.provider_services.getLicenseMetadata().subscribe(data => {
             this.licenseMetadata = data;
-        });
-        setTimeout(() => {
-            this.provider_services.getLicenseMetrics().subscribe(data => {
-                this.licenseMetrics = data;
-                for (let i = 0; i < this.licenseMetrics.length; i++) {
-                    for (let j = 0; j < this.licenseMetadata.length; j++) {
-                        if (this.licenseMetrics[i].name === 'Jaldee_POS_And_Billiing') {
-                            if (this.licenseMetadata[j].pkgId === pkgId) {
-                                for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
-                                    if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {
-                                        if (this.licenseMetadata[j].metrics[k].anyTimeValue === 'true') {
-                                            this.jPay_Billing = true;
-                                            return;
-                                        } else {
-                                            this.jPay_Billing = false;
-                                            return;
-                                        }
-                                    }
-                                }
+            for (let i = 0; i < this.licenseMetadata.length; i++) {
+                if (this.licenseMetadata[i].pkgId === pkgId) {
+                    for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+                        if (this.licenseMetadata[i].metrics[k].id === 6) {
+                            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+                                this.jPay_Billing = true;
+                                return;
+                            } else {
+                                this.jPay_Billing = false;
+                                return;
                             }
                         }
                     }
                 }
-            });
-        }, 1000);
+            }
+        });
         setTimeout(() => {
             this.api_loading = false;
         }, 1000);

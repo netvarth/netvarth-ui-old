@@ -184,6 +184,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   adworddialogRef;
   cacheavoider = '';
   frm_public_search_cap = '';
+  frm_public_searchh_cap = '';
   frm_public_search_off_cap = '';
   frm_adword_cap = '';
   frm_loc_amen_cap = '';
@@ -257,6 +258,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.getProviderLocations();
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'profile-search->public-search' };
     this.frm_public_search_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_public_searchh_cap = Messages.FRM_LEVEL_PUBLIC_SEARCHH_MSG.replace('[customer]', this.customer_label);
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
@@ -290,21 +292,16 @@ export class BProfileComponent implements OnInit, OnDestroy {
     }
     this.provider_services.getLicenseMetadata().subscribe(data => {
       this.licenseMetadata = data;
-    });
-    this.provider_services.getLicenseMetrics().subscribe(data => {
-      this.licenseMetrics = data;
-      for (let i = 0; i < this.licenseMetrics.length; i++) {
-        for (let j = 0; j < this.licenseMetadata.length; j++) {
-          if (this.licenseMetrics[i].displayName === 'Custom URL') {
-            if (this.licenseMetadata[j].pkgId === pkgId) {
-              for (let k = 0; k < this.licenseMetadata[j].metrics.length; k++) {
-                if (this.licenseMetadata[j].metrics[k].id === this.licenseMetrics[i].id) {
-                  if (this.licenseMetadata[j].metrics[k].anyTimeValue === 'true') {
-                    this.showCustomId = true;
-                  } else {
-                    this.showCustomId = false;
-                  }
-                }
+      for (let i = 0; i < this.licenseMetadata.length; i++) {
+        if (this.licenseMetadata[i].pkgId === pkgId) {
+          for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+            if (this.licenseMetadata[i].metrics[k].id === 13) {
+              if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+                this.showCustomId = true;
+                return;
+              } else {
+                this.showCustomId = false;
+                return;
               }
             }
           }

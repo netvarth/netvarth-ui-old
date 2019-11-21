@@ -5676,7 +5676,6 @@ li.separator.setsplit {
   height: auto;
   background: transparent;
   border: 1px solid #00aef2;
-  padding: 5px 15px;
   color: #00aef2;
   font-size: .75rem;
   font-weight: 600;
@@ -5706,6 +5705,7 @@ li.separator.setsplit {
   border-color: #3c8dbc;
   background-color: #3c8dbc;
 }
+.btn-primary-n.clr-fltr {font-size: 1rem !important;}
 .info-box-footer-more {
   padding:10px 0 !important;
   width: 100% !important
@@ -5972,3 +5972,33 @@ display: flex;
 .bill-content .bill-responsive .discount-row .price, .bill-content .bill-responsive .c-row.two .coupon-row .price {
   flex-basis: 25%!important;
 }
+.attach {
+  margin-top: 10px;
+}
+.attach .attach-link {
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: underline;
+  font-size: smaller;
+}
+.pro-dash .mat-select-panel .mat-option-text {
+  font-size: small !important;
+}
+.clr-fltr {
+  padding-right: 3px;
+  padding-left: 5px;
+  border: none;
+}
+.clr-fltr img {
+  width: 20px;
+  height: 20px;
+  margin-top: -5px;
+}
+@media only screen and (max-width: 374px) {
+  .clr-fltr img {
+    width: 16px;
+    height: 16px;
+    margin-top: -5px;
+  }
+}
+

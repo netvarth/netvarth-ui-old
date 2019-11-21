@@ -42,7 +42,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   notification_cap = Messages.NOTIFICATION_CAP;
   saleschannel_cap = Messages.SALESCHANNEL_CAP;
   frm_profile_search_cap = Messages.FRM_LEVEL_PROFILE_SEARCH_MSG;
-  frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG;
+  frm_waitlist_cap = '';
   frm_license_cap = Messages.FRM_LEVEL_LIC_MSG;
   frm_pay_cap = Messages.FRM_LEVEL_PAY_MSG;
   frm_bill_cap = Messages.FRM_LEVEL_BILLING_MSG;
@@ -112,6 +112,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   noitemError = false;
   miscellaneous = '';
   frm_public_self_cap = '';
+  frm_addinfo_cap = '';
+  frm_search_cap = '';
   itemError = '';
   discountError = '';
   waitlist_details;
@@ -130,6 +132,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]', this.customer_label);
     this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
+    this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
+    this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
+    this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();

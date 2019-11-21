@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
   selector: 'app-provider-add-customer',
@@ -31,7 +31,7 @@ export class AddProviderCustomerComponent implements OnInit {
   api_success = null;
   step = 1;
   tday = new Date();
-  minday= new Date(1900, 0, 1);
+  minday = new Date(1900, 0, 1);
   search_data = null;
   disableButton = false;
   api_loading = true;
