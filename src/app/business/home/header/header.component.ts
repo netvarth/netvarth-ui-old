@@ -51,6 +51,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.setLicense();
           break;
         case 'hidemenus':
+          this.renderer.removeClass(document.body, 'sidebar-open');
+          this.renderer.addClass(document.body, 'sidebar-collapse');
           this.iswiz = message.value;
           break;
         case 'instant_q':

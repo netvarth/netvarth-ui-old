@@ -2,7 +2,7 @@
     <app-breadcrumb *ngIf="!apiloading" (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
       [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
   </section>
-  <section class="dashboard content" *ngIf="!apiloading">
+  <section class="dashboard content pro-dash" *ngIf="!apiloading">
     <div class="col-md-12 no-padding-small">
       <div class="row">
         <div class="card p0 w-dta">
@@ -192,8 +192,9 @@
                             </mat-option>
                             <mat-option *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)"
                               [value]="queue.id">
-                              <span class="day_label">{{queue.displayschedule.dstr}} </span>:
+                              <!-- <span class="day_label">{{queue.displayschedule.dstr}} </span>: -->
                               <span class="time_label">{{queue.displayschedule.time}}</span>
+                              <span >[{{queue.name}}]</span>
                             </mat-option>
                           </mat-select>
                         </mat-form-field>

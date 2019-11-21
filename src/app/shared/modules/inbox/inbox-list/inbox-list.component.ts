@@ -1,7 +1,7 @@
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
-import {Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -37,6 +37,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   msgdialogRef;
   fileTooltip = Messages.FILE_TOOLTIP;
+  showImages = false;
 
   @Input() messages: any;
   @Input() fromsource: any;
@@ -47,7 +48,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
-
+console.log(this.messages);
     if (this.fromsource === 'provider_checkin_detail' ||
       this.fromsource === 'consumer_checkin_detail') {
       this.hide_reply_button = true;
@@ -147,5 +148,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
       retdate = obtshowdate + ' ' + this.shared_functions.convert24HourtoAmPm(obtshowtime);
     }
     return retdate;
+  }
+  showImagesection() {
+    (this.showImages) ? this.showImages = false : this.showImages = true;
+  }
+  getThumbUrl(attachment) {
+    if (attachment.s3path.indexOf('.pdf') !== -1) {
+      return attachment.thumbPath;
+    } else {
+      return attachment.s3path;
+    }
   }
 }

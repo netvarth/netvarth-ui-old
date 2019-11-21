@@ -31,7 +31,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   today_cap = Messages.TODAY_HOME_CAP;
   future_cap = Messages.FUTURE_HOME_CAP;
   history_cap = Messages.HISTORY_HOME_CAP;
-  service_window_cap = Messages.WIZ_WORKING_HOURS_CAP;
+  service_window_cap = Messages.WORKING_HRS_CAP;
   services_cap = Messages.SRVIC_CAP;
   check_in_status = Messages.PAY_STATUS;
   payment_status = Messages.PAYMENT_CAP;
@@ -413,6 +413,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemonLocalStorage('provider_selected_location', this.selected_location.id);
     }
     this.shared_functions.setitemonLocalStorage('loc_id', this.selected_location);
+    this.getQueueList();
     // const pdata = { 'ttype': 'location_change' };
     // this.shared_functions.sendSwitchMessage(pdata);
   }
@@ -590,6 +591,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               indx += 1;
             }
           }
+          console.log(this.all_queues);
           if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
             return;
           }

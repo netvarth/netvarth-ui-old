@@ -54,6 +54,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
     selectedChildIndex;
     blogo: any;
     clogo: any;
+    showImages = false;
 
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
@@ -352,5 +353,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
         } else {
             return attachment.s3path;
         }
+    }
+    showImagesection() {
+        (this.showImages) ? this.showImages = false : this.showImages = true;
     }
 }

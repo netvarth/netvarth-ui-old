@@ -59,7 +59,13 @@
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
-                                                            <div class="thumbnails mt10 mb10" *ngIf="inbox.attachments">
+                                                            <div class="attach" *ngIf="inbox.attachments"
+                                                                (click)="showImagesection()">
+                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <a
+                                                                    class="attach-link"> {{inbox.attachments.length}}
+                                                                    Attachment(s) </a>
+                                                            </div>
+                                                            <div class="thumbnails mt10 mb10" *ngIf="showImages">
                                                                 <a class="mg-10" target="_blank"
                                                                     [href]="attachment.s3path"
                                                                     *ngFor="let attachment of inbox.attachments"><img
@@ -86,7 +92,8 @@
                                                                 *ngIf="selectedMessage[parentIndex] && selectedMessage[parentIndex].message && selectedMessage[parentIndex].message.waitlistid"
                                                                 class="btn btn-warning btn-flat"
                                                                 (click)="logofile.click()">
-                                                                <input #logofile type="file" accept="image/*,application/pdf"
+                                                                <input #logofile type="file"
+                                                                    accept="image/*,application/pdf"
                                                                     style="display:none;" multiple
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>

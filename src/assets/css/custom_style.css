@@ -5955,3 +5955,15 @@ border-color: #3c8dbc !important;
 .bill-content .bill-responsive .discount-row .price, .bill-content .bill-responsive .c-row.two .coupon-row .price {
   flex-basis: 25%!important;
 }
+.attach {
+  margin-top: 10px;
+}
+.attach .attach-link {
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: underline;
+  font-size: smaller;
+}
+.pro-dash .mat-select-panel .mat-option-text {
+  font-size: small !important;
+}
