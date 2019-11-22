@@ -6001,4 +6001,15 @@ display: flex;
     margin-top: -5px;
   }
 }
+.q-token-div{
+  display: flex !important;
+  padding-top: 10px !important;
+}
+.q-token-label{
+  padding: 12px !important;
+  padding-left: 5px !important;
+}
+.q-token-input{
+  width: 115px !important;
+}
 

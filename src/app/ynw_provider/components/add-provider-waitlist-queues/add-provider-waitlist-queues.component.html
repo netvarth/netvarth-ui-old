@@ -194,6 +194,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         })">
             </app-field-error-display>
         </div>
+        <div class="form-group" *ngIf="!ifedit && iftokn">
+            <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
+            <div class="example-full-width q-token-div" *ngIf="showAdvancedSettings">
+               <label class="q-token-label">Token starts from</label>
+                 <input type="text" formControlName="tokennum" class="form-control q-token-input" placeholder="Token Number"> 
+            </div>
+        </div>
         <!-- <div class="form-group inline">
             <label>Online check-ins
                 <mat-slide-toggle class="example-margin" formControlName="onlineCheckIn">
