@@ -196,6 +196,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   jaldeediscountJson;
   maximumDiscount: any;
   jdnlength;
+  jdnTooltip = '';
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -211,6 +212,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
+    this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
