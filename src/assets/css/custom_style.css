@@ -6090,11 +6090,15 @@ li.separator.setsplit {
     height: 16px;
     margin-top: -5px;
   }
-  .nav>li>a {
+  /* .nav>li>a {
     padding:10px !important;
-  }
+  } */
 }
-
+.navbar-nav>li>a.sel-que {
+  padding-bottom: 0 !important;
+  line-height: 15px !important;
+  overflow: hidden;
+}
 .chkin .nav>li>a.nav-cust-btn-new {
   padding: 5px 10px !important;
 }
@@ -6110,7 +6114,6 @@ li.separator.setsplit {
   margin-top: 10px;
   font-size: 0.75rem;
 }
-12px
 .nav-lc-sh-icon {
   margin-top: 4px;
 }
@@ -6140,7 +6143,7 @@ li.separator.setsplit {
     width: 50px !important;
 }
 
-.bcrumb-help {
+.bcrumb span.bt6.bcrumb-help {
   border: none !important;
   font-size: 0.75rem;
 }
@@ -6177,12 +6180,16 @@ li.separator.setsplit {
 .queue-menu {
   display: flex !important;
 }
-.queue-menu .icon-time {
+.queue-menu .icon-time, .queue-menu .icon-location {
   margin-top: 17px !important;
   font-size: medium !important;
   color: #3c8dbc !important;
+  margin-left: 5px !important;
 }
 .queue-menu>a {
-  padding-left: 8px !important;
+  padding-left: 4px !important;
   padding-top: 12px !important;
+}
+.dashboard a.dropdown-toggle:hover {
+  color: #00aef2 !important;
 }

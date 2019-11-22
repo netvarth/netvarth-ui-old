@@ -10,10 +10,11 @@
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
             <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">
-                <li class="dropdown messages-menu loc-lst">
+                <li class="dropdown messages-menu loc-lst queue-menu">
+                  <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selected_location" style="padding-top: 12px !important;">
-                    <i class="icon-location"></i><span *ngIf="!small_device_display">
+                    <span *ngIf="!small_device_display">
                       {{selected_location.place | capitalizeFirst}}</span>
                   </a>
                   <ul class="dropdown-menu">
@@ -31,7 +32,7 @@
                   </ul>
                 </li>
                 <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==1 && apis_loaded && selected_queue">
-                    <i class="icon-time"></i>
+                    <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
                     *ngIf="selected_location">
                    <span *ngIf="!small_device_display">
