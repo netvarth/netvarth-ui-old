@@ -7,6 +7,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
+import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 
 @Component({
@@ -54,12 +55,13 @@ export class MailboxComponent implements OnInit, OnDestroy {
     selectedChildIndex;
     blogo: any;
     clogo: any;
-    showImages = false;
+    showImages: any = [];
 
     constructor(private inbox_services: InboxServices,
         private shared_functions: SharedFunctions,
         private shared_services: SharedServices,
         private provider_services: ProviderServices,
+        private _scrollToService: ScrollToService,
         private router: Router) { }
 
     ngOnInit() {
@@ -354,7 +356,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
             return attachment.s3path;
         }
     }
-    showImagesection() {
-        (this.showImages) ? this.showImages = false : this.showImages = true;
+    showImagesection(index) {
+        (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
     }
 }

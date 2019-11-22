@@ -30,15 +30,16 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
                   </ul>
                 </li>
-                <li class="dropdown messages-menu" *ngIf="time_type ==1 && apis_loaded && selected_queue">
-                  <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
-                    *ngIf="selected_location" style="padding-top: 12px !important;">
-                    <i class="icon-time"></i><span *ngIf="!small_device_display">
+                <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==1 && apis_loaded && selected_queue">
+                    <i class="icon-time"></i>
+                  <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
+                    *ngIf="selected_location">
+                   <span *ngIf="!small_device_display">
                       <!-- {{selected_queue.name | capitalizeFirst}} -->
                       {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
-                      {{selected_queue.queueSchedule.timeSlots[0].eTime }}<span class="qname"
-                        *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</span>
-                      <span class="instantQ" *ngIf="selected_queue.instantQueue"> [Only for today]</span>
+                      {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
+                        *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
+                      <div class="instantQ" *ngIf="selected_queue.instantQueue"> [Only for today]</div>
                     </span>
                   </a>
                   <ul class="dropdown-menu ques">
@@ -49,9 +50,9 @@
                           *ngFor="let queue of queues;let i = index">
                           <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
                             <span class="qtime">{{queue.queueSchedule.timeSlots[0].sTime }} -
-                              {{queue.queueSchedule.timeSlots[0].eTime }}<span *ngIf="!queue.instantQueue"
-                                class="qname">[{{ queue.name | capitalizeFirst }}]</span>
-                              <span *ngIf="queue.instantQueue" class="instantQ"> [Only for today]</span></span>
+                              {{queue.queueSchedule.timeSlots[0].eTime }}<div *ngIf="!queue.instantQueue"
+                                class="dashboard-qname">[{{ queue.name | capitalizeFirst }}]</div>
+                              <div *ngIf="queue.instantQueue" class="instantQ"> [Only for today]</div></span>
                           </a>
                         </li>
                       </ul>
@@ -213,7 +214,7 @@
                             [value]="queue.id">
                             <!-- <span class="day_label">{{queue.displayschedule.dstr}} </span>: -->
                             <span class="time_label">{{queue.displayschedule.time}}</span>
-                            <span>[{{queue.name}}]</span>
+                            <span class="dashboard-qname">[{{queue.name}}]</span>
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

@@ -53,11 +53,11 @@
                     <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
                         <!-- {{shared_functions.firstToUpper(message.msg)}} -->
                     </div>
-                    <div class="result attach" *ngIf="message.attachements" (click)="showImagesection()">
+                    <div class="result attach" *ngIf="message.attachements" (click)="showImagesection(i)">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
                             {{message.attachements.length}} Attachment(s) </a>
                     </div>
-                    <div class="thumbnails mt10 mb10" *ngIf="showImages">
+                    <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
                         <a class="mg-10" target="_blank" [href]="attachment.s3path"
                             *ngFor="let attachment of message.attachements"><img [src]="getThumbUrl(attachment)"
                                 style="width:100px; height:100px" /></a>
