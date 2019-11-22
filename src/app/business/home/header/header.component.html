@@ -145,40 +145,59 @@
           <p class="bus-name">{{bname}}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div> -->
-
+<!-- 
         <li class="dropdown notifications-menu" *ngIf="!iswiz">
           <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-circle text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
             <i class="fa fa-circle text-failure"
               *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange"></i>
           </a>
-          <ul class="dropdown-menu">
+         <ul class="dropdown-menu">
             <li class="available">
-              <a routerLink="settings/q-manager/queues" class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
+              <a routerLink="settings/q-manager/queues" class="greenc"
+                *ngIf="qAvailability && qAvailability.availableNow">
                 <span class="greenc">I am available online
-                until {{qAvailability.timeRange.eTime}}</span>
+                  until {{qAvailability.timeRange.eTime}}</span>
               </a>
-              <a routerLink="settings/q-manager/queues" class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
+              <a routerLink="settings/q-manager/queues" class="red"
+                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
                 <span class="red"> I am not available now </span>
               </a>
             </li>
-            <!-- <li class="footer"><a href="#" routerLink="settings/q-manager/queues">Go to Queues</a></li> -->
           </ul>
-        </li>
+        </li> -->
 
         <li class="dropdown user user-menu">
-          <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <img [src]="blogo" class="user-image">
-            <span class="hidden-xs">{{bname}}</span>
+          <a class="dropdown-toggle pointer-cursor user-active-icon" data-toggle="dropdown">
+            <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
+                <i class="fa fa-circle fa-stack-2x  text-failure"
+                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange"></i>
+                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+            </span>
+            <!-- <img [src]="blogo" class="user-image" alt=""> -->
+            <span class="hidden-xs mgn-lt-3" >{{bname}}</span>            
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
-            <li class="user-header pointer-cursor" style="height: 179px !important;" (click)="gotoProfile()">
-              <img [src]="blogo" class="img-circle">
+            <li class="user-header " style="height: 179px !important;" >
+              <img [src]="blogo" class="img-circle pointer-cursor" alt="" (click)="gotoProfile()">
 
-              <p>
+              <p class="pointer-cursor" (click)="gotoProfile()">
                 {{bname}}
                 <small>{{bsector}} ({{bsubsector}})</small>
+              </p>
+              <p><small>
+                <a routerLink="settings/q-manager/queues" class="white"
+                  *ngIf="qAvailability && qAvailability.availableNow">
+                  <span class="white bold">I am available online
+                    until {{qAvailability.timeRange.eTime}}</span>
+                </a>
+                <a routerLink="settings/q-manager/queues" class="white"
+                  *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
+                  <span class="white bold"> I am not available now </span>
+                </a>
+              </small>
               </p>
             </li>
             <!-- <li class="user-body">
@@ -197,8 +216,7 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left" *ngIf="!iswiz">
-                <a (click)="redirectto('profile')" class="btn btn-default btn-flat pointer-cursor btst">Admin
-                  Profile</a>
+                <a (click)="redirectto('profile')" class="btn btn-default btn-flat pointer-cursor btst">My Account</a>
               </div>
               <div class="pull-right">
                 <a (click)="doLogout()" class="btn btn-default btn-flat pointer-cursor btst">Sign out</a>

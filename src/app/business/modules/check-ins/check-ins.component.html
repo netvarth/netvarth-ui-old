@@ -9,9 +9,9 @@
         <header class="main-header dash chkin">
           <nav class="navbar navbar-static-top jd-custom-nav" role="navigation">
             <div class="navbar-custom-menu">
-              <ul class="nav navbar-nav ">
+              <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu loc-lst">
-                  <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
+                  <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selected_location" style="padding-top: 12px !important;">
                     <i class="icon-location"></i><span *ngIf="!small_device_display">
                       {{selected_location.place | capitalizeFirst}}</span>
@@ -60,7 +60,7 @@
                   </ul>
                 </li>
                 <li class="dropdown notifications-menu">
-                  <a (click)="checkinClicked()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                  <a (click)="checkinClicked()" class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown">
                     <i class="fa fa-plus"></i>
                     <span *ngIf="calculationmode!='NoCalc' || (calculationmode=='NoCalc' && !showToken)">
@@ -70,12 +70,12 @@
                 </li>
                 <li class="dropdown notifications-menu">
                   <a (click)="searchCustomer('createCustomer')"
-                    class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new" data-toggle="dropdown">
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                   </a>
                 </li>
                 <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
-                  <a (click)="showAdjustDelay()" class="dropdown-toggle navbar-item-color bold pointer-cursor"
+                  <a (click)="showAdjustDelay()" class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
 
@@ -214,7 +214,7 @@
                             [value]="queue.id">
                             <!-- <span class="day_label">{{queue.displayschedule.dstr}} </span>: -->
                             <span class="time_label">{{queue.displayschedule.time}}</span>
-                            <span class="dashboard-qname">[{{queue.name}}]</span>
+                            <span>[{{queue.name}}]</span>
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

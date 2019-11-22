@@ -203,9 +203,9 @@
 .skin-blue .available .text-success { color: #3c763d !important }
 .skin-blue .available .disabled { color: #dddd !important }
 .skin-blue .q-time.queuelist label.tstat {color: #999999 !important; font-weight: normal}
-.skin-blue .dashboard .card.w-dta .dash-list .table thead {
+/* .skin-blue .dashboard .card.w-dta .dash-list .table thead {
   background-color: #3c8dbc !important;
-}
+} */
 .skin-blue .req-flds-cap {color: red; font-size: 9px;margin-left: 5px;margin-bottom: 0px;}
 
 .skin-blue .bus-name {color: white}
