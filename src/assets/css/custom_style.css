@@ -1285,7 +1285,9 @@ sup {
 .mgn-lt-3 {
   margin-left: 3px !important;
 }
-
+.mgn-lt-10 {
+  margin-left: 10px !important;
+}
 .mgn-up-10 {
   margin-top: 10px !important;
 }
