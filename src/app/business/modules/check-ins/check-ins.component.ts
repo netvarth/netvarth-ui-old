@@ -413,7 +413,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.shared_functions.setitemonLocalStorage('provider_selected_location', this.selected_location.id);
     }
     this.shared_functions.setitemonLocalStorage('loc_id', this.selected_location);
-    this.getQueueList();
     // const pdata = { 'ttype': 'location_change' };
     // this.shared_functions.sendSwitchMessage(pdata);
   }
@@ -578,6 +577,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   getQueueList() {
+    this.selected_queue = null;
     this.provider_services.getProviderLocationQueues(this.selected_location.id)
       .subscribe(
         (data: any) => {
@@ -591,7 +591,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               indx += 1;
             }
           }
-          console.log(this.all_queues);
           if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
             return;
           }
@@ -616,8 +615,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           this.selected_queue = this.all_queues[selqid];
           this.getTodayCheckinCount();
-          if (this.time_type === 1) {
-            this.getTodayCheckIn();
+          // if (this.time_type === 1) {
+          //   this.getTodayCheckIn();
+          // }
+          if (this.time_type === 0) {
+            this.getHistoryCheckIn();
+          }
+          if (this.time_type === 2) {
+            this.getFutureCheckIn();
           }
         },
         () => { },
@@ -661,6 +666,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           },
           () => {
+            this.selected_queue = null;
             this.queues = [];
             this.load_queue = 1;
           },
@@ -720,7 +726,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = 0;
     this.future_waitlist_count = 0;
     this.check_in_list = this.check_in_filtered_list = [];
-    this.getQueueList();
+    // this.getQueueList();
     this.getFutureCheckinCount()
       .then(
         (result) => {
@@ -1029,13 +1035,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     switch (this.time_type) {
-      case 0: this.getHistoryCheckIn();
+      case 0: this.getQueueList();
         this.noOfColumns = 9;
         break;
       case 1: this.getQueueListByDate();
         this.noOfColumns = 8;
         break;
-      case 2: this.getFutureCheckIn();
+      case 2: this.getQueueList();
         this.noOfColumns = 8;
         break;
     }
