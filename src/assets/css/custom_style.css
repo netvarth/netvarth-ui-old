@@ -6012,4 +6012,14 @@ display: flex;
 .q-token-input{
   width: 115px !important;
 }
+.trackSlide{
+  margin-left: 20px;
+}
+.travelmodeEdit{
+  margin-left: 10px;
+}
+.walkingMode{
+  width: 15px;
+  height: 15px;
+}
 

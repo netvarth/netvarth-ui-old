@@ -165,13 +165,15 @@ export class CheckInInnerComponent implements OnInit {
   liveTrack = false;
   source: any = [];
   travelMode = 'DRIVING';
-  notifyTime = 'ONEHOUR';
+  notifyTime = 'AFTERSTART'; 
   shareLoc = false;
-  lat_lng = {
-    latitude: 0,
-    longitude: 0
-  };
-  driving: boolean;
+  lat_lng =
+   {   
+      latitude: 0,
+      longitude: 0 
+     }; 
+   driving = true;
+  
   walking: boolean;
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,

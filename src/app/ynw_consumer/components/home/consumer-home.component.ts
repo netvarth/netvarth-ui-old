@@ -98,8 +98,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   cronHandle: Subscription;
   countercronHandle: Subscription;
   tracksubscription: Subscription;
+  cronHandleTrack: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
+  refreshTimeForTracking = 6000;
   counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
   open_fav_div = null;
   hideShowAnimator = false;
@@ -171,7 +173,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       loop: false,
       easing: 'ease'
     };
-    this.setSystemDate();
+
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
@@ -184,6 +186,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
+    this.cronHandleTrack = Observable.interval(this.refreshTimeForTracking).subscribe(x => {
+      this.setSystemDate();
+      this.liveTrackPolling();
+    });
+
+
+
     this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
       switch (message.ttype) {
         case 'fromconsumer': {
@@ -204,6 +213,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.countercronHandle) {
       this.countercronHandle.unsubscribe();
     }
+
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -242,6 +252,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.remfavdialogRef) {
       this.remfavdialogRef.close();
     }
+    if (this.cronHandleTrack) {
+      this.cronHandleTrack.unsubscribe();
+    }
   }
   setSystemDate() {
     this.shared_services.getSystemDate()
@@ -263,14 +276,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           const today = new Date(todaydt);
           let i = 0;
           let retval;
-          let pollingTime;
           for (const waitlist of this.waitlists) {
             this.changemode[i] = false;
-            if(waitlist.jaldeeWaitlistDistanceTime) {
-            pollingTime = waitlist.jaldeeWaitlistDistanceTime.pollingTime;
-            this.liveTrackPolling(waitlist, pollingTime);
-            }
-           this.statusOfLiveTrack(waitlist.ynwUuid, waitlist.provider.id,i);
+            this.statusOfLiveTrack(waitlist.ynwUuid, waitlist.provider.id, i);
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
@@ -1003,23 +1011,38 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       'travelMode': type
     };
 
+    // const post_Data = {
+    //   'jaldeeGeoLocation': {
+    //     'latitude': this.lat_lng.latitude,
+    //     'longitude': this.lat_lng.longitude
+    //   },
+    //   'travelMode': type,
+    //   'waitlistPhonenumber': this.consumerPhoneNo,
+    //   'jaldeeStartTimeMod': this.notifyTime,
+    //   'shareLocStatus': true
+    // };
+    // this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
+    //   .subscribe(data => {
+    //     console.log(data);
+    //   });
+
     this.shared_services.updateTravelMode(uid, id, passdata)
-    .subscribe(data => {
+      .subscribe(data => {
         this.changemode[i] = false;
-              },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
 
   }
-  statusOfLiveTrack(ynwUuid,id,i) {
-     this.shared_services.statusOfLiveTrack(ynwUuid, id)
-    .subscribe(data => {
-       this.statusOfTrack[i] = data;
-              },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+  statusOfLiveTrack(ynwUuid, id, i) {
+    this.shared_services.statusOfLiveTrack(ynwUuid, id)
+      .subscribe(data => {
+        this.statusOfTrack[i] = data;
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
 
   }
 
@@ -1028,7 +1051,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lat_lng.longitude = +pos.coords.longitude;
         this.lat_lng.latitude = +pos.coords.latitude;
-        console.log(this.lat_lng);
       },
         error => {
         });
@@ -1038,11 +1060,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   updateLatLong(uid, id, passdata) {
     this.shared_services.updateLatLong(uid, id, passdata)
-    .subscribe(data => {
+      .subscribe(data => {
       },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
 
   }
   changeTrackstatus(uid, id, i, event) {
@@ -1052,31 +1074,54 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       this.stopTracking(uid, id, i);
     }
   }
-  startTracking(uid, id,i) {
+  startTracking(uid, id, i) {
     this.shared_services.startLiveTrack(uid, id)
-    .subscribe(data => {
+      .subscribe(data => {
       },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
-  stopTracking(uid, id,i) {
+  stopTracking(uid, id, i) {
     this.shared_services.stopLiveTrack(uid, id)
-    .subscribe(data => {
+      .subscribe(data => {
       },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
-  liveTrackPolling(waitlistData,time){
-    let pollingDateTime = waitlistData.date + ' ' + time;
-    let date = moment(pollingDateTime).format("YYYY-MM-DD HH:mm:ss");
-    console.log(date);
-    console.log(this.server_date);
-    if(this.server_date === pollingDateTime) {
-console.log("start polling");
+
+  liveTrackPolling() {
+    let pollingSet: any = [];
+    if (this.waitlists) {
+      for (const waitlist of this.waitlists) {
+        if (waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
+          pollingSet.push(waitlist);
+          if (pollingSet.length > 0) {
+                const pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
+                const pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
+                const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
+                if (serverDateTime >= pollingDateTime) {
+                  this.getCurrentLocation();
+                  this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
+                    .subscribe(data => { },
+                      error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      });
+                }
+        } else {
+          if (this.cronHandleTrack) {
+            this.cronHandleTrack.unsubscribe();
+          }
+
+        }
+      }
+
+
+      }
     }
-    
+
+
 
   }
 
