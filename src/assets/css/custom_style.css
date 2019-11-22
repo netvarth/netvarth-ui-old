@@ -6092,6 +6092,9 @@ li.separator.setsplit {
     height: 16px;
     margin-top: -5px;
   }
+  .info-box-icon-right {
+    padding: 20px 0px 5px 0px !important;
+  }
   /* .nav>li>a {
     padding:10px !important;
   } */
