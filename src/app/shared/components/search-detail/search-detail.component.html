@@ -357,11 +357,11 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
+                                    <h3  [matTooltipClass]="tooltipcls"
                                         [matTooltip]="bNameTooltip">
-                                        {{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now"
+                                        <span (click)="providerDetClicked(search_result)">{{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now"
                                             *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
-                                        </sup><span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1" (click)="openJdn(search_result)"
+                                        </sup></span><span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1" (click)="openJdn(search_result)"
                                         [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span>
                                     </h3>
                                     <div

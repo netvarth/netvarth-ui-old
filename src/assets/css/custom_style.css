@@ -6194,4 +6194,5 @@ li.separator.setsplit {
 }
 .dashboard a.dropdown-toggle:hover {
   color: #00aef2 !important;
+  background: transparent !important;
 }
