@@ -443,7 +443,7 @@
 
 
 <div *ngIf="liveTrack">
-    <h4 class="mat-dialog-title">Tracking <button mat-dialog-close class="modal_close" tabindex="-1"
+    <h4 class="mat-dialog-title">Tracking <span><i class="fa fa-info-circle"></i></span><button mat-dialog-close class="modal_close" tabindex="-1"
             style="color: black"> <i class="fa fa-window-close" aria-hidden="true"></i> </button>
     </h4>
     <mat-dialog-content>
@@ -474,8 +474,11 @@
                 </mat-radio-group>
                 <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
             </div>
-            <ng-container> <button style="margin-top: 10px;" mat-button class="cs-btn bt1 savemember"
-                    (click)="saveLiveTrackDetails()">I AGREE</button> </ng-container>
+            <ng-container > <button mat-dialog-close class="cs-btn bt2" tabindex="-1" style="margin-left: 10px;
+                margin-right: 10px;"
+               > Cancel </button>
+                <button  mat-button class="cs-btn bt1 savemember"
+                    (click)="saveLiveTrackDetails()" style="margin-top: 10px;">I AGREE</button> </ng-container>
         </div>
     </mat-dialog-content>
 </div>

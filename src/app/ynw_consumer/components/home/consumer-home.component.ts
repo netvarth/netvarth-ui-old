@@ -145,6 +145,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   driving: boolean;
   walking: boolean;
   statusOfTrack: any = [];
+  status: Boolean;
+  pollingSet: any = [];
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -278,8 +280,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let retval;
           for (const waitlist of this.waitlists) {
             this.changemode[i] = false;
-            this.statusOfLiveTrack(waitlist.ynwUuid, waitlist.provider.id, i);
             const waitlist_date = new Date(waitlist.date);
+            this.statusOfLiveTrack(waitlist, i);
+            if (waitlist.jaldeeWaitlistDistanceTime) {
+              this.pollingSet.push(waitlist);
+            }
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
             this.waitlists[i].future = false;
@@ -441,6 +446,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.loadcomplete.fav_provider = true;
           this.fav_providers = data;
+          console.log(this.fav_providers);
           this.fav_providers_id_list = [];
           // this.setWaitlistTimeDetails();
           for (const x of this.fav_providers) {
@@ -699,6 +705,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(data, origin = 'consumer') {
+    console.log(data);
     const provider_data = data.provider_data;
     const location_data = data.location_data;
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
@@ -757,7 +764,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       'id': location.id,
       'name': location.place
     };
-
+    console.log(post_data);
     this.showCheckin(post_data);
   }
   gets3curl() {
@@ -1035,15 +1042,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
 
   }
-  statusOfLiveTrack(ynwUuid, id, i) {
-    this.shared_services.statusOfLiveTrack(ynwUuid, id)
+  statusOfLiveTrack(waitlist, i) {
+    this.shared_services.statusOfLiveTrack(waitlist.ynwUuid, waitlist.provider.id)
       .subscribe(data => {
         this.statusOfTrack[i] = data;
+        waitlist.trackStatus = data;
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
-
   }
 
   getCurrentLocation() {
@@ -1092,37 +1099,38 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   liveTrackPolling() {
-    let pollingSet: any = [];
-    if (this.waitlists) {
-      for (const waitlist of this.waitlists) {
+    if (this.pollingSet && this.pollingSet.length > 0) {
+      for (const waitlist of this.pollingSet) {
         if (waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
-          pollingSet.push(waitlist);
-          if (pollingSet.length > 0) {
-                const pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
-                const pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
-                const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
-                if (serverDateTime >= pollingDateTime) {
-                  this.getCurrentLocation();
-                  this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
-                    .subscribe(data => { },
-                      error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                      });
-                }
-        } else {
-          if (this.cronHandleTrack) {
-            this.cronHandleTrack.unsubscribe();
+          const pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
+          const pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
+          const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
+          if (serverDateTime >= pollingDateTime) {
+            this.getCurrentLocation();
+            this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
+              .subscribe(data => { },
+                error => {
+                  this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
           }
-
+          else if (waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeStartTimeType === 'AFTERSTART') {
+            if (waitlist.trackStatus) {
+              this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
+                .subscribe(data => { },
+                  error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  });
+            }
+          }
+          else {
+            if (this.cronHandleTrack) {
+              this.cronHandleTrack.unsubscribe();
+            }
+          }
         }
       }
-
-
-      }
     }
-
-
-
   }
-
 }
+
+

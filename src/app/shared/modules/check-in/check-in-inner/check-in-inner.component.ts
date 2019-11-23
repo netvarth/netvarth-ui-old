@@ -259,7 +259,9 @@ export class CheckInInnerComponent implements OnInit {
       || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
       // this.search_obj = this.data.srchprovider;
       this.provider_id = this.data.moreparams.provider.unique_id;
+      console.log(this.provider_id);
       this.account_id = this.data.moreparams.provider.account_id;
+      console.log(this.account_id);
       const srch_fields = {
         fields: {
           title: this.data.moreparams.provider.name,
@@ -1347,7 +1349,7 @@ export class CheckInInnerComponent implements OnInit {
       'jaldeeStartTimeMod': this.notifyTime,
       'shareLocStatus': this.shareLoc
     };
-    this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
+    this.shared_services.addLiveTrackDetails(this.trackUuid, this.account_id, post_Data)
       .subscribe(data => {
         console.log(data);
       });
