@@ -1474,7 +1474,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.crtCustdialogRef.afterClosed().subscribe(result => {
-      if (next_page && result.message === 'reloadlist') {
+      if (next_page !== 'createCustomer' && result.message === 'reloadlist') {
         this.createCheckin(result.data);
       }
     });
