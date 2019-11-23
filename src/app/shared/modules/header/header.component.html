@@ -8,11 +8,11 @@
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
-        <div class="row">
-            <div class="lgo col-md-3">
+        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+            <div class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
-            <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
+            <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
                         class="sgn" (click)="doLogin('consumer')"
                         *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"

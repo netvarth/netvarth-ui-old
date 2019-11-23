@@ -6199,3 +6199,8 @@ li.separator.setsplit {
   color: #00aef2 !important;
   background: transparent !important;
 }
+@media only screen and (max-width: 575px) {
+  header .dashb .lgo img {
+    width: 100px;
+  }
+}
