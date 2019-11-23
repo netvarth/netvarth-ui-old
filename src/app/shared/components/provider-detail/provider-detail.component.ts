@@ -1130,12 +1130,25 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.testuserQry = ' test_account:1 ';
     }
     this.q_str = '(and ' + 'account_type:' + 1 + ' branch_id:' + this.branch_id + ')';
+    const searchpass_criteria = {
+      'start': 0,
+      'return': 'title,sector,logo,place1,business_phone_no,unique_id',
+      'fq': '',
+      'q': '',
+      'size': 10,
+      'parser': 'structured', // 'q.parser'
+      'options': '', // 'q.options'
+      'sort': '',
+      'distance': ''
+    };
     this.sharedFunctionobj.getCloudUrl()
       .then(url => {
-        projectConstants.searchpass_criteria.fq = '(and ' + this.testuserQry + ')';
-        projectConstants.searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
-        projectConstants.searchpass_criteria.q = this.q_str;
-        this.search_return = this.shared_services.DocloudSearch(url, projectConstants.searchpass_criteria)
+        searchpass_criteria.fq = '(and ' + this.testuserQry + ')';
+        searchpass_criteria.distance = 'haversin(' + this.loc_details.lat + ',' + this.loc_details.lon + ',location1.latitude,location1.longitude)';
+        searchpass_criteria.q = this.q_str;
+        searchpass_criteria.start = 0;
+        searchpass_criteria.size = 10000;
+        this.search_return = this.shared_services.DocloudSearch(url, searchpass_criteria)
           .subscribe(res => {
             this.search_data = res;
             this.getDoctorListbyDept(this.search_data);

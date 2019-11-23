@@ -248,8 +248,6 @@ export class SharedServices {
 
   }
 
-
-
   /* By Sony - Ends here */
 
   getProfile(id, origin?) {
