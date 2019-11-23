@@ -59,7 +59,7 @@ export class ProviderNotificationsComponent implements OnInit {
   ngOnInit() {
     const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
     this.domain = user.sector;
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
     this.getNotificationList();
   }
@@ -77,9 +77,9 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   performActions(action) {
     if (action === 'learnmore') {
-        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
+      this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->notifications']);
     }
-}
+  }
   setNotificationList(notificationList: any): any {
     if (notificationList.length !== 0) {
       for (const notifyList of notificationList) {
@@ -175,13 +175,12 @@ export class ProviderNotificationsComponent implements OnInit {
         return;
       }
 
-     if( this.ph_arr.indexOf(curphone)==-1){
+      if (this.ph_arr.indexOf(curphone) === -1) {
         this.ph_arr.push(curphone);
-     }
-     else{
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
-      //'Phone number already exists'
-     }
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
     }
@@ -202,13 +201,12 @@ export class ProviderNotificationsComponent implements OnInit {
         // 'Please enter a valid email id';
         return;
       }
-      if( this.em_arr.indexOf(curemail)==-1){
+      if (this.em_arr.indexOf(curemail) === -1) {
         this.em_arr.push(curemail);
-     }
-     else{
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
-      //'Email already exists'
-     }
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
       this.okCheckinStatus = true;
       this.notifyemail = '';
     }
@@ -236,7 +234,13 @@ export class ProviderNotificationsComponent implements OnInit {
         // 'Mobile number should have 10 digits';
         return;
       }
-      this.ph1_arr.push(curphone1);
+      if (this.ph1_arr.indexOf(curphone1) === -1) {
+        this.ph1_arr.push(curphone1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      // this.ph1_arr.push(curphone1);
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
     }
@@ -255,7 +259,12 @@ export class ProviderNotificationsComponent implements OnInit {
         this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
-      this.em1_arr.push(curemail1);
+      if (this.em1_arr.indexOf(curemail1) === -1) {
+        this.em1_arr.push(curemail1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
       this.notifycanclemail = '';
       this.okCancelStatus = true;
     }
