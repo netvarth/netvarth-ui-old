@@ -4,38 +4,40 @@
     </button>
 </h1>
 <mat-dialog-content style="padding: 0px 20px 20px 20px;">
-    <div  >
+    <div>
         <div class="outer">
             <div class="outer1 ">
+                <p class="form-level-settings">Enjoy provider discount upto 20% for every visit. Discount will be
+                    applied to the bill instantly.</p>
                 <div class="name" *ngIf="jdnDetailList.discPercentage">
-                    <span class="dispvalue">Discount: </span>
-                    <span >{{jdnDetailList.discPercentage}}% </span>
-                    
+                    <span class="dispvalue">Discount available: </span>
+                    <span>{{jdnDetailList.discPercentage}}% </span>
+
                 </div>
                 <!-- <div class="description"*ngIf="jdnDetailList.discMax">
                         <span class="dispvalue">Maximumvalue: </span>
                         <span >{{jdnDetailList.discMax}}</span>
                     </div> -->
             </div>
-            <div class="outer3" *ngIf="jdnDetailList.discMax" >
-                    <div class="description">
-                            <span class="dispvalue">Maximumvalue: </span>
-                            <span >₹ {{jdnDetailList.discMax}}</span>
-                    </div>
+            <div class="outer3" *ngIf="jdnDetailList.discMax">
+                <div class="description">
+                    <span class="dispvalue">Maximum discount available: </span>
+                    <span>₹{{jdnDetailList.discMax}}</span>
                 </div>
-            <div class="outer3" *ngIf="jdnDetailList.label" >
-                <div >
+            </div>
+            <div class="outer3" *ngIf="jdnDetailList.label">
+                <div>
                     <span class="dispvalue">Label: </span>
-                    <span >{{jdnDetailList.label}}</span>
+                    <span>{{jdnDetailList.label}}</span>
                 </div>
             </div>
             <div class="outer4" *ngIf="jdnDetailList.displayNote">
-                <div >
+                <div>
                     <span class="dispvalue">Displaynote: </span>
-                    <span >{{jdnDetailList.displayNote}}</span>
+                    <span>{{jdnDetailList.displayNote}}</span>
                 </div>
             </div>
-           
+
         </div>
     </div>
 </mat-dialog-content>

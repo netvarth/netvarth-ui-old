@@ -72,8 +72,7 @@
           </div>
           <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers">
             <div class="col-md-4 col-sm-7 mt5">
-              <h6 class="mb5">{{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
-              </h6>
+              {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}              
             </div>
             <div class="col-md-2 col-sm-5 mt5"><span><i
                   class="fa fa-mobile"></i>{{customer.consumer.userProfile.primaryMobileNo}}</span></div>

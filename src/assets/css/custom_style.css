@@ -1282,7 +1282,12 @@ sup {
 .mgn-bt-5 {
   margin-right: 5px !important;
 }
-
+.mgn-lt-3 {
+  margin-left: 3px !important;
+}
+.mgn-lt-10 {
+  margin-left: 10px !important;
+}
 .mgn-up-10 {
   margin-top: 10px !important;
 }
@@ -2483,7 +2488,7 @@ body {
 }
 
 .audit .card.w-dta .table thead, .customers .card.w-dta .table thead, .dashboard .card.w-dta .table thead {
-  background-color: #3c8dbc !important;
+  background-color: #d8e2f1 !important;
   color: #fff !important;
 }
 
@@ -2520,7 +2525,7 @@ body {
 }
 
 .dashboard .card.w-dta .dash-list .table thead tr th {
-  color: #fff;
+  color: #3c8dbc;
   padding: 10px 8px;
 }
 
@@ -6022,4 +6027,108 @@ display: flex;
   width: 15px;
   height: 15px;
 }
+.navbar-nav>li>a.sel-que {
+  padding-bottom: 0 !important;
+  line-height: 15px !important;
+  overflow: hidden;
+}
+.chkin .nav>li>a.nav-cust-btn-new {
+  padding: 5px 10px !important;
+}
 
+.nav>li>a.nav-cust-btn-new i {
+  font-size: 1rem !important;
+}
+
+.nav-cust-btn-new {
+  border: 1px solid;
+  border-radius: 25px;
+  margin-left: 5px !important;
+  margin-top: 10px;
+  font-size: 0.75rem;
+}
+.nav-lc-sh-icon {
+  margin-top: 4px;
+}
+@media only screen and (min-width: 768px) {
+  .nav-cust-btn-new {
+    margin-top: 12px;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .chkin .nav>li>a.nav-cust-btn-new {
+    padding: 3px 5px 0 5px!important;
+    margin-top: 12px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .chkin .navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+  width: 100% !important;
+  right: 0 !important;
+}
+}
+.fix-width-drp {
+  max-width: 100px !important;
+  overflow: hidden;
+}
+.navbar-nav>.user-menu>.dropdown-menu>li.user-header>img {
+  height: 50px !important;
+    width: 50px !important;
+}
+
+.bcrumb span.bt6.bcrumb-help {
+  border: none !important;
+  font-size: 0.75rem;
+}
+/* .user-menu i.fa-circle {
+  border-radius: 8px;
+  border: 2px solid #fff;
+  font-size: 1rem !important;
+} */
+/* .user-menu i.fa-circle  {
+  font-size: 1.6rem !important;
+} */
+.user-menu i.fa-user  {
+  line-height: 30px !important;
+  font-size: 0.9rem !important;
+}
+.user-active-icon {
+  padding-bottom: 5px !important;
+  padding-top: 10px !important;
+}
+.white {color: #fff !important}
+.custs span i.fa-envelope {font-size:0.8rem !important}
+.bg-blue {
+  background-color: #3c8dbc !important;
+}
+.direct-chat-info {
+  margin-bottom: -8px !important;
+}
+.dashboard-qname {
+  font-size: x-small !important;
+}
+.ques .pull-left {
+  width: 100% !important;
+}
+.queue-menu {
+  display: flex !important;
+}
+.queue-menu .icon-time, .queue-menu .icon-location {
+  margin-top: 17px !important;
+  font-size: medium !important;
+  color: #3c8dbc !important;
+  margin-left: 5px !important;
+}
+.queue-menu>a {
+  padding-left: 4px !important;
+  padding-top: 12px !important;
+}
+.dashboard a.dropdown-toggle:hover {
+  color: #00aef2 !important;
+  background: transparent !important;
+}
+@media only screen and (max-width: 575px) {
+  header .dashb .lgo img {
+    width: 100px;
+  }
+}

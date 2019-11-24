@@ -357,11 +357,12 @@
                                     </div>
                                 </div>
                                 <div class="tp2">
-                                    <h3 (click)="providerDetClicked(search_result)" [matTooltipClass]="tooltipcls"
+                                    <h3  [matTooltipClass]="tooltipcls"
                                         [matTooltip]="bNameTooltip">
-                                        {{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now"
+                                        <span (click)="providerDetClicked(search_result)">{{search_result.fields.title | capitalizeFirst}}<sup class="font-open-now"
                                             *ngIf="search_result.fields['opennow']">&nbsp;{{open_now_cap}}
-                                        </sup>
+                                        </sup></span><span class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1" (click)="openJdn(search_result)"
+                                        [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></span>
                                     </h3>
                                     <div
                                         *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
@@ -452,10 +453,7 @@
                                     <li *ngIf="search_result.fields.firstaid_location1==1" [matTooltip]="'First Aid'">
                                         <span class="icon-first-aid"></span></li>
                                     <li *ngIf="search_result.fields.docambulance_location1==1"
-                                        [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>
-
-                                    <li *ngIf="search_result.fields.jdn == 1" (click)="openJdn(search_result)"
-                                    [matTooltip]="jdnTooltip"><img height="35" width="35" src="./assets/images/JDN.png"></li>
+                                        [matTooltip]="'Ambulance Service'"><span class="icon-ambulance"></span></li>                                    
                                     <li class="img pic_align" *ngIf="search_result.fields.ynw_verified_level==2"
                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Jaldee verified-basic'"><img
                                             src="./assets/images/basic.png" alt="Basic"></li>

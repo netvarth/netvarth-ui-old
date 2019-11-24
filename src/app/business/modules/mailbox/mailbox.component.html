@@ -50,22 +50,22 @@
                                                         </div>
                                                         <!-- /.direct-chat-info -->
                                                         <img *ngIf="inbox.messagestatus=='out'" class="direct-chat-img"
-                                                            [src]="blogo" alt="business image">
+                                                            [src]="blogo">
                                                         <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img"
-                                                            [src]="clogo" alt="user image">
+                                                            [src]="clogo">
                                                         <!-- /.direct-chat-img -->
-                                                        <div class="direct-chat-text"
+                                                        <div class="direct-chat-text" id="messageId[childIndex]"
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
                                                             [class.pointer-cursor]="inbox.messagestatus=='in'"
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
                                                             <div class="attach" *ngIf="inbox.attachments"
-                                                                (click)="showImagesection()">
-                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <a
+                                                                (click)="showImagesection(childIndex)">
+                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <p
                                                                     class="attach-link"> {{inbox.attachments.length}}
-                                                                    Attachment(s) </a>
+                                                                    Attachment(s) </p>
                                                             </div>
-                                                            <div class="thumbnails mt10 mb10" *ngIf="showImages">
+                                                            <div class="thumbnails mt10 mb10" *ngIf="showImages[childIndex]">
                                                                 <a class="mg-10" target="_blank"
                                                                     [href]="attachment.s3path"
                                                                     *ngFor="let attachment of inbox.attachments"><img

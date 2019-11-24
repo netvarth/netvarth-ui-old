@@ -8,11 +8,11 @@
 </div>
 <header [class]="headercls" *ngIf="ctype=='provider' || includedfrom == 'home' || includedfrom =='phome'">
     <div class="container">
-        <div class="row">
-            <div class="lgo col-md-3">
+        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+            <div class="lgo col-md-3 col-xs-5 pull-left">
                 <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
             </div>
-            <div class="tc1 col-md-3 ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
+            <div class="tc1 col-md-3 col-xs-7 no-padding-small ml-auto" *ngIf="!shared_functions.checkLogin() && includedfrom !='phome'">
                 <div class="topsignouter" [matTooltipClass]="tooltipcls" [matTooltip]="custsignTooltip"><button
                         class="sgn" (click)="doLogin('consumer')"
                         *ngIf="!shared_functions.checkLogin()">{{sign_in_cap}}</button> <button class="jn"
@@ -180,7 +180,7 @@
 </header>
 <header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
     <div class="container">
-        <div class="row col-md-22 col-xs-12 col-sm-12" style="padding:15px 0;">
+        <div class="col-md-22 col-xs-12 col-sm-12" style="padding:15px 0;">
             <div class="tp-1">
                 <div class="tp-l lgo"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee logo"></a>
                 </div>
@@ -265,7 +265,7 @@
                 </div>
             </div>
         </div>
-        <div class="row col-md-22 col-xs-12 col-sm-12 no-padding " *ngIf="source !== 'business'">
+        <div class="col-md-22 col-xs-12 col-sm-12 no-padding " *ngIf="source !== 'business'">
             <div class="tp-1">
                 <app-search style="width: 100%" [showopennow]="0" [searchfields]="searchfields"
                     [includedfrom]="'consumer_header'" [passedRefine]="passedRefine"
@@ -274,7 +274,7 @@
             </div>
         </div>
 
-        <div class="row col-md-22 col-xs-12 col-sm-12 no-padding" *ngIf="source !== 'business'">
+        <div class="col-md-22 col-xs-12 col-sm-12 no-padding" *ngIf="source !== 'business'">
             <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="popSearches !== null && searchLength > 0">
                 <div class="row popular">
                     <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>

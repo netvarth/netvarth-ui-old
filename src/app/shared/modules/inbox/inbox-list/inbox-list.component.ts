@@ -37,7 +37,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   refreshTime = projectConstants.INBOX_REFRESH_TIME;
   msgdialogRef;
   fileTooltip = Messages.FILE_TOOLTIP;
-  showImages = false;
+  showImages: any = [];
 
   @Input() messages: any;
   @Input() fromsource: any;
@@ -48,7 +48,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions) { }
 
   ngOnInit() {
-console.log(this.messages);
     if (this.fromsource === 'provider_checkin_detail' ||
       this.fromsource === 'consumer_checkin_detail') {
       this.hide_reply_button = true;
@@ -149,8 +148,8 @@ console.log(this.messages);
     }
     return retdate;
   }
-  showImagesection() {
-    (this.showImages) ? this.showImages = false : this.showImages = true;
+  showImagesection(index) {
+    (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
   }
   getThumbUrl(attachment) {
     if (attachment.s3path.indexOf('.pdf') !== -1) {
