@@ -52,7 +52,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   displayboard_heading = Messages.DISPLAYBOARD_HEADING;
   frm_displayboard_inhelp = Messages.DISPLAYBOARD__INHELP;
   customfields_cap = Messages.CUSTOMFIELDS_CAPTION;
-  displayboards_cap = Messages.DISPLAYBOARDS;
+  displayboards_cap = Messages.DISPLAYBOARD_HEADING;
   displayboards_layout_cap = Messages.DISPLAYBOARDLAYOUT_CAP;
   waitlist_status = false;
   futureDateWaitlist = false;
@@ -93,6 +93,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   reqFields: any = {};
   pos_status: any;
   pos_statusstr: string;
+  licenseMetadata: any = [];
+  statusboardStatus = false;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -100,6 +102,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.shared_functions.getMessage().subscribe(data => {
+      switch (data.ttype) {
+        case 'upgradelicence':
+          this.getStatusboardLicenseStatus();
+          break;
+      }
+    });
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
@@ -148,6 +157,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getPOSSettings();
     this.getDisplayboardCount();
     this.getBusinessConfiguration();
+    this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
@@ -367,9 +377,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'notifications':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
         break;
-        case 'saleschannel':
-          this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
-          break;
+      case 'saleschannel':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
+        break;
       case 'items':
         if (this.noitemError) {
           this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);
@@ -399,22 +409,26 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'home-service', 'services']);
         break;
       case 'homeservice-queues':
-          this.routerobj.navigate(['provider', 'settings', 'home-service', 'queues']);
-          break;
+        this.routerobj.navigate(['provider', 'settings', 'home-service', 'queues']);
+        break;
       case 'pos':
         this.routerobj.navigate(['provider', 'settings', 'pos']);
         break;
       case 'miscellaneous':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
         break;
-        case 'jdn':
-          this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
-          break;
+      case 'jdn':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
+        break;
       case 'labels':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
         break;
       case 'displayboards':
-        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        if (this.statusboardStatus) {
+          this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        } else {
+          this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
+        }
         break;
       case 'skins':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
@@ -437,12 +451,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   getDisplayboardCount() {
     let layout_list: any = [];
     this.provider_services.getDisplayboards()
-        .subscribe(
-            data => {
-                layout_list = data;
-                this.board_count = layout_list.length;
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
         });
-}
+  }
   getServiceCount() {
     this.provider_services.getServiceCount()
       .subscribe(
@@ -511,12 +525,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.bProfile = data;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
-            console.log(domainfields);
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
               subdomainfields => {
                 this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
               });
-        });
+          });
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {
@@ -564,6 +577,31 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         data => {
           this.departmentCount = data;
         });
+  }
+  getStatusboardLicenseStatus() {
+    let pkgId;
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+      pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+    }
+    this.provider_services.getLicenseMetadata().subscribe(data => {
+      this.licenseMetadata = data;
+      for (let i = 0; i < this.licenseMetadata.length; i++) {
+        if (this.licenseMetadata[i].pkgId === pkgId) {
+          for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+            if (this.licenseMetadata[i].metrics[k].id === 6) {
+              if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+                this.statusboardStatus = true;
+                return;
+              } else {
+                this.statusboardStatus = false;
+                return;
+              }
+            }
+          }
+        }
+      }
+    });
   }
 }
 

@@ -1397,14 +1397,13 @@ export const Messages = {
   'HOME_SERVICE_HEADING': 'Home Service',
   'JDN_FUL_CAP': 'Jaldee Discount Network',
   'JDN_CAP': 'JDN',
-  'DISPLAYBOARD_HEADING': 'Displayboard',
+  'DISPLAYBOARD_HEADING': 'Queue Statusboard',
   'DISPLAYBOARD__INHELP': 'display help',
   'QSET_ADD': 'Q-set added successfully',
   'QSET_UPDATE': 'Q-set updated successfully',
-  'DISPLAYBOARD_ADD': 'Displayboard added successfully',
-  'DISPLAYBOARD_UPDATE': 'Displayboard updated successfully',
+  'DISPLAYBOARD_ADD': 'Queue Statusboard added successfully',
+  'DISPLAYBOARD_UPDATE': 'Queue Statusboard updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
-  'DISPLAYBOARDS': 'Displayboards',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
 
   // JDN

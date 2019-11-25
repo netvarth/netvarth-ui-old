@@ -21,7 +21,7 @@
                                             (click)="addDisplayboardLayout()"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">
                                             <span>
-                                                <i class="fa fa-plus"></i> Displayboard
+                                                <i class="fa fa-plus"></i> {{statusboard_cap}}
                                             </span>
                                         </a>
                                     </li>
@@ -38,9 +38,9 @@
                             <div class="col-md-12" *ngIf="layout_list.length==0">
                                 <div class="row">
                                     <div class="no-dta">
-                                        <p>No Displayboards Found</p>
+                                        <p>No {{statusboard_cap}}s Found</p>
                                         <span class="cs-btn bt3" (click)="addDisplayboardLayout()">Add
-                                            Displayboard</span>
+                                            {{statusboard_cap}}</span>
                                     </div>
                                 </div>
                             </div>

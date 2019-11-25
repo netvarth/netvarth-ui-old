@@ -16,6 +16,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     locations_cap = Messages.WAITLIST_LOCATIONS_CAP;
     services_cap = Messages.WAITLIST_SERVICES_CAP;
     ser_time_windows_cap = Messages.SERVICE_TIME_CAP;
+    statusboard_cap = Messages.DISPLAYBOARD_HEADING;
     bProfile = null;
     online_checkin = false;
     waitlist_manager: any = null;
@@ -52,6 +53,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     futureDateWaitlist = false;
     filterbydepartment = false;
     locationExists = false;
+    statusboardStatus = false;
+    licenseMetadata: any = [];
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -60,6 +63,13 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         private shared_services: SharedServices) {
         this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.shared_functions.getMessage().subscribe(data => {
+            switch (data.ttype) {
+                case 'upgradelicence':
+                    this.getStatusboardLicenseStatus();
+                    break;
+            }
+        });
     }
     frm_set_ser_cap = '';
     breadcrumb_moreoptions: any = [];
@@ -67,7 +77,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.domain = user.sector;
+        this.domain = user.sector;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.loading = true;
         this.getBusinessProfile();
@@ -78,6 +88,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.getDepartmentsCount();
         this.getBusinessConfiguration();
         this.getDisplayboardCount();
+        this.getStatusboardLicenseStatus();
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
         this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'checkinmanager->settings' };
         // Update from footer
@@ -96,7 +107,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 data => {
                     layout_list = data;
                     this.board_count = layout_list.length;
-            });
+                });
     }
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks
@@ -150,7 +161,11 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             );
     }
     gotoDisplayboards() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        if (this.statusboardStatus) {
+            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        } else {
+            this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
+        }
     }
     goLocation() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'locations']);
@@ -227,7 +242,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->' + mod]);
-      }
+    }
     // getMode(mod) {
     //   let moreOptions = {};
     //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'waitlistmanager', 'subKey': mod };
@@ -271,5 +286,30 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     this.departmentCount = data;
                 });
         this.loading = false;
+    }
+    getStatusboardLicenseStatus() {
+        let pkgId;
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+            pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+        }
+        this.provider_services.getLicenseMetadata().subscribe(data => {
+            this.licenseMetadata = data;
+            for (let i = 0; i < this.licenseMetadata.length; i++) {
+                if (this.licenseMetadata[i].pkgId === pkgId) {
+                    for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+                        if (this.licenseMetadata[i].metrics[k].id === 6) {
+                            if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+                                this.statusboardStatus = true;
+                                return;
+                            } else {
+                                this.statusboardStatus = false;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 }

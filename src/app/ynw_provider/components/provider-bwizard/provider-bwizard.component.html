@@ -437,9 +437,17 @@
                                             <ng-container *ngSwitchCase="'TEXT'">
                                                     <div class="cont-btn">
                                                         <p> {{fields.value | capitalizeFirst}}</p>
-                                                        <span class="editbt"
+                                                        <span class="editbt" *ngIf="fields.value"
                                                             (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
                                                     </div>
+                                                    <div *ngIf="showAddSection1" class="ynw-common-form-nm"
+                                                    style="margin-bottom: 10px">
+                                                    <app-dynamic-form (retonFormSubmit)="onSubDomainFormSubmit($event)"
+                                                        [questions]="field" (cancelClick)="handleCancel($event)"
+                                                        [origin]="origins"
+                                                        *ngIf="que_type=='subdomain_questions' && field.length > 0">
+                                                    </app-dynamic-form>
+                                                </div>
                                                 </ng-container>
 
                                         <ng-container *ngSwitchCase="'Gender'">
@@ -543,7 +551,7 @@
                                             <ng-container *ngSwitchCase="'TEXT'">
                                                     <div class="cont-btn">
                                                         <p> {{fields.value | capitalizeFirst}}</p>
-                                                        <span class="editbt"
+                                                        <span class="editbt" *ngIf="fields.value"
                                                             (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                     </div>
                                                 </ng-container>
