@@ -77,6 +77,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   ifedit = false;
   iftokn = false;
   queue_list: any = [];
+  toknsugstion: any;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -291,10 +292,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.holdloc_list = data;
+        console.log(this.holdloc_list);
         this.loc_list = [];
         for (let i = 0; i < this.holdloc_list.length; i++) {
           if (this.holdloc_list[i].status === 'ACTIVE') {
             this.loc_list.push(this.holdloc_list[i]);
+            this.toknsugstion=this.holdloc_list[i].TokenMax;
+            console.log(this.toknsugstion);
           }
         }
         if (this.data.queue) {
@@ -329,13 +333,11 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           this.queue_list = data;
           console.log(this.queue_list)
           for (let ii = 0; ii < this.queue_list.length; ii++) {
-            if (this.queue_list[ii].calculationMode==='NoCalc') {
+            if (this.queue_list[ii].calculationMode==='NoCalc' && this.queue_list[ii].showToken) {
               this.iftokn=true;
-              console.log(this.iftokn)
             }
             else{
               this.iftokn=false;
-              console.log(this.iftokn)
             }
 }
         });
@@ -560,6 +562,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // Created new provider queue
   addProviderQueue(post_data,token) {
     post_data['tokenstarts'] = token.tokennum;
+    console.log(post_data)
     this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addProviderQueue(post_data)

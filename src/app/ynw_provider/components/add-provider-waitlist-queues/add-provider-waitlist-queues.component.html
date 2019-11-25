@@ -198,8 +198,10 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
             <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
             <div class="example-full-width q-token-div" *ngIf="showAdvancedSettings">
                <label class="q-token-label">Token starts from</label>
-                 <input type="text" formControlName="tokennum" class="form-control q-token-input" placeholder="Token Number"> 
+                 <input type="text" min="0" max="100000" [(ngModel)]="toknsugstion" formControlName="tokennum" class="form-control q-token-input" (keypress)="isNumeric($event)"
+                 (keyup)="isvalid($event)"> 
             </div>
+            
         </div>
         <!-- <div class="form-group inline">
             <label>Online check-ins
