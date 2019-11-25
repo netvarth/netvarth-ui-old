@@ -127,10 +127,6 @@ export class SharedServices {
     };
     return this.servicemeta.httpGet(url, '', pass_params);
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
   /* By Sony - Ends here */
   getProfile(id, origin?) {
     let path;

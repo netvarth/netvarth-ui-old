@@ -806,5 +806,9 @@ export class ProviderServices {
     const url = 'provider/corp/switchToCorp';
     return this.servicemeta.httpPost(url, post_data);
   }
+  getQStartToken() {
+    const url = 'provider/location/qStartToken';
+    return this.servicemeta.httpGet(url);
+  }
 }
 

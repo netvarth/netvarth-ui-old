@@ -103,6 +103,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
     this.createForm();
+    this.getQStartTokenNo();
     this.getProviderServices();
     this.getProviderQueues();
     // this.getDepartments();
@@ -111,6 +112,24 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // Get the provider services
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
   }
+
+
+  getQStartTokenNo() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.provider_services.getQStartToken()
+        .subscribe(
+          data => {
+            this.toknsugstion = data;
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+
   // creates the form
   createForm() {
     if (this.data.type === 'add') {
@@ -126,7 +145,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         // onlineCheckIn: [false]
       });
     }
-    if(this.data.type==='edit'){
+    if (this.data.type === 'edit') {
       this.amForm = this.fb.group({
         qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         qlocation: ['', Validators.compose([Validators.required])],
@@ -155,28 +174,28 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
   advancedClick() {
     (this.showAdvancedSettings) ? this.showAdvancedSettings = false : this.showAdvancedSettings = true;
-}
+  }
   existingScheduletoggle() {
     this.show_dialog = !this.show_dialog;
     this.activeQueues = [];
-  //  let queue_list: any = [];
+    //  let queue_list: any = [];
     if (this.show_dialog) {
-    //  this.provider_services.getProviderQueues()
-     //   .subscribe(data => {
-     //     queue_list = data;
-          for (let ii = 0; ii < this.queue_list.length; ii++) {
-            let schedule_arr = [];
-            // extracting the schedule intervals
-            if (this.queue_list[ii].queueSchedule) {
-              schedule_arr = this.sharedfunctionObj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
-            }
-            let display_schedule = [];
-            display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(schedule_arr);
-            if (this.queue_list[ii].queueState === 'ENABLED') {
-              this.activeQueues.push(display_schedule[0]);
-            }
-          }
-     //   });
+      //  this.provider_services.getProviderQueues()
+      //   .subscribe(data => {
+      //     queue_list = data;
+      for (let ii = 0; ii < this.queue_list.length; ii++) {
+        let schedule_arr = [];
+        // extracting the schedule intervals
+        if (this.queue_list[ii].queueSchedule) {
+          schedule_arr = this.sharedfunctionObj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
+        }
+        let display_schedule = [];
+        display_schedule = this.sharedfunctionObj.arrageScheduleforDisplay(schedule_arr);
+        if (this.queue_list[ii].queueState === 'ENABLED') {
+          this.activeQueues.push(display_schedule[0]);
+        }
+      }
+      //   });
     }
   }
   // sets up the form with the values filled in
@@ -292,13 +311,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.getProviderLocations()
       .subscribe(data => {
         this.holdloc_list = data;
-        console.log(this.holdloc_list);
         this.loc_list = [];
         for (let i = 0; i < this.holdloc_list.length; i++) {
           if (this.holdloc_list[i].status === 'ACTIVE') {
             this.loc_list.push(this.holdloc_list[i]);
-            this.toknsugstion=this.holdloc_list[i].TokenMax;
-            console.log(this.toknsugstion);
+            // this.toknsugstion=this.holdloc_list[i].TokenMax;
+            // console.log(this.toknsugstion);
           }
         }
         if (this.data.queue) {
@@ -327,20 +345,18 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       });
     this.api_loading1 = false;
   }
-  getProviderQueues(){
-    this.provider_services.getProviderQueues() 
-        .subscribe(data => {
-          this.queue_list = data;
-          console.log(this.queue_list)
-          for (let ii = 0; ii < this.queue_list.length; ii++) {
-            if (this.queue_list[ii].calculationMode==='NoCalc' && this.queue_list[ii].showToken) {
-              this.iftokn=true;
-            }
-            else{
-              this.iftokn=false;
-            }
-}
-        });
+  getProviderQueues() {
+    this.provider_services.getProviderQueues()
+      .subscribe(data => {
+        this.queue_list = data;
+        for (let ii = 0; ii < this.queue_list.length; ii++) {
+          if (this.queue_list[ii].calculationMode === 'NoCalc' && this.queue_list[ii].showToken) {
+            this.iftokn = true;
+          } else {
+            this.iftokn = false;
+          }
+        }
+      });
   }
   getDepartments() {
     this.api_loading1 = true;
@@ -482,7 +498,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       }
       // start and end date validations
       const cdate = new Date();
-      //const dateWithzone = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+      // const dateWithzone = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
 
       let mon;
       mon = (cdate.getMonth() + 1);
@@ -555,14 +571,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         this.ifedit = true;
         this.editProviderQueue(post_data);
       } else if (this.data.type === 'add') {
-        this.addProviderQueue(post_data,form_data);
+        this.addProviderQueue(post_data);
       }
     }
   }
   // Created new provider queue
-  addProviderQueue(post_data,token) {
-    post_data['tokenstarts'] = token.tokennum;
-    console.log(post_data)
+  addProviderQueue(post_data) {
+    post_data['tokenstarts'] = this.toknsugstion;
     this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addProviderQueue(post_data)
