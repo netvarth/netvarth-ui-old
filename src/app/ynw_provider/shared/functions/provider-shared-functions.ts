@@ -5,7 +5,6 @@ import { AddProviderWaitlistQueuesComponent } from '../../components/add-provide
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
-import { AddProviderWaitlistServiceComponent } from '../../components/add-provider-waitlist-service/add-provider-waitlist-service.component';
 @Injectable()
 export class ProviderSharedFuctions {
   private activeQueues: any = [];
@@ -76,25 +75,25 @@ export class ProviderSharedFuctions {
   //       }
   //      this.jaldeecoupon_list = ob.provider_services.changecouponStatus(obj.id, chgstatus);
   //      }
-  addEditServicePopup(ob, type, source, obj = null, services = null) {
-    ob.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'add-service'],
-      disableClose: true,
-      autoFocus: true,
-      data: {
-        service: obj,
-        source: source,
-        type: type,
-        services: services
-      },
-    });
-    ob.servicedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.serviceReloadApi(ob, source);
-      }
-    });
-  }
+  // addEditServicePopup(ob, type, source, obj = null, services = null) {
+  //   ob.servicedialogRef = this.dialog.open(AddProviderWaitlistServiceComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'add-service'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: {
+  //       service: obj,
+  //       source: source,
+  //       type: type,
+  //       services: services
+  //     },
+  //   });
+  //   ob.servicedialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
+  //       this.serviceReloadApi(ob, source);
+  //     }
+  //   });
+  // }
 
   /**
    * Funtion will return the required fields set

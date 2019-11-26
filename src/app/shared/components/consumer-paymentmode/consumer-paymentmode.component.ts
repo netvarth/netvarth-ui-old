@@ -71,7 +71,6 @@ export class ConsumerPaymentmodeComponent {
   
     }
     else{
-      console.log(this.waitlistDetails);
       this.shared_services.providerPayment(this.waitlistDetails)
       .subscribe(pData => {
         if (pData['response']) {

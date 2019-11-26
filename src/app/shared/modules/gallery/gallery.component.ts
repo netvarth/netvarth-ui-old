@@ -117,8 +117,6 @@ export class GalleryComponent implements OnInit, OnChanges {
         // if (event.button.type === ButtonType.DELETE) {
         if (event.button.type === ButtonType.DELETE) {
             // remove the current image and reassign all other to the array of images
-            // console.log('delete in app with images count ' + this.images.length);
-            // console.log('event', event.image, event.image.id);
             const knamearr = event.image.modal.img.split('/');
             const kname = knamearr[(knamearr.length - 1)];
             const file = {
@@ -129,7 +127,6 @@ export class GalleryComponent implements OnInit, OnChanges {
                 },
                 plain: undefined
             };
-            // console.log('delete lightbox', file);
             // this.confirmDelete(file, event.image.id);
             this.deleteImage(file, true);
             this.image_list_popup = this.image_list_popup.filter((val: Image) => event.image && val.id !== event.image.id);
@@ -144,15 +141,12 @@ export class GalleryComponent implements OnInit, OnChanges {
         this.galleryService.sendMessage(input);
     }
     onButtonAfterHook(event: ButtonEvent) {
-        // console.log('onCustomButtonAfterHook ', event);
         if (!event || !event.button) {
             return;
         }
         // Invoked after both a click on a button and its related action.
     }
     onVisibleIndex() {
-        // console.log('onVisibleIndex action: ' + Action[event.action]);
-        // console.log('onVisibleIndex result:' + event.result);
     }
     openImageModalRow(image: Image) {
         // console.log('Opening modal gallery from custom plain gallery row, with image: ', image);

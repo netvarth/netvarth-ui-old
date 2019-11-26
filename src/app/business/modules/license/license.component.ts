@@ -277,7 +277,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.license_sub = data;
                     this.licensePlan = this.license_sub.licSubType;
                     this.licenseDisplayName = this.license_sub.licSubTypeDisplayName;
@@ -299,7 +298,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
                             this.getLicenseMetaData();
                         },
                         (error) => {
-                            console.log('here');
                         }
                     );
                 }
@@ -318,40 +316,10 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                 this.grandTotal = meta['price'] * 12;
                                 this.appliedDiscount = this.grandTotal * (this.annualdiscount / 100);
                                 this.netTotal = this.grandTotal - this.appliedDiscount;
-                                console.log(meta['type'] + ':' + meta['pkgId']);
                                 if (meta['type'] === 'Trial' || meta['pkgId'] === 1) {
                                     this.showAmounts = false;
                                 }
                                 return false;
-                                // license_meta['price'] = meta['price'] || 0;
-                                // license_meta['discPercFor12Months'] = meta['discPercFor12Months'] || 0;
-                                // license_meta['discPercFor6Months'] = meta['discPercFor6Months'] || 0;
-                                // license_meta['current_sub'] = (this.license_sub.licSubType === 'Monthly') ? 'month' : 'year';
-                                // if (license_meta['current_sub'] === 'year') {
-                                //     const year_amount = (license_meta['price'] * 12);
-                                //     license_meta['price'] = year_amount - (year_amount * license_meta['discPercFor12Months'] / 100);
-                                // }
-                                // license_meta['next_sub'] = null;
-                                // if (license_meta['current_sub'] === 'month' &&
-                                //     (license_meta['price'] !== 0 || (license_meta['price'] === 0 && license_meta['discPercFor12Months'] === 100))) {
-                                //     const year_amount = (license_meta['price'] * 12);
-                                //     license_meta['next_sub'] = [
-                                //         {
-                                //             'amount': year_amount - (year_amount * license_meta['discPercFor12Months'] / 100),
-                                //             'discount_per': license_meta['discPercFor12Months'],
-                                //             'type': 'year',
-                                //             'value': 'Annual'
-                                //         }
-                                //     ];
-                                // }
-                                // this.license_upgarde_sub = license_meta;
-                                // console.log(this.license_upgarde_sub);
-                                // if (this.license_upgarde_sub['next_sub']) {
-                                //     for (const details of this.license_upgarde_sub['next_sub']) {
-                                //         this.annualMonthAmount = details.amount;
-                                //         alert(this.annualMonthAmount);
-                                //     }
-                                // }
                             }
                         }
                     }

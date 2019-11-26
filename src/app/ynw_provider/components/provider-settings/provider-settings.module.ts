@@ -21,7 +21,6 @@ import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-
 import { AddProviderBprofilePrivacysettingsComponent } from '../provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { ProviderBprofileSearchSchedulepopupComponent } from '../provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
 import { AddProviderBprofileSpecializationsComponent } from '../add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
-import { AddProviderWaitlistServiceGalleryComponent } from '../add-provider-waitlist-service-gallery/add-provider-waitlist-service-gallery';
 import { ProviderBprofileSearchGalleryComponent } from '../provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
 import { ProviderBprofileSearchPrimaryComponent } from '../provider-bprofile-search-primary/provider-bprofile-search-primary.component';
 import { ProviderBprofileSearchSocialMediaComponent } from '../provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
@@ -62,7 +61,6 @@ import { DepartmentModule } from '../../shared/modules/department/department.mod
         ProviderBprofileSearchSchedulepopupComponent,
         // AddProviderBprofileSpokenLanguagesComponent,
         AddProviderBprofileSpecializationsComponent,
-        AddProviderWaitlistServiceGalleryComponent,
         // UpgradeLicenseComponent,
         // ProviderAuditLogComponent,
         ProviderBprofileSearchPrimaryComponent,
@@ -87,7 +85,6 @@ import { DepartmentModule } from '../../shared/modules/department/department.mod
         // AddProviderBprofileSpokenLanguagesComponent,
         AddProviderBprofileSpecializationsComponent,
         // ProviderBprofileSearchDynamicComponent,
-        AddProviderWaitlistServiceGalleryComponent,
         // ProviderLicenceInvoiceDetailComponent,
         // ProviderAuditLogComponent
     ]

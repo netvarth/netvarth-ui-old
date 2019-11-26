@@ -125,7 +125,6 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
             'propertiesMap': propertiesDetob
         };
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-        // console.log(JSON.stringify(propertiesDet));
         submit_data.append('properties', blobPropdata);
         // this.uploadApi(submit_data);
         const input = {

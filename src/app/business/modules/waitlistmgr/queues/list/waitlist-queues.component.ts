@@ -330,7 +330,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             // replace instancequeue with new flag
                             if (allQs[ii].isAvailableToday && allQs[ii].queueState === 'ENABLED') {
                                 this.todaysQs.push(allQs[ii]);
-                               console.log(this.todaysQs);
                             }
                             if (!allQs[ii].instantQueue && allQs[ii].queueState === 'ENABLED') {
                                 this.scheduledQs.push(allQs[ii]);

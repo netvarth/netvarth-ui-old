@@ -310,20 +310,14 @@ export class MailboxComponent implements OnInit, OnDestroy {
                 reader.readAsDataURL(file);
             }
         }
-        // console.log(this.selectedMessage[parentIndex]);
     }
     addCaption(caption, parentIndex, index) {
-        // console.log(caption);
-        // console.log(this.activeImageCaption[parentIndex][index]);
         // this.pics.caption[index] = e;
         // const caption = {
         //  index : e
         // };
-        // console.log(caption);
         // const blobPropdata = new Blob([JSON.stringify(caption)], { type: 'application/json' });
-        // console.log(blobPropdata);
         // this.showCaptionBox[index] = false;
-        // console.log(this.pics);
         this.showCaptionBox[parentIndex][index] = false;
     }
     deleteTempImage(index, parentIndex) {
