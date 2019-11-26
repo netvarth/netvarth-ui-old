@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-
-import { HomeComponent } from './shared/components/home/home.component';
+import { Routes, RouterModule } from '@angular/router';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
+import { AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';

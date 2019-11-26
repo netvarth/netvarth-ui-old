@@ -1,40 +1,14 @@
 <section class="home-cnt" id="container">
   <div class="mobhome ynw-common-form-nm">
-    <div class="lgo col-md-12 no-padding centeralign"><a routerLink="/"><img src="assets/images/jaldee-logo.png" alt=""></a>
+    <div class="lgo col-md-12 no-padding centeralign"><a routerLink="/"><img src="assets/images/jaldee-logo.png"
+          alt=""></a>
     </div>
     <div class="sp-login-cap" *ngIf="step==1">
       <h2>Service Provider Login</h2>
     </div>
     <form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
   onSubmit(loginForm.value)" *ngIf="step==1">
-
-
-
-      <!-- <div class="mat-dialog-title">{{heading}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
-                  class="fa fa-window-close" aria-hidden="true"></i></button></div> -->
       <div class="login-ph">
-        <!-- <div class="form-group">
-        <mat-form-field>
-          <div class="input-group">
-            <div class="input-group-prepend mob-prefix">
-              <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-            </div>
-            <input type="text" matInput class="form-control" id="phonenumber"
-              placeholder="Enter your 10 digit Mobile number" formControlName="phonenumber" autocomplete="off"
-              (keyup)="handlekeyup($event)" maxlength=10>
-          </div>
-        </mat-form-field>
-        <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber') && show_error"
-          [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',
-                  
-    {
-      'required' : 'Mobile number is required',
-      'minlength' : 'Enter a 10 digit mobile number',
-      'maxlength' : 'Enter a 10 digit mobile number',
-      'pattern' : 'Only numbers are allowed'
-    })">
-        </app-field-error-display>
-      </div> -->
         <div class="form-group">
           <mat-form-field>
             <input type="text" matInput class="form-control" id="emailId"
@@ -68,9 +42,8 @@
             </app-common-innerloading-spinner>
           </button>
         </div>
-        <div class="forgotpass centeralign" ><a (click)="doForgotPassword()">Forgot Password?</a></div>
-
-        <div class="newuser centeralign" >
+        <div class="forgotpass centeralign"><a (click)="doForgotPassword()">Forgot Password?</a></div>
+        <div class="newuser centeralign">
           <div>Jaldee for a new Service provider or business</div>
           <div class="link padding-tp-10">{{signup_here}}<span (click)="doSignup()">Signup here</span></div>
         </div>

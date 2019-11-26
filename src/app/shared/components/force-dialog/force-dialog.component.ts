@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 
@@ -13,11 +12,10 @@ export class ForceDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  forceUpdate () {
+  forceUpdate() {
     window.location.href = 'https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldeebusiness';
   }
-  // forceUpdate () {
+  // forceUpdate() {
   //   window.location.href = 'https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1';
   // }
 }
-
