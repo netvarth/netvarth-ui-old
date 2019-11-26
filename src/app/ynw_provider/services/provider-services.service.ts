@@ -810,5 +810,22 @@ export class ProviderServices {
     const url = 'provider/location/qStartToken';
     return this.servicemeta.httpGet(url);
   }
+  getSearchSCdetails(scId) {
+    const url = 'provider/salesChannel/' + scId;
+    return this.servicemeta.httpGet(url);
+  }
+  // saveHere(post_data) {
+  //   const url = 'provider/'+otp+'/howDoYouHear'  
+  //   return this.servicemeta.httpPost(url,post_data);
+  // }
+  getsearchPhonedetails(phoneNumber) {
+    const url = 'provider/salesChannel/phone/'+ phoneNumber;
+    return this.servicemeta.httpGet(url);
+  }
+  saveHere(post_data,otp) {
+    const url = 'provider/'+otp+'/howDoYouHear'  
+    return this.servicemeta.httpGet(url,post_data);
+  }
+
 }
 
