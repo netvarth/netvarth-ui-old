@@ -171,7 +171,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.shared_service.isAvailableNow()
       .subscribe(data => {
         this.qAvailability = data;
-        console.log(data);
       },
         () => {
         });

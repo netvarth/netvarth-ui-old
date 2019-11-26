@@ -110,7 +110,6 @@ export class LabelComponent implements OnInit {
     }
     onSubmit() {
         if (this.actionparam === 'add') {
-            console.log(this.displayName.replace(/ /g,"_"));
             const post_data = {
                 'label': this.displayName.replace(/ /g,"_"),
                 'displayName': this.displayName,

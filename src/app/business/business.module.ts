@@ -28,7 +28,6 @@ import { MaterialModule } from '../shared/modules/common/material.module';
 import { SharedModule } from '../shared/modules/common/shared.module';
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { LoadingSpinnerModule } from '../ynw_provider/components/loading-spinner/loading-spinner.module';
-import { AddProviderWaitlistServiceComponent } from '../ynw_provider/components/add-provider-waitlist-service/add-provider-waitlist-service.component';
 import { ProviderSystemAuditLogComponent } from '../ynw_provider/components/provider-system-auditlogs/provider-system-auditlogs.component';
 import { ProviderSystemAlertComponent } from '../ynw_provider/components/provider-system-alerts/provider-system-alerts.component';
 import { AddProviderWaitlistQueuesComponent } from '../ynw_provider/components/add-provider-waitlist-queues/add-provider-waitlist-queues.component';
@@ -56,7 +55,6 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins
         BusinessHomeComponent,
         BusinessComponent,
         ProviderCustomersComponent,
-        AddProviderWaitlistServiceComponent,
         ProviderSystemAuditLogComponent,
         ProviderSystemAlertComponent,
         AddProviderWaitlistQueuesComponent,
@@ -89,7 +87,6 @@ import { ProviderWaitlistCheckInCancelPopupComponent } from './modules/check-ins
         CustomerModule
     ],
     entryComponents: [
-        AddProviderWaitlistServiceComponent,
         AddProviderWaitlistQueuesComponent,
         AddProviderWaitlistCheckInBillComponent,
         AddProviderBprofileSearchAdwordsComponent,

@@ -169,7 +169,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       minute: parseInt(moment(this.data.queue.queueSchedule.timeSlots[0].eTime,
         ['h:mm A']).format('mm'), 10)
     };
-    console.log(this.data.queue);
     this.amForm.setValue({
       qname: this.data.queue.name || null,
       qlocation: this.data.queue.location.id || null,

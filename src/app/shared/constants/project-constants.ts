@@ -375,6 +375,7 @@ export const projectConstants = {
     5: 'No active queues found',
     pushMsg: 'Push message',
     email: 'Email',
+    none: 'None',
     professionalConsulting: 'Eg:- Adv.Pranav, Ameya Professionals Private Limited, etc',
     healthCare: 'Eg:- Seven Star Clinic, Dr. Mani, Bright Hospital, etc',
     personalCare: 'Eg:- Herbal beauty parlour, Aloe Sita Beauty Salon & Spa, etc',

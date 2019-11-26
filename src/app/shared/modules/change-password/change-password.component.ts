@@ -49,7 +49,6 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
     this.isBusinessowner = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
-    console.log(this.isBusinessowner);
     if (this.isBusinessowner) {
     this.spForm = this.fb.group({
       old_password: ['', Validators.compose(

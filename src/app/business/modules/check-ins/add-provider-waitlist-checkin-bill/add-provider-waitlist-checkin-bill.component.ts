@@ -1088,7 +1088,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       }
       if (status === 2) {
         this.makePayment(mode, amount, paynot, status);
-        // console.log(this.makePayment);
       }
     });
 

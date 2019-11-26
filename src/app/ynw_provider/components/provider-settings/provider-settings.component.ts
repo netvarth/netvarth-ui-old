@@ -505,7 +505,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.bProfile = data;
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
-            console.log(domainfields);
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
               subdomainfields => {
                 this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);

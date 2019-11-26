@@ -248,7 +248,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
-           // console.log(waitlist);
             const waitlist_date = new Date(waitlist.date);
             today.setHours(0, 0, 0, 0);
             waitlist_date.setHours(0, 0, 0, 0);
@@ -796,8 +795,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
     checkinTime = moment(list.checkInTime, ['h:mm A']).format('HH:mm:ss');
     currentTime = moment(server_time).format('HH:mm:ss');
-    // console.log('checkinTime' + checkinTime);
-    // console.log('currentTime' + currentTime);
     this.mins = moment.utc(moment(currentTime, 'HH:mm').diff(moment(checkinTime, 'HH:mm'))).format('mm');
     this.mins = 15 - this.mins;
     return this.mins;

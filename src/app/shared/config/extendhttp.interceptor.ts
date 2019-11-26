@@ -147,8 +147,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
-            console.log(req);
-            console.log(url);
             if (this._checkSessionExpiryErr(error)) {
               // this.router.navigate(['']);
               return this._ifSessionExpired().pipe(
@@ -186,11 +184,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               this.shared_functions.setitemonLocalStorage('unClaimAccount', true);
               return throwError(error);
             } else {
-              console.log(error.status);
               return throwError(error);
             }
           }
-          console.log(caught);
           return caught;
         })
       );
