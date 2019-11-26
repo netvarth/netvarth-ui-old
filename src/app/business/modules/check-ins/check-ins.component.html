@@ -339,7 +339,7 @@
                                 *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                       class="text">{{partially_paid_cap}}</span></span>
@@ -409,7 +409,7 @@
                         <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                           [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
                         </span>
-                        <!-- <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                        <!-- <span data-title="Payment Status" class="payment" *ngIf="pos">
                             <ng-container *ngIf="checkin.paymentStatus">
                               <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                   class="text">{{partially_paid_cap}}</span></span>
@@ -556,7 +556,7 @@
                                       (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
-                                    <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                                    <span data-title="Payment Status" class="payment" *ngIf="pos">
                                       <ng-container *ngIf="checkin.paymentStatus">
                                         <span class="paid-h icon-btn"
                                           *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -708,7 +708,7 @@
                                       (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
-                                    <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                                    <span data-title="Payment Status" class="payment" *ngIf="pos">
                                       <ng-container *ngIf="checkin.paymentStatus">
                                         <!-- <span class="paid-n" *ngIf="checkin.paymentStatus == 'NotPaid'"><span
                                             class="text">{{not_paid_cap}}</span></span> -->
@@ -894,7 +894,7 @@
                                       (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
-                                    <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                                    <span data-title="Payment Status" class="payment" *ngIf="pos">
                                       <ng-container *ngIf="checkin.paymentStatus">
                                         <span class="paid-h icon-btn"
                                           *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
@@ -1008,7 +1008,7 @@
                                       (click)="showConsumerNote(checkin)">
                                       <i class="icon-note"></i>
                                     </span>
-                                    <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                                    <span data-title="Payment Status" class="payment" *ngIf="pos">
                                       <ng-container *ngIf="checkin.paymentStatus">
                                         <span class="paid-h icon-btn"
                                           *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span

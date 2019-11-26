@@ -1343,11 +1343,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         bill_html += '	</td></tr>';
       }
     }
-    if (this.bill_data.taxableTotal !== 0) {
+    if (this.bill_data && this.bill_data.taxPercentage && this.bill_data.taxableTotal !== 0) {
       bill_html += '	<tr><td>';
       bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
       bill_html += '	<tr>';
-      bill_html += '<td width="70%" style="text-align:right">Tax ' + this.bill_data.taxPercentage + ' % of &#x20b9;' + parseFloat(this.bill_data.taxableTotal).toFixed(2) + '(CGST-' + (this.bill_data.taxPercentage() / 2) + '%, SGST-' + (this.bill_data.taxPercentage() / 2) + '%)</td>';
+      bill_html += '<td width="70%" style="text-align:right">Tax ' + this.bill_data.taxPercentage + ' % of &#x20b9;' + parseFloat(this.bill_data.taxableTotal).toFixed(2) + '(CGST-' + (this.bill_data.taxPercentage / 2) + '%, SGST-' + (this.bill_data.taxPercentage / 2) + '%)</td>';
       bill_html += '<td width="30%" style="text-align:right">(+) &#x20b9;' + parseFloat(this.bill_data.totalTaxAmount).toFixed(2) + '</td>';
       bill_html += '	</tr>';
       bill_html += '</table>';
