@@ -480,6 +480,7 @@
                         (click)="viewBillPage(checkin)">
                         <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                       </a>
+                     
                       <!-- <a class="btn-play pointer-cursor"
                           *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid'"
                           (click)="viewBillPage(checkin)">
@@ -776,6 +777,9 @@
                               <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
                                 <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
                               </a>
+                              <a class="btn-play pointer-cursor" (click)="locateCustomer(checkin.ynwUuid,i)">
+                                <i class="fa fa-location-arrow"></i> <span>Where is my customer</span>
+                              </a><div>{{distance}}</div>
                               <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                                 *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'">
                                 <!-- <i class="fa"></i> -->

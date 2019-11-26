@@ -865,7 +865,7 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-          // this.router.navigate(['/']);
+           this.router.navigate(['/']);
         }
         setTimeout(() => {
           this.liveTrack = true;
@@ -887,10 +887,10 @@ export class CheckInInnerComponent implements OnInit {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
         }
         setTimeout(() => {
-          this.source['list'] = 'reloadlist';
-          this.source['mode'] = this.page_source;
+          //this.source['list'] = 'reloadlist';
+          //this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
-          this.returntoParent.emit(this.source);
+          this.returntoParent.emit('reloadlist');
         }, projectConstants.TIMEOUT_DELAY);
       },
         error => {
@@ -1352,6 +1352,19 @@ export class CheckInInnerComponent implements OnInit {
     this.shared_services.addLiveTrackDetails(this.trackUuid, this.account_id, post_Data)
       .subscribe(data => {
         console.log(data);
+        this.api_success = this.sharedFunctionobj.getProjectMesssages('TRACKINGENABLED');
+
+         setTimeout(() => {
+          //this.source['list'] = 'reloadlist';
+         // this.source['mode'] = this.page_source;
+          // this.dialogRef.close('reloadlist');
+          console.log(this.source);
+          this.returntoParent.emit('reloadlist');
+          }, projectConstants.TIMEOUT_DELAY);
+      },
+        error => {
+          this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+          this.api_loading = false;
       });
   }
 }

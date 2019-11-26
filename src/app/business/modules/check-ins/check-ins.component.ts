@@ -231,6 +231,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   startedPanel = false;
   completedPanel = false;
   cancelledPanel = false;
+  distance: any;
+  trackDetail: any;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1711,4 +1713,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cancelledPanel = true;
     }
 }
+locateCustomer(uuid) {
+  this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
+  console.log(data);
+  this.trackDetail = data;
+  this.distance = this.trackDetail.jaldeeDistance.distance;
+  },
+    error => {
+      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+  }
 }

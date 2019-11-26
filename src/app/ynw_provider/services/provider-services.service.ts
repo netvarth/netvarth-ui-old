@@ -826,6 +826,10 @@ export class ProviderServices {
     const url = 'provider/'+otp+'/howDoYouHear'  
     return this.servicemeta.httpGet(url,post_data);
   }
+  getCustomerTrackStatus(uuid) {
+    const url = 'provider/waitlist/live/locate/distance/time/' + uuid;
+    return this.servicemeta.httpPost(url);
+}
 
 }
 

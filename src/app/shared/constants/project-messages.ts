@@ -1415,6 +1415,8 @@ export const Messages = {
   'UNSUBSCRIBE': 'Unsubscribe',
   'BRANCHUSER_ADDED': 'Branch user created successfully',
   'JOINCORP_SUCCESS': 'You joined as a corporate',
-  'CREATECORP_SUCCESS': 'Corporate created successfully'
+  'CREATECORP_SUCCESS': 'Corporate created successfully',
+  // live track
+  'TRACKINGENABLED' : 'Tracking Enabled successfully'
 };
 
