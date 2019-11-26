@@ -14,7 +14,7 @@ import { Subject } from 'rxjs/Subject';
 import { throwError, observable, EMPTY } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
-import { retry, delay } from 'rxjs/operators';
+import { retry } from 'rxjs/operators';
 import { version } from '../../../assets/json/version.json';
 
 @Injectable()
@@ -147,10 +147,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
-            console.log(req);
-            console.log(url);
             if (this._checkSessionExpiryErr(error)) {
-              // this.router.navigate(['']);
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
                   return next.handle(this.updateHeader(req, url));
@@ -161,17 +158,15 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return throwError(error);
             } else if (error.status === 0) {
               // Network Error Handling
-              // return next.handle(this.updateHeader(req, url)).pipe(
+              return next.handle(req).pipe(
                 retry(2),
-                // catchError((errorN: HttpErrorResponse) => {
-                   this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
-                   return EMPTY;
-                // }),
-                // delay(10000);
-              // );
+                catchError((errorN: HttpErrorResponse) => {
+                  this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+                  return throwError(errorN);
+                })
+              );
             } else if (error.status === 404) {
-              return EMPTY;
-              // return throwError(error);
+              return throwError(error);
             } else if (error.status === 401) {
               this.shared_functions.logout();
               return throwError(error);
@@ -190,7 +185,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return throwError(error);
             }
           }
-          console.log(caught);
           return caught;
         })
       );
@@ -199,7 +193,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
+    // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'iospro-1.2.0') });
+    req = req.clone({ headers: req.headers.append('Hybrid-Version', 'androidpro-1.2.0') });
+    // req = req.clone({ headers: req.headers.append('Android-Version', 'android-1.1.1') });
     req = req.clone({ url: url, responseType: 'json' });
     return req;
   }
@@ -225,4 +221,3 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return check;
   }
 }
-

@@ -4,14 +4,12 @@
 <head>
   <meta charset="utf-8">
   <title>Jaldee</title>
-  <base href="/">
+  <base href="./">
   <!-- <base href="/jaldee/"> -->
-
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <meta name="description" content="Jaldee">
   <meta name="keywords" content="Jaldee, Avoid waiting">
   <meta name="author" content="Jaldee Soft Private Limited">
-  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -36,33 +34,72 @@
 </head>
 
 <body class="hold-transition sidebar-mini" style="height: auto;min-height: 100%;">
-  <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
+  <link href="./assets/css/style.css" rel="stylesheet">
   <app-root></app-root>
 </body>
 
-
 </html>
+<script type="text/javascript" src="cordova.js"></script>
 <script>
-  window.onload = function () {
-    function receiveMessage(e) {
-      if (e.origin !== 'http://localhost:8181' || e.origin !== 'https://sascale.jaldee.com' || e.origin !== 'https://sa.jaldee.com' || e.origin !== 'https://test.jaldee.com') {
-        return;
-      }
-      const response = JSON.stringify(e.data.response);
-      localStorage.setItem('jld', e.data.userdata['password']);
-      delete e.data.userdata['password'];
-      const userdata = JSON.stringify(e.data.userdata);
-      localStorage.setItem('isBusinessOwner', 'true');
-      localStorage.setItem('ynw-user', response);
-      localStorage.setItem('ynw-credentials', userdata);
-      messageEle.innerHTML = "Message Received: " + e.data;
-    }
-    window.addEventListener('message', receiveMessage);
-  }
-  var DEBUG_MODE_ON = true; // hide browser console in production
+  var DEBUG_MODE_ON = false; // hide browser console in production
   if (!DEBUG_MODE_ON) {
     console = console || {};
     console.log = function () { };
   }
+  function onConfirm(buttonIndex) {
+    if (buttonIndex === 2) {
+      navigator.app.exitApp();
+    }
+  }
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function alertDismissed() {
 
+  }
+  function onDeviceReady() {
+    if (typeof FCMPlugin != 'undefined') {
+      FCMPlugin.getToken(function (token) {
+        console.log(token);
+        localStorage.setItem("mUniqueId", token);
+      }, function (err) {
+        localStorage.setItem("mUniqueId", null);
+      });
+      FCMPlugin.onTokenRefresh(function(token){
+        console.log("Token Refreshed : " + token);
+        localStorage.setItem("mUniqueId", token);
+        if(localStorage.getItem("ynw-user")){
+          setPushToken(token);
+        }                
+      });
+      FCMPlugin.onNotification(function (data) {
+        if (data.wasTapped) {
+          navigator.notification.alert(
+            data.message,  // message
+            alertDismissed,         // callback
+            data.title,            // title
+            'Ok'                  // buttonName
+          );
+        } else {
+          //Notification was received in foreground. Maybe the user needs to be notified.
+          navigator.notification.alert(
+            data.message,  // message
+            alertDismissed,         // callback
+            data.title,            // title
+            'Ok'                  // buttonName
+          );
+
+        }
+      }, function (msg) {
+        console.log('onNotification callback successfully registered: ' + msg);
+      },
+        function (err) {
+          console.log('Error registering onNotification callback: ' + err);
+        }
+      );
+    };
+
+    document.addEventListener("backbutton", function (e) {
+      e.preventDefault();
+      navigator.notification.confirm('Press Ok to Exit from Jaldee Business App', onConfirm, 'Jaldee for Business', ['Cancel', 'Ok']);
+    }, false);
+  }
 </script>

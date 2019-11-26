@@ -313,12 +313,16 @@
 
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="payMentShow == 1 && !loading">
-    <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+    <!-- <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
     <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disablebutton">{{cancel_btn}}</button>
     <button type="button" mat-button class="cs-btn bt1" [disabled]="!pay_data.amount || pay_data.amount == 0 ||
     !pay_data.uuid || payment_loading || disablebutton" (click)="makePayment()"
         *ngIf="source != 'payment-history'">{{make_payment}}</button>
-   </div>
+   </div> -->
+   <span class="service-tooltip">
+    <i class="icon-bell"></i>
+   Payments are accepted only through our website "www.jaldee.com"
+  </span>
     <!-- <button type="button" mat-button class="cs-btn bt1" (click)="printMe()">Print</button> -->
 </mat-dialog-actions>
 
