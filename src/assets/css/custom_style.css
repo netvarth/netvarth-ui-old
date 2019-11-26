@@ -3660,7 +3660,7 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 .paysettings .bank-outer {
   flex-grow: 1 !important;
   order: 1 !important;
-  margin-right: 30px !important;
+  /* margin-right: 30px !important; */
   display: flex !important;
   flex-wrap: wrap !important;
   justify-content: space-between !important;
@@ -3675,7 +3675,12 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .paysettings .outermost {
+  margin-bottom: 20px !important;
+}
+@media only screen and (min-width: 768px) {
+  .paysettings .outermost {
   padding-left: 20px !important;
+  }
 }
 
 .paysettings .cc-det .bank-outer .form-group {
@@ -3698,13 +3703,13 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
   margin-bottom: 5px !important;
 }
 
-.paysettings .outermost .paytm-det {
+/* .paysettings .outermost .paytm-det {
   padding-left: 28px !important;
-}
+} */
 
-.paysettings .outermost .cc-det {
+/* .paysettings .outermost .cc-det {
   padding-left: 28px !important;
-}
+} */
 
 .paysettings .mob-prefix span {
   padding: .375rem .75rem !important;
@@ -4730,12 +4735,12 @@ i.notavail {
   padding: 0 !important;
 }
 
-@media only screen and (max-width: 575px) {
+/* @media only screen and (max-width: 575px) {
   .payment-smalldevice {
     width: 270px !important;
     float: right !important;
   }
-}
+} */
 
 .btn-attach {
   margin-top: -3px;
