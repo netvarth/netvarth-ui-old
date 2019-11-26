@@ -438,14 +438,14 @@
                                 </div>
                             </mat-radio-group>
                             <div class="actiondiv"
-                                *ngIf="(!isJaldeeAccount && optJaldeeAccount==='enable' && (payuverified || paytmverified)) || (isJaldeeAccount && (payuverified || paytmverified))">
+                                *ngIf="(!isJaldeeAccount && optJaldeeAccount==='enable' && (payuverified || paytmverified)) || (isJaldeeAccount && optJaldeeAccount==='disable' && (payuverified || paytmverified))">
                                 <button type="button" mat-button class="cs-btn bt1"
                                     (click)="saveAccountPaymentSettings(optJaldeeAccount)">{{save_btn_cap}}</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>+
         </div>
     </div>
 </section>
