@@ -26,6 +26,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   qAvailability;
   iswiz = false; // is cur page is wizard
   isCheckin;
+  customer_label = '';
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -34,6 +35,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     public provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions
   ) {
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'messageCount':
@@ -171,6 +173,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.shared_service.isAvailableNow()
       .subscribe(data => {
         this.qAvailability = data;
+        console.log(data);
       },
         () => {
         });
