@@ -781,10 +781,7 @@
                             <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
                               <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
                             </a>
-                            <a class="btn-play pointer-cursor" (click)="locateCustomer(checkin.ynwUuid,i)">
-                              <i class="fa fa-location-arrow"></i> <span>Where is my customer</span>
-                            </a>
-                            <div>{{distance}}</div>
+                            
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                               *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'">
                               <!-- <i class="fa"></i> -->
@@ -800,6 +797,10 @@
                                       ( checkin.waitlistStatus == 'arrived')">
                               <i class="fa fa-times"></i> <span> {{cancel_cap}} </span>
                             </a>
+                            <div *ngIf="checkin.jaldeeStartTimeType == 'ONEHOUR' || checkin.jaldeeStartTimeType =='TWOHOUR'" class="btn-play popup" (click)="locateCustomer(checkin.ynwUuid,i)">
+                              <i class="fa fa-location-arrow"></i>Where is my customer 
+                              <span class="popuptext" id="myPopup{{[i]}}">He/She is {{distance[i]}} {{unit[i]}} away from you will reach here in {{hours}} Hours and {{minutes}} Mintues</span>
+                             </div>
 
 
 

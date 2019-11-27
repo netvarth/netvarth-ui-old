@@ -498,7 +498,7 @@ export class SharedServices {
   }
   addLiveTrackDetails(uid, id, data) {
     const url = 'consumer/waitlist/saveMyLoc/' + uid + '?account=' + id;
-    return this.servicemeta.httpPut(url, data);
+    return this.servicemeta.httpPost(url, data);
   }
   unSaveMyLocation(uid, id) {
     const url = 'consumer/waitlist/unshareMyLoc/' + uid + '?account=' + id;
