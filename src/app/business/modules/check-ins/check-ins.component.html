@@ -591,17 +591,17 @@
                           </div>
                           <div class="clearfix"></div>
                           <div class="info-box-footer-more" *ngIf="section_start[i]">
-                            <!-- <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label"> -->
+                            <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
                             <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
                                   *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                                   <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i>
                                     {{getAppxTime(checkin)}}</span>
                                 </span> -->
-                            <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                            <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
                                   <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
                                     {{getDisplayname(label.key)}} : {{label.value}}</span>
                                 </span>
-                              </div> -->
+                              </div>
                             <div class="col-md-12 col-xs-12 p0">
                               <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')">
                                 <i class="fa fa-check-circle" style="color: green;"></i> <span> {{done_cap}} </span>
@@ -674,17 +674,19 @@
                         <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                           *ngFor="let checkin of new_checkins_list, let i=index">
                           <div class="info-box" style="box-shadow:none">
-                            <div class="info-box-icon">
+                              <mat-checkbox></mat-checkbox>
+                            <div class="info-box-icon" *ngIf="checkin.token || calculationmode!=='NoCalc'">
+                              
                               <div class="tkn pointer-cursor" *ngIf="checkin.token" (click)="goCheckinDetail(checkin)">
                                 <ng-container>{{checkin.token}}</ng-container>
                               </div>
-                              <div class="dashboard-wait pointer-cursor" *ngIf="!checkin.token"
+                              <div class="dashboard-wait pointer-cursor" *ngIf="calculationmode!=='NoCalc'"
                                 (click)="goCheckinDetail(checkin)">
                                 <ng-container><i class="fa fa-hourglass" style="font-size: x-small;"></i>
                                   {{getAppxTime(checkin)}}</ng-container>
                               </div>
                             </div>
-                            <div class="info-box-content">
+                            <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
                               <div class="col-md-12 p0">
                                 <div class="col-md-7 col-xs-8 p0">
                                   <div class="col-md-8 col-xs-8 p0">
@@ -742,17 +744,17 @@
                           </div>
                           <div class="clearfix"></div>
                           <div class="info-box-footer-more" *ngIf="section_new[i]">
-                            <!-- <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label"> -->
+                            <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
                             <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
                                   *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                                   <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i>
                                     {{getAppxTime(checkin)}}</span>
                                 </span> -->
-                            <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                            <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
                                   <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
                                     {{getDisplayname(label.key)}} : {{label.value}}</span>
                                 </span>
-                              </div> -->
+                              </div>
                             <div class="col-md-12 col-xs-12 p0">
                               <a class="btn-play pointer-cursor" *ngIf="checkin.waitlistStatus != 'arrived'"
                                 (click)="changeWaitlistStatus(checkin, 'REPORT')">
@@ -798,7 +800,7 @@
   
   
   
-                              <!-- <div class="navbar-custom-menu">
+                              <div class="navbar-custom-menu">
                                   <ul class="nav navbar-nav ">
                                     <li ngbDropdown class="dropdown messages-menu loc-lst" (openChange)="toggled($event)">
                                       <a class="btn-play pointer-cursor dropdown-toggle navbar-item-color bold"
@@ -838,7 +840,7 @@
                                       </ul>
                                     </li>
                                   </ul>
-                                </div> -->
+                                </div>
   
   
                               <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'new')">
@@ -927,17 +929,17 @@
                           </div>
                           <div class="clearfix"></div>
                           <div class="info-box-footer-more" *ngIf="section_complete[i]">
-                            <!-- <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label"> -->
+                            <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
                             <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
                                   *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                                   <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i>
                                     {{getAppxTime(checkin)}}</span>
                                 </span> -->
-                            <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                            <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
                                   <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
                                     {{getDisplayname(label.key)}} : {{label.value}}</span>
                                 </span>
-                              </div> -->
+                              </div>
                             <div class="col-md-12 col-xs-12 p0">
                               <a class="btn-play pointer-cursor"
                                 *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
@@ -1040,17 +1042,17 @@
                           </div>
                           <div class="clearfix"></div>
                           <div class="info-box-footer-more" *ngIf="section_cancel[i]">
-                            <!-- <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label"> -->
+                            <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
                             <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time"
                                   *ngIf="time_type ===1 && calculationmode!='NoCalc' && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn')">
                                   <span *ngIf="!showEditView"><i class="fa fa-hourglass"></i>
                                     {{getAppxTime(checkin)}}</span>
                                 </span> -->
-                            <!-- <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
+                            <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
                                   <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
                                     {{getDisplayname(label.key)}} : {{label.value}}</span>
                                 </span>
-                              </div> -->
+                              </div>
                             <div class="col-md-12 col-xs-12 p0">
                               <a class="btn-play pointer-cursor"
                                 *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid && checkin.paymentStatus != 'NotPaid'"

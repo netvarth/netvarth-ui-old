@@ -150,9 +150,9 @@ export class DisplayboardDetailComponent implements OnInit {
             }
         }
         if (this.actionparam === 'add') {
-            console.log(this.displayName.replace(/ /g,"_"));
+            console.log(this.displayName.replace(/ /g, "_"));
             const post_data = {
-                'name': this.displayName.replace(/ /g,"_"),
+                'name': this.displayName.replace(/ /g, "_"),
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric,
@@ -170,7 +170,7 @@ export class DisplayboardDetailComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.layoutData.id,
-                'name': this.displayName.replace(/ /g,"_"),
+                'name': this.displayName.replace(/ /g, "_"),
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric
@@ -213,5 +213,8 @@ export class DisplayboardDetailComponent implements OnInit {
         this.editLayoutbyId(id);
     }
     resetApiErrors() {
+    }
+    gotoAddQset() {
+        this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
     }
 }

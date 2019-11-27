@@ -53,14 +53,14 @@
                                     <div class="form-group col-md-12 inline">
                                         <label class="col-form-label">{{category}}</label>
                                         <mat-radio-group [(ngModel)]="selectedCategory">
-                                            <mat-radio-button [value]="'SERVICE'" *ngIf="services_list.length > 0"
+                                            <mat-radio-button class="jdnpercent" [value]="'SERVICE'" *ngIf="services_list.length > 0"
                                                 (change)="categorySelection('SERVICE')">
                                                 {{service_caption}}
                                             </mat-radio-button>
-                                            <mat-radio-button [value]="'DEPARTMENT'" *ngIf="departments.length > 0"
+                                            <mat-radio-button class="jdnpercent" [value]="'DEPARTMENT'" *ngIf="departments.length > 0"
                                                 (change)="categorySelection('DEPARTMENT')">
                                                 {{department_cap}}s</mat-radio-button>
-                                            <mat-radio-button [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
+                                            <mat-radio-button class="jdnpercent" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
                                                 (change)="categorySelection('QUEUE')">
                                                 {{queue_cap}}
                                             </mat-radio-button>

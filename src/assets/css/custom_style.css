@@ -5462,8 +5462,14 @@ li.separator.setsplit {
 }
 
 .qset_add {
-  color: #f24949 !important;
+  /* color: #f24949 !important; */
   text-align: center !important;
+}
+
+.qset_add .bt3{
+  width: fit-content !important;
+  align-self: center !important;
+  margin-top: 10px !important;
 }
 
 .alert-ack {
