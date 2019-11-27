@@ -1234,11 +1234,11 @@ export class ProviderbWizardComponent implements OnInit {
       pre_value[field_name] = grid_list;
     }
     if (type === 'domain_questions') {
-      // this.onDomainsFormSubmit(pre_value);
-      this.onDomainFormSubmit(pre_value);
+      this.onDomainsFormSubmit(pre_value);
+      // this.onDomainFormSubmit(pre_value);
     } else if (type === 'subdomain_questions') {
-      // this.onSubDomainsFormSubmit(pre_value);
-      this.onSubDomainFormSubmit(pre_value);
+      this.onSubDomainsFormSubmit(pre_value);
+      // this.onSubDomainFormSubmit(pre_value);
     }
   }
 
@@ -1248,35 +1248,35 @@ export class ProviderbWizardComponent implements OnInit {
     this.grid_row_index = grid_row_index;
   }
 
-  // onDomainsFormSubmit(post_data) {
-  //   this.provider_services.updateDomainSubDomainFields(post_data,
-  //     this.bProfile['serviceSector']['domain'])
-  //     .subscribe(
-  //       () => {
-  //         this.getBusinessProfile();
-  //       },
-  //       (error) => {
-  //         this.getBusinessProfile(); // refresh data ;
-  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       }
-  //     );
-  // }
+  onDomainsFormSubmit(post_data) {
+    this.provider_services.updateDomainSubDomainFields(post_data,
+      this.bProfile['serviceSector']['domain'])
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+        },
+        (error) => {
+          this.getBusinessProfile(); // refresh data ;
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
 
-  // onSubDomainsFormSubmit(post_data) {
-  //   this.provider_services.updateDomainSubDomainFields(post_data, null,
-  //     this.bProfile['serviceSubSector']['subDomain'])
-  //     .subscribe(
-  //       () => {
-  //         this.getBusinessProfile();
-  //         this.showAddSection = false;
-  //         this.showAddSection1 = false;
-  //       },
-  //       (error) => {
-  //         this.getBusinessProfile(); // refresh data ;
-  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       }
-  //     );
-  // }
+  onSubDomainsFormSubmit(post_data) {
+    this.provider_services.updateDomainSubDomainFields(post_data, null,
+      this.bProfile['serviceSubSector']['subDomain'])
+      .subscribe(
+        () => {
+          this.getBusinessProfile();
+          this.showAddSection = false;
+          this.showAddSection1 = false;
+        },
+        (error) => {
+          this.getBusinessProfile(); // refresh data ;
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
 
   onDomainFormSubmit(submit_data) {
     this.resetApiErrors();

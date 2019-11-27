@@ -480,6 +480,7 @@
                         (click)="viewBillPage(checkin)">
                         <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                       </a>
+                     
                       <!-- <a class="btn-play pointer-cursor"
                           *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid'"
                           (click)="viewBillPage(checkin)">
@@ -609,7 +610,12 @@
                                 *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
                                 (click)="viewBillPage(checkin)">
                                 <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
-                              </a>                              
+                              </a>
+                              <!-- <a class="btn-play pointer-cursor"
+                                  *ngIf="checkin.billStatus== 'New' && checkin.paymentStatus!='FullyPaid'"
+                                  (click)="viewBillPage(checkin)">
+                                  <i class="fa"></i> <span class=""> Accept payment </span>
+                                </a> -->
                               <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
                                 <i class="fa fa-comments-o "></i> <span> Message </span>
                               </a>
@@ -722,10 +728,6 @@
                                     <i class="fa icon-arrived" style="font-size: smaller;"></i> <span
                                       *ngIf="!small_device_display">Arrived </span>
                                   </a>
-                                  <a class="btn-play pointer-cursor"
-                                  (click)="printCheckin(checkin)">
-                                  <i class="fa fa-printer"></i> <span class=""> Print </span>
-                                </a>
                                   <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')"
                                     *ngIf="(!section_new[i] && !small_device_display) || (small_device_display && checkin.waitlistStatus === 'arrived')">
                                     <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>

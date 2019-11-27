@@ -13,7 +13,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, OnDestroy {
-
+  accountType;
   subscription: Subscription;
   inboxUnreadCnt;
   inboxCntFetched;
@@ -157,6 +157,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();

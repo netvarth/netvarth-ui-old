@@ -14,6 +14,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
+  accountType;
   homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
   search_cap = Messages.SEARCH_CAP;
@@ -133,6 +134,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   filterbydepartment = false;
   locationExists = false;
   ngOnInit() {
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');

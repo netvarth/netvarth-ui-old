@@ -501,19 +501,19 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
   }
   unSaveMyLocation(uid, id) {
-    const url = 'consumer/waitlist/unsaveMyLoc/' + uid + '?account=' + id;
+    const url = 'consumer/waitlist/unshareMyLoc/' + uid + '?account=' + id;
     return this.servicemeta.httpDelete(url);
   }
   startLiveTrack(uid, id) {
-    const url = 'consumer/waitlist/start/mystracking/' + uid + '?account=' + id;
+    const url = 'consumer/waitlist/start/mytracking/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url);
   }
   stopLiveTrack(uid, id) {
-    const url = 'consumer/waitlist/stop/mystracking/' + uid + '?account=' + id;
+    const url = 'consumer/waitlist/stop/mytracking/' + uid + '?account=' + id;
     return this.servicemeta.httpDelete(url);
   }
   statusOfLiveTrack(uid, id) {
-    const path = 'consumer/waitlist/status/mystracking/' + uid + '?account=' + id;
+    const path = 'consumer/waitlist/status/mytracking/' + uid + '?account=' + id;
     return this.servicemeta.httpGet(path);
   }
   liveLocateChange(uid, id) {

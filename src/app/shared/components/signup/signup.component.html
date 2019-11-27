@@ -183,7 +183,7 @@ onSubmit()" (keyup)="resetApiErrors()">
   </app-otp-form>
 </div>
 <!-- <div class="example-container" *ngIf="step==3">
-  <app-sales-channel-code (retonOtpSubmit)="onOtpSubmit($event)"
+  <app-sales-channel-code (retonOtpSubmit)="onOtpSubmit($event)" [scOtp]="otp"
     (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)">
   </app-sales-channel-code>
 </div> -->

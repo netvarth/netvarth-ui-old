@@ -267,6 +267,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         });
   }
   getWaitlist() {
+    this.pollingSet = [];
     this.loadcomplete.waitlist = false;
     const params = {
     };
@@ -1100,11 +1101,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   liveTrackPolling() {
     if (this.pollingSet && this.pollingSet.length > 0) {
+      console.log(this.pollingSet);
       for (const waitlist of this.pollingSet) {
-        if (waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
-          const pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
-          const pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
+        if (waitlist.jaldeeWaitlistDistanceTime) {
+          let pollingDtTim = '';
+          let pollingDateTime = '';
+        if (waitlist.jaldeeStartTimeType !== 'AFTERSTART' && waitlist.waitlistStatus === 'checkedIn') {
+           pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
+           pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
           const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
+          console.log('pollingDateTime' + pollingDateTime);
+          console.log('serverDateTime' + serverDateTime);
           if (serverDateTime >= pollingDateTime) {
             this.getCurrentLocation();
             this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
@@ -1112,8 +1119,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 error => {
                   this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-          }
-          else if (waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeStartTimeType === 'AFTERSTART') {
+          } }
+          else if ( waitlist.jaldeeStartTimeType === 'AFTERSTART' && waitlist.waitlistStatus === 'checkedIn') {
+            console.log('trackStatus' + waitlist.trackStatus);
             if (waitlist.trackStatus) {
               this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
                 .subscribe(data => { },
@@ -1122,14 +1130,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   });
             }
           }
-          else {
-            if (this.cronHandleTrack) {
-              this.cronHandleTrack.unsubscribe();
-            }
-          }
+       
+         
         }
       }
     }
+    // else {
+    //   console.log("....else....");
+    //   if (this.cronHandleTrack) {
+    //     this.cronHandleTrack.unsubscribe();
+    //   }
+    // }
   }
 }
 
