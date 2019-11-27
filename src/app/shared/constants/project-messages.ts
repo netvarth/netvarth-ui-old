@@ -1103,7 +1103,7 @@ export const Messages = {
   'WIZ_VIEW_IN_PUBLIC_SEARCH_CAP': 's will view this in Jaldee Online',
   'WIZ_PROFILE_SUMMARY_CAP': 'Profile Summary',
   'WIZ_NEXT_CAP': 'Next',
-  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP': 'A default service has been created for your convenience which can be edited here. You can also add more services or edit your existing services and also set up your tax and prepayment options for the service in Settings > Check-in > Services, anytime after you complete the wizard.',
+  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP': 'A default service has been created for your convenience which can be edited here. You can also add more services or edit your existing services and also set up your tax and prepayment options for the service in Settings > Q Manager > Services, anytime after you complete the wizard.',
   'WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP': 'Enter your business hours and add the schedule here.',
   'WIZ_LOCATION_CAP': 'Location',
   'WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP': 'You can add more locations in the Settings -> Location, after you create your profile.',

@@ -476,7 +476,7 @@
                         <i class="fa fa-comments-o "></i> <span> Message</span>
                       </a>
                       <a class="btn-play pointer-cursor"
-                        *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid && checkin.paymentStatus != 'NotPaid'"
+                        *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
                         (click)="viewBillPage(checkin)">
                         <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                       </a>
