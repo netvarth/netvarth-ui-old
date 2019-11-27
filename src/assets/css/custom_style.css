@@ -6132,3 +6132,16 @@ display: flex;
     width: 100px;
   }
 }
+.sccode {
+  padding-top: 10px !important;
+  padding-right: 1px !important;
+}
+.lookup-btn {
+  height: 30px !important;
+  font-size: smaller !important;
+  font-weight: 700 !important;
+}
+.sccode-ok-btn {
+  padding-left: 250px !important;
+  padding-top: 10px !important;
+}
