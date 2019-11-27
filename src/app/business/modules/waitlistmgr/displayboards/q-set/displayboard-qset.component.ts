@@ -20,7 +20,7 @@ export class DisplayboardQSetComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Displayboards',
+            title: 'Queue Statusboards',
             url: '/provider/settings/q-manager/displayboards'
         },
         {

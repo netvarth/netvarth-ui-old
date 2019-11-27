@@ -7,17 +7,20 @@
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
-                        <div class="lbl col-md-12 no-padding">
+                        <div class="lbl col-md-12">
                             <div class="cl1" *ngIf="actionparam === 'view' && labelData">
                                 <span class="editbt" (click)="editLabel(labelData.id)"></span>
                                 <div class="ot-it">
                                     <h3>{{ labelData.displayName | capitalizeFirst}} </h3>
                                     <div class="c-ot m0">
-                                        <div class="item displyfont" *ngIf="labelData.description">
+                                        <div class="item displyfont">
                                             <span class="ttle">Description</span>
-                                            <span>{{ labelData.description | capitalizeFirst}}</span>
+                                            <span *ngIf="!labelData.description">-</span>
+                                            <span
+                                                *ngIf="labelData.description">{{ labelData.description | capitalizeFirst}}</span>
                                         </div>
-                                        <div class="item desfont" *ngIf="labelData.valueSet">
+                                        <div class="item desfont"
+                                            *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">
                                             <span class="ttle">Value</span>
                                             <span *ngFor="let labelvalue of labelData.valueSet"> {{labelvalue.value}}
                                                 ({{labelvalue.shortValue}})</span>
@@ -37,12 +40,12 @@
                                             </mat-form-field> -->
                                         </div>
                                         <div class="form-group">
-                                                <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="displayName"
-                                                        placeholder="{{label_name_cap}}" [(ngModel)]="displayName"
-                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="displayName"
+                                                    placeholder="{{label_name_cap}}" [(ngModel)]="displayName"
+                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                            </mat-form-field>
+                                        </div>
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <textarea matInput class="form-control" id="description"
@@ -54,7 +57,18 @@
                                             <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
                                                 characters remaining</span>
                                         </div>
-                                        <div class="form-group col-md-12">
+
+
+                                        <div class="notifications">
+                                            <span class="shortcut"> Shortcut label button </span>
+
+                                            <span class="icon-add" (click)="showAddsection()"></span>
+                                        </div>
+                                        <!-- <div *ngIf="valueSet && valueSet.length === 0">
+No values added
+</div> -->
+
+                                        <div class="form-group col-md-12" *ngIf="showAddsec">
                                             <div class="col-md-4">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="value"
@@ -71,14 +85,20 @@
                                                         placeholder="Enter  short value*" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="labelad">
+                                                <button type="submit" (click)="onbtnCancel()"
+                                                    class="cs-btn bt2">Cancel</button>
+                                                <!-- </div> -->
+                                                <!-- <div class="col-md-2"> -->
                                                 <button type="submit" mat-button
                                                     (click)="addtoValueSet(value, shortValue)"
-                                                    class="cs-btn bt1 mt10 labelad">Add</button>
+                                                    class="cs-btn bt1">Add</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="col-md-10 labeladsmall" *ngFor="let valueset of valueSet; let j=index">
+
+                                        <div class="col-md-12 label-list">
+                                            <div class="col-md-10 labeladsmall"
+                                                *ngFor="let valueset of valueSet; let j=index">
                                                 <div class="col-md-4 col-xs-5">
                                                     {{valueset.value}}
                                                 </div>
@@ -86,16 +106,18 @@
                                                     {{valueset.shortValue}}
                                                 </div>
                                                 <div class="col-md-2 col-xs-1">
-                                                    <span class="icon-delete pull-right" (click)="deleteValueforSet(j)"></span>
+                                                    <span class="icon-delete pull-right"
+                                                        (click)="deleteValueforSet(j)"></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="actiondiv labelsave" style="margin-top: 150px;">
+
+                                        <div class="actiondiv labelsave">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button (click)="onSubmit()" type="button" mat-button [disabled]="savedisabled"
-                                                class="cs-btn bt2">{{button_title}}</button>
+                                            <button (click)="onSubmit()" type="button" mat-button
+                                                [disabled]="savedisabled" class="cs-btn bt2">{{button_title}}</button>
                                         </div>
                                         <br />
                                     </ng-container>

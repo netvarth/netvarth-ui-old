@@ -5150,12 +5150,25 @@ i.notavail {
   width: 100% !important;
 }
 
-.labeladd {
-  float: right !important;
+.labelad {
+  margin-top: 15px !important;
 }
 
-.labelad {
-  margin-top: 19px !important;
+.labelad .cs-btn{
+  padding: 5px !important;
+  font-weight: 0.7rem !important;
+}
+
+.labelad .bt2{
+  margin-right: 10px !important;
+}
+
+.label-list {
+  margin-bottom: 10px;
+}
+.shortcut {
+  font-weight: 500;
+  margin-right: 5px;
 }
 
 @media only screen and (max-width: 575px) {

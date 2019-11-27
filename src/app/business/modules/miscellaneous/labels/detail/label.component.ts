@@ -57,6 +57,7 @@ export class LabelComponent implements OnInit {
     labelData: any = [];
     description;
     displayName;
+    showAddsec = false;
 
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
@@ -104,15 +105,13 @@ export class LabelComponent implements OnInit {
             this.label = this.labelData.label;
             this.description = this.labelData.description;
             this.displayName = this.labelData.displayName;
-            this.valueSet = this.labelData.valueSet.value;
             this.valueSet = this.labelData.valueSet;
         });
     }
     onSubmit() {
         if (this.actionparam === 'add') {
-            console.log(this.displayName.replace(/ /g,"_"));
             const post_data = {
-                'label': this.displayName.replace(/ /g,"_"),
+                'label': this.displayName.replace(/ /g, "_"),
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet,
@@ -125,7 +124,7 @@ export class LabelComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.labelData.id,
-                'label': this.displayName.replace(/ /g,"_"),
+                'label': this.displayName.replace(/ /g, "_"),
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet
@@ -176,8 +175,9 @@ export class LabelComponent implements OnInit {
         valset['shortValue'] = shortcut;
         this.value = [];
         this.shortValue = [];
-        if (valset['value'].length !== 0 && valset['shortValue'].length !== 0 ) {
+        if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
             this.valueSet.push(valset);
+            this.showAddsec = false;
         }
         value = '';
         shortcut = '';
@@ -199,6 +199,11 @@ export class LabelComponent implements OnInit {
             this.router.navigate(['provider/settings/miscellaneous/labels']);
         }
     }
-
+    showAddsection() {
+        this.showAddsec = true;
+    }
+    onbtnCancel() {
+        this.showAddsec = false;
+    }
 }
 
