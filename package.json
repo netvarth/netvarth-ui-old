@@ -78,5 +78,15 @@
     "tslint": "^5.16.0",
     "typescript": "^3.2.4",
     "webpack-bundle-analyzer": "^3.3.2"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {}
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
   }
 }
