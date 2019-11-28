@@ -237,8 +237,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   unit: any = [];
   travelTime: any = [];
   timeUnit: any = [];
-  hours: number;
-  minutes: number;
+  hours;
+  minutes;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1714,18 +1714,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   locateCustomer(uuid, i) {
-    this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
-      this.trackDetail = data;
-      this.distance[i] = this.trackDetail.jaldeeDistance.distance;
-      this.unit[i] = this.trackDetail.jaldeeDistance.unit;
-      this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
-      this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
-      this.hours = Math.floor(this.timeUnit[i] / 60);
-      this.minutes = this.timeUnit[i] % 60;
-      const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
-    },
-      error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
+     this.provider_services.getCustomerTrackStatus(uuid).subscribe(data =>
+       { 
+         this.trackDetail = data;
+          this.distance[i] = this.trackDetail.jaldeeDistance.distance;
+           this.unit[i] = this.trackDetail.jaldeeDistance.unit;
+            this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
+             this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
+              this.hours = Math.floor(this.travelTime[i] / 60);
+               this.minutes = this.travelTime[i] % 60;
+                const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
+               },
+                error => { this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+               }); 
+              }
 }

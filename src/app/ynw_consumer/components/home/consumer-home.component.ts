@@ -1037,6 +1037,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.shared_services.updateTravelMode(uid, id, passdata)
       .subscribe(data => {
         this.changemode[i] = false;
+        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
