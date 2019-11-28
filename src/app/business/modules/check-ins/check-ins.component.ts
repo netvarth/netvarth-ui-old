@@ -110,7 +110,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   section_future: any = [];
   section_history: any = [];
   pos = false;
-  bname='';
+  bname = '';
   cust_note_tooltip;
   filter = {
     first_name: '',
@@ -235,10 +235,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   distance: any = [];
   trackDetail: any = [];
   unit: any = [];
-    travelTime: any = []; 
-   timeUnit: any = []; 
-    hours: number;  
-    minutes: number;
+  travelTime: any = [];
+  timeUnit: any = [];
+  hours: number;
+  minutes: number;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1664,7 +1664,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     checkin_html += '<table width="400px" cellpadding="5px" border="1">';
     checkin_html += '<tr>';
     checkin_html += '<td rowspan="3" width="70px" align="center" style="font-size:1.5rem; background: #ddd;">';
-    checkin_html +=  checkinlist.token;
+    checkin_html += checkinlist.token;
     checkin_html += '</td>';
     checkin_html += '<td>' + checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName + '</td>';
     checkin_html += '<td width="50px">34 M</td>';
@@ -1680,32 +1680,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     checkin_html += '</td>';
     checkin_html += '</tr>';
     checkin_html += '</table>';
-
-    // checkin_html += '<table width="100%">';
-    // checkin_html += '<tr><td	style="text-align:center;font-weight:bold; color:#000000; font-size:10pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-bottom:10px;">' + 'Checkin Receipt' + '</td></tr>';
-    // checkin_html += '	<tr><td style="border:2px solid #ddd;border-radius:3px;padding:5px;">';
-    // checkin_html += '<table width="100%">';
-    // checkin_html += '	<tr style="line-height:20px;">';
-    // if (checkinlist.token) {
-    //   checkin_html += '<td width="50%"	style="color:#000000;font-size:25pt; font-family:"Ubuntu, Arial,sans-serif;">Token No:' + checkinlist.token + '</td>';
-    // }
-
-    // checkin_html += '	</tr>';
-    // checkin_html += '<td width="50%"	style="color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Name:' + checkinlist.consumer.userProfile.firstName + ' ' + checkinlist.consumer.userProfile.lastName + '</td>';
-    // checkin_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Date&Time:' + checkinlist.date + ' ' + checkinlist.checkInTime + '</td>';
-    // checkin_html += '	<tr>';
-    // for (const user of checkinlist.waitlistingFor) {
-    //   checkin_html += '<td width="50%"	style="color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Checkin For:' + user.firstName + ' ' + user.lastName + '</td>';
-    // }
-    // if (checkinlist.personsAhead) {
-    //   checkin_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:15pt; font-family:"Ubuntu, Arial,sans-serif;">Persons Ahead:' + checkinlist.personsAhead + '</td>';
-    // }
-
-    // checkin_html += '</td>';
-    // checkin_html += '	</tr>';
-    // checkin_html += '</table>';
-    // checkin_html += '	</td></tr>';
-    // checkin_html += '</table>';
     printWindow.document.write('<html><head><title></title>');
     printWindow.document.write('</head><body >');
     printWindow.document.write(checkin_html);
@@ -1739,20 +1713,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cancelledPanel = true;
     }
   }
-  locateCustomer(uuid, i) { 
-    this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => 
-      { 
-        this.trackDetail = data;
-         this.distance[i] = this.trackDetail.jaldeeDistance.distance;
-          this.unit[i] = this.trackDetail.jaldeeDistance.unit;
-           this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
-            this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
-             this.hours = Math.floor(this.timeUnit[i] / 60);
-              this.minutes = this.timeUnit[i] % 60; 
-              const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show'); 
-            }, 
-            error => { this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' }); 
-          }); 
-        } 
-
+  locateCustomer(uuid, i) {
+    this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
+      this.trackDetail = data;
+      this.distance[i] = this.trackDetail.jaldeeDistance.distance;
+      this.unit[i] = this.trackDetail.jaldeeDistance.unit;
+      this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
+      this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
+      this.hours = Math.floor(this.timeUnit[i] / 60);
+      this.minutes = this.timeUnit[i] % 60;
+      const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
 }

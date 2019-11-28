@@ -1,65 +1,48 @@
-<section class="col-md-12" id="container">
-        
-    <div class=" ynw-common-form-nm login-form">
-        <div class="example-container">
-            
-            <div class="col-md-12">
-                <div class="col-xs-12">
-                    <label class="col-form-label" style="font-weight: 700;">How did you hear us?</label> </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <mat-radio-group [(ngModel)]="hearus">
-                        <mat-radio-button value="jaldee">Jaldee</mat-radio-button>
-                        <mat-radio-button value="facebook">Facebook</mat-radio-button>
-                        <mat-radio-button value="friend">Friend</mat-radio-button>
-                        <mat-radio-button value="google">Google</mat-radio-button>
-                        <mat-radio-button value="salesrep">Sales Reps</mat-radio-button>
-                        <mat-radio-button value="twitter">Twitter</mat-radio-button>
-                        <mat-radio-button value="other">Other</mat-radio-button>
-                    </mat-radio-group>
-                </div>
-                <div *ngIf="hearus=='salesrep'">
-                        <div class="col-md-12 sccode">
-                                <span class="col-md-6 form-group" style="padding-top: 20px;">
-                                    <span>Do you have SC code?</span>
-                                </span>
-                                <span class="col-md-6 form-group">
-                                    <mat-form-field>
-                                        <input type="text" (keyup)="handlekeyup($event)" matInput [(ngModel)]="sccode">
-                                    </mat-form-field>
-                                </span>
-                                <span *ngIf="txtarea">
-                                    <textarea ng-model="myTextarea" style="width: 100%;" readonly></textarea>
-                                </span>
-                            </div>
-                            <div class="col-md-12">
-                                <span class="col-md-6">
-                                    <div class="centeralign" style="padding-top: 10px;">
-                                        <button type="button" (click)="handleSalescode()" class="cs-btn bt2 lookup-btn">lookup</button>
-                                    </div>
-                                </span>
-                                <span class="col-md-6">
-                                    <!-- <div *ngIf="salescode"><input (keypress)="isNumeric($event)" placeholder="id"
-                                            (keyup)="isvalid($event)" matInput class="form-control" [(ngModel)]="id"></div> -->
-                                    <div *ngIf="salescode">
-                                        <input (keyup)="handlePhoneno($event)" placeholder="phonenumber" matInput class="form-control" [(ngModel)]="phonenumber"></div>
-                                </span>
-                
-                
-                            </div>
-                </div>
-            </div>
-             <div class="mat-dialog-actions">
-                    <div class="centeralign sccode-ok-btn">
-                        <button type="submit" (click)="saveHere()" class="cs-btn bt1">OK</button>
-                    </div>
-                    
-                </div> 
-        </div>
-        <div *ngIf="api_error">
-            <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
-        </div>
-        <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-        </app-form-success-display>
+<section class="col-md-12 col-xs-12 col-sm-12 no-padding">
+    <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding">
+        <label class="col-form-label bold">How did you hear us?</label>
     </div>
-   
+    <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
+        <mat-radio-group [(ngModel)]="hearus">
+            <mat-radio-button value="jaldee">Jaldee</mat-radio-button>
+            <mat-radio-button value="facebook">Facebook</mat-radio-button>
+            <mat-radio-button value="friend">Friend</mat-radio-button>
+            <mat-radio-button value="google">Google</mat-radio-button>
+            <mat-radio-button value="salesrep">Sales Reps</mat-radio-button>       
+            <div class="clearfix"></div>     
+                <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="hearus==='salesrep'">
+                    <div class="form-group mgn-up-10">
+                        <div class="col-md-8 col-xs-10 col-sm-10">
+                            <mat-form-field>
+                                <input matInput placeholder="SC Code/ Phone Number" type="text" class="form-control"
+                                    [(ngModel)]="scCode_Ph" [ngModelOptions]="{standalone: true}">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-xs-2 col-sm-2">
+                            <i class="fa fa-search" (click)="findSC_ByScCode()"></i>
+                        </div> 
+                    </div>
+                    <div class="salesChannelDetails" *ngIf="scfound">
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                            SC Code: {{scInfo.scId}}
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                            SC Name: {{scInfo.scName}}
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                            SC Phone No: {{scInfo.primaryPhoneNo}}
+                        </div>                        
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10">
+                            Name : {{scInfo.contactFirstName}} {{scInfo.contactLastName}}
+                        </div>
+                    </div>
+                </div>
+            <mat-radio-button value="twitter">Twitter</mat-radio-button>
+            <mat-radio-button value="other">Other</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <mat-dialog-actions>
+        <button tabindex="-1" (click)="onSubmit('skip')" class="cs-btn bt2">Skip</button>
+        <button tabindex="2" (click)="onSubmit()" class="cs-btn bt1">{{ok_btn_cap}}</button>
+    </mat-dialog-actions>
 </section>

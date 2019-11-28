@@ -103,7 +103,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
     this.createForm();
-    this.getQStartTokenNo();
     this.getProviderServices();
     this.getProviderQueues();
     // this.getDepartments();
@@ -112,27 +111,10 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // Get the provider services
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
   }
-
-
-  getQStartTokenNo() {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.provider_services.getQStartToken()
-        .subscribe(
-          data => {
-            this.toknsugstion = data;
-            resolve(data);
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-  }
-
   // creates the form
   createForm() {
     if (this.data.type === 'add') {
+      this.toknsugstion = 0;
       this.amForm = this.fb.group({
         qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         qlocation: ['', Validators.compose([Validators.required])],
@@ -144,6 +126,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
+      this.provider_services.getQStartToken()
+        .subscribe(
+          (data) => {
+            this.amForm.controls['tokennum'].setValue(data);
+          }
+        );
     }
     if (this.data.type === 'edit') {
       this.amForm = this.fb.group({

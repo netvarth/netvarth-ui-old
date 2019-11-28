@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ProviderServices } from '../../services/provider-services.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { projectConstants } from '../../../shared/constants/project-constants';
 import { Router } from '@angular/router';
+import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { projectConstants } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-notifications',
-  templateUrl: './provider-notifications.component.html',
-  styleUrls: ['./provider-notifications.component.css']
+  templateUrl: './provider-notifications.component.html'
 })
 export class ProviderNotificationsComponent implements OnInit {
 
@@ -23,7 +22,11 @@ export class ProviderNotificationsComponent implements OnInit {
       title: 'Miscellaneous'
     },
     {
-      title: 'Notifications'
+      title: 'Notifications',
+      url: '/provider/settings/miscellaneous/notifications',
+    },
+    {
+      title: 'Provider'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;

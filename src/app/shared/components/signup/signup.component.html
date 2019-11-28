@@ -1,6 +1,6 @@
-<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2 && step!=4">&nbsp;<button (click)="onCancelPass()"
+<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2  && step!=3">&nbsp;<button (click)="onCancelPass()"
     class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<h1 class="mat-dialog-title" *ngIf="step==1 || step==2"><span *ngIf="step==1">{{heading}}</span><button mat-dialog-close
+<h1 class="mat-dialog-title" *ngIf="step==1 || step==2 || step==3"><span *ngIf="step==1">{{heading}}</span><button mat-dialog-close
     class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm" class="signup-form" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
@@ -56,46 +56,14 @@ onSubmit()" (keyup)="resetApiErrors()">
         </app-field-error-display>
       </div>
     </div>
-    <!-- <label class="caption">{{mobile_no_cap}} * </label>
-  <div class="input-group">
-    <div class="input-group-prepend mob-prefix">
-      <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-    </div>
-    <input type="text" class="form-control" id="phonenumber" formControlName="phonenumber" autocomplete="off"
-      placeholder="Enter your 10 digit mobile number" maxlength=10>
-  </div>
-  <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
-{
-'required' : 'Mobile number is required',
-'minlength' : 'Enter a 10 digit mobile number',
-'maxlength' : 'Enter a 10 digit mobile number',
-'pattern' : 'Only numbers are allowed'
-})">
-  </app-field-error-display> -->
-    <!-- </div> -->
-    <!-- <div class="form-group">
-    <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
-    <input type="text" class="form-control" id="first_name" formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
-{
-  'required' : 'First name is required',
-  'pattern' : 'Only alphabets are allowed'
-})">
-    </app-field-error-display>
-  </div> -->
-
     <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
       <mat-form-field *ngIf="data.claimData == undefined">
-        <!-- <label class="col-form-label" for="last_name">{{select_domain_cap}}</label> -->
         <mat-select placeholder="{{select_domain_cap}}" formControlName="selectedDomainIndex" #seldom
           (selectionChange)="setDomain(seldom.value)">
           <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
             {{domain.displayName}}
           </mat-option>
         </mat-select>
-
-        
-
       </mat-form-field>
       <mat-form-field *ngIf="data.claimData !== undefined">
         <input type="text" matInput class="form-control" placeholder="{{domain_cap}}" formControlName="selectedDomainIndex" autocomplete="off" >
@@ -123,40 +91,6 @@ onSubmit()" (keyup)="resetApiErrors()">
         errorMsg="Select one sub sector">
       </app-field-error-display>
     </div>
-    <!-- <div>
-        <a (click)="corporate_branch()" class="more_less linkc">Are you a Corporate/Branch</a><br/><br/>
-        <div style="display : flex">
-        <mat-checkbox (change)="corporate()" *ngIf="CorporateBranch == 'co_branch'"> Corporate</mat-checkbox> &nbsp; &nbsp;
-        <div class="form-group" *ngIf="action">
-            <input type="text" class="form-control box"  formControlName="corporateaction" minlength="0" maxlength="10">
-               </div>
-              </div>
-        <br/>
-        <div style="display : flex">
-        <mat-checkbox (change)="bank()" *ngIf="CorporateBranch == 'co_branch'"> Branch</mat-checkbox>  &nbsp; &nbsp;
-        <div class="form-group" *ngIf="bank_action">
-            <input type="text" class="form-control box"  formControlName="bankaction" minlength="0" maxlength="10">
-               </div>
-      </div>
-    </div> -->
-    <!-- <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
-      <mat-form-field>
-        <mat-select placeholder="Choose your {{lic_package_cap}}" formControlName="package_id" #licpkg
-          (selectionChange)="clickedPackage(licpkg)">
-          <mat-option *ngFor="let package of packages; let i = index" [value]="package.pkgId">
-            {{package.displayName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'package_id')"
-        errorMsg="Select one license package">
-      </app-field-error-display>
-      <span class="package-desc"><a rel="noopener" routerLink="/license-help" target="_blank">Help me to choose the right license
-          package</a></span>
-      <div class="package-desc" *ngIf="license_description!=''">
-        {{license_description}}
-      </div>
-    </div> -->
     <div class="package-desc" *ngIf="signupForm.get('is_provider').value == 'true'">{{signupp_cap}}<span
         (click)="more()" *ngIf="moreLess == 0" class="more_less">more...</span><span
         *ngIf="moreLess == 1">{{more_signup}}</span><span (click)="less()" *ngIf="moreLess == 1"
@@ -179,19 +113,18 @@ onSubmit()" (keyup)="resetApiErrors()">
 </form>
 <div class="example-container otpouter" *ngIf="step==2">
   <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
-    (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess">
+    (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess">
   </app-otp-form>
 </div>
-<!-- <div class="example-container" *ngIf="step==3">
-  <app-sales-channel-code (retonOtpSubmit)="onOtpSubmit($event)" [scOtp]="otp"
-    (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)">
+<div class="mat-dialog-content" *ngIf="step==3">
+  <app-sales-channel-code (retonRefSubmit)="onReferalSubmit($event)" (resetApiErrors)="resetApiErrors()">
   </app-sales-channel-code>
-</div> -->
-<div class="example-container" *ngIf="step==3">
+</div>
+<div class="example-container" *ngIf="step==4">
   <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
     (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
 </div>
-<div class="example-container" *ngIf="step==4">
+<div class="example-container" *ngIf="step==5">
   <mat-dialog-content class="pwd_cancel_scr">
     <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
   </mat-dialog-content>

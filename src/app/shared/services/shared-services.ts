@@ -54,35 +54,33 @@ export class SharedServices {
     return this.servicemeta.httpGet(path);
   }
   getPackages() {
-    // const path = 'accounts/license/packages';
     const path = 'provider/license/packages';
     return this.servicemeta.httpGet(path);
   }
   signUpProvider(body) {
-    // return this.servicemeta.httpPost('accounts', body);
+
     return this.servicemeta.httpPost('provider', body);
   }
   signUpConsumer(body) {
-    // return this.servicemeta.httpPost('consumers', body);
     return this.servicemeta.httpPost('consumer', body);
   }
+  saveReferralInfo(otp, body) {
+    const path = 'provider/' + otp + '/howDoYouHear';
+    return this.servicemeta.httpPost(path, body);
+  }
   OtpSignUpProviderValidate(otp) {
-    // const path = 'accounts/' + otp + '/verify';
     const path = 'provider/' + otp + '/verify';
     return this.servicemeta.httpPost(path);
   }
   OtpSignUpConsumerValidate(otp) {
-    // const path = 'consumers/' + otp + '/verify';
     const path = 'consumer/' + otp + '/verify';
     return this.servicemeta.httpPost(path);
   }
   ConsumerSetPassword(otp, body) {
-    // const path = 'consumers/' + otp + '/activate';
     const path = 'consumer/' + otp + '/activate';
     return this.servicemeta.httpPut(path, body);
   }
   ProviderSetPassword(otp, body) {
-    // const path = 'accounts/' + otp + '/activate';
     const path = 'provider/' + otp + '/activate';
     return this.servicemeta.httpPut(path, body);
   }

@@ -73,6 +73,7 @@ export class SignUpComponent implements OnInit {
   loginId;
   fname;
   lname;
+  actionstarted = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -126,20 +127,6 @@ export class SignUpComponent implements OnInit {
         () => {
         }
       );
-
-    // this.shared_services.getPackages()
-    // .subscribe(
-    //   data => {
-    //     this.packages = data;
-
-    //     if (this.packages[0] && this.signupForm.get('package_id')) {
-    //       this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
-    //     }
-    //   },
-    //   error => {
-
-    //   }
-    // );
   }
   getPackages() {
     this.shared_services.getPackages()
@@ -171,7 +158,6 @@ export class SignUpComponent implements OnInit {
           }
         },
         () => {
-
         }
       );
   }
@@ -204,18 +190,13 @@ export class SignUpComponent implements OnInit {
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
-        // corporateaction:['', Validators.compose([Validators.required])],
-        // bankaction:['', Validators.compose([Validators.required])],
         terms_condition: ['true'],
-
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
         this.changeType();
-
         break;
     }
   }
-
   createFormSpecial(step) {
     this.step = step;
     switch (step) {
@@ -249,7 +230,6 @@ export class SignUpComponent implements OnInit {
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
         this.changeType();
-
         break;
     }
   }
@@ -298,6 +278,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(acc_id?) {
+    this.actionstarted = true;
     this.resetApiErrors();
     this.user_details = {};
     let userProfile = {
@@ -411,6 +392,7 @@ export class SignUpComponent implements OnInit {
     this.shared_services.signUpProvider(user_details)
       .subscribe(
         () => {
+          this.actionstarted = false;
           this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
           this.createForm(2);
           this.resendemailotpsuccess = true;
@@ -422,6 +404,7 @@ export class SignUpComponent implements OnInit {
           }
         },
         error => {
+          this.actionstarted = false;
           if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
             this.onSubmit(error.error);
           } else {
@@ -431,15 +414,18 @@ export class SignUpComponent implements OnInit {
       );
   }
   onOtpSubmit(submit_data) {
+    this.actionstarted = true;
     this.resetApiErrors();
     if (this.is_provider === 'true') {
       this.shared_services.OtpSignUpProviderValidate(submit_data.phone_otp)
         .subscribe(
           () => {
+            this.actionstarted = false;
             this.otp = submit_data.phone_otp;
             this.createForm(3);
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -447,16 +433,42 @@ export class SignUpComponent implements OnInit {
       this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
         .subscribe(
           () => {
+            this.actionstarted = false;
             this.otp = submit_data.phone_otp;
-            this.createForm(3);
+            this.createForm(4);
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
     }
   }
+  onReferalSubmit(submit_data) {
+    this.actionstarted = true;
+    if (this.is_provider === 'true') {
+      if (submit_data === 'skip') {
+        this.actionstarted = false;
+        this.createForm(4);
+      } else {
+        this.shared_services.saveReferralInfo(this.otp, submit_data)
+          .subscribe(
+            () => {
+              this.actionstarted = false;
+              this.otp = submit_data.phone_otp;
+              this.createForm(4);
+            },
+            error => {
+              this.actionstarted = false;
+              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            }
+          );
+      }
+    }
+
+  }
   onPasswordSubmit(submit_data) {
+    this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
     const post_data = { password: submit_data.new_password };
@@ -464,6 +476,7 @@ export class SignUpComponent implements OnInit {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
         .subscribe(
           () => {
+            this.actionstarted = false;
             const login_data = {
               'countryCode': '+91',
               'loginId': this.user_details.userProfile.primaryMobileNo,
@@ -485,6 +498,7 @@ export class SignUpComponent implements OnInit {
             }
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -492,6 +506,7 @@ export class SignUpComponent implements OnInit {
       this.shared_services.ConsumerSetPassword(this.otp, post_data)
         .subscribe(
           () => {
+            this.actionstarted = false;
             const login_data = {
               'countryCode': '+91',
               'loginId': this.user_details.userProfile.primaryMobileNo,
@@ -512,6 +527,7 @@ export class SignUpComponent implements OnInit {
               );
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -567,7 +583,7 @@ export class SignUpComponent implements OnInit {
     this.dialogRef.close();
   }
   continuetoPwd() {
-    this.step = 3;
+    this.step = 4;
   }
   more() {
     this.moreLess = 1;
@@ -576,8 +592,8 @@ export class SignUpComponent implements OnInit {
     this.moreLess = 0;
   }
   onCancelPass() {
-    if (this.step === 3) {
-      this.step = 4;
+    if (this.step === 4) {
+      this.step = 5;
       this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }

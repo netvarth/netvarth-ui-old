@@ -5473,7 +5473,6 @@ li.separator.setsplit {
     min-height: 60px !important;
   }
 }
-
 .qset_add {
   /* color: #f24949 !important; */
   text-align: center !important;
@@ -6218,4 +6217,27 @@ display: flex;
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity:1 ;}
+}
+.hearus .mat-radio-button {
+  display: -webkit-box;
+  display: block;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-bottom: 0px !important;
+  border:none !important
+}
+.hearus .mat-radio-group .mat-radio-button label {
+  margin: 0;
+  padding: 5px !important;
+  border: none !important;
+  background-clip: padding-box;
+} 
+.hearus .mat-radio-group {
+  display: block !important;
+}
+.hearus input[type="text"] {
+  height: 30px !important;
+}
+.hearus i {
+  font-size: x-large !important;
 }

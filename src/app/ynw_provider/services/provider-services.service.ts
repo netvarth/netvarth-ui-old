@@ -802,34 +802,25 @@ export class ProviderServices {
     const url = 'provider/corp/joinCorp/' + corpUid;
     return this.servicemeta.httpPost(url);
   }
-  createCorp (post_data) {
+  createCorp(post_data) {
     const url = 'provider/corp/switchToCorp';
     return this.servicemeta.httpPost(url, post_data);
   }
   getQStartToken() {
-    const url = 'provider/location/qStartToken';
+    const url = 'provider/waitlist/queues/nextTokenStart';
     return this.servicemeta.httpGet(url);
   }
   getSearchSCdetails(scId) {
     const url = 'provider/salesChannel/' + scId;
     return this.servicemeta.httpGet(url);
   }
-  // saveHere(post_data) {
-  //   const url = 'provider/'+otp+'/howDoYouHear'  
-  //   return this.servicemeta.httpPost(url,post_data);
-  // }
   getsearchPhonedetails(phoneNumber) {
-    const url = 'provider/salesChannel/phone/'+ phoneNumber;
+    const url = 'provider/salesChannel/phone/' + phoneNumber;
     return this.servicemeta.httpGet(url);
-  }
-  saveHere(post_data,otp) {
-    const url = 'provider/'+otp+'/howDoYouHear'  
-    return this.servicemeta.httpGet(url,post_data);
   }
   getCustomerTrackStatus(uuid) {
     const url = 'provider/waitlist/live/locate/distance/time/' + uuid;
     return this.servicemeta.httpPost(url);
-}
-
+  }
 }
 

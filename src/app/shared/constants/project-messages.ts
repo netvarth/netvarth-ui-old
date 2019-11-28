@@ -1281,12 +1281,12 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
   'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable “Online Check-in” and also book a future date for [customer]\'s check-in here.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable â€œOnline Check-inâ€� and also book a future date for [customer]\'s check-in here.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
   'FRM_ADDINFO_MSG': 'Add more details of your business for your [customer] to see',
-  'FRM_SEARCH_MSG': 'Turn it on to enable your profile’s visibility in [customer]\'s search result.',
+  'FRM_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
   'FRM_LEVEL_MISC_MSG': 'Other features can be mentioned here',
@@ -1295,7 +1295,7 @@ export const Messages = {
   'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. ',
   'FRM_LEVEL_PUBLIC_SEARCHH_MSG': 'Unless you enable, the [customer]s won\'t be able to view your profile in their search result. Turning off Public Search will not restrict consumers from online check-ins.',
   'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
-  'FRM_LEVEL_PUBLIC_SEARCH': 'Turn it on to enable your profile’s visibility in [customer]\'s search result.',
+  'FRM_LEVEL_PUBLIC_SEARCH': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
   'FRM_LEVEL_LOC_MSG': 'Manage your business location details here.',
@@ -1411,6 +1411,7 @@ export const Messages = {
   'JDN_UPDATED': 'JDN updated successfully',
   'JDN_DISABLED': 'JDN disabled successfully',
   'SC_CREATED': 'Sales Channel Code Added successfully',
+  'SCNOTFOUND': 'Sales Channel not found',
   'SUBSCRIBE': 'Subscribe',
   'UNSUBSCRIBE': 'Unsubscribe',
   'BRANCHUSER_ADDED': 'Branch user created successfully',
@@ -1419,4 +1420,3 @@ export const Messages = {
   // live track
   'TRACKINGENABLED' : 'Tracking Enabled successfully'
 };
-
