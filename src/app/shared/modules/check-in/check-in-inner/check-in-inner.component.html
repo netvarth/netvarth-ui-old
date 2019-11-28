@@ -175,6 +175,33 @@
                             </ng-container>
                         </div>
                     </div>
+                    <button type="button"  class="cs-btn btn-attach bt_attach"
+                    (click)="imagefile.click()" [matTooltip]="'Attach files'">
+                    <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;" multiple
+                        (change)="filesSelected($event)">
+                    <span><i class="material-icons">attach_file</i></span>
+                </button> 
+                <ng-container *ngIf="selectedMessage">
+                    <div class="row col-md-12" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
+                        <div class="col-md-7">
+                            <span class="ln-hgt-40">{{item.name}}</span>
+                        </div>
+                        <div class="col-md-5">
+                            <span class="mbt comm-menu-imgs">
+                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                        <i class="icon-delete"></i>
+                                        <span>delete</span>
+                                    </button>
+                                </mat-menu>
+                            </span>
+                        </div>
+                        
+                    </div>
+                </ng-container>
                     <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
     <div class="showDetService">
     Check-In for service: <span class='selsername'>{{ sel_ser_det.name }}</span>

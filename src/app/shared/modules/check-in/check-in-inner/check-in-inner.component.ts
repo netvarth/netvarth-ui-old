@@ -173,8 +173,12 @@ export class CheckInInnerComponent implements OnInit {
       longitude: 0 
      }; 
    driving = true;
-  
   walking: boolean;
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
@@ -1338,6 +1342,31 @@ export class CheckInInnerComponent implements OnInit {
   getNotifyTime(time) {
     this.notifyTime = time;
   }
+
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedFunctionobj.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.sharedFunctionobj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+
+  deleteTempImage(index) {
+    this.selectedMessage.files.splice(index, 1);
+  }
+  
   saveLiveTrackDetails() {
     const post_Data = {
       'jaldeeGeoLocation': {
