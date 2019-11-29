@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProviderNotificationsComponent } from './provider-notifications/provider-notifications.component';
+import { ProviderNotificationsComponent } from './provider/provider-notifications.component';
 import { ConsumerNotificationsComponent } from './consumer/consumer-notifications.component';
 import { NotificationsComponent } from './notifications.component';
 

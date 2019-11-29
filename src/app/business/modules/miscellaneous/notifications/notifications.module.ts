@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { NotificationsComponent } from './notifications.component';
 import { NotificationsRoutingModule } from './notifications.routing.module';
 import { ConsumerNotificationsComponent } from './consumer/consumer-notifications.component';
-import { ProviderNotificationsComponent } from './provider-notifications/provider-notifications.component';
+import { ProviderNotificationsComponent } from './provider/provider-notifications.component';
 
 @NgModule({
     declarations: [

@@ -822,5 +822,28 @@ export class ProviderServices {
     const url = 'provider/waitlist/live/locate/distance/time/' + uuid;
     return this.servicemeta.httpPost(url);
   }
+  getSMSglobalSettings() {
+    const url = 'provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  setSMSglobalSettings(state) {
+    const url = 'provider/account/settings/sms/' + state;
+    return this.servicemeta.httpPut(url);
+  }
+  getSMSCredits() {
+    const url = 'provider/account/settings/smsCount';
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerNotificationSettings () {
+    const url = 'provider/consumerNotification/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  saveConsumerNotificationSettings (data) {
+    const url = 'provider/consumerNotification/settings';
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateConsumerNotificationSettings(data) {
+    const url = 'provider/consumerNotification/settings';
+    return this.servicemeta.httpPut(url, data);
+  }
 }
-

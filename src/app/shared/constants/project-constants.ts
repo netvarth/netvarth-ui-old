@@ -175,6 +175,9 @@ export const projectConstants = {
     'docambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
   },
+  SUBDOMAIN_ICONS: {
+    physiciansSurgeons: {help: '', iconClass: 'physicians'}
+  },
   SOCIAL_MEDIA: [
     { key: 'facebook', iconClass: 'fa fa-facebook-square fb', iconImg: 'facebook.png', displayName: 'Facebook' },
     { key: 'twitter', iconClass: 'fa fa-twitter-square tw', iconImg: 'twitter.png', displayName: 'Twitter' },

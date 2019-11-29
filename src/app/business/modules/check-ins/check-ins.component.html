@@ -766,6 +766,10 @@
                               <i class="fa fa-play"></i> <span> Start</span>
                             </a>
                             <a class="btn-play pointer-cursor"
+                                (click)="printCheckin(checkin)">
+                                <i class="fa fa-printer"></i> <span class=""> Print </span>
+                              </a>
+                            <a class="btn-play pointer-cursor"
                               *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
                               (click)="viewBillPage(checkin)">
                               <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
@@ -845,8 +849,6 @@
                                 </li>
                               </ul>
                             </div>
-
-
                             <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'new')">
                               <i class="fa fa-angle-up black"></i>
                             </a>

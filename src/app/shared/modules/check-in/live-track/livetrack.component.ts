@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   // styleUrls: ['./home.component.scss']
 })
 export class LivetrackComponent {
+  payment_popup;
     constructor(public dialogRef: MatDialogRef<LivetrackComponent>, 
         private shared_services: SharedServices,
         public shared_functions: SharedFunctions,
@@ -17,6 +18,6 @@ export class LivetrackComponent {
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer) { }
 
-        
-     
+        paytmPayment() {}
+        payuPayment() {}
 }

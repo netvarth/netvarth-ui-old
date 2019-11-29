@@ -75,14 +75,34 @@ onSubmit()" (keyup)="resetApiErrors()">
 
     <div class="form-group"
       *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
-      <mat-form-field *ngIf="data.claimData == undefined">
+
+      <div class="form-group col-md-12 col-xs-12 col-sm-12 sgn-subdom no-padding">
+        <mat-radio-group formControlName="selectedSubDomains">
+            <mat-radio-button *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                <div class="col-md-10 col-xs-10 col-sm-10 no-padding">
+                    {{subdomain.itemName}}
+                    <p class="form-level-settings">help content here</p>
+                </div>
+                <div class="col-xs-2 col-md-2 col-sm-2" >
+                    <div *ngIf="subdomainSettings[subdomain.value]" [class]="subdomainSettings[subdomain.value].iconClass">mani</div>
+                </div>
+              </div>
+            </mat-radio-button>   
+        </mat-radio-group>
+        </div>
+      <!-- <mat-form-field *ngIf="data.claimData == undefined">
         <mat-select placeholder="{{select_subdomain_cap}}" subdom formControlName="selectedSubDomains" #subdom
           (selectionChange)="onItemSelect(subdom.value)">
           <mat-option *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
             {{subdomain.itemName}}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
+      
+      
+
+
       <mat-form-field *ngIf="data.claimData !== undefined">
         <input type="text" matInput class="form-control" placeholder="{{subdomain_cap}}" formControlName="selectedSubDomains" autocomplete="off" >
               </mat-form-field>

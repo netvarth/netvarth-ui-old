@@ -6218,6 +6218,22 @@ display: flex;
   from {opacity: 0;}
   to {opacity:1 ;}
 }
+.sgn-subdom .mat-radio-button{
+  display: -webkit-box;
+  display: block;
+}
+.sgn-subdom .mat-radio-label {
+  width: 100% !important;
+  white-space: pre-wrap !important;
+  border: 1px solid #dddddd !important;
+  padding: 10px !important;
+}
+.sgn-subdom .mat-radio-group .mat-radio-label-content {
+  width: 100%;
+}
+ .mat-dialog-content .sgn-subdom .mat-radio-group .mat-radio-button {
+   margin: 5px 0 5px 0 !important;
+ }
 .hearus .mat-radio-button {
   display: -webkit-box;
   display: block;
@@ -6232,7 +6248,7 @@ display: flex;
   border: none !important;
   background-clip: padding-box;
 } 
-.hearus .mat-radio-group {
+.hearus .mat-radio-group, .sgn-subdom .mat-radio-group {
   display: block !important;
 }
 .hearus input[type="text"] {
@@ -6240,4 +6256,20 @@ display: flex;
 }
 .hearus i {
   font-size: x-large !important;
+}
+.acc-header {
+  background: #f2f2f2 !important;
+  margin:5px !important;
+  font-size: 1rem !important;
+  min-height: 40px !important;
+}
+.acc-header .mat-expansion-indicator {
+  right:25px !important
+}
+
+.notifications .acc-header p { margin: 0 0 0 0 !important}
+.allopathy_doc {
+  content:    url(../images/allopathy.png);
+  width: 20px;
+  height:20px
 }

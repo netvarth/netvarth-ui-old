@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -8,7 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
     selector: 'app-corporatesettings',
     templateUrl: './corporate-settings.component.html'
 })
-export class CorporateSettingsComponent {
+export class CorporateSettingsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     cancel_btn = Messages.CANCEL_BTN;
     save_btn_cap = Messages.SAVE_BTN;
@@ -25,10 +25,14 @@ export class CorporateSettingsComponent {
         title: 'Corporate Settings'
       }
     ];
+    loading: boolean;
     constructor(private router: Router,
         private shared_services: ProviderServices,
         private shared_functions: SharedFunctions) {
 
+    }
+    ngOnInit() {
+        this.loading = false;
     }
     onSubmitJoinCorp (corpId) {
         this.shared_services.joinCorp(corpId).subscribe(

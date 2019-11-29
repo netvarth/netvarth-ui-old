@@ -1418,5 +1418,6 @@ export const Messages = {
   'JOINCORP_SUCCESS': 'You joined as a corporate',
   'CREATECORP_SUCCESS': 'Corporate created successfully',
   // live track
-  'TRACKINGENABLED' : 'Tracking Enabled successfully'
+  'TRACKINGENABLED' : 'Tracking Enabled successfully',
+  'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully'
 };

@@ -23,6 +23,7 @@ export class BranchUsersComponent implements OnInit {
             title: 'Branch SPs'
         }
     ];
+    api_loading: boolean;
     constructor(
         private router: Router,
         private shared_services: ProviderServices,
@@ -30,6 +31,7 @@ export class BranchUsersComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.api_loading = true;
         this.getBranchSPs();
     }
     addBranchSP() {
@@ -40,6 +42,7 @@ export class BranchUsersComponent implements OnInit {
         this.shared_services.getBranchSPs(accountId).subscribe(
             (data: any) => {
                 this.users_list = data;
+                this.api_loading = false;
                 console.log(this.users_list);
             }
         );

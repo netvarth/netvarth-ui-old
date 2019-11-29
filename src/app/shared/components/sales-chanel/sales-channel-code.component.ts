@@ -59,7 +59,7 @@ export class SalesChannelCodeComponent implements OnInit {
         }
       );
   }
-  onSubmit(action) {
+  onSubmit(action?) {
     let post_data = {};
     if (action === 'skip') {
       post_data['action'] = 'skip';
