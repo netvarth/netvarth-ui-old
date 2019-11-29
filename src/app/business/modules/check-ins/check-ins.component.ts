@@ -512,6 +512,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         data => {
           bProfile = data;
           this.bprofile = bProfile;
+          this.bname = bProfile['businessName'];
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
@@ -1661,33 +1662,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     ].join(',');
     const printWindow = window.open('', '', params);
     let checkin_html = '';
-    checkin_html += '<table width="400px" cellpadding="5px" border="1">';
-    checkin_html += '<tr>';
-    checkin_html += '<td rowspan="3" width="70px" align="center" style="font-size:1.5rem; background: #ddd;">';
-    checkin_html += checkinlist.token;
-    checkin_html += '</td>';
-    checkin_html += '<td>' + checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName + '</td>';
-    checkin_html += '<td width="50px">34 M</td>';
-    checkin_html += '</tr>';
-    checkin_html += '<tr>';
-    checkin_html += '<td colspan="2">';
-    checkin_html += this.bname + '/' + checkinlist.service.name;
-    checkin_html += '</td>';
-    checkin_html += '</tr>';
-    checkin_html += '<tr>';
-    checkin_html += '<td colspan="2">';
+    checkin_html += '<div style="width:400px; height:100px; border:1px solid #ddd; ">';
+    checkin_html += '<div style="float: left; width:100px; height:100px;font-size:1.5rem;background: #eee;">';
+    checkin_html += '<div style="padding-top:30px;text-align:center">#' + checkinlist.token + '</div>';
+    checkin_html += '</div>';
+    checkin_html += '<div style="float:left;height:100px;font-weight:500">';
+    checkin_html += '<div style="padding-top:5px;padding-left:5px">';
+    checkin_html += checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName;
+    checkin_html += '</div>';
+    checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
+    checkin_html += this.bname + ' / ' + checkinlist.service.name;
+    checkin_html += '</div>';
+    checkin_html += '<div style="clear:both;padding-top:15px;padding-left:5px">';
     checkin_html += checkinlist.date + ' ' + checkinlist.checkInTime;
-    checkin_html += '</td>';
-    checkin_html += '</tr>';
-    checkin_html += '</table>';
+    checkin_html += '</div>';
+    checkin_html += '</div>';
+    checkin_html += '</div>';
     printWindow.document.write('<html><head><title></title>');
     printWindow.document.write('</head><body >');
     printWindow.document.write(checkin_html);
     printWindow.document.write('</body></html>');
     printWindow.moveTo(0, 0);
-    printWindow.document.close();
+    // printWindow.document.close();
     printWindow.print();
-    printWindow.close();
+    // printWindow.close();
   }
   filterbyStatus(status) {
     this.filterStatus = false;
@@ -1714,18 +1712,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   locateCustomer(uuid, i) {
-     this.provider_services.getCustomerTrackStatus(uuid).subscribe(data =>
-       { 
-         this.trackDetail = data;
-          this.distance[i] = this.trackDetail.jaldeeDistance.distance;
-           this.unit[i] = this.trackDetail.jaldeeDistance.unit;
-            this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
-             this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
-              this.hours = Math.floor(this.travelTime[i] / 60);
-               this.minutes = this.travelTime[i] % 60;
-                const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
-               },
-                error => { this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-               }); 
-              }
+    this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
+      this.trackDetail = data;
+      this.distance[i] = this.trackDetail.jaldeeDistance.distance;
+      this.unit[i] = this.trackDetail.jaldeeDistance.unit;
+      this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
+      this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
+      this.hours = Math.floor(this.travelTime[i] / 60);
+      this.minutes = this.travelTime[i] % 60;
+      const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
 }
