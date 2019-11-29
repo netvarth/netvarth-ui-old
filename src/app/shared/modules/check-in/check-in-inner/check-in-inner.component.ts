@@ -807,17 +807,23 @@ export class CheckInInnerComponent implements OnInit {
       'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
       'coupons': this.selected_coupons
     };
+    if (this.selectedMessage.files.length > 0 && this.consumerNote === '' ) {
+      this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
+    }
     if (this.partySizeRequired) {
       this.holdenterd_partySize = this.enterd_partySize;
       post_Data['partySize'] = Number(this.holdenterd_partySize);
     }
-    if (this.page_source === 'provider_checkin') {
-      post_Data['consumer'] = { id: this.customer_data.id };
-      post_Data['ignorePrePayment'] = true;
-      this.addCheckInProvider(post_Data);
-    } else {
-      this.addCheckInConsumer(post_Data);
-    }
+   
+    if (this.api_error === null) {
+      if (this.page_source === 'provider_checkin') {
+        post_Data['consumer'] = { id: this.customer_data.id };
+        post_Data['ignorePrePayment'] = true;
+        this.addCheckInProvider(post_Data);
+      } else {
+        this.addCheckInConsumer(post_Data);
+      }
+   }
   }
   addCheckInConsumer(post_Data) {
     post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
@@ -831,6 +837,9 @@ export class CheckInInnerComponent implements OnInit {
           this.trackUuid = retData[key];
           console.log(this.trackUuid);
         });
+        if (this.selectedMessage.files.length > 0) {
+          this.consumerNoteAndFileSave(retUUID);
+         }
         if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
           if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
             this.dialogRef.close();
@@ -884,7 +893,18 @@ export class CheckInInnerComponent implements OnInit {
   addCheckInProvider(post_Data) {
     this.api_loading = true;
     this.shared_services.addProviderCheckin(post_Data)
-      .subscribe(() => {
+      .subscribe((data) => {
+        console.log(data);
+        const retData = data;
+        let retUuid;
+        Object.keys(retData).forEach(key => {
+          retUuid = retData[key];
+          this.trackUuid = retData[key];
+          console.log(this.trackUuid);
+        });
+        if (this.selectedMessage.files.length > 0) {
+          this.consumerNoteAndFileSave(retUuid);
+         }
         if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -1086,6 +1106,11 @@ export class CheckInInnerComponent implements OnInit {
   handleNote() {
     if (this.dispCustomernote) {
       this.dispCustomernote = false;
+     this. selectedMessage = {
+        files: [],
+        base64: [],
+        caption: []
+      };
     } else {
       this.dispCustomernote = true;
     }
@@ -1367,6 +1392,31 @@ export class CheckInInnerComponent implements OnInit {
     this.selectedMessage.files.splice(index, 1);
   }
   
+  consumerNoteAndFileSave(uuid) {
+  const dataToSend: FormData = new FormData();
+  dataToSend.append('message', this.consumerNote);
+  const captions = {};
+  let i = 0;
+    if (this.selectedMessage) {
+      for (const pic of this.selectedMessage.files) {
+        dataToSend.append('attachments', pic, pic['name']);
+        captions[i] = 'caption';
+        i++;
+      }
+    }
+    const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+    dataToSend.append('captions', blobPropdata);
+    this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+      dataToSend)
+      .subscribe(
+        () => {
+        },
+        error => {
+          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+        }
+      );
+  }
+
   saveLiveTrackDetails() {
     const post_Data = {
       'jaldeeGeoLocation': {

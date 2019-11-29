@@ -168,18 +168,16 @@
                             <label for="reason" class="col-form-label">{{have_note_click_here}} <span
                                     [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"
                                     (click)="handleNote()"></span></label>
-                            <ng-container *ngIf="dispCustomernote">
+                            <ng-container *ngIf="dispCustomernote"><div><b>Note</b>
                                 <textarea matInput class="form-control" #consumernote
                                     (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                                     placeholder="{{note_placeholder}}"></textarea>
-                            </ng-container>
-                        </div>
-                    </div>
-                    <button type="button"  class="cs-btn btn-attach bt_attach"
+                                </div>
+                                    <button type="button"  class="cs-btn btn-attach bt_attach"
                     (click)="imagefile.click()" [matTooltip]="'Attach files'">
                     <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;" multiple
                         (change)="filesSelected($event)">
-                    <span><i class="material-icons">attach_file</i></span>
+                    <span><i class="fa fa-upload"></i></span>
                 </button> 
                 <ng-container *ngIf="selectedMessage">
                     <div class="row col-md-12" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
@@ -202,6 +200,10 @@
                         
                     </div>
                 </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    
                     <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
     <div class="showDetService">
     Check-In for service: <span class='selsername'>{{ sel_ser_det.name }}</span>
