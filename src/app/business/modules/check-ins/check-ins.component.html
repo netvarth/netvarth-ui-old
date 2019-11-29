@@ -540,11 +540,11 @@
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12 col-sm-12  no-padding newwaitlist">
-                <div class="labelList">
-                  <div class="statuslink" [class.status-width]="waitlistSelection!=1">
+                <div class="labelList col-md-12 no-padding">
+                  <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="waitlistSelection!=1">
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink" role="navigation" *ngIf="waitlistSelection === 1">
+                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation" *ngIf="waitlistSelection === 1">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
