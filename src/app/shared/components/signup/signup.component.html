@@ -77,15 +77,15 @@ onSubmit()" (keyup)="resetApiErrors()">
       *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
 
       <div class="form-group col-md-12 col-xs-12 col-sm-12 sgn-subdom no-padding">
+        <label class="subdom_cap">{{select_subdomain_cap}}</label>
         <mat-radio-group formControlName="selectedSubDomains">
             <mat-radio-button *ngFor="let subdomain of subDomainList; let i = index" [value]="i">
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                <div class="col-md-10 col-xs-10 col-sm-10 no-padding">
+                <div class="pull-left subdom_tit">
                     {{subdomain.itemName}}
-                    <p class="form-level-settings">help content here</p>
+                    <p class="form-level-settings" *ngIf="subdomainSettings[subdomain.value] && subdomainSettings[subdomain.value].help">{{subdomainSettings[subdomain.value].help}}</p>
                 </div>
-                <div class="col-xs-2 col-md-2 col-sm-2" >
-                    <div *ngIf="subdomainSettings[subdomain.value]" [class]="subdomainSettings[subdomain.value].iconClass">mani</div>
+                <div class="pull-right subdom_img {{subdomainSettings[subdomain.value].iconClass}}" *ngIf="subdomainSettings[subdomain.value]" >            
                 </div>
               </div>
             </mat-radio-button>   
