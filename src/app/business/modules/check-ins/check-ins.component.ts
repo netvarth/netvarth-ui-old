@@ -239,6 +239,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   timeUnit: any = [];
   hours;
   minutes;
+  waitlistSelected: any = [];
+  waitlistSelection = 0;
+  selectedCheckin;
+  showLabels = false;
+  showstatus: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -843,6 +848,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getTodayCheckIn() {
+    this.showstatus['new'] = true;
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     this.resetPaginationData();
@@ -1584,7 +1590,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  changeLabelvalue(checkin, labelname, value) {
+  changeLabelvalue(labelname, value) {
+    const checkin = this.selectedCheckin;
     this.checkinId = checkin.ynwUuid;
     this.labelMap = new Object();
     this.labelMap[labelname] = value;
@@ -1606,7 +1613,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  addLabelvalue(checkin, source, uuid) {
+  addLabelvalue(source, uuid) {
+    const checkin = this.selectedCheckin;
     this.checkinId = uuid;
     this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
       width: '50%',
@@ -1725,5 +1733,38 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
+  }
+  selectWaitlist(index) {
+    this.selectedCheckin = this.new_checkins_list[index];
+    this.labels(this.selectedCheckin);
+    if (this.waitlistSelected[index]) {
+      delete this.waitlistSelected[index];
+      this.waitlistSelection--;
+    } else {
+      this.waitlistSelected[index] = true;
+      this.waitlistSelection++;
+    }
+  }
+
+  labels(checkin) {
+    console.log(checkin.label);
+    for (let i = 0; i < this.providerLabels.length; i++) {
+      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+        for (const value of Object.values(checkin.label)) {
+          if (this.providerLabels[i].valueSet[j].value === value) {
+            this.providerLabels[i].valueSet[j].selected = true;
+          } else {
+            this.providerLabels[i].valueSet[j].selected = false;
+          }
+        }
+      }
+    }
+    console.log(this.providerLabels);
+  }
+  labelClick() {
+    (!this.showLabels) ? this.showLabels = true : this.showLabels = false;
+  }
+  waitlistStatusClick(status) {
+    (!this.showstatus[status]) ? this.showstatus[status] = true : this.showstatus[status] = false;
   }
 }
