@@ -316,7 +316,7 @@
                                         <p class="settings_info">Sales channel options</p>
                                     </a>
                                 </li>
-                                <li *ngIf="accountType!='BRANCH_SP'" (click)="redirecTo('corporate')">
+                                <li *ngIf="accountType!='BRANCH_SP' && isCorp && isMultilevel" (click)="redirecTo('corporate')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Corporate Settings</span>
                                         <p class="settings_info">Manage your branch, corporate here</p>
@@ -328,7 +328,7 @@
                                         <p class="settings_info">Customize your themes</p>
                                     </a>
                                 </li>
-                                <li *ngIf="accountType!='BRANCH_SP'" (click)="redirecTo('users')">
+                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('users')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Branch SPs</span>
                                         <p class="settings_info">Manage your service providers</p>

@@ -88,12 +88,16 @@ export class BranchUserDetailComponent implements OnInit {
     ngOnInit() {
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         console.log(bConfig);
-        const user  = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         console.log(user.sector);
         for (let i = 0; i < bConfig.bdata.length; i++) {
             if (user.sector === bConfig.bdata[i].domain) {
-            this.subDomains = bConfig.bdata[i].subDomains;
-            break;
+                for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
+                    if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
+                        this.subDomains.push(bConfig.bdata[i].subDomains[j]);
+                    }
+                }
+                break;
             }
         }
         console.log(this.subDomains);
@@ -108,7 +112,7 @@ export class BranchUserDetailComponent implements OnInit {
             selectedSubDomain: [0, Validators.compose([Validators.required])]
         });
     }
-    onItemSelect (subdomain) {
+    onItemSelect(subdomain) {
         console.log(subdomain);
     }
     onSubmit(input) {
@@ -153,13 +157,13 @@ export class BranchUserDetailComponent implements OnInit {
             //    }
             const post_data = {
                 'userProfile': {
-                'firstName': input.first_name.trim() || null,
-                'lastName': input.last_name.trim() || null,
-                'dob': date_format || null,
-                'gender': input.gender || null,
-                'email': input.email || '',
-                'countryCode': '+91',
-                'primaryMobileNo': input.phonenumber
+                    'firstName': input.first_name.trim() || null,
+                    'lastName': input.last_name.trim() || null,
+                    'dob': date_format || null,
+                    'gender': input.gender || null,
+                    'email': input.email || '',
+                    'countryCode': '+91',
+                    'primaryMobileNo': input.phonenumber
                 },
                 'subSector': input.selectedSubDomain.subDomain,
                 'commonPassword': input.password,
@@ -182,7 +186,7 @@ export class BranchUserDetailComponent implements OnInit {
     }
     isNumeric(evt) {
         return this.shared_functions.isNumeric(evt);
-      }
+    }
     validateEmail(mail) {
         const emailField = mail;
         const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

@@ -12,6 +12,7 @@ export class CorporateSettingsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     cancel_btn = Messages.CANCEL_BTN;
     save_btn_cap = Messages.SAVE_BTN;
+    accountType;
     breadcrumbs = [
       {
         url: '/provider/settings',
@@ -33,10 +34,16 @@ export class CorporateSettingsComponent implements OnInit {
     }
     ngOnInit() {
         this.loading = false;
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
     }
     onSubmitJoinCorp (corpId) {
         this.shared_services.joinCorp(corpId).subscribe(
             (data) => {
+                const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+                user['accountType'] = 'BRANCH';
+                this.shared_functions.setitemToGroupStorage('ynw-user', user);
+                this.accountType = 'BRANCH';
                 this.shared_functions.openSnackBar(Messages.JOINCORP_SUCCESS);
             },
             (error) => {
@@ -60,6 +67,10 @@ export class CorporateSettingsComponent implements OnInit {
         };
         this.shared_services.createCorp (post_data).subscribe(
             (data) => {
+                const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+                user['accountType'] = 'BRANCH';
+                this.shared_functions.setitemToGroupStorage('ynw-user', user);
+                this.accountType = 'BRANCH';
                 this.shared_functions.openSnackBar(Messages.CREATECORP_SUCCESS);
             },
             (error) => {

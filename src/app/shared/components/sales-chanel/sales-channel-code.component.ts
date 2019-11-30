@@ -34,7 +34,7 @@ export class SalesChannelCodeComponent implements OnInit {
   }
   findSC_ByScCode(scCode) {
     if (scCode) {
-      this.provider_services.getSearchSCdetails(this.scCode_Ph)
+      this.provider_services.getSearchSCdetails(scCode)
       .subscribe(
         data => {
           this.scfound = true;

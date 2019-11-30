@@ -39,9 +39,17 @@ export class BranchUsersComponent implements OnInit {
     }
     getBranchSPs() {
         const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
+        const users = [];
         this.shared_services.getBranchSPs(accountId).subscribe(
             (data: any) => {
                 this.users_list = data;
+                for (let i = 0; i < this.users_list.length; i++) {
+                    if (this.users_list[i]['accountType'] === 'BRANCH') {
+                    } else {
+                        users.push(this.users_list[i]);
+                    }
+                }
+                this.users_list = users;
                 this.api_loading = false;
                 console.log(this.users_list);
             }

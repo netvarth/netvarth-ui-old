@@ -270,7 +270,7 @@ export class SignUpComponent implements OnInit {
     console.log(sub_domains);
     const sub_domains_sortbyorder = this.shared_functions.sortByKey(sub_domains, 'order');
     sub_domains_sortbyorder.forEach((element, index) => {
-      if(this.subdomainSettings[element.subDomain]) {
+      if (this.subdomainSettings[element.subDomain]) {
         console.log(this.subdomainSettings[element.subDomain]);
       }
       const ob = { 'id': index, 'itemName': element.displayName, 'value': element.subDomain };
@@ -376,11 +376,11 @@ export class SignUpComponent implements OnInit {
     this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
+          this.actionstarted = false;
           this.createForm(2);
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
             user_details.userProfile.email) {
-
             this.setMessage('email', user_details.userProfile.email);
           } else {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
@@ -461,7 +461,7 @@ export class SignUpComponent implements OnInit {
           .subscribe(
             () => {
               this.actionstarted = false;
-              this.otp = submit_data.phone_otp;
+              // this.otp = submit_data.phone_otp;
               this.createForm(4);
             },
             error => {

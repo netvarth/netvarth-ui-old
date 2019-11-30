@@ -26,7 +26,7 @@ export class CheckInComponent implements OnInit {
 
     }
     handleCheckinReturn(retVal) {
-      //if(retVal.mode === 'provider_checkin'){
+      // if(retVal.mode === 'provider_checkin'){
       if (retVal === 'reloadlist') {
         this.dialogRef.close('reloadlist');
       }

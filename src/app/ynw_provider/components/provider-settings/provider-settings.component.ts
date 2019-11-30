@@ -96,6 +96,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   pos_statusstr: string;
   licenseMetadata: any = [];
   statusboardStatus = false;
+  isCorp = false;
+  isMultilevel = false;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -147,6 +149,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
+    this.getDomainSubdomainSettings();
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();
@@ -215,6 +218,23 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+  getDomainSubdomainSettings() {
+    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const domain = user_data.sector || null;
+    const sub_domain = user_data.subSector || null;
+    return new Promise((resolve, reject) => {
+      this.provider_services.domainSubdomainSettings(domain, sub_domain)
+        .subscribe(
+          (data: any) => {
+           this.isCorp = data.isCorp;
+           this.isMultilevel = data.isMultilevel;
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
   }
   getpaymentDetails() {
     this.provider_services.getPaymentSettings()

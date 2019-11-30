@@ -60,7 +60,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="accountType!='BRANCH_SP' && isCorp && isMultilevel">
                 <div class="card p0">
                     <span class="b-link" (click)="gotocorporate()">
                         <h2>Corporate Settings</h2>
@@ -81,7 +81,7 @@
                     </span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
                 <div class="card p0">
                     <span class="b-link" (click)="gotobranchsps()">
                         <h2>Branch SPs</h2>
