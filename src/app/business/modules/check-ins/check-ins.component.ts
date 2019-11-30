@@ -1163,6 +1163,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.section_history = [];
           this.section_new = [];
           this.loadApiSwitch(result);
+          this.resetAll();
         }
       );
   }
@@ -1588,7 +1589,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTodayCheckIn();
     },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   deleteLabel(label) {
@@ -1772,7 +1773,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.completedwaitlistSelection++;
     }
     if (this.completedwaitlistSelection === 1) {
-      this.selectedCheckin['completed'] = this.new_checkins_list[this.completedwaitlistSelected.indexOf(true)];
+      this.selectedCheckin['completed'] = this.completed_checkins_list[this.completedwaitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['completed']);
     }
   }
@@ -1786,7 +1787,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cancelledwaitlistSelection++;
     }
     if (this.cancelledwaitlistSelection === 1) {
-      this.selectedCheckin['cancelled'] = this.new_checkins_list[this.cancelledwaitlistSelected.indexOf(true)];
+      this.selectedCheckin['cancelled'] = this.cancelled_checkins_list[this.cancelledwaitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['cancelled']);
     }
   }
@@ -1800,7 +1801,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.startedwaitlistSelection++;
     }
     if (this.startedwaitlistSelection === 1) {
-      this.selectedCheckin['started'] = this.new_checkins_list[this.startedwaitlistSelected.indexOf(true)];
+      this.selectedCheckin['started'] = this.started_checkins_list[this.startedwaitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['started']);
     }
   }
@@ -1835,11 +1836,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showstatus[status] = true;
     } else {
       this.showstatus[status] = false;
-      this.waitlistSelected = [];
-      this.startedwaitlistSelected = [];
-      this.cancelledwaitlistSelected = [];
-      this.completedwaitlistSelected = [];
-      this.waitlistSelection = 0;
+      this.resetAll();
     }
+  }
+  resetAll() {
+    this.waitlistSelected = [];
+    this.startedwaitlistSelected = [];
+    this.cancelledwaitlistSelected = [];
+    this.completedwaitlistSelected = [];
+    this.waitlistSelection = 0;
+    this.startedwaitlistSelection = 0;
+    this.cancelledwaitlistSelection = 0;
+    this.completedwaitlistSelection = 0;
   }
 }

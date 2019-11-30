@@ -421,7 +421,7 @@
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="startedwaitlistSelection === 1">
+                    *ngIf="startedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
@@ -433,20 +433,28 @@
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <span style="font-weight: 700;"> {{label.displayName}} </span>
+                                  <!-- <span style="font-weight: 700;"> {{label.displayName}} </span> -->
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('started', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <li>
-                                      <a class="pointer-cursor" style="color: black;"
-                                        (click)="addLabelvalue('started', 'newvalue', label.label)">
-                                        Enter new {{label.displayName}}</a>
-                                    </li>
+                                    <!-- <li>
+                                          <a class="pointer-cursor" style="color: black;"
+                                            (click)="addLabelvalue('new', 'newvalue', label.label)">
+                                            Enter new {{label.displayName}}</a>
+                                        </li> -->
                                   </ul>
                                 </li>
+
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <a class="pointer-cursor" style="color: black;font-weight: 700;"
+                                    (click)="addLabelvalue('started', 'newvalue', label.label)">
+                                    {{label.displayName}}</a>
+                                </li>
+
+
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor"
@@ -590,32 +598,43 @@
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="waitlistSelection === 1">
+                    *ngIf="waitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
-                        <li class="dropdown messages-menu loc-lst queue-menu">
-                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+
+
+
+                        <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
+                          <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
                             (click)="labelClick('new')">
                             <i class="label-img"></i></div>
-                          <ul class="dropdown-menu" *ngIf="showLabels['new']">
+                          <ul ngbDropdownMenu class="dropdown-menu" *ngIf="showLabels['new']">
                             <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <span style="font-weight: 700;"> {{label.displayName}} </span>
+                                  <!-- <span style="font-weight: 700;"> {{label.displayName}} </span> -->
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('new', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                       <a class="pointer-cursor" style="color: black;"
                                         (click)="addLabelvalue('new', 'newvalue', label.label)">
                                         Enter new {{label.displayName}}</a>
-                                    </li>
+                                    </li> -->
                                   </ul>
                                 </li>
+
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <a class="pointer-cursor" style="color: black;font-weight: 700;"
+                                    (click)="addLabelvalue('new', 'newvalue', label.label)">
+                                    {{label.displayName}}</a>
+                                </li>
+
+
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor" (click)="addLabelvalue('new', 'newlabel')">Add
@@ -779,7 +798,7 @@
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.done)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.done">({{grouped_list.done.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="completedwaitlistSelection === 1">
+                    *ngIf="completedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
@@ -791,19 +810,25 @@
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <span style="font-weight: 700;"> {{label.displayName}} </span>
+                                  <!-- <span style="font-weight: 700;"> {{label.displayName}} </span> -->
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('completed', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <li>
-                                      <a class="pointer-cursor" style="color: black;"
-                                        (click)="addLabelvalue('completed', 'newvalue', label.label)">
-                                        Enter new {{label.displayName}}</a>
-                                    </li>
+                                    <!-- <li>
+                                          <a class="pointer-cursor" style="color: black;"
+                                            (click)="addLabelvalue('new', 'newvalue', label.label)">
+                                            Enter new {{label.displayName}}</a>
+                                        </li> -->
                                   </ul>
+                                </li>
+
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <a class="pointer-cursor" style="color: black;font-weight: 700;"
+                                    (click)="addLabelvalue('completed', 'newvalue', label.label)">
+                                    {{label.displayName}}</a>
                                 </li>
                               </ul>
                             </li>
@@ -925,32 +950,34 @@
                     <span *ngIf="grouped_list && grouped_list.cancelled">({{grouped_list.cancelled.length}})</span>
                   </div>
                   <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="cancelledwaitlistSelection === 1">
+                    *ngIf="cancelledwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
-                        <li class="dropdown messages-menu loc-lst queue-menu">
-                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                        <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
+                          <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
                             (click)="labelClick('cancelled')">
                             <i class="label-img"></i></div>
-                          <ul class="dropdown-menu" *ngIf="showLabels['cancelled']">
+                          <ul ngbDropdownMenu class="dropdown-menu" *ngIf="showLabels['cancelled']">
                             <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <span style="font-weight: 700;"> {{label.displayName}} </span>
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('cancelled', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <li>
-                                      <a class="pointer-cursor" style="color: black;"
-                                        (click)="addLabelvalue('cancelled', 'newvalue', label.label)">
-                                        Enter new {{label.displayName}}</a>
-                                    </li>
                                   </ul>
                                 </li>
+
+                                <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                  <a class="pointer-cursor" style="color: black;font-weight: 700;"
+                                    (click)="addLabelvalue('cancelled', 'newvalue', label.label)">
+                                    {{label.displayName}}</a>
+                                </li>
+
+
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor"
