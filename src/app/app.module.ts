@@ -64,6 +64,7 @@ import { ConsumerPaymentmodeComponent } from './shared/components/consumer-payme
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { SalesChannelCodeComponent } from './shared/components/sales-chanel/sales-channel-code.component';
+import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,7 +87,8 @@ import { SalesChannelCodeComponent } from './shared/components/sales-chanel/sale
     BusinessPageComponent,
     ForceDialogComponent,
     AdminLoginComponent,
-    ConsumerPaymentmodeComponent
+    ConsumerPaymentmodeComponent,
+    ManageProviderComponent
     // PhomeComponent,
   ],
   entryComponents: [

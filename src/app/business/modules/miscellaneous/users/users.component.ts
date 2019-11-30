@@ -59,6 +59,6 @@ export class BranchUsersComponent implements OnInit {
     //      console.log(user);
     // }
     manageProvider(accountId) {
-        window.open('#/provider/manage/' + accountId, '_blank');
+        window.open('#/manage/' + accountId, '_blank');
     }
 }

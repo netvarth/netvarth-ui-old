@@ -774,7 +774,7 @@ export class ProviderServices {
     const url = 'provider/salesChannel/' + id;
     return this.servicemeta.httpPost(url);
   }
-  getSalesCode() {
+  getSalesChannel() {
     const url = 'provider/salesChannel';
     return this.servicemeta.httpGet(url);
   }

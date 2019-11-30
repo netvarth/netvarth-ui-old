@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 
 @Component({
@@ -13,7 +14,6 @@ export class SaleschannelComponent implements OnInit {
     api_error = null;
     api_success = null;
     breadcrumb_moreoptions: any = [];
-    sales_code;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -28,6 +28,10 @@ export class SaleschannelComponent implements OnInit {
         }
     ];
     domain: any;
+    scCode_Ph;
+    scfound;
+    scExists;
+    scInfo;
     constructor(private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
         private routerobj: Router,
@@ -35,29 +39,70 @@ export class SaleschannelComponent implements OnInit {
         private router: Router, ) {
     }
     ngOnInit() {
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.getSalesCode();
+        this.getSalesChannel();
     }
-    addSalesCode(id) {
-        this.provider_services.addSalesCode(id).subscribe(
+    addSalesCode(scCode) {
+        if (scCode) {
+            console.log(this.scInfo.scId);
+            this.provider_services.addSalesCode(this.scInfo.scId).subscribe(
+                data => {
+                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SC_CREATED'), { 'panelclass': 'snackbarerror' });
+                    this.getSalesChannel();
+                },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        } else {
+            this.shared_Functionsobj.openSnackBar('Sales Channel Code is Required', { 'panelClass': 'snackbarerror' });
+        }
+    }
+    getSalesChannel() {
+        this.provider_services.getSalesChannel().subscribe(
             data => {
-                this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SC_CREATED'), { 'panelclass': 'snackbarerror' });
-                this.getSalesCode();
+                // this.scCode_Ph = data;
+                this.scInfo = data;
+                this.scExists = true;
+                // this.findSC_ByScCode(this.scCode_Ph);
             },
             error => {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
-    getSalesCode() {
-        this.provider_services.getSalesCode().subscribe(
-            data => {
-                this.sales_code = data;
-            },
-            error => {
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+
+    handlekeyup(ev) {
+        if (ev.keyCode === 13) {
+            this.findSC_ByScCode(this.scCode_Ph);
+        }
+    }
+    findSC_ByScCode(scCode) {
+        if (scCode) {
+            this.provider_services.getSearchSCdetails(scCode)
+                .subscribe(
+                    data => {
+                        this.scfound = true;
+                        this.scInfo = data;
+                    },
+                    () => {
+                        this.findSC_ByPhone(scCode);
+                    }
+                );
+        }
+    }
+    findSC_ByPhone(phonenumber) {
+        this.provider_services.getsearchPhonedetails(phonenumber)
+            .subscribe(
+                data => {
+                    this.scfound = true;
+                    this.scInfo = data;
+                },
+                () => {
+                    this.scfound = false;
+                    this.shared_functions.openSnackBar(Messages.SCNOTFOUND, { 'panelClass': 'snackbarerror' });
+                }
+            );
     }
     onCancel() {
         this.router.navigate(['provider/settings']);
