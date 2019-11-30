@@ -8,6 +8,7 @@ import { ReturnPaymentComponent } from './shared/components/return-payment/retur
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
+import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -37,7 +38,8 @@ const routes: Routes = [
     },
     { path: 'home/:id', loadChildren: './shared/modules/about-jaldee/about-jaldee.module#AboutJaldeeModule' },
     { path: 'maintenance', component: MaintenanceComponent },
-    { path: ':id', component: BusinessPageComponent }
+    { path: ':id', component: BusinessPageComponent },
+      { path: 'manage/:id', component: ManageProviderComponent}
     // { path: '**', redirectTo: 'not-found' }
 ];
 @NgModule({

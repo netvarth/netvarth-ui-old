@@ -6251,11 +6251,14 @@ display: flex;
 .hearus .mat-radio-group, .sgn-subdom .mat-radio-group {
   display: block !important;
 }
-.hearus input[type="text"] {
+.hearus input[type="text"]{
   height: 30px !important;
 }
-.hearus i {
+.hearus i, .sc-frm i {
   font-size: x-large !important;
+}
+.sc-frm i {
+  padding: 1.7rem 0;
 }
 .acc-header {
   background: #f2f2f2 !important;
