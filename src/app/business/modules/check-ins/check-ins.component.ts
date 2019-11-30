@@ -242,8 +242,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   waitlistSelected: any = [];
   waitlistSelection = 0;
   selectedCheckin;
-  showLabels = false;
+  showLabels: any = [];
   showstatus: any = [];
+  startedwaitlistSelected: any = [];
+  cancelledwaitlistSelected: any = [];
+  completedwaitlistSelected: any = [];
+  cancelledwaitlistSelection = 0;
+  completedwaitlistSelection = 0;
+  startedwaitlistSelection = 0;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -290,6 +296,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
+    this.showstatus['new'] = true;
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
       if (this.time_type === 1) {
         this.getTodayCheckIn();
@@ -848,7 +855,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getTodayCheckIn() {
-    this.showstatus['new'] = true;
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     this.resetPaginationData();
@@ -1564,6 +1570,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
   }
   getLabel() {
+    this.providerLabels = [];
     this.provider_services.getLabelList().subscribe(data => {
       this.providerLabels = data;
     });
@@ -1578,6 +1585,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addLabel() {
     this.provider_services.addLabeltoCheckin(this.checkinId, this.labelMap).subscribe(data => {
+      this.getTodayCheckIn();
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
@@ -1585,12 +1593,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   deleteLabel(label) {
     this.provider_services.deleteLabelfromCheckin(this.checkinId, label).subscribe(data => {
+      this.getTodayCheckIn();
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  changeLabelvalue(labelname, value) {
+  changeLabelvalue(status, labelname, value) {
+    console.log(this.selectedCheckin);
+    console.log(this.selectedCheckin[status]);
     const checkin = this.selectedCheckin;
     this.checkinId = checkin.ynwUuid;
     this.labelMap = new Object();
@@ -1734,9 +1745,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  selectWaitlist(index) {
-    this.selectedCheckin = this.new_checkins_list[index];
-    this.labels(this.selectedCheckin);
+  selectnewWaitlist(index) {
     if (this.waitlistSelected[index]) {
       delete this.waitlistSelected[index];
       this.waitlistSelection--;
@@ -1744,27 +1753,90 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.waitlistSelected[index] = true;
       this.waitlistSelection++;
     }
+    if (this.waitlistSelection === 1) {
+      this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
+      this.labels(this.selectedCheckin);
+    }
+  }
+
+  selectcompletedWaitlist(index) {
+    if (this.completedwaitlistSelected[index]) {
+      delete this.completedwaitlistSelected[index];
+      this.completedwaitlistSelection--;
+    } else {
+      this.completedwaitlistSelected[index] = true;
+      this.completedwaitlistSelection++;
+    }
+    if (this.completedwaitlistSelection === 1) {
+      this.selectedCheckin['completed'] = this.new_checkins_list[this.completedwaitlistSelected.indexOf(true)];
+      this.labels(this.selectedCheckin);
+    }
+  }
+
+  selectcancelledWaitlist(index) {
+    if (this.cancelledwaitlistSelected[index]) {
+      delete this.cancelledwaitlistSelected[index];
+      this.cancelledwaitlistSelection--;
+    } else {
+      this.cancelledwaitlistSelected[index] = true;
+      this.cancelledwaitlistSelection++;
+    }
+    if (this.cancelledwaitlistSelection === 1) {
+      this.selectedCheckin['cancelled'] = this.new_checkins_list[this.cancelledwaitlistSelected.indexOf(true)];
+      this.labels(this.selectedCheckin);
+    }
+  }
+
+  selectstartedWaitlist(index) {
+    if (this.startedwaitlistSelected[index]) {
+      delete this.startedwaitlistSelected[index];
+      this.startedwaitlistSelection--;
+    } else {
+      this.startedwaitlistSelected[index] = true;
+      this.startedwaitlistSelection++;
+    }
+    if (this.startedwaitlistSelection === 1) {
+      this.selectedCheckin['started'] = this.new_checkins_list[this.startedwaitlistSelected.indexOf(true)];
+      this.labels(this.selectedCheckin);
+    }
   }
 
   labels(checkin) {
-    console.log(checkin.label);
+    // this.providerLabels.map(function (x) {
+    //   console.log(x);
+    //   x.selected = false;
+    // });
+    let values = [];
+    for (const value of Object.values(checkin.label)) {
+      values.push(value);
+    }
     for (let i = 0; i < this.providerLabels.length; i++) {
       for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        for (const value of Object.values(checkin.label)) {
-          if (this.providerLabels[i].valueSet[j].value === value) {
+        for (let k = 0; k < values.length; k++) {
+          if (this.providerLabels[i].valueSet[j].value === values[k]) {
+            console.log(this.providerLabels[i].valueSet[j].value);
+            console.log(values[k]);
             this.providerLabels[i].valueSet[j].selected = true;
-          } else {
-            this.providerLabels[i].valueSet[j].selected = false;
           }
         }
       }
     }
     console.log(this.providerLabels);
   }
-  labelClick() {
-    (!this.showLabels) ? this.showLabels = true : this.showLabels = false;
+  labelClick(status) {
+    (!this.showLabels[status]) ? this.showLabels[status] = true : this.showLabels[status] = false;
+    console.log(this.showLabels);
   }
   waitlistStatusClick(status) {
-    (!this.showstatus[status]) ? this.showstatus[status] = true : this.showstatus[status] = false;
+    if (!this.showstatus[status]) {
+      this.showstatus[status] = true;
+    } else {
+      this.showstatus[status] = false;
+      this.waitlistSelected = [];
+      this.startedwaitlistSelected = [];
+      this.cancelledwaitlistSelected = [];
+      this.completedwaitlistSelected = [];
+      this.waitlistSelection = 0;
+    }
   }
 }

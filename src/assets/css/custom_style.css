@@ -6301,11 +6301,9 @@ display: flex;
   content: "\f02c" !important;
 } */
 .statuslink {
-  background-color: #f5f5f5;
   padding: 10px;
 }
 .statuslink  span {
-  text-decoration: underline;
   color: #3c8dbc;
   cursor: pointer;
 }
@@ -6323,4 +6321,7 @@ display: flex;
 }
 .status-width {
   width: 100%;
+}
+.label-img {
+  content: url(../images/label_black_20dp.png);
 }

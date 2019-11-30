@@ -415,11 +415,54 @@
             </div>
             <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
-                <div class="statuslink">
+
+                <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="startedwaitlistSelection!=1">
                   <span (click)="waitlistStatusClick('started')"> Started </span> <span
                     *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
-                  <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span>
+                  <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span></div>
+                <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
+                  *ngIf="startedwaitlistSelection === 1">
+                  <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                      <li class="dropdown messages-menu loc-lst queue-menu">
+                        <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                          (click)="labelClick('started')">
+                          <i class="label-img"></i></div>
+                        <ul class="dropdown-menu" *ngIf="showLabels['started']">
+                          <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
+                            <ul class="menu"
+                              style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
+                              <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                <span style="font-weight: 700;"> {{label.displayName}} </span>
+                                <ul class="menu" style="overflow: hidden;max-height:none;">
+                                  <li *ngFor="let value of label.valueSet">
+                                    <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
+                                      (click)="changeLabelvalue('started', label.label, value.value)">
+                                      {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                  </li>
+                                  <li>
+                                    <a class="pointer-cursor" style="color: black;"
+                                      (click)="addLabelvalue(label.label, 'newvalue')">
+                                      Enter new {{label.displayName}}</a>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="footer"><a class="pointer-cursor" (click)="addLabelvalue(checkin, 'newlabel')">Add
+                              Label</a>
+                          </li>
+                          <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
+                              routerLink="/provider/settings/miscellaneous/labels">Manage
+                              Label</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+
+
                 <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 && 
                 showstatus['started']">
                   {{no_started_checkin_msg}}
@@ -427,7 +470,8 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="started_checkins_list.length>0 && 
                    showstatus['started']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
-                    *ngFor="let checkin of started_checkins_list, let i=index">
+                    *ngFor="let checkin of started_checkins_list, let i=index"
+                    [class.selected-waitlist]="startedwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
                       <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
@@ -435,7 +479,7 @@
                         </div>
                       </div>
                       <div class="info-box-content" [class.tkn-leftbox]="!checkin.token">
-                        <div class="col-md-12 p0">
+                        <div class="col-md-12 p0" (click)="selectstartedWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
                               <span class="info-box-text forwhom pointer-cursor"
@@ -544,13 +588,15 @@
                   <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="waitlistSelection!=1">
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation" *ngIf="waitlistSelection === 1">
+                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
+                    *ngIf="waitlistSelection === 1">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
-                          <i class="fa fa-tags dropdown-toggle pointer-cursor" data-toggle="dropdown"
-                            (click)="labelClick()"></i>
-                          <ul class="dropdown-menu" *ngIf="showLabels">
+                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                            (click)="labelClick('new')">
+                            <i class="label-img"></i></div>
+                          <ul class="dropdown-menu" *ngIf="showLabels['new']">
                             <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
@@ -605,7 +651,7 @@
                         </div>
                       </div>
                       <div class="info-box-content" [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
-                        <div class="col-md-12 p0" (click)="selectWaitlist(i)">
+                        <div class="col-md-12 p0" (click)="selectnewWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
                               <span class="info-box-text forwhom pointer-cursor"
@@ -725,11 +771,55 @@
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
-                <div class="statuslink">
+
+
+                <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="completedwaitlistSelection!=1">
                   <span (click)="waitlistStatusClick('completed')"> Completed </span> <span
                     *ngIf="!grouped_list || (grouped_list && !grouped_list.done)">(0)</span>
-                  <span *ngIf="grouped_list && grouped_list.done">({{grouped_list.done.length}})</span>
+                  <span *ngIf="grouped_list && grouped_list.done">({{grouped_list.done.length}})</span></div>
+                <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
+                  *ngIf="completedwaitlistSelection === 1">
+                  <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                      <li class="dropdown messages-menu loc-lst queue-menu">
+                        <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                          (click)="labelClick('completed')">
+                          <i class="label-img"></i></div>
+                        <ul class="dropdown-menu" *ngIf="showLabels['completed']">
+                          <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
+                            <ul class="menu"
+                              style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
+                              <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                <span style="font-weight: 700;"> {{label.displayName}} </span>
+                                <ul class="menu" style="overflow: hidden;max-height:none;">
+                                  <li *ngFor="let value of label.valueSet">
+                                    <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
+                                      (click)="changeLabelvalue(label.label, value.value)">
+                                      {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                  </li>
+                                  <li>
+                                    <a class="pointer-cursor" style="color: black;"
+                                      (click)="addLabelvalue(label.label, 'newvalue')">
+                                      Enter new {{label.displayName}}</a>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="footer"><a class="pointer-cursor" (click)="addLabelvalue(checkin, 'newlabel')">Add
+                              Label</a>
+                          </li>
+                          <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
+                              routerLink="/provider/settings/miscellaneous/labels">Manage
+                              Label</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+
+
                 <div class="no-dta col-md-12" *ngIf="completed_checkins_list.length === 0 && 
                 showstatus['completed']">
                   {{no_completed_checkin_msg}}
@@ -738,7 +828,7 @@
                     showstatus['completed']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of completed_checkins_list, let i=index"
-                    [class.selected-waitlist]="waitlistSelected[i]">
+                    [class.selected-waitlist]="completedwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
                       <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
@@ -746,7 +836,7 @@
                         </div>
                       </div>
                       <div class="info-box-content" [class.tkn-leftbox]="!checkin.token">
-                        <div class="col-md-12 p0" (click)="selectWaitlist(i)">
+                        <div class="col-md-12 p0" (click)="selectcompletedWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
                               <span class="info-box-text forwhom pointer-cursor"
@@ -824,11 +914,55 @@
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
-                <div class="statuslink">
+
+
+                <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="cancelledwaitlistSelection!=1">
                   <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span> <span
                     *ngIf="!grouped_list || (grouped_list && !grouped_list.cancelled)">(0)</span>
-                  <span *ngIf="grouped_list && grouped_list.cancelled">({{grouped_list.cancelled.length}})</span>
+                  <span *ngIf="grouped_list && grouped_list.cancelled">({{grouped_list.cancelled.length}})</span></div>
+                <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
+                  *ngIf="cancelledwaitlistSelection === 1">
+                  <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                      <li class="dropdown messages-menu loc-lst queue-menu">
+                        <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                          (click)="labelClick('cancelled')">
+                          <i class="label-img"></i></div>
+                        <ul class="dropdown-menu" *ngIf="showLabels['cancelled']">
+                          <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
+                            <ul class="menu"
+                              style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
+                              <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
+                                <span style="font-weight: 700;"> {{label.displayName}} </span>
+                                <ul class="menu" style="overflow: hidden;max-height:none;">
+                                  <li *ngFor="let value of label.valueSet">
+                                    <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
+                                      (click)="changeLabelvalue(label.label, value.value)">
+                                      {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
+                                  </li>
+                                  <li>
+                                    <a class="pointer-cursor" style="color: black;"
+                                      (click)="addLabelvalue(label.label, 'newvalue')">
+                                      Enter new {{label.displayName}}</a>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="footer"><a class="pointer-cursor" (click)="addLabelvalue(checkin, 'newlabel')">Add
+                              Label</a>
+                          </li>
+                          <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
+                              routerLink="/provider/settings/miscellaneous/labels">Manage
+                              Label</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+
+
                 <div class="no-dta col-md-12" *ngIf="cancelled_checkins_list.length === 0 && 
                 showstatus['cancelled']">
                   {{no_cancelled_checkin_msg}}
@@ -836,7 +970,8 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="cancelled_checkins_list.length>0 && 
                     showstatus['cancelled']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
-                    *ngFor="let checkin of cancelled_checkins_list, let i=index">
+                    *ngFor="let checkin of cancelled_checkins_list, let i=index"
+                    [class.selected-waitlist]="cancelledwaitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">
                       <div class="info-box-icon" *ngIf="checkin.token && calculationmode=='NoCalc'">
                         <div class="tkn pointer-cursor" (click)="goCheckinDetail(checkin)">
@@ -844,7 +979,7 @@
                         </div>
                       </div>
                       <div [class.tkn-leftbox]="!checkin.token" class="info-box-content">
-                        <div class="col-md-12 p0">
+                        <div class="col-md-12 p0" (click)="selectcancelledWaitlist(i)">
                           <div class="col-md-7 col-xs-8 p0">
                             <div class="col-md-8 col-xs-8 p0">
                               <span class="info-box-text forwhom pointer-cursor"
