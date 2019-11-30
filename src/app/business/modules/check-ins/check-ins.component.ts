@@ -342,7 +342,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   cdate: today,
                   bdata: this.holdbdata
                 };
-                this.shared_functions.setitemToGroupStorage('ynw-bconf', postdata);
+                this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
                 this.getBusinessProfile();
               }
             );
