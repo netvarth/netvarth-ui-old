@@ -416,6 +416,7 @@
             <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
 
+
                 <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="startedwaitlistSelection!=1">
                   <span (click)="waitlistStatusClick('started')"> Started </span> <span
                     *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>

@@ -241,7 +241,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   minutes;
   waitlistSelected: any = [];
   waitlistSelection = 0;
-  selectedCheckin;
+  selectedCheckin: any = [];
   showLabels: any = [];
   showstatus: any = [];
   startedwaitlistSelected: any = [];
