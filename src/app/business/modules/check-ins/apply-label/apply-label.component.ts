@@ -33,7 +33,6 @@ export class ApplyLabelComponent implements OnInit {
     labelname;
     value;
     source;
-    uuid;
     caption;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
@@ -47,10 +46,7 @@ export class ApplyLabelComponent implements OnInit {
             this.label = data;
         });
         this.source = checkin.source;
-        this.uuid = checkin.uuid;
-        // if (this.source === 'newvalue') {
         this.label = checkin.checkin;
-        // }
         if (this.source === 'newvalue') {
             this.caption = 'Add label - ' + this.label;
         } else {

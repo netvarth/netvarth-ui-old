@@ -1600,9 +1600,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeLabelvalue(status, labelname, value) {
-    console.log(this.selectedCheckin);
-    console.log(this.selectedCheckin[status]);
-    const checkin = this.selectedCheckin;
+    const checkin = this.selectedCheckin[status];
     this.checkinId = checkin.ynwUuid;
     this.labelMap = new Object();
     this.labelMap[labelname] = value;
@@ -1624,9 +1622,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  addLabelvalue(source, uuid) {
-    const checkin = this.selectedCheckin;
-    this.checkinId = uuid;
+  addLabelvalue(status, source, label?) {
+    let checkin;
+    if (label) {
+      checkin = label;
+    } else {
+      checkin = this.selectedCheckin[status];
+    }
+    this.checkinId = this.selectedCheckin[status].ynwUuid;
     this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
@@ -1634,16 +1637,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       autoFocus: true,
       data: {
         checkin: checkin,
-        source: source,
-        uuid: this.checkinId
+        source: source
       }
     });
     this.labeldialogRef.afterClosed().subscribe(data => {
-      this.labelMap = new Object();
-      this.labelMap[data.label] = data.value;
-      this.addLabel();
-      this.getDisplayname(data.label);
-      this.getTodayCheckIn();
+      if (data) {
+        this.labelMap = new Object();
+        this.labelMap[data.label] = data.value;
+        this.addLabel();
+        this.getDisplayname(data.label);
+        this.getTodayCheckIn();
+      }
     });
   }
 
@@ -1755,7 +1759,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
-      this.labels(this.selectedCheckin);
+      this.labels(this.selectedCheckin['new']);
     }
   }
 
@@ -1769,7 +1773,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.completedwaitlistSelection === 1) {
       this.selectedCheckin['completed'] = this.new_checkins_list[this.completedwaitlistSelected.indexOf(true)];
-      this.labels(this.selectedCheckin);
+      this.labels(this.selectedCheckin['completed']);
     }
   }
 
@@ -1783,7 +1787,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.cancelledwaitlistSelection === 1) {
       this.selectedCheckin['cancelled'] = this.new_checkins_list[this.cancelledwaitlistSelected.indexOf(true)];
-      this.labels(this.selectedCheckin);
+      this.labels(this.selectedCheckin['cancelled']);
     }
   }
 
@@ -1797,31 +1801,30 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.startedwaitlistSelection === 1) {
       this.selectedCheckin['started'] = this.new_checkins_list[this.startedwaitlistSelected.indexOf(true)];
-      this.labels(this.selectedCheckin);
+      this.labels(this.selectedCheckin['started']);
     }
   }
-
   labels(checkin) {
-    // this.providerLabels.map(function (x) {
-    //   console.log(x);
-    //   x.selected = false;
-    // });
-    let values = [];
-    for (const value of Object.values(checkin.label)) {
-      values.push(value);
-    }
     for (let i = 0; i < this.providerLabels.length; i++) {
       for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        for (let k = 0; k < values.length; k++) {
-          if (this.providerLabels[i].valueSet[j].value === values[k]) {
-            console.log(this.providerLabels[i].valueSet[j].value);
-            console.log(values[k]);
-            this.providerLabels[i].valueSet[j].selected = true;
+        this.providerLabels[i].valueSet[j].selected = false;
+      }
+    }
+    setTimeout(() => {
+      let values = [];
+      for (const value of Object.values(checkin.label)) {
+        values.push(value);
+      }
+      for (let i = 0; i < this.providerLabels.length; i++) {
+        for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+          for (let k = 0; k < values.length; k++) {
+            if (this.providerLabels[i].valueSet[j].value === values[k]) {
+              this.providerLabels[i].valueSet[j].selected = true;
+            }
           }
         }
       }
-    }
-    console.log(this.providerLabels);
+    }, 100);
   }
   labelClick(status) {
     (!this.showLabels[status]) ? this.showLabels[status] = true : this.showLabels[status] = false;
