@@ -2,7 +2,7 @@
   padding-top: 25px !important;
 }
 
-.srch .sa .sa-fld .sa-lc, .srch .sa .sa-fld .sa-dm, .srch .sa .sa-fld .sa-src {
+.srch .sa .sa-fld .sa-lc, .srch .sa .sa-fld .sa-dm, .srch .sa .sa-fld .sa-src { 
   height: 50px !important
 }
 
@@ -2370,6 +2370,7 @@ div.jd-pricing {
 .jd-pricing th.headcol.lic_metric {
   background-color: #2f702e !important;
   color: #fff !important;
+  text-align: center !important; 
 }
 
 .light-col {
