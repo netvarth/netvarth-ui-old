@@ -1329,7 +1329,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addConsumerInboxMessage(source, waitlst?) {
     let waitlist;
-    console.log(this.selectedCheckin);
     if (source === 'single') {
     waitlist = waitlst;
     } else {

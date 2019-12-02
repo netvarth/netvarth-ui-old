@@ -375,7 +375,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.resetApi();
         // const postData = { 'dcOrCcOrNb': false, 'payTm': false, 'payU': false };
         const postData = {};
-        postData['onlinePayment'] = this.paystatus;
+        // postData['onlinePayment'] = this.paystatus;
         const numberpattern = projectConstants.VALIDATOR_NUMBERONLY;
         const numbercntpattern = projectConstants.VALIDATOR_PHONENUMBERCOUNT10;
         const blankpattern = projectConstants.VALIDATOR_BLANK;

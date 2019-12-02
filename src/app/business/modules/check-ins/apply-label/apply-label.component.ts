@@ -126,8 +126,6 @@ export class ApplyLabelComponent implements OnInit {
             };
             this.provider_services.createLabel(post_data).subscribe(
                 () => {
-                    console.log(this.labelname);
-                    console.log(this.value);
                     setTimeout(() => {
                         this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
                     }, projectConstants.TIMEOUT_DELAY);
@@ -136,8 +134,6 @@ export class ApplyLabelComponent implements OnInit {
                     this.api_error = this.shared_functions.getProjectErrorMesssages(error);
                 });
         } else {
-            console.log(this.label);
-            console.log(this.value);
             this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
             // let valueSet = [];
             // const valset = {};

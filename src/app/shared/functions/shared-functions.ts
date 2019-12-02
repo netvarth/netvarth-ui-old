@@ -270,7 +270,6 @@ public clearSessionStorage() {
   public setitemToGroupStorage(itemname, itemvalue) {
     const group = this.getGroup();
     let groupObj = {};
-    console.log(group);
     if (localStorage.getItem(group)) {
       groupObj = JSON.parse(localStorage.getItem(group));
       if (groupObj) {
@@ -285,7 +284,7 @@ public clearSessionStorage() {
     const group = this.getGroup();
     if (localStorage.getItem(group)) {
       const groupObj = JSON.parse(localStorage.getItem(group));
-      if (groupObj[itemname]) {
+      if (groupObj[itemname] || (itemname === 'isCheckin' && groupObj[itemname] !== undefined)) {
         return groupObj[itemname];
       }
     }

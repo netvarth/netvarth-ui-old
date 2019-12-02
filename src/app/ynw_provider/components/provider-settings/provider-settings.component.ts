@@ -256,60 +256,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   handle_paymentstatus(event) {
-    let dataHolder = '';
-    const is_check = (event.checked) ? true : false;
-    dataHolder = '"onlinePayment": ' + is_check;
-    if (this.payment_settings.hasOwnProperty('payTm')) {
-      dataHolder += ', "payTm": ' + this.payment_settings['payTm'];
-    }
-    if (this.payment_settings.hasOwnProperty('payTmLinkedPhoneNumber')) {
-      dataHolder += ', "payTmLinkedPhoneNumber": ' + '"' + this.payment_settings['payTmLinkedPhoneNumber'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('dcOrCcOrNb')) {
-      dataHolder += ', "dcOrCcOrNb": ' + this.payment_settings['dcOrCcOrNb'];
-    }
-    if (this.payment_settings.hasOwnProperty('panCardNumber')) {
-      dataHolder += ', "panCardNumber": ' + '"' + this.payment_settings['panCardNumber'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('bankAccountNumber')) {
-      dataHolder += ', "bankAccountNumber": ' + '"' + this.payment_settings['bankAccountNumber'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('bankName')) {
-      dataHolder += ', "bankName": ' + '"' + this.payment_settings['bankName'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('ifscCode')) {
-      dataHolder += ', "ifscCode": ' + '"' + this.payment_settings['ifscCode'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('nameOnPanCard')) {
-      dataHolder += ', "nameOnPanCard": ' + '"' + this.payment_settings['nameOnPanCard'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('accountHolderName')) {
-      dataHolder += ', "accountHolderName": ' + '"' + this.payment_settings['accountHolderName'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('branchCity')) {
-      dataHolder += ', "branchCity": ' + '"' + this.payment_settings['branchCity'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('businessFilingStatus')) {
-      dataHolder += ', "businessFilingStatus": ' + '"' + this.payment_settings['businessFilingStatus'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('accountType')) {
-      dataHolder += ', "accountType": ' + '"' + this.payment_settings['accountType'] + '"';
-    }
-    const post_Data = '{' + dataHolder + '}';
-    this.provider_services.setPaymentSettings(JSON.parse(post_Data))
-      .subscribe(
-        () => {
-          this.getpaymentDetails();
-          if (!is_check) {
-            // this.shared_functions.openSnackBar('online payment is disabled', {'panelclass' : 'snackbarerror'});
-            this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
-          }
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.getpaymentDetails();
-        }
-      );
+    let status;
+    (event.checked) ? status = 'enable' : status = 'disable';
+    this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
+      this.getpaymentDetails();
+      if (!event.checked) {
+        this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
+      }
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.getpaymentDetails();
+      });
   }
   getPOSSettings() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {

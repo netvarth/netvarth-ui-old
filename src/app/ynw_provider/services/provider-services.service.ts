@@ -850,4 +850,8 @@ export class ProviderServices {
     const url = 'provider/waitlist/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
+  changeJaldeePayStatus(status) {
+    const url = 'provider/payment/' + status;
+    return this.servicemeta.httpPut(url);
+  }
 }
