@@ -84,7 +84,7 @@ export class HomeServiceComponent implements OnInit, OnDestroy {
                         this.getWaitlistMgr();
                     }
                 });
-        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     }
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks

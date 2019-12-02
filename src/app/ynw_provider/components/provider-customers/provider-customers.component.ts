@@ -71,7 +71,7 @@ export class ProviderCustomersComponent implements OnInit {
   ngOnInit() {
     this.getCustomersList(true);
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
   }
 
   routeLoadIndicator(e) {

@@ -445,7 +445,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
           }
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
-          this.sharedfunctionobj.setitemonLocalStorage('isCheckin', statusCode);
+          this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
 
         },
         () => {

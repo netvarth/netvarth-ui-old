@@ -45,9 +45,8 @@ export class SaleschannelComponent implements OnInit {
         this.getSalesChannel();
     }
     addSalesCode(scCode) {
-        if (scCode) {
-            console.log(this.scInfo.scId);
-            this.provider_services.addSalesCode(this.scInfo.scId).subscribe(
+        if (scCode && this.scInfo.scId) {
+            this.provider_services.addSalesCode(this.scCode_Ph).subscribe(
                 data => {
                     this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SC_CREATED'), { 'panelclass': 'snackbarerror' });
                     this.getSalesChannel();
@@ -62,10 +61,9 @@ export class SaleschannelComponent implements OnInit {
     getSalesChannel() {
         this.provider_services.getSalesChannel().subscribe(
             data => {
-                // this.scCode_Ph = data;
                 this.scInfo = data;
                 this.scExists = true;
-                // this.findSC_ByScCode(this.scCode_Ph);
+                this.scfound = true;
             },
             error => {
                 this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -74,8 +72,15 @@ export class SaleschannelComponent implements OnInit {
 
     handlekeyup(ev) {
         if (ev.keyCode === 13) {
+            this.scInfo = {};
+            this.scfound = false;
             this.findSC_ByScCode(this.scCode_Ph);
         }
+    }
+    blurSc(ev) {
+        this.scInfo = {};
+        this.scfound = false;
+        this.findSC_ByScCode(this.scCode_Ph);
     }
     findSC_ByScCode(scCode) {
         if (scCode) {

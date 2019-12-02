@@ -67,7 +67,7 @@ export class ProviderItemsComponent implements OnInit, OnDestroy {
     
     this.getitems();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.additemdialogRef) {

@@ -91,7 +91,7 @@ export class CustomersListComponent implements OnInit {
         this.domain = user.sector;
         this.getCustomersList(true);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
-        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     }
     filterClicked(type) {
         this.filters[type] = !this.filters[type];

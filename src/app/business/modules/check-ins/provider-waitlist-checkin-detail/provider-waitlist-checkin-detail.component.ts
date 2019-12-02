@@ -114,7 +114,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     } else {
       this.goBack();
     }
-    this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
   }
 
   ngOnDestroy() {

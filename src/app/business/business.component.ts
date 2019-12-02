@@ -37,7 +37,7 @@ export class BusinessComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
           setTimeout(() => {
-            if (this.shared_functions.getitemfromLocalStorage('isCheckin') === 0) {
+            if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
               router.navigate(['provider', 'check-ins']);
             } else {
               router.navigate(['provider', 'settings', 'bprofile']);
@@ -127,7 +127,7 @@ export class BusinessComponent implements OnInit {
             const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
             if (statusCode === 0) {
             }
-            this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
+            this.shared_functions.setitemToGroupStorage('isCheckin', statusCode);
           }
         },
         () => { }

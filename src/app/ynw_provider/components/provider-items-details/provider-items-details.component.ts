@@ -77,7 +77,7 @@ export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
       file: [''],
       caption: 'Itempic'
     });*/
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.editdialogRef) {

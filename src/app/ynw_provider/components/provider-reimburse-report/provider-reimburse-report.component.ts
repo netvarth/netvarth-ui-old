@@ -84,7 +84,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.setFilterDateMaxMin();
     this.resetFilter();
     this.getCouponReport();
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
     return JSON.parse(jsonString);

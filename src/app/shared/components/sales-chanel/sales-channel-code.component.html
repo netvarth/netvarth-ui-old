@@ -4,17 +4,17 @@
     </div>
     <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
         <mat-radio-group [(ngModel)]="hearus">
-            <mat-radio-button value="jaldee">Jaldee</mat-radio-button>
-            <mat-radio-button value="facebook">Facebook</mat-radio-button>
-            <mat-radio-button value="friend">Friend</mat-radio-button>
-            <mat-radio-button value="google">Google</mat-radio-button>
-            <mat-radio-button value="salesrep">Sales Reps</mat-radio-button>
+            <mat-radio-button value="Jaldee">Jaldee</mat-radio-button>
+            <mat-radio-button value="Facebook">Facebook</mat-radio-button>
+            <mat-radio-button value="Friend">Friend</mat-radio-button>
+            <mat-radio-button value="GoogleSearch">Google</mat-radio-button>
+            <mat-radio-button value="SalesReps">Sales Reps</mat-radio-button>
             <div class="clearfix"></div>
-            <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="hearus==='salesrep'">
+            <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="hearus==='SalesReps'">
                 <div class="form-group mgn-up-10">
                     <div class="col-md-8 col-xs-10 col-sm-10">
                         <mat-form-field>
-                            <input matInput placeholder="SC Code/ Phone Number" type="text" class="form-control"
+                            <input matInput placeholder="SC Code/ Phone Number" type="text" class="form-control" (blur)="blurSc($event)" (keypress)="handlekeyup($event)"
                                 [(ngModel)]="scCode_Ph" [ngModelOptions]="{standalone: true}">
                         </mat-form-field>
                     </div>
@@ -37,8 +37,8 @@
                     </div>
                 </div>
             </div>
-            <mat-radio-button value="twitter">Twitter</mat-radio-button>
-            <mat-radio-button value="other">Other</mat-radio-button>
+            <mat-radio-button value="Twitter">Twitter</mat-radio-button>
+            <mat-radio-button value="Other">Other</mat-radio-button>
         </mat-radio-group>
     </div>
     <mat-dialog-actions>

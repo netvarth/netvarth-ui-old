@@ -76,7 +76,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.dialogRef) {

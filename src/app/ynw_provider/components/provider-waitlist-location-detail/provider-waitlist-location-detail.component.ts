@@ -81,7 +81,7 @@ export class ProviderWaitlistLocationDetailComponent implements OnInit, OnDestro
         } else {
             this.goBack();
         }
-        this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
     }
     ngOnDestroy() {
         if (this.editlocdialogRef) {

@@ -12,8 +12,8 @@
                             <div class="form-group" *ngIf="scExists">
                                 <div class="col-md-8 col-xs-10 col-sm-10">
                                     <mat-form-field>
-                                        <input matInput placeholder="SC Code/ Phone Number" type="text"
-                                            class="form-control" [(ngModel)]="scCode_Ph"
+                                        <input matInput placeholder="SC Partner Id/ Phone Number" type="text"
+                                            class="form-control" [(ngModel)]="scCode_Ph" (blur)="blurSc($event)" (keypress)="handlekeyup($event)"
                                             [ngModelOptions]="{standalone: true}">
                                     </mat-form-field>
                                 </div>
@@ -41,36 +41,6 @@
                                 &nbsp;
                                 <button (click)="addSalesCode(scCode_Ph)" type="button" mat-button
                                     class="cs-btn bt2">SET</button>
-                            </div>
-                        </div>
-                        
-                        <!-- <div class="col-md-12">
-                                <form novalidate (keyup)="resetApiErrors()"
-                                    class="ynw-common-form-nm wiz-service labelForm serviceform">
-                                    <ng-container>
-                                        <div *ngIf="!sales_code">
-                                            <div class="form-group jdn_discount">
-                                                <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="id"
-                                                        placeholder="Enter Sales channel code" [(ngModel)]="id"
-                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="actiondiv labelsave" style="display: inline-flex;">
-                                                <button (click)="onCancel()" type="button"
-                                                    class="cs-btn bt2">Cancel</button>
-                                                &nbsp;
-                                                <button (click)="addSalesCode(id)" type="button" mat-button
-                                                    class="cs-btn bt2">SET</button>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                </form>
-                            </div> -->
-                        <div class="content loc-list">
-                            <h3 class="pointer-cursor" *ngIf="sales_code">Sales Channel Code</h3>
-                            <div class="item">
-                                <div *ngIf="sales_code">{{sales_code}} </div>
                             </div>
                         </div>
                     </div>

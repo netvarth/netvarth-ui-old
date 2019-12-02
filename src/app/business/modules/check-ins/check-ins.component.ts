@@ -319,7 +319,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.breadcrumb_moreoptions = {
           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
-        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
         this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
         if (!this.server_date) { this.setSystemDate(); }
         this.router.events
@@ -536,7 +536,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
             if (statusCode === 0) {
             }
-            this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
+            this.shared_functions.setitemToGroupStorage('isCheckin', statusCode);
             this.reloadAPIs();
           }
         },
@@ -1406,7 +1406,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   isCheckinActive() {
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
       if (this.isCheckin === 0 || this.isCheckin > 3) {
         return true;
@@ -1419,7 +1419,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe(
           data => {
             this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
-            this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+            this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
             if (this.isCheckin === 0) {
               return true;
             } else {
@@ -1440,7 +1440,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           data => {
             if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
               this.isCheckin = 4;
-              this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+              this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
               this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
               return false;
             } else {
@@ -1449,7 +1449,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                   data1 => {
                     if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
                       this.isCheckin = 5;
-                      this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+                      this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
                       this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
                       return false;
                     } else {

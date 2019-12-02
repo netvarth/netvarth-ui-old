@@ -71,7 +71,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.holdalertSelAck = this.alertSelAck;
     this.holdalertSeldate = this.alertSeldate;
     this.getAlertListTotalCnt(this.alertSelAck, '');
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
   }
   getAlertListTotalCnt(ackStatus, sdate) {

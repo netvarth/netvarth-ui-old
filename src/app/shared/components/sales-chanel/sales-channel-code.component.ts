@@ -18,6 +18,8 @@ export class SalesChannelCodeComponent implements OnInit {
   ok_btn_cap = Messages.OK_BTN;
   @Output() retonRefSubmit: EventEmitter<any> = new EventEmitter();
   action;
+  searchphone = false;
+  searchcode = false;
   constructor(
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -29,8 +31,15 @@ export class SalesChannelCodeComponent implements OnInit {
 
   handlekeyup(ev) {
     if (ev.keyCode === 13) {
+      this.scfound = false;
+      this.scInfo = {};
       this.findSC_ByScCode(this.scCode_Ph);
     }
+  }
+  blurSc(ev) {
+    this.scfound = false;
+    this.scInfo = {};
+    this.findSC_ByScCode(this.scCode_Ph);
   }
   findSC_ByScCode(scCode) {
     if (scCode) {
@@ -39,6 +48,7 @@ export class SalesChannelCodeComponent implements OnInit {
         data => {
           this.scfound = true;
           this.scInfo = data;
+          this.searchcode = true;
         },
         () => {
           this.findSC_ByPhone(scCode);
@@ -52,6 +62,7 @@ export class SalesChannelCodeComponent implements OnInit {
         data => {
           this.scfound = true;
           this.scInfo = data;
+          this.searchphone = true;
         },
         () => {
           this.scfound = false;
@@ -68,9 +79,9 @@ export class SalesChannelCodeComponent implements OnInit {
       post_data = {
         'hereby': this.hearus,
       };
-      if (this.hearus === 'salesrep') {
+      if (this.hearus === 'SalesReps') {
         if (this.scInfo.scId) {
-          post_data['scCode'] = this.scInfo.scId;
+          post_data['scCode'] = this.scCode_Ph;
         } else {
           this.shared_functions.openSnackBar(Messages.SCNOTFOUND,  {'panelClass': 'snackbarerror'});
           return false;

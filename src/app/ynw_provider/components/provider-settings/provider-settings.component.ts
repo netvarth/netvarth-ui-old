@@ -164,7 +164,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getDisplayboardCount();
     this.getBusinessConfiguration();
     this.getStatusboardLicenseStatus();
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
