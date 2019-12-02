@@ -98,6 +98,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   statusboardStatus = false;
   isCorp = false;
   isMultilevel = false;
+  jaldee_pay_cap: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -149,6 +150,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     this.getDomainSubdomainSettings();
     this.getLocationCount();
     this.getQueuesCount();

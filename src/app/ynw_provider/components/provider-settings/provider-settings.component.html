@@ -176,7 +176,7 @@
                                                 (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p>
-                                        <p class="settings_info" *ngIf="payment_status">Jaldee pay hints</p>
+                                        <p class="settings_info" *ngIf="payment_status">{{jaldee_pay_cap}}</p>
                                         <p class="settings_info" *ngIf="!payment_status">{{frm_public_self_cap}}
                                         </p>
                                     </a>

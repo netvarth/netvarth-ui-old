@@ -40,6 +40,7 @@ export class POSComponent implements OnInit {
   discount_count = 0;
   item_list;
   item_count = 0;
+  jaldee_pay_cap: string;
 
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
@@ -50,6 +51,7 @@ export class POSComponent implements OnInit {
 
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     this.getpaymentDetails();

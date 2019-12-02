@@ -1282,7 +1282,7 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
   'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable â€œOnline Check-inâ€� and also book a future date for [customer]\'s check-in here.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable "Online Check-in" and also book a future date for [customer]\'s check-in here.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
@@ -1320,6 +1320,7 @@ export const Messages = {
   // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
+  'JALDEE_PAY_MSG': 'Enable Jaldee Pay to accept online payments from [customer]s',
 
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
