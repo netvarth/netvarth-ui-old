@@ -11,6 +11,7 @@ import { CommonDataStorageService } from '../../../../shared/services/common-dat
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { LivetrackComponent } from '../live-track/livetrack.component';
 @Component({
   selector: 'app-check-in-inner',
   templateUrl: './check-in-inner.component.html',
@@ -164,14 +165,14 @@ export class CheckInInnerComponent implements OnInit {
   liveTrack = false;
   source: any = [];
   travelMode = 'DRIVING';
-  notifyTime = 'AFTERSTART';
+  notifyTime = 'AFTERSTART'; 
   shareLoc = true;
   lat_lng =
-    {
+   {   
       latitude: 0,
-      longitude: 0
-    };
-  driving = true;
+      longitude: 0 
+     }; 
+   driving = true;
   walking: boolean;
   selectedMessage = {
     files: [],
@@ -806,14 +807,14 @@ export class CheckInInnerComponent implements OnInit {
       'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
       'coupons': this.selected_coupons
     };
-    if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+    if (this.selectedMessage.files.length > 0 && this.consumerNote === '' ) {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
     }
     if (this.partySizeRequired) {
       this.holdenterd_partySize = this.enterd_partySize;
       post_Data['partySize'] = Number(this.holdenterd_partySize);
     }
-
+   
     if (this.api_error === null) {
       if (this.page_source === 'provider_checkin') {
         post_Data['consumer'] = { id: this.customer_data.id };
@@ -822,7 +823,7 @@ export class CheckInInnerComponent implements OnInit {
       } else {
         this.addCheckInConsumer(post_Data);
       }
-    }
+   }
   }
   addCheckInConsumer(post_Data) {
     post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
@@ -838,7 +839,7 @@ export class CheckInInnerComponent implements OnInit {
         });
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUUID);
-        }
+         }
         if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
           if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
             this.dialogRef.close();
@@ -877,7 +878,7 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-          this.router.navigate(['/']);
+          // this.router.navigate(['/']);
         }
         setTimeout(() => {
           this.liveTrack = true;
@@ -888,6 +889,7 @@ export class CheckInInnerComponent implements OnInit {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
         });
+        
   }
   addCheckInProvider(post_Data) {
     this.api_loading = true;
@@ -903,15 +905,15 @@ export class CheckInInnerComponent implements OnInit {
         });
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUuid);
-        }
+         }
         if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
         }
         setTimeout(() => {
-          // this.source['list'] = 'reloadlist';
-          // this.source['mode'] = this.page_source;
+          //this.source['list'] = 'reloadlist';
+          //this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
           this.returntoParent.emit('reloadlist');
         }, projectConstants.TIMEOUT_DELAY);
@@ -1105,7 +1107,7 @@ export class CheckInInnerComponent implements OnInit {
   handleNote() {
     if (this.dispCustomernote) {
       this.dispCustomernote = false;
-      this.selectedMessage = {
+     this. selectedMessage = {
         files: [],
         base64: [],
         caption: []
@@ -1390,12 +1392,12 @@ export class CheckInInnerComponent implements OnInit {
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
   }
-
+  
   consumerNoteAndFileSave(uuid) {
-    const dataToSend: FormData = new FormData();
-    dataToSend.append('message', this.consumerNote);
-    const captions = {};
-    let i = 0;
+  const dataToSend: FormData = new FormData();
+  dataToSend.append('message', this.consumerNote);
+  const captions = {};
+  let i = 0;
     if (this.selectedMessage) {
       for (const pic of this.selectedMessage.files) {
         dataToSend.append('attachments', pic, pic['name']);
@@ -1429,20 +1431,29 @@ export class CheckInInnerComponent implements OnInit {
     };
     this.shared_services.addLiveTrackDetails(this.trackUuid, this.account_id, post_Data)
       .subscribe(data => {
-        console.log(data);
+        // let trackDetail: any = [];
+        // console.log(data);
+        //    trackDetail = data;
+        // const distance = trackDetail.jaldeeDistanceTime.jaldeeDistance.distance;
+        // const unit = trackDetail.jaldeeDistanceTime.jaldeeDistance.unit;
+        // const travelTime = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
+        // const timeUnit = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.timeUnit;
+        // const hours = Math.floor(travelTime / 60);
+        // const minutes = travelTime % 60;
+      //  this.api_success = 'You are' + distance + ' ' + unit + 'away from there you will reach there in ' + hours + 'Hours and' + minutes + 'Mintues';
         this.api_success = this.sharedFunctionobj.getProjectMesssages('TRACKINGENABLED');
 
-        setTimeout(() => {
-          // this.source['list'] = 'reloadlist';
-          // this.source['mode'] = this.page_source;
+         setTimeout(() => {
+          //this.source['list'] = 'reloadlist';
+         // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
           console.log(this.source);
           this.returntoParent.emit('reloadlist');
-        }, projectConstants.TIMEOUT_DELAY);
+          }, projectConstants.TIMEOUT_DELAY);
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
-        });
+      });
   }
 }

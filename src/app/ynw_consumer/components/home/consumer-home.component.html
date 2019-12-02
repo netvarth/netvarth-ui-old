@@ -131,9 +131,9 @@
                                 </span>
                             </div>
                             <div>
-                                    <span class="persons"><span>Travel time :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime}}
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'MINUTES'">Minutes</span>
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'HOURES'">Houres</span>
+                                    <span class="persons"><span>Travel time :</span> {{getMintuesToHour(waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime)}}
+                                    <!-- <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'MINUTES'">Minutes</span>
+                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'HOURES'">Houres</span> -->
                                 </span>
                             </div>
                             

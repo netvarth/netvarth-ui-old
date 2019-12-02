@@ -175,6 +175,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     private activaterouterobj: ActivatedRoute,
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
+    public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
     private dialog: MatDialog) {
     this.onResize();
@@ -1593,6 +1594,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['/']);
     });
   }
   checkProvider(type) {
