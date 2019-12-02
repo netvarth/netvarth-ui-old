@@ -846,4 +846,8 @@ export class ProviderServices {
     const url = 'provider/consumerNotification/settings';
     return this.servicemeta.httpPut(url, data);
   }
+  consumerMassCommunication(data) {
+    const url = 'provider/waitlist/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
 }

@@ -111,20 +111,25 @@ export class LabelComponent implements OnInit {
     onSubmit() {
         if (this.actionparam === 'add') {
             const post_data = {
-                'label': this.displayName.replace(/ /g, ' '),
+                'label': this.displayName.replace(/ /g, '_'),
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet,
             };
             this.provider_services.createLabel(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_ADDED'));
-                this.editLabelbyId(data);
-            });
+                this.editLabelbyId(data); 
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
         }
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.labelData.id,
-                'label': this.displayName.replace(/ /g, "_"),
+                'label': this.displayName.replace(/ /g, '_'),
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet
@@ -132,13 +137,12 @@ export class LabelComponent implements OnInit {
             this.provider_services.updateLabel(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_UPDATED'));
                 this.editLabelbyId(data);
+                this.actionparam = 'view';
             },
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-        this.actionparam = 'view';
-
     }
 
     setDescFocus() {
@@ -193,11 +197,14 @@ export class LabelComponent implements OnInit {
         this.api_success = null;
     }
     onCancel() {
-        if (this.actionparam === 'edit') {
-            this.actionparam = 'view';
-        } else {
-            this.router.navigate(['provider/settings/miscellaneous/labels']);
-        }
+        this.editLabelbyId(this.label_id);
+        setTimeout(() => {
+            if (this.actionparam === 'edit') {
+                this.actionparam = 'view';
+            } else {
+                this.router.navigate(['provider/settings/miscellaneous/labels']);
+            }
+        }, 500);
     }
     showAddsection() {
         this.showAddsec = true;

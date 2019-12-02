@@ -286,7 +286,7 @@
                         </div>
                         <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
                           <a class="btn-play pointer-cursor" *ngIf="!section_future[i]"
-                            (click)="addConsumerInboxMessage(checkin)">
+                            (click)="addConsumerInboxMessage('single', checkin)">
                             <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
                           </a>
                           <a class="btn-more pointer-cursor" *ngIf="!section_future[i]"
@@ -299,7 +299,7 @@
                   </div>
                   <div class="clearfix"></div>
                   <div class="info-box-footer-more" *ngIf="section_future[i]">
-                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message </span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
@@ -387,7 +387,7 @@
                       (click)="changeWaitlistStatus(checkin, 'STARTED')">
                       <i class="fa fa-play"></i> <span> Start</span>
                     </a>
-                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message</span>
                     </a>
                     <a class="btn-play pointer-cursor"
@@ -416,12 +416,12 @@
             <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="startedwaitlistSelection!=1">
+                  <div class="statuslink col-md-10 col-xs-10 col-sm-10" [class.status-width]="startedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('started')"> Started </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="startedwaitlistSelection === 1" style="z-index: 1;">
+                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                    *ngIf="startedwaitlistSelection === 1">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
@@ -433,28 +433,19 @@
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <!-- <span style="font-weight: 700;"> {{label.displayName}} </span> -->
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('started', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <!-- <li>
-                                          <a class="pointer-cursor" style="color: black;"
-                                            (click)="addLabelvalue('new', 'newvalue', label.label)">
-                                            Enter new {{label.displayName}}</a>
-                                        </li> -->
                                   </ul>
                                 </li>
-
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
                                     (click)="addLabelvalue('started', 'newvalue', label.label)">
                                     {{label.displayName}}</a>
                                 </li>
-
-
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor"
@@ -470,8 +461,9 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="startedwaitlistSelection===1">
+                   <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                 </div>
-
                 <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 && 
                   showstatus['started']">
                   {{no_started_checkin_msg}}
@@ -558,7 +550,7 @@
                           (click)="viewBillPage(checkin)">
                           <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                         </a>
-                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
+                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                           <i class="fa fa-comments-o "></i> <span> Message </span>
                         </a>
                         <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
@@ -594,16 +586,13 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12 col-sm-12  no-padding newwaitlist">
                 <div class="labelList col-md-12 no-padding">
-                  <div class="statuslink col-md-9 col-xs-9 col-sm-9" [class.status-width]="waitlistSelection!=1">
+                  <div class="statuslink col-md-10 col-xs-10 col-sm-10" [class.status-width]="waitlistSelection!=1">
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="waitlistSelection === 1" style="z-index: 1;">
+                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                    *ngIf="waitlistSelection === 1">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
-
-
-
                         <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
                           <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
                             (click)="labelClick('new')">
@@ -613,28 +602,19 @@
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <!-- <span style="font-weight: 700;"> {{label.displayName}} </span> -->
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('new', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <!-- <li>
-                                      <a class="pointer-cursor" style="color: black;"
-                                        (click)="addLabelvalue('new', 'newvalue', label.label)">
-                                        Enter new {{label.displayName}}</a>
-                                    </li> -->
                                   </ul>
                                 </li>
-
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
                                     (click)="addLabelvalue('new', 'newvalue', label.label)">
                                     {{label.displayName}}</a>
                                 </li>
-
-
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor" (click)="addLabelvalue('new', 'newlabel')">Add
@@ -649,6 +629,8 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="waitlistSelection===1">
+                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i>  </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
@@ -717,15 +699,12 @@
                               <i class="fa fa-angle-down black"></i>
                             </a>
                           </div>
-
-
                           <!-- <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
                               <span data-title="Wait Time" class="date pointer-cursor inl-blk wt-time">
                                 <span *ngFor="let label of checkin.label | keyvalue" style="margin-right: 10px;">
                                   {{getDisplayname(label.key)}} : {{label.value}}</span>
                               </span>
                             </div> -->
-
                         </div>
                       </div>
                     </div>
@@ -753,7 +732,7 @@
                           (click)="viewBillPage(checkin)">
                           <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                         </a>
-                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
+                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                           <i class="fa fa-comments-o "></i> <span> Message </span>
                         </a>
                         <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
@@ -790,15 +769,14 @@
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
-
                 <div class="labelList">
-                  <div class="statuslink col-md-9 col-xs-9 col-sm-9"
+                  <div class="statuslink col-md-10 col-xs-10 col-sm-10"
                     [class.status-width]="completedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('completed')"> Completed </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.done)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.done">({{grouped_list.done.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
-                    *ngIf="completedwaitlistSelection === 1" style="z-index: 1;">
+                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                    *ngIf="completedwaitlistSelection === 1">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
@@ -810,21 +788,14 @@
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
-                                  <!-- <span style="font-weight: 700;"> {{label.displayName}} </span> -->
                                   <ul class="menu" style="overflow: hidden;max-height:none;">
                                     <li *ngFor="let value of label.valueSet">
                                       <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
                                         (click)="changeLabelvalue('completed', label.label, value.value)">
                                         {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
                                     </li>
-                                    <!-- <li>
-                                          <a class="pointer-cursor" style="color: black;"
-                                            (click)="addLabelvalue('new', 'newvalue', label.label)">
-                                            Enter new {{label.displayName}}</a>
-                                        </li> -->
                                   </ul>
                                 </li>
-
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
                                     (click)="addLabelvalue('completed', 'newvalue', label.label)">
@@ -845,8 +816,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="completedwaitlistSelection===1">
+                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i> 
+                  </div>
                 </div>
-
                 <div class="no-dta col-md-12" *ngIf="completed_checkins_list.length === 0 && 
                   showstatus['completed']">
                   {{no_completed_checkin_msg}}
@@ -925,7 +898,7 @@
                           (click)="viewBillPage(checkin)">
                           <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                         </a>
-                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
+                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                           <i class="fa fa-comments-o "></i> <span> Message </span>
                         </a>
                         <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
@@ -941,15 +914,14 @@
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
-
                 <div class="labelList">
-                  <div class="statuslink col-md-9 col-xs-9 col-sm-9"
+                  <div class="statuslink col-md-10 col-xs-10 col-sm-10"
                     [class.status-width]="cancelledwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.cancelled)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.cancelled">({{grouped_list.cancelled.length}})</span>
                   </div>
-                  <div class="navbar navbar-static-top statuslink col-md-3 col-xs-3 col-sm-3" role="navigation"
+                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
                     *ngIf="cancelledwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
@@ -970,14 +942,11 @@
                                     </li>
                                   </ul>
                                 </li>
-
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
                                     (click)="addLabelvalue('cancelled', 'newvalue', label.label)">
                                     {{label.displayName}}</a>
                                 </li>
-
-
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor"
@@ -993,8 +962,10 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="cancelledwaitlistSelection===1">
+                   <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i> 
+                  </div>
                 </div>
-
                 <div class="no-dta col-md-12" *ngIf="cancelled_checkins_list.length === 0 && 
                   showstatus['cancelled']">
                   {{no_cancelled_checkin_msg}}
@@ -1071,7 +1042,7 @@
                           (click)="viewBillPage(checkin)">
                           <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                         </a>
-                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage(checkin)">
+                        <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                           <i class="fa fa-comments-o "></i> <span> Message </span>
                         </a>
                         <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
@@ -1112,4 +1083,4 @@
 
 <div *ngIf="apiloading" style="margin-top: 100px">
   <app-common-innerloading-spinner></app-common-innerloading-spinner>
-</div>
+</div>  

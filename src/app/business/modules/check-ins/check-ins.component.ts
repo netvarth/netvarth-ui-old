@@ -1327,7 +1327,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     this.doSearch();
   }
-  addConsumerInboxMessage(waitlist) {
+  addConsumerInboxMessage(source, waitlst?) {
+    let waitlist;
+    console.log(this.selectedCheckin);
+    if (source === 'single') {
+    waitlist = waitlst;
+    } else {
+      waitlist = this.selectedCheckin[source];
+    }
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => { },

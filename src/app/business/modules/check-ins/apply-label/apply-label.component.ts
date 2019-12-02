@@ -34,6 +34,8 @@ export class ApplyLabelComponent implements OnInit {
     value;
     source;
     caption;
+    api_error = null;
+    api_success = null;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -76,7 +78,7 @@ export class ApplyLabelComponent implements OnInit {
 
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackarerror' });
+                this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             });
     }
     deleteLabel(label) {
@@ -84,7 +86,7 @@ export class ApplyLabelComponent implements OnInit {
 
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.api_error = this.shared_functions.getProjectErrorMesssages(error);
             });
     }
     changeLabelvalue(labelname, value) {
@@ -118,21 +120,24 @@ export class ApplyLabelComponent implements OnInit {
                 valueSet.push(valset);
             }
             const post_data = {
-                'label': this.labelname,
+                'label': this.labelname.replace(' ', '_'),
                 'displayName': this.labelname,
                 'valueSet': valueSet,
             };
             this.provider_services.createLabel(post_data).subscribe(
                 () => {
-                    this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+                    console.log(this.labelname);
+                    console.log(this.value);
                     setTimeout(() => {
-                        this.dialogRef.close({ label: this.labelname, value: this.value, message: 'newlabel' });
+                        this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
                     }, projectConstants.TIMEOUT_DELAY);
                 },
                 error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
                 });
         } else {
+            console.log(this.label);
+            console.log(this.value);
             this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
             // let valueSet = [];
             // const valset = {};
