@@ -225,7 +225,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getCheckinDetails();
   }
   ngOnInit() {
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
@@ -1253,7 +1253,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
@@ -1286,7 +1286,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (item.discount && item.discount.length > 0) {
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right" colspan="2">Sub Total</td>';

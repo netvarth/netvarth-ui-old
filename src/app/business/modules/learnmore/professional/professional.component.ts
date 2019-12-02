@@ -90,10 +90,6 @@ export class ProfessionalCareComponent implements OnInit {
   ngOnInit() {
    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
-<<<<<<< HEAD
-    // console.log(this.domain);
-=======
->>>>>>> refs/remotes/origin/master
     if (this.target) {
       // this.triggerScrollTo(this.target);
     }

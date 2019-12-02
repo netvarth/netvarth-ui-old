@@ -129,7 +129,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.getInvoiceList();
         this.getSubscriptionDetail();
         this.getUpgradablePackages();
-        this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
         this.loading = false;
         // this.getAnnualDiscountPercentage();
         this.getbillCycle();
@@ -277,13 +277,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
-<<<<<<< HEAD
                 data => {                  
                     this.license_sub = data;                   
-=======
-                data => {
-                    this.license_sub = data;
->>>>>>> refs/remotes/origin/master
                     this.licensePlan = this.license_sub.licSubType;
                     this.licenseDisplayName = this.license_sub.licSubTypeDisplayName;
                     if (this.license_sub.subscriptionTo) {

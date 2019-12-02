@@ -149,12 +149,8 @@ export class DisplayboardDetailComponent implements OnInit {
             }
         }
         if (this.actionparam === 'add') {
-<<<<<<< HEAD
-            console.log(this.displayName.replace(/ /g, "_"));
-=======
->>>>>>> refs/remotes/origin/master
             const post_data = {
-                'name': this.displayName.replace(/ /g, "_"),
+                'name': this.displayName.replace(/ /g, '_'),
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric,
@@ -172,7 +168,7 @@ export class DisplayboardDetailComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.layoutData.id,
-                'name': this.displayName.replace(/ /g, "_"),
+                'name': this.displayName.replace(/ /g, '_'),
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric

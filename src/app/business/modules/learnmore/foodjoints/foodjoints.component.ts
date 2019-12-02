@@ -88,10 +88,6 @@ export class FoodJointComponent implements OnInit {
   ngOnInit() {
    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
     if (this.target) {
       // this.triggerScrollTo(this.target);
     }

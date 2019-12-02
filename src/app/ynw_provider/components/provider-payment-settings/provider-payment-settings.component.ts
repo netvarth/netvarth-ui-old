@@ -157,7 +157,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         this.activeLicPkg = this.shared_functions.getitemFromGroupStorage('ynw-user').accountLicenseDetails.accountLicense.name;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
-        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
         // this.getLicenseMetrics();
     }
     /**

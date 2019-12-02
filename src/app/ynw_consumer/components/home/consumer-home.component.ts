@@ -280,10 +280,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
-<<<<<<< HEAD
             this.changemode[i] = false;
-=======
->>>>>>> refs/remotes/origin/master
             const waitlist_date = new Date(waitlist.date);
             this.statusOfLiveTrack(waitlist, i);
             if (waitlist.jaldeeWaitlistDistanceTime) {
@@ -959,7 +956,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (prepayamt > 0) {
               const payData = {
                 'amount': prepayamt,
-                //'paymentMode': 'DC',
+                // 'paymentMode': 'DC',
                 'uuid': waitlist.ynwUuid,
                 'accountId': waitlist.provider.id,
                 'purpose': 'prePayment'
@@ -1110,21 +1107,21 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         if (waitlist.jaldeeWaitlistDistanceTime) {
           let pollingDtTim = '';
           let pollingDateTime = '';
-        if (waitlist.jaldeeStartTimeType !== 'AFTERSTART' && waitlist.waitlistStatus === 'checkedIn') {
-           pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
-           pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
-          const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
-          console.log('pollingDateTime' + pollingDateTime);
-          console.log('serverDateTime' + serverDateTime);
-          if (serverDateTime >= pollingDateTime) {
-            this.getCurrentLocation();
-            this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
-              .subscribe(data => { },
-                error => {
-                  this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-          } }
-          else if ( waitlist.jaldeeStartTimeType === 'AFTERSTART' && waitlist.waitlistStatus === 'checkedIn') {
+          if (waitlist.jaldeeStartTimeType !== 'AFTERSTART' && waitlist.waitlistStatus === 'checkedIn') {
+            pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
+            pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
+            const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
+            console.log('pollingDateTime' + pollingDateTime);
+            console.log('serverDateTime' + serverDateTime);
+            if (serverDateTime >= pollingDateTime) {
+              this.getCurrentLocation();
+              this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
+                .subscribe(data => { },
+                  error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  });
+            }
+          } else if (waitlist.jaldeeStartTimeType === 'AFTERSTART' && waitlist.waitlistStatus === 'checkedIn') {
             console.log('trackStatus' + waitlist.trackStatus);
             if (waitlist.trackStatus) {
               this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
@@ -1134,8 +1131,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   });
             }
           }
-       
-         
+
+
         }
       }
     }

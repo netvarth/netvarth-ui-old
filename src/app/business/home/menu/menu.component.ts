@@ -121,7 +121,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
   isCheckinActive() {
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
       if (this.isCheckin === 0 || this.isCheckin > 3) {
         return true;
@@ -134,7 +134,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
-            this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+            this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
             if (this.isCheckin === 0) {
               return true;
             } else {
