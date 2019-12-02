@@ -79,7 +79,6 @@ export class HomeserviceServiceDetailComponent implements OnInit {
         });
         this.serviceSubscription = this.servicesService.serviceUpdated.subscribe(
             serviceActionModel => {
-                console.log(serviceActionModel);
                 if (serviceActionModel) {
                     if (serviceActionModel.service) {
                         const post_itemdata2 = serviceActionModel.service;

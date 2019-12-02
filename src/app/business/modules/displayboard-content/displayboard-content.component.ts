@@ -35,7 +35,6 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     onResize(event?) {
         const screenHeight = window.innerHeight;
         this.boardHeight = (screenHeight - 150) / 2;
-        console.log(this.boardHeight);
     }
     ngOnInit() {
         this.getBusinessdetFromLocalstorage();

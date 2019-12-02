@@ -37,8 +37,6 @@ export class AdminLoginComponent implements OnInit {
       .subscribe(params => {
         this.loginId = params.get('userId');
         this.accountId = params.get('accountId');
-        console.log(this.loginId);
-        console.log(this.accountId);
         if (this.shared_functions.checkLogin()) {
           this.shared_functions.logoutNoRedirect();
         }
@@ -62,7 +60,6 @@ export class AdminLoginComponent implements OnInit {
       'password': pW,
       accountId: this.accountId
     };
-    console.log(post_data);
     this.api_loading = true;
     this.shared_functions.adminLogin(post_data)
       .then(

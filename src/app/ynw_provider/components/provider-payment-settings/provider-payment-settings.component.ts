@@ -403,12 +403,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             postData['paytmWebsiteWeb'] = this.paytmWebsiteWeb;
             postData['paytmWebsiteApp'] = this.paytmWebsiteApp;
             postData['paytmIndustryType'] = this.paytmIndustryType;
-            console.log(postData);
         }
-        //  else {
-        //     postData['payTm'] = false;
-        //     console.log(postData);
-        // }
         if (source === 'cc') {
             postData['payU'] = true;
             postData['dcOrCcOrNb'] = true;
@@ -437,14 +432,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             postData['branchCity'] = this.bankbranch;
             postData['businessFilingStatus'] = this.bankfiling;
             postData['accountType'] = this.bankactype;
-            console.log(postData);
         }
-        //  else {
-        //     postData['payU'] = false;
-        //     postData['dcOrCcOrNb'] = false;
-        //     console.log(postData);
-        // }
-        console.log(postData);
         if (!this.errorExist) {
             this.saveEnabled = false;
             this.provider_services.setPaymentSettings(postData)

@@ -274,7 +274,7 @@
                               *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                               <i class="icon-note"></i>
                             </span>
-                            <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                            <span data-title="Payment Status" class="payment" *ngIf="pos">
                               <ng-container *ngIf="checkin.paymentStatus">
                                 <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                     class="text">{{partially_paid_cap}}</span></span>
@@ -510,7 +510,7 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                       class="text">{{partially_paid_cap}}</span></span>
@@ -692,7 +692,7 @@
                                 *ngIf="checkin.consumerNote" (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                       class="text">{{partially_paid_cap}}</span></span>
@@ -885,7 +885,7 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                       class="text">{{partially_paid_cap}}</span></span>
@@ -1033,7 +1033,7 @@
                                 (click)="showConsumerNote(checkin)">
                                 <i class="icon-note"></i>
                               </span>
-                              <span data-title="Payment Status" class="payment" *ngIf="isServiceBillable">
+                              <span data-title="Payment Status" class="payment" *ngIf="pos">
                                 <ng-container *ngIf="checkin.paymentStatus">
                                   <span class="paid-h icon-btn" *ngIf="checkin.paymentStatus == 'PartiallyPaid'"><span
                                       class="text">{{partially_paid_cap}}</span></span>

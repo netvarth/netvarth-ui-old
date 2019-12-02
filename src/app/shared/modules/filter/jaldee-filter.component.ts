@@ -8,11 +8,9 @@ export class JaldeeFilterComponent implements OnInit {
     @Input() fields: any;
 
     ngOnInit() {
-        console.log('init');
     }
 
     filterClicked(event) {
-        console.log(event);
         if (event.target.selected) {
             event.target.selected = false;
             event.target.classList.remove('button_filter');

@@ -97,8 +97,6 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
-    console.log(this.bname);
-    console.log(this.source);
     this.getTaxpercentage();
     this.loading = true;
     this.payment_status = this.invoice.licensePaymentStatus || null;

@@ -214,7 +214,6 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
               return false;
             }
           });
-          console.log (this.payment_options);
           this.payModesQueried = true;
           if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
             this.payModesExists = false;
@@ -276,7 +275,6 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-              console.log( this.payment_popup);
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               this.document.getElementById('paytmform').submit();

@@ -34,7 +34,8 @@
                 </div>
                 <div class="item" *ngIf="service_data.notificationType">
                     <span>{{end_service_notify_cap}}:
-                        <span class="noti-it">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+                        <span class="noti-it" *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
+                        <span class="noti-it" *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
                 </div>
             </div>
             <div class="btm-ctrl">

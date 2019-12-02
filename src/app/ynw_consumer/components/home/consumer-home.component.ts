@@ -280,7 +280,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           let i = 0;
           let retval;
           for (const waitlist of this.waitlists) {
+<<<<<<< HEAD
             this.changemode[i] = false;
+=======
+>>>>>>> refs/remotes/origin/master
             const waitlist_date = new Date(waitlist.date);
             this.statusOfLiveTrack(waitlist, i);
             if (waitlist.jaldeeWaitlistDistanceTime) {

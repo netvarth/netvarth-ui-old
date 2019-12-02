@@ -277,8 +277,13 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
+<<<<<<< HEAD
                 data => {                  
                     this.license_sub = data;                   
+=======
+                data => {
+                    this.license_sub = data;
+>>>>>>> refs/remotes/origin/master
                     this.licensePlan = this.license_sub.licSubType;
                     this.licenseDisplayName = this.license_sub.licSubTypeDisplayName;
                     if (this.license_sub.subscriptionTo) {
@@ -295,7 +300,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
                             this.getLicenseMetaData();
                         },
                         (error) => {
-                            console.log('here');
                         }
                     );
                 }
@@ -314,7 +318,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                 this.grandTotal = meta['price'] * 12;
                                 this.appliedDiscount = this.grandTotal * (this.annualdiscount / 100);
                                 this.netTotal = this.grandTotal - this.appliedDiscount;
-                                console.log(meta['type'] + ':' + meta['pkgId']);
                                 if (meta['type'] === 'Trial' || meta['pkgId'] === 1) {
                                     this.showAmounts = false;
                                 }
