@@ -453,6 +453,7 @@ export class SignUpComponent implements OnInit {
     }
   }
   skipHearus() {
+    this.resetApiErrors();
     this.createForm(4);
   }
   onReferalSubmit(sccode) {
@@ -465,8 +466,9 @@ export class SignUpComponent implements OnInit {
   }
   submitHearus(hearus) {
     this.actionstarted = true;
+    this.resetApiErrors();
     const post_data = {
-      'hereby': hearus,
+      'hearBy': hearus,
     };
     if (hearus === 'SalesReps') {
       post_data['scCode'] = this.scCode;
