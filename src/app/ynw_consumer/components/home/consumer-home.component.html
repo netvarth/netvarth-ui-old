@@ -124,7 +124,7 @@
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
                                 <div *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime" >
-                                    <div>
+                                    <!-- <div>
                                     <span class="persons"><span>Distance :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance}}
                                     <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'KILOMETER'">Km</span>
                                     <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'METER'">M</span>
@@ -132,10 +132,9 @@
                             </div>
                             <div>
                                     <span class="persons"><span>Travel time :</span> {{getMintuesToHour(waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime)}}
-                                    <!-- <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'MINUTES'">Minutes</span>
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.timeUnit == 'HOURES'">Houres</span> -->
+                                   
                                 </span>
-                            </div>
+                            </div> -->
                             
                             <!-- <div >  -->
                             <div  *ngIf ="changemode[i] == false"> <label>Travel mode is : &nbsp;</label>
