@@ -128,7 +128,7 @@ export class ApplyLabelComponent implements OnInit {
                 () => {
                     setTimeout(() => {
                         this.dialogRef.close({ label: this.labelname.replace(' ', '_'), value: this.value, message: 'newlabel' });
-                    }, projectConstants.TIMEOUT_DELAY);
+                    }, 1000);
                 },
                 error => {
                     this.api_error = this.shared_functions.getProjectErrorMesssages(error);

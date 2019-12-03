@@ -1330,7 +1330,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   addConsumerInboxMessage(source, waitlst?) {
     let waitlist;
     if (source === 'single') {
-    waitlist = waitlst;
+      waitlist = waitlst;
     } else {
       waitlist = this.selectedCheckin[source];
     }
@@ -1607,6 +1607,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeLabelvalue(status, labelname, value) {
+    this.showLabels[status] = false;
     const checkin = this.selectedCheckin[status];
     this.checkinId = checkin.ynwUuid;
     this.labelMap = new Object();
@@ -1649,11 +1650,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.labeldialogRef.afterClosed().subscribe(data => {
       if (data) {
-        this.labelMap = new Object();
-        this.labelMap[data.label] = data.value;
-        this.addLabel();
-        this.getDisplayname(data.label);
-        this.getTodayCheckIn();
+        this.getLabel();
+        setTimeout(() => {
+          this.labels(this.selectedCheckin[status]);
+          this.labelMap = new Object();
+          this.labelMap[data.label] = data.value;
+          this.addLabel();
+          this.getDisplayname(data.label);
+          this.getTodayCheckIn();
+        }, 500);
       }
     });
   }
@@ -1834,8 +1839,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 100);
   }
   labelClick(status) {
-    (!this.showLabels[status]) ? this.showLabels[status] = true : this.showLabels[status] = false;
-    console.log(this.showLabels);
+    this.showLabels[status] = true;
+    // (!this.showLabels[status]) ? this.showLabels[status] = true : this.showLabels[status] = false;
   }
   waitlistStatusClick(status) {
     if (!this.showstatus[status]) {

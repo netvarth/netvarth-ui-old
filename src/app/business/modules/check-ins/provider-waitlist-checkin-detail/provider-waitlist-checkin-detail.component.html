@@ -3,7 +3,7 @@
 </section>
 
 <section>
-  <div class="content comn-cls">
+  <div class="content comn-cls checkin-details">
     <div class="col-md-12 no-padding-small">
       <div class="row">
         <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small">
@@ -36,6 +36,8 @@
                   <!-- <span *ngIf="
                     getAppxTime(waitlist_data) !=-1">{{getAppxTime(waitlist_data)}}</span> -->
                 </div>
+
+
                 <div class="item otp_scr"
                   *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">
                   <span class="ttle" *ngIf="getAppxTime(waitlist_data) != -1"> Est Wait Time</span>
@@ -47,23 +49,16 @@
                   <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showEditView">
                     <div class="input-group">
                       <input type="text" [(ngModel)]="esttime" id="estWatTme" max="500" maxlength="3"
-                        (keyup)="isvalid($event)" (keypress)="isNumeric($event)" class="form-control estwtTmTxBx">
-                      <span class="input-group-btn estwtTm">
-                        <button (click)="saveClicked(esttime)" type="button">Save</button>
-                        <button style="margin-left: 5px;" (click)="cancelClicked()" type="button">Cancel</button>
+                        (keyup)="isvalid($event)" (keypress)="isNumeric($event)" class="form-control number-ip-sm col-md-10 col-sm-12 col-xs-12">
+                      <span class="input-group-btn estwtTm col-sm-12 col-xs-12 col-md-2">
+                        <button type="submit" class="cs-btn bt2" (click)="saveClicked(esttime)">Save</button>
+                        <button class="cs-btn bt2" style="margin-left: 5px;" (click)="cancelClicked()" type="button">Cancel</button>
                       </span>
                     </div>
-
-                    <!-- <div  >
-                      <input placeholder="" style="margin-right: 10px;" max="500" maxlength="3" type="text" class="form-control"
-                        (keyup)="isvalid($event)" (keypress)="isNumeric($event)" [(ngModel)]="esttime">
-                      <span >
-                        <button type="submit" mat-button class="cs-btn bt1" (click)="saveClicked(esttime)">Save</button>
-                        <button  mat-button class="cs-btn bt2" style="margin-left: 10px;" (click)="cancelClicked()">Cancel</button>
-                      </span>
-                    </div> -->
                   </div>
                 </div>
+
+
                 <div class="item"><span class="ttle">{{location_cap}}</span><span>{{waitlist_data.queue.location.place
                     | capitalizeFirst}}</span></div>
                 <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>

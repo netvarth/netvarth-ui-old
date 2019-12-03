@@ -258,10 +258,10 @@ export class ProviderbWizardComponent implements OnInit {
           this.document.getElementById('bnameId').focus();
         }
       }, 1000);
-    } else if (changetostep === 2) {
+    } else if (changetostep === 4) {
       this.createForm();
       this.setValue(this.service);
-    } else if (changetostep === 3) {
+    } else if (changetostep === 2) {
       setTimeout(() => {
         if (this.document.getElementById('blatId')) {
           this.document.getElementById('blatId').focus();
@@ -307,18 +307,12 @@ export class ProviderbWizardComponent implements OnInit {
         // }
         break;
       case 2:
-        this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
-        this.loading_active = false;
-        break;
-      case 3:
         let latlon_Exists = false;
         const blankpattern = new RegExp(projectConstants.VALIDATOR_BLANK);
         const floatpattern = new RegExp(projectConstants.VALIDATOR_FLOAT);
         const urlpattern = new RegExp(projectConstants.VALIDATOR_URL);
         let latexists = false;
         let lonexists = false;
-
-
         // validating the fields if they are entered
         if (this.wizard_data_holder.lon !== '' && this.wizard_data_holder.lon !== undefined) {
           latlon_Exists = true;
@@ -446,7 +440,7 @@ export class ProviderbWizardComponent implements OnInit {
             }
           );
         break;
-      case 4:
+      case 3:
         let post_itemdata3;
         // Check whether atleast one schedule is added
         if (this.schedule_arr.length === 0) {
@@ -502,6 +496,10 @@ export class ProviderbWizardComponent implements OnInit {
               }
             }
           );
+        break;
+      case 4:
+        this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
+        this.loading_active = false;
         break;
       case 5:
         this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
@@ -986,7 +984,7 @@ export class ProviderbWizardComponent implements OnInit {
       .subscribe(
         () => {
           this.service = post_data;
-          this.showStep(3);
+          this.showStep(5);
           // this.add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP;
         },
         error => {

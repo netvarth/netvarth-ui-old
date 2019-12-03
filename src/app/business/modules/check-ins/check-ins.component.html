@@ -421,7 +421,7 @@
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
-                    *ngIf="startedwaitlistSelection === 1">
+                    *ngIf="startedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
@@ -590,7 +590,7 @@
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
-                    *ngIf="waitlistSelection === 1">
+                    *ngIf="waitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
@@ -776,7 +776,7 @@
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.done)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.done">({{grouped_list.done.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
-                    *ngIf="completedwaitlistSelection === 1">
+                    *ngIf="completedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
