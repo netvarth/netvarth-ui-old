@@ -79,8 +79,8 @@ export class MenuComponent implements OnInit, OnDestroy {
         // this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
         // break;
         case 'instant_q':
-           this.qAvailability = message.qAvailability;
-           break;
+          this.qAvailability = message.qAvailability;
+          break;
         // case 'popularList':
         //   this.jsonlist = message.target;
         //   if (this.jsonlist) {
@@ -92,7 +92,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   this.popular_search(this.jsonlist);
         //   break;
       }
-       this.getBusinessdetFromLocalstorage();
+      this.getBusinessdetFromLocalstorage();
     });
   }
   getBusinessdetFromLocalstorage() {
@@ -147,7 +147,6 @@ export class MenuComponent implements OnInit, OnDestroy {
         );
     }
   }
-
   gotoHelp() {
     this.router.navigate(['/provider/' + this.domain + '/help']);
   }

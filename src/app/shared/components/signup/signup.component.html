@@ -137,8 +137,30 @@ onSubmit()" (keyup)="resetApiErrors()">
   </app-otp-form>
 </div>
 <div class="mat-dialog-content" *ngIf="step==3">
-  <app-sales-channel-code (retonRefSubmit)="onReferalSubmit($event)" (resetApiErrors)="resetApiErrors()">
-  </app-sales-channel-code>
+  <section class="col-md-12 col-xs-12 col-sm-12 no-padding">
+      <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding">
+          <label class="col-form-label bold">How did you hear us?</label>
+      </div>
+      <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
+          <mat-radio-group [(ngModel)]="hearus">
+              <mat-radio-button value="Jaldee">Jaldee</mat-radio-button>
+              <mat-radio-button value="Facebook">Facebook</mat-radio-button>
+              <mat-radio-button value="Friend">Friend</mat-radio-button>
+              <mat-radio-button value="GoogleSearch">Google</mat-radio-button>
+              <mat-radio-button value="SalesReps">Sales Reps</mat-radio-button>
+              <div class="clearfix"></div>
+              <app-saleschannel *ngIf="hearus==='SalesReps'" (retfromSC)="onReferalSubmit($event)" (resetApiErrors)="resetApiErrors()">
+              </app-saleschannel>
+              <mat-radio-button value="Twitter">Twitter</mat-radio-button>
+              <mat-radio-button value="Other">Other</mat-radio-button>
+          </mat-radio-group>
+      </div>
+      <mat-dialog-actions>
+          <button tabindex="-1" (click)="skipHearus()" class="cs-btn bt2">Skip</button>
+          <button tabindex="2" [disabled]="!hearus || (hearus=='SalesReps' && !scfound)" [ngClass]="{'disabled': !hearus || (hearus=='SalesReps' && !scfound)}" (click)="submitHearus(hearus)" class="cs-btn bt1">{{ok_btn_cap}}</button>
+      </mat-dialog-actions>
+  </section>
+  
 </div>
 <div class="example-container" *ngIf="step==4">
   <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"

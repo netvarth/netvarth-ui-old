@@ -1818,7 +1818,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     setTimeout(() => {
-      let values = [];
+      const values = [];
       for (const value of Object.values(checkin.label)) {
         values.push(value);
       }

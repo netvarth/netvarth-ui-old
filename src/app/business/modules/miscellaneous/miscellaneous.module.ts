@@ -11,8 +11,9 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
-import { SaleschannelComponent } from './saleschannel/saleschannel.component';
 import { JDNComponent } from './jdn/jdn.component';
+import { SalesChannelModule } from '../../../shared/modules/saleschannel/saleschannel.module';
+import { SaleschannelSettingsComponent } from './saleschannel/sc-settings.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -23,13 +24,14 @@ import { JDNComponent } from './jdn/jdn.component';
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         NgbTimepickerModule,
-        SharedModule
+        SharedModule,
+        SalesChannelModule
     ],
     declarations: [
         MiscellaneousComponent,
         AddProviderNonworkingdaysComponent,
         ProviderNonworkingdaysComponent,
-        SaleschannelComponent,
+        SaleschannelSettingsComponent,
         JDNComponent
     ],
     entryComponents: [

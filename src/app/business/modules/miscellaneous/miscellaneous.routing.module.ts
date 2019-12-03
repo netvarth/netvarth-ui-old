@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MiscellaneousComponent } from './miscellaneous.component';
 import { ProviderNonworkingdaysComponent } from '../../../ynw_provider/components/provider-nonworkingdays/provider-nonworkingdays.component';
-import { SaleschannelComponent } from './saleschannel/saleschannel.component';
 import { JDNComponent } from './jdn/jdn.component';
+
+import { SaleschannelSettingsComponent } from './saleschannel/sc-settings.component';
 
 const routes: Routes = [
     { path: '', component: MiscellaneousComponent },
@@ -13,7 +14,7 @@ const routes: Routes = [
     },
     {
       path: 'saleschannel',
-      component: SaleschannelComponent
+      component: SaleschannelSettingsComponent
     },
     {
       path: 'jdn',

@@ -75,6 +75,8 @@ export class SignUpComponent implements OnInit {
   fname;
   lname;
   actionstarted = false;
+  scCode;
+  scfound = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -450,28 +452,36 @@ export class SignUpComponent implements OnInit {
         );
     }
   }
-  onReferalSubmit(submit_data) {
+  skipHearus() {
+    this.createForm(4);
+  }
+  onReferalSubmit(sccode) {
+    this.scfound = false;
+    this.scCode = null;
+    if (sccode) {
+      this.scCode = sccode;
+      this.scfound = true;
+    }
+  }
+  submitHearus(hearus) {
     this.actionstarted = true;
-    if (this.is_provider === 'true') {
-      if (submit_data === 'skip') {
+    const post_data = {
+      'hereby': hearus,
+    };
+    if (hearus === 'SalesReps') {
+      post_data['scCode'] = this.scCode;
+    }
+    this.shared_services.saveReferralInfo(this.otp, post_data)
+    .subscribe(
+      () => {
         this.actionstarted = false;
         this.createForm(4);
-      } else {
-        this.shared_services.saveReferralInfo(this.otp, submit_data)
-          .subscribe(
-            () => {
-              this.actionstarted = false;
-              // this.otp = submit_data.phone_otp;
-              this.createForm(4);
-            },
-            error => {
-              this.actionstarted = false;
-              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-            }
-          );
+      },
+      error => {
+        this.actionstarted = false;
+        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
       }
-    }
-
+    );
   }
   onPasswordSubmit(submit_data) {
     this.actionstarted = true;

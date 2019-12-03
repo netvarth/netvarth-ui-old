@@ -57,14 +57,13 @@ import { LoadingSpinnerModule } from './ynw_provider/components/loading-spinner/
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { LazyModule } from './shared/modules/lazy-load/lazy.module';
 import { ForceDialogComponent } from './shared/components/force-dialog/force-dialog.component';
-import { SearchProviderComponent } from './shared/components/search-provider/search-provider.component';
 import { SearchProviderModule } from './shared/components/search-provider/search-provider.module';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { ConsumerPaymentmodeComponent } from './shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
-import { SalesChannelCodeComponent } from './shared/components/sales-chanel/sales-channel-code.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
+import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +73,6 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
     EqualValidator,
     SignUpComponent,
     SetPasswordFormComponent,
-    SalesChannelCodeComponent,
     LoginComponent,
     ConfirmBoxComponent,
     ReturnPaymentComponent,
@@ -134,7 +132,8 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
     SearchProviderModule,
     ScrollToModule.forRoot(),
     DateFormatPipeModule,
-    DisplayboardLayoutContentModule
+    DisplayboardLayoutContentModule,
+    SalesChannelModule
   ],
   providers: [
     AuthGuardConsumer,

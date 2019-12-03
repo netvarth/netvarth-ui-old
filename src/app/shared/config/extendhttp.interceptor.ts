@@ -199,7 +199,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
-    console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
+    // console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
     if (this.shared_functions.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
