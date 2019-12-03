@@ -35,14 +35,8 @@
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div> -->
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input matInput type="text" class="form-control" id="displayName"
-                                                    placeholder="Display Name" [(ngModel)]="displayName"
-                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="form-group">
+                                      
+                                        <div class="form-group" *ngIf="qset_list.length>0">
                                             <mat-form-field>
                                                 <mat-select placeholder="Choose the queue statusboard layout" id="layout" 
                                                 (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
@@ -54,7 +48,7 @@
                                                 </mat-select>
                                             </mat-form-field>
                                         </div>
-                                        <div class="col-md-12" *ngIf="qset_list.length!==0">
+                                        <div class="col-md-12" *ngIf="qset_list.length>0">
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-12 card">                                    
@@ -77,6 +71,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group" *ngIf="qset_list.length>0">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="displayName"
+                                                        placeholder="Display Name" [(ngModel)]="displayName"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
                                         <div class="col-md-12" *ngIf="qset_list.length==0">
                                             <div class="form-group">
                                                 <div class="row">
@@ -86,7 +87,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="actiondiv labelsave" style="margin-top: 150px;">
+                                        <div class="actiondiv labelsave" style="margin-top: 150px;" *ngIf="qset_list.length >0">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;

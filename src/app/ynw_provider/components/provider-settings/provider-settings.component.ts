@@ -109,7 +109,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.shared_functions.getMessage().subscribe(data => {
       switch (data.ttype) {
         case 'upgradelicence':
-          this.getStatusboardLicenseStatus();
+          // this.getStatusboardLicenseStatus();
           break;
       }
     });
@@ -165,7 +165,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getPOSSettings();
     this.getDisplayboardCount();
     this.getBusinessConfiguration();
-    this.getStatusboardLicenseStatus();
+    // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
@@ -407,11 +407,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
         break;
       case 'displayboards':
-        if (this.statusboardStatus) {
           this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
-        } else {
-          this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
-        }
+        // if (this.statusboardStatus) {
+        //   this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        // } else {
+        //   this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
+        // }
         break;
       case 'skins':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
@@ -562,29 +563,29 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getStatusboardLicenseStatus() {
-    let pkgId;
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
-      pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
-    }
-    this.provider_services.getLicenseMetadata().subscribe(data => {
-      this.licenseMetadata = data;
-      for (let i = 0; i < this.licenseMetadata.length; i++) {
-        if (this.licenseMetadata[i].pkgId === pkgId) {
-          for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-            if (this.licenseMetadata[i].metrics[k].id === 6) {
-              if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-                this.statusboardStatus = true;
-                return;
-              } else {
-                this.statusboardStatus = false;
-                return;
-              }
-            }
-          }
-        }
-      }
-    });
+    // let pkgId;
+    // const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    // if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+    //   pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+    // }
+    // this.provider_services.getLicenseMetadata().subscribe(data => {
+    //   this.licenseMetadata = data;
+    //   for (let i = 0; i < this.licenseMetadata.length; i++) {
+    //     if (this.licenseMetadata[i].pkgId === pkgId) {
+    //       for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+    //         if (this.licenseMetadata[i].metrics[k].id === 18) {
+    //           if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+    //             this.statusboardStatus = true;
+    //             return;
+    //           } else {
+    //             this.statusboardStatus = false;
+    //             return;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
   }
 }
 

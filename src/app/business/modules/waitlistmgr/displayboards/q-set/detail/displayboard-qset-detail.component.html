@@ -23,9 +23,9 @@
                             <div>
                                 <div class="c-ot">
                                     <div class="item" style="width: 100%;">
-                                        <span class="ttle">Selected fields (Order)</span>
+                                        <span class="ttle">Selected fields</span>
                                         <span class="" *ngFor="let fields of displayBoardData.fieldList"
-                                            style="margin-right: 30px;"> {{fields.displayName}}({{fields.order}})
+                                            style="margin-right: 30px;"> {{fields.displayName}}
                                         </span>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                             Queues</label>
                                         <div *ngFor="let schedule of display_schedule; index as i">
                                             <mat-radio-group [(ngModel)]="selectedCategoryValue">
-                                                <mat-radio-button [value]="schedule.id"
+                                                <mat-radio-button *ngIf="schedule.queueState === 'ENABLED'" [value]="schedule.id"
                                                     [checked]="display_schedule[i].checked"
                                                     (change)="queueSelection(schedule.id)">
                                                     {{schedule.displayQ.dstr | capitalizeFirst}}
@@ -124,14 +124,14 @@
                                                             [(ngModel)]="labelDisplayname[i]">
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control" id="order"
                                                             placeholder="Enter Order" autocomplete="off"
                                                             (blur)="getLabelOrder(labelOrder[i], label)"
                                                             [(ngModel)]="labelOrder[i]">
                                                     </mat-form-field>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-4" *ngIf="label.label">
                                                     <mat-form-field>
                                                         <input matInput type="text" class="form-control"

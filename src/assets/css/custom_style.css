@@ -6337,10 +6337,18 @@
   box-shadow:  0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
 }
 }
-.statuslink .navbar-nav>.messages-menu>.dropdown-menu {
+.menu-style {
   top: auto !important;
+  bottom: 100% !important;
   margin-top: 20px !important;
 }
 .checkin-details .lbl .card .c-details .tp .item {
   width: 50% !important;
+}
+.checkin-details .wait-btn{
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.checkin-details .wait-btn .bt3{
+  padding: 5px !important;
 }

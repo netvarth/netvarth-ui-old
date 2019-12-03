@@ -783,7 +783,7 @@
                           <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
                             (click)="labelClick('completed')">
                             <i class="label-img"></i></div>
-                          <ul class="dropdown-menu" *ngIf="showLabels['completed']">
+                          <ul class="dropdown-menu" *ngIf="showLabels['completed']" [class.menu-style]="completed_checkins_list.length<3">
                             <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
@@ -915,13 +915,13 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-10 col-xs-10 col-sm-10"
+                  <div class="statuslink col-md-11 col-xs-11 col-sm-11"
                     [class.status-width]="cancelledwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.cancelled)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.cancelled">({{grouped_list.cancelled.length}})</span>
                   </div>
-                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                  <!-- <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
                     *ngIf="cancelledwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
@@ -961,7 +961,7 @@
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="cancelledwaitlistSelection===1">
                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i> 
                   </div>

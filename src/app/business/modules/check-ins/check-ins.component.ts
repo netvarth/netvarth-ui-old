@@ -1039,6 +1039,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   loadApiSwitch(source) {
+    this.resetAll();
     let chkSrc = true;
     if (source === 'changeLocation' && this.time_type === 0) {
       const hisPage = this.shared_functions.getitemFromGroupStorage('hP');
@@ -1163,7 +1164,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.section_history = [];
           this.section_new = [];
           this.loadApiSwitch(result);
-          this.resetAll();
         }
       );
   }
@@ -1334,6 +1334,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       waitlist = this.selectedCheckin[source];
     }
+
+
+    // {
+    //   "medium": {
+    //     "email": true,
+    //     "sms": true,
+    //     "pushNotification": true
+    //   },
+    //   "communicationMessage": "string",
+    //   "uuid": [
+    //     "string"
+    //   ]
+    // }
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => { },
