@@ -244,7 +244,8 @@
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                   *ngFor="let checkin of check_in_list, let i=index">
                   <div class="info-box">
-                    <div class="info-box-icon" [ngClass]="{cancelled: checkin.waitlistStatus == 'cancelled'}">
+                    <!-- <div class="info-box-icon" [ngClass]="{cancelled: checkin.waitlistStatus == 'cancelled'}"> -->
+                    <div class="info-box-icon">
                       <div class="tkn pointer-cursor" *ngIf="checkin.token && calculationmode=='NoCalc'"
                         (click)="goCheckinDetail(checkin)">
                         <ng-container *ngIf="checkin.token">{{checkin.token}}</ng-container>
@@ -266,6 +267,13 @@
                               {{checkin.service.name}}
                             </span>
                           </div>
+
+                          <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.waitlistStatus === 'cancelled'">
+                            <span class="info-box-text" style="font-size: smaller;">
+                              {{checkin.waitlistStatus}}
+                            </span>
+                          </div>
+
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                               [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
@@ -416,16 +424,17 @@
             <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-10 col-xs-10 col-sm-10" [class.status-width]="startedwaitlistSelection!=1">
+                  <div class="statuslink col-md-12 col-xs-12 col-sm-12"
+                    [class.status-width]="startedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('started')"> Started </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.started">({{grouped_list.started.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                  <div class="navbar navbar-static-top statuslink " role="navigation"
                     *ngIf="startedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
-                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" [matTooltip]="'Labels'"
                             (click)="labelClick('started')">
                             <i class="label-img"></i></div>
                           <ul class="dropdown-menu" *ngIf="showLabels['started']">
@@ -449,27 +458,25 @@
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor"
-                                (click)="addLabelvalue('started', 'newlabel')">Add
-                                Label</a>
+                                (click)="addLabelvalue('started', 'newlabel')">{{add_label}}</a>
                             </li>
                             <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
-                                routerLink="/provider/settings/miscellaneous/labels">Manage
-                                Label</a>
+                                routerLink="/provider/settings/miscellaneous/labels">{{manage_labels}}</a>
                             </li>
                           </ul>
                         </li>
                       </ul>
                     </div>
                   </div>
-                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="startedwaitlistSelection===1">
-                   <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
+                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Send Message'">
+                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 && 
                   showstatus['started']">
                   {{no_started_checkin_msg}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="started_checkins_list.length>0 && 
-                     showstatus['started']">
+                     showstatus['started']" [class.chk-scroll]="showstatus['started']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of started_checkins_list, let i=index"
                     [class.selected-waitlist]="startedwaitlistSelected[i]">
@@ -586,16 +593,16 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12 col-sm-12  no-padding newwaitlist">
                 <div class="labelList col-md-12 no-padding">
-                  <div class="statuslink col-md-10 col-xs-10 col-sm-10" [class.status-width]="waitlistSelection!=1">
+                  <div class="statuslink col-md-12 col-xs-12 col-sm-12" [class.status-width]="waitlistSelection!=1">
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
-                    *ngIf="waitlistSelection === 1" style="z-index: 1;">
+                  <div class="navbar navbar-static-top statuslink " role="navigation" *ngIf="waitlistSelection === 1"
+                    style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li ngbDropdown class="dropdown messages-menu loc-lst queue-menu">
                           <div ngbDropdownToggle class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
-                            (click)="labelClick('new')">
+                            [matTooltip]="'Labels'" (click)="labelClick('new')">
                             <i class="label-img"></i></div>
                           <ul ngbDropdownMenu class="dropdown-menu" *ngIf="showLabels['new']">
                             <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
@@ -617,25 +624,24 @@
                                 </li>
                               </ul>
                             </li>
-                            <li class="footer"><a class="pointer-cursor" (click)="addLabelvalue('new', 'newlabel')">Add
-                                Label</a>
+                            <li class="footer"><a class="pointer-cursor"
+                                (click)="addLabelvalue('new', 'newlabel')">{{add_label}}</a>
                             </li>
                             <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
-                                routerLink="/provider/settings/miscellaneous/labels">Manage
-                                Label</a>
+                                routerLink="/provider/settings/miscellaneous/labels">{{manage_labels}}</a>
                             </li>
                           </ul>
                         </li>
                       </ul>
                     </div>
                   </div>
-                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="waitlistSelection===1">
-                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i>  </div>
+                  <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Send Message'">
+                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
                   *ngIf="new_checkins_list.length>0 && showstatus['new']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of new_checkins_list, let i=index"
@@ -647,7 +653,8 @@
                         </div>
                         <div class="dashboard-wait pointer-cursor" *ngIf="calculationmode!=='NoCalc'"
                           (click)="goCheckinDetail(checkin)">
-                          <ng-container><i class="fa fa-hourglass" style="font-size: x-small;"></i>
+                          <ng-container>
+                            <!-- <i class="fa fa-hourglass" style="font-size: x-small;"></i> -->
                             {{getAppxTime(checkin)}}</ng-container>
                         </div>
                       </div>
@@ -770,20 +777,21 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-10 col-xs-10 col-sm-10"
+                  <div class="statuslink col-md-12 col-xs-12 col-sm-12"
                     [class.status-width]="completedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('completed')"> Completed </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.done)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.done">({{grouped_list.done.length}})</span></div>
-                  <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                  <div class="navbar navbar-static-top statuslink " role="navigation"
                     *ngIf="completedwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
                         <li class="dropdown messages-menu loc-lst queue-menu">
-                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown"
+                          <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" [matTooltip]="'Labels'"
                             (click)="labelClick('completed')">
                             <i class="label-img"></i></div>
-                          <ul class="dropdown-menu" *ngIf="showLabels['completed']" [class.menu-style]="completed_checkins_list.length<3">
+                          <ul class="dropdown-menu" *ngIf="showLabels['completed']"
+                            [class.menu-style]="completed_checkins_list.length<3">
                             <li *ngIf="providerLabels.length > 0" style="border-bottom: 1px solid;">
                               <ul class="menu"
                                 style="padding: 10px;max-height: 240px;overflow-x: hidden;background: white;">
@@ -804,20 +812,18 @@
                               </ul>
                             </li>
                             <li class="footer"><a class="pointer-cursor"
-                                (click)="addLabelvalue('completed', 'newlabel')">Add
-                                Label</a>
+                                (click)="addLabelvalue('completed', 'newlabel')">{{add_label}}</a>
                             </li>
                             <li class="footer" *ngIf="providerLabels.length > 0"><a class="pointer-cursor"
-                                routerLink="/provider/settings/miscellaneous/labels">Manage
-                                Label</a>
+                                routerLink="/provider/settings/miscellaneous/labels">{{manage_labels}}</a>
                             </li>
                           </ul>
                         </li>
                       </ul>
                     </div>
                   </div>
-                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="completedwaitlistSelection===1">
-                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i> 
+                  <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Send Message'">
+                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i>
                   </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="completed_checkins_list.length === 0 && 
@@ -825,7 +831,7 @@
                   {{no_completed_checkin_msg}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="completed_checkins_list.length>0 && 
-                      showstatus['completed']">
+                      showstatus['completed']" [class.chk-scroll]="showstatus['completed']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of completed_checkins_list, let i=index"
                     [class.selected-waitlist]="completedwaitlistSelected[i]">
@@ -915,13 +921,13 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-11 col-xs-11 col-sm-11"
+                  <div class="statuslink col-md-12 col-xs-12 col-sm-12"
                     [class.status-width]="cancelledwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.cancelled)">(0)</span>
                     <span *ngIf="grouped_list && grouped_list.cancelled">({{grouped_list.cancelled.length}})</span>
                   </div>
-                  <!-- <div class="navbar navbar-static-top statuslink col-md-1 col-xs-1 col-sm-1" role="navigation"
+                  <!-- <div class="navbar navbar-static-top statuslink " role="navigation"
                     *ngIf="cancelledwaitlistSelection === 1" style="z-index: 1;">
                     <div class="navbar-custom-menu">
                       <ul class="nav navbar-nav">
@@ -962,8 +968,8 @@
                       </ul>
                     </div>
                   </div> -->
-                  <div class="statuslink col-md-1 col-xs-1 col-sm-1" *ngIf="cancelledwaitlistSelection===1">
-                   <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i> 
+                  <div class="statuslink " *ngIf="cancelledwaitlistSelection===1" [matTooltip]="'Send Message'">
+                    <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i>
                   </div>
                 </div>
                 <div class="no-dta col-md-12" *ngIf="cancelled_checkins_list.length === 0 && 
@@ -971,7 +977,7 @@
                   {{no_cancelled_checkin_msg}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="cancelled_checkins_list.length>0 && 
-                      showstatus['cancelled']">
+                      showstatus['cancelled']" [class.chk-scroll]="showstatus['cancelled']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of cancelled_checkins_list, let i=index"
                     [class.selected-waitlist]="cancelledwaitlistSelected[i]">
@@ -1083,4 +1089,4 @@
 
 <div *ngIf="apiloading" style="margin-top: 100px">
   <app-common-innerloading-spinner></app-common-innerloading-spinner>
-</div>  
+</div>

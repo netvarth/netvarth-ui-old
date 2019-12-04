@@ -45,13 +45,16 @@
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="bName"
                                                 autocomplete="off" [(ngModel)]="boardDisplayname"
-                                                placeholder="Enter Display Name">
+                                                placeholder="Enter the name for your queue-set *">
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group col-md-12 inline">
-                                        <label class="col-form-label">{{category}}</label>
+                                        <label class="col-form-label">{{category}}
+                                                <span class="form-level-settings">Choose any one category to be displayed on your queue statuboard </span>
+                                        </label>
+                                       
                                         <mat-radio-group [(ngModel)]="selectedCategory">
                                             <mat-radio-button class="jdnpercent" [value]="'SERVICE'" *ngIf="services_list.length > 0"
                                                 (change)="categorySelection('SERVICE')">

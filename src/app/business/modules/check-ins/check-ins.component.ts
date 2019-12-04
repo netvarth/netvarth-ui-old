@@ -68,6 +68,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
   wait_time_caption = Messages.WAIT_TIME;
   no_result_found = Messages.NO_RESULT_FOUND;
+  manage_labels = Messages.MANAGE_LABELS;
+  add_label = Messages.ADD_LABEL;
   no_history = '';
   no_today_checkin_msg = '';
   no_started_checkin_msg = '';

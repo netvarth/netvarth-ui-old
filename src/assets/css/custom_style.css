@@ -6352,3 +6352,10 @@
 .checkin-details .wait-btn .bt3{
   padding: 5px !important;
 }
+.today .chk-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.displyboard .locd .no-qset .card {
+  box-shadow: none !important;
+}
