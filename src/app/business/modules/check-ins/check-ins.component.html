@@ -763,8 +763,8 @@
                         <div *ngIf="checkin.jaldeeStartTimeType == 'ONEHOUR' || checkin.jaldeeStartTimeType =='TWOHOUR'"
                           class="btn-play popup" (click)="locateCustomer(checkin.ynwUuid,i)">
                           <i class="fa fa-location-arrow"></i>Where is my customer
-                          <span class="popuptext" id="myPopup{{[i]}}">He/She is {{distance[i]}} {{unit[i]}} away
-                            from you will reach here in {{hours}} Hours and {{minutes}} Mintues</span>
+                          <span class="popuptext" id="myPopup{{[i]}}">Your customer is {{distance[i]}} {{unit[i]}} away
+                            from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span>
                         </div>
                         <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'new')">
                           <i class="fa fa-angle-up black"></i>

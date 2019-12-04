@@ -1763,9 +1763,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   locateCustomer(uuid, i) {
     this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
+      console.log(data);
       this.trackDetail = data;
       this.distance[i] = this.trackDetail.jaldeeDistance.distance;
-      this.unit[i] = this.trackDetail.jaldeeDistance.unit;
+      this.unit[i] = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
       this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
       this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
       this.hours = Math.floor(this.travelTime[i] / 60);
