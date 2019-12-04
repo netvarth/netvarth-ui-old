@@ -146,7 +146,7 @@
                     </div>
                     <div class='q-list-outer' *ngIf="step==1 && queuejson.length == 1">
                         <div class="queue-head" *ngIf="step==1 && queuejson.length == 1">{{serv_time_window_cap}}
-                            <div class="queue-body"> 
+                            <div class="queue-body">
                                 <span class="sel-queue">
                                     <!-- <span class="name">{{sel_queue_name}}</span> -->
                                     {{sel_queue_timecaption}}</span>
@@ -168,42 +168,44 @@
                             <label for="reason" class="col-form-label">{{have_note_click_here}} <span
                                     [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"
                                     (click)="handleNote()"></span></label>
-                            <ng-container *ngIf="dispCustomernote"><div><b>Note</b>
-                                <textarea matInput class="form-control" #consumernote
-                                    (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
-                                    placeholder="{{note_placeholder}}"></textarea>
+                            <ng-container *ngIf="dispCustomernote">
+                                <div><b>Note</b>
+                                    <textarea matInput class="form-control" #consumernote
+                                        (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
+                                        placeholder="{{note_placeholder}}"></textarea>
                                 </div>
-                                    <button type="button"  class="cs-btn btn-attach bt_attach"
-                    (click)="imagefile.click()" [matTooltip]="'Attach files'">
-                    <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;" multiple
-                        (change)="filesSelected($event)">
-                    <span><i class="fa fa-upload"></i></span>
-                </button> 
-                <ng-container *ngIf="selectedMessage">
-                    <div class="row col-md-12" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
-                        <div class="col-md-7">
-                            <span class="ln-hgt-40">{{item.name}}</span>
-                        </div>
-                        <div class="col-md-5">
-                            <span class="mbt comm-menu-imgs">
-                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                    <mat-icon>more_vert</mat-icon>
+                                <button type="button" class="cs-btn btn-attach bt_attach" (click)="imagefile.click()"
+                                    [matTooltip]="'Attach files'">
+                                    <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;"
+                                        multiple (change)="filesSelected($event)">
+                                    <span><i class="fa fa-upload"></i></span>
                                 </button>
-                                <mat-menu #menu="matMenu">
-                                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                                        <i class="icon-delete"></i>
-                                        <span>delete</span>
-                                    </button>
-                                </mat-menu>
-                            </span>
-                        </div>
-                        
-                    </div>
-                </ng-container>
+                                <ng-container *ngIf="selectedMessage">
+                                    <div class="row col-md-12" style="display: flex;"
+                                        *ngFor="let item of selectedMessage.files; let i = index">
+                                        <div class="col-md-7">
+                                            <span class="ln-hgt-40">{{item.name}}</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span class="mbt comm-menu-imgs">
+                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu">
+                                                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                                        <i class="icon-delete"></i>
+                                                        <span>delete</span>
+                                                    </button>
+                                                </mat-menu>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </ng-container>
                             </ng-container>
                         </div>
                     </div>
-                    
+
                     <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
     <div class="showDetService">
     Check-In for service: <span class='selsername'>{{ sel_ser_det.name }}</span>
@@ -471,43 +473,81 @@
 
 
 
-<div *ngIf="liveTrack">
-    <h4 class="mat-dialog-title">Tracking <span><i class="fa fa-info-circle"></i></span><button mat-dialog-close class="modal_close" tabindex="-1"
-            style="color: black"> <i class="fa fa-window-close" aria-hidden="true"></i> </button>
+<div *ngIf="liveTrack" class="lv-trk">
+    <h4 class="mat-dialog-title"><button mat-dialog-close class="modal_close" tabindex="-1" style="color: black"> <i
+                class="fa fa-window-close" aria-hidden="true"></i> </button>
     </h4>
     <mat-dialog-content>
         <div>
-            <div class="form-group"> <input type="checkbox" [(ngModel)]="shareLoc" style="margin-left: 10px"> <label
-                    style="margin-left: 10px"> Share live ETA </label> </div>
-            <div class="col-md-6"> <label>You will reach by</label> </div>
-            <div class="col-md-4">
-                <ul class="trackIcons">
-                    <li matTooltip="Driving" [class.driving]="driving"(click)="getTravelMod('DRIVING')">
-                        <div class="travelmodeicon"><i class="fa fa-car" aria-hidden="true"></i></div>
-                    </li>
-                    <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
-                        <div class="travelmodeicon"><img src="./assets/images/walking.png" alt=""
-                                style="width: 15px;height:15px;" /></div>
-                    </li>
-                </ul>
+            <div class="successmsg">Your checkin for {{activeWt.provider.businessName}} for {{activeWt.service.name}}
+                has been created successfully.</div>
+            <!-- <div class="">From your current location you are {{"1"}} away and it takes around  {{"3"}}. </div>
+            <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around  {{"3"}}. </div> -->
+            <div class="mgn-up-20">Would you allow {{activeWt.provider.businessName}} to track your <span
+                    class="bold">Estimated Time of Arrival</span></div>
+            <div class="form-group mgn-up-5"> <input type="checkbox" [(ngModel)]="shareLoc"> <label> Share my live ETA
+                </label> <a class="pull-right link mgn-up-4" (click)="jaldeeRec=true">Why Jaldee recommends</a></div>
+            <div class="col-md-12 mgn-up-20 no-padding" *ngIf="jaldeeRec">
+                
             </div>
-            <div class="col-md-12">
-                <label>When you want to get notified</label>
-                <mat-radio-group [(ngModel)]="notifyTime">
-                    <mat-radio-button value='ONEHOUR' style="margin-right: 50px; padding-top: 5px;">1 hour before
-                    </mat-radio-button>
-                    <mat-radio-button value='TWOHOUR' style="margin-right: 50px; padding-top: 5px;">2 hour before
-                    </mat-radio-button>
-                    <mat-radio-button value='AFTERSTART' style="margin-right: 50px; padding-top: 5px;">After started
-                    </mat-radio-button>
-                </mat-radio-group>
-                <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
+
+            <div class="form-group" *ngIf="shareLoc">Jaldee will start tracking <span *ngIf="notifyTime=='ONEHOUR'">1
+                    hour prior to your expected arrival</span>
+                <span *ngIf="notifyTime=='TWOHOUR'">2 hour prior to your expected arrival</span><span
+                    *ngIf="notifyTime=='AFTERSTART'">
+                    as soon as you enable 'Live Track'.
+                </span><i class="fa fa-pencil link" (click)="trackTimeChange=!trackTimeChange"></i>
+                <div class="col-md-12 mgn-up-20 no-padding" *ngIf="trackTimeChange">
+                    <label>When should Jaldee track your ETA?</label>
+                    <!-- <mat-radio-group [(ngModel)]="notifyTime" (change)="trackTimeChange=!trackTimeChange"> -->
+                    <ul class="trackIcons tracktime">
+                        <li [class.driving]="notifyTime == 'ONEHOUR'" (click)="notifyTime = 'ONEHOUR';trackTimeChange=!trackTimeChange">
+                            <div>1 hour before</div>
+                        </li>
+                        <li [class.driving]="notifyTime == 'TWOHOUR'" (click)="notifyTime = 'TWOHOUR';trackTimeChange=!trackTimeChange">
+                            <div>2 hour before</div>
+                        </li>
+                        <li [class.driving]="notifyTime == 'AFTERSTART'" (click)="notifyTime = AFTERSTART;trackTimeChange=!trackTimeChange">
+                            <div>manually enable 'Live Track'</div>
+                        </li>
+                    </ul>
+                    <!-- <mat-radio-button value='ONEHOUR'>1 hour before 
+                        </mat-radio-button>
+                        <mat-radio-button value='TWOHOUR'>2 hour before
+                        </mat-radio-button>
+                        <mat-radio-button value='AFTERSTART'>manually enable 'Live Track'
+                        </mat-radio-button>
+                    </mat-radio-group> -->
+                    <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
+                </div>
+                <div class="track-mode col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20"> <label>Mode of transport :
+                        <span *ngIf="driving">I am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
+                        <span *ngIf="bicycling">I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></span>
+                        <span *ngIf="walking">I am Walking <img src="./assets/images/walking.png" alt=""
+                                style="width: 15px;height:15px;" /></span></label><i class="fa fa-pencil link"
+                        (click)="trackMode = !trackMode"></i> </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <ul class="trackIcons" *ngIf="trackMode">
+                        <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
+                            <div>I am Driving <i class="fa fa-car" aria-hidden="true"></i></div>
+                        </li>
+                        <li matTooltip="Bicycling" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')">
+                            <div>I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></div>
+                        </li>
+                        <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
+                            <div>I am Walking <img src="./assets/images/walking.png" alt=""
+                                    style="width: 15px;height:15px;" /></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <ng-container > <button mat-dialog-close class="cs-btn bt2" tabindex="-1" style="margin-left: 10px;
-                margin-right: 10px;"
-               > Cancel </button>
-                <button  mat-button class="cs-btn bt1 savemember"
-                    (click)="saveLiveTrackDetails()" style="margin-top: 10px;">I AGREE</button> </ng-container>
+            <ng-container>
+                <div class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding"><button mat-dialog-close
+                        class="cs-btn bt2" tabindex="-1" style="margin-right: 10px;"> Cancel </button>
+                    <button mat-button class="cs-btn bt1 savemember" *ngIf="shareLoc" (click)="saveLiveTrackDetails()"
+                        style="margin-top: 10px;">I AGREE</button>
+                </div>
+            </ng-container>
         </div>
     </mat-dialog-content>
 </div>

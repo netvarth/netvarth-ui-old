@@ -1,15 +1,12 @@
 <section class="content consumer-dash">
     <div class="container">
-        <!-- <div class="row"> -->
-        <!-- <h1>Consumer <span>Dashboard</span></h1> -->
         <div class="card c-checkins">
             <h2><span [matTooltipClass]="tooltipcls" [matTooltip]="currentcheckinsTooltip">Active Check-Ins
                     <ng-container *ngIf="waitlists && waitlists.length>0">({{waitlists.length}})</ng-container></span>
             </h2>
             <div class="outer">
                 <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
-                    <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists; let i=index" >
-                        <!-- <div class="list"> -->
+                    <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists; let i=index">
                         <div class="header">
                             <div class="lt">
                                 <div class="title" (click)="providerDetail(waitlist.provider)">
@@ -22,11 +19,8 @@
                                             class="icon-location" matTooltip="Click to navigate">
                                         </a></span>
                                 </div>
-                                
+
                                 <div class="status-outer">
-                                    <!-- <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
-                                        {{status_cancelled_cap}}
-                                    </div> -->
                                     <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
                                         {{status_started_cap}}
                                     </div>
@@ -38,21 +32,12 @@
                             <div class="rt">
                                 <div class="favourite" *ngIf="checkIfFav(waitlist.provider.id)">
                                     <span class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.provider)"
-                                    matTooltip="{{remove_fav_cap}}" ></span>
+                                        matTooltip="{{remove_fav_cap}}"></span>
                                 </div>
                                 <div class="favourite" *ngIf="!checkIfFav(waitlist.provider.id)">
                                     <span class="icon-favourite" matTooltip="Add to Favourite"
                                         (click)="addFavProvider(waitlist.provider.id)"></span>
                                 </div>
-                                <!-- <div class="cancel-label" *ngIf="waitlist.waitlistStatus == 'cancelled'">
-                                        {{status_cancelled_cap}}
-                                    </div>
-                                    <div class="started-label" *ngIf="waitlist.waitlistStatus == 'started'">
-                                        {{status_started_cap}}
-                                    </div>
-                                    <div class="done-label" *ngIf="waitlist.waitlistStatus == 'done'">
-                                        {{status_done_cap}}
-                                    </div> -->
                             </div>
                         </div>
                         <div class="details">
@@ -69,7 +54,8 @@
                                     <div class="lt0"
                                         *ngIf="waitlist.estimated_date=='' && waitlist.waitlistStatus != 'cancelled'">
                                         {{waitlist.estimated_caption}} <span class="time now">
-                                            {{waitlist.estimated_timenow}}</span><span style="display: flex"> {{waitlist.estimated_time}}</span>
+                                            {{waitlist.estimated_timenow}}</span><span style="display: flex">
+                                            {{waitlist.estimated_time}}</span>
                                     </div>
                                     <div class="lt0"
                                         *ngIf="waitlist.estimated_date!='' && waitlist.waitlistStatus != 'cancelled'">
@@ -79,16 +65,11 @@
                                             <span
                                                 *ngIf="waitlist.estimated_date_type == 'string'">{{waitlist.estimated_date}}
                                             </span>
-                                            <span *ngIf="waitlist.calculationMode != 'NoCalc'">,{{waitlist.estimated_time}}</span></span>
-                                            <span style="display: flex"> {{waitlist.estimated_timeslot}}</span>
+                                            <span
+                                                *ngIf="waitlist.calculationMode != 'NoCalc'">,{{waitlist.estimated_time}}</span></span>
+                                        <span style="display: flex"> {{waitlist.estimated_timeslot}}</span>
                                     </div>
                                     <div class="lt0" *ngIf="waitlist.waitlistStatus == 'cancelled'">
-                                        <!-- <span *ngIf="waitlist.calculationMode == 'NoCalc'">
-                                            {{waitlist.date | date: dateFormatSp}}, {{waitlist.estimated_time}}
-                                        </span>
-                                        <span *ngIf="waitlist.calculationMode != 'NoCalc'">
-                                            {{waitlist.date | date: dateFormatSp}} {{waitlist.checkInTime}}
-                                        </span> -->
                                         <div class="lt0">
                                             {{waitlist.estimated_caption}} <span class="time">{{waitlist.estimated_date
                                                 | date: dateFormatSp }},
@@ -116,54 +97,79 @@
                                     {{party_size}} <span class="persons">{{waitlist.partySize}}</span>
                                 </div>
                                 <div class="lt0 payment" *ngIf="waitlist.waitlistStatus=='prepaymentPending'">
-                                    <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}} {{checkindisablemsg1}}</span>
+                                    <span class="paytext">{{checkindisablemsg}} {{waitlist.counter}}
+                                        {{checkindisablemsg1}}</span>
                                 </div>
                                 <div class="lt0 payment"
                                     *ngIf="waitlist.amountDue>0 && (waitlist.billViewStatus=='Show') && waitlist.waitlistStatus != 'cancelled'">
-                                    <span class="paytext"><span>Amount Due : <span>&#8377; </span>{{waitlist.amountDue}} </span><a class="bt3 cust-btn pointer-cursor"
+                                    <span class="paytext"><span>Amount Due : <span>&#8377; </span>{{waitlist.amountDue}}
+                                        </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
-                                <div *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime" >
-                                    <!-- <div>
-                                    <span class="persons"><span>Distance :</span> {{waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance}}
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'KILOMETER'">Km</span>
-                                    <span *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit == 'METER'">M</span>
-                                </span>
-                            </div>
-                            <div>
-                                    <span class="persons"><span>Travel time :</span> {{getMintuesToHour(waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime)}}
-                                   
-                                </span>
-                            </div> -->
-                            
-                            <!-- <div >  -->
-                            <div  *ngIf ="changemode[i] == false"> <label>Travel mode is : &nbsp;</label>
-                                <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">Driving</label>
-                                <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">Walking</label>  
-                                <span class="travelmodeEdit"(click)="editmodeOn(i)"><i class="icon-edit"></i> </span></div>
-                            <div  *ngIf = "changemode[i] == true"><label>Travel mode is : &nbsp;</label>
-                                <label [class.driving]="driving" matTooltip="Driving" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"><div class="travelmodeicon"><i
-                                    class="fa fa-car" [class.walking]="walking" aria-hidden="true"></i></div></label>
-                                <label matTooltip="Walking" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"><div class="travelmodeicon"><img
-                                    src="./assets/images/walking.png" alt="" class="walkingMode" /></div></label>
-                                <!-- <ul class="trackIcons">
-                                    <li matTooltip="Driving"  [class.driving]="driving" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"><div class="travelmodeicon"><i
-                                            class="fa fa-car" [class.walking]="walking" aria-hidden="true"></i></div></li>
-                                    <li matTooltip="Walking"  (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"><div class="travelmodeicon"><img
-                                            src="./assets/images/walking.png" alt="" style="width: 15px;height:15px;" /></div></li>
-                                </ul>  -->
-                        </div>
-                    <!-- </div> -->
-
-                       
-                               
+                                <div class="lt0" *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'">
+                                    <span> <label>Live tracking </label></span>
+                                    <span>
+                                        <mat-slide-toggle [checked]="statusOfTrack[i]"
+                                            (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)"
+                                            class="trackSlide"></mat-slide-toggle>
+                                    </span>
                                 </div>
-                                <div *ngIf = "waitlist.jaldeeStartTimeType == 'AFTERSTART'">
-                                   <span> <label>Live track </label></span>
-                                   <span> <mat-slide-toggle [checked]="statusOfTrack[i]"
-                                  (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)" class="trackSlide"></mat-slide-toggle></span>
-                                    
-                            </div>
+                                <div class="lt0"
+                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime">
+                                    <!-- <div *ngIf="changemode[i] == false"> Travel mode is : &nbsp;
+                                            <span
+                                                *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">Driving</span>
+                                            <span
+                                                *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">Walking</span>
+                                            <span class="travelmodeEdit" (click)="editmodeOn(i)"><i class="icon-edit"></i>
+                                            </span></div> -->
+                                    <div>Mode of transport:
+                                        <span
+                                            *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I
+                                            am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
+                                        <span
+                                            *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'">I
+                                            am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></span>
+                                        <span
+                                            *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">I
+                                            am Walking <img src="./assets/images/walking.png" alt=""
+                                                style="width: 15px;height:15px;" /></span><i
+                                            class="fa fa-pencil link pull-right"
+                                            (click)="changemode[i] = !changemode[i]"></i>
+                                        <!-- <span [class.driving]="driving" matTooltip="Driving"
+                                                (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)">
+                                                <div class="travelmodeicon"><i class="fa fa-car" [class.walking]="walking"
+                                                        aria-hidden="true"></i></div>
+                                            </span>
+                                            <span matTooltip="Walking"
+                                                (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)">
+                                                <div class="travelmodeicon"><img src="./assets/images/walking.png" alt=""
+                                                        class="walkingMode" /></div>
+                                            </span> -->
+                                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding" *ngIf="changemode[i]">
+                                            <ul class="trackIcons">
+                                                <li matTooltip="Driving" [class.driving]="driving"
+                                                    (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)">
+                                                    <div>I am Driving <i class="fa fa-car" aria-hidden="true"></i></div>
+                                                </li>
+                                                <li matTooltip="Bicycling" [class.bicycling]="bicycling"
+                                                    (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)">
+                                                    <div>I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i>
+                                                    </div>
+                                                </li>
+                                                <li matTooltip="Walking" [class.walking]="walking"
+                                                    (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)">
+                                                    <div>I am Walking <img src="./assets/images/walking.png" alt=""
+                                                            style="width: 15px;height:15px;" /></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lt0"
+                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (statusOfTrack[i] || waitlist.jaldeeStartTimeType!='AFTERSTART')">
+                                    {{getTrackMessage(waitlist)}}
+                                </div>
                             </div>
                             <div class="rt">
                                 <ul class="controls">
@@ -197,7 +203,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- </div> -->
                     </ngx-item>
                     <button NgxCarouselPrev class='leftRs'>&lt;</button>
                     <button NgxCarouselNext class='rightRs'>&gt;</button>
@@ -207,7 +212,6 @@
                 </div>
             </div>
         </div>
-        <!-- </div> -->
         <div class="card favourites">
             <mat-accordion>
                 <mat-expansion-panel [expanded]='true'>
@@ -288,11 +292,6 @@
                                         </div>
 
                                         <div class="wt-tme notallowed" *ngIf="loc['estimatedtime_det']">
-                                            <!-- <ng-container *ngIf="!loc['estimatedtime_det']['message']">
-                                                {{sorry_cap}}
-                                                {{getTerminologyTerm('waitlist', search_result.fields)}}
-                                                {{not_allowed_cap}}
-                                            </ng-container> -->
                                             <ng-container *ngIf="loc['estimatedtime_det']['message']">
                                                 {{loc['estimatedtime_det']['message']}}</ng-container>
                                         </div>
@@ -348,6 +347,5 @@
             </mat-accordion>
         </div>
     </div>
-    <!-- </div> -->
 </section>
 <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>

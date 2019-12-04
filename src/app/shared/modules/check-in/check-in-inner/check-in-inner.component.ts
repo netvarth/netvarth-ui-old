@@ -48,6 +48,8 @@ export class CheckInInnerComponent implements OnInit {
   note_placeholder;
   s3url;
   provider_id;
+  trackTimeChange = false;
+  trackMode = false;
   api_success = null;
   api_error = null;
   api_cp_error = null;
@@ -177,6 +179,8 @@ export class CheckInInnerComponent implements OnInit {
     base64: [],
     caption: []
   };
+  activeWt;
+  bicycling: boolean;
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
@@ -448,6 +452,7 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'businessProfile':
             this.businessjson = res;
+            console.log(res);
             this.getProviderDepart(this.businessjson.id);
             this.domain = this.businessjson.serviceSector.domain;
             if (this.domain === 'foodJoints') {
@@ -864,10 +869,21 @@ export class CheckInInnerComponent implements OnInit {
             this.api_loading = false;
           }
         } else {
+          this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
+            (wailist: any) => {
+              this.activeWt = wailist;
+              console.log(this.activeWt);
+              this.liveTrack = true;
+              this.resetApi();
+            },
+            () => {
+
+            }
+          );
           if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-            this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+            // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
           } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
-            this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
+            // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
           }
           // setTimeout(() => {
           // this.source['list'] = 'reloadlist';
@@ -878,10 +894,11 @@ export class CheckInInnerComponent implements OnInit {
           // }, projectConstants.TIMEOUT_DELAY);
           // this.router.navigate(['/']);
         }
-        setTimeout(() => {
-          this.liveTrack = true;
-          this.resetApi();
-        }, 2000);
+        // setTimeout(() => {
+
+        //   this.liveTrack = true;
+        //   this.resetApi();
+        // }, 2000);
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -1354,13 +1371,20 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   getTravelMod(event) {
+    this.trackMode = false;
     this.travelMode = event;
     if (event === 'DRIVING') {
       this.driving = true;
       this.walking = false;
-    } else {
+      this.bicycling = false;
+    } else if  (event === 'WALKING') {
       this.walking = true;
       this.driving = false;
+      this.bicycling = false;
+    } else {
+      this.walking = false;
+      this.driving = false;
+      this.bicycling = true;
     }
   }
   getNotifyTime(time) {
@@ -1429,17 +1453,37 @@ export class CheckInInnerComponent implements OnInit {
     };
     this.shared_services.addLiveTrackDetails(this.trackUuid, this.account_id, post_Data)
       .subscribe(data => {
-        // let trackDetail: any = [];
+        let trackDetail: any = [];
         // console.log(data);
-        //    trackDetail = data;
-        // const distance = trackDetail.jaldeeDistanceTime.jaldeeDistance.distance;
-        // const unit = trackDetail.jaldeeDistanceTime.jaldeeDistance.unit;
-        // const travelTime = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
-        // const timeUnit = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.timeUnit;
-        // const hours = Math.floor(travelTime / 60);
-        // const minutes = travelTime % 60;
-        //  this.api_success = 'You are' + distance + ' ' + unit + 'away from there you will reach there in ' + hours + 'Hours and' + minutes + 'Mintues';
-        this.api_success = this.sharedFunctionobj.getProjectMesssages('TRACKINGENABLED');
+        trackDetail = data;
+         const distance = trackDetail.jaldeeDistanceTime.jaldeeDistance.distance;
+         const unit = projectConstants.LIVETRACK_CONST[trackDetail.jaldeeDistanceTime.jaldeeDistance.unit];
+         const travelTime = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
+         const timeUnit = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.timeUnit;
+         const hours = Math.floor(travelTime / 60);
+         const minutes = travelTime % 60;
+         let message = '';
+         message += 'You are ' + distance + ' ' + unit + ' away and will take around';
+         if (hours !== 0) {
+          message += ' ' +  hours;
+           if (hours === 1) {
+            message +=  'hr';
+           } else {
+            message += 'hrs';
+           }
+         }
+         if (minutes !== 0) {
+          message += ' ' +  minutes;
+          if (minutes === 1) {
+            message +=  'min';
+           } else {
+            message += 'mins';
+           }
+         }
+         message += ' to reach ' + this.activeWt.provider.businessName;
+        this.api_success = message;
+        // this.api_success = 'From your current location it takes ' + distance + ' to this provider'
+        // this.api_success = this.sharedFunctionobj.getProjectMesssages('TRACKINGENABLED');
 
         setTimeout(() => {
           // this.source['list'] = 'reloadlist';
@@ -1447,7 +1491,7 @@ export class CheckInInnerComponent implements OnInit {
           // this.dialogRef.close('reloadlist');
           console.log(this.source);
           this.returntoParent.emit('reloadlist');
-        }, projectConstants.TIMEOUT_DELAY);
+        }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

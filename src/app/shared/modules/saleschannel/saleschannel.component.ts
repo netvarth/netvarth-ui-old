@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 
@@ -6,7 +6,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
     'selector': 'app-saleschannel',
     'templateUrl': './saleschannel.component.html'
 })
-export class SalesChannelComponent implements OnInit {
+export class SalesChannelComponent implements OnInit, OnChanges {
     scfound;
     scInfo;
     scCode_Ph;
@@ -22,6 +22,12 @@ export class SalesChannelComponent implements OnInit {
             this.findSC_ByScCode(this.dispObj.scCode);
         }
     }
+    ngOnChanges() {
+        if (this.dispObj && this.dispObj.action === 'view') {
+            this.action = this.dispObj.action;
+            this.findSC_ByScCode(this.dispObj.scCode);
+        }
+    }
     handlekeyup(ev) {
         this.scfound = false;
         if (ev.keyCode === 13) {
@@ -30,8 +36,8 @@ export class SalesChannelComponent implements OnInit {
         }
     }
     blurSC() {
-        this.scfound = false;
-        this.findSC_ByScCode(this.scCode_Ph);
+        // this.scfound = false;
+        // this.findSC_ByScCode(this.scCode_Ph);
     }
     findSC_ByScCode(scCode) {
         if (scCode) {

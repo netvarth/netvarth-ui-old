@@ -208,6 +208,10 @@ export class SharedServices {
   addCheckin(accountid, postData) {
     return this.servicemeta.httpPost('consumer/waitlist?account=' + accountid, postData);
   }
+  getCheckinByConsumerUUID(uuid, accountid) {
+    const url = 'consumer/waitlist/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
   addProviderCheckin(postData) {
     return this.servicemeta.httpPost('provider/waitlist', postData);
   }

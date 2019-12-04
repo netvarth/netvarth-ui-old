@@ -174,7 +174,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               return EMPTY;
               // return throwError(error);
             } else if (error.status === 401) {
-              this.shared_functions.logout();
+              // this.shared_functions.logout();
               return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {

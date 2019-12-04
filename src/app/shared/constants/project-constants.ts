@@ -502,5 +502,8 @@ export const projectConstants = {
     'image/png',
     'image/jpeg',
     'application/pdf'
-  ]
+  ],
+  LIVETRACK_CONST : {
+    'KILOMETER': 'km'
+  }
 };
