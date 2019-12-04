@@ -18,9 +18,9 @@
                                             <span>{{layoutData.displayName | capitalizeFirst}}</span>
                                         </div> -->
                                         <div class="item desfont" *ngIf="layoutData.layout">
-                                                <span class="ttle">Layout</span>
-                                                <span>{{(getLayout(layoutData.layout)).displayName}}</span>
-                                            </div>
+                                            <span class="ttle">Layout</span>
+                                            <span>{{(getLayout(layoutData.layout)).displayName}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -38,17 +38,16 @@
                                         <div class="form-group" *ngIf="qset_list.length>0">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="displayName"
-                                                    placeholder="Display Name *" [(ngModel)]="displayName"
+                                                    placeholder="Display Name*" [(ngModel)]="displayName"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>
                                         <div class="form-group" *ngIf="qset_list.length>0">
                                             <mat-form-field>
-                                                <mat-select placeholder="Choose the queue statusboard layout" id="layout" 
-                                                (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
-                                                    [ngModelOptions]="{standalone: true}">
-                                                    <mat-option *ngFor="let layout of boardLayouts"
-                                                        [value]="layout">
+                                                <mat-select placeholder="Choose the queue statusboard layout"
+                                                    id="layout" (selectionChange)="handleLayout(layout)"
+                                                    [(ngModel)]="layout" [ngModelOptions]="{standalone: true}">
+                                                    <mat-option *ngFor="let layout of boardLayouts" [value]="layout">
                                                         {{ layout.displayName }}
                                                     </mat-option>
                                                 </mat-select>
@@ -57,14 +56,17 @@
                                         <div class="col-md-12" *ngIf="qset_list.length>0">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-12 card">                                    
-                                                        <div *ngFor = "let row of createRange(boardRows)">
-                                                            <div *ngFor = "let col of createRange(boardCols)" class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
+                                                    <div class="col-md-12 card">
+                                                        <div *ngFor="let row of createRange(boardRows)">
+                                                            <div *ngFor="let col of createRange(boardCols)"
+                                                                class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                                 <mat-form-field>
-                                                                    <mat-select placeholder="Choose Queue-Set"                                                                     
-                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]" [ngModelOptions]="{standalone: true}" (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)" >
-                                                                        <mat-option [value]="qset.id" *ngFor="let qset of qset_list"
-                                                                            >
+                                                                    <mat-select placeholder="Choose Queue-Set"
+                                                                        [(ngModel)]="boardSelectedItems[row + '_' + col]"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
+                                                                        <mat-option [value]="qset.id"
+                                                                            *ngFor="let qset of qset_list">
                                                                             {{qset.displayName |
                                                                                 capitalizeFirst}}
                                                                         </mat-option>
@@ -72,7 +74,7 @@
                                                                 </mat-form-field>
                                                             </div>
                                                             <div class="clearfix"></div>
-                                                        </div>                                                                                                                                                                            
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,17 +82,21 @@
                                         <div class="col-md-12 no-qset" *ngIf="qset_list.length==0">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-md-12 card qset_add"> To create a queue statusboard, first a queue-set has to be created <span class="cs-btn bt3" (click)="gotoAddQset()">Create a Queue-Set </span>                                                                                                     
-                                                            <div class="clearfix"></div>                                                                                                                                                                                                                                  
+                                                    <div class="col-md-12 card qset_add"> To create a queue statusboard,
+                                                        first a queue-set has to be created <span class="cs-btn bt3"
+                                                            (click)="gotoAddQset()">Create a Queue-Set </span>
+                                                        <div class="clearfix"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="actiondiv labelsave" style="margin-top: 150px;" *ngIf="qset_list.length >0">
+                                        <div class="actiondiv labelsave" style="margin-top: 150px;"
+                                            *ngIf="qset_list.length >0">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button (click)="onSubmit()" type="button" mat-button class="cs-btn bt2">{{button_title}}</button>
+                                            <button (click)="onSubmit()" type="button" mat-button
+                                                class="cs-btn bt2">{{button_title}}</button>
                                         </div>
                                         <br />
                                     </ng-container>

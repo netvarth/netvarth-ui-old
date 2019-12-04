@@ -109,16 +109,20 @@ export class LabelComponent implements OnInit {
         });
     }
     onSubmit() {
+        let label = '';
+        if (this.displayName) {
+            label = this.displayName.trim().replace(/ /g, '_');
+        }
         if (this.actionparam === 'add') {
             const post_data = {
-                'label': this.displayName.replace(/ /g, '_'),
+                'label': label,
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet,
             };
             this.provider_services.createLabel(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_ADDED'));
-                this.editLabelbyId(data); 
+                this.editLabelbyId(data);
                 this.actionparam = 'view';
             },
                 error => {
@@ -129,7 +133,7 @@ export class LabelComponent implements OnInit {
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.labelData.id,
-                'label': this.displayName.replace(/ /g, '_'),
+                'label': label,
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet

@@ -19,12 +19,12 @@
                                             <span
                                                 *ngIf="labelData.description">{{ labelData.description | capitalizeFirst}}</span>
                                         </div>
-                                        <div class="item desfont"
+                                        <!-- <div class="item desfont"
                                             *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">
                                             <span class="ttle">Value</span>
                                             <span *ngFor="let labelvalue of labelData.valueSet"> {{labelvalue.value}}
                                                 ({{labelvalue.shortValue}})</span>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="displayName"
-                                                    placeholder="{{label_name_cap}}" [(ngModel)]="displayName"
+                                                    placeholder="{{label_name_cap}}*" [(ngModel)]="displayName"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div>

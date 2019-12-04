@@ -6359,3 +6359,6 @@
 .displyboard .locd .no-qset .card {
   box-shadow: none !important;
 }
+.qset-detail .form-level-settings {
+  display: flex;
+}

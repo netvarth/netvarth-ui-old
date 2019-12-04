@@ -143,6 +143,10 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
+        let name = '';
+        if (this.displayName) {
+            name = this.displayName.trim().replace(/ /g, '_');
+        }
         for (let i = 0; i < this.boardRows; i++) {
             for (let j = 0; j < this.boardCols; j++) {
                 this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
@@ -150,7 +154,7 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         if (this.actionparam === 'add') {
             const post_data = {
-                'name': this.displayName.replace(/ /g, '_'),
+                'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric,
@@ -164,11 +168,14 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+            // } else {
+            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+            // }
         }
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.layoutData.id,
-                'name': this.displayName.replace(/ /g, '_'),
+                'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric
