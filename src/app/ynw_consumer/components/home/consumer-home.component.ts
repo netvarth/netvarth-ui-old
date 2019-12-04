@@ -737,7 +737,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.checkindialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
       this.getWaitlist();
-      //}
+      // }
     });
   }
 
@@ -964,7 +964,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (prepayamt > 0) {
               const payData = {
                 'amount': prepayamt,
-                //'paymentMode': 'DC',
+                // 'paymentMode': 'DC',
                 'uuid': waitlist.ynwUuid,
                 'accountId': waitlist.provider.id,
                 'purpose': 'prePayment'

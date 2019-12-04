@@ -47,6 +47,7 @@ export class CorporateSettingsComponent implements OnInit {
                 this.shared_functions.openSnackBar(Messages.JOINCORP_SUCCESS);
             },
             (error) => {
+                console.log(error);
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );

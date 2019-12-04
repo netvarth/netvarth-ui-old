@@ -171,8 +171,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                 // delay(10000);
               // );
             } else if (error.status === 404) {
-              return EMPTY;
-              // return throwError(error);
+              // return EMPTY;
+              return throwError(error);
             } else if (error.status === 401) {
               // this.shared_functions.logout();
               return throwError(error);

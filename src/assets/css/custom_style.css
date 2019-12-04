@@ -1291,7 +1291,12 @@
   .mgn-up-10 {
     margin-top: 10px !important;
   }
-  
+  .mgn-up-5 {
+    margin-top: 5px !important;
+  }
+  .mgn-up-4 {
+    margin-top: 4px !important;
+  }
   .mgn-up-20 {
     margin-top: 20px !important;
   }
@@ -5941,23 +5946,6 @@
     color: red;
     background: none;
   }
-  .trackIcons{
-  list-style: none;
-  display: flex;
-  }
-  .travelmodeicon{
-    width: 30px;
-    height: 20px;
-    border: 1px solid black;
-    border-radius: 2px;
-    padding-left: 5px;
-  }
-   .driving{
-    background-color: darkgrey;
-   } 
-  .walking{
-    background-color: darkgrey;
-  }
   .upgrade_btn {
     margin-left: 10px !important;
   }
@@ -6352,13 +6340,48 @@
 .checkin-details .wait-btn .bt3{
   padding: 5px !important;
 }
+.lv-trk .successmsg {
+  color: green;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 1px solid #ddd !important;
+}
+.lv-trk a.link { font-size: 0.75rem !important;cursor: pointer;}
+.tracktime li {
+  display: block !important;
+}
+.trackIcons li {
+  display: inline-block !important;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid;
+  margin: 5px 5px 5px 0px;;
+  cursor: pointer;
+}
+.trackIcons {
+  padding: 0px !important
+}
+.track-mode label{
+  margin-bottom: 0 !important;
+}
+/* .trackIcons{
+  list-style: none;
+  display: flex;
+  }
+  .travelmodeicon{
+    width: 30px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding-left: 5px;
+  } */
+  .driving, .bicycling, .walking{
+  background-color:#ddd;
+  } 
+  .lv-trk .fa-pencil {padding-left: 10px;}
 .today .chk-scroll {
   max-height: 400px;
   overflow-y: auto;
 }
 .displyboard .locd .no-qset .card {
   box-shadow: none !important;
-}
-.qset-detail .form-level-settings {
-  display: flex;
 }

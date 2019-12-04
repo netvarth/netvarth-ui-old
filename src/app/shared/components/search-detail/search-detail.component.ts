@@ -1349,7 +1349,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     const userobj = this.shared_functions.getitemFromGroupStorage('ynw-user');
     let testUser = false;
-    if (userobj !== null) {
+    if (userobj) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;

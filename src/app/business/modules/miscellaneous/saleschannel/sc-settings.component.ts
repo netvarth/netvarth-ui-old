@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
@@ -36,7 +36,8 @@ export class SaleschannelSettingsComponent implements OnInit {
         private shared_Functionsobj: SharedFunctions,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
-        private router: Router, ) {
+        private router: Router,
+        private changeDetectorRef: ChangeDetectorRef) {
     }
     ngOnInit() {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -69,13 +70,16 @@ export class SaleschannelSettingsComponent implements OnInit {
     getSalesChannel() {
         this.provider_services.getSalesChannel().subscribe(
             data => {
-                console.log(data);
                 if (data) {
                     this.scInfo = data;
                     this.scExists = true;
                     this.dispObj['action'] = 'view';
                     this.dispObj['scCode'] = data;
                     this.scfound = true;
+                    const message = {};
+                    message['ttype'] = 'saleschannel';
+                    message['data'] = this.dispObj;
+                    this.shared_functions.sendMessage(message);
                 }
             },
             error => {
