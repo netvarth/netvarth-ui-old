@@ -141,9 +141,13 @@ export class DisplayboardQSetDetailComponent implements OnInit {
         this.getDisplaydashboardbyId(id);
     }
     onSubmit() {
+        let name = '';
+        if (this.boardDisplayname) {
+            name = this.boardDisplayname.trim().replace(/ /g, ' ');
+        }
         if (this.actionparam === 'add') {
             const post_data = {
-                'name': this.boardDisplayname.replace(/ /g,"_"),
+                'name': name,
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor
@@ -157,11 +161,14 @@ export class DisplayboardQSetDetailComponent implements OnInit {
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+            // } else {
+            //     this.shared_Functionsobj.openSnackBar('Please enter the name for your queue-set', { 'panelClass': 'snackbarerror' });
+            // }
         }
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.displayBoardData.id,
-                'name': this.boardDisplayname.replace(/ /g,"_"),
+                'name': name,
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
                 'statusBoardFor': this.statusBoardfor

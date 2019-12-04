@@ -2,7 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content loc-list">
+    <div class="content loc-list qset-detail">
         <div class="row col-md-12 no-padding-small">
             <div class="card">
                 <div class="copy">
@@ -45,25 +45,29 @@
                                         <mat-form-field>
                                             <input matInput type="text" class="form-control" id="bName"
                                                 autocomplete="off" [(ngModel)]="boardDisplayname"
-                                                placeholder="Enter the name for your queue-set *">
+                                                placeholder="Enter the name for your queue-set*">
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group col-md-12 inline">
                                         <label class="col-form-label">{{category}}
-                                                <span class="form-level-settings">Choose any one category to be displayed on your queue statuboard </span>
+                                            <span class="form-level-settings">Choose any one category to be displayed on
+                                                your queue statuboard </span>
                                         </label>
-                                       
+
                                         <mat-radio-group [(ngModel)]="selectedCategory">
-                                            <mat-radio-button class="jdnpercent" [value]="'SERVICE'" *ngIf="services_list.length > 0"
+                                            <mat-radio-button class="jdnpercent" [value]="'SERVICE'"
+                                                *ngIf="services_list.length > 0"
                                                 (change)="categorySelection('SERVICE')">
                                                 {{service_caption}}
                                             </mat-radio-button>
-                                            <mat-radio-button class="jdnpercent" [value]="'DEPARTMENT'" *ngIf="departments.length > 0"
+                                            <mat-radio-button class="jdnpercent" [value]="'DEPARTMENT'"
+                                                *ngIf="departments.length > 0"
                                                 (change)="categorySelection('DEPARTMENT')">
                                                 {{department_cap}}s</mat-radio-button>
-                                            <mat-radio-button class="jdnpercent" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
+                                            <mat-radio-button class="jdnpercent" [value]="'QUEUE'"
+                                                *ngIf="display_schedule.length > 0"
                                                 (change)="categorySelection('QUEUE')">
                                                 {{queue_cap}}
                                             </mat-radio-button>
@@ -101,8 +105,8 @@
                                             Queues</label>
                                         <div *ngFor="let schedule of display_schedule; index as i">
                                             <mat-radio-group [(ngModel)]="selectedCategoryValue">
-                                                <mat-radio-button *ngIf="schedule.queueState === 'ENABLED'" [value]="schedule.id"
-                                                    [checked]="display_schedule[i].checked"
+                                                <mat-radio-button *ngIf="schedule.queueState === 'ENABLED'"
+                                                    [value]="schedule.id" [checked]="display_schedule[i].checked"
                                                     (change)="queueSelection(schedule.id)">
                                                     {{schedule.displayQ.dstr | capitalizeFirst}}
                                                     {{schedule.displayQ.time}}
