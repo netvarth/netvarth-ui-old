@@ -858,4 +858,8 @@ export class ProviderServices {
     const url = 'provider/payment/' + status;
     return this.servicemeta.httpPut(url);
   }
+  getLicenseAddonmetaData() {
+    const url = 'provider/license/addonmetadata';
+    return this.servicemeta.httpGet(url);
+  }
 }

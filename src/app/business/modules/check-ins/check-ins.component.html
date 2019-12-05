@@ -731,7 +731,7 @@
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')">
                           <i class="fa fa-play"></i> <span> Start</span>
                         </a>
-                        <a class="btn-play pointer-cursor" (click)="printCheckin(checkin)">
+                        <a *ngIf="calculationmode=='NoCalc' && showToken" class="btn-play pointer-cursor" (click)="printCheckin(checkin)">
                           <i class="fa fa-printer"></i> <span class=""> Print </span>
                         </a>
                         <a class="btn-play pointer-cursor"
