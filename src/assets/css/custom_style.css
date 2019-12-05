@@ -6385,3 +6385,13 @@
 .displyboard .locd .no-qset .card {
   box-shadow: none !important;
 }
+.qset-detail .form-level-settings {
+  display: flex;
+}
+.qset-detail .fieldval {
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+.apply-label .mat-checkbox {
+  padding-left: 20px;
+}

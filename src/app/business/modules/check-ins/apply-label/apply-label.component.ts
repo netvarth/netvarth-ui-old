@@ -36,6 +36,8 @@ export class ApplyLabelComponent implements OnInit {
     caption;
     api_error = null;
     api_success = null;
+    defaultShortValue = true;
+    short_value;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -50,13 +52,20 @@ export class ApplyLabelComponent implements OnInit {
         this.source = checkin.source;
         this.label = checkin.checkin;
         if (this.source === 'newvalue') {
-            this.caption = 'Add label - ' + this.label;
+            this.caption = 'Apply label ' + this.label;
         } else {
-            this.caption = 'Add Label';
+            this.caption = 'Apply Label';
         }
     }
     ngOnInit() {
         this.getLabels();
+    }
+    settingDeafultValue(event) {
+
+        (event.checked) ? this.defaultShortValue = true : this.defaultShortValue = false;
+    }
+    valueBlur() {
+        this.short_value = this.value;
     }
     getLabels() {
         this.provider_services.getLabelList().subscribe(data => {
@@ -115,7 +124,8 @@ export class ApplyLabelComponent implements OnInit {
             const valueSet = [];
             const valset = {};
             valset['value'] = this.value;
-            valset['shortValue'] = this.value.replace(' ', '_');
+            // valset['shortValue'] = this.value.replace(' ', '_');
+            valset['shortValue'] = this.short_value;
             if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
                 valueSet.push(valset);
             }
@@ -138,8 +148,10 @@ export class ApplyLabelComponent implements OnInit {
             // let valueSet = [];
             // const valset = {};
             // valset['value'] = this.value;
-            // valset['shortValue'] = this.value.replace(' ', '_');
+            // valset['shortValue'] = this.short_value;
             // valueSet = this.label.valueSet;
+            // console.log(this.label);
+            // console.log(valset);
             // if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
             //     valueSet.push(valset);
             // }
@@ -153,7 +165,8 @@ export class ApplyLabelComponent implements OnInit {
             //     () => {
             //         this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
             //         setTimeout(() => {
-            //             this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
+            //             // this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
+            //             this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
             //         }, projectConstants.TIMEOUT_DELAY);
             //     },
             //     error => {
