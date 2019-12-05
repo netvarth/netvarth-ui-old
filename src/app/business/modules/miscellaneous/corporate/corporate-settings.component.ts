@@ -27,6 +27,7 @@ export class CorporateSettingsComponent implements OnInit {
       }
     ];
     loading: boolean;
+    corpInfo;
     constructor(private router: Router,
         private shared_services: ProviderServices,
         private shared_functions: SharedFunctions) {
@@ -36,6 +37,14 @@ export class CorporateSettingsComponent implements OnInit {
         this.loading = false;
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
+        this.getCorporateDetails();
+    }
+    getCorporateDetails() {
+        this.shared_services.getCorporateDetails().subscribe(
+            (data) => {
+                this.corpInfo = data;
+            }
+        );
     }
     onSubmitJoinCorp (corpId) {
         this.shared_services.joinCorp(corpId).subscribe(

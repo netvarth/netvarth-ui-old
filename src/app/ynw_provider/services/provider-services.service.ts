@@ -5,7 +5,7 @@ import { projectConstants } from '../../shared/constants/project-constants';
 import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
-export class ProviderServices {
+export class ProviderServices {    
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) { }
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');
@@ -797,6 +797,10 @@ export class ProviderServices {
   createBranchSP(post_data) {
     const url = 'provider/branch/createSp';
     return this.servicemeta.httpPost(url, post_data);
+  }
+  getCorporateDetails() {
+    const url = 'provider/corp';
+    return this.servicemeta.httpGet(url);
   }
   joinCorp(corpUid) {
     const url = 'provider/corp/joinCorp/' + corpUid;

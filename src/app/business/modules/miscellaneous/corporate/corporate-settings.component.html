@@ -10,11 +10,32 @@
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <div class="card ynw-common-form-nm" *ngIf="!loading">
-                    <div class="row">
+                    <p class="form-level-settings">you can view existing corporate details or join to a corporate or create your own corporate here
+                        </p>
+                    <div class="row" *ngIf="corpInfo">
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                            <p class="form-level-settings">you can join to a corporate or create your own corporate here
-                            </p>
-                            <p>Do you want to become a corporate</p>
+                                <div class="salesChannelDetails" >
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 bold no-padding">
+                                                Existing Corp. Details
+                                            </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                            Corp. Code: {{corpInfo.corporateCode}}
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                            Corp. Name: {{corpInfo.corporateName}}
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                            Corp Uid: {{corpInfo.corporateUid}}
+                                        </div>                                       
+                                    </div>
+                        </div>                        
+                    </div>
+                    <div class="row mgn-up-10">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                            <!-- <p class="form-level-settings">you can join to a corporate or create your own corporate here
+                            </p> -->
+                            <p *ngIf="corpInfo">Do you want to join to another corporate</p>
+                            <p *ngIf="!corpInfo">Do you want to become a corporate</p>
                             <mat-radio-group [(ngModel)]="corpType">
                                 <mat-radio-button class="ln-hgt-24" value="join">Join Corporate</mat-radio-button><br />
                                 <div class="col-md-12" *ngIf="corpType === 'join'">
