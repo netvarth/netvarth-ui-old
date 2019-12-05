@@ -1,7 +1,7 @@
 import { catchError } from 'rxjs/operators/catchError';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
@@ -11,11 +11,11 @@ import { Messages } from '../constants/project-messages';
 import { projectConstants } from '../constants/project-constants';
 import { SharedServices } from '../services/shared-services';
 import { Subject } from 'rxjs/Subject';
-import { throwError, observable, EMPTY } from 'rxjs';
+import { throwError, EMPTY } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
-import { retry, delay } from 'rxjs/operators';
-import { version } from '../../../assets/json/version.json';
+import { retry } from 'rxjs/operators';
+// import { version } from '../constants/version' ;
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -198,8 +198,9 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', 'hybrid-1.1.0') });
-    // console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
+    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
+    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
+    console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
     if (this.shared_functions.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {

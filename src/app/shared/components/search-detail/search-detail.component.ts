@@ -145,7 +145,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   refTooltip = '';
   bNameTooltip = '';
   jdnTooltip = '';
- couponTooltip = '';
+  couponTooltip = '';
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   hideRefineifOneresultchk = false;
@@ -1848,9 +1848,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             });
         });
   }
-
-  openJdn(obj){
-
+  openJdn(obj) {
     const s3id = obj.fields.unique_id;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     this.shared_functions.getS3Url('provider')
@@ -1868,10 +1866,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
               });
               this.jdndialogRef.afterClosed().subscribe(result => {
-                
               });
             });
         });
-
   }
 }
