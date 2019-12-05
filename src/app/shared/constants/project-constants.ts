@@ -453,7 +453,8 @@ export const projectConstants = {
     15: 'Additional_Transation_Charges',
     16: 'Jaldee_Verification',
     17: 'Jaldee_Discount_Network',
-    18: 'Status_Board'
+    18: 'Status_Board',
+    19: 'Jaldee_Messaging'
 
   },
   REGION_LANGUAGE: 'en-US',
