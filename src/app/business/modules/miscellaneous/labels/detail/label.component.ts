@@ -58,7 +58,7 @@ export class LabelComponent implements OnInit {
     description;
     displayName;
     showAddsec = false;
-
+    defaultShortValue = true;
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -211,10 +211,11 @@ export class LabelComponent implements OnInit {
         }, 500);
     }
     showAddsection() {
-        this.showAddsec = true;
+        (!this.showAddsec) ? this.showAddsec = true : this.showAddsec = false;
     }
-    onbtnCancel() {
-        this.showAddsec = false;
+    settingDeafultValue(event) {
+        (event.checked) ? this.defaultShortValue = true : this.defaultShortValue = false;
+        this.shortValue = this.value;
     }
 }
 

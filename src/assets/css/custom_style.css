@@ -5156,16 +5156,11 @@
   }
   
   .labelad {
-    margin-top: 15px !important;
+    margin-top: 25px !important;
   }
   
   .labelad .cs-btn{
     padding: 5px !important;
-    font-weight: 0.7rem !important;
-  }
-  
-  .labelad .bt2{
-    margin-right: 10px !important;
   }
   
   .label-list {
@@ -6405,4 +6400,10 @@
 .statuslink .fa{
   font-size: 1.1rem;
   cursor: pointer;
+}
+.labels .shortcuts{
+  margin-bottom: 0px !important;
+}
+.labels  .default {
+  margin-left: 20px !important;
 }

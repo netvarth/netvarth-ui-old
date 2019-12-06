@@ -2,7 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content loc-list">
+    <div class="content loc-list labels">
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
@@ -62,13 +62,10 @@
                                         <div class="notifications">
                                             <span class="shortcut"> Shortcut label button </span>
 
-                                            <span class="icon-add" (click)="showAddsection()"></span>
+                                            <span [class.icon-add]="!showAddsec" [class.icon-minus]="showAddsec"
+                                                (click)="showAddsection()"></span>
                                         </div>
-                                        <!-- <div *ngIf="valueSet && valueSet.length === 0">
-No values added
-</div> -->
-
-                                        <div class="form-group col-md-12" *ngIf="showAddsec">
+                                        <div class="form-group col-md-12 shortcuts" *ngIf="showAddsec">
                                             <div class="col-md-4">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="value"
@@ -77,7 +74,7 @@ No values added
                                                         placeholder="Enter  Value*" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" *ngIf="!defaultShortValue">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="shortcut"
                                                         maxlength="10" [(ngModel)]="shortValue"
@@ -86,14 +83,20 @@ No values added
                                                 </mat-form-field>
                                             </div>
                                             <div class="labelad">
-                                                <button type="submit" (click)="onbtnCancel()"
-                                                    class="cs-btn bt2">Cancel</button>
+                                                <!-- <button type="submit" (click)="onbtnCancel()"
+                                                    class="cs-btn bt2">Cancel</button> -->
                                                 <!-- </div> -->
                                                 <!-- <div class="col-md-2"> -->
-                                                <button type="submit" mat-button
-                                                    (click)="addtoValueSet(value, shortValue)"
-                                                    class="cs-btn bt1">Add</button>
+                                                <button type="submit" (click)="addtoValueSet(value, shortValue)"
+                                                    class="cs-btn bt3">Add</button>
                                             </div>
+                                        </div>
+                                        <div class="form-group col-md-12 default" *ngIf="showAddsec">
+                                            <mat-checkbox [(ngModel)]="defaultShortValue"
+                                                [ngModelOptions]="{standalone: true}"
+                                                (change)="settingDeafultValue($event)">Set
+                                                as short value
+                                            </mat-checkbox>
                                         </div>
 
                                         <div class="col-md-12 label-list">

@@ -64,8 +64,6 @@ export class ApplyLabelComponent implements OnInit {
     }
     settingDeafultValue(event) {
         (event.checked) ? this.defaultShortValue = true : this.defaultShortValue = false;
-    }
-    valueBlur() {
         this.short_value = this.value;
     }
     getLabels() {
