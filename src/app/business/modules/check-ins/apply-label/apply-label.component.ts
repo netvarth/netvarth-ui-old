@@ -162,7 +162,7 @@ export class ApplyLabelComponent implements OnInit {
             };
             this.provider_services.updateLabel(post_data).subscribe(
                 () => {
-                    this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+                    // this.shared_functions.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
                     setTimeout(() => {
                         this.dialogRef.close({ label: this.label.label, value: this.value, message: 'reloadlist' });
                     }, projectConstants.TIMEOUT_DELAY);

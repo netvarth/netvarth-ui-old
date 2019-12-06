@@ -5595,13 +5595,13 @@
   }
   .today .info-box-content {
     padding: 0 !important;
-    margin-left: 60px;
+    margin-left: 63px;
   }
   .today .info-box {
     min-height: auto !important;
   }
   .today .box {
-   margin-bottom: 8px !important;
+   margin-bottom: 0px !important;
   }
   .info-box-content span {
     padding-left: 5px !important;
@@ -5609,12 +5609,13 @@
   
   .dashboard .chkins .box {
     border: none;
+    border-bottom: 1px solid #eeee;
   }
   
   .info-box-icon .tkn {
-    margin-top: 10px;
+    margin-top: 15px;
     height: 30px !important;
-    font-size: 1.5rem !important;
+    font-size: 1.3rem !important;
   }
   
   .info-box-icon {
@@ -5625,9 +5626,9 @@
   }
   
   .today .info-box-icon {
-      height: 55px !important;
-      min-height: 55px !important;
-    
+    height: 55px !important;
+    min-height: 55px !important;
+    margin: 4px 0 0 3px !important;
   }
   .today .info-box-icon {
     width: 60px !important;
@@ -6300,6 +6301,8 @@
   }
   .labelList {
     display: flex;
+    background: #ededed29;
+    margin-bottom: 5px;
   }
   .labelList .dropdown-menu {
     box-shadow:  0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
@@ -6313,10 +6316,6 @@
   .label-img {
     content: url(../images/label_black_20dp.png);
   }
-  .statuslink .fa-comments-o {
-  font-size: 1.3rem;
-  cursor: pointer;
-}
 .statuslink .dropdown.messages-menu.loc-lst.open .dropdown-menu {
   left: auto !important;
 }
@@ -6394,4 +6393,16 @@
 }
 .apply-label .mat-checkbox {
   padding-left: 20px;
+}
+.service {
+  line-height: 10px;
+  font-size: smaller;
+}
+.checkin-label {
+  margin-top: 5px;
+  font-size: smaller;
+}
+.statuslink .fa{
+  font-size: 1.1rem;
+  cursor: pointer;
 }

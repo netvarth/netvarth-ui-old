@@ -1144,6 +1144,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeWaitlistStatus(waitlist, action) {
+    console.log(waitlist);
+    if (!waitlist.ynwUuid) {
+      waitlist = this.selectedCheckin[waitlist];
+    }
     if (action === 'DONE') {
       waitlist.disableDonebtn = true;
     }
@@ -1291,7 +1295,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
   }
-  addProviderNote(checkin) {
+  addProviderNote(source) {
+    const checkin = this.selectedCheckin[source];
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1304,7 +1309,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') { }
     });
   }
-  viewBillPage(checkin) {
+  viewBillPage(source) {
+    const checkin = this.selectedCheckin[source];
     this.provider_services.getWaitlistBill(checkin.ynwUuid)
       .subscribe(
         data => {
@@ -1700,7 +1706,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
     }
   }
-  printCheckin(checkinlist) {
+  printCheckin(source) {
+    const checkinlist = this.selectedCheckin[source];
+
     const params = [
       'height=' + screen.height,
       'width=' + screen.width,
