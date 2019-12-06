@@ -619,7 +619,7 @@
                                 </li>
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
-                                    (click)="addLabelvalue('new', 'newvalue', label.label)">
+                                    (click)="addLabelvalue('new', 'newvalue', label)">
                                     {{label.displayName}}</a>
                                 </li>
                               </ul>
@@ -731,7 +731,8 @@
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')">
                           <i class="fa fa-play"></i> <span> Start</span>
                         </a>
-                        <a *ngIf="calculationmode=='NoCalc' && showToken" class="btn-play pointer-cursor" (click)="printCheckin(checkin)">
+                        <a *ngIf="calculationmode=='NoCalc' && showToken" class="btn-play pointer-cursor"
+                          (click)="printCheckin(checkin)">
                           <i class="fa fa-printer"></i> <span class=""> Print </span>
                         </a>
                         <a class="btn-play pointer-cursor"

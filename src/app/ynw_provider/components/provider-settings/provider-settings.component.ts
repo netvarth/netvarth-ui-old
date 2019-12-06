@@ -94,7 +94,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   reqFields: any = {};
   pos_status: any;
   pos_statusstr: string;
-  licenseMetadata: any = [];
+  addonMetadata: any = [];
   statusboardStatus = false;
   isCorp = false;
   isMultilevel = false;
@@ -229,8 +229,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
         .subscribe(
           (data: any) => {
-           this.isCorp = data.isCorp;
-           this.isMultilevel = data.isMultilevel;
+            this.isCorp = data.isCorp;
+            this.isMultilevel = data.isMultilevel;
           },
           error => {
             reject(error);
@@ -407,7 +407,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
         break;
       case 'displayboards':
-          this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         // if (this.statusboardStatus) {
         //   this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         // } else {
@@ -586,6 +586,24 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     //     }
     //   }
     // });
+    this.provider_services.getLicenseAddonmetaData().subscribe(data => {
+      this.addonMetadata = data;
+      //   for (let i = 0; i < this.addonMetadata.length; i++) {
+      //     if (this.addonMetadata[i].pkgId === pkgId) {
+      //       for (let k = 0; k < this.addonMetadata[i].metrics.length; k++) {
+      //         if (this.addonMetadata[i].metrics[k].id === 18) {
+      //           if (this.addonMetadata[i].metrics[k].anyTimeValue === 'true') {
+      //             this.statusboardStatus = true;
+      //             return;
+      //           } else {
+      //             this.statusboardStatus = false;
+      //             return;
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+    });
   }
 }
 

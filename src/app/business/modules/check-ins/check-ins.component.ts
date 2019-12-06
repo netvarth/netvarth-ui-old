@@ -1646,12 +1646,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   addLabelvalue(status, source, label?) {
-    let checkin;
-    if (label) {
-      checkin = label;
-    } else {
-      checkin = this.selectedCheckin[status];
-    }
+    const checkin = this.selectedCheckin[status];
     this.checkinId = this.selectedCheckin[status].ynwUuid;
     this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
       width: '50%',
@@ -1660,7 +1655,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       autoFocus: true,
       data: {
         checkin: checkin,
-        source: source
+        source: source,
+        label: label
       }
     });
     this.labeldialogRef.afterClosed().subscribe(data => {

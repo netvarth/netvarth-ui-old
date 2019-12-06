@@ -52,7 +52,7 @@ export class BranchUserDetailComponent implements OnInit {
             url: '/provider/settings/miscellaneous'
         },
         {
-            title: 'Branch SPs',
+            title: 'Doctors',
             url: '/provider/settings/miscellaneous/users'
         }
     ];
@@ -60,6 +60,7 @@ export class BranchUserDetailComponent implements OnInit {
     actionparam = 'show';
     subDomainList: any = [];
     business_domains;
+    showAdvancedSection = false;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -194,5 +195,8 @@ export class BranchUserDetailComponent implements OnInit {
             return false;
         }
         return true;
+    }
+    advancedClick() {
+        (this.showAdvancedSection) ? this.showAdvancedSection = false : this.showAdvancedSection = true;
     }
 }

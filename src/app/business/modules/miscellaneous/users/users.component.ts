@@ -20,7 +20,7 @@ export class BranchUsersComponent implements OnInit {
             title: 'Miscellaneous'
         },
         {
-            title: 'Branch SPs'
+            title: 'Doctors'
         }
     ];
     api_loading: boolean;
