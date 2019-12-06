@@ -790,6 +790,7 @@ export class CheckInInnerComponent implements OnInit {
         console.log(this.lat_lng);
       },
         error => {
+          this.shareLoc = false;
         });
     }
   }
@@ -1441,6 +1442,7 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   saveLiveTrackDetails() {
+    this.resetApi();
     const post_Data = {
       'jaldeeGeoLocation': {
         'latitude': this.lat_lng.latitude,

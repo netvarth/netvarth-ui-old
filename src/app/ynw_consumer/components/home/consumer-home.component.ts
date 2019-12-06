@@ -101,7 +101,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   cronHandleTrack: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
-  refreshTimeForTracking = 600000;
+  //refreshTimeForTracking = 600000;
   counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
   open_fav_div = null;
   hideShowAnimator = false;
@@ -188,7 +188,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = Observable.interval(this.refreshTimeForTracking).subscribe(x => {
+    this.cronHandleTrack = Observable.interval(this.refreshTime * 1000).subscribe(x => {
       this.liveTrackPolling();
     });
 

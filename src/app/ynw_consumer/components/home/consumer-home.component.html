@@ -106,6 +106,7 @@
                                         </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
+                                <div *ngIf="waitlist.waitlistStatus=='checkedIn'">
                                 <div class="lt0" *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'">
                                     <span> <label>Live tracking </label></span>
                                     <span>
@@ -170,6 +171,7 @@
                                     *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (statusOfTrack[i] || waitlist.jaldeeStartTimeType!='AFTERSTART')">
                                     {{getTrackMessage(waitlist)}}
                                 </div>
+                            </div>
                             </div>
                             <div class="rt">
                                 <ul class="controls">
