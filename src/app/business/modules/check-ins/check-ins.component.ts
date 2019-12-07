@@ -769,6 +769,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.selected_queue = selected_queue;
     this.getTodayCheckIn();
+    this.resetAll();
     this.today_waitlist_count = 0;
   }
   handleQueueSel(mod) {

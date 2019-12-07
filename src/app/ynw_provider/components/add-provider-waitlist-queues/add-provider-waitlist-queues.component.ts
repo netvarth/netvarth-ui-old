@@ -77,7 +77,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   ifedit = false;
   iftokn = false;
   queue_list: any = [];
-  toknsugstion: any;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -114,7 +113,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   // creates the form
   createForm() {
     if (this.data.type === 'add') {
-      this.toknsugstion = 0;
       this.amForm = this.fb.group({
         qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
         qlocation: ['', Validators.compose([Validators.required])],
@@ -302,8 +300,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         for (let i = 0; i < this.holdloc_list.length; i++) {
           if (this.holdloc_list[i].status === 'ACTIVE') {
             this.loc_list.push(this.holdloc_list[i]);
-            // this.toknsugstion=this.holdloc_list[i].TokenMax;
-            // console.log(this.toknsugstion);
           }
         }
         if (this.data.queue) {
@@ -552,7 +548,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         'location': {
           'id': form_data.qlocation
         },
-        'services': selser
+        'services': selser,
+        'tokenstarts': form_data.tokennum
       };
       if (this.data.type === 'edit') {
         this.ifedit = true;
@@ -564,7 +561,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
   // Created new provider queue
   addProviderQueue(post_data) {
-    post_data['tokenstarts'] = this.toknsugstion;
     this.disableButton = true;
     this.api_loading = true;
     this.provider_services.addProviderQueue(post_data)
