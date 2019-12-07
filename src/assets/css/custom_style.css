@@ -6372,11 +6372,16 @@ display: flex;
   padding-left: 5px;
 } */
 .driving, .bicycling, .walking{
-color:olivedrab;
+color:green;
+}
+.trackingtimeselect{
+  border: .5px solid black;
+  border-radius: 10px;
+  background-color: darkgray;
 }
 .trackingtime{
-  border: 1px solid black;
-  border-radius: 2px;
+  border: .5px solid black;
+  border-radius: 10px;
 }
 .lv-trk .fa-pencil {padding-left: 10px;}
 .today .chk-scroll {
@@ -6416,6 +6421,17 @@ margin-bottom: 0px !important;
 }
 .labels  .default {
 margin-left: 20px !important;
+}
+.trackbutton{
+  font-size: small !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+.trackButtonDiv{
+border-top: 1px solid #ddd !important;
+}
+.mgtop40 {
+  margin-top: 40px !important;
 }
 .mgtop40 {
   margin-top: 40px !important;

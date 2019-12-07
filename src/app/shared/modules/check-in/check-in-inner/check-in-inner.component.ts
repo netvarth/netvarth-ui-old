@@ -790,7 +790,7 @@ export class CheckInInnerComponent implements OnInit {
         console.log(this.lat_lng);
       },
         error => {
-          this.shareLoc = false;
+         // this.shareLoc = false;
         });
     }
   }
@@ -1440,6 +1440,12 @@ export class CheckInInnerComponent implements OnInit {
         }
       );
   }
+  locationEnableDisable(event) {
+console.log(event);
+if (event.checked) {
+  this.getCurrentLocation();
+}
+  }
 
   saveLiveTrackDetails() {
     this.resetApi();
@@ -1456,8 +1462,9 @@ export class CheckInInnerComponent implements OnInit {
     this.shared_services.addLiveTrackDetails(this.trackUuid, this.account_id, post_Data)
       .subscribe(data => {
         let trackDetail: any = [];
-        // console.log(data);
+        console.log(data);
         trackDetail = data;
+        if (trackDetail.jaldeeDistanceTime) {
          const distance = trackDetail.jaldeeDistanceTime.jaldeeDistance.distance;
          const unit = projectConstants.LIVETRACK_CONST[trackDetail.jaldeeDistanceTime.jaldeeDistance.unit];
          const travelTime = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
@@ -1486,7 +1493,7 @@ export class CheckInInnerComponent implements OnInit {
         this.api_success = message;
         // this.api_success = 'From your current location it takes ' + distance + ' to this provider'
         // this.api_success = this.sharedFunctionobj.getProjectMesssages('TRACKINGENABLED');
-
+      }
         setTimeout(() => {
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
