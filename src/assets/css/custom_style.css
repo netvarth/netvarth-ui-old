@@ -6420,3 +6420,29 @@ margin-left: 20px !important;
 .mgtop40 {
   margin-top: 40px !important;
 }
+.stat-brd .title {
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+.stat-brd .acc-plus-btn, .stat-brd-qset .acc-plus-btn {
+  font-size: 1.5rem !important;
+  color: #00aef2 !important;  
+}
+.stat-brd .acc-plus-btn {
+  margin-top:5px !important;
+}
+.stat-brd .mat-icon-button, .stat-brd-qset .mat-icon-button{
+  line-height: 50px !important;
+}
+.stat-brd-qset .title {
+  font-weight: 600 !important;
+  padding:10px 0px 10px 10px !important;
+}
+li>a.bk-ctrl {padding-right: 0 !important; padding-left: 0 !important;}
+
+.nav.stat-brd>li>a {
+  padding-left: 0px !important;
+}
+.stat-brd-qset .backicon {padding-left: 5px !important; padding-right: 5px !important;}
+.stat-brd-qset .fa-angle-left {font-size: 1rem;}
+.content.loc-list .card .copy .qset {color: #000 !important;}
