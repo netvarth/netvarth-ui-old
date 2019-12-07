@@ -93,7 +93,7 @@
                     </tr>
                   </ng-container>
                   <tr *ngFor="let report of couponreport">
-                    <td data-title="Report Id" class="name pointer-cursor" (click)="reportView(report.invoiceId)">
+                    <td data-title="Report" class="name pointer-cursor" (click)="reportView(report.invoiceId)">
                       {{report.invoiceId}}</td>
                     <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
                       - {{formatDateDisplay(report.reportEndDate)}}</td>
@@ -106,7 +106,7 @@
                       </span>
                     </td>
                     <td data-title="Jaldee Bank">{{report.subTotalJaldeeBank}}</td>
-                    <td data-title="Coupon Amount">{{report.subTotalJaldeeCoupons}}</td>
+                    <td data-title="Jaldee coupon reimbursable">{{report.subTotalJaldeeCoupons}}</td>
                     <td data-title="Reimbursable Amount">{{report.grantTotal}}</td>
                     <td data-title="Status">
                       {{report_statuses[report.status]}}

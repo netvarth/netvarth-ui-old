@@ -962,7 +962,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-reimburse-report
   'REIMBUSE_REPORT_CAP': 'Reimbursement Reports',
-  'REPORT_ID_CAP': 'Report Id',
+  'REPORT_ID_CAP': 'Report',
   'TIME_PERIOD_CAP': 'Time Period',
   'COUP_USE_CAP': 'Coupons Used',
   'J_ACC_CAP': 'Jaldee Bank',
@@ -1050,7 +1050,7 @@ export const Messages = {
 
   // App-ynw_provider-components-view-report
   'REPORT_PERIOD_DATE_CAP': 'Period/Date',
-  'REPORT_COUPON_AMT_CAP': 'Coupon Amount',
+  'REPORT_COUPON_AMT_CAP': 'Jaldee coupon reimbursable',
   'REPORT_REIMBURSE_AMT_CAP': 'Reimbursable Amount from Jaldee',
   'REPORT_JALDEE_ACCT_CAP': 'Jaldee Financial Account',
   'REPORT_CONSUMER_CAP': 'Consumer',
@@ -1286,7 +1286,7 @@ export const Messages = {
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
-  'FRM_ADDINFO_MSG': 'Add more details of your business for your [customer] to see',
+  'FRM_ADDINFO_MSG': 'Add more details to your online profile',
   'FRM_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
@@ -1401,8 +1401,8 @@ export const Messages = {
   'JDN_CAP': 'JDN',
   'DISPLAYBOARD_HEADING': 'Queue Statusboard',
   'DISPLAYBOARD__INHELP': 'display help',
-  'QSET_ADD': 'Queue Selection Criteria added successfully',
-  'QSET_UPDATE': 'Queue Selection Criteria updated successfully',
+  'QSET_ADD': 'Q-set added successfully',
+  'QSET_UPDATE': 'Q-set updated successfully',
   'DISPLAYBOARD_ADD': 'Queue Statusboard added successfully',
   'DISPLAYBOARD_UPDATE': 'Queue Statusboard updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
