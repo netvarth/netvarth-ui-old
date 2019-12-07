@@ -6,26 +6,6 @@
         </button>
     </h1>
     <mat-dialog-content>
-        <div class="form-group" *ngIf="!api_loading && typeOfMsg === 'multiple'">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="col-md-5">SMS</div>
-                <mat-slide-toggle class="col-md-7 example-margin" [(ngModel)]="sms"
-                    [ngModelOptions]="{standalone: true}">
-                </mat-slide-toggle>
-            </div>
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="col-md-5">Email</div>
-                <mat-slide-toggle class="col-md-7 example-margin" [(ngModel)]="email"
-                    [ngModelOptions]="{standalone: true}">
-                </mat-slide-toggle>
-            </div>
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="col-md-5">Push notification</div>
-                <mat-slide-toggle class="col-md-7 example-margin" [(ngModel)]="pushnotify"
-                    [ngModelOptions]="{standalone: true}">
-                </mat-slide-toggle>
-            </div>
-        </div>
         <div class="form-group" *ngIf="!api_loading">
             <mat-form-field>
                 <textarea matInput class="form-control" id="message" placeholder="{{message_label}} *"
@@ -35,6 +15,21 @@
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                 errorMsg="Please enter a message.">
             </app-field-error-display>
+        </div>
+        <div class="mgtop40 form-group" *ngIf="!api_loading && typeOfMsg === 'multiple'">
+            Send message via
+            <div class="coupon-outer">
+                <mat-checkbox class="jdnpercent example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                    SMS
+                </mat-checkbox>
+                <mat-checkbox class="jdnpercent example-margin" [(ngModel)]="email"
+                    [ngModelOptions]="{standalone: true}">Email
+                </mat-checkbox>
+                <mat-checkbox class="jdnpercent example-margin" [(ngModel)]="pushnotify"
+                    [ngModelOptions]="{standalone: true}">Push
+                    notification
+                </mat-checkbox>
+            </div>
         </div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>

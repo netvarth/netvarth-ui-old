@@ -48,7 +48,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public sharedfunctionObj: SharedFunctions,
     public common_datastorage: CommonDataStorageService
   ) {
-    console.log(this.data);
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
     this.uuid = this.data.uuid || null;

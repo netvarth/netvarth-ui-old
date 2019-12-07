@@ -469,7 +469,7 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Send Message'">
+                  <div class="statuslink " *ngIf="startedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('started')"></i> </div>
                   <div class="statuslink "
                     *ngIf="startedwaitlistSelection===1 && pos && selectedCheckin['started'].waitlistStatus != 'prepaymentPending' && !selectedCheckin['started'].parentUuid"
@@ -640,7 +640,7 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="statuslink " *ngIf="waitlistSelection > 0" [matTooltip]="'Send Message'">
+                  <div class="statuslink " *ngIf="waitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1 && calculationmode=='NoCalc' && showToken"
                     [matTooltip]="'Print'">
@@ -844,7 +844,7 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Send Message'">
+                  <div class="statuslink " *ngIf="completedwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('completed')"></i>
                   </div>
                   <div class="statuslink "
@@ -1001,7 +1001,7 @@
                       </ul>
                     </div>
                   </div> -->
-                  <div class="statuslink " *ngIf="cancelledwaitlistSelection===1" [matTooltip]="'Send Message'">
+                  <div class="statuslink " *ngIf="cancelledwaitlistSelection>0" [matTooltip]="'Send Message'">
                     <i class="fa fa-comments-o" (click)="addConsumerInboxMessage('cancelled')"></i>
                   </div>
                   <div class="statuslink "
