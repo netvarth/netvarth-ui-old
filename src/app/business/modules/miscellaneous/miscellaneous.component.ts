@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { Messages } from '../../../shared/constants/project-messages';
+
 @Component({
     selector: 'app-miscellaneous',
     templateUrl: './miscellaneous.component.html'
@@ -21,17 +23,25 @@ export class MiscellaneousComponent implements OnInit {
     isCorp = false;
     isMultilevel = false;
     accountType: any;
+    cust_domain_name = '';
+    provider_domain_name = '';
+    customer_label = '';
+    provider_label = '';
 
     constructor(
         private router: Router,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
-        private provider_services: ProviderServices
+        private provider_services: ProviderServices,
+        private sharedfunctionObj: SharedFunctions,
     ) {
-
+        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
     }
     ngOnInit() {
         this.getDomainSubdomainSettings();
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
+        this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
     }
     gotobranchsps() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);

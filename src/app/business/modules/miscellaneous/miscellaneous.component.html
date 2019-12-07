@@ -20,7 +20,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoNotifications()">
                         <h2>Notifications</h2>
-                        <span class="form-level-settings">Notification settings for provider <a
+                        <span class="form-level-settings"> {{cust_domain_name}} and {{provider_domain_name}} notification settings<a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('notifications', $event)">Learn
                                 More</a></span>
@@ -42,7 +42,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLabels()">
                         <h2>Custom fields / Labels</h2>
-                        <span class="form-level-settings">Manage your labels here.<a
+                        <span class="form-level-settings">Add or manage your labels here.<a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('labels', $event)">Learn
                                 More</a></span>
@@ -53,7 +53,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotosaleschannel()">
                         <h2>Sales Channel</h2>
-                        <span class="form-level-settings">Notification settings for provider <a
+                        <span class="form-level-settings">Sales channel options <a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('saleschannel', $event)">Learn
                                 More</a></span>

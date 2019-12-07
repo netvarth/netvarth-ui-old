@@ -49,6 +49,14 @@ export const Messages = {
   'HOLIDAY_ETIME': 'Closing time should be greater than Start time',
   'HOLIDAY_LISTEMPTY': 'No scheduled holidays',
 
+  // notifications
+  'GENRL_NOTIFICATION_MSG': 'Inorder to send and receive notifications, the [provider] has to purchase atleast one of the Jaldee Messaging ADD-ON.',
+  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Sent notifications to your [customer]s!',
+  'FRM_LEVEL_PROVIDER_NOTIFICATION_MSG': 'Get notifications from [customer]!',
+  'CUSTOMER_NAME': '[customer]',
+  'PROVIDER_NAME': '[provider]',
+  'FRM_LVL_CUSTMR_NOTIFY_MODE': 'Specify the mode of channel through which the notification should be send to [customer]s.',
+
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
   'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
