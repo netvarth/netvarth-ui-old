@@ -252,6 +252,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   cancelledwaitlistSelection = 0;
   completedwaitlistSelection = 0;
   startedwaitlistSelection = 0;
+  startedWaitlistforMsg: any = [];
+  cancelledWaitlistforMsg: any = [];
+  completedWaitlistforMsg: any = [];
+  newWaitlistforMsg: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1337,24 +1341,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   addConsumerInboxMessage(source, waitlst?) {
     let waitlist;
-    if (source === 'single') {
-      waitlist = waitlst;
-    } else {
-      waitlist = this.selectedCheckin[source];
+    if (source === 'new') {
+      waitlist = this.newWaitlistforMsg;
+    } else if (source === 'started') {
+      waitlist = this.startedWaitlistforMsg;
+    } else if (source === 'completed') {
+      waitlist = this.completedWaitlistforMsg;
+    } else if (source === 'cancelled') {
+      waitlist = this.cancelledWaitlistforMsg;
     }
-
-
-    // {
-    //   "medium": {
-    //     "email": true,
-    //     "sms": true,
-    //     "pushNotification": true
-    //   },
-    //   "communicationMessage": "string",
-    //   "uuid": [
-    //     "string"
-    //   ]
-    // }
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => { },
@@ -1782,6 +1777,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   selectnewWaitlist(index) {
+    this.newWaitlistforMsg = [];
     if (this.waitlistSelected[index]) {
       delete this.waitlistSelected[index];
       this.waitlistSelection--;
@@ -1793,9 +1789,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['new']);
     }
+    for (let i = 0; i < this.waitlistSelected.length; i++) {
+      if (this.waitlistSelected[i]) {
+        if (this.newWaitlistforMsg.indexOf(this.new_checkins_list[i]) === -1) {
+          this.newWaitlistforMsg.push(this.new_checkins_list[i]);
+        }
+      }
+    }
   }
 
   selectcompletedWaitlist(index) {
+    this.completedWaitlistforMsg = [];
     if (this.completedwaitlistSelected[index]) {
       delete this.completedwaitlistSelected[index];
       this.completedwaitlistSelection--;
@@ -1807,9 +1811,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedCheckin['completed'] = this.completed_checkins_list[this.completedwaitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['completed']);
     }
+    for (let i = 0; i < this.completedwaitlistSelected.length; i++) {
+      if (this.completedwaitlistSelected[i]) {
+        if (this.completedWaitlistforMsg.indexOf(this.completed_checkins_list[i]) === -1) {
+          this.completedWaitlistforMsg.push(this.completed_checkins_list[i]);
+        }
+      }
+    }
   }
 
   selectcancelledWaitlist(index) {
+    this.cancelledWaitlistforMsg = [];
     if (this.cancelledwaitlistSelected[index]) {
       delete this.cancelledwaitlistSelected[index];
       this.cancelledwaitlistSelection--;
@@ -1821,9 +1833,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedCheckin['cancelled'] = this.cancelled_checkins_list[this.cancelledwaitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['cancelled']);
     }
+    for (let i = 0; i < this.cancelledwaitlistSelected.length; i++) {
+      if (this.cancelledwaitlistSelected[i]) {
+        if (this.cancelledWaitlistforMsg.indexOf(this.cancelled_checkins_list[i]) === -1) {
+          this.cancelledWaitlistforMsg.push(this.cancelled_checkins_list[i]);
+        }
+      }
+    }
   }
 
   selectstartedWaitlist(index) {
+    this.startedWaitlistforMsg = [];
     if (this.startedwaitlistSelected[index]) {
       delete this.startedwaitlistSelected[index];
       this.startedwaitlistSelection--;
@@ -1834,6 +1854,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.startedwaitlistSelection === 1) {
       this.selectedCheckin['started'] = this.started_checkins_list[this.startedwaitlistSelected.indexOf(true)];
       this.labels(this.selectedCheckin['started']);
+    }
+    for (let i = 0; i < this.startedwaitlistSelected.length; i++) {
+      if (this.startedwaitlistSelected[i]) {
+        if (this.startedWaitlistforMsg.indexOf(this.started_checkins_list[i]) === -1) {
+          this.startedWaitlistforMsg.push(this.started_checkins_list[i]);
+        }
+      }
     }
   }
   labels(checkin) {

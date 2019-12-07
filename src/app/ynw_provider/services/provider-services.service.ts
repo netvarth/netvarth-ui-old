@@ -5,7 +5,7 @@ import { projectConstants } from '../../shared/constants/project-constants';
 import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
-export class ProviderServices {    
+export class ProviderServices {
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) { }
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');
@@ -838,21 +838,17 @@ export class ProviderServices {
     const url = 'provider/account/settings/smsCount';
     return this.servicemeta.httpGet(url);
   }
-  getConsumerNotificationSettings () {
+  getConsumerNotificationSettings() {
     const url = 'provider/consumerNotification/settings';
     return this.servicemeta.httpGet(url);
   }
-  saveConsumerNotificationSettings (data) {
+  saveConsumerNotificationSettings(data) {
     const url = 'provider/consumerNotification/settings';
     return this.servicemeta.httpPost(url, data);
   }
   updateConsumerNotificationSettings(data) {
     const url = 'provider/consumerNotification/settings';
     return this.servicemeta.httpPut(url, data);
-  }
-  consumerMassCommunication(data) {
-    const url = 'provider/waitlist/consumerMassCommunication';
-    return this.servicemeta.httpPost(url, data);
   }
   changeJaldeePayStatus(status) {
     const url = 'provider/payment/' + status;

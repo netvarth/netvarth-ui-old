@@ -35,6 +35,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   };
   showCaptionBox: any = {};
   activeImageCaption: any = [];
+  sms = true;
+  email = true;
+  pushnotify = true;
+  typeOfMsg;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,6 +48,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public sharedfunctionObj: SharedFunctions,
     public common_datastorage: CommonDataStorageService
   ) {
+    console.log(this.data);
+    this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
     this.uuid = this.data.uuid || null;
     this.source = this.data.source || null;
@@ -126,14 +132,38 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (blankvalidate.test(form_data.message)) {
       this.api_error = this.sharedfunctionObj.getProjectMesssages('MSG_ERROR');
     } else {
-      const post_data = {
-        communicationMessage: form_data.message
-      };
-      switch (this.source) {
-        case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
-        case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
-        case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
-        case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
+      if (this.typeOfMsg === 'multiple') {
+        const post_data = {
+          medium: {
+            email: this.email,
+            sms: this.sms,
+            pushNotification: this.pushnotify
+          },
+          communicationMessage: form_data.message,
+          uuid: this.uuid
+        };
+        this.shared_services.consumerMassCommunication(post_data).
+          subscribe(() => {
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
+      } else {
+        const post_data = {
+          communicationMessage: form_data.message
+        };
+        switch (this.source) {
+          case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
+          case 'consumer-waitlist': this.consumerToProviderWaitlistNote(post_data); break;
+          case 'consumer-common': this.consumerToProviderNoteAdd(post_data); break;
+          case 'provider-common': this.providerToConsumerNoteAdd(post_data); break;
+        }
       }
     }
   }

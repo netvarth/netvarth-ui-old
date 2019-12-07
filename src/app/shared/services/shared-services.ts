@@ -527,63 +527,38 @@ export class SharedServices {
     const url = 'consumer/waitlist/update/latlong/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url, data);
   }
- updateTravelMode(uid, id, data) {
-   console.log(data);
-  const url = 'consumer/waitlist/update/travelmode/' + uid + '?account=' + id;
-  return this.servicemeta.httpPut(url, data);
- }
-
-
+  updateTravelMode(uid, id, data) {
+    console.log(data);
+    const url = 'consumer/waitlist/update/travelmode/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
   getTimeinMin(time) {
-
     const time_min = (time.hour * 60) + time.minute;
-
     return (typeof (time_min) === 'number') ? time_min : 0;
-
   }
-
-
-
   getFormattedAddress(data) {
-
     let address;
-
     if (data) {
-
       if (data.area) {
-
         address = data.area;
-
       }
-
       if (data.district && data.district !== data.area) {
-
         address = address + ', ' + data.district;
-
       }
-
       if (data.state.state) {
-
         address = address + ', ' + data.state.state;
-
       }
-
       if (data.state.country.country) {
-
         address = address + ', ' + data.state.country.country;
-
       }
-
       if (data.pinCode) {
-
         address = address + ', ' + data.pinCode;
-
       }
-
     }
-
     return address;
-
   }
-
+  consumerMassCommunication(data) {
+    const url = 'provider/waitlist/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
 }
