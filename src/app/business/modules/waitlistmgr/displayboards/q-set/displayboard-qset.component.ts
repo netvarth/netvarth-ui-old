@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -9,27 +9,32 @@ import { Messages } from '../../../../../shared/constants/project-messages';
     templateUrl: './displayboard-qset.component.html'
 })
 export class DisplayboardQSetComponent implements OnInit {
-    breadcrumb_moreoptions: any = [];
-    breadcrumbs = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
-        {
-            title: 'Queue Statusboards',
-            url: '/provider/settings/q-manager/displayboards'
-        },
-        {
-            title: 'Queue-Set'
-        }
-    ];
+    refresh = false;
+    // breadcrumb_moreoptions: any = [];
+    // breadcrumbs = [
+    //     {
+    //         title: 'Settings',
+    //         url: '/provider/settings'
+    //     },
+    //     {
+    //         title: Messages.WAITLIST_MANAGE_CAP,
+    //         url: '/provider/settings/q-manager'
+    //     },
+    //     {
+    //         title: 'Queue Statusboards',
+    //         url: '/provider/settings/q-manager/displayboards'
+    //     },
+    //     {
+    //         title: 'Queue-Set'
+    //     }
+    // ];
     api_loading: boolean;
     board_list: any = [];
     domain: any;
+    go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
+    @Input() source;
+    @Output() idSelected = new EventEmitter<any>();
+
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     constructor(
         private router: Router,
@@ -39,13 +44,24 @@ export class DisplayboardQSetComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.breadcrumb_moreoptions = {
-            'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
-        };
+        // this.breadcrumb_moreoptions = {
+        //     'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
+        // };
         this.getDisplayboardQsets();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
+    goBack() {
+        console.log('back' + this.source);
+        const actionObj = {
+            source: this.source
+        };
+        if (this.refresh) {
+            actionObj['refresh'] = true;
+        }
+        this.idSelected.emit(actionObj);
+    }
+
     getDisplayboardQsets() {
         this.api_loading = true;
         this.board_list = [];
@@ -66,28 +82,46 @@ export class DisplayboardQSetComponent implements OnInit {
             this.routerobj.navigate(['/provider/' + this.domain + '/displayboard->board']);
         }
     }
-    addDisplayboardQSet() {
-        this.router.navigate(['provider', 'settings',  'q-manager',
-        'displayboards', 'q-set', 'add']);
+     addQSet() {
+        //  this.router.navigate(['provider', 'settings',  'q-manager',
+        //  'displayboards', 'q-set', 'add']);
+        const actionObj = {
+            action: 'add',
+            id: null,
+            source: 'QLIST'
+        };
+        this.idSelected.emit(actionObj);
     }
     editDisplayboardQSet(board) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { id: board.id }
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: { id: board.id }
+        // };
+        const actionObj = {
+            action: 'edit',
+            id: board.id,
+            source: 'QLIST'
         };
-        this.router.navigate(['provider', 'settings', 'q-manager',
-            'displayboards', 'q-set', 'edit'], navigationExtras);
+        this.idSelected.emit(actionObj);
+        // this.router.navigate(['provider', 'settings', 'q-manager',
+        //     'displayboards', 'q-set', 'edit'], navigationExtras);
     }
     goDisplayboardQSetDetails(board) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { id: board.id }
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: { id: board.id }
+        // };
+        // this.router.navigate(['provider', 'settings',  'q-manager',
+        // 'displayboards', 'q-set', 'view'], navigationExtras);
+        const actionObj = {
+            action: 'view',
+            id: board.id
         };
-        this.router.navigate(['provider', 'settings',  'q-manager',
-        'displayboards', 'q-set', 'view'], navigationExtras);
+        this.idSelected.emit(actionObj);
     }
     deleteDisplayboardQSet(board) {
         this.provider_services.deleteDisplayboardQSet(board.id).subscribe(
             () => {
                 this.getDisplayboardQsets();
+                this.refresh = true;
             }
         );
     }

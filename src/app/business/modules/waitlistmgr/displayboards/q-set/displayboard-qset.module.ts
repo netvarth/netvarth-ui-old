@@ -17,7 +17,7 @@ import { DisplayboardQSetRoutingModule } from './displayboard-qset.routing.modul
        DisplayboardQSetDetailComponent
     ],
     imports: [
-        DisplayboardQSetRoutingModule,
+        // DisplayboardQSetRoutingModule,
         BreadCrumbModule,
         MaterialModule,
         FormMessageDisplayModule,
@@ -26,8 +26,8 @@ import { DisplayboardQSetRoutingModule } from './displayboard-qset.routing.modul
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
         CommonModule,
-        SharedModule
+        SharedModule,
     ],
-    exports: [DisplayboardQSetComponent]
+    exports: [DisplayboardQSetComponent, DisplayboardQSetDetailComponent]
 })
 export class DisplayboardQSetModule {}

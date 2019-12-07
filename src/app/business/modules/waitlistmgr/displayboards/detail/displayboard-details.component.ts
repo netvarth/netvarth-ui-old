@@ -23,7 +23,11 @@ export class DisplayboardDetailComponent implements OnInit {
     statussel1 = false;
     statusse2 = false;
     statussel3 = false;
+    showMode = 'DBOARD';
+    // showQsets = true;
+    // showQset = false;
     layoutData: any = [];
+    add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     boardSelectedItems: any = {};
     boardLayouts = [
         { displayName: '1x1', value: '1_1', row: 1, col: 1 },
@@ -60,6 +64,10 @@ export class DisplayboardDetailComponent implements OnInit {
     ];
     breadcrumbs = this.breadcrumbs_init;
     actionparam = 'show';
+    qsetAction;
+    qsetId;
+    showDboard = true;
+    source;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -88,6 +96,34 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
+    }
+    addQSet() {
+        this.qsetAction = 'add';
+        this.showMode = 'QSET';
+        this.source = 'DBOARD';
+        this.qsetId = null;
+    }
+    qSetSelected(qset) {
+        console.log(qset);
+        if (qset.refresh) {
+            this.getDisplayboardQSets();
+        }
+        if (qset.source === 'QLIST') {
+            this.source = 'DBOARD';
+            this.showMode = 'QSETS';
+        } else if (qset.source === 'DBOARD') {
+            this.showMode = 'DBOARD'; // when click back to statusboard button
+        } else {
+            this.showDboard = false;
+            this.qsetAction = qset.action;
+            this.qsetId = qset.id;
+            this.source = qset.source;
+            this.showMode = 'QSET';
+        }
+    }
+    qSetListClicked() {
+        this.source = 'DBOARD';
+        this.showMode = 'QSETS';
     }
     getLayout(layoutvalue) {
         let layoutActive;
@@ -219,7 +255,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     resetApiErrors() {
     }
-    gotoAddQset() {
-        this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
-    }
+    // gotoAddQset() {
+    //     this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
+    // }
 }

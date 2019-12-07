@@ -174,8 +174,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
-              // this.shared_functions.logout();
-              return throwError(error);
+              this.shared_functions.logout();
+              // return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
                 this._forceUpdate();
@@ -200,7 +200,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
-    console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
     if (this.shared_functions.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
