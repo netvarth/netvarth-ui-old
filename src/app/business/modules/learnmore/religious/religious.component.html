@@ -346,8 +346,8 @@
         Buying relevant keywords that a prospective devotee would be searching
         on Jaldee. For
         example,
-        if you are a Veterinary provider, you can buy Jaldee-Keywords like “Dogs
-        provider”, “Dog
+        if you are a Veterinary doctor, you can buy Jaldee-Keywords like “Dogs
+        doctor”, “Dog
         vaccination” etc.</span>
         <h6>How to add a Jaldee-Keyword ?</h6>
         <span>Different number of Jaldee-Keywords are available for different
@@ -2364,7 +2364,7 @@
                                           <td class="th6 light-col long"><i class="fa fa-check"></i></td>
                                         </tr>
                                         <tr>
-                                          <th class="th3 headcol">My Customer database</th>
+                                          <th class="th3 headcol">My Devotee database</th>
                                           <td class="th2 light-col long"><i class="fa fa-check"></i></td>
                                           <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                           <td class="th3 light-col long"><i class="fa fa-check"></i></td>
@@ -2455,7 +2455,7 @@
                                                 <td class="th6 light-col long"><i class="fa fa-check"></i></td>
                                               </tr>
                                               <tr>
-                                                  <th class="th3 headcol">Live track customer ETAs</th>
+                                                  <th class="th3 headcol">Live track devotee ETAs</th>
                                                   <td class="th2 light-col long"><i class="fa fa-times"></i></td>
                                                   <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
                                                   <td class="th3 light-col long"><i class="fa fa-check"></i></td>
@@ -3151,78 +3151,186 @@
         </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion>
-        <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
-        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-        class="accordion">
-        <mat-panel-title class="accordion-title">
-            <span class="helpcontent"
-                (click)="handleScroll('notifications', 'miscellaneous')">
-                Notifications</span>
-        </mat-panel-title>
-        </mat-expansion-panel-header>
-        
-        <div class="helpcontent">
-        <span>Notifications are important to get timely information about devotee
-            check-ins and
-            cancellation of devotee check-ins.</span>
-        <ol class="ol-normal">
-            <li><strong>Notify whenever check-in happens :</strong> When a devotee
-                checks-in with
-                the priest, the priest can receive notifications in the following
-                ways:
-                <ul class="ul-normal">
-                    <li><strong>Via SMS:</strong> Add phone number to which you wish
-                        to receive
-                        SMS.</li>
-                    <li><strong>Via Email:</strong> Add email id to which you wish
-                        to receive
-                        email notification.</li>
-                    <li><strong>Push Notification:</strong> Turn on this toggle
-                        button if you
-                        would like to receive information via push notification.
-                    </li>
-                </ul>
-            </li>
-            <li><strong>Notify whenever check-in gets cancelled :</strong> When a
-                devotee
-                checks-in gets cancelled with the priest, the priest
-                can receive notifications in the following ways:
-                <ul class="ul-normal">
-                    <li><strong>Via SMS:</strong> Add phone number to which you wish
-                        to receive
-                        notification.</li>
-                    <li><strong>Via Email:</strong> Add email id to which you wish
-                        to receive
-                        email notification.</li>
-                    <li><strong>Push Notification:</strong> Turn on this toggle
-                        button if you
-                        would like to receive information via push notification.
-                    </li>
-                </ul>
-            </li>
-            <span>Choose convenient options from the above and click
-                <strong>Ok</strong> to save
-                the information.</span>
-        </ol>
-        </div>
-        
-        </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                    <mat-panel-title class="accordion-title">
+                        <span class="helpcontent" (click)="handleScroll('notifications', 'miscellaneous')">
+                            Notifications</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="helpcontent">
+                    <span>Notifications are information the priest send and receive, it can be reminders,
+                        communication
+                        from devotees, or other timely information</span><br>
+                    <strong><u>Enable SMS Notification</u></strong><br>
+                    This is a global notification toggle button which can only be enabled, if the priest
+                    has
+                    purchased any of the Jaldee Messaging add-ons available. Once the priest turn on
+                    “Enable
+                    SMS Notification”, the priest can see the available SMS credits for the respective
+                    add-on
+                    bought, under the label “Remaining SMS credits”. And the remaining SMS credits will be
+                    updated according to the usage of SMS.
+                </div>
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                            class="accordion">
+                            <mat-panel-title class="accordion-title">
+                                <span class="helpcontent">
+                                    Devotee Notifications</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="helpcontent">
+                            <span>Deliver timely information to your devotees like, the number of devotees
+                                ahead of a particular
+                                devotee in line, when the devotee is second next in line and also when the
+                                devotee is next in line for the actual appointment.</span>
+                            <ol>
+                                <li><strong>Early Notification:</strong><br>
+                                    Notify a devotee, the number of people ahead of him/her in line via
+                                    SMS/Email/Notifications. First the priest has to enter a devotee number
+                                    to whom you
+                                    wish to send a notification. Enable the following modes of channel through
+                                    which you
+                                    wish to send notifications to your devotee.
+                                    <ul>
+                                        <li>Via SMS</li>
+                                        <li>Via Email</li>
+                                        <li>Push Notifications</li>
+                                    </ul>
+                                    Choose convenient options from the above and click Ok to save the
+                                    information.
+                                </li>
+                                <li>
+                                    <strong>
+                                        Pre Final Notification
+                                    </strong><br>
+                                    Notify a devotee when he is second next in line via
+                                    SMS/Email/Notifications.
+                                    Enable the following modes of channel through which you wish to send
+                                    notifications to your
+                                    devotee.
+                                   <ul>
+                                        <li>Via SMS</li>
+                                        <li>Via Email</li>
+                                        <li>Push Notifications</li>
+                                   </ul>
+                                   Choose convenient options from the above and click Ok to save the
+                                   information.
+                                </li>
+                                <li>
+                                        <strong>
+                                        Final Notification
+                                        </strong><br>
+                                        Notify a devotee when he is next in line via SMS/Email/Notifications.
+                                        Enable the following modes of channel through which you wish to send
+                                        notifications to your devotee.
+                                       <ul>
+                                            <li>Via SMS</li>
+                                            <li>Via Email</li>
+                                            <li>Push Notifications</li>
+                                       </ul>
+                                       Choose convenient options from the above and click Ok to save the
+                                       information.
+                                    </li>
+                            </ol>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                class="accordion">
+                                <mat-panel-title class="accordion-title">
+                                    <span class="helpcontent">
+                                        Priest Notifications</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="helpcontent">
+                                <span>It is important to receive notifications for the priest when a devotee checks-in or when a devotee check-in is cancelled.
+                                        </span>
+                                        <ul>
+                                            <li>
+                                                <strong>Notify whenever check-in happens:</strong><br>
+                                                When a devotee checks-in with the priest, the priest can receive notifications in the following ways:
+                                                <ul>
+                                                    <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                    <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                    <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                    <strong>Notify whenever check-in gets cancelled:</strong><br>
+                                                    When a devotee checks-in gets cancelled with the priest, the priest can receive notifications in the following ways:
+                                                    <ul>
+                                                        <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                        <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                        <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                    </ul>
+                                                </li>
+                                        </ul>
+                                        Choose convenient options from the above and click Ok to save the information.
+
+                               
+                            </div>
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+            </mat-expansion-panel>
         </mat-accordion>
-        <!-- <mat-accordion>
-                <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
-                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                        class="accordion">
-                        <mat-panel-title class="accordion-title">
-                            <span class="helpcontent"
-                                (click)="handleScroll('labels', 'miscellaneous')">
-                                Custom fields/labels</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-        
-                    <div></div>
-        
-                </mat-expansion-panel>
-            </mat-accordion> -->
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                    <mat-panel-title class="accordion-title">
+                        <span class="helpcontent" (click)="handleScroll('labels', 'miscellaneous')">
+                            Custom fields/labels</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="helpcontent">
+                    Jaldee allows their priests to add and manage their own custom fields or labels for the
+                    check-ins list in the dashboard.The steps you take in the Custom Fields/Labels option from
+                    priest dashboard, create the label and make it available for use from the check-ins list
+                    in the dashboard. And also you can use the New Label/Manage Label option from check-in list
+                    in
+                    dashboard to add new label or manage the existing labels.<br>
+                    <strong>How to create a new lablel?</strong>
+                    <ul>
+                        <li>To get started with creating new label click the button “ADD LABELS”.</li>
+                        <li>Input the label name and briefly describe the label you wish to add.</li>
+                        <li>Then click the button <strong>“Short label button”</strong> to add the values of the
+                            label which can be
+                            used to sort the check-ins list in the dashboard.</li>
+                        <li>Enter a value and a corresponding short value and click “ADD” to save.
+                        </li>
+                        <li>You can also delete the added values from here.
+                        </li>
+                        <li>Click SAVE to save all the information.</li>
+                        <li>And once a label is created, when a particular check-in is selected from dashboard a
+                            label
+                            symbol appears in right corner , click that symbol and assign a particular value to
+                            this
+                            check-in.
+                        </li>
+                    </ul>
+                    <strong>EXAMPLE:</strong> A priest creates a label named <strong>“Check-ins”</strong> and
+                    describing this label as “Both walk-in and online check-ins”. Then he clicks <strong>“Short
+                        label button”</strong>.First he entered a value “Walk-in” and gave a shortcut value “W”,
+                    again he added the second value “Online”and gave shortcut value “O”. Now from the check-ins
+                    list in the dashboard, priest chooses the label for each check-in using that symbol appeared in the right corner of the selected check-in and
+                    assign respective values according to the type of check-in that devotee has taken ie;
+                    either
+                    <strong>W</strong>(walk-in)or <strong>O</strong>(Online).
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
             <mat-accordion>
                 <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -3257,7 +3365,7 @@
                                     <li>And if you have any note about the discount created write in the <strong>"Note"</strong> section.
                                         </li>
                                 </ul>
-                                Once JDN is created by the priest, the priest profile in devotee dashboard shows <strong><i>JDN Assured</i></strong> label with which devotees get to know the discount offered by a particular priest. And when a devotee checks-in for a priest profile with JDN assured feature, the devotee gets  a fixed discount on the total bill amount.
+                                Once JDN is created by the priest, the priest profile in devotee dashboard shows <strong><i>JDN Assured</i></strong> label with which devotees get to know the details of discount offered by a particular priest. And when a devotee checks-in for a priest profile with JDN assured feature, the devotee gets  a fixed discount on the total bill amount.
 
     
                         </div>
@@ -3871,7 +3979,7 @@
                                             </li>
                                         <li>If the priest choose Jaldee Bank for accepting online payments, a total of 5 % will be deducted from the total bill amount, ie 2% payment gateway commision and 3% Jaldee  transaction charge. 
                                             </li>
-                                        <li>Priests using their own bank account for accepting online payments from customers, will be eliminated from imposing jaldee transaction charge.
+                                        <li>Priests using their own bank account for accepting online payments from devotees, will be eliminated from imposing jaldee transaction charge.
                                             </li>
                                     </ul>
                                     </span>

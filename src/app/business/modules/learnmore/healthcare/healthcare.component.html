@@ -34,7 +34,7 @@
                 <h6>Public Search</h6>
         <ol class="ol-normal">
         <li>A doctor is required to click on the “TURN ON” button to enable the
-        Public Search if he/she wants to be visible in the customer’s search
+        Public Search if he/she wants to be visible in the patient’s search
         results.</li>
         <li>If a doctor has disabled the Public Search, patients cannot see the
         doctor’s profile in their search results.</li>
@@ -291,10 +291,10 @@
         
         <div class="helpcontent">
                 <h6>Jaldee Keywords</h6>
-        <span>Jaldee-Keyword is common keywords. A customer generally uses such
+        <span>Jaldee-Keyword is common keywords. A patient generally uses such
         keywords to search for a
         service provider.
-        Buying relevant keywords that a prospective customer would be searching
+        Buying relevant keywords that a prospective patient would be searching
         on Jaldee. For
         example,
         if you are a Veterinary provider, you can buy Jaldee-Keywords like “Dogs
@@ -1172,7 +1172,7 @@
         </mat-expansion-panel-header>
         
         <div class="helpcontent">
-        <span>Image and Photos seize the customer’s attention and make a profile more engaging. doctors are suggested to add service or specialization related images to the profile. This will increase patients’ attention. Gallery section has <strong>view</strong> options and
+        <span>Image and Photos seize the patient's attention and make a profile more engaging. doctors are suggested to add service or specialization related images to the profile. This will increase patients’ attention. Gallery section has <strong>view</strong> options and
         <strong>add
         multiple
         images</strong> option. All the added images are shown here.</span>
@@ -2284,7 +2284,7 @@
                                   <td class="th6 light-col long"><i class="fa fa-check"></i></td>
                                 </tr>
                                 <tr>
-                                  <th class="th3 headcol">My Customer database</th>
+                                  <th class="th3 headcol">My Patient database</th>
                                   <td class="th2 light-col long"><i class="fa fa-check"></i></td>
                                   <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                   <td class="th3 light-col long"><i class="fa fa-check"></i></td>
@@ -2375,7 +2375,7 @@
                                         <td class="th6 light-col long"><i class="fa fa-check"></i></td>
                                       </tr>
                                       <tr>
-                                          <th class="th3 headcol">Live track customer ETAs</th>
+                                          <th class="th3 headcol">Live track patient ETAs</th>
                                           <td class="th2 light-col long"><i class="fa fa-times"></i></td>
                                           <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
                                           <td class="th3 light-col long"><i class="fa fa-check"></i></td>
@@ -3034,68 +3034,186 @@
         </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion>
-        <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
-        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-        class="accordion">
-        <mat-panel-title class="accordion-title">
-        <span class="helpcontent"
-        (click)="handleScroll('notifications', 'miscellaneous')">
-        Notifications</span>
-        </mat-panel-title>
-        </mat-expansion-panel-header>
-        
-        <div class="helpcontent">
-        <span>Notifications are important to get timely information about patient
-        check-ins and cancellation of patient check-ins.</span>
-        <ol class="ol-normal">
-        <li><strong>Notify whenever check-in happens :</strong> When a patient
-        checks-in with the doctor, the doctor can receive notifications in
-        the following ways:
-        <ul class="ul-normal">
-        <li><strong>Via SMS:</strong> Add phone number to which you wish
-            to receive SMS.</li>
-        <li><strong>Via Email:</strong> Add email id to which you wish
-            to receive email notification.</li>
-        <li><strong>Push Notification:</strong> Turn on this toggle
-            button if you would like to receive information via push
-            notification.</li>
-        </ul>
-        </li>
-        <li><strong>Notify whenever check-in gets cancelled :</strong> When a
-        patient checks-in gets cancelled with the doctor, the doctor
-        can receive notifications in the following ways:
-        <ul class="ul-normal">
-        <li><strong>Via SMS:</strong> Add phone number to which you wish
-            to receive notification.</li>
-        <li><strong>Via Email:</strong> Add email id to which you wish
-            to receive email notification.</li>
-        <li><strong>Push Notification:</strong> Turn on this toggle
-            button if you would like to receive information via push
-            notification.</li>
-        </ul>
-        </li>
-        <span>Choose convenient options from the above and click
-        <strong>Ok</strong> to save the information.</span>
-        </ol>
-        </div>
-        
-        </mat-expansion-panel>
-        </mat-accordion>
-        <!-- <mat-accordion>
-                <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
-                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                        class="accordion">
+                <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
+                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
                         <mat-panel-title class="accordion-title">
-                            <span class="helpcontent"
-                                (click)="handleScroll('labels', 'miscellaneous')">
+                            <span class="helpcontent" (click)="handleScroll('notifications', 'miscellaneous')">
+                                Notifications</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="helpcontent">
+                        <span>Notifications are information the doctor send and receive, it can be reminders,
+                            communication
+                            from patients, or other timely information</span><br>
+                        <strong><u>Enable SMS Notification</u></strong><br>
+                        This is a global notification toggle button which can only be enabled, if the doctor
+                        has
+                        purchased any of the Jaldee Messaging add-ons available. Once the doctor turn on
+                        “Enable
+                        SMS Notification”, the doctor can see the available SMS credits for the respective
+                        add-on
+                        bought, under the label “Remaining SMS credits”. And the remaining SMS credits will be
+                        updated according to the usage of SMS.
+                    </div>
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                class="accordion">
+                                <mat-panel-title class="accordion-title">
+                                    <span class="helpcontent">
+                                        Patient Notifications</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="helpcontent">
+                                <span>Deliver timely information to your patients like, the number of patients
+                                    ahead of a particular
+                                    patient in line, when the patient is second next in line and also when the
+                                    patient is next in line for the actual appointment.</span>
+                                <ol>
+                                    <li><strong>Early Notification:</strong><br>
+                                        Notify a patient, the number of people ahead of him/her in line via
+                                        SMS/Email/Notifications. First the doctor has to enter a patient number
+                                        to whom you
+                                        wish to send a notification. Enable the following modes of channel through
+                                        which you
+                                        wish to send notifications to your patient.
+                                        <ul>
+                                            <li>Via SMS</li>
+                                            <li>Via Email</li>
+                                            <li>Push Notifications</li>
+                                        </ul>
+                                        Choose convenient options from the above and click Ok to save the
+                                        information.
+                                    </li>
+                                    <li>
+                                        <strong>
+                                            Pre Final Notification
+                                        </strong><br>
+                                        Notify a patient when he is second next in line via
+                                        SMS/Email/Notifications.
+                                        Enable the following modes of channel through which you wish to send
+                                        notifications to your
+                                        patient.
+                                       <ul>
+                                            <li>Via SMS</li>
+                                            <li>Via Email</li>
+                                            <li>Push Notifications</li>
+                                       </ul>
+                                       Choose convenient options from the above and click Ok to save the
+                                       information.
+                                    </li>
+                                    <li>
+                                            <strong>
+                                            Final Notification
+                                            </strong><br>
+                                            Notify a patient when he is next in line via SMS/Email/Notifications.
+                                            Enable the following modes of channel through which you wish to send
+                                            notifications to your patient.
+                                           <ul>
+                                                <li>Via SMS</li>
+                                                <li>Via Email</li>
+                                                <li>Push Notifications</li>
+                                           </ul>
+                                           Choose convenient options from the above and click Ok to save the
+                                           information.
+                                        </li>
+                                </ol>
+                            </div>
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                    class="accordion">
+                                    <mat-panel-title class="accordion-title">
+                                        <span class="helpcontent">
+                                            Doctor Notifications</span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="helpcontent">
+                                    <span>It is important to receive notifications for the doctor when a patient checks-in or when a patient check-in is cancelled.
+                                            </span>
+                                            <ul>
+                                                <li>
+                                                    <strong>Notify whenever check-in happens:</strong><br>
+                                                    When a patient checks-in with the doctor, the doctor can receive notifications in the following ways:
+                                                    <ul>
+                                                        <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                        <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                        <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                        <strong>Notify whenever check-in gets cancelled:</strong><br>
+                                                        When a patient checks-in gets cancelled with the doctor, the doctor can receive notifications in the following ways:
+                                                        <ul>
+                                                            <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                            <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                            <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                        </ul>
+                                                    </li>
+                                            </ul>
+                                            Choose convenient options from the above and click Ok to save the information.
+
+                                   
+                                </div>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
+                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                        <mat-panel-title class="accordion-title">
+                            <span class="helpcontent" (click)="handleScroll('labels', 'miscellaneous')">
                                 Custom fields/labels</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-        
-                    <div></div>
-        
+
+                    <div class="helpcontent">
+                        Jaldee allows their doctors to add and manage their own custom fields or labels for the
+                        check-ins list in the dashboard.The steps you take in the Custom Fields/Labels option from
+                        doctor dashboard, create the label and make it available for use from the check-ins list
+                        in the dashboard. And also you can use the New Label/Manage Label option from check-in list
+                        in
+                        dashboard to add new label or manage the existing labels.<br>
+                        <strong>How to create a new lablel?</strong>
+                        <ul>
+                            <li>To get started with creating new label click the button “ADD LABELS”.</li>
+                            <li>Input the label name and briefly describe the label you wish to add.</li>
+                            <li>Then click the button <strong>“Short label button”</strong> to add the values of the
+                                label which can be
+                                used to sort the check-ins list in the dashboard.</li>
+                            <li>Enter a value and a corresponding short value and click “ADD” to save.
+                            </li>
+                            <li>You can also delete the added values from here.
+                            </li>
+                            <li>Click SAVE to save all the information.</li>
+                            <li>And once a label is created, when a particular check-in is selected from dashboard a
+                                label
+                                symbol appears in right corner , click that symbol and assign a particular value to
+                                this
+                                check-in.
+                            </li>
+                        </ul>
+                        <strong>EXAMPLE:</strong> A doctor creates a label named <strong>“Check-ins”</strong> and
+                        describing this label as “Both walk-in and online check-ins”. Then he clicks <strong>“Short
+                            label button”</strong>.First he entered a value “Walk-in” and gave a shortcut value “W”,
+                        again he added the second value “Online”and gave shortcut value “O”. Now from the check-ins
+                        list in the dashboard, doctor chooses the label for each check-in using that symbol appeared in the right corner of the selected check-in and
+                        assign respective values according to the type of check-in that patient has taken ie;
+                        either
+                        <strong>W</strong>(walk-in)or <strong>O</strong>(Online).
+                    </div>
+
                 </mat-expansion-panel>
-            </mat-accordion> -->
+            </mat-accordion>
             <mat-accordion>
                 <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -3130,7 +3248,7 @@
                                     <li>And if you have any note about the discount created write in the <strong>"Note"</strong> section.
                                         </li>
                                 </ul>
-                                Once JDN is created by the doctor, the doctor profile in patient dashboard shows <strong><i>JDN Assured</i></strong> label with which patients get to know the discount offered by a particular doctor. And when a patient checks-in for a doctor profile with JDN assured feature, the patient gets  a fixed discount on the total bill amount.
+                                Once JDN is created by the doctor, the doctor profile in patient dashboard shows <strong><i>JDN Assured</i></strong> label with which patients get to know the details of discount offered by a particular doctor. And when a patient checks-in for a doctor profile with JDN assured feature, the patient gets  a fixed discount on the total bill amount.
 
     
     

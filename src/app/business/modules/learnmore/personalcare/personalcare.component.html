@@ -2934,69 +2934,186 @@
         </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion>
-        <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
-        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-        class="accordion">
-        <mat-panel-title class="accordion-title">
-        <span class="helpcontent"
-        (click)="handleScroll('notifications', 'miscellaneous')">
-        Notifications</span>
-        </mat-panel-title>
-        </mat-expansion-panel-header>
-        
-        <div class="helpcontent">
-        <span>Notifications are important to get timely information about customer
-        check-ins and cancellation of customer check-ins.</span>
-        <ol class="ol-normal">
-        <li><strong>Notify whenever check-in happens :</strong> When a customer
-        checks-in with the provider, the provider can receive notifications
-        in
-        the following ways:
-        <ul class="ul-normal">
-        <li><strong>Via SMS:</strong> Add phone number to which you wish
-        to receive SMS.</li>
-        <li><strong>Via Email:</strong> Add email id to which you wish
-        to receive email notification.</li>
-        <li><strong>Push Notification:</strong> Turn on this toggle
-        button if you would like to receive information via push
-        notification.</li>
-        </ul>
-        </li>
-        <li><strong>Notify whenever check-in gets cancelled :</strong> When a
-        customer checks-in gets cancelled with the provider, the provider
-        can receive notifications in the following ways:
-        <ul class="ul-normal">
-        <li><strong>Via SMS:</strong> Add phone number to which you wish
-        to receive notification.</li>
-        <li><strong>Via Email:</strong> Add email id to which you wish
-        to receive email notification.</li>
-        <li><strong>Push Notification:</strong> Turn on this toggle
-        button if you would like to receive information via push
-        notification.</li>
-        </ul>
-        </li>
-        <span>Choose convenient options from the above and click
-        <strong>Ok</strong> to save the information.</span>
-        </ol>
-        </div>
-        
-        </mat-expansion-panel>
+            <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                    <mat-panel-title class="accordion-title">
+                        <span class="helpcontent" (click)="handleScroll('notifications', 'miscellaneous')">
+                            Notifications</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="helpcontent">
+                    <span>Notifications are information the provider send and receive, it can be reminders,
+                        communication
+                        from customers, or other timely information</span><br>
+                    <strong><u>Enable SMS Notification</u></strong><br>
+                    This is a global notification toggle button which can only be enabled, if the provider
+                    has
+                    purchased any of the Jaldee Messaging add-ons available. Once the provider turn on
+                    “Enable
+                    SMS Notification”, the provider can see the available SMS credits for the respective
+                    add-on
+                    bought, under the label “Remaining SMS credits”. And the remaining SMS credits will be
+                    updated according to the usage of SMS.
+                </div>
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                            class="accordion">
+                            <mat-panel-title class="accordion-title">
+                                <span class="helpcontent">
+                                    Customer Notifications</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="helpcontent">
+                            <span>Deliver timely information to your customers like, the number of customers
+                                ahead of a particular
+                                customer in line, when the customer is second next in line and also when the
+                                customer is next in line for the actual appointment.</span>
+                            <ol>
+                                <li><strong>Early Notification:</strong><br>
+                                    Notify a customer, the number of people ahead of him/her in line via
+                                    SMS/Email/Notifications. First the provider has to enter a customer number
+                                    to whom you
+                                    wish to send a notification. Enable the following modes of channel through
+                                    which you
+                                    wish to send notifications to your customer.
+                                    <ul>
+                                        <li>Via SMS</li>
+                                        <li>Via Email</li>
+                                        <li>Push Notifications</li>
+                                    </ul>
+                                    Choose convenient options from the above and click Ok to save the
+                                    information.
+                                </li>
+                                <li>
+                                    <strong>
+                                        Pre Final Notification
+                                    </strong><br>
+                                    Notify a customer when he is second next in line via
+                                    SMS/Email/Notifications.
+                                    Enable the following modes of channel through which you wish to send
+                                    notifications to your
+                                    customer.
+                                   <ul>
+                                        <li>Via SMS</li>
+                                        <li>Via Email</li>
+                                        <li>Push Notifications</li>
+                                   </ul>
+                                   Choose convenient options from the above and click Ok to save the
+                                   information.
+                                </li>
+                                <li>
+                                        <strong>
+                                        Final Notification
+                                        </strong><br>
+                                        Notify a customer when he is next in line via SMS/Email/Notifications.
+                                        Enable the following modes of channel through which you wish to send
+                                        notifications to your customer.
+                                       <ul>
+                                            <li>Via SMS</li>
+                                            <li>Via Email</li>
+                                            <li>Push Notifications</li>
+                                       </ul>
+                                       Choose convenient options from the above and click Ok to save the
+                                       information.
+                                    </li>
+                            </ol>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                class="accordion">
+                                <mat-panel-title class="accordion-title">
+                                    <span class="helpcontent">
+                                        Provider Notifications</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="helpcontent">
+                                <span>It is important to receive notifications for the provider when a customer checks-in or when a customer check-in is cancelled.
+                                        </span>
+                                        <ul>
+                                            <li>
+                                                <strong>Notify whenever check-in happens:</strong><br>
+                                                When a customer checks-in with the provider, the provider can receive notifications in the following ways:
+                                                <ul>
+                                                    <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                    <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                    <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                    <strong>Notify whenever check-in gets cancelled:</strong><br>
+                                                    When a customer checks-in gets cancelled with the provider, the provider can receive notifications in the following ways:
+                                                    <ul>
+                                                        <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                        <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                        <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                    </ul>
+                                                </li>
+                                        </ul>
+                                        Choose convenient options from the above and click Ok to save the information.
+
+                               
+                            </div>
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+            </mat-expansion-panel>
         </mat-accordion>
-        <!-- <mat-accordion>
-                <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
-                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                        class="accordion">
-                        <mat-panel-title class="accordion-title">
-                            <span class="helpcontent"
-                                (click)="handleScroll('labels', 'miscellaneous')">
-                                Custom fields/labels</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-        
-                    <div></div>
-        
-                </mat-expansion-panel>
-            </mat-accordion> -->
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
+                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                    <mat-panel-title class="accordion-title">
+                        <span class="helpcontent" (click)="handleScroll('labels', 'miscellaneous')">
+                            Custom fields/labels</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="helpcontent">
+                    Jaldee allows their providers to add and manage their own custom fields or labels for the
+                    check-ins list in the dashboard.The steps you take in the Custom Fields/Labels option from
+                    provider dashboard, create the label and make it available for use from the check-ins list
+                    in the dashboard. And also you can use the New Label/Manage Label option from check-in list
+                    in
+                    dashboard to add new label or manage the existing labels.<br>
+                    <strong>How to create a new lablel?</strong>
+                    <ul>
+                        <li>To get started with creating new label click the button “ADD LABELS”.</li>
+                        <li>Input the label name and briefly describe the label you wish to add.</li>
+                        <li>Then click the button <strong>“Short label button”</strong> to add the values of the
+                            label which can be
+                            used to sort the check-ins list in the dashboard.</li>
+                        <li>Enter a value and a corresponding short value and click “ADD” to save.
+                        </li>
+                        <li>You can also delete the added values from here.
+                        </li>
+                        <li>Click SAVE to save all the information.</li>
+                        <li>And once a label is created, when a particular check-in is selected from dashboard a
+                            label
+                            symbol appears in right corner , click that symbol and assign a particular value to
+                            this
+                            check-in.
+                        </li>
+                    </ul>
+                    <strong>EXAMPLE:</strong> A provider creates a label named <strong>“Check-ins”</strong> and
+                    describing this label as “Both walk-in and online check-ins”. Then he clicks <strong>“Short
+                        label button”</strong>.First he entered a value “Walk-in” and gave a shortcut value “W”,
+                    again he added the second value “Online”and gave shortcut value “O”. Now from the check-ins
+                    list in the dashboard, provider chooses the label for each check-in using that symbol appeared in the right corner of the selected check-in and
+                    assign respective values according to the type of check-in that customer has taken ie;
+                    either
+                    <strong>W</strong>(walk-in)or <strong>O</strong>(Online).
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
             <mat-accordion>
                 <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -3031,7 +3148,7 @@
                                     <li>And if you have any note about the discount created write in the <strong>"Note"</strong> section.
                                         </li>
                                 </ul>
-                                Once JDN is created by the provider, the provider profile in customer dashboard shows <strong><i>JDN Assured</i></strong> label with which customers get to know the discount offered by a particular provider. And when a customer checks-in for a provider profile with JDN assured feature, the customer gets  a fixed discount on the total bill amount.
+                                Once JDN is created by the provider, the provider profile in customer dashboard shows <strong><i>JDN Assured</i></strong> label with which customers get to know the details of discount offered by a particular provider. And when a customer checks-in for a provider profile with JDN assured feature, the customer gets  a fixed discount on the total bill amount.
     
     
                         </div>
