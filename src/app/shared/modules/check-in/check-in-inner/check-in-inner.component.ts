@@ -166,7 +166,8 @@ export class CheckInInnerComponent implements OnInit {
   liveTrack = false;
   source: any = [];
   travelMode = 'DRIVING';
-  notifyTime = 'AFTERSTART';
+  notifyTime = 'ONEHOUR';
+  notifyAutomatic = true;
   shareLoc = true;
   lat_lng = {
     latitude: 0,
@@ -181,6 +182,7 @@ export class CheckInInnerComponent implements OnInit {
   };
   activeWt;
   bicycling: boolean;
+  liveTrackMessage;
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
@@ -213,7 +215,7 @@ export class CheckInInnerComponent implements OnInit {
     this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.gets3curl();
     this.getFamilyMembers();
-    this.getCurrentLocation();
+    // this.getCurrentLocation();
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     this.today = new Date(this.today);
     this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -783,16 +785,20 @@ export class CheckInInnerComponent implements OnInit {
     }
   }
   getCurrentLocation() {
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        this.lat_lng.longitude = +pos.coords.longitude;
-        this.lat_lng.latitude = +pos.coords.latitude;
-        console.log(this.lat_lng);
-      },
-        error => {
-         // this.shareLoc = false;
-        });
-    }
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      if (navigator) {
+        alert(_this.lat_lng);
+        navigator.geolocation.getCurrentPosition(pos => {
+          _this.lat_lng.longitude = +pos.coords.longitude;
+          _this.lat_lng.latitude = +pos.coords.latitude;
+          resolve(_this.lat_lng);
+        },
+          error => {
+            reject();
+          });
+      }
+    });
   }
   saveCheckin() {
     const waitlistarr = [];
@@ -873,12 +879,22 @@ export class CheckInInnerComponent implements OnInit {
           this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
             (wailist: any) => {
               this.activeWt = wailist;
-              console.log(this.activeWt);
               this.liveTrack = true;
+              this.getCurrentLocation().then(
+                (lat_long: any) => {
+                  this.lat_lng = lat_long;
+                  this.saveLiveTrackInfo().then(
+                        (liveTInfo) => {
+                          console.log(liveTInfo);
+                          this.shareLoc = true;
+                          this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName);
+                          console.log(this.liveTrackMessage);
+                        }
+                  );
+                });
               this.resetApi();
             },
             () => {
-
             }
           );
           if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
@@ -1378,7 +1394,7 @@ export class CheckInInnerComponent implements OnInit {
       this.driving = true;
       this.walking = false;
       this.bicycling = false;
-    } else if  (event === 'WALKING') {
+    } else if (event === 'WALKING') {
       this.walking = true;
       this.driving = false;
       this.bicycling = false;
@@ -1441,13 +1457,46 @@ export class CheckInInnerComponent implements OnInit {
       );
   }
   locationEnableDisable(event) {
-console.log(event);
-if (event.checked) {
-  this.getCurrentLocation();
-}
+    console.log(event);
+    if (event.checked) {
+      this.getCurrentLocation();
+    }
   }
 
-  saveLiveTrackDetails() {
+  notifyEvent(event) {
+    if (event.checked) {
+      this.notifyTime = 'ONEHOUR';
+    } else {
+      this.notifyTime = 'AFTERSTART';
+    }
+  }
+
+  saveLiveTrackInfo() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const post_Data = {
+        'jaldeeGeoLocation': {
+          'latitude': _this.lat_lng.latitude,
+          'longitude': _this.lat_lng.longitude
+        },
+        'travelMode': _this.travelMode,
+        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'jaldeeStartTimeMod': _this.notifyTime,
+        'shareLocStatus': _this.shareLoc
+      };
+      _this.shared_services.addLiveTrackDetails(_this.trackUuid, _this.account_id, post_Data)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+
+   saveLiveTrackDetails() {
     this.resetApi();
     const post_Data = {
       'jaldeeGeoLocation': {
@@ -1459,52 +1508,19 @@ if (event.checked) {
       'jaldeeStartTimeMod': this.notifyTime,
       'shareLocStatus': this.shareLoc
     };
-    this.shared_services.addLiveTrackDetails(this.trackUuid, this.account_id, post_Data)
-      .subscribe(data => {
-        let trackDetail: any = [];
-        console.log(data);
-        trackDetail = data;
-        if (trackDetail.jaldeeDistanceTime) {
-         const distance = trackDetail.jaldeeDistanceTime.jaldeeDistance.distance;
-         const unit = projectConstants.LIVETRACK_CONST[trackDetail.jaldeeDistanceTime.jaldeeDistance.unit];
-         const travelTime = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
-         const timeUnit = trackDetail.jaldeeDistanceTime.jaldeelTravelTime.timeUnit;
-         const hours = Math.floor(travelTime / 60);
-         const minutes = travelTime % 60;
-         let message = '';
-         message += 'You are ' + distance + ' ' + unit + ' away and will take around';
-         if (hours !== 0) {
-          message += ' ' +  hours;
-           if (hours === 1) {
-            message +=  'hr';
-           } else {
-            message += 'hrs';
-           }
-         }
-         if (minutes !== 0) {
-          message += ' ' +  minutes;
-          if (minutes === 1) {
-            message +=  'min';
-           } else {
-            message += 'mins';
-           }
-         }
-         message += ' to reach ' + this.activeWt.provider.businessName;
-        this.api_success = message;
-        // this.api_success = 'From your current location it takes ' + distance + ' to this provider'
-        // this.api_success = this.sharedFunctionobj.getProjectMesssages('TRACKINGENABLED');
-      }
+    this.saveLiveTrackInfo().then(
+      data => {
+        this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName);;
         setTimeout(() => {
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
-          console.log(this.source);
           this.returntoParent.emit('reloadlist');
         }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
-        error => {
-          this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-          this.api_loading = false;
-        });
+      error => {
+        this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        this.api_loading = false;
+      });
   }
 }

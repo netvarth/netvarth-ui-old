@@ -124,8 +124,20 @@
                                                 *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">Walking</span>
                                             <span class="travelmodeEdit" (click)="editmodeOn(i)"><i class="icon-edit"></i>
                                             </span></div> -->
-                                    <div>Mode of transport:
-                                        <span
+                                    <div class="tr-mod">Mode of transport 
+                                        <span class="" *ngIf="!changemode[i]">
+                                        <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
+                                        <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i>
+                                        <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
+                                                            style="width: 15px;height:15px;"  *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
+                                        <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> 
+                                        </span>
+                                       <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]"><i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i>
+                                        <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i>
+                                        <img src="./assets/images/walking.png" alt=""
+                                                        class="walkingMode mgn-lt-20" [class.walking]="walking" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"/>
+                                       </span>                 
+                                        <!-- <span
                                             *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I
                                             am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
                                         <span
@@ -136,7 +148,7 @@
                                             am Walking <img src="./assets/images/walking.png" alt=""
                                                 style="width: 15px;height:15px;" /></span><i
                                             class="fa fa-pencil link pull-right"
-                                            (click)="changemode[i] = !changemode[i]"></i>
+                                            (click)="changemode[i] = !changemode[i]"></i> -->
                                         <!-- <span [class.driving]="driving" matTooltip="Driving"
                                                 (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)">
                                                 <div class="travelmodeicon"><i class="fa fa-car" [class.walking]="walking"
@@ -147,9 +159,23 @@
                                                 <div class="travelmodeicon"><img src="./assets/images/walking.png" alt=""
                                                         class="walkingMode" /></div>
                                             </span> -->
-                                        <div class="col-md-12 col-sm-12 col-xs-12 no-padding" *ngIf="changemode[i]">
+                                        <!-- <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20" *ngIf="changemode[i]">
                                             <ul class="trackIcons">
                                                 <li matTooltip="Driving" [class.driving]="driving"
+                                                    (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)">
+                                                    <div><i class="fa fa-car" aria-hidden="true"></i></div>
+                                                </li>
+                                                <li matTooltip="Bicycling" [class.bicycling]="bicycling"
+                                                    (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)">
+                                                    <div><i class="fa fa-bicycle" aria-hidden="true"></i>
+                                                    </div>
+                                                </li>
+                                                <li matTooltip="Walking" [class.walking]="walking"
+                                                    (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)">
+                                                    <div><img src="./assets/images/walking.png" alt=""
+                                                            style="width: 15px;height:15px;" /></div>
+                                                </li> -->
+                                                <!-- <li matTooltip="Driving" [class.driving]="driving"
                                                     (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)">
                                                     <div>I am Driving <i class="fa fa-car" aria-hidden="true"></i></div>
                                                 </li>
@@ -162,9 +188,9 @@
                                                     (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)">
                                                     <div>I am Walking <img src="./assets/images/walking.png" alt=""
                                                             style="width: 15px;height:15px;" /></div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                </li> -->
+                                            <!-- </ul>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="lt0"

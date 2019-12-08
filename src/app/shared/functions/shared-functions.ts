@@ -207,12 +207,12 @@ export class SharedFunctions {
       }
     }
   }
-public clearSessionStorage() {
-  for (let index = 0; index < sessionStorage.length; index++) {
-    sessionStorage.removeItem(sessionStorage.key(index));
-    index = index - 1; // manage index after remove
+  public clearSessionStorage() {
+    for (let index = 0; index < sessionStorage.length; index++) {
+      sessionStorage.removeItem(sessionStorage.key(index));
+      index = index - 1; // manage index after remove
+    }
   }
-}
   public checkLogin() {
     const login = (localStorage.getItem('ynw-credentials')) ? true : false;
     return login;
@@ -1306,5 +1306,57 @@ public clearSessionStorage() {
   removeDuplicates(array, key) {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
+  }
+  getLiveTrackStatusMessage(liveTrackInfo, businessName) {
+    if (liveTrackInfo.jaldeeDistanceTime) {
+      const distance = liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.distance;
+      const unit = projectConstants.LIVETRACK_CONST[liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.unit];
+      const travelTime = liveTrackInfo.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
+      const hours = Math.floor(travelTime / 60);
+      const minutes = travelTime % 60;
+      let message = '';
+      if (distance === 0 && hours === 0 && minutes ===  0) {
+        message += '';
+      } else if (distance === 0 && (hours !== 0 || minutes !== 0)) {
+        message += 'It will take around';
+        if (hours !== 0) {
+          message += ' ' + hours;
+          if (hours === 1) {
+            message += ' hr';
+          } else {
+            message += ' hrs';
+          }
+        }
+        if (minutes !== 0) {
+          message += ' ' + minutes;
+          if (minutes === 1) {
+            message += ' min';
+          } else {
+            message += ' mins';
+          }
+        }
+        message += ' to reach ' + businessName;
+      } else {
+        message += 'You are ' + distance + ' ' + unit + ' away and will take around';
+        if (hours !== 0) {
+          message += ' ' + hours;
+          if (hours === 1) {
+            message += ' hr';
+          } else {
+            message += ' hrs';
+          }
+        }
+        if (minutes !== 0) {
+          message += ' ' + minutes;
+          if (minutes === 1) {
+            message += ' min';
+          } else {
+            message += ' mins';
+          }
+        }
+        message += ' to reach ' + businessName;
+      }
+      return message;
+    }
   }
 }

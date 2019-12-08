@@ -65,18 +65,24 @@
                         </li>
                     </ng-container>
                 </ul>
+                <ng-container *ngIf="page_source != 'provider_checkin'">
+                    <div class="input-group">
+                        <label *ngIf="edit" class="col-form-label">
+                            <span class="chkin-ph" *ngIf="userPhone"><i
+                                    class="fa fa-mobile chkin-mobic"></i>&nbsp;{{userPhone}}</span>&nbsp;<i
+                                class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
+                        </label>
+                        <label *ngIf="!edit">
+                            <input type="text" style="width: 75px; border-bottom: 1px solid; font-size:.75rem"
+                                placeholder="Contact number" class=" emailPrepay"
+                                [(ngModel)]="selected_phone" />
+                            <span  (click)="addPhone()" style="color: #00aef2; padding-left:5px">Ok</span>
+                            <app-field-error-display [displayError]="true" *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
+                            </app-field-error-display>
+                        </label>
+                    </div>
+                </ng-container>
             </div>
-            <ng-container *ngIf="page_source != 'provider_checkin'">
-                <div class="input-group">
-                    <label *ngIf="edit" class="col-form-label">Contact number: <span *ngIf="userPhone">{{userPhone}}
-                        </span><span style="color: #00aef2;" (click)="editPhone()">Edit</span></label>
-                    <input *ngIf="!edit" type="text" style="width: 50%;border-bottom: 1px solid;"
-                        placeholder="Contact number" class=" emailPrepay" [(ngModel)]="selected_phone">
-                    <span *ngIf="!edit" (click)="addPhone()" style="color: #00aef2;">Add</span>
-                    <app-field-error-display [displayError]="true" *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
-                    </app-field-error-display>
-                </div>
-            </ng-container>
             <div class="date-outer" *ngIf="step==1 && data.datechangereq">
                 <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
                 <div class="date-body">
@@ -418,42 +424,52 @@
     </h4>
     <mat-dialog-content>
         <div>
-            <div class="successmsg">Your check-in for the service {{activeWt.service.name}} at
-                {{activeWt.provider.businessName}}
-                has successfull.</div>
+            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!  {{liveTrackMessage}}
+            </div>
             <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
                 <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
-            <div class="mgn-up-20">Jaldee recommends sharing your <span class="bold">Estimated Time of Arrival</span>
+            <div class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your <span class="bold">Estimated Time of Arrival</span>
+                <span class="mgn-lt-10">
+                    <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
+                </span>
+            </div>                     
+            <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
+                <span class="mgn-lt-10">
+                    <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
+                </span>
+                <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee will start tracking 1 hour prior to your turn. </span></div>
+                <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is turned off you will have to enable tracking manually. </span></div>
             </div>
-            <div class="form-group mgn-up-5"><label> Share my live ETA with {{activeWt.provider.businessName}}</label>
+            <!-- <div class="form-group mgn-up-5"><label> Share my live ETA with {{activeWt.provider.businessName}}</label>
                 <span class="mgn-lt-10">
                     <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
                 </span>
                 <label class="mgn-lt-10"><b>{{shareLoc ? 'On' : 'Off'}}</b></label>
-            </div>
-            <div class="form-group" *ngIf="shareLoc">Jaldee will track your ETA
-                <span *ngIf="notifyTime=='ONEHOUR'">automatically. </span>
+            </div> -->
+            <div class="form-group" *ngIf="shareLoc">
+                <!-- Jaldee will track your ETA -->
+                <!-- <span *ngIf="notifyTime=='ONEHOUR'">automatically. </span> -->
                 <!-- <span *ngIf="notifyTime=='TWOHOUR'">2 hour prior to your expected arrival</span> -->
-                <span *ngIf="notifyTime=='AFTERSTART'">manually.</span>
-                <i class="fa fa-pencil link" (click)="trackTimeChange=!trackTimeChange"></i>
-                <div class="col-md-12 mgn-up-10 no-padding" *ngIf="trackTimeChange">
+                <!-- <span *ngIf="notifyTime=='AFTERSTART'">manually.</span>
+                <i class="fa fa-pencil link" (click)="trackTimeChange=!trackTimeChange"></i> -->
+                <!-- <div class="col-md-12 mgn-up-10 no-padding"> -->
                     <!-- <label>When should Jaldee track your ETA?</label> -->
                     <!-- <mat-radio-group [(ngModel)]="notifyTime" (change)="trackTimeChange=!trackTimeChange"> -->
-                    <ul class="trackIcons tracktime">
+                    <!-- <ul class="trackIcons tracktime">
                         <li [class.trackingtimeselect]="notifyTime == 'ONEHOUR'"
                             (click)="notifyTime = 'ONEHOUR'; trackTimeChange=!trackTimeChange">
                             <div>Automatically <i class="fa fa-info-circle "
                                     matTooltip="1 hour prior to your expected arrival"></i></div>
-                        </li>
+                        </li> -->
                         <!-- <li [class.driving]="notifyTime == 'TWOHOUR'" (click)="notifyTime = 'TWOHOUR';trackTimeChange=!trackTimeChange">
                 <div>2 hour before</div>
                 </li> -->
-                        <li [class.trackingtimeselect]="notifyTime == 'AFTERSTART'"
+                        <!-- <li [class.trackingtimeselect]="notifyTime == 'AFTERSTART'"
                             (click)="notifyTime = 'AFTERSTART'; trackTimeChange=!trackTimeChange">
                             <div>Manually <i class="fa fa-info-circle "
                                     matTooltip="as soon as you turn on 'Live Tracking'"></i></div>
                         </li>
-                    </ul>
+                    </ul> -->
                     <!-- <mat-radio-button value='ONEHOUR'>1 hour before 
                 </mat-radio-button>
                 <mat-radio-button value='TWOHOUR'>2 hour before
@@ -462,16 +478,39 @@
                 </mat-radio-button>
                 </mat-radio-group> -->
                     <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
-                </div>
-                <div class="track-mode col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
-                    I am coming via
+                <!-- </div> -->
+                <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                    Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod('DRIVING')"></i>
+                    <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i>
+                    <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20" src="./assets/images/walking.png" alt=""  style="width: 15px;height:15px;" />
+                    <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"  src="./assets/images/walking-selected.png" alt=""  style="width: 15px;height:15px;" />
+                    <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
+                    <!-- <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> -->
+                </div>                
+                    <!-- <div class="pull-left">Mode of transport</div>
+                    <div  class="pull-left">
+                        <ul class="trackIcons">
+                            <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
+                                <div class="travelmodechange"><i class="fa fa-car" aria-hidden="true"></i></div> -->
+                                <!-- <div class="textsize">Driving</div> -->
+                            <!-- </li>
+                            <li matTooltip="Bicycling" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')">
+                                <div class="travelmodechange"><i class="fa fa-bicycle" aria-hidden="true"></i></div> -->
+                                <!-- <div class="textsize">Bicycling</div> -->
+                            <!-- </li>
+                            <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
+                                <div class="travelmodechange"><i class="fa fa-male" aria-hidden="true"></i></div> -->
+                                <!-- <div class="textsize">Walking</div> -->
+                            <!-- </li>
+                        </ul>
+                    </div> -->
                     <!-- <label>Mode of transport :
                 <span *ngIf="driving">I am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
                 <span *ngIf="bicycling">I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></span>
                 <span *ngIf="walking">I am Walking <img src="./assets/images/walking.png" alt=""
                 style="width: 15px;height:15px;" /></span></label><i class="fa fa-pencil link"
                 (click)="trackMode = !trackMode"></i> -->
-                </div>
+                <!-- </div>
                 <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                     <ul class="trackIcons">
                         <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
@@ -486,7 +525,7 @@
                             <div class="travelmodechange"><i class="fa fa-male" aria-hidden="true"></i></div>
                             <div class="textsize">Walking</div>
                         </li>
-                    </ul>
+                    </ul> -->
 
                     <!-- <ul class="trackIcons" *ngIf="trackMode">
                 <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
@@ -500,13 +539,12 @@
                 style="width: 15px;height:15px;" /></div>
                 </li>
                 </ul> -->
-                </div>
+                <!-- </div> -->
             </div>
             <ng-container>
-                <div class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding trackButtonDiv">
-                    <button mat-dialog-close class="cs-btn bt2 trackbutton mgn-up-10" tabindex="-1"> Cancel </button>
-                    <button mat-button class="cs-btn bt1 trackbutton mgn-up-10" *ngIf="shareLoc"
-                        (click)="saveLiveTrackDetails()">I AGREE</button>
+                <div class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
+                    <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp;
+                    <button type="button" class="cs-btn bt1 small-btn" (click)="saveLiveTrackDetails()">Ok</button>
                 </div>
             </ng-container>
         </div>
