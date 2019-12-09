@@ -1594,7 +1594,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['/']);
+      console.log(result);
+      //this.router.navigate(['/']);
     });
   }
   checkProvider(type) {

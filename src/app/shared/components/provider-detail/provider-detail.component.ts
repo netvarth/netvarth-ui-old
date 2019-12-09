@@ -865,7 +865,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.checkindialogRef.afterClosed().subscribe(result => {
       //if (result === 'reloadlist') {
         this.getbusinessprofiledetails_json('location', true);
-        this.routerobj.navigate(['/']);
+        //this.routerobj.navigate(['/']);
 
      // }
     });

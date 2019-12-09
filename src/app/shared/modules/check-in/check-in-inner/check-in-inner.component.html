@@ -419,7 +419,7 @@
             (click)="handleSaveMember()">{{save_member_cap}}</button> </ng-container>
 </div>
 <div *ngIf="liveTrack" class="lv-trk">
-    <h4 class="mat-dialog-title"><button mat-dialog-close class="modal_close" tabindex="-1" style="color: black"> <i
+    <h4 class="mat-dialog-title"><button (click)="trackClose('livetrack')" class="modal_close" tabindex="-1" style="color: black"> <i
                 class="fa fa-window-close" aria-hidden="true"></i> </button>
     </h4>
     <mat-dialog-content>

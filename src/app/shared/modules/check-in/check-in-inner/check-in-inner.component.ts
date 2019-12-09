@@ -906,8 +906,9 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-          // this.router.navigate(['/']);
+           //this.router.navigate(['/']);
         }
+       // this.router.navigate(['/']);
         // setTimeout(() => {
 
         //   this.liveTrack = true;
@@ -1501,7 +1502,14 @@ export class CheckInInnerComponent implements OnInit {
         );
     });
   }
+  trackClose(status) {
+ if(status === 'livetrack'){
+  this.dialogRef.close();
+  this.router.navigate(['/']);
 
+
+ }
+  }
    saveLiveTrackDetails() {
     this.resetApi();
     const post_Data = {
@@ -1524,8 +1532,10 @@ export class CheckInInnerComponent implements OnInit {
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
-          this.returntoParent.emit('reloadlist');
+          //this.returntoParent.emit('reloadlist');
+          this.trackClose('livetrack');
         }, projectConstants.TIMEOUT_DELAY_LARGE10);
+        
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

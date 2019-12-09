@@ -107,14 +107,7 @@
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
                                 <div *ngIf="waitlist.waitlistStatus=='checkedIn'">
-                                <div class="lt0" *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'">
-                                    <span> <label>Live tracking </label></span>
-                                    <span>
-                                        <mat-slide-toggle [checked]="statusOfTrack[i]"
-                                            (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)"
-                                            class="trackSlide"></mat-slide-toggle>
-                                    </span>
-                                </div>
+                                
                                 <div class="lt0"
                                     *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime">
                                     <!-- <div *ngIf="changemode[i] == false"> Travel mode is : &nbsp;
@@ -194,8 +187,17 @@
                                     </div>
                                 </div>
                                 <div class="lt0"
-                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (statusOfTrack[i] || waitlist.jaldeeStartTimeType!='AFTERSTART')">
+                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime">
                                     {{getTrackMessage(waitlist)}}
+                                    <div class="lt0" *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'">
+                                        <span> <label>Live tracking </label></span>
+                                        <span>
+                                            <mat-slide-toggle [checked]="statusOfTrack[i]"
+                                                (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)"
+                                                class="trackSlide"></mat-slide-toggle>
+                                                <label class="mgn-lt-10"><b>{{statusOfTrack[i] ? 'On' : 'Off'}}</b></label>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             </div>
