@@ -188,7 +188,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+    this.cronHandleTrack = Observable.interval(this.refreshTime * 100).subscribe(x => {
       this.liveTrackPolling();
     });
 
@@ -260,11 +260,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   setSystemDate() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      this.shared_services.getSystemDate()
+      _this.shared_services.getSystemDate()
         .subscribe(
           res => {
-            this.server_date = res;
-            this.shared_functions.setitemonLocalStorage('sysdate', res);
+            _this.server_date = res;
+            _this.shared_functions.setitemonLocalStorage('sysdate', res);
             resolve();
           },
           () => {
@@ -307,6 +307,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               if (waitlist.jaldeeWaitlistDistanceTime && waitlist.waitlistStatus === 'checkedIn') {
                 this.statusOfLiveTrack(waitlist, i);
                 this.pollingSet.push(waitlist);
+                console.log(this.pollingSet);
               }
               this.waitlists[i].estimated_time = retval.time;
               this.waitlists[i].estimated_timenow = retval.timenow;
@@ -1142,34 +1143,38 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return message;
   }
   liveTrackPolling() {
-    if (this.pollingSet && this.pollingSet.length > 0) {
-      this.setSystemDate().then(
-        () => {
-          for (const waitlist of this.pollingSet) {
+    const _this = this;
+    if (_this.pollingSet && _this.pollingSet.length > 0) {
+      //console.log(_this.pollingSet);
+      _this.setSystemDate().then(
+        () => { 
+          for (const waitlist of _this.pollingSet) {
+            //console.log("for" +waitlist);
             if (waitlist.jaldeeWaitlistDistanceTime) {
+             // console.log(waitlist);
               let pollingDtTim = '';
               let pollingDateTime = '';
               if (waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
                 pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
-                const serverDateTime = moment(this.server_date).format('YYYY-MM-DD HH:mm');
-                console.log('pollingDateTime' + pollingDateTime);
-                console.log('serverDateTime' + serverDateTime);
+                const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
+               // console.log('pollingDateTime' + pollingDateTime);
+               // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
-                  this.getCurrentLocation();
-                  this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
+                  _this.getCurrentLocation();
+                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                       });
                 }
               } else {
                 console.log('trackStatus' + waitlist.trackStatus);
                 if (waitlist.trackStatus) {
-                  this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, this.lat_lng)
+                  _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
                     .subscribe(data => { },
                       error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        _this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                       });
                 }
               }
