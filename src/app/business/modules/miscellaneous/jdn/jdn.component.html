@@ -14,10 +14,15 @@
                                 (click)="handlejdn_status(status)">{{btn_msg}}</button>
                             <button class="cs-btn bt3 on" *ngIf="status === 'DISABLED'"
                                 (click)="handlejdn_status(status)">{{btn_msg}}</button>
+                            <i class="editbt pull-right" *ngIf="status === 'ENABLED'&& rewrite !='edit'"
+                                    (click)="edit('edit')"></i>
+                            <p class="form-level-settings">Subscribe to JDN and offer discount to your {{cust_label}}s  <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('jdn', $event)">Learn
+                                More</a></p>
                         </div>
                         <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-10" *ngIf="jdnType==='Label'; else elseBlock">
-                            <label class="col-form-label">Label <i class="editbt" *ngIf="status === 'ENABLED' && rewrite !='edit'"
-                                    (click)="edit('edit')"></i></label>
+                            <label class="col-form-label">Label </label>
                             <input *ngIf="rewrite ==='edit' || status ==='Create'" matInput type="text"
                                     [(ngModel)]="jdnlabeltext" class="form-control" id="jdnlabeltext" autocomplete="off"/>   
                             <div *ngIf="rewrite !='edit'&& status !='Create'"
@@ -30,13 +35,12 @@
                             <div *ngIf="rewrite ==='edit'|| status ==='Create'"
                                 class="col-md-12 col-xs-12 col-sm-12 mgn-up-20">
                                 <label class="col-form-label">Choose
-                                    Discount Offered</label>
+                                    the discount you wish to offer</label>
                             </div>
                             <div *ngIf="rewrite !='edit'&& status !='Create'"
                                 class="col-md-12 col-xs-12 col-sm-12 mgn-up-20">
                                 <label class="col-form-label">Discount
-                                    Offered <i class="editbt" *ngIf="status === 'ENABLED'&& rewrite !='edit'"
-                                    (click)="edit('edit')"></i></label>
+                                    Offered </label>
                                 <div>{{discType}}% (upto
                                     {{jdnmaxDiscounttext}})</div>
                             </div>
@@ -45,11 +49,16 @@
                                 <mat-radio-group (change)="radioChange($event)" [(ngModel)]="discType"
                                     [disabled]="status === 'DISABLED'">
                                     <mat-radio-button class="jdnpercent" [value]=option.percentage
-                                        *ngFor="let option of jdnPercentage;">{{option.percentage}}%
+                                        *ngFor="let option of jdnPercentage;"><div class="pull-left mgn-up-4">{{option.percentage}}%</div>
+                                        <div class="pull-left " *ngIf="discType == option.percentage">&nbsp;upto {{rupee_symbol}}
+                                            <input class="jdn_ip" *ngIf="rewrite ==='edit' || status ==='Create'"
+                                        [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
+                                        (keyup)="isvalid($event)"
+                                        [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext"></div>
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 jdn_discount">
+                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 jdn_discount">
                                 <label class="col-form-label"
                                     *ngIf="rewrite ==='edit'|| status ==='Create'">Maximum Discount
                                     ({{rupee_symbol}})</label>
@@ -57,7 +66,7 @@
                                     [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
                                     (keyup)="isvalid($event)" matInput class="form-control"
                                     [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext">
-                            </div>
+                            </div> -->
                         </ng-template>
                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
                             <label class="col-form-label"
@@ -65,7 +74,7 @@
                             <label class="col-form-label" *ngIf="rewrite ==='edit' || status ==='Create'">Note</label>
                             <div *ngIf="rewrite !='edit'&& status !='Create'">{{jdndisplayNote}}</div>
                             <textarea *ngIf="rewrite ==='edit' || status ==='Create'" [disabled]="status === 'DISABLED'"
-                                placeholder="Enter Display Note" class="form-control" [(ngModel)]="jdndisplayNote"
+                                placeholder="Enter the message for your {{cust_label}}s to see" class="form-control" [(ngModel)]="jdndisplayNote"
                                 id="jdndisplayNote" maxlength="500">
                             </textarea>
                         </div>

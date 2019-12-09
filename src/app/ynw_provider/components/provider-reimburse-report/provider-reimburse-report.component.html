@@ -111,8 +111,8 @@
                     <td data-title="Status">
                       {{report_statuses[report.status]}}
                     </td>
-                    <td class="action">
-                      <span class="mbt" *ngIf="report.status=='PAYMENTPENDING'">
+                    <td *ngIf="report.status=='PAYMENTPENDING'">
+                      <span class="mbt">
                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                           <mat-icon>more_vert</mat-icon>
                         </button>
@@ -122,9 +122,9 @@
                           </button>
                         </mat-menu>
                       </span>
-                      <span class="mbt-mobile-show" *ngIf="report.status=='PAYMENTPENDING'">
+                      <!-- <span class="mbt-mobile-show" *ngIf="report.status=='PAYMENTPENDING'">
                         <button type="button" (click)="openrequestModal(report.invoiceId)">{{req_payment_cap}}</button>
-                      </span>
+                      </span> -->
                     </td>
                   </tr>
                 </tbody>

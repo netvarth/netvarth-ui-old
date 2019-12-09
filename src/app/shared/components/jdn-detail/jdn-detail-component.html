@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">JDN <span>Details</span>
+<h1 class="mat-dialog-title">JDN Info
     <button #jdn mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
@@ -7,22 +7,13 @@
     <div>
         <div class="outer">
             <div class="outer1 ">
-                <p class="form-level-settings">Enjoy provider discount upto 20% for every visit. Discount will be
-                    applied to the bill instantly.</p>
-                <div class="name" *ngIf="jdnDetailList.discPercentage">
-                    <span class="dispvalue">Discount available: </span>
-                    <span>{{jdnDetailList.discPercentage}}% </span>
-
+                <!-- <p class="form-level-settings">Enjoy provider discount upto 20% for every visit. Discount will be
+                    applied to the bill instantly.</p> -->
+                <div class="outer4" *ngIf="jdnDetailList.displayNote">
+                    {{jdnDetailList.displayNote}}
                 </div>
-                <!-- <div class="description"*ngIf="jdnDetailList.discMax">
-                        <span class="dispvalue">Maximumvalue: </span>
-                        <span >{{jdnDetailList.discMax}}</span>
-                    </div> -->
-            </div>
-            <div class="outer3" *ngIf="jdnDetailList.discMax">
-                <div class="description">
-                    <span class="dispvalue">Maximum discount available: </span>
-                    <span>₹{{jdnDetailList.discMax}}</span>
+                <div class="name" *ngIf="jdnDetailList.discPercentage">
+                    You will get a discount of <strong>{{jdnDetailList.discPercentage}}% (upto ₹{{jdnDetailList.discMax}})</strong> for every visit.
                 </div>
             </div>
             <div class="outer3" *ngIf="jdnDetailList.label">
@@ -30,13 +21,7 @@
                     <span class="dispvalue">Label: </span>
                     <span>{{jdnDetailList.label}}</span>
                 </div>
-            </div>
-            <div class="outer4" *ngIf="jdnDetailList.displayNote">
-                <div>
-                    <span class="dispvalue">Displaynote: </span>
-                    <span>{{jdnDetailList.displayNote}}</span>
-                </div>
-            </div>
+            </div>            
 
         </div>
     </div>
