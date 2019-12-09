@@ -93,7 +93,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   ngOnInit() {
     this.activeSchedules = this.data.schedules;
     // this.activeSchedules = this.data.queue.displayschedule;
-    // alert(JSON.stringify(this.data))
     this.api_loading = false;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -549,7 +548,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           'id': form_data.qlocation
         },
         'services': selser,
-        'tokenStarts': form_data.tokennum
+        'tokenstarts': form_data.tokennum
       };
       if (this.data.type === 'edit') {
         this.ifedit = true;
