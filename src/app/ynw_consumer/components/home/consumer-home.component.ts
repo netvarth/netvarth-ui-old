@@ -193,7 +193,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
 
-
     this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
       switch (message.ttype) {
         case 'fromconsumer': {
