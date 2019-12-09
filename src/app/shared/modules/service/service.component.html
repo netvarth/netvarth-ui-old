@@ -11,7 +11,7 @@
                     <span class="ttle">Department Name</span>
                     <span>{{departmentName}}</span>
                 </div>
-                <div class="item">
+                <div class="item" *ngIf="subdomainsettings.serviceBillable">
                     <span class="ttle">{{est_duration_cap}}</span>
                     <span class="icon-time"> {{getAppxTime(service_data.serviceDuration)}}
                     </span>

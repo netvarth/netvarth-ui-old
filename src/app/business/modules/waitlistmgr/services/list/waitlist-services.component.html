@@ -20,7 +20,7 @@
                         <h3 (click)="goServiceDetail(service)" class="pointer-cursor"> {{service.name |
                                 capitalizeFirst}}</h3>
                         <div class="c-ot m0">
-                            <div class="item">
+                            <div class="item" *ngIf="isServiceBillable">
                                 <span class="ttle">{{est_duration_cap}}</span>
                                 <span class="icon-time">{{getAppxTime(service.serviceDuration)}} </span>
                             </div>

@@ -1,0 +1,66 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+</section>
+<section>
+    <div class="content displayboard loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="col-md-12 no-padding">
+                    <div class="card" *ngIf="api_loading">
+                        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding" *ngIf="!api_loading">
+                    <div class="card no-padding">
+                        <div class="copy">
+                            <div class="col-md-12 no-padding">
+                                <ul class="nav jd-custom-nav chkn-dash">
+                                    <li class="dropdown notifications-menu pull-right">
+                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                            (click)="addBranchSP()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                <i class="fa fa-plus"></i> Doctor
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-12" *ngIf="users_list.length==0">
+                                <div class="row">
+                                    <div class="no-dta">
+                                        <p>No Doctors Found</p>
+                                        <span class="cs-btn bt3" (click)="addBranchSP()">Add
+                                            Doctor</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 no-padding" *ngIf="users_list.length!==0">
+                                <div class="col-md-12 pt10 mt5 dboard" *ngFor="let user of users_list">
+                                    <div class="copy">
+                                        <!-- <span class="mbt">
+                                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                        </span> -->
+                                        <h3 class="pointer-cursor" (click)="manageProvider(user.id)">
+                                            {{user.businessName}}<span class="layout_name">
+                                            </span></h3>
+                                        <!-- <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item>
+                                                <i class="fa fa-folder-open"></i>
+                                                <a class="pointer-cursor" target="_blank"
+                                                    style="color: black; font-weight: 400;"
+                                                    (click)="manageProvider(user.id)"> Manage
+                                                </a> </button>
+                                        </mat-menu> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

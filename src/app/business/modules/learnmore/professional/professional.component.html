@@ -301,10 +301,10 @@
         
                                 <div class="helpcontent">
                                         <h6>Jaldee Keywords</h6>
-                                    <span>Jaldee-Keyword is common keywords. A customer generally uses such
+                                    <span>Jaldee-Keyword is common keywords. A client generally uses such
                                         keywords to search for a
                                         service provider.
-                                        Buying relevant keywords that a prospective customer would be searching
+                                        Buying relevant keywords that a prospective client would be searching
                                         on Jaldee. For
                                         example,
                                         if you are a Veterinary provider, you can buy Jaldee-Keywords like “Dogs
@@ -2281,198 +2281,446 @@
             </mat-expansion-panel-header>
         
             <div class="helpcontent">
-                <div class="col-md-12 text-center">
+                <div class="container text-center">
                     <h6>Jaldee Pricing</h6>
                     <div class="row" *ngIf="activePrice == ''">
         
                         <div class="jd-pricing">
-                                <table align="center">
-                                        <tr>
-                                            <th class="th1 headcol lic_metric">Licensable metrics</th>
-                                            <td class="th2 long head_bg">FREE</td>
-                                            <td class="long head_bg">Silver</td>
-                                            <td class="th3 long head_bg">Gold</td>
-                                            <td class="th4 long head_bg">Platinum <br/><span style="font-size:0.8px">(Free 60 days trial)</span></td>
-                                            <!-- <td class="th5 long head_bg">Ruby</td> -->
-                                            <td class="th6 long head_bg">Diamond</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="th3 headcol">Price(Rs/Month)</th>
-                                            <td class="th2 light-col long">FREE</td>
-                                            <td class="brozelicensecol long">499 Rs</td>
-                                            <td class="th3 light-col long">1499 Rs</td>
-                                            <td class="th4 brozelicensecol long">2999 Rs</td>
-                                            <!-- <td class="th5 light-col long">5999 Rs</td> -->
-                                            <td class="th6 light-col long">7999 Rs</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1  headcol">Jaldee Business Listing</th>
-                                            <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
-                                            <td class="td6 light-col long"><i class="fa fa-check"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1  headcol">Public searches <div style="font-size: 10px"><i>(Business name, domain, subdomain, specializations,
-                                                keywords etc..)</i></div></th>
-                                            <td class="td2 light-col long">Unlimited</td>
-                                            <td class="brozelicensecol long">Unlimited</td>
-                                            <td class="td3 light-col long">Unlimited</td>
-                                            <td class="td4 brozelicensecol long">Unlimited</td>
-                                            <!-- <td class="td5 light-col long">Unlimited</td> -->
-                                            <td class="td6 light-col long">Unlimited</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1  headcol">Business profile detailed views</th>
-                                            <td class="td2 light-col long">30/month <div style="font-size: 10px"><i>(10/day)</i></div></td>
-                                            <td class="brozelicensecol long">300/month <div style="font-size: 10px"><i>(20/day)</i></div></td>
-                                            <td class="td3 light-col long">1000/month <div style="font-size: 10px"><i>(50/day)</i></div></td>
-                                            <td class="td4 brozelicensecol long">2000/month <div style="font-size: 10px"><i>(125/day)</i></div></td>
-                                            <!-- <td class="td5 light-col long">300 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                                [matTooltip]="'5000 per month'"></i></td> -->
-                                            <td class="td6 light-col long">Unlimited</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1  headcol">Number of Transactions <div style="font-size: 10px"><i>(check ins/get token/ request for
-                                                appointment-
-                                                both online and walk-ins together)</i></div></th>
-                                            <td class="td2 light-col long">30/month <div style="font-size: 10px"><i>(10/day)</i></div></td>
-                                            <td class="brozelicensecol long">300/month <div style="font-size: 10px"><i>(30/day)</i></div></td>
-                                            <td class="td3 light-col long">500/month <div style="font-size: 10px"><i>(50/day,  Unlimited for 2019)</i></div></td>
-                                            <td class="td4 brozelicensecol long">1000/month <div style="font-size: 10px"><i>(100/day, Unlimited for 2019)</i></div></td>
-                                            <!-- <td class="td5 light-col long">250 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                                [matTooltip]="'2500 per month, Unlimited for 2019'"></i></td> -->
-                                            <td class="td6 light-col long">10000/month <div style="font-size: 10px"><i>(10,00/day, Unlimited for 2019))</i></div></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1  headcol">Jaldee coupons</th>
-                                            <td class="td2 light-col long">Option not available</td>
-                                            <td class="brozelicensecol long">Only sign up coupons</td>
-                                            <td class="td3 light-col long">Sign up coupons +1 <div style="font-size: 10px"><i>(business promotion coupon/month)</i></div></td>
-                                            <td class="td4 brozelicensecol long">Sign up coupons +2 <div style="font-size: 10px"><i>(business promotion coupon/month)</i></div></td>
-                                            <!-- <td class="td5 light-col long">Sign up coupons +3 <i class="fa fa-info-circle"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'(business promotion coupon) per month'"></i></td> -->
-                                            <td class="td6 light-col long">Sign up coupons +5 <div style="font-size: 10px"><i>(business promotion coupon/month)</i></div></td>
-                                        </tr>
-                                        <!-- <tr>
-                                            <th class="td1  headcol">Customised coupons</th>
-                                            <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <!-- <td class="td5 light-col long">1 per month</td> -->
-                                            <!-- <td class="td6 light-col long">2 per month</td>
-                                        </tr> --> 
-                                        <tr>
-                                            <th class="td1 headcol">Jaldee POS</th>
-                                            <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
-                                            <td class="td6 light-col long"><i class="fa fa-check"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1 headcol">Jaldee pay / Billing</th>
-                                            <td class="td2 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
-                                            <td class="td6 light-col long"><i class="fa fa-check"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1 headcol">Custom URL</th>
-                                            <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
-                                            <td class="td6 light-col long"><i class="fa fa-check"></i></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1 headcol">Storage (image upload)</th>
-                                            <td class="td2 light-col long">10 mb <div style="font-size: 10px"><i>(eg.10 images - 1mb)</i></div></td>
-                                            <td class="brozelicensecol long">25 mb <div style="font-size: 10px"><i>(eg.20 images - 1mb)</i></div></td>
-                                            <td class="td3 light-col long">60 mb <div style="font-size: 10px"><i>(eg.40 images - 1mb)</i></div></td>
-                                            <td class="td4 brozelicensecol long">100 mb <div style="font-size: 10px"><i>(eg.100 images - 1mb)</i></div></td>
-                                            <!-- <td class="td5 light-col long">250 mb <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
-                                                [matTooltip]="'(eg.250 images - 1mb)'"></i></td> -->
-                                            <td class="td6 light-col long">1 gb <div style="font-size: 10px"><i>(eg.1000 images - 1mb)</i></div></td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1 headcol">Jaldee Keywords</th>
-                                            <td class="td2 light-col long">0</td>
-                                            <td class="brozelicensecol long">0</td>
-                                            <td class="td3 light-col long">2</td>
-                                            <td class="td4 brozelicensecol long">5</td>
-                                            <!-- <td class="td5 light-col long">10</td> -->
-                                            <td class="td6 light-col long">25</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="td1 headcol">Kiosk</th>
-                                            <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <td class="td5 light-col long"><i class="fa fa-check"></i></td> 
-                                            <!-- <td class="td6 light-col long"><i class="fa fa-check"></i></td> -->
-                                        </tr>
-                                        <tr>
-                                            <th class="td1 headcol">Corporate integration <div style="font-size: 10px"><i>(manage and monitor multiple branches)</i></div></th>
-                                            <td class="td2 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-times"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
-                                            <td class="td6 light-col long"><i class="fa fa-check"></i></td>
-                                        </tr>
-                                        <!-- <tr>
-                                            <th class="td1 headcol">Number of users</th>
-                                            <td class="td2 light-col long">1</td>
-                                            <td class="brozelicensecol long">1</td>
-                                            <td class="td3 light-col long">1</td>
-                                            <td class="td4 brozelicensecol long">upto 5</td>
-                                            <td class="td5 light-col long">upto 20</td> -->
-                                            <!-- <td class="td6 light-col long">upto 100</td>
-                                        </tr> -->
-                                        <!-- <tr>
-                                            <th class="td1 headcol">Guaranteed business value protection <i class="fa fa-info-circle"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'(pay only 99 Rs for the
-                                            current
-                                            billing month if all below three are true 1) In last 90 days no transactions made 2) In
-                                            last
-                                            90 days none viewed business profile details 3) In last 90 days Not once found in searches)'"></i>
-                                            </th>
-                                            <td class="td2 light-col long">NA</td>
-                                            <td class="brozelicensecol long">NA</td>
-                                            <td class="td3 light-col long">Yes</td>
-                                            <td class="td4 brozelicensecol long">Yes</td> -->
-                                            <!-- <td class="td5 light-col long">Yes</td> -->
-                                            <!-- <td class="td6 light-col long">Yes</td>
-                                        </tr> -->
-                                        <!-- <tr>
-                                            <th class="td1 headcol">Additional transaction charges <i class="fa fa-info-circle"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'(per check-in)'"></i></th>
-                                            <td class="td2 light-col long">3 Rs</td>
-                                            <td class="brozelicensecol long">3 Rs</td>
-                                            <td class="td3 light-col long">3 Rs</td>
-                                            <td class="td4 brozelicensecol long">3 Rs</td> -->
-                                            <!-- <td class="td5 light-col long">1.5 Rs</td> -->
-                                            <!-- <td class="td6 light-col long">3 Rs</td>
-                                        </tr> -->
-                                        <tr>
-                                            <th class="td1 headcol">Jaldee verification</th>
-                                            <td class="td2 light-col long">Option not available </td>
-                                            <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <td class="td3 light-col long"><i class="fa fa-check"></i></td>
-                                            <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
-                                            <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
-                                            <td class="td6 light-col long"><i class="fa fa-check"></i></td>
-                                        </tr>
-                                        </table>
+                            <table align="center">
+                                <thead>
+                                  <tr>
+                                      <th class="th1 headcol lic_metric">Product</th>
+                                      <td class="th2 long head_bg">Free</td>
+                                      <td class="long head_bg">Silver <div style="font-size: 15px">(Rs 499)</div>
+                                      </td>
+                                      <td class="th3 long head_bg">Gold <div style="font-size: 15px">(Rs 1499)</div>
+                                      </td>
+                                      <td class="th4 long head_bg">Platinum <div style="font-size: 15px">(Rs 2999)</div>
+                                      </td>
+                                      <!-- <td class="th5 long head_bg">Ruby</td> -->
+                                      <td class="th6 long head_bg">Diamond <div style="font-size: 15px">(Rs 7999)</div>
+                                      </td>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td colspan="6">
+                                          <mat-accordion class="no-padding">
+                                              <mat-expansion-panel  [expanded]="false" style="width:100%">
+                                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                  <mat-panel-title>
+                                                    <span class="helpcontent">Jaldee Q Manager</span>
+                                                  </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <tr>
+                                                  <th class="th3 headcol">Jaldee Q Manager</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i>
+                                                  </td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i>
+                                                  </td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Online queue check-in/booking</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Walk-in and phone-in queue</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Two way communication(SMS, Email,
+                                                    Mobile app
+                                                    messaging) </th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">My Client database</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Multiple locations</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Dynamic business schedules </th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Recurring business schedules </th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Web UI, Android and iOs Apps</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Bring your own device (BYOD)</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                  <th class="th3 headcol">Queue status display board <div style="font-size: 10px"><i>(addon)</i></div>
+                                                  </th>
+                                                  <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th3 headcol">Online enquiries</th>
+                                                    <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                    <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                    <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                    <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                    <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <th class="th3 headcol">Kiosk <div style="font-size: 10px"><i>(addon)</i></div></th>
+                                                      <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                      <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                      <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                      <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                      <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                      <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="th3 headcol">Online Prepayments <div style="font-size: 10px"><i>(Jaldee pos required)</i></div></th>
+                                                        <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                        <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                        <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                        <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                        <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th class="th3 headcol">Live track client ETAs</th>
+                                                          <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                          <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                          <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                          <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                          <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                          <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="th3 headcol">Online questionnaire</th>
+                                                            <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                            <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                            <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                            <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                            <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                            <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                          </tr>
+                                              </mat-expansion-panel>
+                                            </mat-accordion>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="6">
+                                          <mat-accordion class="no-padding">
+                                              <mat-expansion-panel [expanded]="false" style="width:100%">
+                                                <mat-expansion-panel-header  expandedHeight="48px" collapsedHeight="32px">
+                                                  <mat-panel-title>
+                                                    <span class="helpcontent">Jaldee Online</span>
+                                                  </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <tr>
+                                                  <th class="th3 headcol">Jaldee Online</th>
+                                                  <td class="th2 light-col long"><i class="fa fa-check"></i>
+                                                    <div style="font-size: 10px"><i>Limited features</i></div>
+                                                  </td>
+                                                  <td class="brozelicensecol long"><i class="fa fa-check"></i>
+                                                    <div style="font-size: 10px"><i>Limited features</i></div>
+                                                  </td>
+                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th3 headcol">Jaldee.com Business Listing</th>
+                                                    <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                    <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                    <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                    <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                    <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <th class="th3 headcol">Online enquiries</th>
+                                                      <td class="th2 light-col long">2</td>
+                                                      <td class="brozelicensecol long">10</td>
+                                                      <td class="th3 light-col long">25</td>
+                                                      <td class="th4 brozelicensecol long">Unlimited</td>
+                                                      <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                      <td class="th6 light-col long">Unlimited</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="th3 headcol">Showcase your business</th>
+                                                        <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                        <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                        <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                        <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                        <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                        <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th class="th3 headcol">Custom Jaldee.com URL ID</th>
+                                                          <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                          <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                          <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                          <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                          <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                          <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="th3 headcol">Jaldee.com verification/certification</th>
+                                                            <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                            <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                            <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                            <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                            <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                            <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <th class="th3 headcol">Queue manager integration with Jaldee.com</th>
+                                                              <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                              <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                              <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                              <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                              <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                              <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="th3 headcol">Jaldee.com and order manager integration</th>
+                                                                <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                                <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                                <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                              </tr>
+                                                            <tr>
+                                                                <th class="th3 headcol">Jaldee.com search keywords</th>
+                                                                <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                                <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                                <td class="th3 light-col long">2</td>
+                                                                <td class="th4 brozelicensecol long">5</td>
+                                                                <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                                <td class="th6 light-col long">25</td>
+                                                              </tr>
+                                              </mat-expansion-panel>
+                                            </mat-accordion>
+                                      </td>
+                    
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">
+                                            <mat-accordion class="no-padding">
+                                                <mat-expansion-panel [expanded]="false" style="width:100%">
+                                                  <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px">
+                                                    <mat-panel-title>
+                                                      <span class="helpcontent">Jaldee Pos & Billing</span>
+                                                    </mat-panel-title>
+                                                  </mat-expansion-panel-header>
+                                                  <tr>
+                                                    <th class="th3 headcol">Jaldee Pos & Billing</th>
+                                                    <td class="th2 light-col long"><i class="fa fa-check"></i>
+                                                      <div style="font-size: 10px"><i>Limited features</i></div>
+                                                    </td>
+                                                    <td class="brozelicensecol long"><i class="fa fa-check"></i>
+                                                      <div style="font-size: 10px"><i>Limited features</i></div>
+                                                    </td>
+                                                    <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                    <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                    <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                    <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <th class="th3 headcol">Store coupons and discounts</th>
+                                                      <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                      <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                      <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                      <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                      <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                      <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="th3 headcol">Online coupons</th>
+                                                        <td class="th2 light-col long">0</td>
+                                                        <td class="brozelicensecol long">3</td>
+                                                        <td class="th3 light-col long">10</td>
+                                                        <td class="th4 brozelicensecol long">Unlimited</td>
+                                                        <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                        <td class="th6 light-col long">Unlimited</td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th class="th3 headcol">Items database</th>
+                                                          <td class="th2 light-col long">10</td>
+                                                          <td class="brozelicensecol long">50</td>
+                                                          <td class="th3 light-col long">300</td>
+                                                          <td class="th4 brozelicensecol long">Unlimited</td>
+                                                          <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                          <td class="th6 light-col long">Unlimited</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="th3 headcol">GST support</th>
+                                                            <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                            <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                            <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                            <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                            <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                            <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <th class="th3 headcol">Electronic billing and receipts</th>
+                                                              <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                              <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                              <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                              <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                              <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                              <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="th3 headcol">Cashless payment self pay <div style="font-size: 10px"><i>(Paytm/Debit cards/Credit cards/Internet banking)</i></div></th>
+                                                                <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                                <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                                <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                                <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                              </tr>
+                                                              <tr>
+                                                                  <th class="th3 headcol">Your own bank account setup</th>
+                                                                  <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                                                  <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                                                  <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                                  <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                  <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                                  <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="th3 headcol">Jaldee bank account <div style="font-size: 10px"><i>(periodic payment transfers)</i></div></th>
+                                                                    <td class="th2 light-col long"><i class="fa fa-check"></i></td>
+                                                                    <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                    <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                                                    <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                                                    <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                                                    <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                                                  </tr>
+                                                </mat-expansion-panel>
+                                              </mat-accordion>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="td1  headcol">Transactions <div style="font-size: 10px"><i>(Queue check ins/bookings/online
+                                              orders)</i></div>
+                                        </th>
+                                        <td class="td2 light-col long">30/month <div style="font-size: 10px"><i>(10/day)</i></div>
+                                        </td>
+                                        <td class="brozelicensecol long">300/month <div style="font-size: 10px"><i>(25/day)</i></div>
+                                        </td>
+                                        <td class="td3 light-col long">500/month <div style="font-size: 10px"><i>(50/day)</i></div>
+                                        </td>
+                                        <td class="td4 brozelicensecol long">2000/month <div style="font-size: 10px"><i>(100/day)</i></div>
+                                        </td>
+                                        <!-- <td class="td5 light-col long">250 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'2500 per month, Unlimited for 2019'"></i></td> -->
+                                        <td class="td6 light-col long">5000/month <div style="font-size: 10px"><i>(200/day)</i></div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <th class="td1  headcol">Business profile views</th>
+                                        <td class="td2 light-col long">30/month <div style="font-size: 10px"><i>(10/day)</i></div>
+                                        </td>
+                                        <td class="brozelicensecol long">1000/month <div style="font-size: 10px"><i>(50/day)</i></div>
+                                        </td>
+                                        <td class="td3 light-col long">Unlimited</td>
+                                        <td class="td4 brozelicensecol long">Unlimited</td>
+                                        <!-- <td class="td5 light-col long">300 per day <i class="fa fa-info-circle" [matTooltipClass]="tooltipcls"
+                                            [matTooltip]="'5000 per month'"></i></td> -->
+                                        <td class="td6 light-col long">Unlimited</td>
+                                      </tr>
+                                      <tr>
+                                        <th class="td1 headcol">Corporate website integration </th>
+                                        <td class="td2 light-col long"><i class="fa fa-times"></i></td>
+                                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                        <td class="td3 light-col long"><i class="fa fa-check"></i></td>
+                                        <td class="td4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                        <!-- <td class="td5 light-col long"><i class="fa fa-check"></i></td> -->
+                                        <td class="td6 light-col long"><i class="fa fa-check"></i></td>
+                                      </tr>
+                                      <tr>
+                                        <th class="th3 headcol">Api/SDK <div style="font-size: 10px"><i>(Coming soon)</i></div>
+                                        </th>
+                                        <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                        <td class="th3 light-col long"><i class="fa fa-times"></i></td>
+                                        <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                        <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                        <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                      </tr>
+                                      <tr>
+                                        <th class="th3 headcol">Custom app <div style="font-size: 10px"><i>(addon)</i></div>
+                                        </th>
+                                        <td class="th2 light-col long"><i class="fa fa-times"></i></td>
+                                        <td class="brozelicensecol long"><i class="fa fa-times"></i></td>
+                                        <td class="th3 light-col long"><i class="fa fa-check"></i></td>
+                                        <td class="th4 brozelicensecol long"><i class="fa fa-check"></i></td>
+                                        <!-- <td class="th5 light-col long">5999 Rs</td> -->
+                                        <td class="th6 light-col long"><i class="fa fa-check"></i></td>
+                                      </tr>
+                                  </tbody>
+                              </table>
                         </div>
                     </div>
                 </div>
@@ -2561,26 +2809,109 @@
                 <table class="table addon-tbl">
                     <tbody>
                         <tr>
-                            <td class="td1">Storage per month</td>
+                            <td class="td1">Storage(per month)</td>
                             <td class="td2 bordl">
                                 <ul class="ul-normal">
-                                    <li class="fsize">50MB for Rs 50 per month</li>
-                                    <li class="fsize">250MB for Rs 100 per month</li>
-                                    <li class="fsize">1GB for rs 250 per month</li>
+                                    <li class="fsize">500MB for Rs 25 per month</li>
+                                    <li class="fsize">2GB for Rs 59 per month</li>
+                                    <li class="fsize">5GB for Rs 99 per month</li>
+                                    <li class="fsize">15GB for Rs 199 per month</li>
                                 </ul>
                             </td>
-                            <!-- <td class="td3">Passive</td> -->
                         </tr>
                         <tr>
-                            <td class="td1">Keywords</td>
+                            <td class="td1">Jaldee.com search keywords</td>
                             <td class="td2 bordl">
                                 <ul class="ul-normal">
-                                    <li class="fsize">Pack of 5 keywords for Rs 250 per month</li>
-                                    <li class="fsize">Pack of 20 keywords for Rs 1000 per month</li>
+                                    <li class="fsize">Pack of 5 search keywords for Rs 250 per month</li>
+                                    <li class="fsize">Pack of 20 search keywords for Rs 1000 per month</li>
                                 </ul>
                             </td>
-                            <!-- <td class="td3">Passive</td> -->
                         </tr>
+                        <tr>
+                            <td class="td1">Jaldee Discount Network(JDN)</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Rs.499 for lifetime</li> 
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Kiosk(Coming soon)</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Kiosk(1) for Rs 399 per month</li>
+                                    <li class="fsize">Kiosk(2) for Rs 759 per month</li>
+                                    <li class="fsize">Kiosk(5) for Rs 1499 per month</li>
+                                    <li class="fsize">Kiosk(10) for Rs 2499 per month</li>
+                                    <li class="fsize">Kiosk(25) for Rs 4999 per month</li>   
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Custom app(Coming soon)</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Custom app for Rs 699 per month</li>
+                                    <li class="fsize">Custom app enterprise(multi user) for Rs 1999 per month</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Queue Display board</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Queue Status display board(1) for Rs 399 per month</li>
+                                    <li class="fsize">Queue Status display board(2) for Rs 759 per month</li>
+                                    <li class="fsize">Queue Status display board(5) for Rs 1499 per month</li>
+                                    <li class="fsize">Queue Status display board(10) for Rs 2499 per month</li>
+                                    <li class="fsize">Queue Status display board(25) for Rs 4999 per month</li>
+                                    <li class="fsize">Queue Status display board(100) for Rs 19999 per month</li>  
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Jaldee Messaging(SMS/Email/Push notification)</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">1000 SMS(unlimited Emails & Push notifications) for Rs 199 per month</li>
+                                    <li class="fsize">2500 SMS(unlimited Emails & Push notifications) for Rs 459 per month</li>
+                                    <li class="fsize">10000 SMS(unlimited Emails & Push notifications) for Rs 1699 per month</li>
+                                    <li class="fsize">25000 SMS(unlimited Emails & Push notifications) for Rs 3999 per month</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Online enquiries</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Online enquiries 100 for Rs 49 per month</li>
+                                    <li class="fsize">Unlimited online enquiries for Rs 149 per month</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Online business profile views</td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Online business profile views(unlimited) for 99 per month</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Jaldee Queue manager multi provider (i.e for hospitals, nursing homes, clinics) </td>
+                            <td class="td2 bordl">
+                                <ul class="ul-normal">
+                                    <li class="fsize">Service providers upto 10 for Rs 9999 per month</li>
+                                    <li class="fsize">Service providers upto 25 for Rs 17999 per month</li>
+                                    <li class="fsize">Service providers upto 50 for Rs 29999 per month</li>
+                                    <li class="fsize">Service providers upto 100 for Rs 49999 per month</li>
+                                    <li class="fsize">Service providers upto 250 for Rs 99999 per month</li>
+                                    
+                                </ul>
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
                 <span>*Note: Add-on deletion is possible only via Jaldee support. Once it is deleted,
@@ -2764,63 +3095,186 @@
         </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion>
-        <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
-            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
-                <mat-panel-title class="accordion-title">
-                    <span class="helpcontent" (click)="handleScroll('notifications', 'miscellaneous')">
-                        Notifications</span>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-        
-            <div class="helpcontent">
-                <span>Notifications are important to get timely information about client check-ins and
-                    cancellation of client check-ins.</span>
-                <ol class="ol-normal">
-                    <li><strong>Notify whenever check-in happens :</strong> When a client checks-in with
-                        the provider, the provider can receive notifications in the following ways:
-                        <ul class="ul-normal">
-                            <li><strong>Via SMS:</strong> Add phone number to which you wish to receive
-                                SMS.</li>
-                            <li><strong>Via Email:</strong> Add email id to which you wish to receive
-                                email notification.</li>
-                            <li><strong>Push Notification:</strong> Turn on this toggle button if you
-                                would like to receive information via push notification.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Notify whenever check-in gets cancelled :</strong> When a client
-                        checks-in gets cancelled with the provider, the provider
-                        can receive notifications in the following ways:
-                        <ul class="ul-normal">
-                            <li><strong>Via SMS:</strong> Add phone number to which you wish to receive
-                                notification.</li>
-                            <li><strong>Via Email:</strong> Add email id to which you wish to receive
-                                email notification.</li>
-                            <li><strong>Push Notification:</strong> Turn on this toggle button if you
-                                would like to receive information via push notification.</li>
-                        </ul>
-                    </li>
-                    <span>Choose convenient options from the above and click <strong>Ok</strong> to save
-                        the information.</span>
-                </ol>
-            </div>
-        
-        </mat-expansion-panel>
-        </mat-accordion>
-        <!-- <mat-accordion>
-                <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
-                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                        class="accordion">
+                <mat-expansion-panel [expanded]="shownotifications && showmiscellaneous">
+                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
                         <mat-panel-title class="accordion-title">
-                            <span class="helpcontent"
-                                (click)="handleScroll('labels', 'miscellaneous')">
+                            <span class="helpcontent" (click)="handleScroll('notifications', 'miscellaneous')">
+                                Notifications</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="helpcontent">
+                        <span>Notifications are information the provider send and receive, it can be reminders,
+                            communication
+                            from clients, or other timely information</span><br>
+                        <strong><u>Enable SMS Notification</u></strong><br>
+                        This is a global notification toggle button which can only be enabled, if the provider
+                        has
+                        purchased any of the Jaldee Messaging add-ons available. Once the provider turn on
+                        “Enable
+                        SMS Notification”, the provider can see the available SMS credits for the respective
+                        add-on
+                        bought, under the label “Remaining SMS credits”. And the remaining SMS credits will be
+                        updated according to the usage of SMS.
+                    </div>
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                class="accordion">
+                                <mat-panel-title class="accordion-title">
+                                    <span class="helpcontent">
+                                        Client Notifications</span>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="helpcontent">
+                                <span>Deliver timely information to your clients like, the number of clients
+                                    ahead of a particular
+                                    client in line, when the client is second next in line and also when the
+                                    client is next in line for the actual appointment.</span>
+                                <ol>
+                                    <li><strong>Early Notification:</strong><br>
+                                        Notify a client, the number of people ahead of him/her in line via
+                                        SMS/Email/Notifications. First the provider has to enter a client number
+                                        to whom you
+                                        wish to send a notification. Enable the following modes of channel through
+                                        which you
+                                        wish to send notifications to your client.
+                                        <ul>
+                                            <li>Via SMS</li>
+                                            <li>Via Email</li>
+                                            <li>Push Notifications</li>
+                                        </ul>
+                                        Choose convenient options from the above and click Ok to save the
+                                        information.
+                                    </li>
+                                    <li>
+                                        <strong>
+                                            Pre Final Notification
+                                        </strong><br>
+                                        Notify a client when he is second next in line via
+                                        SMS/Email/Notifications.
+                                        Enable the following modes of channel through which you wish to send
+                                        notifications to your
+                                        client.
+                                       <ul>
+                                            <li>Via SMS</li>
+                                            <li>Via Email</li>
+                                            <li>Push Notifications</li>
+                                       </ul>
+                                       Choose convenient options from the above and click Ok to save the
+                                       information.
+                                    </li>
+                                    <li>
+                                            <strong>
+                                            Final Notification
+                                            </strong><br>
+                                            Notify a client when he is next in line via SMS/Email/Notifications.
+                                            Enable the following modes of channel through which you wish to send
+                                            notifications to your client.
+                                           <ul>
+                                                <li>Via SMS</li>
+                                                <li>Via Email</li>
+                                                <li>Push Notifications</li>
+                                           </ul>
+                                           Choose convenient options from the above and click Ok to save the
+                                           information.
+                                        </li>
+                                </ol>
+                            </div>
+
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                    class="accordion">
+                                    <mat-panel-title class="accordion-title">
+                                        <span class="helpcontent">
+                                            Provider Notifications</span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <div class="helpcontent">
+                                    <span>It is important to receive notifications for the provider when a client checks-in or when a client check-in is cancelled.
+                                            </span>
+                                            <ul>
+                                                <li>
+                                                    <strong>Notify whenever check-in happens:</strong><br>
+                                                    When a client checks-in with the provider, the provider can receive notifications in the following ways:
+                                                    <ul>
+                                                        <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                        <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                        <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                        <strong>Notify whenever check-in gets cancelled:</strong><br>
+                                                        When a client checks-in gets cancelled with the provider, the provider can receive notifications in the following ways:
+                                                        <ul>
+                                                            <li>Via SMS: Add phone number to which you wish to receive SMS.</li>
+                                                            <li>Via Email: Add email id to which you wish to receive email notification.</li>
+                                                            <li>Push Notification: Turn on this toggle button if you would like to receive information via push notification.</li>
+                                                        </ul>
+                                                    </li>
+                                            </ul>
+                                            Choose convenient options from the above and click Ok to save the information.
+
+                                   
+                                </div>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="showlabel && showmiscellaneous">
+                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px" class="accordion">
+                        <mat-panel-title class="accordion-title">
+                            <span class="helpcontent" (click)="handleScroll('labels', 'miscellaneous')">
                                 Custom fields/labels</span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-        
-                    <div></div>
-        
+
+                    <div class="helpcontent">
+                        Jaldee allows their providers to add and manage their own custom fields or labels for the
+                        check-ins list in the dashboard.The steps you take in the Custom Fields/Labels option from
+                        provider dashboard, create the label and make it available for use from the check-ins list
+                        in the dashboard. And also you can use the New Label/Manage Label option from check-in list
+                        in
+                        dashboard to add new label or manage the existing labels.<br>
+                        <strong>How to create a new lablel?</strong>
+                        <ul>
+                            <li>To get started with creating new label click the button “ADD LABELS”.</li>
+                            <li>Input the label name and briefly describe the label you wish to add.</li>
+                            <li>Then click the button <strong>“Short label button”</strong> to add the values of the
+                                label which can be
+                                used to sort the check-ins list in the dashboard.</li>
+                            <li>Enter a value and a corresponding short value and click “ADD” to save.
+                            </li>
+                            <li>You can also delete the added values from here.
+                            </li>
+                            <li>Click SAVE to save all the information.</li>
+                            <li>And once a label is created, when a particular check-in is selected from dashboard a
+                                label
+                                symbol appears in right corner , click that symbol and assign a particular value to
+                                this
+                                check-in.
+                            </li>
+                        </ul>
+                        <strong>EXAMPLE:</strong> A provider creates a label named <strong>“Check-ins”</strong> and
+                        describing this label as “Both walk-in and online check-ins”. Then he clicks <strong>“Short
+                            label button”</strong>.First he entered a value “Walk-in” and gave a shortcut value “W”,
+                        again he added the second value “Online”and gave shortcut value “O”. Now from the check-ins
+                        list in the dashboard, provider chooses the label for each check-in using that symbol appeared in the right corner of the selected check-in and
+                        assign respective values according to the type of check-in that client has taken ie;
+                        either
+                        <strong>W</strong>(walk-in)or <strong>O</strong>(Online).
+                    </div>
+
                 </mat-expansion-panel>
-            </mat-accordion> -->
+            </mat-accordion>
             <mat-accordion>
                 <mat-expansion-panel [expanded]="showjdn && showmiscellaneous">
                     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
@@ -2855,7 +3309,7 @@
                                     <li>And if you have any note about the discount created write in the <strong>"Note"</strong> section.
                                         </li>
                                 </ul>
-                                Once JDN is created by the provider, the provider profile in client dashboard shows <strong><i>JDN Assured</i></strong> label with which clients get to know the discount offered by a particular provider. And when a client checks-in for a provider profile with JDN assured feature, the client gets  a fixed discount on the total bill amount.
+                                Once JDN is created by the provider, the provider profile in client dashboard shows <strong><i>JDN Assured</i></strong> label with which clients get to know the details of discount offered by a particular provider. And when a client checks-in for a provider profile with JDN assured feature, the client gets  a fixed discount on the total bill amount.
 
     
     
@@ -3357,7 +3811,7 @@
                                         </li>
                                     <li>If the provider choose Jaldee Bank for accepting online payments, a total of 5 % will be deducted from the total bill amount, ie 2% payment gateway commision and 3% Jaldee  transaction charge. 
                                         </li>
-                                    <li>Providers using their own bank account for accepting online payments from customers, will be eliminated from imposing jaldee transaction charge.
+                                    <li>Providers using their own bank account for accepting online payments from clients, will be eliminated from imposing jaldee transaction charge.
                                         </li>
                                 </ul>
                                 </span>

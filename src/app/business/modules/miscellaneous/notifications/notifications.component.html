@@ -1,0 +1,51 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+</section>
+<section>
+    <div class="content w-manager settings comn-cls">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0 ynw-common-form-nm jdn-pg">
+                    <div class="paysettings-tab col-md-6 col-xs-12 col-sm-12 no-padding">
+                        <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 ">
+                            <label style="display: flex">Enable SMS Notifications&nbsp;&nbsp;
+                                <mat-slide-toggle
+                                        class="example-margin"
+                                        [(ngModel)]="smsGlobalStatus"
+                                        (change)="handleGlobalSMSSettings($event)">
+                                </mat-slide-toggle>
+                            </label>
+                        </div>
+                        <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 " style="padding-bottom: 10px;">
+                            <label style="display: flex">Remaining SMS Credits: <span class="bold">{{smsCredits}}</span> </label>
+                            <span class="form-level-settings">{{genrl_notification_cap}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoConsumer()">
+                        <h2>{{cust_domain_name|capitalizeFirst}}</h2>
+                        <span class="form-level-settings">{{frm_cust_notification_cap}}<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('notifications', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotoProvider()">
+                        <h2>{{provdr_domain_name|capitalizeFirst}}</h2>
+                        <span class="form-level-settings">{{frm_providr_notification_cap}} <a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('notifications', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>

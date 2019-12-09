@@ -210,7 +210,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-    const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
     if (activeUser) {
@@ -863,9 +863,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+      //if (result === 'reloadlist') {
         this.getbusinessprofiledetails_json('location', true);
-      }
+        //this.routerobj.navigate(['/']);
+
+     // }
     });
   }
   showcheckInButton(servcount?) {
@@ -1103,7 +1105,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   getDoctors() {
-    const userobj = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.latitude = loc_det.lat;
     this.longitude = loc_det.lon;

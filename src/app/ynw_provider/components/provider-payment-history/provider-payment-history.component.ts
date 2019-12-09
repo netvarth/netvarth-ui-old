@@ -50,7 +50,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   ngOnInit() {
     this.getPaymentHistoryCount();
     this.getPaymentHistory();
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
 
   getPaymentHistoryCount() {

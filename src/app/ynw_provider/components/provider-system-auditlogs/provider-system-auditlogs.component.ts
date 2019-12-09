@@ -73,7 +73,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
 
   ngOnInit() {
     // this.getAuditList();\
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.logSelcat = '';
     this.logSelsubcat = '';
@@ -87,7 +87,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdlogSeldate = this.logSeldate;
     this.holdlogSelaction = this.logSelaction;
     this.getAuditListTotalCnt('', '', '', '');
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
   }
   getAuditListTotalCnt(cat, subcat, action, sdate) {

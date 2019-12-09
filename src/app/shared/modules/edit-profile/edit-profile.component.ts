@@ -121,7 +121,7 @@ export class EditProfileComponent implements OnInit {
     }
     let post_data;
     let passtyp;
-    const curuserdet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const curuserdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (sub_data.email) {
       const stat = this.validateEmail(sub_data.email);
         if (!stat) {
@@ -173,11 +173,11 @@ export class EditProfileComponent implements OnInit {
             // this.api_success = Messages.PROFILE_UPDATE;
             this.shared_functions.openSnackBar(Messages.PROFILE_UPDATE);
             this.getProfile(this.curtype);
-            const curuserdetexisting = this.shared_functions.getitemfromLocalStorage('ynw-user');
+            const curuserdetexisting = this.shared_functions.getitemFromGroupStorage('ynw-user');
             curuserdetexisting['userName'] = sub_data.first_name + ' ' + sub_data.last_name;
             curuserdetexisting['firstName'] = sub_data.first_name;
             curuserdetexisting['lastName'] = sub_data.last_name;
-            this.shared_functions.setitemonLocalStorage('ynw-user', curuserdetexisting);
+            this.shared_functions.setitemToGroupStorage('ynw-user', curuserdetexisting);
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
           },

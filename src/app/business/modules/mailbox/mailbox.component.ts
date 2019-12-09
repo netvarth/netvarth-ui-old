@@ -65,7 +65,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
         private router: Router) { }
 
     ngOnInit() {
-        this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.terminologies = this.shared_functions.getTerminologies();
         this.usertype = this.shared_functions.isBusinessOwner('returntyp');
         if (this.usertype === 'provider') {
@@ -89,7 +89,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     }
                 );
         } else {
-            const userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+            const userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
             this.user_id = userDet.id;
             this.loading = false;
         }

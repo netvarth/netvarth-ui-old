@@ -1,5 +1,5 @@
 export const projectConstants = {
-  GOOGLEAPIKEY: 'AIzaSyBy0c2wXOnE16A7Xr4NKrELGa_m_8KCy6U',
+  GOOGLEAPIKEY: 'AIzaSyC3MdDKtIAsLrWXzKiQShq3wRXgftf5lBM',
   PERPAGING_LIMIT: 10,
   CONSUMER_DASHBOARD_REFRESH_TIME: 120, // seconds
   INBOX_REFRESH_TIME: 30, // seconds
@@ -174,6 +174,44 @@ export const projectConstants = {
     'autopaymentoptions': { 'icon': 'autopay.png', 'class': 'icon-auto-payment' },
     'docambulance': { 'icon': 'ambulance.png', 'class': 'icon-ambulance' },
     'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
+  },
+  SUBDOMAIN_ICONS: {
+    physiciansSurgeons: {help: 'single doctor facility', iconClass: 'allopathy_doc'},
+    hospital: {help: 'multiple doctors facility', iconClass: 'hospital_doc'},
+    dentists: {help: 'single doctor facility', iconClass: 'dentists_doc'},
+    dentalHosp: {help: 'multiple doctors facility', iconClass: 'dentalHosp_doc'},
+    alternateMedicinePractitioners: {help: 'single doctor facility (homeo, ayurveda ....)', iconClass: 'alternateMedicinePractitioners_doc'},
+    alternateMedicineHosp: {help: 'multiple doctors facility (homeo, ayurveda ....)', iconClass: 'alternateMedicineHosp_doc'},
+    veterinarydoctor: {help: 'single doctor facility', iconClass: 'veterinarydoctor_doc'},
+    veterinaryhospital: {help: 'multiple doctors facility', iconClass: 'veterinarydoctor_doc'},
+    petcare: {help: '', iconClass: 'veterinarydoctor_doc'},
+    beautyCare: {help: '', iconClass: 'veterinarydoctor_doc'},
+    personalFitness: {help: '', iconClass: 'veterinarydoctor_doc'},
+    massageCenters: {help: '', iconClass: 'veterinarydoctor_doc'},
+    restaurants: {help: '', iconClass: 'veterinarydoctor_doc'},
+    caterer: {help: '', iconClass: 'veterinarydoctor_doc'},
+    homebaker: {help: '', iconClass: 'veterinarydoctor_doc'},
+    bakery: {help: '', iconClass: 'veterinarydoctor_doc'},
+    juiceParlour: {help: '', iconClass: 'veterinarydoctor_doc'},
+    iceCreamParlour: {help: '', iconClass: 'veterinarydoctor_doc'},
+    homefood: {help: '', iconClass: 'veterinarydoctor_doc'},
+    coffeeShop: {help: '', iconClass: 'veterinarydoctor_doc'},
+    sweetShop: {help: '', iconClass: 'veterinarydoctor_doc'},
+    lawyers: {help: '', iconClass: 'veterinarydoctor_doc'},
+    charteredAccountants: {help: '', iconClass: 'veterinarydoctor_doc'},
+    taxConsultants: {help: '', iconClass: 'veterinarydoctor_doc'},
+    civilArchitects: {help: '', iconClass: 'veterinarydoctor_doc'},
+    financialAdviser: {help: '', iconClass: 'veterinarydoctor_doc'},
+    stockbroker: {help: '', iconClass: 'veterinarydoctor_doc'},
+    auditor: {help: '', iconClass: 'veterinarydoctor_doc'},
+    geologist: {help: '', iconClass: 'veterinarydoctor_doc'},
+    vastu: {help: '', iconClass: 'veterinarydoctor_doc'},
+    Astrologer: {help: '', iconClass: 'veterinarydoctor_doc'},
+    temple: {help: '', iconClass: 'veterinarydoctor_doc'},
+    poojari: {help: '', iconClass: 'veterinarydoctor_doc'},
+    bank: {help: '', iconClass: 'veterinarydoctor_doc'},
+    nbfc: {help: '', iconClass: 'veterinarydoctor_doc'},
+    insurance: {help: '', iconClass: 'veterinarydoctor_doc'}
   },
   SOCIAL_MEDIA: [
     { key: 'facebook', iconClass: 'fa fa-facebook-square fb', iconImg: 'facebook.png', displayName: 'Facebook' },
@@ -403,16 +441,20 @@ export const projectConstants = {
     3: 'Business_Profile_View',
     4: 'Number_Of_Provider',
     5: 'Transactions',
-    6: 'Jaldee_Pay/Billing',
+    6: 'Your_Own_Bank_Account',
     7: 'Storage',
     8: 'Jaldee_Keywords',
     9: 'Kiosk',
-    10: 'Jaldee_POS',
-    11: 'Corporate_Integration',
-    12: 'Jaldee_Coupon',
+    10: 'Jaldee_POS_And_Billiing',
+    11: 'Corporate_Branch_Admin',
+    12: 'Jaldee_Online_Coupons',
     13: 'Custom_URL',
     14: 'Guaranteed_Business_Value_Protection',
-    15: 'Additional_Transation_Charges'
+    15: 'Additional_Transation_Charges',
+    16: 'Jaldee_Verification',
+    17: 'Jaldee_Discount_Network',
+    18: 'Status_Board',
+    19: 'Jaldee_Messaging'
 
   },
   REGION_LANGUAGE: 'en-US',
@@ -461,5 +503,8 @@ export const projectConstants = {
     'image/png',
     'image/jpeg',
     'application/pdf'
-  ]
+  ],
+  LIVETRACK_CONST : {
+    'KILOMETER': 'km'
+  }
 };

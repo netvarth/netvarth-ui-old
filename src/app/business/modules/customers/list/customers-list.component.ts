@@ -87,11 +87,11 @@ export class CustomersListComponent implements OnInit {
         this.checkedin_label = Messages.CHECKED_IN_LABEL;
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getCustomersList(true);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
-        this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     }
     filterClicked(type) {
         this.filters[type] = !this.filters[type];

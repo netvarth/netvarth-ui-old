@@ -72,13 +72,13 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {

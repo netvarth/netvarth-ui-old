@@ -74,7 +74,7 @@ export class DepartmentDetailComponent implements OnInit {
         } else {
             this.selected_action = 'add';
         }
-        this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
         // this.loading = false;
     }
     checkServiceExists(name) {

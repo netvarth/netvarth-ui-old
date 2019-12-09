@@ -1,111 +1,79 @@
-<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2 && step!=4">&nbsp;<button (click)="onCancelPass()"
-  class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<h1 class="mat-dialog-title" *ngIf="step==1 || step==2"><span *ngIf="step==1">{{heading}}</span><button mat-dialog-close
-  class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2  && step!=3">&nbsp;<button (click)="onCancelPass()"
+    class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title" *ngIf="step==1 || step==2 || step==3"><span *ngIf="step==1">{{heading}}</span><button mat-dialog-close
+    class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <form [formGroup]="signupForm" class="signup-form" novalidate (ngSubmit)="signupForm.valid &&
 onSubmit()" (keyup)="resetApiErrors()">
 
-<div class="mat-dialog-content" *ngIf="step==1">
-  <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
-    <div class="form-group mob-prefx mobile-field">
-      
-      <div style="display: flex;">
-          <div class="input-group-prepend mob-prefix">
-              <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-              </div>
-      <mat-form-field> 
-          <div>     
-              <input type="text" style="display: inline;" matInput class="form-control" id="phonenumber" formControlName="phonenumber"
-              autocomplete="off" placeholder="{{mobile_no_cap}} *" maxlength=10>
-          </div>
-      </mat-form-field>
-  </div>
+  <div class="mat-dialog-content" *ngIf="step==1">
+    <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
+      <div class="form-group mob-prefx mobile-field">
+        
+        <div style="display: flex;">
+            <div class="input-group-prepend mob-prefix">
+                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                </div>
+        <mat-form-field> 
+            <div>     
+                <input type="text" style="display: inline;" matInput class="form-control" id="phonenumber" formControlName="phonenumber"
+                autocomplete="off" placeholder="{{mobile_no_cap}} *" maxlength=10>
+            </div>
+        </mat-form-field>
+    </div>
 
 
-      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
+  {
+    'required' : 'Mobile number is required',
+    'minlength' : 'Enter a 10 digit mobile number',
+    'maxlength' : 'Enter a 10 digit mobile number',
+    'pattern' : 'Only numbers are allowed'
+  })">
+        </app-field-error-display>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input type="text" matInput class="form-control" id="first_name" placeholder="{{first_name_cap}}"
+            formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
 {
-  'required' : 'Mobile number is required',
-  'minlength' : 'Enter a 10 digit mobile number',
-  'maxlength' : 'Enter a 10 digit mobile number',
-  'pattern' : 'Only numbers are allowed'
-})">
-      </app-field-error-display>
-    </div>
-    <div class="form-group">
-      <mat-form-field>
-        <input type="text" matInput class="form-control" id="first_name" placeholder="{{first_name_cap}}"
-          formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
-      </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
-{
-'required' : 'First name is required',
-'pattern' : 'Only alphabets are allowed'
-})">
-      </app-field-error-display>
-    </div>
-    <div class="form-group">
-      <mat-form-field>
-        <input type="text" matInput class="form-control" id="last_name" placeholder="{{last_name_cap}}"
-          formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
-      </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
-{
-  'required' : 'Last name is required',
+  'required' : 'First name is required',
   'pattern' : 'Only alphabets are allowed'
 })">
+        </app-field-error-display>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input type="text" matInput class="form-control" id="last_name" placeholder="{{last_name_cap}}"
+            formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
+  {
+    'required' : 'Last name is required',
+    'pattern' : 'Only alphabets are allowed'
+  })">
+        </app-field-error-display>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
+      <mat-form-field *ngIf="data.claimData == undefined">
+        <mat-select placeholder="{{select_domain_cap}}" formControlName="selectedDomainIndex" #seldom
+          (selectionChange)="setDomain(seldom.value)">
+          <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
+            {{domain.displayName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="data.claimData !== undefined">
+        <input type="text" matInput class="form-control" placeholder="{{domain_cap}}" formControlName="selectedDomainIndex" autocomplete="off" >
+             </mat-form-field>
+      <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedDomainIndex')"
+        errorMsg="Select one Service Domain">
       </app-field-error-display>
     </div>
-  </div>
-  <!-- <label class="caption">{{mobile_no_cap}} * </label>
-<div class="input-group">
-  <div class="input-group-prepend mob-prefix">
-    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-  </div>
-  <input type="text" class="form-control" id="phonenumber" formControlName="phonenumber" autocomplete="off"
-    placeholder="Enter your 10 digit mobile number" maxlength=10>
-</div>
-<app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
-{
-'required' : 'Mobile number is required',
-'minlength' : 'Enter a 10 digit mobile number',
-'maxlength' : 'Enter a 10 digit mobile number',
-'pattern' : 'Only numbers are allowed'
-})">
-</app-field-error-display> -->
-  <!-- </div> -->
-  <!-- <div class="form-group">
-  <label class="col-form-label" for="first_name">{{first_name_cap}}</label>
-  <input type="text" class="form-control" id="first_name" formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
-  <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
-{
-'required' : 'First name is required',
-'pattern' : 'Only alphabets are allowed'
-})">
-  </app-field-error-display>
-</div> -->
 
-  <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
-    <mat-form-field *ngIf="data.claimData == undefined">
-      <!-- <label class="col-form-label" for="last_name">{{select_domain_cap}}</label> -->
-      <mat-select placeholder="{{select_domain_cap}}" formControlName="selectedDomainIndex" #seldom
-        (selectionChange)="setDomain(seldom.value)">
-        <mat-option *ngFor="let domain of business_domains; let i = index" [value]="i">
-          {{domain.displayName}}
-        </mat-option>
-      </mat-select>
-
-      
-
-    </mat-form-field>
-    <mat-form-field *ngIf="data.claimData !== undefined">
-      <input type="text" matInput class="form-control" placeholder="{{domain_cap}}" formControlName="selectedDomainIndex" autocomplete="off" >
-           </mat-form-field>
-    <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedDomainIndex')"
-      errorMsg="Select one Service Domain">
-    </app-field-error-display>
-  </div>
-
-  <div class="form-group"
+     <div class="form-group"
     *ngIf="signupForm.get('is_provider').value == 'true' && domainIsthere">
     <mat-form-field *ngIf="data.claimData == undefined">
       <mat-select placeholder="{{select_subdomain_cap}}" subdom formControlName="selectedSubDomains" #subdom
@@ -604,36 +572,62 @@ onSubmit()" (keyup)="resetApiErrors()">
     </div>
   </div>
 </div>
-<div class="mat-dialog-actions" *ngIf="step==1">
-  <button type="submit" mat-button
-    [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">Send
-    OTP</button>
-  <div *ngIf="is_provider=='false'" style="padding-top:10px;">If you are a Service Provider / Business Owner
-    <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">Go to Jaldee Business</a></div>
+  <div class="mat-dialog-actions" *ngIf="step==1">
+    <button type="submit" mat-button
+      [disabled]="signupForm.get('terms_condition').value == '' || signupForm.get('terms_condition').value == false || !signupForm.valid">Send
+      OTP</button>
+    <div *ngIf="is_provider=='false'" style="padding-top:10px;">If you are a Service Provider / Business Owner
+      <div><a style="cursor:pointer" class="normal-link" (click)="goBusinessClicked()">Go to Jaldee Business</a></div>
+    </div>
   </div>
-</div>
 </form>
 <div class="example-container otpouter" *ngIf="step==2">
-<app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
-  (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess">
-</app-otp-form>
+  <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+    (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)" [resendemailotpsuccess]="resendemailotpsuccess">
+  </app-otp-form>
 </div>
-<div class="example-container" *ngIf="step==3">
-<app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
-  (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
+<div class="mat-dialog-content" *ngIf="step==3">
+  <section class="col-md-12 col-xs-12 col-sm-12 no-padding">
+      <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding">
+          <label class="col-form-label bold">How did you hear us?</label>
+      </div>
+      <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
+          <mat-radio-group [(ngModel)]="hearus">
+              <mat-radio-button value="Jaldee">Jaldee</mat-radio-button>
+              <mat-radio-button value="Facebook">Facebook</mat-radio-button>
+              <mat-radio-button value="Friend">Friend</mat-radio-button>
+              <mat-radio-button value="GoogleSearch">Google</mat-radio-button>
+              <mat-radio-button value="SalesReps">Sales Reps</mat-radio-button>
+              <div class="clearfix"></div>
+              <app-saleschannel *ngIf="hearus==='SalesReps'" (retfromSC)="onReferalSubmit($event)" (resetApiErrors)="resetApiErrors()">
+              </app-saleschannel>
+              <mat-radio-button value="Twitter">Twitter</mat-radio-button>
+              <mat-radio-button value="Other">Other</mat-radio-button>
+          </mat-radio-group>
+      </div>
+      <mat-dialog-actions>
+          <button tabindex="-1" (click)="skipHearus()" class="cs-btn bt2">Skip</button>
+          <button tabindex="2" [disabled]="!hearus || (hearus=='SalesReps' && !scfound)" [ngClass]="{'disabled': !hearus || (hearus=='SalesReps' && !scfound)}" (click)="submitHearus(hearus)" class="cs-btn bt1">{{ok_btn_cap}}</button>
+      </mat-dialog-actions>
+  </section>
+  
 </div>
 <div class="example-container" *ngIf="step==4">
-<mat-dialog-content class="pwd_cancel_scr">
-  <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2">{{cancel_btn_cap}}</button>
-  <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
-</mat-dialog-actions>
+  <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
+    (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="is_provider"></app-sp-form>
+</div>
+<div class="example-container" *ngIf="step==5">
+  <mat-dialog-content class="pwd_cancel_scr">
+    <p class="col-form-label col-md-12 no-padding" for="otp">{{close_message}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button tabindex="-1" (click)="continuetoPwd()" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+    <button tabindex="2" (click)="closePwdScreen()" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
+  </mat-dialog-actions>
 </div>
 <div *ngIf="api_error">
-<app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
+  <app-field-error-display [displayError]="true" errorMsg="{{api_error}}"></app-field-error-display>
 </div>
 <div *ngIf="api_success">
-<app-form-success-display [displayMsg]="true" successMsg="{{api_success}}"></app-form-success-display>
+  <app-form-success-display [displayMsg]="true" successMsg="{{api_success}}"></app-form-success-display>
 </div>

@@ -28,7 +28,7 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
     private activaterouterobj: ActivatedRoute) { }
 
   ngOnInit() {
-    this.userDet = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.activaterouterobj.params
       .subscribe(paramsv => {
         this.provider_id = paramsv.id;

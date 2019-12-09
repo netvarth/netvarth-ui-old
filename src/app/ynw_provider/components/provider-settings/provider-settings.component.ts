@@ -14,6 +14,7 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderSettingsComponent implements OnInit, OnDestroy {
+  accountType;
   homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
   search_cap = Messages.SEARCH_CAP;
@@ -52,7 +53,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   displayboard_heading = Messages.DISPLAYBOARD_HEADING;
   frm_displayboard_inhelp = Messages.DISPLAYBOARD__INHELP;
   customfields_cap = Messages.CUSTOMFIELDS_CAPTION;
-  displayboards_cap = Messages.DISPLAYBOARDS;
+  displayboards_cap = Messages.DISPLAYBOARD_HEADING;
   displayboards_layout_cap = Messages.DISPLAYBOARDLAYOUT_CAP;
   waitlist_status = false;
   futureDateWaitlist = false;
@@ -93,6 +94,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   reqFields: any = {};
   pos_status: any;
   pos_statusstr: string;
+  addonMetadata: any = [];
+  statusboardStatus = false;
+  isCorp = false;
+  isMultilevel = false;
+  jaldee_pay_cap: string;
+  provider_label = '';
+  cust_domain_name = '';
+  provider_domain_name = '';
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -100,6 +109,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     private provider_shared_functions: ProviderSharedFuctions) {
     this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.shared_functions.getMessage().subscribe(data => {
+      switch (data.ttype) {
+        case 'upgradelicence':
+          // this.getStatusboardLicenseStatus();
+          break;
+      }
+    });
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
@@ -124,6 +141,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   filterbydepartment = false;
   locationExists = false;
   ngOnInit() {
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
     this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
     this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
@@ -132,9 +151,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]', this.customer_label);
     this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
-    this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
+    // this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
+    this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG;
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
+    this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
+    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
+    this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
+    this.getDomainSubdomainSettings();
     this.getLocationCount();
     this.getQueuesCount();
     this.getServiceCount();
@@ -148,7 +172,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getPOSSettings();
     this.getDisplayboardCount();
     this.getBusinessConfiguration();
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    // this.getStatusboardLicenseStatus();
+    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
@@ -203,6 +228,23 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       );
   }
+  getDomainSubdomainSettings() {
+    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const domain = user_data.sector || null;
+    const sub_domain = user_data.subSector || null;
+    return new Promise((resolve, reject) => {
+      this.provider_services.domainSubdomainSettings(domain, sub_domain)
+        .subscribe(
+          (data: any) => {
+            this.isCorp = data.isCorp;
+            this.isMultilevel = data.isMultilevel;
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
   getpaymentDetails() {
     this.provider_services.getPaymentSettings()
       .subscribe(
@@ -221,60 +263,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   handle_paymentstatus(event) {
-    let dataHolder = '';
-    const is_check = (event.checked) ? true : false;
-    dataHolder = '"onlinePayment": ' + is_check;
-    if (this.payment_settings.hasOwnProperty('payTm')) {
-      dataHolder += ', "payTm": ' + this.payment_settings['payTm'];
-    }
-    if (this.payment_settings.hasOwnProperty('payTmLinkedPhoneNumber')) {
-      dataHolder += ', "payTmLinkedPhoneNumber": ' + '"' + this.payment_settings['payTmLinkedPhoneNumber'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('dcOrCcOrNb')) {
-      dataHolder += ', "dcOrCcOrNb": ' + this.payment_settings['dcOrCcOrNb'];
-    }
-    if (this.payment_settings.hasOwnProperty('panCardNumber')) {
-      dataHolder += ', "panCardNumber": ' + '"' + this.payment_settings['panCardNumber'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('bankAccountNumber')) {
-      dataHolder += ', "bankAccountNumber": ' + '"' + this.payment_settings['bankAccountNumber'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('bankName')) {
-      dataHolder += ', "bankName": ' + '"' + this.payment_settings['bankName'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('ifscCode')) {
-      dataHolder += ', "ifscCode": ' + '"' + this.payment_settings['ifscCode'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('nameOnPanCard')) {
-      dataHolder += ', "nameOnPanCard": ' + '"' + this.payment_settings['nameOnPanCard'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('accountHolderName')) {
-      dataHolder += ', "accountHolderName": ' + '"' + this.payment_settings['accountHolderName'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('branchCity')) {
-      dataHolder += ', "branchCity": ' + '"' + this.payment_settings['branchCity'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('businessFilingStatus')) {
-      dataHolder += ', "businessFilingStatus": ' + '"' + this.payment_settings['businessFilingStatus'] + '"';
-    }
-    if (this.payment_settings.hasOwnProperty('accountType')) {
-      dataHolder += ', "accountType": ' + '"' + this.payment_settings['accountType'] + '"';
-    }
-    const post_Data = '{' + dataHolder + '}';
-    this.provider_services.setPaymentSettings(JSON.parse(post_Data))
-      .subscribe(
-        () => {
-          this.getpaymentDetails();
-          if (!is_check) {
-            // this.shared_functions.openSnackBar('online payment is disabled', {'panelclass' : 'snackbarerror'});
-            this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
-          }
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          this.getpaymentDetails();
-        }
-      );
+    let status;
+    (event.checked) ? status = 'enable' : status = 'disable';
+    this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
+      this.getpaymentDetails();
+      if (!event.checked) {
+        this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
+      }
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.getpaymentDetails();
+      });
   }
   getPOSSettings() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
@@ -367,9 +367,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'notifications':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
         break;
-        case 'saleschannel':
-          this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
-          break;
+      case 'saleschannel':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
+        break;
       case 'items':
         if (this.noitemError) {
           this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);
@@ -399,25 +399,36 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'home-service', 'services']);
         break;
       case 'homeservice-queues':
-          this.routerobj.navigate(['provider', 'settings', 'home-service', 'queues']);
-          break;
+        this.routerobj.navigate(['provider', 'settings', 'home-service', 'queues']);
+        break;
       case 'pos':
         this.routerobj.navigate(['provider', 'settings', 'pos']);
         break;
       case 'miscellaneous':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous']);
         break;
-        case 'jdn':
-          this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
-          break;
+      case 'jdn':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
+        break;
       case 'labels':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'labels']);
         break;
       case 'displayboards':
         this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        // if (this.statusboardStatus) {
+        //   this.routerobj.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
+        // } else {
+        //   this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
+        // }
         break;
       case 'skins':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
+        break;
+      case 'users':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+        break;
+      case 'corporate':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
         break;
     }
   }
@@ -431,12 +442,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   getDisplayboardCount() {
     let layout_list: any = [];
     this.provider_services.getDisplayboards()
-        .subscribe(
-            data => {
-                layout_list = data;
-                this.board_count = layout_list.length;
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
         });
-}
+  }
   getServiceCount() {
     this.provider_services.getServiceCount()
       .subscribe(
@@ -509,7 +520,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
               subdomainfields => {
                 this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
               });
-        });
+          });
         if (this.bProfile.baseLocation) {
           this.locationExists = true;
         } else {
@@ -557,6 +568,49 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         data => {
           this.departmentCount = data;
         });
+  }
+  getStatusboardLicenseStatus() {
+    // let pkgId;
+    // const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    // if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
+    //   pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
+    // }
+    // this.provider_services.getLicenseMetadata().subscribe(data => {
+    //   this.licenseMetadata = data;
+    //   for (let i = 0; i < this.licenseMetadata.length; i++) {
+    //     if (this.licenseMetadata[i].pkgId === pkgId) {
+    //       for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
+    //         if (this.licenseMetadata[i].metrics[k].id === 18) {
+    //           if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
+    //             this.statusboardStatus = true;
+    //             return;
+    //           } else {
+    //             this.statusboardStatus = false;
+    //             return;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
+    this.provider_services.getLicenseAddonmetaData().subscribe(data => {
+      this.addonMetadata = data;
+      //   for (let i = 0; i < this.addonMetadata.length; i++) {
+      //     if (this.addonMetadata[i].pkgId === pkgId) {
+      //       for (let k = 0; k < this.addonMetadata[i].metrics.length; k++) {
+      //         if (this.addonMetadata[i].metrics[k].id === 18) {
+      //           if (this.addonMetadata[i].metrics[k].anyTimeValue === 'true') {
+      //             this.statusboardStatus = true;
+      //             return;
+      //           } else {
+      //             this.statusboardStatus = false;
+      //             return;
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+    });
   }
 }
 

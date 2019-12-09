@@ -189,7 +189,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
         res => {
           this.server_date = res;
           this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
-          const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+          const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
           if (activeUser) {
             this.isLoggedIn = true;
             this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -390,7 +390,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
               this.getServiceByLocationid(this.locationjson[i].id, i);
               // this.getProviderDepart(this.provider_bussiness_id);
               this.locationjson[i]['checkins'] = [];
-              if (localStorage.getItem('ynw-user')) {
+              if (this.sharedFunctionobj.getitemFromGroupStorage('ynw-user')) {
                 this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               }
               locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
@@ -952,9 +952,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
                 this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
                 if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
                   this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-                }
-                
-                else {
+                } else {
                   if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
                     this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
                   } else {
@@ -1098,7 +1096,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   }
 
   getDoctors() {
-    const userobj = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const userobj = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     const loc_det = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.latitude = loc_det.lat;
     this.longitude = loc_det.lon;

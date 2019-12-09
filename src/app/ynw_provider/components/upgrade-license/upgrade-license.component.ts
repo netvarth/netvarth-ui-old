@@ -71,11 +71,11 @@ export class UpgradeLicenseComponent implements OnInit {
       this.api_loading = true;
       this.provider_services.upgradeLicensePackage(this.selected_pac.pkgId)
         .subscribe(data => {
-          const loginuserdata = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+          const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata['new_lic'] = this.selected_pac.displayName;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionObj.setitemonLocalStorage('ynw-user', loginuserdata);
+          this.sharedfunctionObj.setitemToGroupStorage('ynw-user', loginuserdata);
           this.api_success = Messages.LICENSE_UPGRADED.replace('[package]', this.selected_pac.pkgName);
           const pdata = { 'ttype': 'upgradelicence'};
           this.sharedfunctionObj.sendMessage(pdata);

@@ -237,8 +237,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
-    this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
@@ -286,7 +286,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
   getLicensemetrics() {
     let pkgId;
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
       pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
@@ -371,11 +371,11 @@ export class BProfileComponent implements OnInit, OnDestroy {
               }
             }
           }
-          const loginuserdata = this.sharedfunctionobj.getitemfromLocalStorage('ynw-user');
+          const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionobj.setitemonLocalStorage('ynw-user', loginuserdata);
+          this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
           this.serviceSector = data['serviceSector']['displayName'] || null;
           if (this.bProfile.status === 'ACTIVE') {
             this.normal_profile_active = 3;
@@ -445,7 +445,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
           }
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
-          this.sharedfunctionobj.setitemonLocalStorage('isCheckin', statusCode);
+          this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
 
         },
         () => {

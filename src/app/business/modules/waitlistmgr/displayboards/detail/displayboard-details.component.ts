@@ -23,7 +23,11 @@ export class DisplayboardDetailComponent implements OnInit {
     statussel1 = false;
     statusse2 = false;
     statussel3 = false;
+    showMode = 'DBOARD';
+    // showQsets = true;
+    // showQset = false;
     layoutData: any = [];
+    add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     boardSelectedItems: any = {};
     boardLayouts = [
         { displayName: '1x1', value: '1_1', row: 1, col: 1 },
@@ -54,12 +58,16 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Displayboards',
+            title: 'Queue Statusboard',
             url: '/provider/settings/q-manager/displayboards'
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
     actionparam = 'show';
+    qsetAction;
+    qsetId;
+    showDboard = true;
+    source;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -88,6 +96,34 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
+    }
+    addQSet() {
+        this.qsetAction = 'add';
+        this.showMode = 'QSET';
+        this.source = 'DBOARD';
+        this.qsetId = null;
+    }
+    qSetSelected(qset) {
+        console.log(qset);
+        if (qset.refresh) {
+            this.getDisplayboardQSets();
+        }
+        if (qset.source === 'QLIST') {
+            this.source = 'DBOARD';
+            this.showMode = 'QSETS';
+        } else if (qset.source === 'DBOARD') {
+            this.showMode = 'DBOARD'; // when click back to statusboard button
+        } else {
+            this.showDboard = false;
+            this.qsetAction = qset.action;
+            this.qsetId = qset.id;
+            this.source = qset.source;
+            this.showMode = 'QSET';
+        }
+    }
+    qSetListClicked() {
+        this.source = 'DBOARD';
+        this.showMode = 'QSETS';
     }
     getLayout(layoutvalue) {
         let layoutActive;
@@ -143,6 +179,10 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
+        let name = '';
+        if (this.displayName) {
+            name = this.displayName.trim().replace(/ /g, '_');
+        }
         for (let i = 0; i < this.boardRows; i++) {
             for (let j = 0; j < this.boardCols; j++) {
                 this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
@@ -150,7 +190,7 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         if (this.actionparam === 'add') {
             const post_data = {
-                'name': this.displayName.replace(/ /g,"_"),
+                'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric,
@@ -164,11 +204,14 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.api_loading = false;
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+            // } else {
+            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+            // }
         }
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.layoutData.id,
-                'name': this.displayName.replace(/ /g,"_"),
+                'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
                 'metric': this.metric
@@ -212,4 +255,7 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     resetApiErrors() {
     }
+    // gotoAddQset() {
+    //     this.router.navigate(['/provider/settings/q-manager/displayboards/q-set/add']);
+    // }
 }

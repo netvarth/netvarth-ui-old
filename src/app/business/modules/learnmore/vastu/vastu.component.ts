@@ -87,7 +87,7 @@ export class VastuComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+   this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
     if (this.target) {
       // this.triggerScrollTo(this.target);

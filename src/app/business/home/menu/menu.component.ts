@@ -13,7 +13,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, OnDestroy {
-
+  accountType;
   subscription: Subscription;
   inboxUnreadCnt;
   inboxCntFetched;
@@ -79,8 +79,8 @@ export class MenuComponent implements OnInit, OnDestroy {
         // this.router.navigate(['/provider/faq/' + message.target.scrollKey]);
         // break;
         case 'instant_q':
-           this.qAvailability = message.qAvailability;
-           break;
+          this.qAvailability = message.qAvailability;
+          break;
         // case 'popularList':
         //   this.jsonlist = message.target;
         //   if (this.jsonlist) {
@@ -92,11 +92,11 @@ export class MenuComponent implements OnInit, OnDestroy {
         //   this.popular_search(this.jsonlist);
         //   break;
       }
-       this.getBusinessdetFromLocalstorage();
+      this.getBusinessdetFromLocalstorage();
     });
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
+    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -121,7 +121,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
   isCheckinActive() {
-    this.isCheckin = this.shared_functions.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
       if (this.isCheckin === 0 || this.isCheckin > 3) {
         return true;
@@ -134,7 +134,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
-            this.shared_functions.setitemonLocalStorage('isCheckin', this.isCheckin);
+            this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
             if (this.isCheckin === 0) {
               return true;
             } else {
@@ -147,7 +147,6 @@ export class MenuComponent implements OnInit, OnDestroy {
         );
     }
   }
-
   gotoHelp() {
     this.router.navigate(['/provider/' + this.domain + '/help']);
   }
@@ -158,7 +157,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider/settings/miscellaneous/holidays']);
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
     this.domain = user.sector;
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();

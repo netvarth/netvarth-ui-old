@@ -20,13 +20,14 @@ export class DisplayboardsComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Displayboards'
+            title: 'Queue Statusboards'
         }
     ];
     api_loading: boolean;
     layout_list: any = [];
     add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
     domain: any;
+    statusboard_cap = Messages.DISPLAYBOARD_HEADING;
     boardLayouts = [
         { displayName: '1x1', value: '1_1', row: 1, col: 1 },
         { displayName: '1x2', value: '1_2', row: 1, col: 2 },
@@ -47,7 +48,7 @@ export class DisplayboardsComponent implements OnInit {
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     getDisplayboardLayouts() {

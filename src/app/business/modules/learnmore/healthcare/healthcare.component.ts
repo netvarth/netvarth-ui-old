@@ -73,7 +73,12 @@ export class HealthCareComponent implements OnInit {
   showjdn = false;
   showsaleschannel = false;
   showthemes = false;
+  showcorporate = false;
+  showserviceprovider = false;
+  show_corp_accordion = false;
+  show_brnch_accordion = false;
   domain;
+  subdomain;
   show = 'false';
   constructor(
     private activated_route: ActivatedRoute,
@@ -87,8 +92,13 @@ export class HealthCareComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+   this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
+    this.subdomain =  this.active_user.subSector;
+    if((this.subdomain === 'hospital') || (this.subdomain === 'dentalHosp') || (this.subdomain === 'alternateMedicineHosp')){
+      this.show_corp_accordion = true;
+      this.show_brnch_accordion = true;
+    }
     if (this.target) {
       // this.triggerScrollTo(this.target);
     }
@@ -205,6 +215,12 @@ export class HealthCareComponent implements OnInit {
       }
       if (childContent === 'themes') {
         this.showthemes = true;
+      }
+      if (childContent === 'corporate') {
+        this.showcorporate = true;
+      }
+      if (childContent === 'branchsps') {
+        this.showserviceprovider = true;
       }
     }
 

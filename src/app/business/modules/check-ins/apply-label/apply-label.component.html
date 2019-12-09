@@ -26,10 +26,10 @@
 
 <h1 class="mat-dialog-title">{{caption}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
             class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<mat-dialog-content class="ynw-common-form">
+<mat-dialog-content class="ynw-common-form apply-label">
     <div class="form-group col-md-12" *ngIf="source === 'newlabel'">
         <mat-form-field>
-            <input matInput type="text" class="form-control" id="displayName" placeholder="Label Name"
+            <input matInput type="text" class="form-control" id="displayName" placeholder="Label"
                 [(ngModel)]="labelname" autocomplete="off">
         </mat-form-field>
     </div>
@@ -39,8 +39,22 @@
                 autocomplete="off">
         </mat-form-field>
     </div>
+    <mat-checkbox [(ngModel)]="defaultShortValue" (change)="settingDeafultValue($event)">Set
+        as short value
+    </mat-checkbox>
+    <div class="form-group col-md-12" *ngIf="!defaultShortValue">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="value" [(ngModel)]="short_value"
+                placeholder="Enter short Value*" autocomplete="off">
+        </mat-form-field>
+    </div>
+
 </mat-dialog-content>
 <mat-dialog-actions>
     <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
     <button (click)="createLabel()" type="button" mat-button class="cs-btn bt1">Create</button>
 </mat-dialog-actions>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>

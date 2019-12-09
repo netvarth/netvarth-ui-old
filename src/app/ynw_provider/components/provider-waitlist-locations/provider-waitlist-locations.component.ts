@@ -15,17 +15,17 @@ import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-f
 })
 
 export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
-base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
-set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
-new_loc_cap = Messages.ADD_NEW_LOC_CAP;
-no_loc_add = Messages.NO_LOC_ADDED;
-base_loc_det_cap = Messages.BPROFILE_BASE_LOCATION;
-please_use_cap = Messages.BPROFILE_PLEASE_CAP;
-edit_cap = Messages.EDIT_BTN;
-location_cap = Messages.LOCATION_CAP;
-btn_to_compl_cap = Messages.BPROFILE_BUTTON_COMPLETE_CAP;
-need_loc_cap = Messages.BPROFILE_NEED_LOCATION_CAP;
-work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
+  base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
+  set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
+  new_loc_cap = Messages.ADD_NEW_LOC_CAP;
+  no_loc_add = Messages.NO_LOC_ADDED;
+  base_loc_det_cap = Messages.BPROFILE_BASE_LOCATION;
+  please_use_cap = Messages.BPROFILE_PLEASE_CAP;
+  edit_cap = Messages.EDIT_BTN;
+  location_cap = Messages.LOCATION_CAP;
+  btn_to_compl_cap = Messages.BPROFILE_BUTTON_COMPLETE_CAP;
+  need_loc_cap = Messages.BPROFILE_NEED_LOCATION_CAP;
+  work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   loc_list: any = [];
   bProfile: any = [];
   loc_badges: any = [];
@@ -70,13 +70,13 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.getBusinessConfiguration();
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.isCheckin = this.shared_Functionsobj.getitemfromLocalStorage('isCheckin');
+    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.dialogRef) {
@@ -98,8 +98,7 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
   performActions(action) {
     if (action === 'addlocation') {
       this.addLocation();
-    }
-    else if(action === 'learnmore'){
+    } else if (action === 'learnmore') {
       this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-locations']);
     }
   }
@@ -160,10 +159,9 @@ work_to_turn_search = Messages.BPROFILE_WORK_HOURS_SEARCH_CAP;
           const actions = [];
           if (this.show_addlocationButton) {
             actions.push({ 'title': this.new_loc_cap, 'type': 'addlocation' });
-            actions.push({'title':'Help','type':'learnmore'});
-          }
-          else{
-            actions.push({'title':'Help','type':'learnmore'});
+            actions.push({ 'title': 'Help', 'type': 'learnmore' });
+          } else {
+            actions.push({ 'title': 'Help', 'type': 'learnmore' });
           }
           this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-locations', 'subKey': '', 'classname': 'b-loc',

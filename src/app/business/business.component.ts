@@ -37,7 +37,7 @@ export class BusinessComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         if (router.url === '\/provider' || router.url === '\/provider\/check-ins') {
           setTimeout(() => {
-            if (this.shared_functions.getitemfromLocalStorage('isCheckin') === 0) {
+            if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
               router.navigate(['provider', 'check-ins']);
             } else {
               router.navigate(['provider', 'settings', 'bprofile']);
@@ -115,6 +115,7 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
+          this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
@@ -126,7 +127,7 @@ export class BusinessComponent implements OnInit {
             const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
             if (statusCode === 0) {
             }
-            this.shared_functions.setitemonLocalStorage('isCheckin', statusCode);
+            this.shared_functions.setitemToGroupStorage('isCheckin', statusCode);
           }
         },
         () => { }

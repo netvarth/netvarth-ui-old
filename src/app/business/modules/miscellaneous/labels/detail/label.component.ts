@@ -57,7 +57,8 @@ export class LabelComponent implements OnInit {
     labelData: any = [];
     description;
     displayName;
-
+    showAddsec = false;
+    defaultShortValue = true;
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -104,14 +105,17 @@ export class LabelComponent implements OnInit {
             this.label = this.labelData.label;
             this.description = this.labelData.description;
             this.displayName = this.labelData.displayName;
-            this.valueSet = this.labelData.valueSet.value;
             this.valueSet = this.labelData.valueSet;
         });
     }
     onSubmit() {
+        let label = '';
+        if (this.displayName) {
+            label = this.displayName.trim().replace(/ /g, '_');
+        }
         if (this.actionparam === 'add') {
             const post_data = {
-                'label': this.displayName.replace(/ /g,"_"),
+                'label': label,
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet,
@@ -119,12 +123,17 @@ export class LabelComponent implements OnInit {
             this.provider_services.createLabel(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_ADDED'));
                 this.editLabelbyId(data);
-            });
+                this.actionparam = 'view';
+            },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
         }
         if (this.actionparam === 'edit') {
             const post_data = {
                 'id': this.labelData.id,
-                'label': this.displayName.replace(/ /g,"_"),
+                'label': label,
                 'displayName': this.displayName,
                 'description': this.description,
                 'valueSet': this.valueSet
@@ -132,13 +141,12 @@ export class LabelComponent implements OnInit {
             this.provider_services.updateLabel(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_UPDATED'));
                 this.editLabelbyId(data);
+                this.actionparam = 'view';
             },
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-        this.actionparam = 'view';
-
     }
 
     setDescFocus() {
@@ -175,8 +183,9 @@ export class LabelComponent implements OnInit {
         valset['shortValue'] = shortcut;
         this.value = [];
         this.shortValue = [];
-        if (valset['value'].length !== 0 && valset['shortValue'].length !== 0 ) {
+        if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
             this.valueSet.push(valset);
+            this.showAddsec = false;
         }
         value = '';
         shortcut = '';
@@ -192,12 +201,21 @@ export class LabelComponent implements OnInit {
         this.api_success = null;
     }
     onCancel() {
-        if (this.actionparam === 'edit') {
-            this.actionparam = 'view';
-        } else {
-            this.router.navigate(['provider/settings/miscellaneous/labels']);
-        }
+        this.editLabelbyId(this.label_id);
+        setTimeout(() => {
+            if (this.actionparam === 'edit') {
+                this.actionparam = 'view';
+            } else {
+                this.router.navigate(['provider/settings/miscellaneous/labels']);
+            }
+        }, 500);
     }
-
+    showAddsection() {
+        (!this.showAddsec) ? this.showAddsec = true : this.showAddsec = false;
+    }
+    settingDeafultValue(event) {
+        (event.checked) ? this.defaultShortValue = true : this.defaultShortValue = false;
+        this.shortValue = this.value;
+    }
 }
 

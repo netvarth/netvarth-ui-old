@@ -284,10 +284,10 @@ export class HomeComponent implements OnInit {
     });
   }
   doWatchVideo() {
-    alert('Clicked watch video');
+    // alert('Clicked watch video');
   }
   doLearnMore() {
-    alert('Clicked learn more');
+    // alert('Clicked learn more');
   }
   providerLinkClicked() {
     this.routerobj.navigate(['/provider-home']);

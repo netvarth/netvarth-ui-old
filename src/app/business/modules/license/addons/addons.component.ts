@@ -45,7 +45,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
@@ -55,9 +55,9 @@ export class AddonsComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.currentlicense_details = data;
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
-                const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
-                this.sharedfunctionObj.setitemonLocalStorage('ynw-user', ynw_user);
+                this.sharedfunctionObj.setitemToGroupStorage('ynw-user', ynw_user);
             });
     }
     ngOnDestroy() {

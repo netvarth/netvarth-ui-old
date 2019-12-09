@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { DisplayboardsComponent } from './displayboards.component';
 import { DisplayboardsRoutingModule } from './displayboards.routing.module';
 import { DisplayboardDetailComponent } from './detail/displayboard-details.component';
+import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { DisplayboardDetailComponent } from './detail/displayboard-details.compo
         ReactiveFormsModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
-        CommonModule
+        CommonModule,
+        DisplayboardQSetModule
     ],
     exports: [DisplayboardsComponent]
 })

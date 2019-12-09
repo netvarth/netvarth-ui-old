@@ -774,7 +774,7 @@ export class ProviderServices {
     const url = 'provider/salesChannel/' + id;
     return this.servicemeta.httpPost(url);
   }
-  getSalesCode() {
+  getSalesChannel() {
     const url = 'provider/salesChannel';
     return this.servicemeta.httpGet(url);
   }
@@ -786,5 +786,76 @@ export class ProviderServices {
     const url = 'provider/license/annualDiscPct';
     return this.servicemeta.httpGet(url);
   }
+  manageProvider(accountId) {
+    const url = 'provider/branch/manage/' + accountId;
+    return this.servicemeta.httpPost(url);
+  }
+  getBranchSPs(branchId) {
+    const url = 'provider/branch/' + branchId + '/accounts';
+    return this.servicemeta.httpGet(url);
+  }
+  createBranchSP(post_data) {
+    const url = 'provider/branch/createSp';
+    return this.servicemeta.httpPost(url, post_data);
+  }
+  getCorporateDetails() {
+    const url = 'provider/corp';
+    return this.servicemeta.httpGet(url);
+  }
+  joinCorp(corpUid) {
+    const url = 'provider/corp/joinCorp/' + corpUid;
+    return this.servicemeta.httpPost(url);
+  }
+  createCorp(post_data) {
+    const url = 'provider/corp/switchToCorp';
+    return this.servicemeta.httpPost(url, post_data);
+  }
+  getQStartToken() {
+    const url = 'provider/waitlist/queues/nextTokenStart';
+    return this.servicemeta.httpGet(url);
+  }
+  getSearchSCdetails(scId) {
+    const url = 'provider/salesChannel/' + scId;
+    return this.servicemeta.httpGet(url);
+  }
+  getsearchPhonedetails(phoneNumber) {
+    const url = 'provider/salesChannel/phone/' + phoneNumber;
+    return this.servicemeta.httpGet(url);
+  }
+  getCustomerTrackStatus(uuid) {
+    const url = 'provider/waitlist/live/locate/distance/time/' + uuid;
+    return this.servicemeta.httpPost(url);
+  }
+  getSMSglobalSettings() {
+    const url = 'provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  setSMSglobalSettings(state) {
+    const url = 'provider/account/settings/sms/' + state;
+    return this.servicemeta.httpPut(url);
+  }
+  getSMSCredits() {
+    const url = 'provider/account/settings/smsCount';
+    return this.servicemeta.httpGet(url);
+  }
+  getConsumerNotificationSettings() {
+    const url = 'provider/consumerNotification/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  saveConsumerNotificationSettings(data) {
+    const url = 'provider/consumerNotification/settings';
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateConsumerNotificationSettings(data) {
+    const url = 'provider/consumerNotification/settings';
+    return this.servicemeta.httpPut(url, data);
+  }
+  changeJaldeePayStatus(status) {
+    const url = 'provider/payment/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getLicenseAddonmetaData() {
+    const url = 'provider/license/addonmetadata';
+    return this.servicemeta.httpGet(url);
+  }
 }
-

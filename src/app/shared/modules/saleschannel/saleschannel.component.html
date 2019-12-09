@@ -1,0 +1,27 @@
+<div class="col-md-12 col-xs-12 col-sm-12 no-padding" >
+    <div class="form-group mgn-up-10" *ngIf="action!='view'">
+        <div class="col-md-9 col-xs-10 col-sm-10">
+            <mat-form-field>
+                <input matInput placeholder="Sales Partner Id/ Phone" type="text" class="form-control" (keypress)="handlekeyup($event)"
+                    [(ngModel)]="scCode_Ph" (blur)="blurSC()" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 col-xs-2 col-sm-2">
+            <i class="fa fa-search pointer-cursor" (click)="findSC_ByScCode(scCode_Ph)"></i>
+        </div>
+    </div>
+    <div class="salesChannelDetails" *ngIf="scfound">
+        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+            SC Code: {{scInfo.scId}}
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+            SC Name: {{scInfo.scName}}
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+            SC Phone No: {{scInfo.primaryPhoneNo}}
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10">
+            Name : {{scInfo.contactFirstName}} {{scInfo.contactLastName}}
+        </div>
+    </div>
+</div>

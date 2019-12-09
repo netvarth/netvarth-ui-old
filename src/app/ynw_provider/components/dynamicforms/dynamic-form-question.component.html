@@ -139,8 +139,9 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
       </mat-form-field>
-      <app-field-error-display [displayError]="fed_service.isFieldValid(form,question.key)"
-        errorMsg="fed_service.getErrorMessage(form,question.key,this.errors)">
+      <app-field-error-display *ngIf="question.controlType =='date'"
+      [displayError]="fed_service.isFieldValid(form,question.key)"
+      [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
       </app-field-error-display>
     </div>
   </ng-container>

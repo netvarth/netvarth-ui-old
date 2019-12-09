@@ -69,6 +69,7 @@ export class SharedFunctions {
       this.shared_service.ConsumerLogout()
         .subscribe(data => {
           this.clearLocalstorage();
+          this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -84,6 +85,7 @@ export class SharedFunctions {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
           this.clearLocalstorage();
+          this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -186,7 +188,8 @@ export class SharedFunctions {
   }
 
   public setLoginData(data, post_data, mod) {
-    localStorage.setItem('ynw-user', JSON.stringify(data));
+    // localStorage.setItem('ynw-user', JSON.stringify(data));
+    this.setitemToGroupStorage('ynw-user', data);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
 
@@ -204,7 +207,12 @@ export class SharedFunctions {
       }
     }
   }
-
+  public clearSessionStorage() {
+    for (let index = 0; index < sessionStorage.length; index++) {
+      sessionStorage.removeItem(sessionStorage.key(index));
+      index = index - 1; // manage index after remove
+    }
+  }
   public checkLogin() {
     const login = (localStorage.getItem('ynw-credentials')) ? true : false;
     return login;
@@ -240,13 +248,62 @@ export class SharedFunctions {
     localStorage.removeItem(itemname);
   }
 
+  public setitemOnSessionStorage(itemname, itemvalue) {
+    sessionStorage.setItem(itemname, JSON.stringify(itemvalue));
+  }
+  public getitemfromSessionStorage(itemname) { // function to get local storage item value
+    if (sessionStorage.getItem(itemname) !== 'undefined') {
+      return JSON.parse(sessionStorage.getItem(itemname));
+    }
+  }
+  public removeitemfromSessionStorage(itemname) {
+    localStorage.removeItem(itemname);
+  }
+
+  public getGroup() {
+    if (this.getitemfromSessionStorage('tabId')) {
+      return this.getitemfromSessionStorage('accoutid');
+    } else {
+      return 0;
+    }
+  }
+  public setitemToGroupStorage(itemname, itemvalue) {
+    const group = this.getGroup();
+    let groupObj = {};
+    if (localStorage.getItem(group)) {
+      groupObj = JSON.parse(localStorage.getItem(group));
+      if (groupObj) {
+        groupObj[itemname] = itemvalue;
+      }
+    } else {
+      groupObj[itemname] = itemvalue;
+    }
+    localStorage.setItem(group, JSON.stringify(groupObj));
+  }
+  public getitemFromGroupStorage(itemname) {
+    const group = this.getGroup();
+    if (localStorage.getItem(group)) {
+      const groupObj = JSON.parse(localStorage.getItem(group));
+      if (groupObj[itemname] || (itemname === 'isCheckin' && groupObj[itemname] !== undefined)) {
+        return groupObj[itemname];
+      }
+    }
+  }
+  public removeitemFromGroupStorage(itemname) {
+    const group = this.getGroup();
+    const groupObj = JSON.parse(localStorage.getItem(group));
+    if (groupObj[itemname]) {
+      delete groupObj[itemname];
+      localStorage.setItem(group, JSON.stringify(groupObj));
+    }
+  }
+
   public setItemOnCookie(cname, cvalue, exdays = 30) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     const expires = 'expires=' + d.toUTCString();
     document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
   }
-
   public getItemOnCookie(cname) {
     const name = cname + '=';
     const decodedCookie = decodeURIComponent(document.cookie);
@@ -296,7 +353,7 @@ export class SharedFunctions {
 
   public getProfile() {
     const promise = new Promise((resolve, reject) => {
-      const user = JSON.parse(localStorage.getItem('ynw-user'));
+      const user = this.getitemFromGroupStorage('ynw-user');
       if (!user.id) {
         this.router.navigate(['logout']);
       }
@@ -737,7 +794,7 @@ export class SharedFunctions {
 
   setBusinessDetailsforHeaderDisp(bname, sector, subsector, logo, forcelogoblank?) {
     const buss_det = { 'bn': '', 'bs': '', 'bss': '', 'logo': '' };
-    const exist_det = this.getitemfromLocalStorage('ynwbp');
+    const exist_det = this.getitemFromGroupStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
       buss_det.bs = sector || '';
@@ -753,7 +810,7 @@ export class SharedFunctions {
       buss_det.bss = subsector;
       buss_det.logo = logo;
     }
-    this.setitemonLocalStorage('ynwbp', buss_det);
+    this.setitemToGroupStorage('ynwbp', buss_det);
   }
   retSubSectorNameifRequired(domain, subdomainname) {
     const bprof = this.getitemfromLocalStorage('ynw-bconf');
@@ -1249,5 +1306,45 @@ export class SharedFunctions {
   removeDuplicates(array, key) {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
+  }
+  getLiveTrackStatusMessage(liveTrackInfo, businessName, mode) {
+    if (liveTrackInfo.jaldeeDistanceTime) {
+      const distance = liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.distance;
+      const unit = projectConstants.LIVETRACK_CONST[liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.unit];
+      const travelTime = liveTrackInfo.jaldeeDistanceTime.jaldeelTravelTime.travelTime;
+      const hours = Math.floor(travelTime / 60);
+      const minutes = travelTime % 60;
+      let message = '';
+      if (distance === 0) {
+        message += 'You are close to ' + businessName;
+      }  else {
+        message += 'From your current location, you are ' + distance + ' ' + unit + ' away and will take around';
+        if (hours !== 0) {
+          message += ' ' + hours;
+          if (hours === 1) {
+            message += ' hr';
+          } else {
+            message += ' hrs';
+          }
+        }
+        if (minutes !== 0) {
+          message += ' ' + minutes;
+          if (minutes === 1) {
+            message += ' min';
+          } else {
+            message += ' mins';
+          }
+        }
+        if (mode === 'WALKING') {
+          message += ' walk';
+        } else if (mode === 'DRIVING') {
+          message += ' drive';
+        } else if (mode === 'BICYCLING') {
+          message += ' ride';
+        }
+        message += ' to reach ' + businessName;
+      }
+      return message;
+    }
   }
 }

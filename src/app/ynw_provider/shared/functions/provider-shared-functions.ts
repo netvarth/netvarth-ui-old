@@ -264,8 +264,26 @@ export class ProviderSharedFuctions {
   }
 
   addConsumerInboxMessage(waitlist, Cthis?) {
-    const uuid = waitlist.ynwUuid || null;
-    const name = waitlist.consumer.userProfile.firstName + ' ' + waitlist.consumer.userProfile.lastName;
+    const uuids = [];
+    let type;
+    let ynwUuid;
+    let uuid;
+    let name;
+    if (waitlist.length > 1) {
+      type = 'multiple';
+      for (const watlst of waitlist) {
+        uuids.push(watlst.ynwUuid);
+      }
+    } else {
+      type = 'single';
+      uuid = waitlist[0].ynwUuid || null;
+      name = waitlist[0].consumer.userProfile.firstName + ' ' + waitlist[0].consumer.userProfile.lastName;
+    }
+    if (type === 'single') {
+      ynwUuid = uuid;
+    } else {
+      ynwUuid = uuids;
+    }
     const terminologies = this.common_datastorage.get('terminologies');
     return new Promise((resolve, reject) => {
       Cthis.sendmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
@@ -273,7 +291,8 @@ export class ProviderSharedFuctions {
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          uuid: uuid,
+          typeOfMsg: type,
+          uuid: ynwUuid,
           source: 'provider-waitlist',
           type: 'send',
           terminologies: terminologies,

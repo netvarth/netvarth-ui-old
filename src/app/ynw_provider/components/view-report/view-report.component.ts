@@ -65,7 +65,7 @@ export class ViewReportComponent implements OnInit {
         this.invoice_id = params.id;
         this.getjaldeeReport();
       });
-      this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+      this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
       return JSON.parse(jsonString);

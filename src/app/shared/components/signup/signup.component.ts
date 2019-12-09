@@ -39,6 +39,7 @@ export class SignUpComponent implements OnInit {
   activeDomainIndex;
   activeSubDomainIndex;
   subDomainList = [];
+  subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
   dropdownSettings = {
     singleSelection: false,
     text: 'Select Sub Sector',
@@ -73,6 +74,9 @@ export class SignUpComponent implements OnInit {
   loginId;
   fname;
   lname;
+  actionstarted = false;
+  scCode;
+  scfound = false;
   showTermcondition = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
@@ -86,7 +90,7 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ynwUser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     if (this.ynw_credentials) {
       this.loginId = this.ynw_credentials.loginId;
@@ -127,20 +131,6 @@ export class SignUpComponent implements OnInit {
         () => {
         }
       );
-
-    // this.shared_services.getPackages()
-    // .subscribe(
-    //   data => {
-    //     this.packages = data;
-
-    //     if (this.packages[0] && this.signupForm.get('package_id')) {
-    //       this.signupForm.get('package_id').setValue(this.packages[0].pkgId);
-    //     }
-    //   },
-    //   error => {
-
-    //   }
-    // );
   }
   getPackages() {
     this.shared_services.getPackages()
@@ -172,7 +162,6 @@ export class SignUpComponent implements OnInit {
           }
         },
         () => {
-
         }
       );
   }
@@ -205,18 +194,13 @@ export class SignUpComponent implements OnInit {
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
-        // corporateaction:['', Validators.compose([Validators.required])],
-        // bankaction:['', Validators.compose([Validators.required])],
         terms_condition: ['true'],
-
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
         this.changeType();
-
         break;
     }
   }
-
   createFormSpecial(step) {
     this.step = step;
     switch (step) {
@@ -250,7 +234,6 @@ export class SignUpComponent implements OnInit {
       });
         this.signupForm.get('is_provider').setValue(this.is_provider);
         this.changeType();
-
         break;
     }
   }
@@ -287,7 +270,12 @@ export class SignUpComponent implements OnInit {
   setSubDomains(i) {
     this.subDomainList = [];
     const sub_domains = (this.business_domains[i]) ? this.business_domains[i]['subDomains'] : [];
-    sub_domains.forEach((element, index) => {
+    console.log(sub_domains);
+    const sub_domains_sortbyorder = this.shared_functions.sortByKey(sub_domains, 'order');
+    sub_domains_sortbyorder.forEach((element, index) => {
+      if (this.subdomainSettings[element.subDomain]) {
+        console.log(this.subdomainSettings[element.subDomain]);
+      }
       const ob = { 'id': index, 'itemName': element.displayName, 'value': element.subDomain };
       this.subDomainList.push(ob);
     });
@@ -299,6 +287,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(acc_id?) {
+    this.actionstarted = true;
     this.resetApiErrors();
     this.user_details = {};
     let userProfile = {
@@ -390,11 +379,11 @@ export class SignUpComponent implements OnInit {
     this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
+          this.actionstarted = false;
           this.createForm(2);
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
             user_details.userProfile.email) {
-
             this.setMessage('email', user_details.userProfile.email);
           } else {
             this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
@@ -412,6 +401,7 @@ export class SignUpComponent implements OnInit {
     this.shared_services.signUpProvider(user_details)
       .subscribe(
         () => {
+          this.actionstarted = false;
           this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
           this.createForm(2);
           this.resendemailotpsuccess = true;
@@ -423,6 +413,7 @@ export class SignUpComponent implements OnInit {
           }
         },
         error => {
+          this.actionstarted = false;
           if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
             this.onSubmit(error.error);
           } else {
@@ -432,15 +423,18 @@ export class SignUpComponent implements OnInit {
       );
   }
   onOtpSubmit(submit_data) {
+    this.actionstarted = true;
     this.resetApiErrors();
     if (this.is_provider === 'true') {
       this.shared_services.OtpSignUpProviderValidate(submit_data.phone_otp)
         .subscribe(
           () => {
+            this.actionstarted = false;
             this.otp = submit_data.phone_otp;
             this.createForm(3);
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -448,16 +442,52 @@ export class SignUpComponent implements OnInit {
       this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
         .subscribe(
           () => {
+            this.actionstarted = false;
             this.otp = submit_data.phone_otp;
-            this.createForm(3);
+            this.createForm(4);
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
     }
   }
+  skipHearus() {
+    this.resetApiErrors();
+    this.createForm(4);
+  }
+  onReferalSubmit(sccode) {
+    this.scfound = false;
+    this.scCode = null;
+    if (sccode) {
+      this.scCode = sccode;
+      this.scfound = true;
+    }
+  }
+  submitHearus(hearus) {
+    this.actionstarted = true;
+    this.resetApiErrors();
+    const post_data = {
+      'hearBy': hearus,
+    };
+    if (hearus === 'SalesReps') {
+      post_data['scCode'] = this.scCode;
+    }
+    this.shared_services.saveReferralInfo(this.otp, post_data)
+    .subscribe(
+      () => {
+        this.actionstarted = false;
+        this.createForm(4);
+      },
+      error => {
+        this.actionstarted = false;
+        this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+      }
+    );
+  }
   onPasswordSubmit(submit_data) {
+    this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
     const post_data = { password: submit_data.new_password };
@@ -465,6 +495,7 @@ export class SignUpComponent implements OnInit {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
         .subscribe(
           () => {
+            this.actionstarted = false;
             const login_data = {
               'countryCode': '+91',
               'loginId': this.user_details.userProfile.primaryMobileNo,
@@ -486,6 +517,7 @@ export class SignUpComponent implements OnInit {
             }
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -493,6 +525,7 @@ export class SignUpComponent implements OnInit {
       this.shared_services.ConsumerSetPassword(this.otp, post_data)
         .subscribe(
           () => {
+            this.actionstarted = false;
             const login_data = {
               'countryCode': '+91',
               'loginId': this.user_details.userProfile.primaryMobileNo,
@@ -513,6 +546,7 @@ export class SignUpComponent implements OnInit {
               );
           },
           error => {
+            this.actionstarted = false;
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
@@ -568,7 +602,7 @@ export class SignUpComponent implements OnInit {
     this.dialogRef.close();
   }
   continuetoPwd() {
-    this.step = 3;
+    this.step = 4;
   }
   more() {
     this.moreLess = 1;
@@ -577,8 +611,8 @@ export class SignUpComponent implements OnInit {
     this.moreLess = 0;
   }
   onCancelPass() {
-    if (this.step === 3) {
-      this.step = 4;
+    if (this.step === 4) {
+      this.step = 5;
       this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }

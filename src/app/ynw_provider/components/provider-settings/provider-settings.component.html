@@ -111,8 +111,7 @@
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('services')"><a class="pointer-cursor"><span
-                                            class="lnk setings">{{services_cap}} <span class="pull-right badge bg-blue"
-                                                *ngIf="multipeLocationAllowed == true">{{service_count}}</span></span>
+                                            class="lnk setings">{{services_cap}} <span class="pull-right badge bg-blue">{{service_count}}</span></span>
                                         <p class="settings_info">Add and manage services here</p>
                                     </a>
                                 </li>
@@ -121,12 +120,12 @@
                                         <p class="settings_info">Add and manage your queues here</p>
                                     </a>
                                 </li>
-                                <!-- <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span
-                                            class="lnk">{{displayboards_cap}}<span class="pull-right badge bg-blue">{{board_count}}</span>
+                                <li (click)="redirecTo('displayboards')"><a class="pointer-cursor"><span
+                                            class="lnk setings">{{displayboards_cap}}<span class="pull-right badge bg-blue">{{board_count}}</span>
                                         </span>
                                         <p class="settings_info">Manage display boards here</p>
                                     </a>
-                                </li> -->
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -177,7 +176,7 @@
                                                 (change)="handle_paymentstatus($event)"></mat-slide-toggle>
                                         </span>
                                         <p class="sts" [class.active]="payment_status">{{payment_statusstr}}</p>
-                                        <p class="settings_info" *ngIf="payment_status">Jaldee pay hints</p>
+                                        <p class="settings_info" *ngIf="payment_status">{{jaldee_pay_cap}}</p>
                                         <p class="settings_info" *ngIf="!payment_status">{{frm_public_self_cap}}
                                         </p>
                                     </a>
@@ -204,7 +203,7 @@
                                 <li (click)="redirecTo('taxsettings')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{tax_setting_cap}}
                                         </span>
-                                        <p class="settings_info">Set up and turn on tax configuration.</p>
+                                        <p class="settings_info">Enable and configure tax settings.</p>
                                     </a>
                                 </li>
                             </ul>
@@ -298,18 +297,18 @@
                                 </li>
                                 <li (click)="redirecTo('notifications')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{notification_cap}}</span>
-                                        <p class="settings_info">Notification settings for provider</p>
+                                        <p class="settings_info">{{cust_domain_name|capitalizeFirst}} and {{provider_domain_name}} notifications settings</p>
                                     </a>
                                 </li>
-                                <!-- <li (click)="redirecTo('labels')"><a class="pointer-cursor">
-                                        <span class="lnk">{{customfields_cap}}</span>
-                                        <p class="settings_info">Manage your labels here</p>
+                                <li (click)="redirecTo('labels')"><a class="pointer-cursor">
+                                        <span class="lnk setings">{{customfields_cap}}</span>
+                                        <p class="settings_info">Add or manage your labels here</p>
                                     </a>
-                                </li> -->
+                                </li>
                                 <li (click)="redirecTo('jdn')"><a class="pointer-cursor"><span
                                             class="lnk setings">{{frm_jdn_short_cap}}
                                         </span>
-                                        <p class="settings_info">Add Jaldee Discount Network here</p>
+                                        <p class="settings_info">Subscribe to Jaldee Discount Network here</p>
                                     </a>
                                 </li>
                                 <li (click)="redirecTo('saleschannel')"><a class="pointer-cursor"><span
@@ -317,10 +316,22 @@
                                         <p class="settings_info">Sales channel options</p>
                                     </a>
                                 </li>
+                                <li *ngIf="accountType!='BRANCH_SP' && isCorp && isMultilevel" (click)="redirecTo('corporate')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Corporate Settings</span>
+                                        <p class="settings_info">Create or join corporate account</p>
+                                    </a>
+                                </li>
                                 <li (click)="redirecTo('skins')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Themes</span>
                                         <p class="settings_info">Customize your themes</p>
+                                    </a>
+                                </li>
+                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('users')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Doctors</span>
+                                        <p class="settings_info">Create or manage doctors</p>
                                     </a>
                                 </li>
                             </ul>

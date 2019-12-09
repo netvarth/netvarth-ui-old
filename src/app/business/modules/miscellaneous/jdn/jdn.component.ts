@@ -25,6 +25,8 @@ export class JDNComponent implements OnInit {
     rewrite;
     api_error = null;
     api_success = null;
+    cust_label;
+    radioSelected;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -50,9 +52,10 @@ export class JDNComponent implements OnInit {
         private routerobj: Router,
         private shared_functions: SharedFunctions,
         private dialog: MatDialog) {
+            this.cust_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        const user_data = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user_data.sector;
         const sub_domain = user_data.subSector || null;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -66,6 +69,9 @@ export class JDNComponent implements OnInit {
                         for (const option of this.jdnPercentage) {
                             if (option.percentage === 5) {
                                 this.maximumDiscount1 = option.maxDiscount;
+                                this.discType = 5;
+                                this.jdnmaxDiscounttext = this.maximumDiscount1;
+                                this.radioSelected = this.discType;
                             } else if (option.percentage === 10) {
                                 this.maximumDiscount2 = option.maxDiscount;
                             } else {
@@ -88,6 +94,7 @@ export class JDNComponent implements OnInit {
         this.jdnlabeltext = data.label;
         this.discType = data.discPercentage;
         this.jdnmaxDiscounttext = data.discMax;
+        this.radioSelected = this.discType;
     }
 
     saveJDN() {
@@ -122,12 +129,19 @@ export class JDNComponent implements OnInit {
     }
 
     radioChange(event) {
-        if (event.value === 5) {
-            this.jdnmaxDiscounttext = this.maximumDiscount1;
-        } else if (event.value === 10) {
-            this.jdnmaxDiscounttext = this.maximumDiscount2;
-        } else {
-            this.jdnmaxDiscounttext = this.maximumDiscount3;
+       if (!event.value) {
+        return;
+       }
+        console.log(this.radioSelected);
+        if (this.radioSelected !== event.value) {
+            this.radioSelected = event.value;
+            if (event.value === 5) {
+                this.jdnmaxDiscounttext = this.maximumDiscount1;
+            } else if (event.value === 10) {
+                this.jdnmaxDiscounttext = this.maximumDiscount2;
+            } else {
+                this.jdnmaxDiscounttext = this.maximumDiscount3;
+            }
         }
     }
     update(stat) {
@@ -209,7 +223,10 @@ export class JDNComponent implements OnInit {
             }
         });
     }
-
+    learnmore_clicked(mod, e) {
+        e.stopPropagation();
+        this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
+    }
     getJdnDetails() {
         this.shared_services.getJdn()
             .subscribe(data => {

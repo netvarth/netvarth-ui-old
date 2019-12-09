@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-    selector: 'app-professional-learnmore',
-    templateUrl : './professional.component.html'
+  selector: 'app-professional-learnmore',
+  templateUrl: './professional.component.html'
 })
 
 export class ProfessionalCareComponent implements OnInit {
@@ -63,7 +63,7 @@ export class ProfessionalCareComponent implements OnInit {
   showdashboard = false;
   showdashbord = false;
   showcustomer = false;
-  showdownpanel = false; 
+  showdownpanel = false;
   showdisplayboard = false;
   showlabel = false;
   showboard = false;
@@ -88,7 +88,7 @@ export class ProfessionalCareComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
     if (this.target) {
       // this.triggerScrollTo(this.target);
@@ -247,19 +247,15 @@ export class ProfessionalCareComponent implements OnInit {
       }
     }
     if (parentContent === 'customer' && childContent === 'customer') {
-        this.showcustomer = true;
+      this.showcustomer = true;
     }
     if (parentContent === 'downpanel' && childContent === 'downpanel') {
       this.showdownpanel = true;
-  }
-  
- if (parentContent === 'homeservice')
-{
-  this.showhomeservice = true;
-  if(childContent === 'serviceH')
-  {this.showserviceH = true;}
-  if(childContent === 'hourH')
-  {this.showhoursH = true;}
-}
+    }
+    if (parentContent === 'homeservice') {
+      this.showhomeservice = true;
+      if (childContent === 'serviceH') { this.showserviceH = true; }
+      if (childContent === 'hourH') { this.showhoursH = true; }
+    }
   }
 }

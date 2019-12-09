@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MiscellaneousComponent } from './miscellaneous.component';
 import { ProviderNonworkingdaysComponent } from '../../../ynw_provider/components/provider-nonworkingdays/provider-nonworkingdays.component';
-import { ProviderNotificationsComponent } from '../../../ynw_provider/components/provider-notifications/provider-notifications.component';
-import { SaleschannelComponent } from './saleschannel/saleschannel.component';
 import { JDNComponent } from './jdn/jdn.component';
+
+import { SaleschannelSettingsComponent } from './saleschannel/sc-settings.component';
 
 const routes: Routes = [
     { path: '', component: MiscellaneousComponent },
@@ -13,19 +13,18 @@ const routes: Routes = [
       component: ProviderNonworkingdaysComponent
     },
     {
-      path: 'notifications',
-      component: ProviderNotificationsComponent
-    },
-    {
       path: 'saleschannel',
-      component: SaleschannelComponent
+      component: SaleschannelSettingsComponent
     },
     {
       path: 'jdn',
       component: JDNComponent
     },
     { path: 'labels', loadChildren: './labels/labels.module#LabelsModule'},
-    { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' }
+    { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' },
+    { path: 'users', loadChildren: './users/users.module#UsersModule' },
+    { path: 'corporate', loadChildren: './corporate/corporate.module#CorporateModule' },
+    { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsModule'}
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

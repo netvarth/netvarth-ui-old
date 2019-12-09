@@ -11,8 +11,9 @@ import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+
 import * as moment from 'moment';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 @Component({
     selector: 'app-license',
     templateUrl: './license.component.html',
@@ -110,15 +111,15 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.route.params.subscribe((data) => {
             this.type = data.type;
             if (this.type === 'upgrade') {
-                const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 this.current_lic = ynw_user.accountLicenseDetails.accountLicense.displayName;
                 this.showupgradeLicense();
             }
         });
     }
     ngOnInit() {
-        this.active_user = this.shared_functions.getitemfromLocalStorage('ynw-user');
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.loading = true;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
@@ -128,7 +129,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.getInvoiceList();
         this.getSubscriptionDetail();
         this.getUpgradablePackages();
-        this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+        this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
         this.loading = false;
         // this.getAnnualDiscountPercentage();
         this.getbillCycle();
@@ -172,9 +173,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.currentlicense_details = data;
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
-                const ynw_user = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
-                this.sharedfunctionObj.setitemonLocalStorage('ynw-user', ynw_user);
+                this.sharedfunctionObj.setitemToGroupStorage('ynw-user', ynw_user);
                 if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
                     const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
                     const end_date = (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;
@@ -213,6 +214,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.upgradedialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
                 this.getLicenseDetails('update');
+                this.getSubscriptionDetail();
+                this.getLicenseMetaData();
             }
             this.goBacktoPrev();
         });
@@ -277,16 +280,13 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
                 data => {
+                    console.log(data);
                     this.license_sub = data;
                     this.licensePlan = this.license_sub.licSubType;
                     this.licenseDisplayName = this.license_sub.licSubTypeDisplayName;
                     if (this.license_sub.subscriptionTo) {
                         this.statusOfLicense = this.license_sub.subscriptionTo;
                     }
-                    // if(this.license_sub.pendingStmtCount){
-                    //     this.pendingStatus = this.license_sub.pendingStmtCount;
-                    // }
-
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

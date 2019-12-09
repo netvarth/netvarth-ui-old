@@ -65,7 +65,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
         this.getCouponview();
         this.getJaldeeCouponStatistic();
       });
-    // this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
+    // this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
   getCouponview() {
     this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(

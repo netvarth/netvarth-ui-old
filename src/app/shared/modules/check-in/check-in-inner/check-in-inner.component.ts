@@ -11,13 +11,11 @@ import { CommonDataStorageService } from '../../../../shared/services/common-dat
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
 @Component({
   selector: 'app-check-in-inner',
   templateUrl: './check-in-inner.component.html',
 })
 export class CheckInInnerComponent implements OnInit {
-
   select_service_cap = Messages.SELECT_SER_CAP;
   select_deptment_cap = Messages.SELECT_DEPT_CAP;
   no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
@@ -48,9 +46,10 @@ export class CheckInInnerComponent implements OnInit {
   get_token_cap;
   domain;
   note_placeholder;
-
   s3url;
   provider_id;
+  trackTimeChange = false;
+  trackMode = false;
   api_success = null;
   api_error = null;
   api_cp_error = null;
@@ -153,13 +152,37 @@ export class CheckInInnerComponent implements OnInit {
   confrmshow = false;
   userData: any = [];
   userEmail;
+  userPhone;
   emailExist = false;
   payEmail;
   payEmail1;
   emailerror = null;
   email1error = null;
-
-
+  phoneerror = null;
+  edit = true;
+  selected_phone;
+  consumerPhoneNo;
+  trackUuid;
+  liveTrack = false;
+  source: any = [];
+  travelMode = 'DRIVING';
+  notifyTime = 'ONEHOUR';
+  notifyAutomatic = true;
+  shareLoc = true;
+  lat_lng = {
+    latitude: 0,
+    longitude: 0
+  };
+  driving = true;
+  walking: boolean;
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  activeWt;
+  bicycling: boolean;
+  liveTrackMessage;
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
@@ -169,14 +192,11 @@ export class CheckInInnerComponent implements OnInit {
     public _sanitizer: DomSanitizer,
     private dialog: MatDialog,
     @Inject(DOCUMENT) public document,
-    // @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {
-  }
+  ) { }
   ngOnInit() {
     this.api_loading = false;
-
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-    const activeUser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
@@ -192,11 +212,10 @@ export class CheckInInnerComponent implements OnInit {
     this.maxsize = 1;
     this.step = 1;
     this.getProfile();
-    this.loggedinuser = this.sharedFunctionobj.getitemfromLocalStorage('ynw-user');
+    this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.gets3curl();
     this.getFamilyMembers();
-    // this.consumerNote = '';
-    // this.today = new Date(this.server_date.split(' ')[0]);
+    // this.getCurrentLocation();
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     this.today = new Date(this.today);
     this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -220,14 +239,12 @@ export class CheckInInnerComponent implements OnInit {
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     if (this.page_source === 'provider_checkin') {
-      // this.waitlist_for.push ({id: this.customer_data.id, name: 'Self'});
       if (this.fromKiosk) {
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
       } else {
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
       }
     } else {
-      // this.waitlist_for.push ({id: this.loggedinuser.id, name: 'Self'});
       this.waitlist_for.push({ id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName });
     }
     if (this.page_source === 'searchlist_checkin') { // case check-in from search result pages
@@ -245,14 +262,14 @@ export class CheckInInnerComponent implements OnInit {
       }
       const providarr = this.search_obj.id.split('-');
       this.account_id = providarr[0];
-      // this.sel_queue_name = this.search_obj.fields.waitingtime_res.nextAvailableQueue.name || '';
       this.minDate = this.sel_checkindate;
-
     } else if (this.page_source === 'provdet_checkin'
       || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
       // this.search_obj = this.data.srchprovider;
       this.provider_id = this.data.moreparams.provider.unique_id;
+      console.log(this.provider_id);
       this.account_id = this.data.moreparams.provider.account_id;
+      console.log(this.account_id);
       const srch_fields = {
         fields: {
           title: this.data.moreparams.provider.name,
@@ -272,9 +289,7 @@ export class CheckInInnerComponent implements OnInit {
     if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
       if (this.data.datechangereq) {
         const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-
         const seldate_checker = new Date(seldateChecker);
-
         const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const todaydate_checker = new Date(todaydateChecker);
         if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
@@ -283,13 +298,11 @@ export class CheckInInnerComponent implements OnInit {
           const serverdate = moment(server).format();
           const servdate = new Date(serverdate);
           const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-
           this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
-          this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });  // done to set the min date in the calendar view
+          this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
           this.minDate = new Date(this.minDate.replace(/-/g, '/'));
         }
       }
-
     }
     const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const ddd = new Date(day);
@@ -301,7 +314,7 @@ export class CheckInInnerComponent implements OnInit {
       this.setTerminologyLabels();
     }
     // if ( this.page_source !== 'provider_checkin') {
-    //   this.getPaymentModesofProvider(this.account_id);
+    // this.getPaymentModesofProvider(this.account_id);
     // }
     const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const date1 = new Date(dt1);
@@ -315,10 +328,7 @@ export class CheckInInnerComponent implements OnInit {
     // this.sel_queue_det = retdatedet;
     this.showfuturediv = false;
     this.revealphonenumber = true;
-
-
   }
-
   setTerminologyLabels() {
     this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlist']);
     this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.terminologiesjson['waitlisted']);
@@ -379,7 +389,6 @@ export class CheckInInnerComponent implements OnInit {
         }
       };
     }
-
     fn.subscribe(data => {
       this.familymembers = [];
       this.familymembers.push(self_obj);
@@ -393,7 +402,6 @@ export class CheckInInnerComponent implements OnInit {
       () => {
         this.api_loading1 = false;
       });
-
   }
   gets3curl() {
     this.api_loading1 = true;
@@ -421,7 +429,6 @@ export class CheckInInnerComponent implements OnInit {
         }
       );
   }
-
   // gets the various json files based on the value of "section" parameter
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
     let UTCstring = null;
@@ -436,7 +443,7 @@ export class CheckInInnerComponent implements OnInit {
             this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
             /*this.maxsize = this.settingsjson.maxPartySize;
             if (this.maxsize === undefined) {
-              this.maxsize = 1;
+            this.maxsize = 1;
             }*/
             break;
           case 'terminologies':
@@ -447,11 +454,12 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'businessProfile':
             this.businessjson = res;
+            console.log(res);
             this.getProviderDepart(this.businessjson.id);
             this.domain = this.businessjson.serviceSector.domain;
             if (this.domain === 'foodJoints') {
               this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-              this.note_placeholder = 'Item No   Item Name   Item Quantity';
+              this.note_placeholder = 'Item No Item Name Item Quantity';
             } else {
               this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
               this.note_placeholder = '';
@@ -467,16 +475,16 @@ export class CheckInInnerComponent implements OnInit {
         }
       },
         () => {
-
         }
       );
   }
-
   getProfile() {
     this.sharedFunctionobj.getProfile()
       .then(
         data => {
           this.userData = data;
+          this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+          this.consumerPhoneNo = this.userPhone;
           if (this.userData.userProfile !== undefined) {
             this.userEmail = this.userData.userProfile.email || '';
           }
@@ -504,10 +512,7 @@ export class CheckInInnerComponent implements OnInit {
         this.email1error = 'Please enter a valid email.';
       }
     }
-
-
     // return new Promise((resolve) => {
-
     if (this.payEmail === this.payEmail1) {
       post_data = {
         'id': this.userData.userProfile.id || null,
@@ -535,13 +540,33 @@ export class CheckInInnerComponent implements OnInit {
     } else {
       this.email1error = 'Email and Re-entered Email do not match';
     }
-    // });
-
-
-
-
-
-
+  }
+  addPhone() {
+    this.resetApiErrors();
+    this.resetApi();
+    const curphone = this.selected_phone;
+    const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
+    const result = pattern.test(curphone);
+    const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
+    const result1 = pattern1.test(curphone);
+    if (this.selected_phone === '') {
+      this.phoneerror = Messages.BPROFILE_PHONENO;
+      return;
+    } else if (!result) {
+      this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+      return;
+    } else if (!result1) {
+      this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+      return;
+    } else {
+      this.consumerPhoneNo = this.selected_phone;
+      this.userPhone = this.selected_phone;
+      this.edit = true;
+    }
+  }
+  editPhone() {
+    this.edit = false;
+    this.selected_phone = this.userPhone;
   }
   validateEmail(mail) {
     const emailField = mail;
@@ -551,11 +576,10 @@ export class CheckInInnerComponent implements OnInit {
     }
     return true;
   }
-
   resetApiErrors() {
-
     this.emailerror = null;
     this.email1error = null;
+    this.phoneerror = null;
   }
   setServiceDetails(curservid) {
     let serv;
@@ -584,7 +608,6 @@ export class CheckInInnerComponent implements OnInit {
     }
     // }
   }
-
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     this.queueQryExecuted = false;
     if (locid && servid) {
@@ -640,7 +663,6 @@ export class CheckInInnerComponent implements OnInit {
       this.confrmshow = true;
     }
   }
-
   isSelectedService(id) {
     let clr = false;
     if (id === this.sel_ser) {
@@ -650,7 +672,6 @@ export class CheckInInnerComponent implements OnInit {
     }
     return clr;
   }
-
   isSelectedQueue(id) {
     let clr = false;
     if (id === this.sel_queue_id) {
@@ -661,15 +682,14 @@ export class CheckInInnerComponent implements OnInit {
     return clr;
   }
   // handleQueueSel(obj) {
-  //   this.resetApi();
-  //   // this.queueReloaded = false;
-  //   this.sel_queue_id = obj.id;
-  //   this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
-  //   this.sel_queue_servicetime = obj.serviceTime || '';
-  //   this.sel_queue_name = obj.name;
-  //   // this.queueReloaded = true;
+  // this.resetApi();
+  // // this.queueReloaded = false;
+  // this.sel_queue_id = obj.id;
+  // this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(obj.queueWaitingTime);
+  // this.sel_queue_servicetime = obj.serviceTime || '';
+  // this.sel_queue_name = obj.name;
+  // // this.queueReloaded = true;
   // }
-
   handleQueueSel(mod) {
     this.resetApi();
     if (mod === 'next') {
@@ -695,7 +715,6 @@ export class CheckInInnerComponent implements OnInit {
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
   }
-
   isCheckinenable() {
     if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
       return true;
@@ -706,7 +725,6 @@ export class CheckInInnerComponent implements OnInit {
   revealChk() {
     this.revealphonenumber = !this.revealphonenumber;
   }
-
   handleConsumerNote(vale) {
     this.consumerNote = vale;
   }
@@ -725,11 +743,9 @@ export class CheckInInnerComponent implements OnInit {
     const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
     const date2 = new Date(dt2);
-
     const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
     const datee2 = new Date(dte2);
-
     if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
       this.isFuturedate = true;
     } else {
@@ -744,30 +760,16 @@ export class CheckInInnerComponent implements OnInit {
     this.step = 3;
     this.main_heading = 'Family Members';
   }
-  // handleCheckinClicked() {
-  //   if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin' && !this.emailExist) {
-  //     this.addEmail().then(
-  //       () => {
-  //         this.confirmCheckin();
-  //       }
-
-  //     );
-  //   } else {
-  //     this.confirmCheckin();
-  //   }
-  // }
-
   handleCheckinClicked() {
-
     this.resetApi();
     let error = '';
     // if (this.step === 1) {
-    //  this.step = 2;
+    // this.step = 2;
     // } else
     if (this.step === 1) {
       if (this.sel_ser_det.isPrePayment && this.page_source !== 'provider_checkin') {
         /*if (this.paytype === '') {
-          error = 'Please select the payment mode';
+        error = 'Please select the payment mode';
         }*/
         this.paytype = 'DC'; // deleberately giving this value as per request from Manikandan.
       }
@@ -781,6 +783,21 @@ export class CheckInInnerComponent implements OnInit {
         this.api_error = error;
       }
     }
+  }
+  getCurrentLocation() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      if (navigator) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          _this.lat_lng.longitude = +pos.coords.longitude;
+          _this.lat_lng.latitude = +pos.coords.latitude;
+          resolve(_this.lat_lng);
+        },
+          error => {
+            reject();
+          });
+      }
+    });
   }
   saveCheckin() {
     const waitlistarr = [];
@@ -798,24 +815,27 @@ export class CheckInInnerComponent implements OnInit {
       'consumerNote': this.consumerNote,
       'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
       'coupons': this.selected_coupons
-      /*,
-        'revealPhone': this.revealphonenumber*/
     };
+    if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+      this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
+    }
     if (this.partySizeRequired) {
       this.holdenterd_partySize = this.enterd_partySize;
       post_Data['partySize'] = Number(this.holdenterd_partySize);
     }
 
-    if (this.page_source === 'provider_checkin') {
-      post_Data['consumer'] = { id: this.customer_data.id };
-      post_Data['ignorePrePayment'] = true;
-      this.addCheckInProvider(post_Data);
-    } else {
-      this.addCheckInConsumer(post_Data);
+    if (this.api_error === null) {
+      if (this.page_source === 'provider_checkin') {
+        post_Data['consumer'] = { id: this.customer_data.id };
+        post_Data['ignorePrePayment'] = true;
+        this.addCheckInProvider(post_Data);
+      } else {
+        this.addCheckInConsumer(post_Data);
+      }
     }
   }
-
   addCheckInConsumer(post_Data) {
+    post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
@@ -823,7 +843,12 @@ export class CheckInInnerComponent implements OnInit {
         let retUUID;
         Object.keys(retData).forEach(key => {
           retUUID = retData[key];
+          this.trackUuid = retData[key];
+          console.log(this.trackUuid);
         });
+        if (this.selectedMessage.files.length > 0) {
+          this.consumerNoteAndFileSave(retUUID);
+        }
         if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
           if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
             this.dialogRef.close();
@@ -835,7 +860,6 @@ export class CheckInInnerComponent implements OnInit {
               'accountId': this.account_id,
               'purpose': 'prePayment'
             };
-
             const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
               width: '50%',
               panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -845,57 +869,81 @@ export class CheckInInnerComponent implements OnInit {
                 'origin': 'consumer'
               }
             });
-            // this.shared_services.consumerPayment(payData)
-            //   .subscribe(pData => {
-            //     if (pData['response']) {
-            //       this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-            //       this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT');
-            //       setTimeout(() => {
-            //         this.document.getElementById('payuform').submit();
-            //       }, 2000);
-            //     } else {
-            //       this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
-            //       this.api_loading = false;
-            //     }
-            //   },
-            //     error => {
-            //       this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-            //       this.api_loading = false;
-            //     });
+
           } else {
             this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
             this.api_loading = false;
           }
         } else {
+          this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
+            (wailist: any) => {
+              this.activeWt = wailist;
+              this.liveTrack = true;
+              this.getCurrentLocation().then(
+                (lat_long: any) => {
+                  this.lat_lng = lat_long;
+                  this.saveLiveTrackInfo().then(
+                        (liveTInfo) => {
+                          console.log(liveTInfo);
+                          this.shareLoc = true;
+                          this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');                 }
+                  );
+                });
+              this.resetApi();
+            },
+            () => {
+            }
+          );
           if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-            this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+            // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
           } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
-            this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
+            // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
           }
-          setTimeout(() => {
-            // this.dialogRef.close('reloadlist');
-            this.returntoParent.emit('reloadlist');
-          }, projectConstants.TIMEOUT_DELAY);
-          this.router.navigate(['/']);
+          // setTimeout(() => {
+          // this.source['list'] = 'reloadlist';
+          // this.source['mode'] = this.page_source;
+          // // this.dialogRef.close('reloadlist');
+          // console.log(this.source);
+          // this.returntoParent.emit(this.source);
+          // }, projectConstants.TIMEOUT_DELAY);
+           //this.router.navigate(['/']);
         }
+       // this.router.navigate(['/']);
+        // setTimeout(() => {
 
+        //   this.liveTrack = true;
+        //   this.resetApi();
+        // }, 2000);
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
         });
-  }
 
+  }
   addCheckInProvider(post_Data) {
     this.api_loading = true;
     this.shared_services.addProviderCheckin(post_Data)
-      .subscribe(() => {
+      .subscribe((data) => {
+        console.log(data);
+        const retData = data;
+        let retUuid;
+        Object.keys(retData).forEach(key => {
+          retUuid = retData[key];
+          this.trackUuid = retData[key];
+          console.log(this.trackUuid);
+        });
+        if (this.selectedMessage.files.length > 0) {
+          this.consumerNoteAndFileSave(retUuid);
+        }
         if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
           this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
         }
         setTimeout(() => {
+          // this.source['list'] = 'reloadlist';
+          // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
           this.returntoParent.emit('reloadlist');
         }, projectConstants.TIMEOUT_DELAY);
@@ -956,13 +1004,11 @@ export class CheckInInnerComponent implements OnInit {
     caption = 'Confirm';
     return caption;
   }
-
   handleOneMemberSelect(id, name) {
     this.resetApi();
     this.waitlist_for = [];
     this.waitlist_for.push({ id: id, name: name });
   }
-
   handleMemberSelect(id, name, obj) {
     this.resetApi();
     if (this.waitlist_for.length === 0) {
@@ -1010,19 +1056,16 @@ export class CheckInInnerComponent implements OnInit {
     }
     return retval;
   }
-
   addMember() {
     this.resetApi();
     this.showCreateMember = true;
     // this.step = 4; // show add member section
     // this.main_heading = 'Add Family Member';
   }
-
   resetApi() {
     this.api_error = null;
     this.api_success = null;
   }
-
   handleReturnDetails(obj) {
     this.resetApi();
     this.addmemberobj.fname = obj.fname || '';
@@ -1087,7 +1130,6 @@ export class CheckInInnerComponent implements OnInit {
         error => {
           this.api_error = error.error;
         });
-
     } else {
       this.api_error = derror;
     }
@@ -1095,6 +1137,11 @@ export class CheckInInnerComponent implements OnInit {
   handleNote() {
     if (this.dispCustomernote) {
       this.dispCustomernote = false;
+      this.selectedMessage = {
+        files: [],
+        base64: [],
+        caption: []
+      };
     } else {
       this.dispCustomernote = true;
     }
@@ -1106,7 +1153,6 @@ export class CheckInInnerComponent implements OnInit {
       this.dispCustomerEmail = true;
     }
   }
-
   calculateDate(days) {
     this.resetApi();
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1157,27 +1203,6 @@ export class CheckInInnerComponent implements OnInit {
       return false;
     }
   }
-
-  // disableMinus(){
-
-  //   const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  // const seldate = new Date(moment(seldate1,'YYYY-MM-DD HH:mm').toDate());
-  // const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
-  // const strtDt = new Date(new Date(this.hold_sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }));
-  // // const strtDt = new Date(strtDate);
-  // const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
-  // // if (strtDt.getTime() >= seldate.getTime()) {
-  //   alert('selecttdate'+selecttdate);
-  //   alert('startdate'+startdate);
-  // if (startdate >= selecttdate) {
-  // return true;
-  // } else {
-  // return false;
-  // }
-
-
-  // }
-
   getPartysizeDetails(domain, subdomain) {
     this.shared_services.getPartysizeDetails(domain, subdomain)
       .subscribe(data => {
@@ -1196,7 +1221,6 @@ export class CheckInInnerComponent implements OnInit {
         }
       },
         () => {
-
         });
   }
   checkPartySize(pVal) {
@@ -1220,7 +1244,6 @@ export class CheckInInnerComponent implements OnInit {
     }
     return errmsg;
   }
-
   clearerrorParty() {
     this.partyapi_error = '';
   }
@@ -1255,7 +1278,6 @@ export class CheckInInnerComponent implements OnInit {
     this.api_cp_error = null;
   }
   applyCoupons(jCoupon) {
-
     this.api_cp_error = null;
     this.couponvalid = true;
     const couponInfo = {
@@ -1291,7 +1313,6 @@ export class CheckInInnerComponent implements OnInit {
       this.api_cp_error = 'Enter a Coupon';
     }
   }
-
   getProviderDepart(id) {
     this.shared_services.getProviderDept(id).
       subscribe(data => {
@@ -1312,7 +1333,6 @@ export class CheckInInnerComponent implements OnInit {
         }
       });
   }
-
   handleDeptSelction(obj) {
     this.api_error = '';
     this.selected_dept = obj;
@@ -1344,7 +1364,6 @@ export class CheckInInnerComponent implements OnInit {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT');
     }
   }
-
   getServicebyLocationId(locid, pdate) {
     this.api_loading1 = true;
     this.resetApi();
@@ -1365,5 +1384,162 @@ export class CheckInInnerComponent implements OnInit {
           this.api_loading1 = false;
           this.sel_ser = '';
         });
+  }
+  getTravelMod(event) {
+    this.trackMode = false;
+    this.travelMode = event;
+    if (event === 'DRIVING') {
+      this.driving = true;
+      this.walking = false;
+      this.bicycling = false;
+    } else if (event === 'WALKING') {
+      this.walking = true;
+      this.driving = false;
+      this.bicycling = false;
+    } else {
+      this.walking = false;
+      this.driving = false;
+      this.bicycling = true;
+    }
+    this.saveLiveTrackInfo().then(
+      data => {
+        this.api_loading = true;
+        this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+      },
+      error => {
+        this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        this.api_loading = false;
+      });
+  }
+  getNotifyTime(time) {
+    this.notifyTime = time;
+  }
+
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.sharedFunctionobj.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.sharedFunctionobj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+
+  deleteTempImage(index) {
+    this.selectedMessage.files.splice(index, 1);
+  }
+
+  consumerNoteAndFileSave(uuid) {
+    const dataToSend: FormData = new FormData();
+    dataToSend.append('message', this.consumerNote);
+    const captions = {};
+    let i = 0;
+    if (this.selectedMessage) {
+      for (const pic of this.selectedMessage.files) {
+        dataToSend.append('attachments', pic, pic['name']);
+        captions[i] = 'caption';
+        i++;
+      }
+    }
+    const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+    dataToSend.append('captions', blobPropdata);
+    this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+      dataToSend)
+      .subscribe(
+        () => {
+        },
+        error => {
+          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+        }
+      );
+  }
+  locationEnableDisable(event) {
+    console.log(event);
+    if (event.checked) {
+      this.getCurrentLocation();
+    }
+  }
+
+  notifyEvent(event) {
+    if (event.checked) {
+      this.notifyTime = 'ONEHOUR';
+    } else {
+      this.notifyTime = 'AFTERSTART';
+    }
+  }
+
+  saveLiveTrackInfo() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const post_Data = {
+        'jaldeeGeoLocation': {
+          'latitude': _this.lat_lng.latitude,
+          'longitude': _this.lat_lng.longitude
+        },
+        'travelMode': _this.travelMode,
+        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'jaldeeStartTimeMod': _this.notifyTime,
+        'shareLocStatus': _this.shareLoc
+      };
+      _this.shared_services.addLiveTrackDetails(_this.trackUuid, _this.account_id, post_Data)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+  trackClose(status) {
+ if(status === 'livetrack'){
+  this.dialogRef.close();
+  this.router.navigate(['/']);
+
+
+ }
+  }
+   saveLiveTrackDetails() {
+    this.resetApi();
+    const post_Data = {
+      'jaldeeGeoLocation': {
+        'latitude': this.lat_lng.latitude,
+        'longitude': this.lat_lng.longitude
+      },
+      'travelMode': this.travelMode,
+      'waitlistPhonenumber': this.consumerPhoneNo,
+      'jaldeeStartTimeMod': this.notifyTime,
+      'shareLocStatus': this.shareLoc
+    };
+    this.saveLiveTrackInfo().then(
+      data => {
+        if (data) {
+          this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+        }
+        setTimeout(() => {
+          
+          // this.source['list'] = 'reloadlist';
+          // this.source['mode'] = this.page_source;
+          // this.dialogRef.close('reloadlist');
+          //this.returntoParent.emit('reloadlist');
+          this.trackClose('livetrack');
+        }, projectConstants.TIMEOUT_DELAY_LARGE10);
+        
+      },
+      error => {
+        this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        this.api_loading = false;
+      });
   }
 }

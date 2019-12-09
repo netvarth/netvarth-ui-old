@@ -29,7 +29,7 @@ export class ProviderSkinsComponent implements OnInit {
   }
   ngOnInit() {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
   }
   skinSelected(skin) {

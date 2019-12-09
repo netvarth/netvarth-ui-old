@@ -55,7 +55,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     }
 
     getBusinessdetFromLocalstorage() {
-        const bdetails = this.shared_functions.getitemfromLocalStorage('ynwbp');
+        const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
         if (bdetails) {
           this.bname = bdetails.bn || '';
           this.blogo = bdetails.logo || '';
@@ -101,7 +101,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     }
     setFilterForApi(layout) {
         const api_filter = {};
-        layout.statusBoardFor.forEach(element => {
+        layout.queueSetFor.forEach(element => {
             if (element.type === 'SERVICE') {
                 api_filter['service-eq'] = element.id[0];
             } else if (element.type === 'QUEUE') {
@@ -109,6 +109,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
             } else {
                 api_filter['department-eq'] = element.id[0];
             }
+            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
         });
         return api_filter;
     }

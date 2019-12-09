@@ -51,7 +51,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.initSpecializations();
-        const user = this.shared_functions.getitemfromLocalStorage('ynw-user');
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     // learnmore_clicked(parent, child) {}

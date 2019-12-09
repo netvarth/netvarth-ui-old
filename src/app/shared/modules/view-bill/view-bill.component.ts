@@ -109,7 +109,7 @@ export class ViewBillComponent implements OnInit, OnChanges {
     if (this.bill_data['passedProvname']) {
       this.bname = this.bill_data['passedProvname'];
     } else {
-      const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
+      const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
       if (bdetails) {
         this.bname = bdetails.bn || '';
       }

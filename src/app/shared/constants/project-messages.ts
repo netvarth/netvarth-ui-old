@@ -49,6 +49,14 @@ export const Messages = {
   'HOLIDAY_ETIME': 'Closing time should be greater than Start time',
   'HOLIDAY_LISTEMPTY': 'No scheduled holidays',
 
+  // notifications
+  'GENRL_NOTIFICATION_MSG': 'Inorder to send and receive notifications, the [provider] has to purchase atleast one of the Jaldee Messaging ADD-ON.',
+  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Sent notifications to your [customer]s!',
+  'FRM_LEVEL_PROVIDER_NOTIFICATION_MSG': 'Get notifications from [customer]!',
+  'CUSTOMER_NAME': '[customer]',
+  'PROVIDER_NAME': '[provider]',
+  'FRM_LVL_CUSTMR_NOTIFY_MODE': 'Specify the mode of channel through which the notification should be send to [customer]s.',
+
   // Common
   'API_ERROR': 'Jaldee.com is currently experiencing technical difficulties. Please try again later or email us at support@jaldee.com',
   'NETWORK_ERROR': 'Network error. Please check your internet connectivity',
@@ -189,6 +197,7 @@ export const Messages = {
   'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CASH_PAYMENT': 'Visit provider to pay by cash',
   'TOKEN_GENERATION': 'Token has been generated successfully',
+  'ADDNOTE_ERROR': 'Please add note',
 
 
   // Consumer Dashboard
@@ -490,7 +499,7 @@ export const Messages = {
   'SERV_TIME_WINDOW_CAP': 'Queue',
   'ENTER_PARTY_SIZE': 'Enter Party Size',
   'HAVE_NOTE_CLICK_HERE_CAP': 'If you have a note, Click here.',
-  'NOT_ACCEPTED_THIS_DATE_CAP': 'for this service is not available at the moment. Please try for a different time/date',
+  'NOT_ACCEPTED_THIS_DATE_CAP': ' for this service is not available at the moment. Please try for a different time or date',
   'NEEDS_PREPAYMENT_FOR_CAP': 'This service needs prepayment for',
   'PRE_PAYMENT_AMNT_CAP': 'Pre Payment Amount:',
   'NO_PAY_MODES_AVAIL_CAP': 'Sorry no payment modes available',
@@ -961,7 +970,7 @@ export const Messages = {
 
   // App-ynw_provider-components-provider-reimburse-report
   'REIMBUSE_REPORT_CAP': 'Reimbursement Reports',
-  'REPORT_ID_CAP': 'Report Id',
+  'REPORT_ID_CAP': 'Report',
   'TIME_PERIOD_CAP': 'Time Period',
   'COUP_USE_CAP': 'Coupons Used',
   'J_ACC_CAP': 'Jaldee Bank',
@@ -1049,7 +1058,7 @@ export const Messages = {
 
   // App-ynw_provider-components-view-report
   'REPORT_PERIOD_DATE_CAP': 'Period/Date',
-  'REPORT_COUPON_AMT_CAP': 'Coupon Amount',
+  'REPORT_COUPON_AMT_CAP': 'Jaldee coupon reimbursable',
   'REPORT_REIMBURSE_AMT_CAP': 'Reimbursable Amount from Jaldee',
   'REPORT_JALDEE_ACCT_CAP': 'Jaldee Financial Account',
   'REPORT_CONSUMER_CAP': 'Consumer',
@@ -1103,7 +1112,7 @@ export const Messages = {
   'WIZ_VIEW_IN_PUBLIC_SEARCH_CAP': 's will view this in Jaldee Online',
   'WIZ_PROFILE_SUMMARY_CAP': 'Profile Summary',
   'WIZ_NEXT_CAP': 'Next',
-  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP': 'A default service has been created for your convenience which can be edited here. You can also add more services or edit your existing services and also set up your tax and prepayment options for the service in Settings > Check-in > Services, anytime after you complete the wizard.',
+  'WIZ_ADD_MORE_SERVICE_IN_THE_SETT_CAP': 'A default service has been created for your convenience which can be edited here. You can also add more services or edit your existing services and also set up your tax and prepayment options for the service in Settings > Q Manager > Services, anytime after you complete the wizard.',
   'WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP': 'Enter your business hours and add the schedule here.',
   'WIZ_LOCATION_CAP': 'Location',
   'WIZ_ADD_MORE_LOC_IN_THE_SETT_CAP': 'You can add more locations in the Settings -> Location, after you create your profile.',
@@ -1281,12 +1290,12 @@ export const Messages = {
   'FRM_LEVEL_PROFILE_SEARCH_MSG': 'Setup and maintain your public profile here.',
   // 'FRM_LEVEL_PROFILE_MSG' : 'Setup your profile name to help [customer]s identify and understand you. Summarize overall content by adding your location, working hours etc...',
   'FRM_LEVEL_PROFILE_MSG': 'Setup and maintain your public profile here.',
-  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable “Online Check-in” and also book a future date for [customer]\'s check-in here.',
+  'FRM_LEVEL_WAITLIST_MSG': 'Manage your working hours, wait-time calculation, locations, services, service-time window and waitlist here. Enable "Online Check-in" and also book a future date for [customer]\'s check-in here.',
   'FRM_LEVEL_LIC_MSG': 'Manage and upgrade your license package.',
   'FRM_LEVEL_PAY_MSG': 'View and edit the payment and tax settings.',
   'FRM_LEVEL_SELF_MSG': 'Your [customer]s won\'t be able to make online payments and you cannot collect prepayment for services.',
-  'FRM_ADDINFO_MSG': 'Add more details of your business for your [customer] to see',
-  'FRM_SEARCH_MSG': 'Turn it on to enable your profile’s visibility in [customer]\'s search result.',
+  'FRM_ADDINFO_MSG': 'Add more details to your online profile',
+  'FRM_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_BILLING_MSG': 'Create items, discounts and coupons here.',
   'FRM_LEVEL_COUPON_MSG': 'View all the coupons available here.',
   'FRM_LEVEL_MISC_MSG': 'Other features can be mentioned here',
@@ -1295,7 +1304,7 @@ export const Messages = {
   'FRM_LEVEL_PUBLIC_SEARCH_MSG': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result. ',
   'FRM_LEVEL_PUBLIC_SEARCHH_MSG': 'Unless you enable, the [customer]s won\'t be able to view your profile in their search result. Turning off Public Search will not restrict consumers from online check-ins.',
   'FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF': 'Your profile is now visible to [customer]s in jaldee.com',
-  'FRM_LEVEL_PUBLIC_SEARCH': 'Turn it on to enable your profile’s visibility in [customer]\'s search result.',
+  'FRM_LEVEL_PUBLIC_SEARCH': 'Turn it on to enable your profile\'s visibility in [customer]\'s search result.',
   'FRM_LEVEL_ADWORDS_MSG': 'Manage relevant keywords to increase visibility to your [customer]s.',
   'FRM_LEVEL_PROFILE_NAME_CAP': 'Manage profile name and basic information of you or your business here. Profile Name can be either the individual\'s name or the business name.',
   'FRM_LEVEL_LOC_MSG': 'Manage your business location details here.',
@@ -1319,6 +1328,7 @@ export const Messages = {
   // form-level-provider-payment-settings
   'FRM_LEVEL_PAYMENT_SETTINGS_MSG': 'Select the payment mode here. Enable online payments to settle your transactions online. You can also select different payment gateways such as Paytm/CC/DC/Net Banking/UPI for transaction process.',
   'FRM_LEVEL_TAX_SETTINGS_MSG': 'Set up and turn on tax configuration.',
+  'JALDEE_PAY_MSG': 'Enable Jaldee Pay to accept online payments from [customer]s',
 
   // form-level-provider-license and invoice
   'FRM_LEVEL_PROVIDER_LICE_MSG': 'Manage the license history, its usage, and payment history and also upgrade your license here.',
@@ -1397,22 +1407,29 @@ export const Messages = {
   'HOME_SERVICE_HEADING': 'Home Service',
   'JDN_FUL_CAP': 'Jaldee Discount Network',
   'JDN_CAP': 'JDN',
-  'DISPLAYBOARD_HEADING': 'Displayboard',
+  'DISPLAYBOARD_HEADING': 'Queue Statusboard',
   'DISPLAYBOARD__INHELP': 'display help',
   'QSET_ADD': 'Q-set added successfully',
   'QSET_UPDATE': 'Q-set updated successfully',
-  'DISPLAYBOARD_ADD': 'Displayboard added successfully',
-  'DISPLAYBOARD_UPDATE': 'Displayboard updated successfully',
+  'DISPLAYBOARD_ADD': 'Queue Statusboard added successfully',
+  'DISPLAYBOARD_UPDATE': 'Queue Statusboard updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
-  'DISPLAYBOARDS': 'Displayboards',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
+  'MANAGE_LABELS': 'Manage Labels',
+  'ADD_LABEL': 'New Label',
 
   // JDN
   'JDN_CREATED': 'JDN enabled successfully',
   'JDN_UPDATED': 'JDN updated successfully',
   'JDN_DISABLED': 'JDN disabled successfully',
   'SC_CREATED': 'Sales Channel Code Added successfully',
+  'SCNOTFOUND': 'Sales Channel not found',
   'SUBSCRIBE': 'Subscribe',
-  'UNSUBSCRIBE': 'Unsubscribe'
+  'UNSUBSCRIBE': 'Unsubscribe',
+  'BRANCHUSER_ADDED': 'Branch user created successfully',
+  'JOINCORP_SUCCESS': 'You joined as a corporate',
+  'CREATECORP_SUCCESS': 'Corporate created successfully',
+  // live track
+  'TRACKINGENABLED' : 'Tracking Enabled successfully',
+  'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully'
 };
-

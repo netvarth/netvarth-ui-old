@@ -20,7 +20,7 @@
                 <div class="card p0">
                     <span class="b-link" (click)="gotoNotifications()">
                         <h2>Notifications</h2>
-                        <span class="form-level-settings">Notification settings for provider <a
+                        <span class="form-level-settings"> {{cust_domain_name}} and {{provider_domain_name}} notification settings<a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('notifications', $event)">Learn
                                 More</a></span>
@@ -38,24 +38,35 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoLabels()">
                         <h2>Custom fields / Labels</h2>
-                        <span class="form-level-settings">Manage your labels here.<a
+                        <span class="form-level-settings">Add or manage your labels here.<a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('labels', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
-            </div> -->
+            </div>
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotosaleschannel()">
                         <h2>Sales Channel</h2>
-                        <span class="form-level-settings">Notification settings for provider <a
+                        <span class="form-level-settings">Sales channel options <a
                                 class="learnmore-pointer" id="customer-help"
                                 (click)="learnmore_clicked('saleschannel', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="accountType!='BRANCH_SP' && isCorp && isMultilevel">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotocorporate()">
+                        <h2>Corporate Settings</h2>
+                        <span class="form-level-settings">Create or join corporate account<a
+                                class="learnmore-pointer" id="customer-help"
+                                (click)="learnmore_clicked('corporate', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>
@@ -66,6 +77,16 @@
                         <h2>Themes</h2>
                         <span class="form-level-settings">Themes for your home page <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('themes', $event)">Learn
+                                More</a></span>
+                    </span>
+                </div>
+            </div>
+            <div class="row" *ngIf="accountType=='BRANCH' && isMultilevel">
+                <div class="card p0">
+                    <span class="b-link" (click)="gotobranchsps()">
+                        <h2>Doctors</h2>
+                        <span class="form-level-settings">Create or manage doctors<a class="learnmore-pointer"
+                                id="customer-help" (click)="learnmore_clicked('branchsps', $event)">Learn
                                 More</a></span>
                     </span>
                 </div>

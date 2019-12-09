@@ -225,8 +225,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getCheckinDetails();
   }
   ngOnInit() {
-    this.isCheckin = this.sharedfunctionObj.getitemfromLocalStorage('isCheckin');
-    const bdetails = this.sharedfunctionObj.getitemfromLocalStorage('ynwbp');
+    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -398,7 +398,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   //   return errMsgs;
   // }
   getDomainSubdomainSettings() {
-    const user_data = this.sharedfunctionObj.getitemfromLocalStorage('ynw-user');
+    const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {
@@ -701,7 +701,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       } else if (this.isItem) {
         type = 'Items';
       }
-      this.itemServiceSelected(type, name.value)
+      this.itemServiceSelected(type, name.value);
     }
   }
   /**
@@ -1253,7 +1253,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
@@ -1286,7 +1286,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       if (item.discount && item.discount.length > 0) {
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
-        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+        bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
         bill_html += '	</tr>';
         bill_html += '	<tr style="font-weight:bold">';
         bill_html += '<td style="text-align:right" colspan="2">Sub Total</td>';
@@ -1304,6 +1304,18 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '	</tr>                                                                           ';
     bill_html += '</table>';
     bill_html += '	</td></tr>';
+
+    if (this.bill_data.jdn && this.bill_data.jdn.discount) {
+      bill_html += '	<tr><td>';
+      bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
+      bill_html += '	<tr style="color:#aaa">';
+      bill_html += '<td width="70%" style="text-align:right">JDN</td>';
+      bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(this.bill_data.jdn.discount).toFixed(2) + '</td>';
+      bill_html += '	</tr>                                                                           ';
+      bill_html += '</table>';
+      bill_html += '	</td></tr>';
+    }
+
     // List<Discount> billDisounts = mapper.readValue(bill.getDiscount().toString(), new TypeReference<List<Discount>>(){});
     for (const billDiscount of this.bill_data.discount) {
       bill_html += '	<tr><td>';
@@ -1335,7 +1347,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         bill_html += '	<tr><td>';
         bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
         bill_html += '	<tr style="color:#aaa">';
-        bill_html += '<td width="70%" style="text-align:right">' + key + '</td>';
+        bill_html += '<td width="70%" style="text-align:right">' + key + ' (Jaldee Coupon)</td>';
         bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
         bill_html += '	</tr>                                                                           ';
         bill_html += '</table>';

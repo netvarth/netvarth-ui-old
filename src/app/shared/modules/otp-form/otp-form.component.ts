@@ -31,7 +31,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 
   otp_form: FormGroup;
   email_form: FormGroup;
-
+  buttonclicked = false;
   email_otp_req = false;
   otp_email = null;
   message;
@@ -42,7 +42,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   cronHandle: Subscription;
   refreshTime = 30;
   otp_mobile = null;
-
+  @Input() actionstarted;
   @Input() submitdata;
   @Input() type;
   @Input() resendemailotpsuccess;
@@ -75,11 +75,13 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
+    this.buttonclicked = this.actionstarted;
     if (this.checking_email_otpsuccess && this.resendemailotpsuccess) {
       this.email_otp_req = false;
       this.showOTPEmailContainer = false;
       this.showOTPContainer = true;
       this.otp_email = null;
+      this.buttonclicked = false;
     }
   }
   resetCounter(val) {
@@ -95,6 +97,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   doOnOtpSubmit(value) {
+    this.buttonclicked = true;
     this.retonOtpSubmit.emit(value);
   }
 

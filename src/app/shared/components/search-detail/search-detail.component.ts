@@ -145,7 +145,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   refTooltip = '';
   bNameTooltip = '';
   jdnTooltip = '';
- couponTooltip = '';
+  couponTooltip = '';
   estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   hideRefineifOneresultchk = false;
@@ -175,6 +175,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     private activaterouterobj: ActivatedRoute,
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
+    public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
     private dialog: MatDialog) {
     this.onResize();
@@ -199,12 +200,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.setEnvironment(false);
           });
       });
-    const activeUser = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const activeUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
     this.nosearch_results = false;
-    this.retscrolltop = this.shared_functions.getitemfromLocalStorage('sctop') || 0;
+    this.retscrolltop = this.shared_functions.getitemFromGroupStorage('sctop') || 0;
     this.shared_functions.setitemonLocalStorage('sctop', 0);
   }
   stringToInt(stringVal) {
@@ -1346,9 +1347,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (textstr !== '') {
       textstr = ' ' + textstr;
     }
-    const userobj = this.shared_functions.getitemfromLocalStorage('ynw-user');
+    const userobj = this.shared_functions.getitemFromGroupStorage('ynw-user');
     let testUser = false;
-    if (userobj !== null) {
+    if (userobj) {
       const phno = (userobj.primaryPhoneNumber.toString());
       if (phno.startsWith('55')) {
         testUser = true;
@@ -1593,6 +1594,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      //this.router.navigate(['/']);
     });
   }
   checkProvider(type) {
@@ -1603,7 +1606,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       // const arr = obj.id.split('-');
       const providforDetails = obj.fields.unique_id;
       // check whether logged in as consumer
-      this.shared_functions.setitemonLocalStorage('sctop', this.scrolltop);
+      this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
@@ -1846,9 +1849,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             });
         });
   }
-
-  openJdn(obj){
-
+  openJdn(obj) {
     const s3id = obj.fields.unique_id;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
     this.shared_functions.getS3Url('provider')
@@ -1866,10 +1867,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 }
               });
               this.jdndialogRef.afterClosed().subscribe(result => {
-                
               });
             });
         });
-
   }
 }

@@ -2,104 +2,149 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content loc-list">
+    <div class="content loc-list displyboard">
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
-                        <div class="lbl col-md-12 no padding">
-                            <div class="cl1" *ngIf="actionparam === 'view'">
-                                <span class="editbt" (click)="editlayout(layoutData.id)"></span>
-                                <div class="ot-it">
-                                    <h3>{{layoutData.displayName | capitalizeFirst}}</h3>
-                                    <div class="c-ot m0">
-                                        <!-- <div class="item desfont" *ngIf="layoutData.displayName">
+                        <div class="lbl col-md-12 col-xs-12 col-sm-12 no-padding">
+                            <ul class="nav jd-custom-nav stat-brd"  *ngIf="showMode == 'DBOARD' && qset_list.length!=0">                                                               
+                                <li class="dropdown notifications-menu pull-right" (click)="addQSet()">
+                                    <mat-panel-description class="acc-plus-btn">
+                                        <button mat-icon-button>
+                                            <mat-icon>{{add_circle_outline}}</mat-icon>
+                                        </button>
+                                    </mat-panel-description>
+                                </li>
+                                <li class="dropdown notifications-menu pull-right">
+                                    <a class="title link" (click)="qSetListClicked()">Queue Selection Criterias</a>
+                                </li>
+                            </ul>
+                            <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="showMode == 'DBOARD'">
+                                <div class="cl1" *ngIf="actionparam === 'view'">
+                                    <span class="editbt" (click)="editlayout(layoutData.id)"></span>
+                                    <div class="ot-it">
+                                        <h3>{{layoutData.displayName | capitalizeFirst}}</h3>
+                                        <div class="c-ot m0">
+                                            <!-- <div class="item desfont" *ngIf="layoutData.displayName">
                                             <span class="ttle">Display Name</span>
                                             <span>{{layoutData.displayName | capitalizeFirst}}</span>
                                         </div> -->
-                                        <div class="item desfont" *ngIf="layoutData.layout">
+                                            <div class="item desfont" *ngIf="layoutData.layout">
                                                 <span class="ttle">Layout</span>
                                                 <span>{{(getLayout(layoutData.layout)).displayName}}</span>
                                             </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-12" *ngIf="actionparam !== 'view'">
-                                <form novalidate (keyup)="resetApiErrors()"
-                                    class="ynw-common-form-nm wiz-service labelForm serviceform">
-                                    <ng-container>
-                                        <!-- <div class="form-group">
+                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="actionparam !== 'view'">                                                                       
+                                    <form novalidate (keyup)="resetApiErrors()"
+                                        class="ynw-common-form-nm wiz-service labelForm serviceform">
+                                        <ng-container>
+                                            <!-- <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="Name"
                                                     placeholder="Name" [(ngModel)]="name"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div> -->
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input matInput type="text" class="form-control" id="displayName"
-                                                    placeholder="Display Name" [(ngModel)]="displayName"
-                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <mat-select placeholder="Choose Queue-Set" id="layout" 
-                                                (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
-                                                    [ngModelOptions]="{standalone: true}">
-                                                    <mat-option *ngFor="let layout of boardLayouts"
-                                                        [value]="layout">
-                                                        {{ layout.displayName }}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-12" *ngIf="qset_list.length!==0">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-12 card">                                    
-                                                        <div *ngFor = "let row of createRange(boardRows)">
-                                                            <div *ngFor = "let col of createRange(boardCols)" class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
-                                                                <mat-form-field>
-                                                                    <mat-select placeholder="Choose Queue-Set"                                                                     
-                                                                    [(ngModel)]="boardSelectedItems[row + '_' + col]" [ngModelOptions]="{standalone: true}" (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)" >
-                                                                        <mat-option [value]="qset.id" *ngFor="let qset of qset_list"
-                                                                            >
-                                                                            {{qset.displayName |
+                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Choose the queue statusboard layout"
+                                                        id="layout" (selectionChange)="handleLayout(layout)"
+                                                        [(ngModel)]="layout" [ngModelOptions]="{standalone: true}">
+                                                        <mat-option *ngFor="let layout of boardLayouts"
+                                                            [value]="layout">
+                                                            {{ layout.displayName }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="displayName"
+                                                        placeholder="Enter title *" [(ngModel)]="displayName"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="card no-padding mgn-up-20" *ngIf="qset_list.length>0">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12">                                                            
+                                                            <div *ngFor="let row of createRange(boardRows)">
+                                                                <div *ngFor="let col of createRange(boardCols)"
+                                                                    class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
+                                                                    <mat-form-field>
+                                                                        <mat-select placeholder="Choose Queue Selection Criteria"
+                                                                            [(ngModel)]="boardSelectedItems[row + '_' + col]"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
+                                                                            <mat-option [value]="qset.id"
+                                                                                *ngFor="let qset of qset_list">
+                                                                                {{qset.displayName |
                                                                                 capitalizeFirst}}
-                                                                        </mat-option>
-                                                                    </mat-select>
-                                                                </mat-form-field>
+                                                                            </mat-option>
+                                                                        </mat-select>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div class="clearfix"></div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding no-qset" *ngIf="qset_list.length==0">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-12 card qset_add"> To create a queue
+                                                            statusboard,
+                                                            first a queue selection criteria has to be created <span class="cs-btn bt3"
+                                                            (click)="addQSet()">Create Now </span>
                                                             <div class="clearfix"></div>
-                                                        </div>                                                                                                                                                                            
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12" *ngIf="qset_list.length==0">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-12 card qset_add"> NO Q-set found                                                                                                      
-                                                            <div class="clearfix"></div>                                                                                                                                                                                                                                  
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 actiondiv labelsave mgn-up-20" 
+                                                *ngIf="qset_list.length >0">
+                                                <button (click)="onCancel()" type="button"
+                                                    class="cs-btn bt2">{{cancel_btn}}</button>
+                                                &nbsp;
+                                                <button (click)="onSubmit()" type="button" 
+                                                    class="cs-btn bt1">{{button_title}}</button>
                                             </div>
-                                        </div>
-                                        <div class="actiondiv labelsave" style="margin-top: 150px;">
-                                            <button (click)="onCancel()" type="button"
-                                                class="cs-btn bt2">{{cancel_btn}}</button>
-                                            &nbsp;
-                                            <button (click)="onSubmit()" type="button" mat-button
-                                                [disabled]="savedisabled" class="cs-btn bt2">{{button_title}}</button>
-                                        </div>
-                                        <br />
-                                    </ng-container>
-                                </form>
+                                        </ng-container>
+                                    </form>                                    
+                                </div>
                             </div>
+                            <!-- <div class="col-xs-12 col-sm-12 col-md-12" *ngIf="showMode = 'QSETS'">
+
+                            </div> -->
+                            <!-- <ul class="nav jd-custom-nav stat-brd">
+                                    <li class="dropdown notifications-menu pull-left">
+                                        <div class="title">Queue-Selection Criteria</div>
+                                    </li>
+                                    <li class="dropdown notifications-menu pull-left" (click)="addQSet()">
+                                        <mat-panel-description class="acc-plus-btn">
+                                            <button mat-icon-button>
+                                                <mat-icon>{{add_circle_outline}}</mat-icon>
+                                            </button>
+                                        </mat-panel-description>
+                                    </li>
+                                </ul> -->
+                            <!--Q Selection criteria starts here-->
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSETS'">
+                                <app-displayboard-qset (idSelected)="qSetSelected($event)" [source]="source"></app-displayboard-qset>
+                            </div>
+                            <div class="col-md-12 co-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSET'">
+                                <app-displayboard-qset-detail [action]="qsetAction" [qsetId]="qsetId" [source]="source" (idSelected)="qSetSelected($event)">
+                                </app-displayboard-qset-detail>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>

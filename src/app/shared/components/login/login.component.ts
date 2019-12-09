@@ -132,9 +132,11 @@ export class LoginComponent implements OnInit {
       'password': data.password,
       'mUniqueId': null
     };
+    this.shared_functions.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
     if (this.data.type === 'provider') {
       post_data.mUniqueId = localStorage.getItem('mUniqueId');
+      this.shared_functions.clearSessionStorage();
       this.shared_functions.providerLogin(post_data)
         .then(
           () => {

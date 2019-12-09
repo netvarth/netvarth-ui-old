@@ -7,6 +7,7 @@ import { BusinessPageComponent } from './shared/components/business-page/busines
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
 import { HomeAppComponent } from './shared/components/home-app/home-app.component';
+import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent},
     {
@@ -20,12 +21,16 @@ const routes: Routes = [
     { path: 'not-found', loadChildren: './shared/modules/not-found/not-found.module#NotFoundModule' },
     { path: 'searchdetail', loadChildren: './shared/components/search-detail/search-detail.module#SearchDetailModule' },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
-    { path: 'terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule'},
-    { path: 'provider-home/terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule'},
+    { path: 'terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule' },
+    { path: 'provider-home/terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule' },
+    {
+        path: 'displayboard/:id', loadChildren: './business/modules/displayboard-content/displayboard-content.module#DisplayboardLayoutContentModule',
+        canActivate: [AuthGuardProvider]
+    },
     { path: 'home/:id', loadChildren: './shared/modules/about-jaldee/about-jaldee.module#AboutJaldeeModule' },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent},
-    { path: '**', redirectTo: 'not-found' }
+      { path: 'manage/:id', component: ManageProviderComponent}
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes, {
