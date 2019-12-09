@@ -91,8 +91,6 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    // alert('data is'+JSON.stringify(this.datas));
-    // alert(JSON.stringify(this.invoice));
     const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';

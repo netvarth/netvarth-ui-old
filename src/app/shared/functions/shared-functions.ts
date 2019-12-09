@@ -1307,7 +1307,7 @@ export class SharedFunctions {
     const lookup = new Set();
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
   }
-  getLiveTrackStatusMessage(liveTrackInfo, businessName) {
+  getLiveTrackStatusMessage(liveTrackInfo, businessName, mode) {
     if (liveTrackInfo.jaldeeDistanceTime) {
       const distance = liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.distance;
       const unit = projectConstants.LIVETRACK_CONST[liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.unit];
@@ -1315,10 +1315,10 @@ export class SharedFunctions {
       const hours = Math.floor(travelTime / 60);
       const minutes = travelTime % 60;
       let message = '';
-      if (distance === 0 && hours === 0 && minutes ===  0) {
-        message += '';
-      } else if (distance === 0 && (hours !== 0 || minutes !== 0)) {
-        message += 'It will take around';
+      if (distance === 0) {
+        message += 'You are close to ' + businessName;
+      }  else {
+        message += 'From your current location, you are ' + distance + ' ' + unit + ' away and will take around';
         if (hours !== 0) {
           message += ' ' + hours;
           if (hours === 1) {
@@ -1335,24 +1335,12 @@ export class SharedFunctions {
             message += ' mins';
           }
         }
-        message += ' to reach ' + businessName;
-      } else {
-        message += 'You are ' + distance + ' ' + unit + ' away and will take around';
-        if (hours !== 0) {
-          message += ' ' + hours;
-          if (hours === 1) {
-            message += ' hr';
-          } else {
-            message += ' hrs';
-          }
-        }
-        if (minutes !== 0) {
-          message += ' ' + minutes;
-          if (minutes === 1) {
-            message += ' min';
-          } else {
-            message += ' mins';
-          }
+        if (mode === 'WALKING') {
+          message += ' walk';
+        } else if (mode === 'DRIVING') {
+          message += ' drive';
+        } else if (mode === 'BICYCLING') {
+          message += ' ride';
         }
         message += ' to reach ' + businessName;
       }

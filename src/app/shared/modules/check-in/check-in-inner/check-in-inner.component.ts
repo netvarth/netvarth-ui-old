@@ -788,7 +788,6 @@ export class CheckInInnerComponent implements OnInit {
     const _this = this;
     return new Promise(function (resolve, reject) {
       if (navigator) {
-        alert(_this.lat_lng);
         navigator.geolocation.getCurrentPosition(pos => {
           _this.lat_lng.longitude = +pos.coords.longitude;
           _this.lat_lng.latitude = +pos.coords.latitude;
@@ -887,9 +886,7 @@ export class CheckInInnerComponent implements OnInit {
                         (liveTInfo) => {
                           console.log(liveTInfo);
                           this.shareLoc = true;
-                          this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName);
-                          console.log(this.liveTrackMessage);
-                        }
+                          this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');                 }
                   );
                 });
               this.resetApi();
@@ -1403,6 +1400,15 @@ export class CheckInInnerComponent implements OnInit {
       this.driving = false;
       this.bicycling = true;
     }
+    this.saveLiveTrackInfo().then(
+      data => {
+        this.api_loading = true;
+        this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+      },
+      error => {
+        this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        this.api_loading = false;
+      });
   }
   getNotifyTime(time) {
     this.notifyTime = time;
@@ -1510,7 +1516,9 @@ export class CheckInInnerComponent implements OnInit {
     };
     this.saveLiveTrackInfo().then(
       data => {
-        this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName);;
+        if (data) {
+          this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+        }
         setTimeout(() => {
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;

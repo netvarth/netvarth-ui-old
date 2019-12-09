@@ -474,7 +474,6 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
   registerCustomer() {
     let curmobile = '';
     if (this.showregmobile) {
-      // alert('ddd');
       if (!this.numberpattern.test(this.reg_mobile)) {
         if (!this.reg_mobile) {
           this.shared_functions.openSnackBar('Please enter your mobile number', { 'panelClass': 'snackbarerror' });

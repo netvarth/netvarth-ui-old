@@ -305,7 +305,6 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getAlertsTotalCnt(ackStatus, sdate) {
-    // alert(ackStatus);
     let retparam = this.buildAlertsParams(ackStatus, sdate);
     if (retparam !== '') {
       retparam = '?' + retparam;

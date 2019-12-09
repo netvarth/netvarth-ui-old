@@ -424,7 +424,7 @@
     </h4>
     <mat-dialog-content>
         <div>
-            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!  {{liveTrackMessage}}
+            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!
             </div>
             <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
                 <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
@@ -486,7 +486,10 @@
                     <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"  src="./assets/images/walking-selected.png" alt=""  style="width: 15px;height:15px;" />
                     <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
                     <!-- <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> -->
-                </div>                
+                </div>    
+                <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-10 lv-msg no-padding">
+                    {{liveTrackMessage}}       
+                </div>
                     <!-- <div class="pull-left">Mode of transport</div>
                     <div  class="pull-left">
                         <ul class="trackIcons">
