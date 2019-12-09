@@ -27,7 +27,6 @@
                               placeholder="{{customer_label | capitalizeFirst}}s ahead *" 
                               autocomplete="off" (keypress)="showSubmit('EARLY');isNumeric($event)" (keyup)="isvalid($event)">
                       </mat-form-field>
-                      <p class="form-level-settings form-level-p">The nth {{customer_label}} whom the notification should be send.</p>
                   </div>
                   <div class="clearfix"></div>
                   <ul class="notifications">
