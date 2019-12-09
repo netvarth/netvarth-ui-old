@@ -293,10 +293,10 @@
                           </div>
                         </div>
                         <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
-                          <!-- <a class="btn-play pointer-cursor" *ngIf="!section_future[i]"
+                          <a class="btn-play pointer-cursor" *ngIf="!section_future[i]"
                             (click)="addConsumerInboxMessage('single', checkin)">
                             <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
-                          </a> -->
+                          </a>
                           <a class="btn-more pointer-cursor" *ngIf="!section_future[i]"
                             (click)="openActionsWindow('future', i)">
                             <i class="fa fa-angle-down black"></i>
@@ -307,10 +307,10 @@
                   </div>
                   <div class="clearfix"></div>
                   <div class="info-box-footer-more" *ngIf="section_future[i]">
-                    <!-- <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message </span>
-                    </a> -->
-                    <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
+                    </a>
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('future', checkin)">
                       <i class="icon-note"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
@@ -396,15 +396,15 @@
                       (click)="changeWaitlistStatus(checkin, 'STARTED')">
                       <i class="fa fa-play"></i> <span> Start</span>
                     </a>
-                    <!-- <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message</span>
-                    </a> -->
+                    </a>
                     <a class="btn-play pointer-cursor"
                       *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
-                      (click)="viewBillPage(checkin)">
+                      (click)="viewBillPage('history', checkin)">
                       <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                     </a>
-                    <a class="btn-play pointer-cursor" (click)="addProviderNote(checkin)">
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('history', checkin)">
                       <i class="fa icon-note"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"

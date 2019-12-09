@@ -101,7 +101,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     }
     setFilterForApi(layout) {
         const api_filter = {};
-        layout.statusBoardFor.forEach(element => {
+        layout.queueSetFor.forEach(element => {
             if (element.type === 'SERVICE') {
                 api_filter['service-eq'] = element.id[0];
             } else if (element.type === 'QUEUE') {

@@ -1149,7 +1149,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeWaitlistStatus(waitlist, action) {
-    console.log(waitlist);
     if (!waitlist.ynwUuid) {
       waitlist = this.selectedCheckin[waitlist];
     }
@@ -1300,8 +1299,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid]);
   }
-  addProviderNote(source) {
-    const checkin = this.selectedCheckin[source];
+  addProviderNote(source, waitlist?) {
+    let checkin;
+    if (source === 'history' || source === 'future') {
+      checkin = waitlist;
+    } else {
+      checkin = this.selectedCheckin[source];
+    }
     this.addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -1314,12 +1318,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result === 'reloadlist') { }
     });
   }
-  viewBillPage(source) {
-    const checkin = this.selectedCheckin[source];
-    this.provider_services.getWaitlistBill(checkin.ynwUuid)
+  viewBillPage(source, checkin?) {
+    let checkin_details;
+    if (source === 'history') {
+      checkin_details = checkin;
+    } else {
+      checkin_details = this.selectedCheckin[source];
+    }
+    this.provider_services.getWaitlistBill(checkin_details.ynwUuid)
       .subscribe(
         data => {
-          this.router.navigate(['provider', 'bill', checkin.ynwUuid]);
+          this.router.navigate(['provider', 'bill', checkin_details.ynwUuid]);
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1341,7 +1350,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   addConsumerInboxMessage(source, waitlst?) {
-    let waitlist;
+    let waitlist = [];
     if (source === 'new') {
       waitlist = this.newWaitlistforMsg;
     } else if (source === 'started') {
@@ -1350,6 +1359,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       waitlist = this.completedWaitlistforMsg;
     } else if (source === 'cancelled') {
       waitlist = this.cancelledWaitlistforMsg;
+    } else if (source === 'single') {
+      waitlist.push(waitlst);
     }
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
@@ -1763,7 +1774,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   locateCustomer(uuid, i) {
     this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
-      console.log(data);
       this.trackDetail = data;
       this.distance[i] = this.trackDetail.jaldeeDistance.distance;
       this.unit[i] = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];

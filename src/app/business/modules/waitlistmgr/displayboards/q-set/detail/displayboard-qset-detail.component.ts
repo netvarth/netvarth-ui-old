@@ -144,17 +144,17 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             // this.breadcrumbs = breadcrumbs;
             this.boardName = this.displayBoardData.name;
             this.boardDisplayname = this.displayBoardData.displayName;
-            for (let i = 0; i < this.displayBoardData.statusBoardFor.length; i++) {
-                this.selectedCategory = this.displayBoardData.statusBoardFor[i].type;
-                this.selectedCategoryValue = this.displayBoardData.statusBoardFor[i].id[0];
-                if (this.displayBoardData.statusBoardFor[i].type === 'SERVICE') {
-                    this.serviceSelection(this.displayBoardData.statusBoardFor[i].id[0]);
+            for (let i = 0; i < this.displayBoardData.queueSetFor.length; i++) {
+                this.selectedCategory = this.displayBoardData.queueSetFor[i].type;
+                this.selectedCategoryValue = this.displayBoardData.queueSetFor[i].id[0];
+                if (this.displayBoardData.queueSetFor[i].type === 'SERVICE') {
+                    this.serviceSelection(this.displayBoardData.queueSetFor[i].id[0]);
                 }
-                if (this.displayBoardData.statusBoardFor[i].type === 'QUEUE') {
-                    this.queueSelection(this.displayBoardData.statusBoardFor[i].id[0]);
+                if (this.displayBoardData.queueSetFor[i].type === 'QUEUE') {
+                    this.queueSelection(this.displayBoardData.queueSetFor[i].id[0]);
                 }
-                if (this.displayBoardData.statusBoardFor[i].type === 'DEPARTMENT') {
-                    this.departmentSelection(this.displayBoardData.statusBoardFor[i].id[0]);
+                if (this.displayBoardData.queueSetFor[i].type === 'DEPARTMENT') {
+                    this.departmentSelection(this.displayBoardData.queueSetFor[i].id[0]);
                 }
             }
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
@@ -193,7 +193,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'name': name,
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
-                'statusBoardFor': this.statusBoardfor
+                'queueSetFor': this.statusBoardfor
             };
             this.provider_services.createDisplayboardQSet(post_data).subscribe(data => {
                 // this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
@@ -225,7 +225,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'name': name,
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
-                'statusBoardFor': this.statusBoardfor
+                'queueSetFor': this.statusBoardfor
             };
             this.provider_services.updateDisplayboardQSet(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });

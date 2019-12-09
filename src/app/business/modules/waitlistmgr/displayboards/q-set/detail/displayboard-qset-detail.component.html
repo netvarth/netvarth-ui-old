@@ -22,7 +22,7 @@
     <div class="cli col-md-12 col-xs-12 col-sm-12" *ngIf="actionparam === 'view' && displayBoardData">
         <span class="editbt" (click)="editStatusBoard(displayBoardData.id)" style="float: right;"></span>
         <h3> {{displayBoardData.displayName | capitalizeFirst}}</h3>
-        <div class="c-ot" *ngFor="let labelfor of displayBoardData.statusBoardFor">
+        <div class="c-ot" *ngFor="let labelfor of displayBoardData.queueSetFor">
             <div class="item">
                 <span class="ttle">{{category}}</span>
                 <span class=""> {{labelfor.type}} <span *ngFor="let labelid of labelfor.id">

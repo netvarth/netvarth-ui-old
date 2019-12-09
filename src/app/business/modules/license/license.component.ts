@@ -214,6 +214,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.upgradedialogRef.afterClosed().subscribe(result => {
             if (result === 'reloadlist') {
                 this.getLicenseDetails('update');
+                this.getSubscriptionDetail();
+                this.getLicenseMetaData();
             }
             this.goBacktoPrev();
         });
@@ -277,8 +279,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
-                data => {                  
-                    this.license_sub = data;                   
+                data => {
+                    console.log(data);
+                    this.license_sub = data;
                     this.licensePlan = this.license_sub.licSubType;
                     this.licenseDisplayName = this.license_sub.licSubTypeDisplayName;
                     if (this.license_sub.subscriptionTo) {
