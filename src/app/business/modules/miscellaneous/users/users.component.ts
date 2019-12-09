@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class BranchUsersComponent implements OnInit {
     users_list: any = [];
     breadcrumb_moreoptions: any = [];
+    domain;
     breadcrumbs = [
         {
             url: '/provider/settings',
@@ -26,13 +27,17 @@ export class BranchUsersComponent implements OnInit {
     api_loading: boolean;
     constructor(
         private router: Router,
+        private routerobj: Router,
         private shared_services: ProviderServices,
         private shared_functions: SharedFunctions) {
 
     }
     ngOnInit() {
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
         this.api_loading = true;
         this.getBranchSPs();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     addBranchSP() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add']);
@@ -61,4 +66,9 @@ export class BranchUsersComponent implements OnInit {
     manageProvider(accountId) {
         window.open('#/manage/' + accountId, '_blank');
     }
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
+        }
+      }
 }

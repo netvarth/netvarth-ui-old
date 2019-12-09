@@ -13,6 +13,7 @@ export class CorporateSettingsComponent implements OnInit {
     cancel_btn = Messages.CANCEL_BTN;
     save_btn_cap = Messages.SAVE_BTN;
     accountType;
+    domain;
     breadcrumbs = [
       {
         url: '/provider/settings',
@@ -28,7 +29,9 @@ export class CorporateSettingsComponent implements OnInit {
     ];
     loading: boolean;
     corpInfo;
-    constructor(private router: Router,
+    constructor(
+        private router: Router,
+        private routerobj: Router,
         private shared_services: ProviderServices,
         private shared_functions: SharedFunctions) {
 
@@ -36,8 +39,10 @@ export class CorporateSettingsComponent implements OnInit {
     ngOnInit() {
         this.loading = false;
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domain = user.sector;
         this.accountType = user.accountType;
         this.getCorporateDetails();
+        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     getCorporateDetails() {
         this.shared_services.getCorporateDetails().subscribe(
@@ -91,4 +96,9 @@ export class CorporateSettingsComponent implements OnInit {
     onCancel() {
         this.router.navigate(['provider', 'settings']);
     }
+    performActions(action) {
+        if (action === 'learnmore') {
+          this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->corporate']);
+        }
+      }
 }

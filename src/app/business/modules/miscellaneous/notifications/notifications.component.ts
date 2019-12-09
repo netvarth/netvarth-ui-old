@@ -45,9 +45,7 @@ export class NotificationsComponent implements OnInit {
         private sharedfunctionObj: SharedFunctions
     ) {
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        this.custmr_domain_terminology = this.sharedfunctionObj.getTerminologyTerm('customer');
         this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
-        this.provdr_domain_terminology = this.sharedfunctionObj.getTerminologyTerm('provider');
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -56,9 +54,9 @@ export class NotificationsComponent implements OnInit {
         this.getSMSCredits();
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]',this.provider_label);
         this.frm_cust_notification_cap = Messages.FRM_LEVEL_CUST_NOTIFICATION_MSG.replace('[customer]',this.customer_label);
-        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.custmr_domain_terminology);
+        this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
         this.frm_providr_notification_cap = Messages.FRM_LEVEL_PROVIDER_NOTIFICATION_MSG.replace('[customer]',this.customer_label);
-        this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provdr_domain_terminology);
+        this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
 
     }
