@@ -1520,6 +1520,7 @@ export class CheckInInnerComponent implements OnInit {
           this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
         setTimeout(() => {
+          
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
