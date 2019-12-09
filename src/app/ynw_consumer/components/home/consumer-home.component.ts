@@ -188,7 +188,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = Observable.interval(this.refreshTime * 100).subscribe(x => {
+    this.cronHandleTrack = Observable.interval(this.refreshTime * 250).subscribe(x => {
       this.liveTrackPolling();
     });
 

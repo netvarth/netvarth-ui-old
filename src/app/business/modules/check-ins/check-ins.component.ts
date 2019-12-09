@@ -256,6 +256,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   cancelledWaitlistforMsg: any = [];
   completedWaitlistforMsg: any = [];
   newWaitlistforMsg: any = [];
+  consumerTrackstatus = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1772,16 +1773,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cancelledPanel = true;
     }
   }
-  locateCustomer(uuid, i) {
-    this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
+  locateCustomer(source) {
+    const waitlistData = this.selectedCheckin[source];
+    this.provider_services.getCustomerTrackStatus(waitlistData.ynwUuid).subscribe(data => {
+      console.log(data);
       this.trackDetail = data;
-      this.distance[i] = this.trackDetail.jaldeeDistance.distance;
-      this.unit[i] = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
-      this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
-      this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
-      this.hours = Math.floor(this.travelTime[i] / 60);
-      this.minutes = this.travelTime[i] % 60;
-      const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
+      if (this.trackDetail && this.trackDetail.jaldeeDistance) {
+      this.distance = this.trackDetail.jaldeeDistance.distance;
+      this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
+      this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
+      this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
+      this.hours = Math.floor(this.travelTime / 60);
+      this.minutes = this.travelTime % 60;
+      const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+    }
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1798,6 +1803,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
+      console.log(this.selectedCheckin['new']);
+      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' ){
+        this.consumerTrackstatus = true;
+      }
+      
       this.labels(this.selectedCheckin['new']);
     }
     for (let i = 0; i < this.waitlistSelected.length; i++) {
