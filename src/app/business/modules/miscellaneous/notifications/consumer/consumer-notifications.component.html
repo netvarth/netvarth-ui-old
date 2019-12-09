@@ -9,7 +9,7 @@
         <mat-accordion>
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>
-              <mat-panel-title class="block-level">{{cust_domain_name|capitalizeFirst}} Notifications<br>
+              <mat-panel-title class="block-level">{{customer_label|capitalizeFirst}} Notifications<br>
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
@@ -18,7 +18,7 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header no-padding-small">                                           
                           <mat-panel-title class="block-level mat-expansion-panel-header-title"> Early Notifications
-                            <p class="form-level-settings">Notify a {{cust_domain_name}}, the number of people ahead of him/her in line via SMS/Email/Notifications</p> 
+                            <p class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of him/her in line via SMS/Email/Notifications</p> 
                           </mat-panel-title>
                   </mat-expansion-panel-header>
                   <div class="form-group col-md-3 col-xs-7 col-sm-4" >
@@ -27,6 +27,7 @@
                               placeholder="{{customer_label | capitalizeFirst}}s ahead *" 
                               autocomplete="off" (keypress)="showSubmit('EARLY');isNumeric($event)" (keyup)="isvalid($event)">
                       </mat-form-field>
+                      <p class="form-level-settings form-level-p">The nth {{customer_label}} whom the notification should be send.</p>
                   </div>
                   <div class="clearfix"></div>
                   <ul class="notifications">
@@ -54,7 +55,7 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header no-padding-small">                     
                           <mat-panel-title class="block-level mat-expansion-panel-header-title"> Pre Final Notifications
-                            <p class="form-level-settings">Notify a {{cust_domain_name}} when he  is second next in line via SMS/Email/Notifications.</p>
+                            <p class="form-level-settings">Notify a {{customer_label}} when he  is second next in line via SMS/Email/Notifications.</p>
                           </mat-panel-title>
                   </mat-expansion-panel-header>                  
                   <ul class="notifications">
@@ -86,7 +87,7 @@
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header no-padding-small">
                      
                           <mat-panel-title class="block-level mat-expansion-panel-header-title"> Final Notifications
-                             <p class="form-level-settings">Notify a {{cust_domain_name}} when he is next in line via SMS/Email/Notifications.</p>
+                             <p class="form-level-settings">Notify a {{customer_label}} when he is next in line via SMS/Email/Notifications.</p>
                           </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ul class="notifications">
