@@ -46,6 +46,8 @@ export class ConsumerNotificationsComponent implements OnInit {
   api_error = null;
   api_success = null;
   domain;
+  cust_domain_name = '';
+  mode_of_notify = '';
   notification: any = [];
   savechekinNotification_json: any = {};
   savecancelNotification_json: any = {};
@@ -71,6 +73,8 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationList();
+    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
+    this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]',this.customer_label);
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
