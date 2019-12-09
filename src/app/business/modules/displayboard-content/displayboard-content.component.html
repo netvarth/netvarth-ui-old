@@ -16,9 +16,9 @@
                         [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}"
                         style="background: white;border: 1px solid #ccc;overflow: auto;">
                         <div *ngIf="selectedDisplayboards[row + '_' + col]">
-                            <div *ngIf="selectedDisplayboards[row + '_' + col]['board']" style="text-align: center;">
+                            <!-- <div *ngIf="selectedDisplayboards[row + '_' + col]['board']" style="text-align: center;">
                                 <strong> {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</strong>
-                            </div>
+                            </div> -->
                             <table class="table table-striped responsive-table"
                                 *ngIf="selectedDisplayboards[row + '_' + col]['board']">
                                 <thead>

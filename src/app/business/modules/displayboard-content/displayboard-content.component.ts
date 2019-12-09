@@ -109,6 +109,7 @@ export class DisplayboardLayoutContentComponent implements OnInit {
             } else {
                 api_filter['department-eq'] = element.id[0];
             }
+            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
         });
         return api_filter;
     }

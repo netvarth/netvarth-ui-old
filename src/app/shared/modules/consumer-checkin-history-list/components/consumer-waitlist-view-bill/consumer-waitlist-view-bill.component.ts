@@ -382,14 +382,14 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	</tr>';
       // List<Discount> serviceDisounts = mapper.readValue(service.getDiscount().toString(), new TypeReference<List<Discount>>(){});
       if (service.discount && service.discount.length > 0) {
-      for (const serviceDiscount of service.discount) {
-        bill_html += '	<tr style="color:#aaa">';
-        bill_html += '<td style="text-align:right;"';
-        bill_html += '	colspan="2">' + serviceDiscount.name + '</td>';
-        bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(serviceDiscount.discountValue).toFixed(2);
-        bill_html += '</td>';
-        bill_html += '	</tr>';
-      }
+        for (const serviceDiscount of service.discount) {
+          bill_html += '	<tr style="color:#aaa">';
+          bill_html += '<td style="text-align:right;"';
+          bill_html += '	colspan="2">' + serviceDiscount.name + '</td>';
+          bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(serviceDiscount.discountValue).toFixed(2);
+          bill_html += '</td>';
+          bill_html += '	</tr>';
+        }
 
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
@@ -444,6 +444,17 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     bill_html += '	</tr>                                                                           ';
     bill_html += '</table>';
     bill_html += '	</td></tr>';
+
+    if (this.bill_data.jdn && this.bill_data.jdn.discount) {
+      bill_html += '	<tr><td>';
+      bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
+      bill_html += '	<tr style="color:#aaa">';
+      bill_html += '<td width="70%" style="text-align:right">JDN</td>';
+      bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(this.bill_data.jdn.discount).toFixed(2) + '</td>';
+      bill_html += '	</tr>                                                                           ';
+      bill_html += '</table>';
+      bill_html += '	</td></tr>';
+    }
     // List<Discount> billDisounts = mapper.readValue(bill.getDiscount().toString(), new TypeReference<List<Discount>>(){});
     for (const billDiscount of this.bill_data.discount) {
       bill_html += '	<tr><td>';
@@ -486,7 +497,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	<tr><td>';
       bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
       bill_html += '	<tr>';
-      bill_html += '<td width="70%" style="text-align:right">Tax ' + this.bill_data.taxPercentage + ' % of &#x20b9;' + parseFloat(this.bill_data.taxableTotal).toFixed(2) + '(CGST-' + (this.bill_data.taxPercentage() / 2) + '%, SGST-' + (this.bill_data.taxPercentage() / 2) + '%)</td>';
+      bill_html += '<td width="70%" style="text-align:right">Tax ' + this.bill_data.taxPercentage + ' % of &#x20b9;' + parseFloat(this.bill_data.taxableTotal).toFixed(2) + '(CGST-' + (this.bill_data.taxPercentage / 2) + '%, SGST-' + (this.bill_data.taxPercentage / 2) + '%)</td>';
       bill_html += '<td width="30%" style="text-align:right">(+) &#x20b9;' + parseFloat(this.bill_data.totalTaxAmount).toFixed(2) + '</td>';
       bill_html += '	</tr>';
       bill_html += '</table>';
@@ -593,5 +604,3 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     }
   }
 }
-
-
