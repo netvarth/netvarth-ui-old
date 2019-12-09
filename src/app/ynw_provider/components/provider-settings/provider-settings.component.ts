@@ -99,6 +99,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   isCorp = false;
   isMultilevel = false;
   jaldee_pay_cap: string;
+  provider_label = '';
+  cust_domain_name = '';
+  provider_domain_name = '';
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -113,6 +116,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           break;
       }
     });
+    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
@@ -152,6 +156,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
+    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
+    this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
     this.getDomainSubdomainSettings();
     this.getLocationCount();
     this.getQueuesCount();
