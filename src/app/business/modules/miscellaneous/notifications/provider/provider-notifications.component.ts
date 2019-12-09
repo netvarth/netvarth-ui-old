@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
+import { Messages } from '../../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -49,6 +50,8 @@ export class ProviderNotificationsComponent implements OnInit {
   ph1_arr: any = [];
   em1_arr: any = [];
   domain;
+  provdr_domain_name = '';
+  provider_label = '';
   savechekinNotification_json: any = {};
   savecancelNotification_json: any = {};
   notificationList: any = [];
@@ -57,7 +60,9 @@ export class ProviderNotificationsComponent implements OnInit {
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    public provider_services: ProviderServices) { }
+    public provider_services: ProviderServices) {
+      this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+     }
 
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -65,6 +70,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationList();
+    this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
   }
   getNotificationList() {
     this.provider_services.getNotificationList()
