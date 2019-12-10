@@ -33,8 +33,8 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
                             <!-- <p class="form-level-settings">you can join to a corporate or create your own corporate here
                             </p> -->
-                            <p *ngIf="corpInfo">Do you want to join to another corporate</p>
-                            <p *ngIf="!corpInfo">Do you want to become a corporate</p>
+                            <p *ngIf="corpInfo">Do you want to join to another corporate?</p>
+                            <p *ngIf="!corpInfo">Do you want to become a corporate?</p>
                             <mat-radio-group [(ngModel)]="corpType">
                                 <mat-radio-button class="ln-hgt-24" value="join">Join Corporate</mat-radio-button><br />
                                 <div class="col-md-12" *ngIf="corpType === 'join'">

@@ -25,7 +25,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="first_name"
-                                                    placeholder="First Name" formControlName="first_name"
+                                                    placeholder="First Name *" formControlName="first_name"
                                                     autocomplete="off">
                                             </mat-form-field>
                                             <app-field-error-display
@@ -46,7 +46,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="last_name"
-                                                    placeholder="Last Name" formControlName="last_name"
+                                                    placeholder="Last Name *" formControlName="last_name"
                                                     autocomplete="off">
                                             </mat-form-field>
                                             <app-field-error-display
@@ -58,7 +58,7 @@
                                                             })">
                                             </app-field-error-display>
                                             <app-field-error-display [displayError]="true"
-                                                *ngIf="lnameerror != null && !fed_service.isFieldValid(amForm,'last_name')"
+                                                *ngIf="!fed_service.isFieldValid(amForm,'last_name')"
                                                 [errorMsg]="lnameerror">
                                             </app-field-error-display>
                                         </div>
@@ -73,7 +73,7 @@
                                                     </div>
                                                     <input type="text" (keypress)="isNumeric($event)" matInput
                                                         class="form-control text-width" id="phonenumber"
-                                                        placeholder="Enter Mobile #" formControlName="phonenumber"
+                                                        placeholder="Enter Mobile # *" formControlName="phonenumber"
                                                         autocomplete="off" ngModel maxlength="10">
                                                 </div>
                                             </mat-form-field>
@@ -108,7 +108,7 @@
                                         *ngIf="filterBydept && departments.length > 0">
                                         <div class="form-group">
                                             <mat-form-field>
-                                                <mat-select placeholder="Select department"
+                                                <mat-select placeholder="Select department *"
                                                     formControlName="selectedDepartment" #deptsel>
                                                     <mat-option *ngFor="let dept of departments"
                                                         [value]="dept.departmentCode">
@@ -121,7 +121,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <mat-form-field>
-                                                <input class="form-control" placeholder="Enter default password"
+                                                <input class="form-control" placeholder="Enter default password *"
                                                     matInput formControlName="password" reverse="true" type="password">
                                             </mat-form-field>
                                             <app-field-error-display
@@ -188,7 +188,7 @@
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button type="submit" mat-button [disabled]="savedisabled"
+                                            <button type="submit" mat-button [disabled]="!amForm.valid"
                                                 class="cs-btn bt2">{{button_title}}</button>
                                         </div>
                                     </div>
