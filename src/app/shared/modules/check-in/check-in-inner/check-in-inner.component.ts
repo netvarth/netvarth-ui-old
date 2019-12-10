@@ -885,7 +885,7 @@ export class CheckInInnerComponent implements OnInit {
                   this.saveLiveTrackInfo().then(
                     (liveTInfo) => {
                       console.log(liveTInfo);
-                     // this.shareLoc = true;
+                      // this.shareLoc = true;
                       this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
                     }
                   );
@@ -1403,7 +1403,7 @@ export class CheckInInnerComponent implements OnInit {
       this.driving = false;
       this.bicycling = true;
     }
-    this.saveLiveTrackInfo().then(
+    this.saveLiveTrackTravelModeInfo().then(
       data => {
         this.api_loading = true;
         this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
@@ -1479,7 +1479,24 @@ export class CheckInInnerComponent implements OnInit {
       this.notifyTime = 'AFTERSTART';
     }
   }
+  saveLiveTrackTravelModeInfo() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const passdata = {
+        'travelMode': _this.travelMode
+      };
 
+      _this.shared_services.updateTravelMode(_this.trackUuid, _this.account_id, passdata)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
   saveLiveTrackInfo() {
     const _this = this;
     console.log(_this.shareLoc);

@@ -1804,7 +1804,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
       console.log(this.selectedCheckin['new']);
-      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' ){
+      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' ){
         this.consumerTrackstatus = true;
       }
       
