@@ -1469,6 +1469,8 @@ export class CheckInInnerComponent implements OnInit {
     console.log(event);
     if (event.checked) {
       this.getCurrentLocation();
+    } else {
+      this.saveLiveTrackInfo();
     }
   }
 
@@ -1530,16 +1532,7 @@ export class CheckInInnerComponent implements OnInit {
   }
   saveLiveTrackDetails() {
     this.resetApi();
-    const post_Data = {
-      'jaldeeGeoLocation': {
-        'latitude': this.lat_lng.latitude,
-        'longitude': this.lat_lng.longitude
-      },
-      'travelMode': this.travelMode,
-      'waitlistPhonenumber': this.consumerPhoneNo,
-      'jaldeeStartTimeMod': this.notifyTime,
-      'shareLocStatus': this.shareLoc
-    };
+    
     this.saveLiveTrackInfo().then(
       data => {
         if (data) {
