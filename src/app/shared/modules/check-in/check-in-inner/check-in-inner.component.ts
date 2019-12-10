@@ -1532,8 +1532,7 @@ export class CheckInInnerComponent implements OnInit {
   }
   saveLiveTrackDetails() {
     this.resetApi();
-    
-    this.saveLiveTrackInfo().then(
+    this.updateLiveTrackInfo().then(
       data => {
         if (data) {
           this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
@@ -1553,4 +1552,30 @@ export class CheckInInnerComponent implements OnInit {
         this.api_loading = false;
       });
   }
+  updateLiveTrackInfo() {
+    const _this = this;
+    console.log(_this.shareLoc);
+    return new Promise(function (resolve, reject) {
+      const post_Data = {
+        'jaldeeGeoLocation': {
+          'latitude': _this.lat_lng.latitude,
+          'longitude': _this.lat_lng.longitude
+        },
+        'travelMode': _this.travelMode,
+        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'jaldeeStartTimeMod': _this.notifyTime,
+        'shareLocStatus': _this.shareLoc
+      };
+      _this.shared_services.updateLiveTrackDetails(_this.trackUuid, _this.account_id, post_Data)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+
 }
