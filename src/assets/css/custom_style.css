@@ -6484,6 +6484,8 @@ font-size: 0.75rem !important;}
 input.jdn_ip { width: 50px !important}
 .jdnpercent {display: block !important;
   margin-right: 50px;}
-.form-level-p{
-    width: 800px;
-  }
+.form-level-early-hint{
+  width: 800px !important;;
+  height: 20px !important;;
+}  
+ 
