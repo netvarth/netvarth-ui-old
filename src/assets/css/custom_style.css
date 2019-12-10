@@ -5904,7 +5904,8 @@ background-color:#fff !important;
   }
 }
 .jdn-pg i.editbt { margin-left: 20px !important;}
-.jdn-title {font-weight: 600 !important;}
+.jdn-title {font-weight: 600 !important;
+margin-right: 10px;}
 .jdn-pg .bt3{padding: 5px 10px !important}
 .jdn-pg .mat-input-element {
   border : 1px solid #d2d6de !important;
@@ -6488,4 +6489,9 @@ input.jdn_ip { width: 50px !important}
   width: 800px !important;;
   height: 20px !important;;
 }  
- 
+.create-dept {
+  margin: 10px 10px 20px 30px;
+}
+.info-lst li {
+  padding-top: 5px;
+}

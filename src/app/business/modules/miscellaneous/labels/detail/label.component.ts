@@ -180,9 +180,13 @@ export class LabelComponent implements OnInit {
     addtoValueSet(value, shortcut) {
         const valset = {};
         valset['value'] = value;
-        valset['shortValue'] = shortcut;
-        this.value = [];
-        this.shortValue = [];
+        if (shortcut) {
+            valset['shortValue'] = shortcut;
+        } else {
+            valset['shortValue'] = value;
+        }
+        this.value = '';
+        this.shortValue = '';
         if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
             this.valueSet.push(valset);
             this.showAddsec = false;
@@ -191,8 +195,8 @@ export class LabelComponent implements OnInit {
         shortcut = '';
     }
     deleteValueforSet(i) {
-        this.value = [];
-        this.shortValue = [];
+        this.value = '';
+        this.shortValue = '';
         this.valueSet.splice(i, 1);
 
     }
@@ -218,4 +222,3 @@ export class LabelComponent implements OnInit {
         this.shortValue = this.value;
     }
 }
-
