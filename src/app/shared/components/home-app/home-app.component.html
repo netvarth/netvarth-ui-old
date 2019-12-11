@@ -42,10 +42,11 @@
             </app-common-innerloading-spinner>
           </button>
         </div>
-        <div class="forgotpass centeralign"><a (click)="doForgotPassword()">Forgot Password?</a></div>
-        <div class="newuser centeralign">
-          <div>Jaldee for a new Service provider or business</div>
-          <div class="link padding-tp-10">{{signup_here}}<span (click)="doSignup()">Signup here</span></div>
+      <div class="forgotpass centeralign" (click)="doForgotPassword()">Forgot Password?</div>
+
+      <div class="newuser centeralign" (click)="doSignup()">
+        <div>New to jaldee.com?</div>
+        <div class="link padding-tp-10"><span>Signup here</span></div>
         </div>
       </div>
     </form>

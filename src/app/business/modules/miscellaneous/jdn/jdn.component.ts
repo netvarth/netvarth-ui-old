@@ -52,7 +52,7 @@ export class JDNComponent implements OnInit {
         private routerobj: Router,
         private shared_functions: SharedFunctions,
         private dialog: MatDialog) {
-            this.cust_label = this.shared_functions.getTerminologyTerm('customer');
+        this.cust_label = this.shared_functions.getTerminologyTerm('customer');
     }
     ngOnInit() {
         const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -69,8 +69,8 @@ export class JDNComponent implements OnInit {
                         for (const option of this.jdnPercentage) {
                             if (option.percentage === 5) {
                                 this.maximumDiscount1 = option.maxDiscount;
-                                this.discType = 5;
-                                this.jdnmaxDiscounttext = this.maximumDiscount1;
+                                // this.discType = 5;
+                                // this.jdnmaxDiscounttext = this.maximumDiscount1;
                                 this.radioSelected = this.discType;
                             } else if (option.percentage === 10) {
                                 this.maximumDiscount2 = option.maxDiscount;
@@ -90,11 +90,16 @@ export class JDNComponent implements OnInit {
     }
 
     fillJdnfields(data) {
-        this.jdndisplayNote = data.displayNote;
-        this.jdnlabeltext = data.label;
-        this.discType = data.discPercentage;
-        this.jdnmaxDiscounttext = data.discMax;
-        this.radioSelected = this.discType;
+        if (data) {
+            this.jdndisplayNote = data.displayNote;
+            this.jdnlabeltext = data.label;
+            this.discType = data.discPercentage;
+            this.jdnmaxDiscounttext = data.discMax;
+            this.radioSelected = this.discType;
+        } else {
+            this.discType = 5;
+            this.jdnmaxDiscounttext = this.maximumDiscount1;
+        }
     }
 
     saveJDN() {
@@ -129,10 +134,9 @@ export class JDNComponent implements OnInit {
     }
 
     radioChange(event) {
-       if (!event.value) {
-        return;
-       }
-        console.log(this.radioSelected);
+        if (!event.value) {
+            return;
+        }
         if (this.radioSelected !== event.value) {
             this.radioSelected = event.value;
             if (event.value === 5) {

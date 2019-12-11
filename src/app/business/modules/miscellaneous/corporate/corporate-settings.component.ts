@@ -87,6 +87,7 @@ export class CorporateSettingsComponent implements OnInit {
                 this.shared_functions.setitemToGroupStorage('ynw-user', user);
                 this.accountType = 'BRANCH';
                 this.shared_functions.openSnackBar(Messages.CREATECORP_SUCCESS);
+                this.getCorporateDetails();
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

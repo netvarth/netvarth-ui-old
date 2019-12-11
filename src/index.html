@@ -31,12 +31,12 @@
     FontAwesomeConfig = { searchPseudoElements: true };
   </script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
-</head>
+<link rel="stylesheet" href="styles.4ff17b786788ee8390ae.css"></head>
 
 <body class="hold-transition sidebar-mini" style="height: auto;min-height: 100%;">
   <link href="./assets/css/style.css" rel="stylesheet">
   <app-root></app-root>
-</body>
+<script type="text/javascript" src="runtime.af576f09bd20fa0b44b3.js"></script><script type="text/javascript" src="polyfills.0c38c016e68be70f1898.js"></script><script type="text/javascript" src="scripts.f0a24b630ed544e4f5b9.js"></script><script type="text/javascript" src="main.4bdc682d32b9699376f0.js"></script></body>
 
 </html>
 <script type="text/javascript" src="cordova.js"></script>
@@ -46,8 +46,10 @@
     console = console || {};
     console.log = function () { };
   }
+  var exitApp = false, intval = setInterval(function (){exitApp = false;}, 1000);
   function onConfirm(buttonIndex) {
     if (buttonIndex === 2) {
+	clearInterval(intval);
       navigator.app.exitApp();
     }
   }
@@ -96,10 +98,15 @@
         }
       );
     };
-
     document.addEventListener("backbutton", function (e) {
       e.preventDefault();
-      navigator.notification.confirm('Press Ok to Exit from Jaldee Business App', onConfirm, 'Jaldee for Business', ['Cancel', 'Ok']);
+	   if (exitApp) {
+          navigator.notification.confirm('Press Ok to Exit from Jaldee Business App', onConfirm, 'Jaldee for Business', ['Cancel', 'Ok']);
+      }
+      else {
+          exitApp = true
+          history.back(1);
+      } 
     }, false);
   }
 </script>

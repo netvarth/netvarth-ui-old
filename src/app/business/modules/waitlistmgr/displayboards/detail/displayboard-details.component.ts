@@ -104,11 +104,10 @@ export class DisplayboardDetailComponent implements OnInit {
         this.qsetId = null;
     }
     qSetSelected(qset) {
-        console.log(qset);
         if (qset.refresh) {
             this.getDisplayboardQSets();
         }
-        if (qset.source === 'QLIST') {
+        if (qset.source === 'QLIST' && !qset.action) {
             this.source = 'DBOARD';
             this.showMode = 'QSETS';
         } else if (qset.source === 'DBOARD') {

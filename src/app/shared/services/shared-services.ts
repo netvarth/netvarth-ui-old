@@ -501,6 +501,10 @@ export class SharedServices {
     const url = 'consumer/waitlist/saveMyLoc/' + uid + '?account=' + id;
     return this.servicemeta.httpPost(url, data);
   }
+  updateLiveTrackDetails(uid, id, data) {
+    const url = 'consumer/waitlist/updateMyLoc/' + uid + '?account=' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
   unSaveMyLocation(uid, id) {
     const url = 'consumer/waitlist/unshareMyLoc/' + uid + '?account=' + id;
     return this.servicemeta.httpDelete(url);

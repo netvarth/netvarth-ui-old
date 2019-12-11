@@ -31,7 +31,7 @@
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="board_list.length == 0">
                 <div class="no-dta">
                     <p> Queue Selection Criteria not found</p>
-                    <span class="cs-btn bt3" (click)="addDisplayboardQSet()">Add it now</span>
+                    <span class="cs-btn bt3" (click)="addQSet()">Add it now</span>
                 </div>
             </div>
             <div class="col-md-12 pt10 qset" *ngFor="let board of board_list">

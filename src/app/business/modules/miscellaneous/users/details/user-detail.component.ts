@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { SharedServices } from '../../../../../shared/services/shared-services';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html'
@@ -33,7 +35,7 @@ export class BranchUserDetailComponent implements OnInit {
     button_title = 'Save';
     service = false;
     action = 'show';
-    api_loading: boolean;
+    api_loading = false;
     api_error = null;
     api_success = null;
     fnameerror = null;
@@ -61,6 +63,10 @@ export class BranchUserDetailComponent implements OnInit {
     subDomainList: any = [];
     business_domains;
     showAdvancedSection = false;
+    filterBydept = false;
+    removeitemdialogRef;
+    departments: any = [];
+    // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -68,6 +74,7 @@ export class BranchUserDetailComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private shared_services: SharedServices,
         private router: Router,
+        private dialog: MatDialog,
         private fb: FormBuilder
     ) {
         this.activated_route.params.subscribe(params => {
@@ -87,10 +94,9 @@ export class BranchUserDetailComponent implements OnInit {
             });
     }
     ngOnInit() {
+        this.getWaitlistMgr();
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-        console.log(bConfig);
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        console.log(user.sector);
         for (let i = 0; i < bConfig.bdata.length; i++) {
             if (user.sector === bConfig.bdata[i].domain) {
                 for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
@@ -101,7 +107,6 @@ export class BranchUserDetailComponent implements OnInit {
                 break;
             }
         }
-        console.log(this.subDomains);
         this.amForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -110,14 +115,14 @@ export class BranchUserDetailComponent implements OnInit {
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
             password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-            selectedSubDomain: [0, Validators.compose([Validators.required])]
+            selectedSubDomain: [0, Validators.compose([Validators.required])],
+            selectedDepartment: []
         });
     }
     onItemSelect(subdomain) {
-        console.log(subdomain);
+        // console.log(subdomain);
     }
     onSubmit(input) {
-        console.log(input);
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -168,14 +173,14 @@ export class BranchUserDetailComponent implements OnInit {
                 },
                 'subSector': input.selectedSubDomain.subDomain,
                 'commonPassword': input.password,
-                'isAdmin': true
+                'isAdmin': true,
+                'departmentCode': input.selectedDepartment
             };
             this.provider_services.createBranchSP(post_data).subscribe(data => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
             },
                 error => {
-                    this.api_loading = false;
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
@@ -198,5 +203,57 @@ export class BranchUserDetailComponent implements OnInit {
     }
     advancedClick() {
         (this.showAdvancedSection) ? this.showAdvancedSection = false : this.showAdvancedSection = true;
+    }
+
+    getWaitlistMgr() {
+        this.provider_services.getWaitlistMgr()
+            .subscribe(
+                data => {
+                    this.filterBydept = data['filterByDept'];
+                    if (this.filterBydept) {
+                        setTimeout(() => {
+                            this.getDepartments();
+                        }, 1000);
+                    }
+                },
+                () => {
+                }
+            );
+    }
+    enabledepartment() {
+        this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+                'message': 'Proceed with enabling department?'
+            }
+        });
+        this.removeitemdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.provider_services.setDeptWaitlistMgr('Enable')
+                    .subscribe(
+                        () => {
+                            this.api_loading = true;
+                            this.getWaitlistMgr();
+                        },
+                        error => {
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+            } else {
+            }
+        });
+    }
+    getDepartments() {
+        this.provider_services.getDepartments()
+            .subscribe(
+                data => {
+                    this.departments = data['departments'];
+                    this.amForm.get('selectedDepartment').setValue(this.departments[0].departmentCode);
+                    this.api_loading = false;
+                },
+                error => {
+                }
+            );
     }
 }
