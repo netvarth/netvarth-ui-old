@@ -890,7 +890,10 @@ export class CheckInInnerComponent implements OnInit {
                       this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
                     }
                   );
-                });
+                }, (error) => {
+                  this.shareLoc = false;
+                }
+                );
               this.resetApi();
             },
             () => {
