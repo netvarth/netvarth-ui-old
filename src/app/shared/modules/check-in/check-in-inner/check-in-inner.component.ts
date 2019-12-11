@@ -144,6 +144,7 @@ export class CheckInInnerComponent implements OnInit {
   server_date;
   api_loading1 = true;
   api_loading = true;
+  track_loading = false;
   departmentlist: any = [];
   departments: any = [];
   selected_dept;
@@ -1470,7 +1471,7 @@ export class CheckInInnerComponent implements OnInit {
     if (event.checked) {
       this.getCurrentLocation();
     } else {
-      this.saveLiveTrackInfo();
+      this.updateLiveTrackInfo();
     }
   }
 
@@ -1531,6 +1532,7 @@ export class CheckInInnerComponent implements OnInit {
     }
   }
   saveLiveTrackDetails() {
+    this.track_loading = true;
     this.resetApi();
     this.updateLiveTrackInfo().then(
       data => {
@@ -1544,13 +1546,14 @@ export class CheckInInnerComponent implements OnInit {
           // this.dialogRef.close('reloadlist');
           //this.returntoParent.emit('reloadlist');
           this.trackClose('livetrack');
+          this.track_loading = false;
         }, projectConstants.TIMEOUT_DELAY_LARGE10);
-
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
+      
   }
   updateLiveTrackInfo() {
     const _this = this;
