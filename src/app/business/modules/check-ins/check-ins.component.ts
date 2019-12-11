@@ -1786,7 +1786,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
         width: '40%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
+        panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
           message: this.customerMsg

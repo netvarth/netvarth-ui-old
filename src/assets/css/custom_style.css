@@ -6501,3 +6501,9 @@ input.jdn_ip { width: 50px !important}
 .qset-detail .criteria-fields .mat-checkbox label {
   font-weight: 500 !important;
 }
+.locatecustomer-class {
+  width: 300px !important;
+}
+.locate-customer {
+  text-align: center;
+}

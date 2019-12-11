@@ -1416,7 +1416,7 @@ export const Messages = {
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
   'MANAGE_LABELS': 'Manage Labels',
-  'ADD_LABEL': 'New Label',
+  'ADD_LABEL': 'Create Label',
 
   // JDN
   'JDN_CREATED': 'JDN enabled successfully',

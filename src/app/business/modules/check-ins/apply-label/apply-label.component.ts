@@ -54,9 +54,9 @@ export class ApplyLabelComponent implements OnInit {
         this.checkin = checkin.checkin;
         this.label = checkin.label;
         if (this.source === 'newvalue') {
-            this.caption = 'Apply label ' + this.label.label;
+            this.caption = 'Create label ' + this.label.label;
         } else {
-            this.caption = 'Apply Label';
+            this.caption = 'Create Label';
         }
     }
     ngOnInit() {

@@ -82,7 +82,7 @@ export class LabelComponent implements OnInit {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
-                        title: 'Add'
+                        title: 'Create Label'
                     });
                     this.breadcrumbs = breadcrumbs;
                 }
