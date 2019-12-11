@@ -546,7 +546,7 @@
                     <!-- </div> -->
                 </div>
                 <ng-container>
-                    <div class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
+                    <div *ngIf="shareLoc" class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
                         <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp;
                         <button type="button" class="cs-btn bt1 small-btn" (click)="saveLiveTrackDetails()">Ok</button>
                     </div>

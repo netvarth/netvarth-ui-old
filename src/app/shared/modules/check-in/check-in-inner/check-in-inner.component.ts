@@ -883,10 +883,11 @@ export class CheckInInnerComponent implements OnInit {
                 (lat_long: any) => {
                   this.lat_lng = lat_long;
                   this.saveLiveTrackInfo().then(
-                        (liveTInfo) => {
-                          console.log(liveTInfo);
-                          this.shareLoc = true;
-                          this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');                 }
+                    (liveTInfo) => {
+                      console.log(liveTInfo);
+                      // this.shareLoc = true;
+                      this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
+                    }
                   );
                 });
               this.resetApi();
@@ -894,6 +895,7 @@ export class CheckInInnerComponent implements OnInit {
             () => {
             }
           );
+
           if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
             // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
           } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -906,9 +908,9 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-           //this.router.navigate(['/']);
+          //this.router.navigate(['/']);
         }
-       // this.router.navigate(['/']);
+        // this.router.navigate(['/']);
         // setTimeout(() => {
 
         //   this.liveTrack = true;
@@ -1401,7 +1403,7 @@ export class CheckInInnerComponent implements OnInit {
       this.driving = false;
       this.bicycling = true;
     }
-    this.saveLiveTrackInfo().then(
+    this.saveLiveTrackTravelModeInfo().then(
       data => {
         this.api_loading = true;
         this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
@@ -1467,6 +1469,8 @@ export class CheckInInnerComponent implements OnInit {
     console.log(event);
     if (event.checked) {
       this.getCurrentLocation();
+    } else {
+      this.saveLiveTrackInfo();
     }
   }
 
@@ -1477,9 +1481,27 @@ export class CheckInInnerComponent implements OnInit {
       this.notifyTime = 'AFTERSTART';
     }
   }
+  saveLiveTrackTravelModeInfo() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const passdata = {
+        'travelMode': _this.travelMode
+      };
 
+      _this.shared_services.updateTravelMode(_this.trackUuid, _this.account_id, passdata)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
   saveLiveTrackInfo() {
     const _this = this;
+    console.log(_this.shareLoc);
     return new Promise(function (resolve, reject) {
       const post_Data = {
         'jaldeeGeoLocation': {
@@ -1503,39 +1525,28 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   trackClose(status) {
- if(status === 'livetrack'){
-  this.dialogRef.close();
-  this.router.navigate(['/']);
-
-
- }
+    if (status === 'livetrack') {
+      this.dialogRef.close();
+      this.router.navigate(['/']);
+    }
   }
-   saveLiveTrackDetails() {
+  saveLiveTrackDetails() {
     this.resetApi();
-    const post_Data = {
-      'jaldeeGeoLocation': {
-        'latitude': this.lat_lng.latitude,
-        'longitude': this.lat_lng.longitude
-      },
-      'travelMode': this.travelMode,
-      'waitlistPhonenumber': this.consumerPhoneNo,
-      'jaldeeStartTimeMod': this.notifyTime,
-      'shareLocStatus': this.shareLoc
-    };
+    
     this.saveLiveTrackInfo().then(
       data => {
         if (data) {
           this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
         setTimeout(() => {
-          
+
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
           //this.returntoParent.emit('reloadlist');
           this.trackClose('livetrack');
         }, projectConstants.TIMEOUT_DELAY_LARGE10);
-        
+
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);

@@ -256,6 +256,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   cancelledWaitlistforMsg: any = [];
   completedWaitlistforMsg: any = [];
   newWaitlistforMsg: any = [];
+  consumerTrackstatus = false;
+  customerMsg = '';
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1772,21 +1774,70 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cancelledPanel = true;
     }
   }
-  locateCustomer(uuid, i) {
-    this.provider_services.getCustomerTrackStatus(uuid).subscribe(data => {
+  locateCustomer(source) {
+    const waitlistData = this.selectedCheckin[source];
+    this.provider_services.getCustomerTrackStatus(waitlistData.ynwUuid).subscribe(data => {
+      console.log(data);
       this.trackDetail = data;
-      this.distance[i] = this.trackDetail.jaldeeDistance.distance;
-      this.unit[i] = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
-      this.travelTime[i] = this.trackDetail.jaldeelTravelTime.travelTime;
-      this.timeUnit[i] = this.trackDetail.jaldeelTravelTime.timeUnit;
-      this.hours = Math.floor(this.travelTime[i] / 60);
-      this.minutes = this.travelTime[i] % 60;
-      const popup = document.getElementById('myPopup' + [i]); popup.classList.toggle('show');
+      this.customerMsg = this.locateCustomerMsg(this.trackDetail);
+
+    //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
+    //   this.distance = this.trackDetail.jaldeeDistance.distance;
+    //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
+    //   this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
+    //   this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
+    //   this.hours = Math.floor(this.travelTime / 60);
+    //   this.minutes = this.travelTime % 60;
+    //   const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+    // }
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+ locateCustomerMsg(details) {
+  if (details && details.jaldeeDistance) {
+    const distance = details.jaldeeDistance.distance;
+    const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+    const travelTime = details.jaldeelTravelTime.travelTime;
+    const hours = Math.floor(travelTime / 60);
+    const mode = details.jaldeelTravelTime.travelMode;
+    const minutes = travelTime % 60;
+    const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+    let message = '';
+    if (distance === 0) {
+      message += 'Your customer is close to you, will arrive shortly' ;
+    }  else {
+      message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
+      if (hours !== 0) {
+        message += ' ' + hours;
+        if (hours === 1) {
+          message += ' hr';
+        } else {
+          message += ' hrs';
+        }
+      }
+      if (minutes !== 0) {
+        message += ' ' + minutes;
+        if (minutes === 1) {
+          message += ' min';
+        } else {
+          message += ' mins';
+        }
+      }
+      if (mode === 'WALKING') {
+        message += ' walk';
+      } else if (mode === 'DRIVING') {
+        message += ' drive';
+      } else if (mode === 'BICYCLING') {
+        message += ' ride';
+      }
+      message += ' to reach here' ;
+    }
+    return message;
+  }
+ }
+
   selectnewWaitlist(index) {
     this.newWaitlistforMsg = [];
     if (this.waitlistSelected[index]) {
@@ -1798,6 +1849,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
+      console.log(this.selectedCheckin['new']);
+      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' ){
+        this.consumerTrackstatus = true;
+      }
+      
       this.labels(this.selectedCheckin['new']);
     }
     for (let i = 0; i < this.waitlistSelected.length; i++) {

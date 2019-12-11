@@ -5806,7 +5806,7 @@ background-color:#fff !important;
 .sm-align{
   margin-top: 20px !important;
  }
- .jdnpercent {
+ .mgright50 {
  margin-right: 50px;
  }
  .footer_info{
@@ -6482,4 +6482,10 @@ li>a.bk-ctrl {padding-right: 0 !important; padding-left: 0 !important;}
 .lv-msg {font-weight: bold !important;
 font-size: 0.75rem !important;}
 input.jdn_ip { width: 50px !important}
-.jdnpercent {display: block !important;}
+.jdnpercent {display: block !important;
+  margin-right: 50px;}
+.form-level-early-hint{
+  width: 800px !important;;
+  height: 20px !important;;
+}  
+ 

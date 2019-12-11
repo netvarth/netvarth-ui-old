@@ -1308,7 +1308,7 @@ export class SharedFunctions {
     return array.filter(obj => !lookup.has(obj[key]) && lookup.add(obj[key]));
   }
   getLiveTrackStatusMessage(liveTrackInfo, businessName, mode) {
-    if (liveTrackInfo.jaldeeDistanceTime) {
+    if (liveTrackInfo && liveTrackInfo.jaldeeDistanceTime) {
       const distance = liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.distance;
       const unit = projectConstants.LIVETRACK_CONST[liveTrackInfo.jaldeeDistanceTime.jaldeeDistance.unit];
       const travelTime = liveTrackInfo.jaldeeDistanceTime.jaldeelTravelTime.travelTime;

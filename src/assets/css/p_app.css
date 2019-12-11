@@ -44,3 +44,6 @@ html, body {
 .sp-login-cap h2{
   font-size: 20px;
 }
+.ynw-common-form-nm.login-form .mob-prefix span {
+  padding: 20px 10px 0px 5px !important
+}

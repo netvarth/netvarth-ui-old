@@ -280,7 +280,6 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getLicenseSubscription()
             .subscribe(
                 data => {
-                    console.log(data);
                     this.license_sub = data;
                     this.licensePlan = this.license_sub.licSubType;
                     this.licenseDisplayName = this.license_sub.licSubTypeDisplayName;
@@ -318,6 +317,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
                                 this.netTotal = this.grandTotal - this.appliedDiscount;
                                 if (meta['type'] === 'Trial' || meta['pkgId'] === 1) {
                                     this.showAmounts = false;
+                                } else {
+                                    this.showAmounts = true;
                                 }
                                 return false;
                             }

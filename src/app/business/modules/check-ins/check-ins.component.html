@@ -651,6 +651,12 @@
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('new')"></i> </div>
+                    <div *ngIf="consumerTrackstatus && waitlistSelection===1"
+                          class="statuslink popup" (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
+                          <i class="fa fa-location-arrow"></i><span class="popuptext" id="myPopup">{{customerMsg}}</span>
+                          <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
+                            from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span> -->
+                        </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
@@ -782,12 +788,12 @@
                         <!-- <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')">
                           <i class="fa fa-times"></i> <span> {{cancel_cap}} </span>
                         </a> -->
-                        <div *ngIf="checkin.jaldeeStartTimeType == 'ONEHOUR' || checkin.jaldeeStartTimeType =='TWOHOUR'"
+                        <!-- <div *ngIf="checkin.jaldeeStartTimeType == 'ONEHOUR' || checkin.jaldeeStartTimeType =='TWOHOUR'"
                           class="btn-play popup" (click)="locateCustomer(checkin.ynwUuid,i)">
                           <i class="fa fa-location-arrow"></i>Where is my customer
                           <span class="popuptext" id="myPopup{{[i]}}">Your customer is {{distance[i]}} {{unit[i]}} away
                             from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span>
-                        </div>
+                        </div> -->
                         <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'new')">
                           <i class="fa fa-angle-up black"></i>
                         </a>
