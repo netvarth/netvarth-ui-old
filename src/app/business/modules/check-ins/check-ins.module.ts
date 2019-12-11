@@ -3,6 +3,7 @@ import { CheckInsComponent } from './check-ins.component';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AdjustQueueDelayComponent } from './queue-delay/adjust-queue-delay.component';
+import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { CheckinsRoutingModule } from './check-ins.routing.module';
 import { BreadCrumbModule } from '../../../shared/modules/breadcrumb/breadcrumb.module';
 import { CommonModule } from '@angular/common';
@@ -37,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
+        LocateCustomerComponent,
         ProviderWaitlistCheckInDetailComponent,
         ApplyLabelComponent
     ],
@@ -44,6 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,
+        LocateCustomerComponent,
         ApplyLabelComponent
     ],
     exports: [CheckInsComponent]

@@ -19,6 +19,7 @@ import { CheckInComponent } from '../../../shared/modules/check-in/check-in.comp
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { Observable } from 'rxjs/Observable';
+import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -181,6 +182,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   viewbilldialogRef;
   makPaydialogRef;
   sendmsgdialogRef;
+  locateCustomerdialogRef;
+  
   screenWidth;
   isCheckin;
   small_device_display = false;
@@ -1781,6 +1784,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.trackDetail = data;
       this.customerMsg = this.locateCustomerMsg(this.trackDetail);
 
+      this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          message: this.customerMsg
+        }
+      });
+      this.locateCustomerdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+        }
+      });
+
     //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
     //   this.distance = this.trackDetail.jaldeeDistance.distance;
     //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
@@ -1803,7 +1819,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const hours = Math.floor(travelTime / 60);
     const mode = details.jaldeelTravelTime.travelMode;
     const minutes = travelTime % 60;
-    const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+   // const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
     let message = '';
     if (distance === 0) {
       message += 'Your customer is close to you, will arrive shortly' ;

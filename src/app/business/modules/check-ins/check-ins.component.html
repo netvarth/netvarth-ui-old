@@ -653,7 +653,8 @@
                     <i class="fa icon-note" (click)="addProviderNote('new')"></i> </div>
                     <div *ngIf="consumerTrackstatus && waitlistSelection===1"
                           class="statuslink popup" (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
-                          <i class="fa fa-location-arrow"></i><span class="popuptext" id="myPopup">{{customerMsg}}</span>
+                          <i class="fa fa-location-arrow"></i>
+                          <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
                           <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
                             from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span> -->
                         </div>
