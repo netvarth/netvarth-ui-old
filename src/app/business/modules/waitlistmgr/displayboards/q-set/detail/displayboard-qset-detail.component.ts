@@ -48,7 +48,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     display_schedule: any = [];
     defaultLables: any = [];
     showLabelEdit: any = [];
-    selectedCategory = 'SERVICE';
+    selectedCategory = 'DEPARTMENT';
     selectedCategoryValue;
     labelDisplayname: any = [];
     labelDefaultvalue: any = [];
@@ -271,7 +271,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getServicesList(params)
             .subscribe(data => {
                 this.services_list = data;
-                this.selectedCategoryValue = this.services_list[0].id;
                 this.serviceSelection(this.services_list[0].id);
             });
     }
@@ -286,6 +285,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                             this.departments.push(this.deptObj.departments[i]);
                         }
                     }
+                    this.selectedCategoryValue = this.departments[0].departmentId;
                 },
                 error => {
                     this.shared_Functionsobj.apiErrorAutoHide(this, error);

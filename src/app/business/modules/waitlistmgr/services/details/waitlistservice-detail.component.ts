@@ -53,6 +53,16 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             (params) => {
                 this.service_id = params.id;
                 this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                if (this.service_id === 'add') {
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: 'Add'
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                }
             }
         );
         this.activated_route.queryParams.subscribe(

@@ -97,7 +97,8 @@
                                                     (selectionChange)="onItemSelect(subdom.value)">
                                                     <mat-option *ngFor="let subdomain of subDomains; let i = index"
                                                         [value]="subdomain">
-                                                        {{subdomain.displayName}}
+                                                        <!-- {{subdomain.displayName}} -->
+                                                        {{subdomain_displayname[subdomain.id]}}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>

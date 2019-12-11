@@ -506,5 +506,10 @@ export const projectConstants = {
   ],
   LIVETRACK_CONST : {
     'KILOMETER': 'km'
+  },
+  SUBDOMAIN_DISPLAYNAME: {
+    1: 'Doctor',
+    2: 'Dentist',
+    3: 'Alternative Medicine Practitioner'
   }
 };

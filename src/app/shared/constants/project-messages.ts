@@ -1409,8 +1409,8 @@ export const Messages = {
   'JDN_CAP': 'JDN',
   'DISPLAYBOARD_HEADING': 'Queue Statusboard',
   'DISPLAYBOARD__INHELP': 'display help',
-  'QSET_ADD': 'Q-set added successfully',
-  'QSET_UPDATE': 'Q-set updated successfully',
+  'QSET_ADD': 'Statusboard criteria added successfully',
+  'QSET_UPDATE': 'Statusboard criteria updated successfully',
   'DISPLAYBOARD_ADD': 'Queue Statusboard added successfully',
   'DISPLAYBOARD_UPDATE': 'Queue Statusboard updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
@@ -1430,6 +1430,6 @@ export const Messages = {
   'JOINCORP_SUCCESS': 'You joined as a corporate',
   'CREATECORP_SUCCESS': 'Corporate created successfully',
   // live track
-  'TRACKINGENABLED' : 'Tracking Enabled successfully',
+  'TRACKINGENABLED': 'Tracking Enabled successfully',
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully'
 };
