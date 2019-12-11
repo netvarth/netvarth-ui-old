@@ -124,7 +124,11 @@ export class ApplyLabelComponent implements OnInit {
             const valset = {};
             valset['value'] = this.value;
             // valset['shortValue'] = this.value.replace(' ', '_');
-            valset['shortValue'] = this.short_value;
+            if (this.short_value) {
+                valset['shortValue'] = this.short_value;
+            } else {
+                valset['shortValue'] = this.value;
+            }
             if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
                 valueSet.push(valset);
             }
@@ -147,7 +151,11 @@ export class ApplyLabelComponent implements OnInit {
             let valueSet = [];
             const valset = {};
             valset['value'] = this.value;
-            valset['shortValue'] = this.short_value;
+            if (this.short_value) {
+                valset['shortValue'] = this.short_value;
+            } else {
+                valset['shortValue'] = this.value;
+            }
             valueSet = this.label.valueSet;
             if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
                 valueSet.push(valset);

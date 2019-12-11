@@ -453,7 +453,7 @@
                                 </li>
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
-                                    (click)="addLabelvalue('started', 'newvalue', label.label)">
+                                    (click)="addLabelvalue('started', 'newvalue', label)">
                                     {{label.displayName}}</a>
                                 </li>
                               </ul>
@@ -835,7 +835,7 @@
                                 </li>
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
-                                    (click)="addLabelvalue('completed', 'newvalue', label.label)">
+                                    (click)="addLabelvalue('completed', 'newvalue', label)">
                                     {{label.displayName}}</a>
                                 </li>
                               </ul>
@@ -990,7 +990,7 @@
                                 </li>
                                 <li *ngFor="let label of providerLabels;let i = index" [(value)]="i">
                                   <a class="pointer-cursor" style="color: black;font-weight: 700;"
-                                    (click)="addLabelvalue('cancelled', 'newvalue', label.label)">
+                                    (click)="addLabelvalue('cancelled', 'newvalue', label)">
                                     {{label.displayName}}</a>
                                 </li>
                               </ul>

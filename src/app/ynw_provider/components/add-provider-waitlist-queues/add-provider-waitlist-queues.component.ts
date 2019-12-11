@@ -548,7 +548,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           'id': form_data.qlocation
         },
         'services': selser,
-        'tokenstarts': form_data.tokennum
+        'tokenStarts': form_data.tokennum
       };
       if (this.data.type === 'edit') {
         this.ifedit = true;

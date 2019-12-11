@@ -53,8 +53,8 @@
                                                 <mat-form-field *ngIf="filters['ack_status']">
                                                     <mat-select (selectionChange)="do_search(false)"
                                                         [(ngModel)]="alertSelAck" name="catg">
-                                                        <!-- <mat-option value=""> {{any_cap}}
-                                                        </mat-option> -->
+                                                        <mat-option value=""> {{any_cap}}
+                                                        </mat-option>
                                                         <mat-option value="true">
                                                             {{acknowledged_cap}}</mat-option>
                                                         <mat-option value="false">
