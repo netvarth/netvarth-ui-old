@@ -797,7 +797,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       this.addLocation();
     }
     // the following section is commented as client told that they wanted the provider
-    // to be taken to the location details page under Check-In manager when clicked on
+    // to be taken to the location details page under Q manager when clicked on
     // edit button, rather than editing the location here itself
 
     /* const dialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
