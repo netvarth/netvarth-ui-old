@@ -1207,7 +1207,7 @@
                         <mat-expansion-panel [expanded]='showcheckinmanager'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('checkinmanager')">
-                                    Queue Manager
+                                    Q Manager
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
@@ -1766,65 +1766,93 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
                             <mat-accordion>
-                <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
-                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                        class="accordion">
-                        <mat-panel-title class="accordion-title">
-                            <span class="helpcontent"
-                                (click)="handleScroll('settings-displayboards','checkinmanager')">Queue Statusboards</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-        
-                    
-                            <div class="helpcontent">
-                                    Get an immediate overview or a quick reference of check-ins or any related information at the premise with the feature “Queue Status Board” in Jaldee. To create and display a status board the priest has to purchase a Queue Status Board addon from license section. Priest can customize the display boards to show any information they want by selecting the layout and also status board criterias from the created list. We’ll help you replace the conventional display boards with Queue Status Board to display check-in information.
-                                    <ul>
-                                        <li>To create a Queue Status Board, first you have to create a “Status Board Criteria”.</li>
-                                        <li>Status Board Criterias are created to display the required information in Queue Status Board. Once a status board criteria is set, it can be added to the queue status board to display.
-                                        </li>
-                                    </ul>
-                                    <strong><u>How to create a status board criteria?</u></strong><br>
-                                    <ol>
-                                    <li>Click  <strong>“CREATE A QUEUE STATUS BOARD”</strong> and to start with creating a status board criteria, click <strong>“CREATE”</strong>.
-                                    </li>
-                                    <li>Here, enter the name of the status board criteria you are about to create.
-                                    </li>
-                                    <li>Under category, choose from <strong>Services, Queues,</strong> or <strong>Departments</strong>(only when department is enabled)to be displayed.</li>
-                                    <li>Then choose from the options listed corresponding to the category selected. For example if category chosen is services, the list of  services added to the priest  profile is listed here. Choose one service from the list.
-                                    </li>
-                                    <li>And then select the fields to be displayed in queue status board. Also you can edit the field name from here.
-                                    </li>
-                                    <li>When you have all the information set, click “Save” and thus a status board criteria is created.
-                                    </li>
-                                    <li>Once created these can be edited using the pencil icon in the right corner.</li>
-                                    </ol>
-                                    <strong><u>How to create a Queue Status Board?
-                                    </u></strong><br>
-                                    <ol>
-                                        <li>To start with click on<strong>“CREATE A QUEUE STATUS BOARD”</strong> .
-                                        </li>
-                                        <li>Select a layout that you want from the list.</li>
-                                        <li>Give a title for the queue status board.</li>
-                                        <li>Lastly, but most importantly select the already added status board criteria you wanted to display in the status board from the list.
-                                        </li>
-                                        <li>Status board criteria can be chosen differently in four different layouts. This is given below:
-                                            <ul>
-                                                <li>If 1 x 1 layout is selected, only one status board criteria can be chosen.
+                                <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
+                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                                        class="accordion">
+                                        <mat-panel-title class="accordion-title">
+                                            <span class="helpcontent"
+                                                (click)="handleScroll('settings-displayboards','checkinmanager')">Queue
+                                                Statusboards</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+
+
+                                    <div class="helpcontent">
+                                        Get an immediate overview or a quick reference of check-ins or any related
+                                        information at the premise with the feature “Queue Status Board” in Jaldee. To
+                                        create and display a status board the priest has to purchase a Queue Status
+                                        Board addon from license section. Priest can customize the display boards to
+                                        show any information they want by selecting the layout and also status board
+                                        criterias from the created list. We’ll help you replace the conventional display
+                                        boards with Queue Status Board to display check-in information.
+                                        <ul>
+                                            <li>To create a Queue Status Board, first you have to create a “Status Board
+                                                Criteria”.</li>
+                                            <li>Status Board Criterias are created to display the required information
+                                                in Queue Status Board. Once a status board criteria is set, it can be
+                                                added to the queue status board to display.
+                                            </li>
+                                        </ul>
+                                        <strong><u>How to create a status board criteria?</u></strong><br>
+                                        <ol>
+                                            <li>Click <strong>“CREATE A QUEUE STATUS BOARD”</strong> and to start with
+                                                creating a status board criteria, click <strong>“CREATE”</strong>.
+                                            </li>
+                                            <li>Here, enter the name of the status board criteria you are about to
+                                                create.
+                                            </li>
+                                            <li>Under category, choose from <strong>Services, Queues,</strong> or
+                                                <strong>Departments</strong>(only when department is enabled)to be
+                                                displayed.</li>
+                                            <li>Then choose from the options listed corresponding to the category
+                                                selected. For example if category chosen is services, the list of
+                                                services added to the priest profile is listed here. Choose one service
+                                                from the list.
+                                            </li>
+                                            <li>And then select the fields to be displayed in queue status board. Also
+                                                you can edit the field name from here.
+                                            </li>
+                                            <li>When you have all the information set, click “Save” and thus a status
+                                                board criteria is created.
+                                            </li>
+                                            <li>Once created these can be edited using the pencil icon in the right
+                                                corner.</li>
+                                        </ol>
+                                        <strong><u>How to create a Queue Status Board?
+                                            </u></strong><br>
+                                        <ol>
+                                            <li>To start with click on<strong>“CREATE A QUEUE STATUS BOARD”</strong> .
+                                            </li>
+                                            <li>Select a layout that you want from the list.</li>
+                                            <li>Give a title for the queue status board.</li>
+                                            <li>Lastly, but most importantly select the already added status board
+                                                criteria you wanted to display in the status board from the list.
+                                            </li>
+                                            <li>Status board criteria can be chosen differently in four different
+                                                layouts. This is given below:
+                                                <ul>
+                                                    <li>If 1 x 1 layout is selected, only one status board criteria can
+                                                        be chosen.
                                                     </li>
-                                                <li>If 1 x 2 layout is selected two status board criteria can be chosen.</li>
-                                                <li>If 2 x 1 layout is selected two status board criteria can be chosen.</li>
-                                                <li>If 2 x 2 layout is selected four status board criteria can be chosen.</li>
-                                            </ul>
-                                        </li>
-                                        <li>Click “Save” and a new queue status board is created.</li>
-                                        <li>From the list of queue status boards created click the three dots menu in the right corner click “Open” to view the display board. Options to edit or delete the status boards are given in the three dots menu.</li>
-                                    </ol>
-            
-                                </div>
-                  
-        
-                </mat-expansion-panel>
-            </mat-accordion>
+                                                    <li>If 1 x 2 layout is selected two status board criteria can be
+                                                        chosen.</li>
+                                                    <li>If 2 x 1 layout is selected two status board criteria can be
+                                                        chosen.</li>
+                                                    <li>If 2 x 2 layout is selected four status board criteria can be
+                                                        chosen.</li>
+                                                </ul>
+                                            </li>
+                                            <li>Click “Save” and a new queue status board is created.</li>
+                                            <li>From the list of queue status boards created click the three dots menu
+                                                in the right corner click “Open” to view the display board. Options to
+                                                edit or delete the status boards are given in the three dots menu.</li>
+                                        </ol>
+
+                                    </div>
+
+
+                                </mat-expansion-panel>
+                            </mat-accordion>
 
 
                         </mat-expansion-panel>
@@ -2695,7 +2723,7 @@
                                     <td class="th6 light-col long"><i class="fa fa-check"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="th3 headcol">Queue manager integration with Jaldee.com</th>
+                                    <th class="th3 headcol">Q manager integration with Jaldee.com</th>
                                     <td class="th2 light-col long"><i class="fa fa-check"></i></td>
                                     <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                     <td class="th3 light-col long"><i class="fa fa-check"></i></td>
@@ -3083,7 +3111,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="td1">Jaldee Queue manager multi provider (i.e for hospitals, nursing homes,
+                            <td class="td1">Jaldee Q manager multi provider (i.e for hospitals, nursing homes,
                                 clinics) </td>
                             <td class="td2 bordl">
                                 <ul class="ul-normal">
@@ -3572,7 +3600,9 @@
                         </mat-expansion-panel-header>
 
                         <div class="helpcontent">
-                                Every newly created priest dashboard has a default theme set in Jaldee. If you wish to change the view of your profile, you can select the available themes from. The selection will automatically switch your profile’s appearance according to your selection.   
+                            Every newly created priest dashboard has a default theme set in Jaldee. If you wish to
+                            change the view of your profile, you can select the available themes from. The selection
+                            will automatically switch your profile’s appearance according to your selection.
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -4557,9 +4587,7 @@
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
-
             </div>
-
         </mat-expansion-panel>
     </mat-accordion>
 
@@ -4664,12 +4692,8 @@
                 <span class="helpcontent">Services</span>
                 </mat-panel-title>
                 </mat-expansion-panel-header>
-                
                 <div class="helpcontent">
-                
-                
                 </div>
-                
                 </mat-expansion-panel>
                 </mat-accordion>
                 <mat-accordion>
@@ -4681,17 +4705,12 @@
                 <span class="helpcontent">Queues</span>
                 </mat-panel-title>
                 </mat-expansion-panel-header>
-                
                 <div class="helpcontent">
-                
-                
                 </div>
-                
                 </mat-expansion-panel>
                 </mat-accordion>
                 </mat-expansion-panel>
                 </mat-accordion> -->
-
     </div>
     </div>
     </div>
