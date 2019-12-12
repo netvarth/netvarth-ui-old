@@ -101,7 +101,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   cronHandleTrack: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
-  //refreshTimeForTracking = 600000;
+  refreshTimeForTracking = 600000;
   counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
   open_fav_div = null;
   hideShowAnimator = false;

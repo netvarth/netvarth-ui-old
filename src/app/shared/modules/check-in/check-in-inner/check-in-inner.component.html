@@ -482,7 +482,7 @@
                     <!-- </div> -->
                     <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
                         Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod('DRIVING')"></i>
-                        <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i>
+                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i> -->
                         <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20" src="./assets/images/walking.png" alt=""  style="width: 15px;height:15px;" />
                         <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"  src="./assets/images/walking-selected.png" alt=""  style="width: 15px;height:15px;" />
                         <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
