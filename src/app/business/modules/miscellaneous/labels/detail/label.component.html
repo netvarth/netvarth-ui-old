@@ -21,7 +21,7 @@
                                         </div>
                                         <div class="item desfont"
                                             *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">
-                                            <span class="ttle">Values Set</span>
+                                            <span class="ttle">Value Set</span>
                                             <p class="form-level-settings">Actual Value(Short Value)</p>
                                             <span class="mgn-rt-5" *ngFor="let labelvalue of labelData.valueSet"> {{labelvalue.value}}({{labelvalue.shortValue}})</span>
                                         </div>
@@ -56,7 +56,7 @@
                                             </mat-form-field>
                                         </div>
                                         <div class="notifications mgn-bt-10">
-                                            <span class="shortcut pull-left"> Values Set</span>
+                                            <span class="shortcut pull-left"> Value Set</span>
                                             <div class="pull-left" [class.icon-add]="!showAddsec" [class.icon-minus]="showAddsec"
                                                 (click)="showAddsection()"></div>
                                             <div class="clearfix"></div>
