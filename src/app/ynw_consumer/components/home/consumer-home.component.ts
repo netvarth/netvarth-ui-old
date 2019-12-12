@@ -1144,21 +1144,21 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   liveTrackPolling() {
     const _this = this;
     if (_this.pollingSet && _this.pollingSet.length > 0) {
-      //console.log(_this.pollingSet);
+      // console.log(_this.pollingSet);
       _this.setSystemDate().then(
-        () => { 
+        () => {
           for (const waitlist of _this.pollingSet) {
-            //console.log("for" +waitlist);
+            // console.log("for" +waitlist);
             if (waitlist.jaldeeWaitlistDistanceTime) {
-             // console.log(waitlist);
+              // console.log(waitlist);
               let pollingDtTim = '';
               let pollingDateTime = '';
               if (waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
                 pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
-               // console.log('pollingDateTime' + pollingDateTime);
-               // console.log('serverDateTime' + serverDateTime);
+                // console.log('pollingDateTime' + pollingDateTime);
+                // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)

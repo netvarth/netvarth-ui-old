@@ -36,28 +36,30 @@
                                 </div>
                             </div>
                             <div class="col-md-12" *ngIf="actionparam !== 'view'">
+                                <p class="form-level-settings no-margin mgn-up-10">Create label to group {{customer_label}}s,
+                                    {{waitlist_label}}s, etc. </p>
                                 <form novalidate (keyup)="resetApiErrors()"
                                     class="ynw-common-form-nm wiz-service labelForm serviceform">
                                     <ng-container>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group"> -->
                                             <!-- <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="label_name"
                                                     placeholder="{{label_name_cap}}" [(ngModel)]="label"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field> -->
-                                        </div>
+                                        <!-- </div> -->
                                         <div class="c-ot m0 col-md-12 no-padding">
-                                        <div class="form-group col-md-7 no-padding">
-                                            <mat-form-field>
-                                                <input matInput type="text" class="form-control" id="displayName"
-                                                    placeholder="{{label_name_cap}}*" [(ngModel)]="displayName"
-                                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="form-group item col-md-5 no-padding-small mgn-up-20">
-                                            <span class="ttle">Data type</span>
-                                            <span>Text</span>
-                                        </div>
+                                            <div class="form-group col-md-7 no-padding">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="displayName"
+                                                        placeholder="{{label_name_cap}}*" [(ngModel)]="displayName"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="form-group item col-md-5 no-padding-small mgn-up-20">
+                                                <span class="ttle">Data type</span>
+                                                <span>Text</span>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <mat-form-field>
@@ -69,6 +71,8 @@
                                             </mat-form-field>
                                         </div>
                                         <div class="notifications mgn-bt-10">
+                                            <p class="form-level-settings no-margin mgn-up-20">Set values for labels and also set shortnames
+                                                for each value for easy usage. </p>
                                             <span class="shortcut pull-left"> Value Set</span>
                                             <div class="pull-left" [class.icon-add]="!showAddsec"
                                                 [class.icon-minus]="showAddsec" (click)="showAddsection()"></div>
