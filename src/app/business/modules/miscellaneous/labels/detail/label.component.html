@@ -19,11 +19,18 @@
                                             <span
                                                 *ngIf="labelData.description">{{ labelData.description | capitalizeFirst}}</span>
                                         </div>
+                                        <div class="item displyfont">
+                                            <span class="ttle">Data type</span>
+                                            <span>Text</span>
+                                        </div>
+                                    </div>
+                                    <div class="c-ot m0 mgn-up-20">
                                         <div class="item desfont"
                                             *ngIf="labelData && labelData.valueSet && labelData.valueSet.length > 0">
                                             <span class="ttle">Value Set</span>
                                             <p class="form-level-settings">Actual Value(Short Value)</p>
-                                            <span class="mgn-rt-5" *ngFor="let labelvalue of labelData.valueSet"> {{labelvalue.value}}({{labelvalue.shortValue}})</span>
+                                            <span class="mgn-rt-5" *ngFor="let labelvalue of labelData.valueSet">
+                                                {{labelvalue.value}}({{labelvalue.shortValue}})</span>
                                         </div>
                                     </div>
                                 </div>
@@ -39,12 +46,18 @@
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field> -->
                                         </div>
-                                        <div class="form-group">
+                                        <div class="c-ot m0 col-md-12 no-padding">
+                                        <div class="form-group col-md-7 no-padding">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="displayName"
                                                     placeholder="{{label_name_cap}}*" [(ngModel)]="displayName"
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
+                                        </div>
+                                        <div class="form-group item col-md-5 no-padding-small mgn-up-20">
+                                            <span class="ttle">Data type</span>
+                                            <span>Text</span>
+                                        </div>
                                         </div>
                                         <div class="form-group">
                                             <mat-form-field>
@@ -57,20 +70,22 @@
                                         </div>
                                         <div class="notifications mgn-bt-10">
                                             <span class="shortcut pull-left"> Value Set</span>
-                                            <div class="pull-left" [class.icon-add]="!showAddsec" [class.icon-minus]="showAddsec"
-                                                (click)="showAddsection()"></div>
+                                            <div class="pull-left" [class.icon-add]="!showAddsec"
+                                                [class.icon-minus]="showAddsec" (click)="showAddsection()"></div>
                                             <div class="clearfix"></div>
-                                            <p class="form-level-settings">Actual Value(Short Value)</p>                                            
+                                            <p class="form-level-settings">Actual Value(Short Value)</p>
                                         </div>
-                                        <div class="form-group col-md-12 shortcuts no-padding  mgn-bt-20" *ngIf="showAddsec">
+                                        <div class="form-group col-md-12 shortcuts no-padding  mgn-bt-20"
+                                            *ngIf="showAddsec">
                                             <div class="col-md-4 no-padding">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="value"
                                                         maxlength="10" [(ngModel)]="value"
                                                         [ngModelOptions]="{standalone: true}"
                                                         placeholder="Enter  Value*" autocomplete="off">
-
-                                                        <app-field-error-display [displayError]="true" *ngIf="api_error['value']" errorMsg="{{api_error['value']}}"></app-field-error-display>
+                                                    <app-field-error-display [displayError]="true"
+                                                        *ngIf="api_error['value']" errorMsg="{{api_error['value']}}">
+                                                    </app-field-error-display>
                                                 </mat-form-field>
                                                 <div class="form-group col-md-12 no-padding">
                                                     <mat-checkbox [(ngModel)]="defaultShortValue"
@@ -86,7 +101,9 @@
                                                         maxlength="10" [(ngModel)]="shortValue"
                                                         [ngModelOptions]="{standalone: true}"
                                                         placeholder="Enter  short value*" autocomplete="off">
-                                                        <app-field-error-display [displayError]="true" *ngIf="api_error['short']" errorMsg="{{api_error['short']}}"></app-field-error-display>
+                                                    <app-field-error-display [displayError]="true"
+                                                        *ngIf="api_error['short']" errorMsg="{{api_error['short']}}">
+                                                    </app-field-error-display>
                                                 </mat-form-field>
                                             </div>
                                             <div class="mgn-up-25 col-md-2 no-padding-small">
@@ -98,8 +115,6 @@
                                                     class="cs-btn bt3">Add</button>
                                             </div>
                                         </div>
-                                        
-
                                         <div class="no-padding col-md-12 label-list" *ngIf="!showAddsec">
                                             <div class="no-padding col-md-10 labeladsmall mgn-bt-10"
                                                 *ngFor="let valueset of valueSet; let j=index">
@@ -115,13 +130,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="actiondiv labelsave" *ngIf="!showAddsec">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
-                                            <button (click)="onSubmit()" type="button"
-                                                [disabled]="savedisabled" class="cs-btn bt2 jd_btn">{{button_title}}</button>
+                                            <button (click)="onSubmit()" type="button" [disabled]="savedisabled"
+                                                class="cs-btn bt2 jd_btn">{{button_title}}</button>
                                         </div>
                                         <br />
                                     </ng-container>
