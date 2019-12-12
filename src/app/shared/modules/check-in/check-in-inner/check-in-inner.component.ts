@@ -1490,6 +1490,7 @@ export class CheckInInnerComponent implements OnInit {
         );
     } else {
       this.shareLoc = false;
+      this.updateLiveTrackInfo();
     }
   }
 
