@@ -69,6 +69,8 @@
                                                         maxlength="10" [(ngModel)]="value"
                                                         [ngModelOptions]="{standalone: true}"
                                                         placeholder="Enter  Value*" autocomplete="off">
+
+                                                        <app-field-error-display [displayError]="true" *ngIf="api_error['value']" errorMsg="{{api_error['value']}}"></app-field-error-display>
                                                 </mat-form-field>
                                                 <div class="form-group col-md-12 no-padding">
                                                     <mat-checkbox [(ngModel)]="defaultShortValue"
@@ -84,6 +86,7 @@
                                                         maxlength="10" [(ngModel)]="shortValue"
                                                         [ngModelOptions]="{standalone: true}"
                                                         placeholder="Enter  short value*" autocomplete="off">
+                                                        <app-field-error-display [displayError]="true" *ngIf="api_error['short']" errorMsg="{{api_error['short']}}"></app-field-error-display>
                                                 </mat-form-field>
                                             </div>
                                             <div class="mgn-up-25 col-md-2 no-padding-small">

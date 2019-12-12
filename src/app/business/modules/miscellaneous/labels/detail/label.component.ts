@@ -49,7 +49,7 @@ export class LabelComponent implements OnInit {
     action: string;
     status: any;
     breadcrumbs = this.breadcrumbs_init;
-    api_error: any;
+    api_error: any = [];
     api_success: any;
     valueSet = [];
     value;
@@ -178,6 +178,12 @@ export class LabelComponent implements OnInit {
             );
     }
     addtoValueSet(value, shortcut) {
+        this.api_error = [];
+        if (!value) {
+this.api_error['value'] = 'Please enter the value';
+        } else if (!this.defaultShortValue && !shortcut) {
+            this.api_error['short'] = 'Please enter the short value';
+        } else {
         const valset = {};
         valset['value'] = value;
         if (shortcut) {
@@ -194,6 +200,7 @@ export class LabelComponent implements OnInit {
         value = '';
         shortcut = '';
     }
+    }
     deleteValueforSet(i) {
         this.value = '';
         this.shortValue = '';
@@ -201,8 +208,8 @@ export class LabelComponent implements OnInit {
 
     }
     resetApiErrors() {
-        this.api_error = null;
-        this.api_success = null;
+        this.api_error = [];
+        this.api_success = [];
     }
     onCancel() {
         this.editLabelbyId(this.label_id);

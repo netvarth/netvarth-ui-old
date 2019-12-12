@@ -168,7 +168,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     // } else {
     this.getAlertList(this.holdalertSelAck || '', seldate);
     // }
-    if (seldate !== '' || this.holdalertSelAck !== 'false') {
+    if (seldate !== '' || this.holdalertSelAck !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
