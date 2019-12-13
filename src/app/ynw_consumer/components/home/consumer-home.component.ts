@@ -1117,6 +1117,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   startTracking(uid, id, i) {
     this.shared_services.startLiveTrack(uid, id)
       .subscribe(data => {
+        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1125,6 +1126,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   stopTracking(uid, id, i) {
     this.shared_services.stopLiveTrack(uid, id)
       .subscribe(data => {
+        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

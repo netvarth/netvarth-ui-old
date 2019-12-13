@@ -191,7 +191,10 @@
                                     <div  >
                                         <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable live tracking </label></span>
                                         <p *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'" class="form-level-settings"> Automatically Live track is enabled </p>
-                                        <span *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'"> <label>Mode of transport </label></span>
+                                        <span *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'"> 
+                                            <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I am driving </label>
+                                            <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">I am walking </label>
+                                        </span>
                                         
                                         <span class="" *ngIf="!changemode[i]">
                                                 <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
