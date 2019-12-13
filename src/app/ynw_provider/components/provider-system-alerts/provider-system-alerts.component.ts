@@ -84,8 +84,8 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.alert_details = [];
         } else {
           this.alertStatus = 1;
-          this.getAlertList(this.alertSelAck, sdate);
         }
+        this.getAlertList(this.alertSelAck, sdate);
         this.api_loading = false;
       },
         () => {
