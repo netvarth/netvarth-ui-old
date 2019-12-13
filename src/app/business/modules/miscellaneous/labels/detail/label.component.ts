@@ -4,7 +4,6 @@ import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 @Component({
@@ -49,7 +48,7 @@ export class LabelComponent implements OnInit {
     action: string;
     status: any;
     breadcrumbs = this.breadcrumbs_init;
-    api_error: any;
+    api_error: any = [];
     api_success: any;
     valueSet = [];
     value;
@@ -59,14 +58,16 @@ export class LabelComponent implements OnInit {
     displayName;
     showAddsec = false;
     defaultShortValue = true;
+    customer_label = '';
+    waitlist_label = '';
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         public fed_service: FormMessageDisplayService,
         private shared_functions: SharedFunctions,
-        private shared_Functionsobj: SharedFunctions,
-        private provider_shared_functions: ProviderSharedFuctions,
-        private fb: FormBuilder) {
+        private shared_Functionsobj: SharedFunctions) {
+        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.waitlist_label = this.shared_functions.getTerminologyTerm('waitlist');
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
         }
@@ -82,7 +83,7 @@ export class LabelComponent implements OnInit {
                         breadcrumbs.push(e);
                     });
                     breadcrumbs.push({
-                        title: 'Add'
+                        title: 'Create Label'
                     });
                     this.breadcrumbs = breadcrumbs;
                 }
@@ -90,6 +91,7 @@ export class LabelComponent implements OnInit {
     }
 
     ngOnInit() {
+
     }
     editLabelbyId(id) {
         this.provider_services.getLabel(id).subscribe(data => {
@@ -178,31 +180,37 @@ export class LabelComponent implements OnInit {
             );
     }
     addtoValueSet(value, shortcut) {
-        const valset = {};
-        valset['value'] = value;
-        if (shortcut) {
-            valset['shortValue'] = shortcut;
+        this.api_error = [];
+        if (!value) {
+            this.api_error['value'] = 'Please enter the value';
+        } else if (!this.defaultShortValue && !shortcut) {
+            this.api_error['short'] = 'Please enter the short value';
         } else {
-            valset['shortValue'] = value;
+            const valset = {};
+            valset['value'] = value;
+            if (shortcut) {
+                valset['shortValue'] = shortcut;
+            } else {
+                valset['shortValue'] = value;
+            }
+            this.value = '';
+            this.shortValue = '';
+            if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
+                this.valueSet.push(valset);
+                this.showAddsec = false;
+            }
+            value = '';
+            shortcut = '';
         }
-        this.value = '';
-        this.shortValue = '';
-        if (valset['value'].length !== 0 && valset['shortValue'].length !== 0) {
-            this.valueSet.push(valset);
-            this.showAddsec = false;
-        }
-        value = '';
-        shortcut = '';
     }
     deleteValueforSet(i) {
         this.value = '';
         this.shortValue = '';
         this.valueSet.splice(i, 1);
-
     }
     resetApiErrors() {
-        this.api_error = null;
-        this.api_success = null;
+        this.api_error = [];
+        this.api_success = [];
     }
     onCancel() {
         this.editLabelbyId(this.label_id);

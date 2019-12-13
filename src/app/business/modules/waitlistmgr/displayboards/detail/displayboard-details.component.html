@@ -17,7 +17,7 @@
                                     </mat-panel-description>
                                 </li>
                                 <li class="dropdown notifications-menu pull-right">
-                                    <a class="title link" (click)="qSetListClicked()">Queue Selection Criterias</a>
+                                    <a class="title link" (click)="qSetListClicked()">Statusboard Criterias</a>
                                 </li>
                             </ul>
                             <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="showMode == 'DBOARD'">
@@ -37,7 +37,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="actionparam !== 'view'">                                                                       
+                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20" *ngIf="actionparam !== 'view'">                                                                       
                                     <form novalidate (keyup)="resetApiErrors()"
                                         class="ynw-common-form-nm wiz-service labelForm serviceform">
                                         <ng-container>
@@ -50,7 +50,7 @@
                                         </div> -->
                                             <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                 <mat-form-field>
-                                                    <mat-select placeholder="Choose the queue statusboard layout"
+                                                    <mat-select placeholder="Choose the statusboard layout"
                                                         id="layout" (selectionChange)="handleLayout(layout)"
                                                         [(ngModel)]="layout" [ngModelOptions]="{standalone: true}">
                                                         <mat-option *ngFor="let layout of boardLayouts"
@@ -63,7 +63,7 @@
                                             <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="displayName"
-                                                        placeholder="Enter title *" [(ngModel)]="displayName"
+                                                        placeholder="Enter the name for the statusboard *" [(ngModel)]="displayName"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
@@ -76,7 +76,7 @@
                                                                 <div *ngFor="let col of createRange(boardCols)"
                                                                     class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                                     <mat-form-field>
-                                                                        <mat-select placeholder="Choose Queue Selection Criteria"
+                                                                        <mat-select placeholder="Choose Statusboard Criteria"
                                                                             [(ngModel)]="boardSelectedItems[row + '_' + col]"
                                                                             [ngModelOptions]="{standalone: true}"
                                                                             (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
@@ -99,9 +99,8 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-12 card qset_add"> To create a queue
-                                                            statusboard,
-                                                            first a queue selection criteria has to be created <span class="cs-btn bt3"
-                                                            (click)="addQSet()">Create Now </span>
+                                                            statusboard, set the statusboard criteria <span class="cs-btn bt3"
+                                                            (click)="addQSet()">Set Now </span>
                                                             <div class="clearfix"></div>
                                                         </div>
                                                     </div>

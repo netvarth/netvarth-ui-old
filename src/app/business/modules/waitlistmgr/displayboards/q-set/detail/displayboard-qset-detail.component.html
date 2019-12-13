@@ -10,7 +10,7 @@
     <div class="col-md-12 no-padding">
         <ul class="nav jd-custom-nav stat-brd-qset">
             <li class="dropdown notifications-menu pull-left">
-                <div class="title">Queue Selection Criteria</div>
+                <div class="title">Statusboard Criteria</div>
             </li>
             <li class="dropdown notifications-menu pull-right">
                 <a class="bk-ctrl link">
@@ -54,22 +54,19 @@
                 <div class="col-md-6">
                     <mat-form-field>
                         <input matInput type="text" class="form-control" id="bName" autocomplete="off"
-                            [(ngModel)]="boardDisplayname" placeholder="Enter the name for your queue-set*">
+                            [(ngModel)]="boardDisplayname" placeholder="Name the statusboard criteria *">
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 criteria-fields">
                 <div class="form-group col-md-12 ">
-                    <label class="col-form-label">{{category}}
-                        <span class="form-level-settings">Choose any one category to be displayed on
-                            your queue statuboard </span>
+                    <label class="col-form-label mgn-bt-10">Choose one from below to be displayed on
+                        your statusboard
+                        <!-- <span class="form-level-settings">Choose one from below to be displayed on
+                            your statusboard </span> -->
                     </label>
 
                     <mat-radio-group [(ngModel)]="selectedCategory">
-                        <mat-radio-button class="mgright50" [value]="'SERVICE'" *ngIf="services_list.length > 0"
-                            (change)="categorySelection('SERVICE')">
-                            {{service_caption}}
-                        </mat-radio-button>
                         <mat-radio-button class="mgright50" [value]="'DEPARTMENT'" *ngIf="departments.length > 0"
                             (change)="categorySelection('DEPARTMENT')">
                             {{department_cap}}s</mat-radio-button>
@@ -77,12 +74,16 @@
                             (change)="categorySelection('QUEUE')">
                             {{queue_cap}}
                         </mat-radio-button>
+                        <mat-radio-button class="mgright50" [value]="'SERVICE'" *ngIf="services_list.length > 0"
+                            (change)="categorySelection('SERVICE')">
+                            {{service_caption}}
+                        </mat-radio-button>
                     </mat-radio-group>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'SERVICE'">
-                    <label class="col-form-label" style="margin-left: 20px">Choose
+                    <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Services</label>
-                    <div *ngFor="let service of services_list; index as i" style="margin-left: 30px;">
+                    <div class="mgn-lt-20" *ngFor="let service of services_list; index as i">
                         <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button [value]="service.id" [checked]="services_list[i].checked"
                                 (change)="serviceSelection(service.id)">
@@ -92,9 +93,9 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'DEPARTMENT'">
-                    <label class="col-form-label" style="margin-left: 20px">Choose
+                    <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Department</label>
-                    <div *ngFor="let department of departments; index as i">
+                    <div class="mgn-lt-20" *ngFor="let department of departments; index as i">
                         <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button [value]="department.departmentId" [checked]="departments[i].checked"
                                 (change)="departmentSelection(department.departmentId)">
@@ -104,9 +105,9 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'QUEUE'">
-                    <label class="col-form-label" style="margin-left: 20px">Choose
+                    <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Queues</label>
-                    <div *ngFor="let schedule of display_schedule; index as i">
+                    <div class="mgn-lt-20" *ngFor="let schedule of display_schedule; index as i">
                         <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button *ngIf="schedule.queueState === 'ENABLED'" [value]="schedule.id"
                                 [checked]="display_schedule[i].checked" (change)="queueSelection(schedule.id)">

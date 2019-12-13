@@ -15,20 +15,22 @@ export class CorporateSettingsComponent implements OnInit {
     accountType;
     domain;
     breadcrumbs = [
-      {
-        url: '/provider/settings',
-        title: 'Settings'
-      },
-      {
-        url: '/provider/settings/miscellaneous',
-        title: 'Miscellaneous'
-      },
-      {
-        title: 'Corporate Settings'
-      }
+        {
+            url: '/provider/settings',
+            title: 'Settings'
+        },
+        {
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
+        },
+        {
+            title: 'Corporate Settings'
+        }
     ];
     loading: boolean;
     corpInfo;
+    corpType;
+    corpId;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -51,7 +53,7 @@ export class CorporateSettingsComponent implements OnInit {
             }
         );
     }
-    onSubmitJoinCorp (corpId) {
+    onSubmitJoinCorp(corpId) {
         this.shared_services.joinCorp(corpId).subscribe(
             (data) => {
                 const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -59,14 +61,16 @@ export class CorporateSettingsComponent implements OnInit {
                 this.shared_functions.setitemToGroupStorage('ynw-user', user);
                 this.accountType = 'BRANCH';
                 this.shared_functions.openSnackBar(Messages.JOINCORP_SUCCESS);
+                this.corpType = '';
+                this.corpId = '';
+                this.getCorporateDetails();
             },
             (error) => {
-                console.log(error);
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }
-    onSubmitCreateCorp (corpName, corpCode) {
+    onSubmitCreateCorp(corpName, corpCode) {
         if (!corpName || corpName === '') {
             this.shared_functions.openSnackBar('Corporate Name required', { 'panelClass': 'snackbarerror' });
             return false;
@@ -76,11 +80,11 @@ export class CorporateSettingsComponent implements OnInit {
             return false;
         }
         const post_data = {
-            'corporateName' : corpName,
-            'corporateCode' : corpCode,
+            'corporateName': corpName,
+            'corporateCode': corpCode,
             'multilevel': true
         };
-        this.shared_services.createCorp (post_data).subscribe(
+        this.shared_services.createCorp(post_data).subscribe(
             (data) => {
                 const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
                 user['accountType'] = 'BRANCH';
@@ -99,7 +103,7 @@ export class CorporateSettingsComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->corporate']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->corporate']);
         }
-      }
+    }
 }

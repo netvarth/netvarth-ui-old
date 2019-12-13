@@ -429,17 +429,20 @@
                 </div>
                 <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
                     <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
-                <div class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your <span class="bold">Estimated Time of Arrival</span>
-                    <span class="mgn-lt-10">
+                <div class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your 
+                    <p class="bold">Estimated Time of Arrival <span  class="mgn-lt-30">
+                            <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
+                        </span></p>
+                    <!-- <span >
                         <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
-                    </span>
+                    </span> -->
                 </div>                     
                 <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
                     <span class="mgn-lt-10">
                         <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
                     </span>
                     <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee will start tracking 1 hour prior to your turn. </span></div>
-                    <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is turned off you will have to enable tracking manually. </span></div>
+                    <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is turned off, you will have to enable tracking manually from your check-in. </span></div>
                 </div>
                 <!-- <div class="form-group mgn-up-5"><label> Share my live ETA with {{activeWt.provider.businessName}}</label>
                     <span class="mgn-lt-10">
@@ -482,7 +485,7 @@
                     <!-- </div> -->
                     <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
                         Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod('DRIVING')"></i>
-                        <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i>
+                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i> -->
                         <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20" src="./assets/images/walking.png" alt=""  style="width: 15px;height:15px;" />
                         <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"  src="./assets/images/walking-selected.png" alt=""  style="width: 15px;height:15px;" />
                         <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
@@ -547,9 +550,11 @@
                 </div>
                 <ng-container>
                     <div *ngIf="shareLoc" class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
-                        <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp;
-                        <button type="button" class="cs-btn bt1 small-btn" (click)="saveLiveTrackDetails()">Ok</button>
+                        <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
+                        <button type="button"  [class.disabled]="track_loading" class="cs-btn bt1 small-btn" (click)="saveLiveTrackDetails()">Ok</button>
+                        <app-common-innerloading-spinner *ngIf="track_loading"></app-common-innerloading-spinner>
                     </div>
+                    
                 </ng-container>
             </div>
         </mat-dialog-content>

@@ -144,6 +144,7 @@ export class CheckInInnerComponent implements OnInit {
   server_date;
   api_loading1 = true;
   api_loading = true;
+  track_loading = false;
   departmentlist: any = [];
   departments: any = [];
   selected_dept;
@@ -168,7 +169,7 @@ export class CheckInInnerComponent implements OnInit {
   travelMode = 'DRIVING';
   notifyTime = 'ONEHOUR';
   notifyAutomatic = true;
-  shareLoc = true;
+  shareLoc = false;
   lat_lng = {
     latitude: 0,
     longitude: 0
@@ -879,17 +880,22 @@ export class CheckInInnerComponent implements OnInit {
             (wailist: any) => {
               this.activeWt = wailist;
               this.liveTrack = true;
-              this.getCurrentLocation().then(
-                (lat_long: any) => {
-                  this.lat_lng = lat_long;
-                  this.saveLiveTrackInfo().then(
-                    (liveTInfo) => {
-                      console.log(liveTInfo);
-                      // this.shareLoc = true;
-                      this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-                    }
-                  );
-                });
+              // if(this.shareLoc){
+              // this.getCurrentLocation().then(
+              //   (lat_long: any) => {
+              //     this.lat_lng = lat_long;
+              //     this.saveLiveTrackInfo().then(
+              //       (liveTInfo) => {
+              //         console.log(liveTInfo);
+              //         // this.shareLoc = true;
+              //         this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
+              //       }
+              //     );
+              //   }, (error) => {
+              //     this.shareLoc = false;
+              //   }
+              //   );
+              // }
               this.resetApi();
             },
             () => {
@@ -1468,9 +1474,23 @@ export class CheckInInnerComponent implements OnInit {
   locationEnableDisable(event) {
     console.log(event);
     if (event.checked) {
-      this.getCurrentLocation();
+      this.getCurrentLocation().then(
+        (lat_long: any) => {
+          this.lat_lng = lat_long;
+          this.saveLiveTrackInfo().then(
+            (liveTInfo) => {
+              console.log(liveTInfo);
+              // this.shareLoc = true;
+              this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
+            }
+          );
+        }, (error) => {
+          this.shareLoc = false;
+        }
+        );
     } else {
-      this.saveLiveTrackInfo();
+      this.shareLoc = false;
+      this.updateLiveTrackInfo();
     }
   }
 
@@ -1531,26 +1551,28 @@ export class CheckInInnerComponent implements OnInit {
     }
   }
   saveLiveTrackDetails() {
+    this.track_loading = true;
     this.resetApi();
     this.updateLiveTrackInfo().then(
       data => {
         if (data) {
-          this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+          //this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
-        setTimeout(() => {
+       // setTimeout(() => {
 
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
           //this.returntoParent.emit('reloadlist');
           this.trackClose('livetrack');
-        }, projectConstants.TIMEOUT_DELAY_LARGE10);
-
+          this.track_loading = false;
+       // }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
+      
   }
   updateLiveTrackInfo() {
     const _this = this;

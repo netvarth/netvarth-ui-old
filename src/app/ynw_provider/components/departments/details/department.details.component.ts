@@ -68,6 +68,14 @@ export class DepartmentDetailComponent implements OnInit {
         if (this.dept_id === 'add') {
             this.dept_id = null;
             this.showServc = false;
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: 'Add'
+            });
+            this.breadcrumbs = breadcrumbs;
         }
         if (this.dept_id) {
             this.getDepartmentDetails();

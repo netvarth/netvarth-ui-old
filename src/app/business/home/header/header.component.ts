@@ -61,6 +61,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
         case 'alertCount':
           this.alertCnt = message.alertCnt;
+// this.getAlertCount();
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -302,5 +303,14 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
+  // getAlertById(date) {
+  //   this.shared_service.getAlertsTotalCnt('false', date)
+  //     .subscribe(() => {
+  //       this.getAlertCount();
+  //       this.getAlerts();
+  //     },
+  //       error => {
+  //       });
+  // }
 }
 

@@ -176,7 +176,9 @@
                 <i class="fa fa-user fa-stack-1x fa-inverse"></i>
             </span>
             <!-- <img [src]="blogo" class="user-image" alt=""> -->
-            <span class="hidden-xs mgn-lt-3" >{{bname}}</span>            
+            <span class="hidden-xs mgn-lt-3" *ngIf="bname">
+              {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }}
+            </span>            
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
@@ -184,7 +186,7 @@
               <img [src]="blogo" class="img-circle pointer-cursor" alt="" (click)="gotoProfile()">
 
               <p class="pointer-cursor" (click)="gotoProfile()">
-                {{bname}}
+            <ng-container *ngIf="bname">    {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }} </ng-container>
                 <small>{{bsector}} ({{bsubsector}})</small>
               </p>
               <p><small>

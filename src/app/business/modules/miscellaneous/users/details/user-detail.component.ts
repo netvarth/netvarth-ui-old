@@ -26,6 +26,7 @@ export class BranchUserDetailComponent implements OnInit {
     email_cap = Messages.EMAIL_CAP;
     mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
     select_subdomain_cap = Messages.SELECT_SB_DMN_CAP;
+    subdomain_displayname = projectConstants.SUBDOMAIN_DISPLAYNAME;
     amForm: FormGroup;
     char_count = 0;
     max_char_count = 250;

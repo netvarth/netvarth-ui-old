@@ -224,7 +224,8 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
         }, projectConstants.TIMEOUT_DELAY_LARGE);*/
         this.getProviderLocations();
       },
-        () => {
+        (error) => {
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           /* this.api_error = error.error;
            setTimeout(() => {
              this.resetApiErrors();

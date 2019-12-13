@@ -1291,11 +1291,20 @@ sup {
 .mgn-lt-20 {
   margin-left: 20px !important;
 }
+.mgn-lt-30 {
+  margin-left: 30px !important;
+}
 .mgn-up-10 {
   margin-top: 10px !important;
 }
 .mgn-up-5 {
   margin-top: 5px !important;
+}
+.mgn-rt-5 {
+  margin-right: 5px !important;
+}
+.mgn-rt-10 {
+  margin-right: 10px !important;
 }
 .mgn-up-4 {
   margin-top: 4px !important;
@@ -1303,7 +1312,9 @@ sup {
 .mgn-up-20 {
   margin-top: 20px !important;
 }
-
+.mgn-up-25 {
+  margin-top: 25px !important;
+}
 .brd-bt {
   border-bottom: 1px solid #ddd !important;
 }
@@ -6411,7 +6422,7 @@ margin-bottom: 30px;
 padding-left: 20px;
 }
 .service {
-line-height: 10px;
+line-height: 15px;
 font-size: smaller;
 }
 .checkin-label {
@@ -6423,7 +6434,8 @@ font-size: 1.1rem;
 cursor: pointer;
 }
 .labels .shortcuts{
-margin-bottom: 0px !important;
+/* margin-bottom: 0px !important; */
+margin-top: -20px !important;
 }
 .labels  .default {
 margin-left: 20px !important;
@@ -6494,4 +6506,48 @@ input.jdn_ip { width: 50px !important}
 }
 .info-lst li {
   padding-top: 5px;
+}
+.qset-detail .criteria-fields .mat-radio-button label {
+  font-weight: 400 !important;
+}
+.qset-detail .criteria-fields .mat-checkbox label {
+  font-weight: 500 !important;
+}
+.locatecustomer-class {
+  width: 300px !important;
+}
+.locate-customer {
+  text-align: center;
+}
+.jd_btn {
+  box-shadow: none;
+  background: #00aef2 !important;
+  outline: none !important;
+  color: #fff !important;
+  font-size: .875rem !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center !important;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer !important;
+  border: none !important;
+  white-space: nowrap !important;
+  line-height: inherit !important;
+  -moz-user-select: none;
+  z-index: 2;
+  text-transform: uppercase;
+  -webkit-border-radius: 3px !important;
+  border-radius: 3px !important;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
 }

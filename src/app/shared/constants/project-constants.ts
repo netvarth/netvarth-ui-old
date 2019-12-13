@@ -176,7 +176,7 @@ export const projectConstants = {
     'none': { 'icon': 'noimage.png', 'class': 'icon-trauma' }
   },
   SUBDOMAIN_ICONS: {
-    physiciansSurgeons: {help: 'single doctor facility', iconClass: 'allopathy_doc'},
+    physiciansSurgeons: {help: 'single doctor facility', iconClass: 'allopathy_doci'},
     hospital: {help: 'multiple doctors facility', iconClass: 'hospital_doc'},
     dentists: {help: 'single doctor facility', iconClass: 'dentists_doc'},
     dentalHosp: {help: 'multiple doctors facility', iconClass: 'dentalHosp_doc'},
@@ -506,5 +506,10 @@ export const projectConstants = {
   ],
   LIVETRACK_CONST : {
     'KILOMETER': 'km'
+  },
+  SUBDOMAIN_DISPLAYNAME: {
+    1: 'Doctor',
+    2: 'Dentist',
+    3: 'Alternative Medicine Practitioner'
   }
 };
