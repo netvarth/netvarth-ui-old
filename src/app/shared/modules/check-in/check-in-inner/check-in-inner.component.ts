@@ -144,7 +144,7 @@ export class CheckInInnerComponent implements OnInit {
   server_date;
   api_loading1 = true;
   api_loading = true;
-  track_loading = false;
+  track_loading = true;
   departmentlist: any = [];
   departments: any = [];
   selected_dept;
@@ -836,7 +836,7 @@ export class CheckInInnerComponent implements OnInit {
     }
   }
   addCheckInConsumer(post_Data) {
-    post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
+    post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
@@ -1480,9 +1480,9 @@ export class CheckInInnerComponent implements OnInit {
           this.saveLiveTrackInfo().then(
             (liveTInfo) => {
               console.log(liveTInfo);
-              // this.shareLoc = true;
+              this.track_loading = false;
               this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-            }
+              }
           );
         }, (error) => {
           this.shareLoc = false;
@@ -1520,6 +1520,7 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   saveLiveTrackInfo() {
+   this.track_loading = true;
     const _this = this;
     console.log(_this.shareLoc);
     return new Promise(function (resolve, reject) {
@@ -1529,7 +1530,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhoneNumber': _this.consumerPhoneNo,
+        'waitlistPhonenumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };
@@ -1537,6 +1538,7 @@ export class CheckInInnerComponent implements OnInit {
         .subscribe(
           data => {
             resolve(data);
+            
           },
           () => {
             reject();
@@ -1584,7 +1586,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhoneNumber': _this.consumerPhoneNo,
+        'waitlistPhonenumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };
