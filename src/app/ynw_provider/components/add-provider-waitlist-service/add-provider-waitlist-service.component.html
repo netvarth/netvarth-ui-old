@@ -192,7 +192,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         <div class="upload-doc" (click)="file.click()" *ngIf="!canceldisabled">
           <label class="col-form-label">{{select_image_cap}}</label>
           <span class="select-wrapper ">
-            <input type="file" capture multiple name="image_src" id="image_src" accept="image/*" #file
+            <input type="file" multiple name="image_src" id="image_src" accept="image/*" #file
               (change)="imageSelect(file,$event)">
           </span>
         </div>
