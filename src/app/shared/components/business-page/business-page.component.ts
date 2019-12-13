@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
-import { CheckInComponent } from '../../modules/check-in/check-in.component';
+// import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ProviderDetailService } from '../provider-detail/provider-detail.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
@@ -840,36 +840,36 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
     });
   }
   showCheckin(locid, locname, curdate, origin?) {
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: {
-          source: 'provdet_checkin',
-          bypassDefaultredirection: 1,
-          provider: {
-            unique_id: this.provider_id,
-            account_id: this.provider_bussiness_id,
-            name: this.businessjson.businessName
-          },
-          location: {
-            id: locid,
-            name: locname
-          },
-          sel_date: curdate,
-          terminologies: this.terminologiesjson
-        },
-        datechangereq: this.changedate_req
-      }
-    });
-    this.checkindialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getbusinessprofiledetails_json('location', true);
-      }
-    });
+    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
+    //   width: '50%',
+    //   panelClass: ['consumerpopupmainclass', 'checkin-consumer'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: false,
+    //     moreparams: {
+    //       source: 'provdet_checkin',
+    //       bypassDefaultredirection: 1,
+    //       provider: {
+    //         unique_id: this.provider_id,
+    //         account_id: this.provider_bussiness_id,
+    //         name: this.businessjson.businessName
+    //       },
+    //       location: {
+    //         id: locid,
+    //         name: locname
+    //       },
+    //       sel_date: curdate,
+    //       terminologies: this.terminologiesjson
+    //     },
+    //     datechangereq: this.changedate_req
+    //   }
+    // });
+    // this.checkindialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'reloadlist') {
+    //     this.getbusinessprofiledetails_json('location', true);
+    //   }
+    // });
   }
   showcheckInButton(servcount?) {
     if (this.settingsjson && this.settingsjson.onlineCheckIns && this.settings_exists && this.business_exists && this.location_exists && (servcount > 0)) {

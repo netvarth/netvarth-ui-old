@@ -21,39 +21,34 @@ const routes: Routes = [
         path: 'coupons',
         component: ProviderCouponsComponent
     },
-        {
-            path: 'coupons',
-            children: [
-                {
-                    path: 'report',
-                    component: ProviderReimburseReportComponent
-                },
-                {
-                    path: 'report/:id',
-                    component: ViewReportComponent
-                }
-            ]
-        },
+    {
+        path: 'coupons',
+        children: [
+            {
+                path: 'report',
+                component: ProviderReimburseReportComponent
+            },
+            {
+                path: 'report/:id',
+                component: ViewReportComponent
+            }
+        ]
+    },
     {
         path: 'coupons/:id',
         component: ProviderJcouponDetailsComponent
     },
     {
-        path: 'items',
-        component: ProviderItemsComponent
-      },
-      {
-        path: 'items/:id',
-        component: ProviderItemsDetailsComponent
-      },
-      {
+        path: 'items', loadChildren: './items/items.module#ItemsModule'
+    },
+    {
         path: 'taxsettings',
         component: ProvidertaxSettingsComponent
-      },
-      {
+    },
+    {
         path: 'paymentsettings',
         component: ProviderPaymentSettingsComponent
-      }
+    }
 ];
 
 @NgModule({

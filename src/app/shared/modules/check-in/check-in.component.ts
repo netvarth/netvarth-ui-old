@@ -6,14 +6,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-check-in',
   templateUrl: './check-in.component.html',
 })
-export class CheckInComponent implements OnInit {
+export class CheckInoldComponent implements OnInit {
 
     customer_data: any = [];
     page_source = null;
     showinner = false;
 
     constructor(
-    public dialogRef: MatDialogRef<CheckInComponent>,
+    // public dialogRef: MatDialogRef<CheckInComponent>,
     public _sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
@@ -28,7 +28,7 @@ export class CheckInComponent implements OnInit {
     handleCheckinReturn(retVal) {
       // if(retVal.mode === 'provider_checkin'){
       if (retVal === 'reloadlist') {
-        this.dialogRef.close('reloadlist');
+        // this.dialogRef.close('reloadlist');
       }
    // }
     }

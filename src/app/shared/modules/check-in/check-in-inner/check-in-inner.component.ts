@@ -914,7 +914,7 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-          //this.router.navigate(['/']);
+          // this.router.navigate(['/']);
         }
         // this.router.navigate(['/']);
         // setTimeout(() => {
@@ -1555,14 +1555,14 @@ export class CheckInInnerComponent implements OnInit {
     this.updateLiveTrackInfo().then(
       data => {
         if (data) {
-          //this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+          // this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
        // setTimeout(() => {
 
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
-          //this.returntoParent.emit('reloadlist');
+          // this.returntoParent.emit('reloadlist');
           this.trackClose('livetrack');
           this.track_loading = false;
        // }, projectConstants.TIMEOUT_DELAY_LARGE10);
@@ -1571,7 +1571,6 @@ export class CheckInInnerComponent implements OnInit {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
-      
   }
   updateLiveTrackInfo() {
     const _this = this;
