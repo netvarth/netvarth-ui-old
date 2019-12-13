@@ -60,9 +60,10 @@
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
                                                             <div class="attach" *ngIf="inbox.attachments"
-                                                                (click)="showImagesection(childIndex)">
-                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;{{inbox.attachments.length}}
-                                                                Attachment(s)
+                                                                (click)="showImagesection(childIndex)">                                  
+                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <span
+                                                                    class="attach-link"> {{inbox.attachments.length}}
+                                                                    Attachment(s) </span>
                                                             </div>
                                                             <div class="thumbnails mt10 mb10" *ngIf="showImages[childIndex]">
                                                                 <a class="mg-10" target="_blank"
@@ -93,7 +94,7 @@
                                                                 (click)="logofile.click()">
                                                                 <input #logofile type="file"
                                                                     accept="image/*,application/pdf"
-                                                                    style="display:none;" multiple capture
+                                                                    style="display:none;" multiple
                                                                     (change)="filesSelected($event, parentIndex)">
                                                                 <span><i class="fa fa-paperclip"></i></span>
                                                             </button>
