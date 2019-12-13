@@ -1167,10 +1167,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.newarr.push(data.hits.hit[i].fields);
       this.newarr[i].id = data.hits.hit[i].id;
     }
+    console.log(this.servicesjson);
+    console.log(this.showDepartments);
     for (let i = 0; i < this.newarr.length; i++) {
-      for (let j = 0; j < this.departmentlist.departments.length; j++) {
-        if (this.departmentlist.departments[j].departmentCode === this.newarr[i].department_code) {
-          this.newarr[i].department_code = this.newarr[i].department_code.replace(this.newarr[i].department_code, this.departmentlist.departments[j].departmentName); // Replacing the domain name to it's display name
+      for (let j = 0; j < this.servicesjson.length; j++) {
+        if (this.servicesjson[j].departmentCode === this.newarr[i].department_code) {
+          this.newarr[i].department_code = this.newarr[i].department_code.replace(this.newarr[i].department_code, this.servicesjson[j].departmentName); // Replacing the domain name to it's display name
         }
       }
     }
