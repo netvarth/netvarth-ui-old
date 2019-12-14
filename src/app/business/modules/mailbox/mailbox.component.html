@@ -49,10 +49,11 @@
                                                                 [class.pull-right]="inbox.messagestatus=='out'">{{formatDateDisplay(inbox.timestamp)}}</span>
                                                         </div>
                                                         <!-- /.direct-chat-info -->
-                                                        <img *ngIf="inbox.messagestatus=='out'" class="direct-chat-img"
-                                                            [src]="blogo">
-                                                        <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img"
-                                                            [src]="clogo">
+                                                        <img *ngIf="blogo && inbox.messagestatus=='out'" class="direct-chat-img" [src]="blogo" />
+                                                        <div *ngIf="!blogo && inbox.messagestatus=='out'" class="direct-chat-img blogo"
+                                                            ></div>
+                                                        <div *ngIf="inbox.messagestatus=='in'" class="direct-chat-img clogo"
+                                                            ></div>                                                        
                                                         <!-- /.direct-chat-img -->
                                                         <div class="direct-chat-text" id="messageId[childIndex]"
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
