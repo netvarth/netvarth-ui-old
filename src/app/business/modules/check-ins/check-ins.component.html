@@ -293,8 +293,8 @@
                           </div>
                         </div>
                         <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
-                          <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
-                            [matTooltip]="'Send message'" (click)="addConsumerInboxMessage('single', checkin)">
+                          <a class="btn-play pointer-cursor" *ngIf="!section_future[i]"
+                            (click)="addConsumerInboxMessage('single', checkin)">
                             <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
                           </a>
                           <a class="btn-more pointer-cursor" *ngIf="!section_future[i]"
@@ -307,24 +307,20 @@
                   </div>
                   <div class="clearfix"></div>
                   <div class="info-box-footer-more" *ngIf="section_future[i]">
-                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message </span>
                     </a>
-                    <a class="btn-play pointer-cursor" (click)="addProviderNote('future', checkin)"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('future', checkin)">
                       <i class="icon-note"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"
                       *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
                       <i class="fa fa-trash-o"></i> <span> {{cancel_cap}} </span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                      *ngIf="checkin.waitlistStatus == 'cancelled'" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Change status to ' + checkin_label">
+                      *ngIf="checkin.waitlistStatus == 'cancelled'">
                       <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                      <i class="fa fa-undo" aria-hidden="true"></i>
+                      <i class="fa fa-arrow-left"></i>
                       <span>{{checkin_label}} </span>
                     </a>
                     <a class="btn-more pointer-cursor" (click)="openActionsWindow('future', i)">
@@ -375,13 +371,12 @@
                           </span>
                         </div>
                         <div class="col-md-4 col-xs-4 p0 info-box-icon-right">
-                          <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Start'"
+                          <a class="btn-play pointer-cursor"
                             *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived') && !section_history[i]"
                             (click)="changeWaitlistStatus(checkin, 'STARTED')">
                             <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                           </a>
                           <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'DONE')"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                             *ngIf="checkin.waitlistStatus == 'started' && !section_history[i]">
                             <i class="fa fa-check-circle" style="color: green;"></i> <span
                               *ngIf="!small_device_display"> {{done_cap}}</span>
@@ -396,26 +391,23 @@
                   </div>
                   <div class="clearfix"></div>
                   <div class="info-box-footer-more" *ngIf="section_history[i]">
-                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Start'"
+                    <a class="btn-play pointer-cursor"
                       *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')"
                       (click)="changeWaitlistStatus(checkin, 'STARTED')">
                       <i class="fa fa-play"></i> <span> Start</span>
                     </a>
-                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
+                    <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)">
                       <i class="fa fa-comments-o "></i> <span> Message</span>
                     </a>
-                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
+                    <a class="btn-play pointer-cursor"
                       *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
                       (click)="viewBillPage('history', checkin)">
                       <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                     </a>
-                    <a class="btn-play pointer-cursor" (click)="addProviderNote('history', checkin)"
-                      [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
+                    <a class="btn-play pointer-cursor" (click)="addProviderNote('history', checkin)">
                       <i class="fa icon-note"></i> <span> Private Note </span>
                     </a>
-                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Cancel ' + checkin_label" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
+                    <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                       *ngIf="checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived'">
                       <i class="fa fa-trash-o"></i> <span> {{cancel_cap}}</span>
                     </a>
@@ -541,16 +533,15 @@
                           </div>
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
                             <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')"
-                              *ngIf="!section_start[i]" [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
+                              *ngIf="!section_start[i]">
                               <i class="fa fa-check-circle" style="color: green;"></i> <span
                                 *ngIf="!small_device_display"> {{done_cap}}
                               </span>
                             </a>
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                              *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
-                              [matTooltip]="'Change status to ' + checkin_label">
+                              *ngIf="checkin.billStatus != 'Settled'">
                               <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                              <i class="fa fa-undo" aria-hidden="true"></i>
+                              <i class="fa fa-arrow-left"></i>
                               <span *ngIf="!small_device_display"> {{checkin_label}} </span>
                             </a>
                             <!-- <a class="btn-play pointer-cursor"
@@ -576,8 +567,7 @@
                         </span>
                       </div>
                       <div class="col-md-12 col-xs-12 p0">
-                        <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
+                        <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')">
                           <i class="fa fa-check-circle" style="color: green;"></i> <span> {{done_cap}} </span>
                         </a>
                         <!-- <a class="btn-play pointer-cursor"
@@ -592,10 +582,9 @@
                           <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
                         </a> -->
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                          *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Change status to ' + checkin_label">
+                          *ngIf="checkin.billStatus != 'Settled'">
                           <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                          <i class="fa fa-undo" aria-hidden="true"></i>
+                          <i class="fa fa-arrow-left"></i>
                           <span>{{checkin_label}} </span>
                         </a>
                         <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'start')">
@@ -662,13 +651,13 @@
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('new')"></i> </div>
-                  <div *ngIf="consumerTrackstatus && waitlistSelection===1" class="statuslink popup"
-                    (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
-                    <i class="fa fa-location-arrow"></i>
-                    <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
-                    <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
+                    <div *ngIf="consumerTrackstatus && waitlistSelection===1"
+                          class="statuslink popup" (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
+                          <i class="fa fa-location-arrow"></i>
+                          <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
+                          <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
                             from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span> -->
-                  </div>
+                        </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
@@ -732,20 +721,18 @@
                           </div>
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'REPORT')"
-                              *ngIf="checkin.waitlistStatus != 'arrived' && !section_new[i]"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'">
+                              *ngIf="checkin.waitlistStatus != 'arrived' && !section_new[i]">
                               <i class="fa icon-arrived" style="font-size: smaller;"></i> <span
                                 *ngIf="!small_device_display">Arrived </span>
                             </a>
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')"
-                              *ngIf="!section_new[i]" [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                              *ngIf="!section_new[i]">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                              *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                              *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'">
                               <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                              <i class="fa fa-undo" aria-hidden="true"></i>
+                              <i class="fa fa-arrow-left"></i>
                               <span *ngIf="!small_device_display"> {{checkin_label}} </span>
                             </a>
                             <!-- <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'new')"
@@ -772,12 +759,10 @@
                       </div>
                       <div class="col-md-12 col-xs-12 p0">
                         <a class="btn-play pointer-cursor" *ngIf="checkin.waitlistStatus != 'arrived'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'"
                           (click)="changeWaitlistStatus(checkin, 'REPORT')">
                           <i class="fa"></i> <span class="icon-arrived"> Arrived </span>
                         </a>
-                        <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                        <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')">
                           <i class="fa fa-play"></i> <span> Start</span>
                         </a>
                         <!-- <a *ngIf="calculationmode=='NoCalc' && showToken" class="btn-play pointer-cursor"
@@ -796,10 +781,9 @@
                           <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
                         </a> -->
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                          *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'"
-                          [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                          *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'">
                           <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                          <i class="fa fa-undo" aria-hidden="true"></i>
+                          <i class="fa fa-arrow-left"></i>
                           <span> {{checkin_label}} </span>
                         </a>
                         <!-- <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')">
@@ -1089,10 +1073,9 @@
                           </div>
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
                             <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                              *ngIf="checkin.billStatus != 'Settled' && !section_cancel[i]"
-                              [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
+                              *ngIf="checkin.billStatus != 'Settled' && !section_cancel[i]">
                               <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                              <i class="fa fa-undo" aria-hidden="true"></i>
+                              <i class="fa fa-arrow-left"></i>
                               <span *ngIf="!small_device_display"> {{checkin_label}} </span>
                             </a>
                             <!-- <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'cancel')"
@@ -1124,10 +1107,9 @@
                           <i class="fa fa-sticky-note-o"></i> <span> Private Note </span>
                         </a> -->
                         <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
-                          *ngIf="checkin.billStatus != 'Settled'" [matTooltipClass]="tooltipcls"
-                          [matTooltip]="'Change status to ' + checkin_label">
+                          *ngIf="checkin.billStatus != 'Settled'">
                           <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->
-                          <i class="fa fa-undo" aria-hidden="true"></i>
+                          <i class="fa fa-arrow-left"></i>
                           <span> {{checkin_label}} </span>
                         </a>
                         <a class="btn-more pointer-cursor" (click)="openActionsWindow('new', i, 'cancel')">

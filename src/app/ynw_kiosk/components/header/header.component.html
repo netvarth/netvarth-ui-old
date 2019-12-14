@@ -1,0 +1,14 @@
+<div class="ksk-hd">
+    <div class="ksk-ynw-logo">
+        <img src="assets/images/jaldee-logo.png" alt="Jaldee logo">
+    </div>
+    <div class="ksk-company-logo">
+        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}} &nbsp;</span>
+        <div class="logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt=""/></div>
+    </div>
+    <!-- <div class="ksk-exit">
+        <button class="exit">
+            <span class="icon-logout"></span>Exit
+        </button>
+    </div> -->
+</div>

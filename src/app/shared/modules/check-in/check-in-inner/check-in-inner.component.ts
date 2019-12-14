@@ -144,7 +144,7 @@ export class CheckInInnerComponent implements OnInit {
   server_date;
   api_loading1 = true;
   api_loading = true;
-  track_loading = true;
+  track_loading = false;
   departmentlist: any = [];
   departments: any = [];
   selected_dept;
@@ -1480,9 +1480,9 @@ export class CheckInInnerComponent implements OnInit {
           this.saveLiveTrackInfo().then(
             (liveTInfo) => {
               console.log(liveTInfo);
-              this.track_loading = false;
+              // this.shareLoc = true;
               this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-              }
+            }
           );
         }, (error) => {
           this.shareLoc = false;
@@ -1490,7 +1490,6 @@ export class CheckInInnerComponent implements OnInit {
         );
     } else {
       this.shareLoc = false;
-      this.updateLiveTrackInfo();
     }
   }
 
@@ -1520,7 +1519,6 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   saveLiveTrackInfo() {
-   this.track_loading = true;
     const _this = this;
     console.log(_this.shareLoc);
     return new Promise(function (resolve, reject) {
@@ -1538,7 +1536,6 @@ export class CheckInInnerComponent implements OnInit {
         .subscribe(
           data => {
             resolve(data);
-            
           },
           () => {
             reject();

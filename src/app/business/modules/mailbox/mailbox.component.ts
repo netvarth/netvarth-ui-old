@@ -78,7 +78,10 @@ export class MailboxComponent implements OnInit, OnDestroy {
                             logo => {
                                 if (logo[0]) {
                                     this.blogo = logo[0].url;
+                                } else {
+                                    this.blogo = '../../../assets/images/img-null.svg';
                                 }
+                                this.clogo = '../../../assets/images/avatar5.png';
                             });
                     },
                     () => {

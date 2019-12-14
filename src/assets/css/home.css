@@ -19,6 +19,11 @@
 }
 
 @media only screen and (max-width: 575px) {
+  /* .srch .sa {
+    padding-top: 40px !important;
+    padding-bottom: 10px !important;
+    padding-left: 0px !important
+  }*/
   .srch .sa .sa-fld .sa-lc, .srch .sa .sa-fld .sa-dm, .srch .sa .sa-fld .sa-src {
     height: 40px !important
   }
@@ -141,9 +146,15 @@ header .tc1 .isprovidertop span {
   margin: 25px 20px !important;
   width: 60px !important;
 }
+
+/* .srch .sa h1 {
+  color: #fff;
+} */
+
 .srch-slider input, .srch-slider mat-select {
   background: #fff !important
 }
+
 .srch-slider .srch .sa .sa-fld .sa-mo .icon-filter {
   color: #fff !important
 }
@@ -633,6 +644,7 @@ figure:hover img {
   transition: all .3s ease !important;
   -webkit-transition: all .3s ease !important;
   -moz-transition: all .3s ease !important;
+  /*cursor:url("../../themes/jaldee/assets/images/icon-zoom-white.png"), pointer*/
 }
 
 .grid li {
@@ -5297,3 +5309,4 @@ a.text-dark:hover, a.text-dark:focus {
     border: 1px solid #ddd !important;
   }
 }
+/*# sourceMappingURL=bootstrap.css.map */

@@ -49,11 +49,10 @@
                                                                 [class.pull-right]="inbox.messagestatus=='out'">{{formatDateDisplay(inbox.timestamp)}}</span>
                                                         </div>
                                                         <!-- /.direct-chat-info -->
-                                                        <img *ngIf="blogo && inbox.messagestatus=='out'" class="direct-chat-img" [src]="blogo" />
-                                                        <div *ngIf="!blogo && inbox.messagestatus=='out'" class="direct-chat-img blogo"
-                                                            ></div>
-                                                        <div *ngIf="inbox.messagestatus=='in'" class="direct-chat-img clogo"
-                                                            ></div>                                                        
+                                                        <img *ngIf="inbox.messagestatus=='out'" class="direct-chat-img"
+                                                            [src]="blogo">
+                                                        <img *ngIf="inbox.messagestatus=='in'" class="direct-chat-img"
+                                                            [src]="clogo">
                                                         <!-- /.direct-chat-img -->
                                                         <div class="direct-chat-text" id="messageId[childIndex]"
                                                             [class.active]="selectedParentIndex == parentIndex && selectedChildIndex == childIndex"
@@ -61,10 +60,10 @@
                                                             (click)="setActiveMessage(inbox, parentIndex, childIndex)">
                                                             {{inbox.message}}
                                                             <div class="attach" *ngIf="inbox.attachments"
-                                                                (click)="showImagesection(childIndex)">                                  
-                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <span
+                                                                (click)="showImagesection(childIndex)">
+                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <p
                                                                     class="attach-link"> {{inbox.attachments.length}}
-                                                                    Attachment(s) </span>
+                                                                    Attachment(s) </p>
                                                             </div>
                                                             <div class="thumbnails mt10 mb10" *ngIf="showImages[childIndex]">
                                                                 <a class="mg-10" target="_blank"
