@@ -70,22 +70,29 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   }
   createForm() {
     this.loginForm = this.fb.group({
-      phonenumber: ['', Validators.compose(
-        [Validators.required,
-        Validators.maxLength(10),
-        Validators.minLength(10),
-        Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+      // phonenumber: ['', Validators.compose(
+      //   [Validators.required,
+      //   Validators.maxLength(10),
+      //   Validators.minLength(10),
+      //   Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+        emailId: [''],
       password: ['', Validators.compose([Validators.required])]
-
     });
   }
   showError() {
     this.show_error = true;
-    const pN = this.document.getElementById('phonenumber').value.trim();
+    // const pN = this.document.getElementById('phonenumber').value.trim();
+    const pN = this.document.getElementById('emailId').value.trim();
     const pW = this.document.getElementById('password').value.trim();
+    // if (pN === '') {
+    //   if (this.document.getElementById('phonenumber')) {
+    //     this.document.getElementById('phonenumber').focus();
+    //     return;
+    //   }
+    // }
     if (pN === '') {
-      if (this.document.getElementById('phonenumber')) {
-        this.document.getElementById('phonenumber').focus();
+      if (this.document.getElementById('emailId')) {
+        this.document.getElementById('emailId').focus();
         return;
       }
     }
@@ -98,11 +105,18 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   }
   onSubmit(data) {
     this.resetApiErrors();
-    const pN = data.phonenumber.trim();
+    // const pN = data.phonenumber.trim();
+    const pN = data.emailId.trim();
     const pW = data.password.trim();
+    // if (pN === '') {
+    //   if (this.document.getElementById('phonenumber')) {
+    //     this.document.getElementById('phonenumber').focus();
+    //     return;
+    //   }
+    // }
     if (pN === '') {
-      if (this.document.getElementById('phonenumber')) {
-        this.document.getElementById('phonenumber').focus();
+      if (this.document.getElementById('emailId')) {
+        this.document.getElementById('emailId').focus();
         return;
       }
     }
@@ -112,19 +126,23 @@ export class HomeAppComponent implements OnInit, OnDestroy {
         return;
       }
     }
+    const loginId = pN;
     const ob = this;
     const post_data = {
       'countryCode': '+91',
-      'loginId': data.phonenumber,
+      'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
     };
+    post_data.mUniqueId = localStorage.getItem('mUniqueId');
     this.api_loading = true;
     // if (this.data.type === 'provider') {
     this.shared_functions.providerLogin(post_data)
       .then(
         () => {
           // this.dialogRef.close();
+          const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
           setTimeout(() => {
             // this.dialogRef.close();
           }, projectConstants.TIMEOUT_DELAY_SMALL);

@@ -84,8 +84,8 @@ export class ProviderSystemAlertComponent implements OnInit {
           this.alert_details = [];
         } else {
           this.alertStatus = 1;
-          this.getAlertList(this.alertSelAck, sdate);
         }
+        this.getAlertList(this.alertSelAck, sdate);
         this.api_loading = false;
       },
         () => {
@@ -168,7 +168,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     // } else {
     this.getAlertList(this.holdalertSelAck || '', seldate);
     // }
-    if (seldate !== '' || this.holdalertSelAck !== 'false') {
+    if (seldate !== '' || this.holdalertSelAck !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;

@@ -108,8 +108,8 @@
                                 </div>
                                 <div *ngIf="waitlist.waitlistStatus=='checkedIn'">
                                 
-                                <div class="lt0"
-                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime">
+                                <!-- <div class="lt0"
+                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime"> -->
                                     <!-- <div *ngIf="changemode[i] == false"> Travel mode is : &nbsp;
                                             <span
                                                 *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">Driving</span>
@@ -117,19 +117,20 @@
                                                 *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">Walking</span>
                                             <span class="travelmodeEdit" (click)="editmodeOn(i)"><i class="icon-edit"></i>
                                             </span></div> -->
-                                    <div class="tr-mod">Mode of transport 
-                                        <span class="" *ngIf="!changemode[i]">
-                                        <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
-                                        <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i>
-                                        <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
+                                    <!-- <div class="tr-mod">Mode of transport  -->
+                                        <!-- <span class="" *ngIf="!changemode[i]">
+                                        <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i> -->
+                                        <!-- <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
+                                        <!-- <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
                                                             style="width: 15px;height:15px;"  *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
                                         <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> 
-                                        </span>
-                                       <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]"><i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i>
-                                        <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i>
-                                        <img src="./assets/images/walking.png" alt=""
+                                        </span> -->
+                                       <!-- <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]">
+                                        <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i> -->
+                                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
+                                        <!-- <img src="./assets/images/walking.png" alt=""
                                                         class="walkingMode mgn-lt-20" [class.walking]="walking" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"/>
-                                       </span>                 
+                                       </span>                  -->
                                         <!-- <span
                                             *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I
                                             am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
@@ -184,17 +185,35 @@
                                                 </li> -->
                                             <!-- </ul>
                                         </div> -->
-                                    </div>
-                                </div>
-                                <div class="lt0"
-                                    *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime">
-                                    {{getTrackMessage(waitlist)}}
-                                    <div class="lt0" *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'">
-                                        <span> <label>Live tracking </label></span>
-                                        <span>
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                                <div class="lt0"  *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime" >
+                                    <div  >
+                                        <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable live tracking </label></span>
+                                        <p *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'" class="form-level-settings">Live tracking is automatically enabled</p>
+                                        <span *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'"> 
+                                            <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'">I am driving </label>
+                                            <label *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'">I am walking </label>
+                                        </span>
+                                        
+                                        <span class="" *ngIf="!changemode[i]">
+                                                <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
+                                                <!-- <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
+                                                <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
+                                                                    style="width: 15px;height:15px;"  *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
+                                                <i class="fa fa-pencil link mgn-lt-10 " (click)="changemode[i] = !changemode[i]"></i> 
+                                                </span>
+                                                <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]">
+                                                        <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i>
+                                                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
+                                                        <img src="./assets/images/walking.png" alt=""
+                                                                        class="walkingMode mgn-lt-20" [class.walking]="walking" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"/>
+                                                       </span>
+                                                   
+                                        <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'" class="pull-right">
                                             <mat-slide-toggle [checked]="statusOfTrack[i]"
                                                 (change)="changeTrackstatus(waitlist.ynwUuid,waitlist.provider.id,i,$event)"
-                                                class="trackSlide"></mat-slide-toggle>
+                                                class="trackSlide "></mat-slide-toggle>
                                                 <label class="mgn-lt-10"><b>{{statusOfTrack[i] ? 'On' : 'Off'}}</b></label>
                                         </span>
                                     </div>

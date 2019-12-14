@@ -35,7 +35,7 @@
         <label class="col-form-label" *ngIf="!img_exists">{{select_image}}</label>
         <label class="col-form-label" *ngIf="img_exists">{{change_image}}</label>
         <span class="select-wrapper ">
-        <input type="file" name="image_src" id="image_src"  accept=".png, .jpg, .jpeg, .bmp, .gif, .tif"  #file (change)="imageSelect(file,$event)">
+        <input type="file" name="image_src" id="image_src"  accept="image/*"  #file (change)="imageSelect(file,$event)">
         </span>
         </div>
     </div>

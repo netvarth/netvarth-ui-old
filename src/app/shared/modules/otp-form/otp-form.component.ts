@@ -163,6 +163,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   removSpecChar(evt) {
+    this.buttonclicked = false;
     return this.shared_functions.removSpecChar(evt);
   }
 

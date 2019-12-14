@@ -30,14 +30,12 @@
               "src/assets/third-party/Admin-LTE/css/AdminLTE.min.css",             
               "src/customTheme.scss",
               "src/assets/css/styles.css",
-              "src/assets/css/consumer.css",
               "src/assets/css/modal_popups.css",
               "src/assets/css/header_footer.css",
               "src/assets/css/mat_form_style.css",
-              "src/assets/css/kiosk_style.css",
               "src/assets/css/custom_style.css",
-              "src/assets/css/home.css",
-              "src/assets/third-party/Admin-LTE/css/_all-skins.css"
+              "src/assets/third-party/Admin-LTE/css/_all-skins.css",
+              "src/assets/css/p_app.css"
             ],
             "scripts": [
               "src/assets/third-party/jquery/dist/jquery.min.js",

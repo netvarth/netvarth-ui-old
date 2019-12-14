@@ -1,30 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-
-import { HomeComponent } from './shared/components/home/home.component';
+import { Routes, RouterModule } from '@angular/router';
 import { LogoutComponent } from './shared/components/logout/logout.component';
-import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
+import { AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 import { ReturnPaymentComponent } from './shared/components/return-payment/return-payment.component';
 import { BusinessPageComponent } from './shared/components/business-page/business-page.component';
 import { MaintenanceComponent } from './shared/modules/maintenance/maintenance.component';
 import { AdminLoginComponent } from './shared/components/admin/login/login.component';
+import { HomeAppComponent } from './shared/components/home-app/home-app.component';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 const routes: Routes = [
-    { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
+    { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent},
     {
         path: 'provider', loadChildren: './business/business.module#BusinessModule',
         canActivate: [AuthGuardProvider]
     },
-    {
-        path: 'consumer', loadChildren: './ynw_consumer/consumer.module#ConsumerModule',
-        canActivate: [AuthGuardConsumer]
-    },
-    {
-        path: 'kiosk', loadChildren: './ynw_kiosk/kiosk.module#KioskModule',
-        canActivate: [AuthGuardProvider]
-    },
-    { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
-    { path: 'provider-home', loadChildren: './shared/components/phome/phome.module#PhomeModule' },
+    { path: '', component: HomeAppComponent, canActivate: [AuthGuardHome]},
+    { path: 'provider-home', loadChildren: './shared/components/phome/phome.module#PhomeModule'},
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: './shared/modules/not-found/not-found.module#NotFoundModule' },
@@ -38,9 +29,8 @@ const routes: Routes = [
     },
     { path: 'home/:id', loadChildren: './shared/modules/about-jaldee/about-jaldee.module#AboutJaldeeModule' },
     { path: 'maintenance', component: MaintenanceComponent },
-    { path: ':id', component: BusinessPageComponent },
+    { path: ':id', component: BusinessPageComponent},
       { path: 'manage/:id', component: ManageProviderComponent}
-    // { path: '**', redirectTo: 'not-found' }
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes, {

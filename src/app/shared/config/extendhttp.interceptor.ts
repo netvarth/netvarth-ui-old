@@ -15,7 +15,7 @@ import { throwError, EMPTY } from 'rxjs';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
 import { retry } from 'rxjs/operators';
-// import { version } from '../constants/version' ;
+import { version } from '../constants/version';
 
 @Injectable()
 export class ExtendHttpInterceptor implements HttpInterceptor {
@@ -151,7 +151,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              // this.router.navigate(['']);
               return this._ifSessionExpired().pipe(
                 switchMap(() => {
                   return next.handle(this.updateHeader(req, url));
@@ -198,8 +197,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
-    // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
+    req = req.clone({ headers: req.headers.append('Hybrid-Version', version.mobile) });
     if (this.shared_functions.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
@@ -230,4 +228,3 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return check;
   }
 }
-

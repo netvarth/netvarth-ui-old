@@ -80,6 +80,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
   getSearchData() {
     this.searchResults = this.searchResult;
+    console.log(this.searchResults);
     for (let i = 0; i < this.searchResults.length; i++) {
       this.result_providdet = [];
       if (this.searchResults[i]['logo']) {
