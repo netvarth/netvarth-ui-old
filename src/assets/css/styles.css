@@ -4531,7 +4531,6 @@ body { font-size: 1rem !important}
     -webkit-border-radius: 20px;
     border-radius: 20px;
     background-clip: padding-box;
-    /* stops bg color from leaking outside the border: */
     border: 1px solid #999999;
     font-size: .75rem;
     margin-right: 10px;
@@ -5222,7 +5221,6 @@ body { font-size: 1rem !important}
 
 .content .col-a .card.w-dta.active .cd-b .emltbl .tbl-list .ttd .otr .mbt {
     right: -20px;
-    /*opacity: 0;*/
     -moz-transition: all 300ms;
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
@@ -5511,7 +5509,6 @@ body { font-size: 1rem !important}
     margin: 0 20px;
     display: flex;
     border: 1px solid #dbdbdb;
-    /*border-bottom: none;*/
     margin-bottom: 15px;
 }
 
@@ -5617,13 +5614,6 @@ body { font-size: 1rem !important}
     -o-transition: all 300ms;
     -webkit-transition: all 300ms;
     transition: all 300ms;
-    /*opacity: 0;*/
-    /*@include respond-to(ynw-767){
-                  opacity: 1;
-              }
-              @include respond-to(ynw-768-991){
-                  opacity: 1;
-              }*/
 }
 
 .content .col-a .card.spc-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .cont-btn .editbt:hover, .content .col-a .card.add-extra .mat-accordion .acc-cont .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .cont-btn .editbt:hover {
@@ -6299,11 +6289,6 @@ body { font-size: 1rem !important}
     color: #fff;
 }
 
-/* .content.w-manager .card .b-link:hover h2 span {
-    color: #fff;
-    color: #00aef2;
-} */
-
 .content.w-manager .card app-form-success-display .sts-msg {
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -6483,7 +6468,6 @@ body { font-size: 1rem !important}
     align-items: center;
     width: 100%;
     border-top: 1px solid #f2f2f2;
-    /*padding: 0 10px;*/
 }
 
 @media only screen and (max-width: 400px) {
@@ -7174,7 +7158,6 @@ body { font-size: 1rem !important}
     background: transparent;
     padding-left: 20px;
     font-weight: 500;
-    /*margin-right: 15px;*/
     cursor: pointer;
 }
 
@@ -7326,7 +7309,6 @@ body { font-size: 1rem !important}
 
 @media only screen and (max-width: 767px) {
     .dashboard .card.w-dta .head {
-        /*flex-direction: column;*/
         height: auto;
         justify-content: flex-start;
     }
@@ -7341,7 +7323,6 @@ body { font-size: 1rem !important}
 
 @media (min-width: 768px) and (max-width: 991px) {
     .dashboard .card.w-dta .head {
-        /*flex-direction: column;*/
         height: auto;
     }
 }
@@ -7403,7 +7384,6 @@ body { font-size: 1rem !important}
     font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     border: 1px solid #e6e6e6;
-    /*display: flex;*/
     align-items: center;
 }
 
@@ -8250,7 +8230,6 @@ body { font-size: 1rem !important}
 
 .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-n, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-h, .dashboard .card.w-dta .dash-list .d-tbl .table tbody tr td.payment .paid-f {
     padding: 2px 0px;
-    /*background: $cc-lightgray;*/
     color: #222223;
     position: relative;
     font-weight: 600;
@@ -8470,7 +8449,6 @@ body { font-size: 1rem !important}
 }
 
 .dashboard .card.w-dta .dash-list .d-tbl .search_paging .container {
-    /*padding: 15px;*/
     padding: 0px;
 }
 
@@ -8706,7 +8684,6 @@ body { font-size: 1rem !important}
 }
 
 .comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(1) {
-    /*width: 15%;*/
     cursor: pointer;
     color: #00aef2;
     font-weight: 500;
@@ -9038,7 +9015,6 @@ body { font-size: 1rem !important}
 }
 
 .comn-cls .w-dta .copy .right.card .lc33 .search_paging .container {
-    /*padding: 15px;*/
     padding: 0px;
 }
 
