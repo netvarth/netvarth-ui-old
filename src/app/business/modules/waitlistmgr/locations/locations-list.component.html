@@ -1,0 +1,52 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
+        (performAction)="performActions($event)"></app-breadcrumb>
+</section>
+
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12" *ngIf="api_loading">
+            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+        </div>
+        <div class="col-md-12 no-padding-small" *ngIf="!api_loading">
+            <div class="row" *ngFor="let loc of loc_list">
+                <div class="card" [class.disabled]="loc.status=='INACTIVE'" [class.bse-lcn]="loc.baseLocation == true">
+                    <div class="copy">
+                        <span class="mbt" *ngIf="loc.baseLocation != true">
+                            <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                        </span>
+                        <span class="bse-lcn-label" *ngIf="loc.baseLocation == true">{{base_loc_cap}}</span>
+                        <div class="warning baseloc" *ngIf="(loc.place && loc.address) === '' ">
+                            <i data-icon="m"></i>
+                            <p><span><strong>{{base_loc_det_cap}}.</strong></span></p>
+                            <p><span>{{please_use_cap}} <strong>{{edit_cap}} {{location_cap}}</strong>
+                                    {{btn_to_compl_cap}}.</span></p>
+                            <span class="cs-btn bt3" (click)="goLocationDetail(loc, 'editbase')">{{edit_cap}}
+                                {{location_cap}}</span>
+                            <p class="smlft"><small>* {{need_loc_cap}} &amp; {{work_to_turn_search}}</small></p>
+                        </div>
+                        <h3 class="pointer-cursor" (click)="goLocationDetail(loc, 'view')">
+                            {{loc.place | capitalizeFirst}}
+                        </h3>
+                        <p>{{loc.address | capitalizeFirst}}</p>
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="changeProviderLocationStatus(loc)">
+                                <i *ngIf="loc.status=='INACTIVE'" class="icon-enable"></i>
+                                <i *ngIf="loc.status=='ACTIVE'" class="icon-disable"></i>
+                                {{(loc.status=='ACTIVE') ? 'Disable' :' Enable'}}
+                            </button>
+                            <button mat-menu-item (click)="changeProviderBaseLocationStatus(loc)">
+                                <i class="icon-location"></i> {{set_base_loc_cap}}
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+            <div class="card" *ngIf="!api_loading && loc_list.length === 0">
+                {{no_loc_add}}
+            </div>
+        </div>
+    </div>
+</section>

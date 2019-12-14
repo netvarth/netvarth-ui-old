@@ -8,14 +8,15 @@ import { WaitlistMgrComponent } from './waitlistmgr.component';
 
 const routes: Routes = [
     {path: '', component: WaitlistMgrComponent},
-    {
-        path: 'locations',
-        component: ProviderWaitlistLocationsComponent
-      },
-      {
-        path: 'location-detail/:id',
-        component: ProviderWaitlistLocationDetailComponent
-      },
+    // {
+    //     path: 'locations',
+    //     component: ProviderWaitlistLocationsComponent
+    //   },
+    //   {
+    //     path: 'location-detail/:id',
+    //     component: ProviderWaitlistLocationDetailComponent
+    //   },
+    {path: 'locations', loadChildren: '../../../business/modules/waitlistmgr/locations/locations-list.module#LocationListModule'},
       {path: 'services', loadChildren: '../../../business/modules/waitlistmgr/services/waitlist-services.module#WaitlistServicesModule'},
       {path: 'queues', loadChildren: '../../../business/modules/waitlistmgr/queues/waitlist-queues.module#WaitlistQueuesModule'},
       {
