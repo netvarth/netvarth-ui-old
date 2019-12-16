@@ -110,9 +110,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
         this.actionparam = this.action;
         // this.id = this.id;
+        this.getProviderQueues();
         this.getProviderServices();
         this.getDepartments();
-        this.getProviderQueues();
         if (this.id) {
             this.getDisplaydashboardbyId(this.id);
             this.submit_btn = Messages.UPDATE_BTN;
@@ -270,6 +270,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getServicesList(params)
             .subscribe(data => {
                 this.services_list = data;
+                if (this.selectedCategory === '' && this.services_list.length > 0) {
+                    this.selectedCategory = 'SERVICE';
+                    this.selectedCategoryValue = this.services_list[0].id;
+                }
                 this.serviceSelection(this.services_list[0].id);
             });
     }
@@ -288,9 +292,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     if (this.departments.length > 0 && this.filterByDept) {
                         this.selectedCategory = 'DEPARTMENT';
                         this.selectedCategoryValue = this.departments[0].departmentId;
-                    } else {
-                        this.selectedCategory = 'SERVICE';
-                        this.selectedCategoryValue = this.services_list[0].id;
                     }
                 },
                 error => {
@@ -304,6 +305,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getProviderQueues()
             .subscribe(data => {
                 this.display_schedule = data;
+                if (this.selectedCategory === '' && this.display_schedule.length > 0) {
+                    this.selectedCategory = 'QUEUE';
+                    this.selectedCategoryValue = this.display_schedule[0].id;
+                }
                 for (let ii = 0; ii < this.display_schedule.length; ii++) {
                     let schedule_arr = [];
                     if (this.display_schedule[ii].queueSchedule) {

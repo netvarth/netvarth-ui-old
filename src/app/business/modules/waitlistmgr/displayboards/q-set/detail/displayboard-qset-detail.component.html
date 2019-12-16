@@ -14,7 +14,8 @@
             </li>
             <li class="dropdown notifications-menu pull-right">
                 <a class="bk-ctrl link">
-                    <span class="bold pointer-cursor" (click)="goBack()"><i class="bold fa fa-angle-left"></i><span class="backicon">Statusboard</span></span>
+                    <span class="bold pointer-cursor" (click)="goBack()"><i class="bold fa fa-angle-left"></i><span
+                            class="backicon">Statusboard</span></span>
                 </a>
             </li>
         </ul>
@@ -67,8 +68,8 @@
                     </label>
 
                     <mat-radio-group [(ngModel)]="selectedCategory">
-                        <mat-radio-button class="mgright50" [value]="'DEPARTMENT'" *ngIf="departments.length > 0 && filterByDept"
-                            (change)="categorySelection('DEPARTMENT')">
+                        <mat-radio-button class="mgright50" [value]="'DEPARTMENT'"
+                            *ngIf="departments.length > 0 && filterByDept" (change)="categorySelection('DEPARTMENT')">
                             {{department_cap}}s</mat-radio-button>
                         <mat-radio-button class="mgright50" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
                             (change)="categorySelection('QUEUE')">
