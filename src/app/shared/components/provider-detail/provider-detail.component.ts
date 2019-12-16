@@ -464,7 +464,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'jaldeediscount':
             this.jaldeediscountJson = res;
-           this.jdnlength = Object.keys(this.jaldeediscountJson).length;
+            this.jdnlength = Object.keys(this.jaldeediscountJson).length;
         }
       },
         () => {
@@ -864,10 +864,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
       //if (result === 'reloadlist') {
-        this.getbusinessprofiledetails_json('location', true);
-        //this.routerobj.navigate(['/']);
+      this.getbusinessprofiledetails_json('location', true);
+      //this.routerobj.navigate(['/']);
 
-     // }
+      // }
     });
   }
   showcheckInButton(servcount?) {
@@ -1167,8 +1167,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.newarr.push(data.hits.hit[i].fields);
       this.newarr[i].id = data.hits.hit[i].id;
     }
-    console.log(this.servicesjson);
-    console.log(this.showDepartments);
     for (let i = 0; i < this.newarr.length; i++) {
       for (let j = 0; j < this.servicesjson.length; j++) {
         if (this.servicesjson[j].departmentCode === this.newarr[i].department_code) {

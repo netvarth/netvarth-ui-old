@@ -67,7 +67,7 @@
                     </label>
 
                     <mat-radio-group [(ngModel)]="selectedCategory">
-                        <mat-radio-button class="mgright50" [value]="'DEPARTMENT'" *ngIf="departments.length > 0"
+                        <mat-radio-button class="mgright50" [value]="'DEPARTMENT'" *ngIf="departments.length > 0 && filterByDept"
                             (change)="categorySelection('DEPARTMENT')">
                             {{department_cap}}s</mat-radio-button>
                         <mat-radio-button class="mgright50" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
