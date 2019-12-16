@@ -61,7 +61,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
         case 'alertCount':
           this.alertCnt = message.alertCnt;
-// this.getAlertCount();
+          // this.getAlertCount();
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -312,5 +312,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   //       error => {
   //       });
   // }
+  gotoBranch() {
+    const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accoutid');
+    this.sharedfunctionobj.removeitemfromLocalStorage(accountid);
+    this.sharedfunctionobj.removeitemfromSessionStorage('accoutid');
+    this.sharedfunctionobj.removeitemfromSessionStorage('tabId');
+    window.location.reload();
+  }
 }
 
