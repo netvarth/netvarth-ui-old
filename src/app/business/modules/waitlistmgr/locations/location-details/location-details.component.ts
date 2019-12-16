@@ -68,8 +68,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
-    api_success = null;
-    api_error = null;
     editlocdialogRef;
     queuedialogRef;
     isCheckin;
@@ -233,7 +231,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             });
     }
     changeProviderBaseLocationStatus(obj) {
-        this.resetApiErrors();
         this.provider_services.changeProviderBaseLocationStatus(obj.id)
             .subscribe(() => {
                 this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
@@ -309,10 +306,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     objectKeys(obj) {
         return Object.keys(obj);
     }
-    resetApiErrors() {
-        this.api_error = null;
-        this.api_success = null;
-    }
     changeProviderQueueStatus(obj) {
         this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'location_detail');
     }
@@ -333,7 +326,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         return form.get(field);
     }
     showGooglemap() {
-        this.resetApiErrors();
         const dialogRef = this.dialog.open(GoogleMapComponent, {
             width: '50%',
             panelClass: 'googlemainmappopup',
@@ -367,7 +359,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     }
     handlesSaveschedule(obj) {
         this.schedule_arr = obj;
-        this.api_success = this.api_error = '';
     }
     handle_badge_click(obj) {
         const indx = this.sel_badges.indexOf(obj.name);
@@ -432,7 +423,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
             const result2 = pattern2.test(curlabel);
             if (result2) {
-                this.api_error = this.shared_Functionsobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
+                this.shared_Functionsobj.openSnackBar(Messages.BPROFILE_LOCNAME_BLANK, { 'panelClass': 'snackbarerror' }); // 'Phone label should not be blank';
                 this.disableButton = false;
                 return;
             }
@@ -454,29 +445,28 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.provider_services.editProviderLocation(post_itemdata2)
                 .subscribe(
                     () => {
-                        if (this.forbadge === true) {
-                            this.api_success = this.shared_Functionsobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
-                        } else {
-                            this.api_success = this.shared_Functionsobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
-                        }
-
+                        this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_UPDATED, { 'panelclass': 'snackbarerror' });
+                         this.getLocationDetail();
+                        this.action = 'view';
+                        this.disableButton = false;
                     },
                     error => {
-                        this.api_error = this.shared_Functionsobj.getProjectErrorMesssages(error);
+                        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.disableButton = false;
                     }
                 );
         } else {
             this.provider_services.addProviderLocation(post_itemdata2)
                 .subscribe(
-                    () => {
-                        this.api_error = '';
-                        this.api_success = this.shared_Functionsobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
-
+                    (data) => {
+                        this.location_id = data;
+                        this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CREATED, { 'panelclass': 'snackbarerror' });
+                        this.getLocationDetail();
+                        this.action = 'view';
+                        this.disableButton = false;
                     },
                     error => {
-                        this.api_success = '';
-                        this.api_error = this.shared_Functionsobj.getProjectErrorMesssages(error);
+                        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.disableButton = false;
                     }
                 );
