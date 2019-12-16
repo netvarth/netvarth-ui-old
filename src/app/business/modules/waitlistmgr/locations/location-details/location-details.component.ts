@@ -135,7 +135,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
             locmapurl: [{ value: '', disabled: true }]
         });
-        this.api_loading = false;
+        // this.api_loading = false;
         if (this.action === 'edit' || this.action === 'editbase') {
             this.updateForm();
         }
@@ -143,17 +143,16 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
 
     updateForm() {
         if (this.location_data) {
-        this.amForm.setValue({
-            locname: this.location_data.place || null,
-            locaddress: this.location_data.address || null,
-            loclattitude: this.location_data.lattitude || null,
-            loclongitude: this.location_data.longitude || null,
-            locmapurl: this.location_data.googleMapUrl || null
-        });
-    }
+            this.amForm.setValue({
+                locname: this.location_data.place || null,
+                locaddress: this.location_data.address || null,
+                loclattitude: this.location_data.lattitude || null,
+                loclongitude: this.location_data.longitude || null,
+                locmapurl: this.location_data.googleMapUrl || null
+            });
+        }
         this.schedule_arr = [];
         // extracting the schedule intervals
-        console.log(this.location_data);
         if (this.location_data && this.location_data.bSchedule && this.location_data.bSchedule.timespec) {
             for (let i = 0; i < this.location_data.bSchedule.timespec.length; i++) {
                 for (let j = 0; j < this.location_data.bSchedule.timespec[i].repeatIntervals.length; j++) {
@@ -174,7 +173,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.location_data = data;
-                    console.log(this.location_data);
+                    this.api_loading = false;
                     let schedule_arr = [];
                     this.active_Schedules = [];
                     this.schedule_ar = [];

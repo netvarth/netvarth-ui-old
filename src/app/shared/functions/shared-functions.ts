@@ -257,7 +257,7 @@ export class SharedFunctions {
     }
   }
   public removeitemfromSessionStorage(itemname) {
-    localStorage.removeItem(itemname);
+    sessionStorage.removeItem(itemname);
   }
 
   public getGroup() {

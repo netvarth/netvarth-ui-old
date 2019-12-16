@@ -16,8 +16,13 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
+        <li *ngIf="!iswiz && accountType === 'BRANCH_SP'">
+          <a (click)="gotoBranch()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+            <i class="fa fa-arrow-left"></i>
+          </a>
+        </li>
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
-          <a  (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
+          <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
             <span class="label label-success"
               *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
@@ -145,7 +150,7 @@
           <p class="bus-name">{{bname}}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div> -->
-<!-- 
+        <!-- 
         <li class="dropdown notifications-menu" *ngIf="!iswiz">
           <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-circle text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
@@ -170,36 +175,36 @@
         <li class="dropdown user user-menu">
           <a class="dropdown-toggle pointer-cursor user-active-icon" data-toggle="dropdown">
             <span class="fa-stack">
-                <i class="fa fa-circle fa-stack-2x text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
-                <i class="fa fa-circle fa-stack-2x  text-failure"
+              <i class="fa fa-circle fa-stack-2x text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
+              <i class="fa fa-circle fa-stack-2x  text-failure"
                 *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange"></i>
-                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+              <i class="fa fa-user fa-stack-1x fa-inverse"></i>
             </span>
             <!-- <img [src]="blogo" class="user-image" alt=""> -->
             <span class="hidden-xs mgn-lt-3" *ngIf="bname">
               {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }}
-            </span>            
+            </span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
-            <li class="user-header " style="height: 179px !important;" >
+            <li class="user-header " style="height: 179px !important;">
               <img [src]="blogo" class="img-circle pointer-cursor" alt="" (click)="gotoProfile()">
 
               <p class="pointer-cursor" (click)="gotoProfile()">
-            <ng-container *ngIf="bname">    {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }} </ng-container>
+                <ng-container *ngIf="bname"> {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }} </ng-container>
                 <small>{{bsector}} ({{bsubsector}})</small>
               </p>
               <p><small>
-                <a routerLink="settings/q-manager/queues" class="white"
-                  *ngIf="qAvailability && qAvailability.availableNow">
-                  <span class="white bold">I am available online
-                    until {{qAvailability.timeRange.eTime}}</span>
-                </a>
-                <a routerLink="settings/q-manager/queues" class="white"
-                  *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-                  <span class="white bold"> I am not available now </span>
-                </a>
-              </small>
+                  <a routerLink="settings/q-manager/queues" class="white"
+                    *ngIf="qAvailability && qAvailability.availableNow">
+                    <span class="white bold">I am available online
+                      until {{qAvailability.timeRange.eTime}}</span>
+                  </a>
+                  <a routerLink="settings/q-manager/queues" class="white"
+                    *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
+                    <span class="white bold"> I am not available now </span>
+                  </a>
+                </small>
               </p>
             </li>
             <!-- <li class="user-body">
