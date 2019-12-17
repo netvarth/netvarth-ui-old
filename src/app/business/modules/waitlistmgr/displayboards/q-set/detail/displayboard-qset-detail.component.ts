@@ -110,9 +110,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
         this.actionparam = this.action;
         // this.id = this.id;
+        this.getDepartments();
         this.getProviderQueues();
         this.getProviderServices();
-        this.getDepartments();
         if (this.id) {
             this.getDisplaydashboardbyId(this.id);
             this.submit_btn = Messages.UPDATE_BTN;
@@ -270,11 +270,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getServicesList(params)
             .subscribe(data => {
                 this.services_list = data;
-                if (this.selectedCategory === '' && this.services_list.length > 0) {
+                if (this.actionparam === 'add' && this.selectedCategory === '' && this.services_list.length > 0) {
                     this.selectedCategory = 'SERVICE';
                     this.selectedCategoryValue = this.services_list[0].id;
+                    this.serviceSelection(this.services_list[0].id);
                 }
-                this.serviceSelection(this.services_list[0].id);
             });
     }
     getDepartments() {
@@ -289,9 +289,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                         }
                     }
                     this.filterByDept = this.deptObj.filterByDept;
-                    if (this.departments.length > 0 && this.filterByDept) {
+                    if (this.actionparam === 'add' && this.departments.length > 0 && this.filterByDept) {
                         this.selectedCategory = 'DEPARTMENT';
                         this.selectedCategoryValue = this.departments[0].departmentId;
+                        this.departmentSelection(this.departments[0].departmentId);
                     }
                 },
                 error => {
@@ -305,9 +306,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getProviderQueues()
             .subscribe(data => {
                 this.display_schedule = data;
-                if (this.selectedCategory === '' && this.display_schedule.length > 0) {
+                if (this.actionparam === 'add' && this.selectedCategory === '' && this.display_schedule.length > 0) {
                     this.selectedCategory = 'QUEUE';
                     this.selectedCategoryValue = this.display_schedule[0].id;
+                    this.queueSelection(this.display_schedule[0].id);
                 }
                 for (let ii = 0; ii < this.display_schedule.length; ii++) {
                     let schedule_arr = [];
