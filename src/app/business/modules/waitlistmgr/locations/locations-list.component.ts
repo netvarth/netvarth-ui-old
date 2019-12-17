@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -12,7 +12,7 @@ import { Router, NavigationExtras } from '@angular/router';
     templateUrl: './locations-list.component.html'
 })
 
-export class LocationsListComponent implements OnInit, OnDestroy {
+export class LocationsListComponent implements OnInit {
     base_loc_cap = Messages.WAITLIST_BASE_LOC_CAP;
     set_base_loc_cap = Messages.WAITLIST_SET_BASE_CAP;
     new_loc_cap = Messages.ADD_NEW_LOC_CAP;
@@ -30,14 +30,11 @@ export class LocationsListComponent implements OnInit, OnDestroy {
     badge_map_arr: any = [];
     query_executed = false;
     emptyMsg = '';
-    api_error = null;
-    api_success = null;
     subdomain_fields: any = [];
     loc_icon = projectConstants.LOCATION_BADGE_ICON;
     show_addlocationButton = false;
     multipeLocationAllowed = false;
     businessConfig: any = [];
-    dialogRef;
     breadcrumb_moreoptions: any = [];
     init_location = true;
     api_loading = false;
@@ -69,15 +66,10 @@ export class LocationsListComponent implements OnInit, OnDestroy {
         this.domain = user.sector;
         this.getBusinessConfiguration();
         // calling the method to get the list of badges related to location
-        this.getLocationBadges();
         // this.bProfile = this.provider_datastorage.get('bProfile');
         this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
     }
-    ngOnDestroy() {
-        if (this.dialogRef) {
-            this.dialogRef.close();
-        }
-    }
+
     getBusinessConfiguration() {
         this.shared_services.bussinessDomains()
             .subscribe(data => {
@@ -163,15 +155,7 @@ export class LocationsListComponent implements OnInit, OnDestroy {
                 this.query_executed = true;
             });
     }
-    getLocationBadges() {
-        this.provider_services.getLocationBadges()
-            .subscribe(data => {
-                this.loc_badges = data;
-                for (const badge of this.loc_badges) {
-                    this.badge_map_arr[badge.name] = badge.displayName;
-                }
-            });
-    }
+
     changeProviderLocationStatus(obj) {
         this.provider_shared_functions.changeProviderLocationStatusMessage(obj)
             .then((msg_data) => {
@@ -190,7 +174,6 @@ export class LocationsListComponent implements OnInit, OnDestroy {
             });
     }
     changeProviderBaseLocationStatus(obj) {
-        this.resetApiErrors();
         this.provider_services.changeProviderBaseLocationStatus(obj.id)
             .subscribe(() => {
                 this.getProviderLocations();
@@ -200,19 +183,12 @@ export class LocationsListComponent implements OnInit, OnDestroy {
                     this.getProviderLocations();
                 });
     }
-    objectKeys(obj) {
-        return Object.keys(obj);
-    }
     getLocationBadgeIcon(key) {
         if (!projectConstants.LOCATION_BADGE_ICON[key]) {
             key = 'none';
         }
         const imgurl = 'assets/locationbadges/' + projectConstants.LOCATION_BADGE_ICON[key];
         return imgurl;
-    }
-    resetApiErrors() {
-        this.api_error = null;
-        this.api_success = null;
     }
     goLocationDetail(location_detail, action) {
         const navigationExtras: NavigationExtras = {

@@ -69,7 +69,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     ];
     breadcrumbs = this.breadcrumbs_init;
     editlocdialogRef;
-    queuedialogRef;
     isCheckin;
     active_Schedules: any = [];
     action;
@@ -78,7 +77,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     sel_badges: any = [];
     schedule_json: any = [];
     forbadge = false;
-    disableButton: boolean;
+    disableButton = false;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -120,9 +119,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         if (this.editlocdialogRef) {
             this.editlocdialogRef.close();
         }
-        if (this.queuedialogRef) {
-            this.queuedialogRef.close();
-        }
     }
 
     createForm() {
@@ -133,7 +129,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
             locmapurl: [{ value: '', disabled: true }]
         });
-        // this.api_loading = false;
         if (this.action === 'edit' || this.action === 'editbase') {
             this.updateForm();
         }
@@ -309,9 +304,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     changeProviderQueueStatus(obj) {
         this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'location_detail');
     }
-    getProviderQueues() {
-        this.getQueueList(this.location_id);
-    }
     addEditProviderQueue(type, queue = null) {
         if (this.location_id && type === 'add') {
             queue = { 'location': { id: null } };
@@ -359,19 +351,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     }
     handlesSaveschedule(obj) {
         this.schedule_arr = obj;
-    }
-    handle_badge_click(obj) {
-        const indx = this.sel_badges.indexOf(obj.name);
-        if (indx !== -1) {
-            this.sel_badges.splice(indx, 1);
-        } else {
-            this.sel_badges.push(obj.name);
-        }
-    }
-    checkbadgealreadyselected(obj) {
-        if (this.sel_badges.indexOf(obj.name) !== -1) {
-            return true;
-        }
     }
     onSubmit(form_data) {
         this.disableButton = true;
@@ -446,7 +425,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                 .subscribe(
                     () => {
                         this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_UPDATED, { 'panelclass': 'snackbarerror' });
-                         this.getLocationDetail();
+                        this.getLocationDetail();
                         this.action = 'view';
                         this.disableButton = false;
                     },

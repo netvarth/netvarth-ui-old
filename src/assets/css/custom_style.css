@@ -6513,18 +6513,16 @@ input.jdn_ip { width: 50px !important}
   /* font-weight: 500; */
 }
 
-.pro-schedule .schedule_outer .whrs {
-  margin-bottom: 20px;
-}
-
 .pro-schedule .schedule_outer .whrs li {
   display: flex;
   align-items: center;
+  padding: 5px 10px;
+  /* 
   -moz-transition: all 300ms;
   -o-transition: all 300ms;
   -webkit-transition: all 300ms;
   transition: all 300ms;
-  padding: 5px 10px;
+   */
 }
 
 @media only screen and (max-width: 767px) {
@@ -6539,11 +6537,12 @@ input.jdn_ip { width: 50px !important}
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   color: #222223;
+  /* 
   display: inline-block;
   font-style: normal;
-  font-size: .875rem;
+  font-size: .875rem; */
   width: 250px;
-  margin: 0;
+  /* margin: 0; */
 }
 
 @media only screen and (max-width: 767px) {
@@ -6554,10 +6553,11 @@ input.jdn_ip { width: 50px !important}
 
 .pro-schedule .schedule_outer .whrs li .time {
   font-weight: 500;
-  font-style: normal;
   color: #222223;
+  /* font-style: normal;
+ 
   font-size: .875rem;
-  margin: 0;
+  margin: 0; */
   width: 175px;
 }
 
@@ -6575,10 +6575,6 @@ input.jdn_ip { width: 50px !important}
 
 .pro-schedule .schedule_outer .whrs li:hover {
   background: #f8f8f8;
-}
-
-.pro-schedule .schedule_outer .bt3 {
-  margin-bottom: 0;
 }
 
 .pro-schedule .schedule_outer .bt7 {
