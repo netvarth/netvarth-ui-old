@@ -120,7 +120,6 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.editlocdialogRef.close();
         }
     }
-
     createForm() {
         this.amForm = this.fb.group({
             locname: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_BLANK_FALSE)])],

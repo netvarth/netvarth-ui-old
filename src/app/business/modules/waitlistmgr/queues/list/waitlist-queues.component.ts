@@ -90,7 +90,6 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     todayQLoading: any = [];
     scheduleLoading: any = [];
     domain: any;
-
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,

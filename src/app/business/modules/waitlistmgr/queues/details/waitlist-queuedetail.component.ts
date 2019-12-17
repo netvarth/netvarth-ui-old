@@ -15,7 +15,6 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 })
 
 export class WaitlistQueueDetailComponent implements OnInit {
-
     location_cap = Messages.Q_DET_LOCATION_CAP;
     service_cap = Messages.Q_DET_SERVICE_OFFERD_CAP;
     enabled_cap = Messages.Q_DET_ENABLED_CAP;

@@ -60,7 +60,6 @@ export class LocationsListComponent implements OnInit {
     ) {
         this.emptyMsg = this.shared_Functionsobj.getProjectMesssages('ADWORD_LISTEMPTY');
     }
-
     ngOnInit() {
         const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
