@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -48,7 +48,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     display_schedule: any = [];
     defaultLables: any = [];
     showLabelEdit: any = [];
-    selectedCategory = 'DEPARTMENT';
+    selectedCategory = '';
     selectedCategoryValue;
     labelDisplayname: any = [];
     labelDefaultvalue: any = [];
@@ -62,13 +62,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     labelfromConstants = projectConstants.STATUS_BOARD;
     submit_btn;
     id;
+    filterByDept = false;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
         private router: Router,
         private shared_Functionsobj: SharedFunctions,
-        public provider_shared_functions: ProviderSharedFuctions,
-        private activated_route: ActivatedRoute
+        public provider_shared_functions: ProviderSharedFuctions
     ) {
         this.resetFields();
         // this.activated_route.params.subscribe(params => {
@@ -110,9 +110,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
         this.actionparam = this.action;
         // this.id = this.id;
+        this.getProviderQueues();
         this.getProviderServices();
         this.getDepartments();
-        this.getProviderQueues();
         if (this.id) {
             this.getDisplaydashboardbyId(this.id);
             this.submit_btn = Messages.UPDATE_BTN;
@@ -249,7 +249,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
     }
     onCancel() {
-        console.log(this.source);
         const actionObj = {
             source: this.source
         };
@@ -271,6 +270,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getServicesList(params)
             .subscribe(data => {
                 this.services_list = data;
+                if (this.selectedCategory === '' && this.services_list.length > 0) {
+                    this.selectedCategory = 'SERVICE';
+                    this.selectedCategoryValue = this.services_list[0].id;
+                }
                 this.serviceSelection(this.services_list[0].id);
             });
     }
@@ -285,7 +288,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                             this.departments.push(this.deptObj.departments[i]);
                         }
                     }
-                    this.selectedCategoryValue = this.departments[0].departmentId;
+                    this.filterByDept = this.deptObj.filterByDept;
+                    if (this.departments.length > 0 && this.filterByDept) {
+                        this.selectedCategory = 'DEPARTMENT';
+                        this.selectedCategoryValue = this.departments[0].departmentId;
+                    }
                 },
                 error => {
                     this.shared_Functionsobj.apiErrorAutoHide(this, error);
@@ -298,6 +305,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.provider_services.getProviderQueues()
             .subscribe(data => {
                 this.display_schedule = data;
+                if (this.selectedCategory === '' && this.display_schedule.length > 0) {
+                    this.selectedCategory = 'QUEUE';
+                    this.selectedCategoryValue = this.display_schedule[0].id;
+                }
                 for (let ii = 0; ii < this.display_schedule.length; ii++) {
                     let schedule_arr = [];
                     if (this.display_schedule[ii].queueSchedule) {
@@ -385,7 +396,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.queueSelection(this.display_schedule[0].id);
         } else if (this.selectedCategory === 'DEPARTMENT') {
             this.selectedCategoryValue = this.departments[0].departmentId;
-            this.departmentSelection(this.departments[0].departmentId);
+            if (this.departments.length > 0) {
+                this.departmentSelection(this.departments[0].departmentId);
+            }
         }
     }
     saveLabels(index) {

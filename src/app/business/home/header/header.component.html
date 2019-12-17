@@ -16,7 +16,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
-        <li *ngIf="!iswiz && accountType === 'BRANCH_SP'">
+        <li [matTooltip]="'Go back to branch'" *ngIf="!iswiz && accountType === 'BRANCH_SP'">
           <a (click)="gotoBranch()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-arrow-left"></i>
           </a>
@@ -68,7 +68,7 @@
             <li class="footer"><a href="#" routerLink="alerts">Go to Alerts</a></li>
           </ul>
         </li>
-        <li [matTooltip]="'License Details'" class="dropdown tasks-menu" *ngIf="!iswiz && accountType!='BRANCH_SP'">
+        <li [matTooltip]="'License Details'" class="dropdown tasks-menu" *ngIf="!iswiz">
           <a (click)="gotoLicense()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="icon-license"></i>
           </a>
