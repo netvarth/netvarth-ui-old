@@ -68,8 +68,10 @@ export class DisplayboardLayoutContentComponent implements OnInit {
             fieldValue = checkin[field.name][0].firstName + ' ' + checkin[field.name][0].lastName;
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
-        } else if (field.name === 'service' || field.name === 'queue') {
+        } else if (field.name === 'service') {
             fieldValue = checkin[field.name].name;
+        } else if (field.name === 'queue') {
+            fieldValue = checkin[field.name].queueStartTime + ' - ' + checkin[field.name].queueEndTime;
         } else if (field.label === true) {
             if (checkin.label[field.name]) {
                 fieldValue = checkin.label[field.name];
