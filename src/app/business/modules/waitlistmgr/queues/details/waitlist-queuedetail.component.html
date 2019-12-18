@@ -97,14 +97,14 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <div *ngIf="loc_list.length ===1 || action=='edit'">
+                                    <div *ngIf="loc_list.length ===1 || action=='edit' || action == 'editFromList'">
                                         <label class="labelstyle">{{location_cap}}</label>
                                         <div *ngFor="let loc of loc_list">
                                             {{ loc.place | capitalizeFirst }}
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="action=='edit'">
+                                <div *ngIf="action=='edit' || action == 'editFromList'">
                                     <label class="labelstyle">{{location_cap}}</label>
                                     <div>
                                         {{loc_name}}
@@ -259,7 +259,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-                                <button type="button" mat-dialog-close class="cs-btn bt2"
+                                <button type="button" (click)="closeClick()" class="cs-btn bt2"
                                     [disabled]="disableButton">{{cancel_btn}}</button>
                                 <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
                                     class="cs-btn bt1">{{save_btn}}

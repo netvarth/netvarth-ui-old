@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-waitlist-queuedetail',
@@ -80,6 +81,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
         private router: Router,
+        private _location: Location,
         private activated_route: ActivatedRoute,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -330,7 +332,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     });
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
-                    if (this.action === 'edit') {
+                    if (this.action === 'edit' || this.action === 'editFromList') {
                         this.createForm();
                     }
                 },
@@ -422,7 +424,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     }
                 );
         }
-        if (this.action === 'edit') {
+        if (this.action === 'edit' || this.action === 'editFromList') {
             this.amForm = this.fb.group({
                 qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 qlocation: ['', Validators.compose([Validators.required])],
@@ -640,7 +642,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'services': selser,
                 'tokenStarts': form_data.tokennum
             };
-            if (this.action === 'edit') {
+            if (this.action === 'edit' || this.action === 'editFromList') {
                 this.editProviderQueue(post_data);
             } else if (this.action === 'add') {
                 this.addProviderQueue(post_data);
@@ -676,5 +678,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.disableButton = false;
                 }
             );
+    }
+    closeClick() {
+        if (this.action === 'edit') {
+            this.action = 'view';
+        } else {
+            this._location.back();
+        }
     }
 }
