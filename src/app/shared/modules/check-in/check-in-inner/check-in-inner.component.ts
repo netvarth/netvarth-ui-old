@@ -836,7 +836,7 @@ export class CheckInInnerComponent implements OnInit {
     }
   }
   addCheckInConsumer(post_Data) {
-    post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
+    post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
@@ -1553,7 +1553,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'waitlistPhoneNumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };
@@ -1613,7 +1613,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'waitlistPhoneNumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };

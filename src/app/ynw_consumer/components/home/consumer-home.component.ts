@@ -1051,7 +1051,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     //     'longitude': this.lat_lng.longitude
     //   },
     //   'travelMode': type,
-    //   'waitlistPhonenumber': this.consumerPhoneNo,
+    //   'waitlistPhoneNumber': this.consumerPhoneNo,
     //   'jaldeeStartTimeMod': this.notifyTime,
     //   'shareLocStatus': true
     // };
