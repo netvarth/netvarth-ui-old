@@ -1432,5 +1432,5 @@ export const Messages = {
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
-  'CONTACT_SUPERADMIN': 'Contact superadmin'
+  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations'
 };
