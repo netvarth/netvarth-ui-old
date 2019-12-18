@@ -97,6 +97,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     changelicence = false;
     annualdiscount: any = [];
     licenseDisplayName;
+    account_type;
 
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
@@ -119,6 +120,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.account_type = this.active_user.accountType;
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.loading = true;
@@ -202,23 +204,27 @@ export class LicenseComponent implements OnInit, OnDestroy {
             });
     }
     showupgradeLicense() {
-        this.upgradedialogRef = this.dialog.open(UpgradeLicenseComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-                type: 'upgrade',
-                current_license_pkg: this.current_lic
-            }
-        });
-        this.upgradedialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') {
-                this.getLicenseDetails('update');
-                this.getSubscriptionDetail();
-                this.getLicenseMetaData();
-            }
-            this.goBacktoPrev();
-        });
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.upgradedialogRef = this.dialog.open(UpgradeLicenseComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass'],
+                disableClose: true,
+                data: {
+                    type: 'upgrade',
+                    current_license_pkg: this.current_lic
+                }
+            });
+            this.upgradedialogRef.afterClosed().subscribe(result => {
+                if (result === 'reloadlist') {
+                    this.getLicenseDetails('update');
+                    this.getSubscriptionDetail();
+                    this.getLicenseMetaData();
+                }
+                this.goBacktoPrev();
+            });
+        }
     }
     goBacktoPrev() {
         const retcheck = this.sharedfunctionObj.getitemfromLocalStorage('lic_ret');
@@ -345,43 +351,59 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'license', 'payment', 'history']);
     }
     showUnpaidInvoice() {
-        this.loadingTb = true;
-        if (this.invoices.length === 1) {
-            this.getInvoicePay(this.invoices[0], 1);
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
-            this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
+            this.loadingTb = true;
+            if (this.invoices.length === 1) {
+                this.getInvoicePay(this.invoices[0], 1);
+            } else {
+                this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
+            }
+            this.loadingTb = false;
         }
-        this.loadingTb = false;
     }
     getInvoice(invoice) {
-        this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-            width: '50%',
-            data: {
-                invoice: invoice,
-                source: 'license-home'
-            },
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true
-        });
-        this.invoicedialogRef.afterClosed().subscribe(() => {
-        });
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
+                width: '50%',
+                data: {
+                    invoice: invoice,
+                    source: 'license-home'
+                },
+                panelClass: ['popup-class', 'commonpopupmainclass'],
+                disableClose: true
+            });
+            this.invoicedialogRef.afterClosed().subscribe(() => {
+            });
+        }
     }
     getInvoicePay(invoice, payMentShow) {
-        this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-            width: '50%',
-            data: {
-                invoice: invoice,
-                payMent: payMentShow,
-                source: 'license-home'
-            },
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true
-        });
-        this.invoicedialogRef.afterClosed().subscribe(() => {
-        });
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
+                width: '50%',
+                data: {
+                    invoice: invoice,
+                    payMent: payMentShow,
+                    source: 'license-home'
+                },
+                panelClass: ['popup-class', 'commonpopupmainclass'],
+                disableClose: true
+            });
+            this.invoicedialogRef.afterClosed().subscribe(() => {
+            });
+        }
     }
     openAnnualSection() {
-        this.changelicence = true;
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.changelicence = true;
+        }
     }
     getbillCycle() {
         this.effectivedate = this.provider_servicesobj.getbillCycle()
@@ -405,20 +427,24 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
 
     doUpgradeSubcription(value) {
-        this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-                'message': 'Are you sure you want to change the subscription?'
-            }
-        });
-        this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.updateSubscription(value);
-            }
-            this.changelicence = false;
-        });
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'Are you sure you want to change the subscription?'
+                }
+            });
+            this.upgradesubscriptdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.updateSubscription(value);
+                }
+                this.changelicence = false;
+            });
+        }
     }
 
     cancelAssignServices() {
@@ -430,32 +456,36 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/license->' + mod]);
     }
     makePayment(invoice) {
-        this.pay_data.amount = invoice.amount;
-        this.pay_data.uuid = invoice.ynwUuid;
-        this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
-        if (this.pay_data.uuid && this.pay_data.amount &&
-            this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.pay_data.amount = invoice.amount;
+            this.pay_data.uuid = invoice.ynwUuid;
+            this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
+            if (this.pay_data.uuid && this.pay_data.amount &&
+                this.pay_data.amount !== 0 && this.pay_data.paymentMode) {
 
-            this.payment_loading = true;
+                this.payment_loading = true;
 
-            this.provider_servicesobj.providerPayment(this.pay_data)
-                .subscribe(
-                    data => {
-                        if (data['response']) {
-                            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('PAYMENT_REDIRECT'));
-                            setTimeout(() => {
-                                this.document.getElementById('payuform').submit();
-                            }, 2000);
-                        } else {
-                            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                this.provider_servicesobj.providerPayment(this.pay_data)
+                    .subscribe(
+                        data => {
+                            if (data['response']) {
+                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('PAYMENT_REDIRECT'));
+                                setTimeout(() => {
+                                    this.document.getElementById('payuform').submit();
+                                }, 2000);
+                            } else {
+                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                            }
+                        },
+                        error => {
+                            this.payment_loading = false;
+                            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
-                    },
-                    error => {
-                        this.payment_loading = false;
-                        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    }
-                );
+                    );
+            }
         }
     }
 

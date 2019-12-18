@@ -1431,5 +1431,6 @@ export const Messages = {
   'CREATECORP_SUCCESS': 'Corporate created successfully',
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
-  'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully'
+  'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
+  'CONTACT_SUPERADMIN': 'Contact superadmin'
 };

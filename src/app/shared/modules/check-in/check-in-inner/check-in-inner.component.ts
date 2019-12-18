@@ -836,7 +836,7 @@ export class CheckInInnerComponent implements OnInit {
     }
   }
   addCheckInConsumer(post_Data) {
-    post_Data['waitlistPhonenumber'] = this.consumerPhoneNo;
+    post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addCheckin(this.account_id, post_Data)
       .subscribe(data => {
@@ -1482,12 +1482,12 @@ export class CheckInInnerComponent implements OnInit {
               console.log(liveTInfo);
               this.track_loading = false;
               this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-              }
+            }
           );
         }, (error) => {
           this.shareLoc = false;
         }
-        );
+      );
     } else {
       this.shareLoc = false;
       this.updateLiveTrackInfo();
@@ -1520,7 +1520,7 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   saveLiveTrackInfo() {
-   this.track_loading = true;
+    this.track_loading = true;
     const _this = this;
     console.log(_this.shareLoc);
     return new Promise(function (resolve, reject) {
@@ -1530,7 +1530,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'waitlistPhoneNumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };
@@ -1538,7 +1538,7 @@ export class CheckInInnerComponent implements OnInit {
         .subscribe(
           data => {
             resolve(data);
-            
+
           },
           () => {
             reject();
@@ -1560,21 +1560,21 @@ export class CheckInInnerComponent implements OnInit {
         if (data) {
           //this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
-       // setTimeout(() => {
+        // setTimeout(() => {
 
-          // this.source['list'] = 'reloadlist';
-          // this.source['mode'] = this.page_source;
-          // this.dialogRef.close('reloadlist');
-          //this.returntoParent.emit('reloadlist');
-          this.trackClose('livetrack');
-          this.track_loading = false;
-       // }, projectConstants.TIMEOUT_DELAY_LARGE10);
+        // this.source['list'] = 'reloadlist';
+        // this.source['mode'] = this.page_source;
+        // this.dialogRef.close('reloadlist');
+        //this.returntoParent.emit('reloadlist');
+        this.trackClose('livetrack');
+        this.track_loading = false;
+        // }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
-      
+
   }
   updateLiveTrackInfo() {
     const _this = this;
@@ -1586,7 +1586,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'waitlistPhoneNumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };

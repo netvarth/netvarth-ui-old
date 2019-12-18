@@ -55,6 +55,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     locationExists = false;
     statusboardStatus = false;
     licenseMetadata: any = [];
+    account_type;
     constructor(private provider_services: ProviderServices,
         private provider_datastorage: ProviderDataStorageService,
         private router: Router,
@@ -78,6 +79,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.account_type = user.accountType;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.loading = true;
         this.getBusinessProfile();
