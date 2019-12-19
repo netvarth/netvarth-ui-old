@@ -11,6 +11,7 @@
 <div class="card p0" *ngIf=" action !== 'view' && !api_loading && amForm">
 <div class="copy locd">
 <div class="lbl col-sm-12 col-md-8 col-lg-8">
+<div class="col-md-12">
     <form  [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
     onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         class="ynw-common-form-nm">
@@ -29,7 +30,7 @@
         <div class="form-group">
                 <label class="col-form-label" for="calculationType">{{type_mand_cap}}</label>
                 <mat-radio-group formControlName="calculationType">
-                  <mat-radio-button value="Fixed" (click)="handleTypechange('Fixed')">{{fixed_cap}}</mat-radio-button>
+                  <mat-radio-button value="Fixed" (click)="handleTypechange('Fixed')">{{fixed_cap}}</mat-radio-button>&nbsp;&nbsp;&nbsp;
                   <mat-radio-button value="Percentage" (click)="handleTypechange('Percentage')">{{percentage_cap}}</mat-radio-button>
                 </mat-radio-group>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')" errorMsg="Please enter your coupon type.">
@@ -38,13 +39,10 @@
                   <!-- <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'" class='rupee'> ₹ &nbsp;</span>  -->
                   <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
                   <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
-                  <mat-form-field>
-                    <input matInput type="text" class="form-control valfield" min="0" max={{maxlimit}}  (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                    <input matInput type="text" class="form-control cupn-price" min="0" max={{maxlimit}}  (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
                       id="discValue" [placeholder]="valueCaption" formControlName="discValue" autocomplete="off">
-                  </mat-form-field>
                   <!-- <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span> -->
                 </mat-form-field>
-          
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'discValue')" [errorMsgs]="fed_service.getErrorMessage(amForm,'discValue',
              {
                'required' : valueCaption,
@@ -64,15 +62,15 @@
                   })">
                     </app-field-error-display>
                   </div>
-                  <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
+                  <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
                         <button (click)="onCancel()" type="button"
                                 class="cs-btn bt2">{{cancel_btn_cap}}</button>
                             &nbsp;
-                            <button  type="submit"
+                            <button  type="submit"  mat-button [disabled]="!amForm.valid || disableButton"
                                 class="cs-btn bt1">{{save_btn_cap}}</button>
                       </div>
         </form>
-
+</div>  
 </div>
 <div class="lbr col-sm-12 col-md-4 col-lg-4"></div>
 </div>

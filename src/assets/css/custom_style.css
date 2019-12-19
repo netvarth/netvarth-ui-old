@@ -6748,3 +6748,6 @@ input.jdn_ip { width: 50px !important}
   font-weight: 500;
   text-align: left;
 }
+.cupn-price {
+  width:auto !important;
+}

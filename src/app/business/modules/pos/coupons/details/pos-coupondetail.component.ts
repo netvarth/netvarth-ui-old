@@ -25,7 +25,7 @@ export class PosCouponDetailComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  valueCaption = 'Enter value *';
+  valueCaption = "Enter value";
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxNumbers = projectConstants.VALIDATOR_MAX9;
   curtype = 'Fixed';
