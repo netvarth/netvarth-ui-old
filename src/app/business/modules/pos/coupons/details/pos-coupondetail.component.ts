@@ -86,7 +86,15 @@ breadcrumbs = this.breadcrumbs_init;
                             (item) => {
                                 this.coupon = item;
                                 if (this.action === 'edit') {
-                                    this.createForm();
+                                  const breadcrumbs = [];
+                                  this.breadcrumbs_init.map((e) => {
+                                      breadcrumbs.push(e);
+                                  });
+                                  breadcrumbs.push({
+                                      title: 'Edit'
+                                  });
+                                  this.breadcrumbs = breadcrumbs;
+                                  this.createForm();
                                 }
                             }
                         );
