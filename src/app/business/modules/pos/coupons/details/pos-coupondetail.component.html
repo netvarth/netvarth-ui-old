@@ -8,10 +8,10 @@
 <div class="card p0" *ngIf="api_loading">
 <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
-<div class="card p0" *ngIf="!api_loading">
+<div class="card p0" *ngIf=" action !== 'view' && !api_loading && amForm">
 <div class="copy locd">
 <div class="lbl col-sm-12 col-md-8 col-lg-8">
-    <form *ngIf="action=='add' || action === 'edit'" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+    <form  [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
     onSubmit(amForm.value)" (keyup)="resetApiErrors()"
         class="ynw-common-form-nm">
         <div class="form-group">

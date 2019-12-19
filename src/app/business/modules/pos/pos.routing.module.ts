@@ -50,7 +50,7 @@ const routes: Routes = [
         component: ProviderPaymentSettingsComponent
     },
     {
-        path: 'coupon',loadChildren: './coupons/pos-coupons.module#CouponsModule'
+        path: 'coupon', loadChildren: './coupons/pos-coupons.module#CouponsModule'
     }
 ];
 

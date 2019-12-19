@@ -194,7 +194,6 @@ onSubmit(form_data) {
     'amount': form_data.discValue,
     'calculationType': form_data.calculationType,
   };
-
   if (this.action === 'edit') {
     this.editCoupon(post_data);
   } else if (this.action === 'add') {
@@ -205,12 +204,13 @@ onSubmit(form_data) {
 editCoupon(post_data) {
   this.disableButton = true;
   this.api_loading = true;
-  post_data.id = this.coupon.id;
+  post_data.id = this.coupon.id; 
   this.provider_services.editCoupon(post_data)
     .subscribe(
       () => {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('COUPON_UPDATED'));
         this.api_loading = false;
+        this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
       },
       error => {
         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -228,6 +228,7 @@ addCoupon(post_data) {
       () => {
         this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('COUPON_CREATED'));
                     this.api_loading = false; 
+                    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);      
       },
       error => {
         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

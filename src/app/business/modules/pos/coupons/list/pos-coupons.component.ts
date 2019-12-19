@@ -129,9 +129,8 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'pos', 'coupon', 'add']);
   }
   editCoupons(coupon) {
-    console.log(coupon)
     const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'edit' }
+    queryParams: { action: 'edit' }
   };
    this.router.navigate(['provider', 'settings', 'pos', 'coupon', coupon.id], navigationExtras);
   }
