@@ -1,13 +1,14 @@
-import { Component, OnInit, HostListener, ViewChildren, QueryList, ElementRef, Query } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChildren, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
     selector: 'app-displayboard-content',
     templateUrl: './displayboard-content.component.html'
 })
-export class DisplayboardLayoutContentComponent implements OnInit {
+export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     layout_id;
     boardLayouts = [
         { displayName: '1x1', value: '1_1', row: 1, col: 1 },
@@ -21,6 +22,8 @@ export class DisplayboardLayoutContentComponent implements OnInit {
     boardHeight;
     bname;
     blogo;
+    metricElement;
+    cronHandle: Subscription;
     @ViewChildren('boardid') private boardstyle;
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
@@ -36,6 +39,11 @@ export class DisplayboardLayoutContentComponent implements OnInit {
         const screenHeight = window.innerHeight;
         this.boardHeight = (screenHeight - 150) / 2;
     }
+    ngOnDestroy() {
+        if (this.cronHandle) {
+            this.cronHandle.unsubscribe();
+        }
+    }
     ngOnInit() {
         this.getBusinessdetFromLocalstorage();
         if (this.layout_id) {
@@ -47,20 +55,24 @@ export class DisplayboardLayoutContentComponent implements OnInit {
                     this.boardRows = layoutPosition[0];
                     this.boardCols = layoutPosition[1];
                     layoutData.metric.forEach(element => {
+                        this.metricElement = element;
                         this.selectedDisplayboards[element.position] = {};
                         this.setDisplayboards(element);
                     });
                 });
         }
+        this.cronHandle = Observable.interval(120000).subscribe(() => {
+            this.setDisplayboards(this.metricElement);
+        });
     }
 
     getBusinessdetFromLocalstorage() {
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
         if (bdetails) {
-          this.bname = bdetails.bn || '';
-          this.blogo = bdetails.logo || '';
+            this.bname = bdetails.bn || '';
+            this.blogo = bdetails.logo || '';
         }
-      }
+    }
 
     getFieldValue(field, checkin) {
         let fieldValue = '';
@@ -116,5 +128,3 @@ export class DisplayboardLayoutContentComponent implements OnInit {
         return api_filter;
     }
 }
-
-

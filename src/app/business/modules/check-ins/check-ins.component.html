@@ -433,7 +433,7 @@
             <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="time_type==1 && queues.length !=0">
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-12 col-xs-12 col-sm-12"
+                  <div class="statuses col-md-12 col-xs-12 col-sm-12"
                     [class.status-width]="startedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('started')"> Started </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.started)">(0)</span>
@@ -609,7 +609,7 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12 col-sm-12  no-padding newwaitlist">
                 <div class="labelList col-md-12 no-padding">
-                  <div class="statuslink col-md-12 col-xs-12 col-sm-12" [class.status-width]="waitlistSelection!=1">
+                  <div class="statuses col-md-12 col-xs-12 col-sm-12" [class.status-width]="waitlistSelection!=1">
                     <span (click)="waitlistStatusClick('new')"> New </span>
                     <span>({{new_checkins_list.length}})</span></div>
                   <div class="navbar navbar-static-top statuslink " role="navigation" *ngIf="waitlistSelection === 1"
@@ -822,7 +822,7 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-12 col-xs-12 col-sm-12"
+                  <div class="statuses col-md-12 col-xs-12 col-sm-12"
                     [class.status-width]="completedwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('completed')"> Completed </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.done)">(0)</span>
@@ -977,7 +977,7 @@
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
                 <div class="labelList">
-                  <div class="statuslink col-md-12 col-xs-12 col-sm-12"
+                  <div class="statuses col-md-12 col-xs-12 col-sm-12"
                     [class.status-width]="cancelledwaitlistSelection!=1">
                     <span (click)="waitlistStatusClick('cancelled')"> Cancelled </span> <span
                       *ngIf="!grouped_list || (grouped_list && !grouped_list.cancelled)">(0)</span>

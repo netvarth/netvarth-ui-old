@@ -6292,9 +6292,12 @@ border-color: #3c8dbc !important;
   background: #d8e2f1 !important;
 }
 .statuslink {
-  padding: 10px;
+  padding: 07px 10px 07px 10px !important
 }
-.statuslink  span {
+.statuses {
+  padding: 11px 10px 10px 11px;
+}
+.statuses  span {
   color: #3c8dbc;
   cursor: pointer;
 }
@@ -6535,4 +6538,13 @@ input.jdn_ip { width: 50px !important}
 .direct-chat-img.blogo {
   background-image: url(../images/img-null.svg);
   background-size: contain;
+}
+@media only screen and (max-width: 768px) {
+  .labelList .navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+    width: 100% !important;
+    right: 0 !important;
+  }
+}
+.labelList .navbar-custom-menu>.navbar-nav>li>.dropdown-menu .menu a{
+  white-space: initial !important;
 }
