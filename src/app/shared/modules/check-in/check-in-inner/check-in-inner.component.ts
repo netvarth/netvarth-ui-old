@@ -1553,7 +1553,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'waitlistPhoneNumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };
@@ -1613,7 +1613,7 @@ export class CheckInInnerComponent implements OnInit {
           'longitude': _this.lat_lng.longitude
         },
         'travelMode': _this.travelMode,
-        'waitlistPhonenumber': _this.consumerPhoneNo,
+        'waitlistPhoneNumber': _this.consumerPhoneNo,
         'jaldeeStartTimeMod': _this.notifyTime,
         'shareLocStatus': _this.shareLoc
       };
