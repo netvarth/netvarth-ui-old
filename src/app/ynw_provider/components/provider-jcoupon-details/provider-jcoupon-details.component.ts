@@ -48,7 +48,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
     },
     {
       title: 'Coupons',
-      url: '/provider/settings/pos/coupons'
+      url: '/provider/settings/pos/coupon'
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
