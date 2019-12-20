@@ -280,8 +280,13 @@ export class SharedFunctions {
     }
     localStorage.setItem(group, JSON.stringify(groupObj));
   }
-  public getitemFromGroupStorage(itemname) {
-    const group = this.getGroup();
+  public getitemFromGroupStorage(itemname, type?) {
+    let group;
+    if (type) {
+      group = 0;
+    } else {
+      group = this.getGroup();
+    }
     if (localStorage.getItem(group)) {
       const groupObj = JSON.parse(localStorage.getItem(group));
       if (groupObj[itemname] || (itemname === 'isCheckin' && groupObj[itemname] !== undefined)) {
@@ -1317,7 +1322,7 @@ export class SharedFunctions {
       let message = '';
       if (distance === 0) {
         message += 'You are close to ' + businessName;
-      }  else {
+      } else {
         message += 'From your current location, you are ' + distance + ' ' + unit + ' away and will take around';
         if (hours !== 0) {
           message += ' ' + hours;

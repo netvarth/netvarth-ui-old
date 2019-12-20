@@ -45,7 +45,7 @@
   <button (click)="OnSubmit()" type="button" mat-button class="cs-btn bt1"
     [disabled]="form.calculationMode == 'Fixed' && form.trnArndTime == null">{{save_btn}}</button>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="account_type!='BRANCH_SP'">
       <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 " style ="margin-bottom: 10px">
           <label>Send notifications to {{customer_label}}
           <mat-slide-toggle class="example-margin" [checked]="waitlist_manager['sendNotification']"

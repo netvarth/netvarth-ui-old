@@ -27,6 +27,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     domain;
     learn_more = Messages.LEARN_MORE_CAP;
     history_cap = Messages.HISTORY_HOME_CAP;
+    account_type;
     breadcrumbs = [
         {
             title: 'License & Invoice',
@@ -46,6 +47,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.account_type = user.accountType;
         this.domain = user.sector;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
@@ -87,18 +89,22 @@ export class AddonsComponent implements OnInit, OnDestroy {
         });
     }
     showadd_addons() {
-        this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-            width: '50%',
-            data: {
-                type: 'addons'
-            },
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true
-        });
-        this.addondialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') {
-               this.getLicenseDetails();
-            }
-        });
+        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        } else {
+            this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
+                width: '50%',
+                data: {
+                    type: 'addons'
+                },
+                panelClass: ['popup-class', 'commonpopupmainclass'],
+                disableClose: true
+            });
+            this.addondialogRef.afterClosed().subscribe(result => {
+                if (result === 'reloadlist') {
+                    this.getLicenseDetails();
+                }
+            });
+        }
     }
 }

@@ -42,6 +42,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   frm_wait_cal_cap = '';
   removeitemdialogRef;
   message;
+  account_type;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions,
@@ -53,7 +54,8 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   }
 
   ngOnInit() {
-
+const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+this.account_type = user.accountType;
     this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
     this.setValue(this.waitlist_manager);
     this.frm_wait_cal_cap = Messages.FRM_LEVEL_WAIT_TIME_CALC_MSG.replace('[customer]', this.customer_label);
