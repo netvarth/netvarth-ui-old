@@ -13,10 +13,10 @@ import { MediaComponent } from './media/media.component';
 import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { SpecializationsComponent } from './specializations/specializations.component';
-import { PrivacyComponent } from './privacy/privacy.component';
 import { ProviderBprofileSearchDynamicComponent } from '../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
+import { PrivacyModule } from './privacy/privacy.module';
 @NgModule({
     imports: [
         BProfileRoutingModule,
@@ -29,6 +29,7 @@ import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
         Nl2BrPipeModule,
         DynamicFormModule,
         GalleryModule,
+        PrivacyModule
     ],
     declarations: [
         BProfileComponent,
@@ -38,7 +39,6 @@ import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
         LanguagesComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
-        PrivacyComponent
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,
