@@ -131,7 +131,7 @@ export class POSComponent implements OnInit {
     }
   }
   gotoCoupons() {
-    this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
   gotoTaxSettings() {
     this.router.navigate(['provider', 'settings', 'pos', 'taxsettings']);

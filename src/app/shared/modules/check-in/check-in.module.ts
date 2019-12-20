@@ -7,8 +7,9 @@ import { FormMessageDisplayModule } from '../../../shared/modules/form-message-d
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
-import { CheckInComponent } from './check-in.component';
+// import { CheckInComponent } from './check-in.component';
 import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component';
+import { CheckInComponent } from '../checkin/checkin.component';
 
 
 @NgModule({

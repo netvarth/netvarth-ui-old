@@ -14,8 +14,10 @@ const routes: Routes = [
         {path: 'specializations', component: SpecializationsComponent },
         {path: 'languages', component: LanguagesComponent },
         {path: 'additionalinfo', component: AdditionalInfoComponent },
-        {path: 'privacy', component: PrivacyComponent }
-    ]}
+    ]},
+    {
+        path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyModule'
+    }
 ];
 
 @NgModule({

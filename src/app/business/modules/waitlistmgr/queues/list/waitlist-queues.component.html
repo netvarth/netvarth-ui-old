@@ -26,12 +26,10 @@
                                                         </button>
                                                 </mat-panel-description>
                                         </div>
-
                                         <div class="row m0" *ngIf="showInstantQFlag">
                                                 <div class="col-md-12 p0">
                                                         <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
-                                                                        onSubmit(instantQForm.value)"
-                                                                (keyup)="resetApiErrors()">
+                                                                        onSubmit(instantQForm.value)">
                                                                 <div class="instant-ed">
                                                                         <span [class.label-margin]="true"><strong>I am
                                                                                         available</strong>&nbsp;from</span>
@@ -452,7 +450,7 @@
                                                                                         Count
                                                                                 </button>
                                                                                 <button mat-menu-item
-                                                                                        (click)="addEditProviderQueue('edit', queue)"
+                                                                                        (click)="addEditProviderQueue('editFromList', queue)"
                                                                                         *ngIf="queue.queueState=='ENABLED'">
                                                                                         <i class="icon-edit"></i>Edit
                                                                                 </button>
@@ -506,7 +504,8 @@
                                                                                                                 style="font-size: small; color: black;">({{schedule.dstr}})</span></span>
                                                                                                 <div
                                                                                                         style="font-size: small; color: black; margin-top: 2px; display: block;">
-                                                                                                        [<span>{{queue.name}}                                                                                                                -
+                                                                                                        [<span>{{queue.name}}
+                                                                                                                -
                                                                                                         </span>
                                                                                                         <span
                                                                                                                 *ngIf="queue.location">{{queue.location.place | capitalizeFirst}}]</span>

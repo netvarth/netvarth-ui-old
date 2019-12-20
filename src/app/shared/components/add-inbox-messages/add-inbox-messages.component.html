@@ -76,15 +76,8 @@
                 [disabled]="disableButton">{{cancel_btn_cap}}</button>
             <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
                 class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
-            <button type="button" *ngIf="!typeOfMsg && (source=='consumer-waitlist' || source=='provider-waitlist')"
-                class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Attach files'">
-                <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
-                <input #logofile type="file" accept="image/*,application/pdf" style="display:none;" multiple
-                    (change)="filesSelected($event)">
-                <span><i class="material-icons">attach_file</i></span>
-            </button>
             <button type="button"
-                *ngIf="typeOfMsg && typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist')"
+                *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist')"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Attach files'">
                 <!-- accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" -->
                 <input #logofile type="file" accept="image/*,application/pdf" style="display:none;" multiple

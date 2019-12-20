@@ -55,7 +55,7 @@
                                                         turn on the Public Search. At this point, a default service gets
                                                         created which can be edited in <strong>Services</strong> under
                                                         the
-                                                        Q manager.</li>
+                                                        Check-In Manager.</li>
                                                     <li>If the provider logs out of the website after setting up the
                                                         location, a default
                                                         service time window gets created. The provider can edit this
@@ -1192,11 +1192,11 @@
                         <mat-expansion-panel [expanded]='showcheckinmanager'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('checkinmanager')">
-                                    Q Manager
+                                    Queue Manager
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <span>The Q manager helps the provider in managing the working hours and ensuring
+                                <span>The check-in manager helps the provider in managing the working hours and ensuring
                                     the seamless workflow from the point of the check-in to the completion of service.
                                 </span>
                             </div>
@@ -1656,98 +1656,28 @@
                                             <li>To edit department details, click on the department name.</li>
                                             <li>To allow customers to check-in department wise enable the toggle button
                                                 <strong>“Select
-                                                    services by department”</strong> from Q manager.</li>
+                                                    services by department”</strong> from check-in manager.</li>
                                         </ul>
                                     </div>
 
                                 </mat-expansion-panel>
                             </mat-accordion>
-                            <mat-accordion>
-                                <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
-                                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
-                                        class="accordion">
-                                        <mat-panel-title class="accordion-title">
-                                            <span class="helpcontent"
-                                                (click)="handleScroll('settings-displayboards','checkinmanager')">Queue
-                                                Statusboards</span>
-                                        </mat-panel-title>
-                                    </mat-expansion-panel-header>
-
-                                    <div class="helpcontent">
-                                        Get an immediate overview or a quick reference of check-ins or any related
-                                        information at the premise with the feature “Queue Status Board” in Jaldee. To
-                                        create and display a status board the provider has to purchase a Queue Status
-                                        Board addon from license section. Provider can customize the display boards to
-                                        show any information they want by selecting the layout and also status board
-                                        criterias from the created list. We’ll help you replace the conventional display
-                                        boards with Queue Status Board to display check-in information.
-                                        <ul>
-                                            <li>To create a Queue Status Board, first you have to create a “Status Board
-                                                Criteria”.</li>
-                                            <li>Status Board Criterias are created to display the required information
-                                                in Queue Status Board. Once a status board criteria is set, it can be
-                                                added to the queue status board to display.
-                                            </li>
-                                        </ul>
-                                        <strong><u>How to create a status board criteria?</u></strong><br>
-                                        <ol>
-                                            <li>Click <strong>“CREATE A QUEUE STATUS BOARD”</strong> and to start with
-                                                creating a status board criteria, click <strong>“CREATE”</strong>.
-                                            </li>
-                                            <li>Here, enter the name of the status board criteria you are about to
-                                                create.
-                                            </li>
-                                            <li>Under category, choose from <strong>Services, Queues,</strong> or
-                                                <strong>Departments</strong>(only when department is enabled)to be
-                                                displayed.</li>
-                                            <li>Then choose from the options listed corresponding to the category
-                                                selected. For example if category chosen is services, the list of
-                                                services added to the provider profile is listed here. Choose one
-                                                service from the list.
-                                            </li>
-                                            <li>And then select the fields to be displayed in queue status board. Also
-                                                you can edit the field name from here.
-                                            </li>
-                                            <li>When you have all the information set, click “Save” and thus a status
-                                                board criteria is created.
-                                            </li>
-                                            <li>Once created these can be edited using the pencil icon in the right
-                                                corner.</li>
-                                        </ol>
-                                        <strong><u>How to create a Queue Status Board?
-                                            </u></strong><br>
-                                        <ol>
-                                            <li>To start with click on<strong>“CREATE A QUEUE STATUS BOARD”</strong> .
-                                            </li>
-                                            <li>Select a layout that you want from the list.</li>
-                                            <li>Give a title for the queue status board.</li>
-                                            <li>Lastly, but most importantly select the already added status board
-                                                criteria you wanted to display in the status board from the list.
-                                            </li>
-                                            <li>Status board criteria can be chosen differently in four different
-                                                layouts. This is given below:
-                                                <ul>
-                                                    <li>If 1 x 1 layout is selected, only one status board criteria can
-                                                        be chosen.
-                                                    </li>
-                                                    <li>If 1 x 2 layout is selected two status board criteria can be
-                                                        chosen.</li>
-                                                    <li>If 2 x 1 layout is selected two status board criteria can be
-                                                        chosen.</li>
-                                                    <li>If 2 x 2 layout is selected four status board criteria can be
-                                                        chosen.</li>
-                                                </ul>
-                                            </li>
-                                            <li>Click “Save” and a new queue status board is created.</li>
-                                            <li>From the list of queue status boards created click the three dots menu
-                                                in the right corner click “Open” to view the display board. Options to
-                                                edit or delete the status boards are given in the three dots menu.</li>
-                                        </ol>
-
-                                    </div>
-
-                                </mat-expansion-panel>
-                            </mat-accordion>
+                            <!-- <mat-accordion>
+                <mat-expansion-panel [expanded]="showdisplayboard && showcheckinmanager">
+                    <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="32px"
+                        class="accordion">
+                        <mat-panel-title class="accordion-title">
+                            <span class="helpcontent"
+                                (click)="handleScroll('settings-displayboards','checkinmanager')">Displayboards</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+        
+                    <div>
+        
+                    </div>
+        
+                </mat-expansion-panel>
+            </mat-accordion> -->
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- next -->
@@ -2577,7 +2507,7 @@
                                     <td class="th6 light-col long"><i class="fa fa-check"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="th3 headcol">Q manager integration with Jaldee.com</th>
+                                    <th class="th3 headcol">Queue manager integration with Jaldee.com</th>
                                     <td class="th2 light-col long"><i class="fa fa-check"></i></td>
                                     <td class="brozelicensecol long"><i class="fa fa-check"></i></td>
                                     <td class="th3 light-col long"><i class="fa fa-check"></i></td>
@@ -2950,7 +2880,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="td1">Jaldee Q manager multi provider (i.e for hospitals, nursing homes,
+                            <td class="td1">Jaldee Queue manager multi provider (i.e for hospitals, nursing homes,
                                 clinics) </td>
                             <td class="td2 bordl">
                                 <ul class="ul-normal">
@@ -3339,8 +3269,7 @@
                             describing this label as “Both walk-in and online check-ins”. Then he clicks <strong>“Short
                                 label button”</strong>.First he entered a value “Walk-in” and gave a shortcut value “W”,
                             again he added the second value “Online”and gave shortcut value “O”. Now from the check-ins
-                            list in the dashboard, provider chooses the label for each check-in using that symbol
-                            appeared in the right corner of the selected check-in and
+                            list in the dashboard, provider chooses the label for each check-in using that symbol appeared in the right corner of the selected check-in and
                             assign respective values according to the type of check-in that customer has taken ie;
                             either
                             <strong>W</strong>(walk-in)or <strong>O</strong>(Online).
@@ -3366,19 +3295,18 @@
                             bill generated by JDN subscribed provider.<br>
                             <u><strong>How to set JALDEE DISCOUNT NETWORK in Jaldee?
                                 </strong></u>
-                            <ul>
-                                <li>
+                           <ul>
+                               <li>
                                     Fill in the “Label” text box with a brief idea of discount you are offering.
-                                </li>
-                                <li>
+                               </li>
+                               <li>
                                     Enter the details of the discount in the “Note” textbox.
-                                </li>
-                            </ul>
+                               </li>
+                           </ul>
                             Once JDN is created by the provider, the provider profile in customer dashboard shows
                             <strong><i>JDN symbol</i></strong> with which customers get to know the details of
                             discount
-                            offered by a particular provider.A provider can disable JDN anytime and the provider has to
-                            pay an amount of Rs.499/- to
+                            offered by a particular provider.A provider can disable JDN anytime and the provider has to pay an amount of Rs.499/- to
                             resubscribe JDN.
 
 
@@ -3395,9 +3323,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
-                        <div class="helpcontent">
-                                If you are introduced to Jaldee via any of the sales channel (who has a contract with Jaldee),give that particular sales channel’s code here and the details of the respective sales channel will be displayed. You can use this option if you have missed setting up sales channel code during the signup process.
-                        </div>
+                        <div></div>
 
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -3410,11 +3336,7 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
-                        <div class="helpcontent">
-                            Every newly created provider dashboard has a default theme set in Jaldee. If you wish to
-                            change the view of your profile, you can select the available themes from. The selection
-                            will automatically switch your profile’s appearance according to your selection.
-                        </div>
+                        <div></div>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
@@ -4148,7 +4070,7 @@
                                     time of billing, only if the <strong>“Tax Applicable”</strong>
                                     toggle button is enabled
                                     in
-                                    the respective section (i.e. Settings -> Q manager
+                                    the respective section (i.e. Settings -> Check-In Manager
                                     ->Services).</li>
                                 <li>Jaldee has no role in paying taxes paid by the customer to the
                                     service provider. All types
@@ -4563,6 +4485,7 @@
         </mat-accordion>
         </mat-expansion-panel>
         </mat-accordion> -->
+
     </div>
     </div>
     </div>

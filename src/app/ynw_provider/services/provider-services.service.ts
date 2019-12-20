@@ -240,7 +240,7 @@ export class ProviderServices {
     const url = 'provider/license/adwords/' + id;
     return this.servicemeta.httpDelete(url);
   }
-  // Q manager
+  // Check-In Manager
   setAcceptOnlineCheckin(status) {
     const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
     return this.servicemeta.httpPut(url);

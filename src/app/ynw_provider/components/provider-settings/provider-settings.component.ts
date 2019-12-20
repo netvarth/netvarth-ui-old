@@ -156,8 +156,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.frm_search_cap = Messages.FRM_SEARCH_MSG.replace('[customer]', this.customer_label);
     this.frm_waitlist_cap = Messages.FRM_LEVEL_WAITLIST_MSG.replace('[customer]', this.customer_label);
     this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
-    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
-    this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]',this.provider_label);
+    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
+    this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.getDomainSubdomainSettings();
     this.getLocationCount();
     this.getQueuesCount();
@@ -359,7 +359,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
         break;
       case 'coupons':
-        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupons']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupon']);
         break;
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);

@@ -4,12 +4,12 @@
 
 <section>
     <div class="content loc-list">
-        <div class="col-md-12" *ngIf="queue_data">
+        <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card que p0" *ngIf="api_loading">
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
-                <div class="card que p0" *ngIf="!api_loading">
+                <div class="card que p0" *ngIf="queue_data && action === 'view' && !api_loading">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
@@ -23,7 +23,6 @@
                                                 (change)="changeProviderQueueStatus(queue_data)"></mat-slide-toggle>
                                         </span>
                                     </div>
-
                                     <div class="row col-sm-12 padleft">
                                         <span class='greenc'
                                             *ngIf="queue_data.queueState=='ENABLED'">{{enabled_cap}}</span>
@@ -83,6 +82,190 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="action !== 'view' && !api_loading">
+                    <div class="copy ynw-common-form-nm">
+                        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" class="ynw-common-form">
+                            <div class="form-group">
+                                <div *ngIf="action!='edit'">
+                                    <mat-form-field *ngIf="loc_list.length > 1">
+                                        <mat-select placeholder="Location *" formControlName="qlocation">
+                                            <mat-option *ngFor="let loc of loc_list" [value]="loc.id">
+                                                {{ loc.place | capitalizeFirst }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div *ngIf="loc_list.length ===1 || action=='edit' || action == 'editFromList'">
+                                        <label class="labelstyle">{{location_cap}}</label>
+                                        <div *ngFor="let loc of loc_list">
+                                            {{ loc.place | capitalizeFirst }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="action=='edit' || action == 'editFromList'">
+                                    <label class="labelstyle">{{location_cap}}</label>
+                                    <div>
+                                        {{loc_name}}
+                                    </div>
+                                </div>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qlocation')"
+                                    errorMsg="Please enter the location">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group" *ngIf="filterbyDept">
+                                <label class="labelstyle">{{service_cap}}</label>
+                                <div class="schselectall">
+                                    <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectdept()">
+                                        {{select_All}}</i>
+                                    <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectdept()">
+                                        {{select_All}}</i>
+                                </div>
+                                <div *ngFor="let department of departments;let i = index">
+                                    <mat-checkbox *ngIf="department.serviceIds.length > 0"
+                                        (change)="selectdeprtservice(i,$event,department.departmentName)"
+                                        [checked]="department.checked === true">{{department.departmentName}}
+                                    </mat-checkbox>
+                                    <section class="schedule-section leftselectAll">
+                                        <div *ngFor="let services of department.serviceIds;let j = index">
+                                            <mat-checkbox class="example-margin"
+                                                (change)="serviceunderdept(j,department.departmentName, i, services)"
+                                                [checked]="serviceSelection[department.departmentName][j]"
+                                                *ngIf="SelService[i]" style="display:block">{{services}}</mat-checkbox>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="!filterbyDept">
+                                <label class="labelstyle">{{service_cap}}</label>
+                                <div class="schselectall ">
+                                    <i class="fa fa-square-o" *ngIf="!SelServcall" (click)="selectAllService()">
+                                        {{select_All}}</i>
+                                    <i class="fa fa-check-square-o" *ngIf="SelServcall" (click)="deselectAllService()">
+                                        {{select_All}}</i>
+                                </div>
+                                <section class="service-section leftselectAll">
+                                    <div *ngFor="let service of services_list; index as i ">
+                                        <mat-checkbox class="example-margin" [value]="service.id"
+                                            (change)="handleServicechecbox(i)"
+                                            [checked]="services_list[i].checked === true">
+                                            {{service.name | capitalizeFirst}}
+                                        </mat-checkbox>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="form-group">
+                                <label class="labelstyle">{{schedule_cap}}</label><a
+                                    class="link exstschdlesze pointer-cursor"
+                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a>
+                                <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
+                                    <ul class="item">
+                                        <li *ngFor="let schedule of this.activeQueues"><span
+                                                class="day">{{schedule.dstr}}:
+                                            </span><span class="time">{{schedule.time}}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="schselectall">
+                                    <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">
+                                        {{select_All}}</i>
+                                    <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()">
+                                        {{select_All}}</i>
+                                </div>
+                                <section class="schedule-section leftselectAll">
+                                    <div *ngFor="let wday of weekdays; index as i">
+                                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecbox(i)"
+                                            [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="form-group">
+                                <div class="startendtime">
+                                    <div class="starttimediv">
+                                        <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
+                                        <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time
+                                            (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
+                                            errorMsg="Please enter the start time">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="endtimediv">
+                                        <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
+                                        <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time
+                                            (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
+                                            errorMsg="Please enter the end time">
+                                        </app-field-error-display>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-form-field>
+                                        <input matInput
+                                            placeholder="{{service_time_window_name}} (not visible to public)"
+                                            formControlName="qname" autocomplete="off" maxlength="20">
+                                    </mat-form-field>
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')"
+                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
+            {
+              'required' : 'Please enter title for queue',
+              'maxlength' : 'Name can contain only 100 characters'
+            })">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group">
+                                <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
+                            </div>
+                            <div class="form-group" *ngIf="showAdvancedSettings">
+                                <mat-form-field>
+                                    <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
+                                        class="form-control number-ip-sm"
+                                        placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
+                                        formControlName="qcapacity" autocomplete="off" (keypress)="isNumeric($event)"
+                                        (keyup)="isvalid($event)">
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qcapacity')"
+                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qcapacity',
+        {
+          'required' : 'Please enter the capacity',
+          'maxlength' : 'Only 4 digits are allowed'
+        })">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group" *ngIf="showAdvancedSettings">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="{{parallellimit}}" type="text" class="number-ip-sm"
+                                        placeholder="{{customer_label | capitalizeFirst}}s served at a time *"
+                                        formControlName="qserveonce" autocomplete="off" (keypress)="isNumeric($event)"
+                                        (keyup)="isvalid($event)">
+                                </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qserveonce')"
+                                    [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
+        {
+          'required' : 'Please enter the ' + customer_label + 's served at a time' ,
+          'maxlength' : 'Only 4 digits are allowed'
+        })">
+                                </app-field-error-display>
+                            </div>
+                            <div class="form-group" *ngIf="showAdvancedSettings && action !== 'edit'">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="100000" type="text" class="number-ip-sm"
+                                        placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
+                                        (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                                <button type="button" (click)="closeClick()" class="cs-btn bt2"
+                                    [disabled]="disableButton">{{cancel_btn}}</button>
+                                <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+                                    class="cs-btn bt1">{{save_btn}}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

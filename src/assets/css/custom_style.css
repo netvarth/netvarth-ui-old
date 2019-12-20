@@ -1278,7 +1278,9 @@ sup {
 .mgn-bt-10 {
   margin-bottom: 10px !important;
 }
-
+.mgn-bt-20 {
+  margin-bottom: 20px !important;
+}
 .mgn-bt-5 {
   margin-right: 5px !important;
 }
@@ -6097,6 +6099,14 @@ border-color: #3c8dbc !important;
   border: none !important;
   font-size: 0.75rem;
 }
+/* .user-menu i.fa-circle {
+  border-radius: 8px;
+  border: 2px solid #fff;
+  font-size: 1rem !important;
+} */
+/* .user-menu i.fa-circle  {
+  font-size: 1.6rem !important;
+} */
 .user-menu i.fa-user  {
   line-height: 30px !important;
   font-size: 0.9rem !important;
@@ -6291,10 +6301,16 @@ border-color: #3c8dbc !important;
 .selected-waitlist {
   background: #d8e2f1 !important;
 }
+/* .dashboard .card.w-dta .dash-list .newwaitlist .mat-accordion .mat-expansion-panel .mat-expansion-panel-header.mat-expanded .mat-content i:before {
+  content: "\f02c" !important;
+} */
 .statuslink {
-  padding: 10px;
+  padding: 07px 10px 07px 10px !important
 }
-.statuslink  span {
+.statuses {
+  padding: 11px 10px 10px 11px;
+}
+.statuses  span {
   color: #3c8dbc;
   cursor: pointer;
 }
@@ -6366,6 +6382,17 @@ font-style: bold;
 .textsize{
 font-size: .7rem !important;
 }
+/* .trackIcons{
+list-style: none;
+display: flex;
+}
+.travelmodeicon{
+  width: 30px;
+  height: 20px;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding-left: 5px;
+} */
 .driving, .bicycling, .walking{
 color:green;
 }
@@ -6535,4 +6562,306 @@ input.jdn_ip { width: 50px !important}
 .direct-chat-img.blogo {
   background-image: url(../images/img-null.svg);
   background-size: contain;
+}
+.pro-schedule .schedule_outer {
+  font-size: .875rem;
+}
+
+.pro-schedule .schedule_outer .whrs li {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .pro-schedule .schedule_outer .whrs li {
+      position: relative;
+      align-items: flex-start;
+      flex-direction: column;
+  }
+}
+
+.pro-schedule .schedule_outer .whrs li .day {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  color: #222223;
+  width: 250px;
+}
+
+@media only screen and (max-width: 767px) {
+  .pro-schedule .schedule_outer .whrs li .day {
+      flex-grow: 1;
+  }
+}
+
+.pro-schedule .schedule_outer .whrs li .time {
+  font-weight: 500;
+  color: #222223;
+  width: 175px;
+}
+
+.pro-schedule .schedule_outer .whrs li .mat-icon-button {
+  outline: none;
+  color: #00aef2;
+}
+
+@media only screen and (max-width: 767px) {
+  .pro-schedule .schedule_outer .whrs li .mat-icon-button {
+      position: absolute;
+      right: 0;
+  }
+}
+
+.pro-schedule .schedule_outer .whrs li:hover {
+  background: #f8f8f8;
+}
+
+.pro-schedule .schedule_outer .bt7 {
+  margin-left: 5px;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer {
+  background: #f8f8f8;
+  padding: 20px;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .sch_sel_head {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .schselectall i {
+  padding: 5px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #00aef2;
+  cursor: pointer;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .schselectall i:before {
+  font-family: 'fontAwesome';
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .chk-section {
+  /* display: flex;
+  flex-wrap: wrap; */
+  margin-bottom: 20px;
+  height: auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .pro-schedule .schedule_outer .schedulesub_outer .chk-section {
+      margin-bottom: 5px;
+  }
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .chk-section .chk-margin {
+  margin-right: 20px;
+  margin-left: 0px;
+}
+
+@media only screen and (max-width: 767px) {
+  .pro-schedule .schedule_outer .schedulesub_outer .chk-section .chk-margin {
+      margin-bottom: 15px;
+  }
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .chk-section .chk-margin:nth-child(1) {
+  display: none;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .chk-section .chk-margin .mat-checkbox-layout {
+  margin-bottom: 0;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime {
+  /* margin-bottom: 20px; */
+  display: flex;
+  /* flex-wrap: wrap; */
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv {
+  flex-grow: 1;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .form-control, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .form-control {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+  font-size: 0.875rem;
+  color: #4c4c4c;
+  text-overflow: ellipsis;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .form-control:focus, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .form-control:focus {
+  -webkit-box-shadow: 0 0 1px #00aef2 inset;
+  -moz-box-shadow: 0 0 1px #00aef2 inset;
+  box-shadow: 0 0 1px #00aef2 inset;
+  border: 1px solid #00aef2;
+  background: #fff;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link {
+  display: flex;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:first-child .chevron:before, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:first-child .chevron:before {
+  border: none;
+  content: "\66";
+  font-family: "custom-ynw" !important;
+  color: #00aef2;
+  transform: rotate(0);
+  font-size: .75rem;
+  font-weight: 700;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:last-child .chevron.bottom:before, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:last-child .chevron.bottom:before {
+  border: none;
+  content: "\72";
+  font-family: "custom-ynw" !important;
+  color: #00aef2;
+  transform: rotate(0);
+  font-size: .75rem;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:hover, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:focus, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-hour .btn-link:active, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:hover, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:focus, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-minute .btn-link:active, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:hover, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:focus, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-hour .btn-link:active, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:hover, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:focus, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-minute .btn-link:active {
+  text-decoration: none;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary {
+  border-color: #00aef2;
+  color: #00aef2;
+  font-weight: 600;
+  font-size: .875rem;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:hover {
+  background: #00aef2;
+  color: #fff;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset .ngb-tp-meridian .btn-outline-primary:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv fieldset:first-child, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv fieldset:first-child {
+  margin-bottom: 15px;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer .savecancel .bt7 {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.error {
+  padding: 10px 0px 0;
+  color: #f24949;
+  font-size: .75rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.pro-schedule .schedule_outer .schedulesub_outer app-field-error-display .sts-msg.success {
+  padding: 10px 0px 0;
+  color: #00cc96;
+  font-size: .75rem;
+  font-weight: 500;
+  text-align: left;
+}
+.cupn-price {
+  width:auto !important;
+}
+@media only screen and (max-width: 768px) {
+  .labelList .navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+    width: 100% !important;
+    right: 0 !important;
+  }
+}
+.labelList .navbar-custom-menu>.navbar-nav>li>.dropdown-menu .menu a{
+  white-space: initial !important;
+}
+@-webkit-keyframes startWaitlist {
+  from { background-color: #00cc96; }
+  to { background-color: inherit; }
+}
+@-moz-keyframes startWaitlist {
+  from { background-color: #00cc96; }
+  to { background-color: inherit; }
+}
+@-o-keyframes startWaitlist {
+  from { background-color: #00cc96; }
+  to { background-color: inherit; }
+}
+@keyframes startWaitlist {
+  from { background-color: #00cc96; }
+  to { background-color: inherit; }
+}
+.startWaitlist {
+  -webkit-animation: startWaitlist 1s infinite; /* Safari 4+ */
+  -moz-animation:    startWaitlist 1s infinite; /* Fx 5+ */
+  -o-animation:      startWaitlist 1s infinite; /* Opera 12+ */
+  animation:         startWaitlist 1s infinite; /* IE 10+ */
+}
+.display-layout .branch-sp{
+  display: flex;
+}
+
+.display-layout .branch-sp .categoryspec{
+  font-size: 0.80rem;
+}
+
+.display-layout .logo img {
+  width: 80px;
+  height: 80px;
+}
+
+.display-layout .title {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.display-content .content-lst .form-group .tab-lst{
+  min-height: calc(100vh - 180px);
+}
+.content-lst .tab-lst thead,
+.content-lst .tab-lst th,
+.content-lst .tab-lst td{
+  border: 1px solid;
+}
+.display-content .main-footer{
+  margin-left: 0px;
 }

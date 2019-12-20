@@ -211,8 +211,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.sendMessage({ 'ttype': 'menuChanged', 'value': 'inbox' });
   }
   upgradeMembership() {
+    if (this.accountType === 'BRANCH' || this.accountType === 'BRANCH_SP') {
+      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+  } else {
     this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'license', 'upgrade']);
+  }
   }
   showCheckinED() {
     this.waitlistmgr = [];

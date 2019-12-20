@@ -43,7 +43,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     },
     {
       title: 'Coupons',
-      url: '/provider/settings/pos/coupons'
+      url: '/provider/settings/pos/coupon'
     },
     {
       title: 'Reports'

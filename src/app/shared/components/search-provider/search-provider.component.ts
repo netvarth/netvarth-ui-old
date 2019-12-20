@@ -5,7 +5,7 @@ import { projectConstants } from '../../constants/project-constants';
 import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { Messages } from '../../constants/project-messages';
-import { CheckInComponent } from '../../modules/check-in/check-in.component';
+// import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { MatDialog } from '@angular/material';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
@@ -80,7 +80,6 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
   getSearchData() {
     this.searchResults = this.searchResult;
-    console.log(this.searchResults);
     for (let i = 0; i < this.searchResults.length; i++) {
       this.result_providdet = [];
       if (this.searchResults[i]['logo']) {
@@ -329,21 +328,21 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     return (type === 'consumer') ? 'false' : 'true';
   }
   showCheckin(origin?) {
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        dept: true,
-        type: origin,
-        is_provider: this.checkProvider(origin),
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
-        srchprovider: this.current_provider,
-        datechangereq: this.changedate_req
-      }
-    });
-    this.checkindialogRef.afterClosed().subscribe(result => {
-    });
+    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+    //   disableClose: true,
+    //   data: {
+    //     dept: true,
+    //     type: origin,
+    //     is_provider: this.checkProvider(origin),
+    //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
+    //     srchprovider: this.current_provider,
+    //     datechangereq: this.changedate_req
+    //   }
+    // });
+    // this.checkindialogRef.afterClosed().subscribe(result => {
+    // });
   }
 
   getServiceByLocationid(locid, passedIndx) {

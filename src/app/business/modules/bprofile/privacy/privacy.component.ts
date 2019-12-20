@@ -49,6 +49,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
         private routerobj: Router,
+        private router: Router,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) { }
@@ -207,25 +208,26 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         });
     }
     handlePrivacysettings(typ?, peditindx?) {
-        this.privacydialogRef = this.dialog.open(AddProviderBprofilePrivacysettingsComponent, {
-            width: '50%',
-            // panelClass: 'privacysettingsmainclass',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-            disableClose: true,
-            autoFocus: true,
-            data: {
-                bprofile: this.bProfile,
-                editindx: peditindx,
-                curtype: typ
-            }
-        });
-        this.privacydialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                if (result.message === 'reloadlist') {
-                    this.bProfile = result.data;
-                    this.setPrivacyDetails();
-                }
-            }
-        });
+        //this.privacydialogRef = this.dialog.open(AddProviderBprofilePrivacysettingsComponent, {
+        //     width: '50%',
+        //     // panelClass: 'privacysettingsmainclass',
+        //     panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+        //     disableClose: true,
+        //     autoFocus: true,
+        //     data: {
+        //         bprofile: this.bProfile,
+        //         editindx: peditindx,
+        //         curtype: typ
+        //     }
+        // });
+        // this.privacydialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+        //         if (result.message === 'reloadlist') {
+        //             this.bProfile = result.data;
+        //             this.setPrivacyDetails();
+        //         }
+        //     }
+        // });
+            this.router.navigate(['provider', 'settings', 'bprofile', 'privacy', 'add']);
     }
 }

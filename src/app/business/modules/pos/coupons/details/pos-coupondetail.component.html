@@ -1,0 +1,81 @@
+<section>
+<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+<div class="content loc-list">
+<div class="col-md-12 no-padding-small">
+<div class="row">
+<div class="card p0" *ngIf="api_loading">
+<app-common-innerloading-spinner></app-common-innerloading-spinner>
+</div>
+<div class="card p0" *ngIf=" action !== 'view' && !api_loading && amForm">
+<div class="copy locd">
+<div class="lbl col-sm-12 col-md-8 col-lg-8">
+<div class="col-md-12">
+    <form  [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+    onSubmit(amForm.value)" (keyup)="resetApiErrors()"
+        class="ynw-common-form-nm">
+        <div class="form-group">
+            <mat-form-field>
+                    <input matInput type="text" class="form-control" id="name" placeholder="{{name_mand_cap}}" formControlName="name"
+                        autocomplete="off">
+                    </mat-form-field>  
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'name',
+    {
+      'required' : 'Please enter the coupon name.',
+      'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+    })">
+      </app-field-error-display>
+        </div>
+        <div class="form-group">
+                <label class="col-form-label" for="calculationType">{{type_mand_cap}}</label>
+                <mat-radio-group formControlName="calculationType">
+                  <mat-radio-button value="Fixed" (click)="handleTypechange('Fixed')">{{fixed_cap}}</mat-radio-button>&nbsp;&nbsp;&nbsp;
+                  <mat-radio-button value="Percentage" (click)="handleTypechange('Percentage')">{{percentage_cap}}</mat-radio-button>
+                </mat-radio-group>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')" errorMsg="Please enter your coupon type.">
+                </app-field-error-display>
+                <mat-form-field class="example-full-width">
+                  <!-- <span matPrefix *ngIf="amForm.get('calculationType').value == 'Fixed'" class='rupee'> ₹ &nbsp;</span>  -->
+                  <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
+                  <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
+                    <input matInput type="text" class="form-control cupn-price" min="0" max={{maxlimit}}  (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                      id="discValue" [placeholder]="valueCaption" formControlName="discValue" autocomplete="off">
+                  <!-- <span matSuffix *ngIf="amForm.get('calculationType').value == 'Percentage'"> % &nbsp;</span> -->
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'discValue')" [errorMsgs]="fed_service.getErrorMessage(amForm,'discValue',
+             {
+               'required' : valueCaption,
+               'maxlength' : 'Only ' + maxNumbers + ' digits are allowed'
+             })">
+                </app-field-error-display>
+              </div>
+              <div class="form-group">
+                    <mat-form-field>
+                      <input matInput type="text" class="form-control" id="description" placeholder="{{description_mand_cap}}"
+                        formControlName="description" autocomplete="off">
+                    </mat-form-field>
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'description')" [errorMsgs]="fed_service.getErrorMessage(amForm,'description',
+                  {
+                    'required' : 'Please enter the description.',
+                    'maxlength' : 'Description can contain only ' + maxChars + ' characters'
+                  })">
+                    </app-field-error-display>
+                  </div>
+                  <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
+                        <button (click)="onCancel()" type="button"
+                                class="cs-btn bt2">{{cancel_btn_cap}}</button>
+                            &nbsp;
+                            <button  type="submit"  mat-button [disabled]="!amForm.valid || disableButton"
+                                class="cs-btn bt1">{{save_btn_cap}}</button>
+                      </div>
+        </form>
+</div>  
+</div>
+<div class="lbr col-sm-12 col-md-8 col-lg-8"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>

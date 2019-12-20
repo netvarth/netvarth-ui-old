@@ -1,6 +1,6 @@
+
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { version } from '../../constants/version';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-force-dialog',
@@ -8,13 +8,16 @@ import { version } from '../../constants/version';
 })
 export class ForceDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-  public dialogRef: MatDialogRef<ForceDialogComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
-  forceUpdate() {
-    this.dialogRef.close('true');
-    window.location.href = version.updateUrl;
+
+  forceUpdate () {
+    window.location.href = 'https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldeebusiness';
   }
+  // forceUpdate () {
+  //   window.location.href = 'https://apps.apple.com/us/app/jaldee-for-business/id1475235232?ls=1';
+  // }
 }
+

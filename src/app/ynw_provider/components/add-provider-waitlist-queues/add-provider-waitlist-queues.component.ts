@@ -341,6 +341,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       });
   }
   getDepartments() {
+    this.departments = [];
     this.api_loading1 = true;
     this.provider_services.getDepartments()
       .subscribe(
@@ -357,17 +358,19 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
               }
             }
           }
-          if (this.data.type === 'edit') {
-            this.ifedit = true;
-            this.updateForm();
-          }
           this.api_loading1 = false;
         },
         error => {
           this.api_loading1 = false;
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          // this.sharedfunctionObj.apiErrorAutoHide(this, error);
         }
       );
+    setTimeout(() => {
+      if (this.data.type === 'edit') {
+        this.ifedit = true;
+        this.updateForm();
+      }
+    }, 1000);
   }
   // handles the day checkbox click
   handleDaychecbox(dayindx) {

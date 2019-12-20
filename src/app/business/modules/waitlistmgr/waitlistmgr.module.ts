@@ -19,7 +19,6 @@ import { ProviderWaitlistOnlineCheckinModule } from '../../../ynw_provider/compo
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { DepartmentModule } from '../../../ynw_provider/shared/modules/department/department.module';
 import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
-
 @NgModule({
     imports: [
         CommonModule,

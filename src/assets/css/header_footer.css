@@ -1764,6 +1764,7 @@ footer .sect1 .ft-cpy .sbi-bt li a span {
     width: 44px;
     height: 44px;
     display: inline-block;
+    /*margin-left: 1.875em;*/
 }
 
 footer .sect1 .ft-cpy .sbi-bt li a span.smi-a, footer .sect1 .ft-cpy .sbi-bt li a span.smi-b, footer .sect1 .ft-cpy .sbi-bt li a span.smi-c {

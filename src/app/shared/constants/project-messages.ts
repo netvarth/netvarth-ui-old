@@ -1431,5 +1431,8 @@ export const Messages = {
   'CREATECORP_SUCCESS': 'Corporate created successfully',
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
-  'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully'
+  'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
+  'TRACKINGCANCELENABLED': ' able to track your ETA',
+  'TRACKINGCANCELDISABLED': ' disable to track your ETA',
+  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations'
 };

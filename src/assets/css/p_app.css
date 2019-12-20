@@ -38,4 +38,5 @@ html, body {
 .login-form .sts-msg.error{color: red !important; font-size: 0.75rem !important; padding-top: 15px !important}
 .login-form .sts-msg.success{color: green !important; font-size: 0.75rem !important;padding-top: 15px !important}
 .centeralign {text-align: center !important}
+/* h2 { font-size: 1.5rem !important} */
 .login-form .form-group {margin-bottom: 0.5rem !important}

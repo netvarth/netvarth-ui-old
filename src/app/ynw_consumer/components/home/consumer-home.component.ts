@@ -12,7 +12,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
-import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
+// import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
@@ -101,7 +101,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   cronHandleTrack: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
-  refreshTimeForTracking = 600000;
   counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
   open_fav_div = null;
   hideShowAnimator = false;
@@ -188,7 +187,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = Observable.interval(this.refreshTime * 2000).subscribe(x => {
+    this.cronHandleTrack = Observable.interval(this.refreshTime * 250).subscribe(x => {
       this.liveTrackPolling();
     });
 
@@ -717,23 +716,23 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(data);
     const provider_data = data.provider_data;
     const location_data = data.location_data;
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        moreparams: {
-          source: 'provdet_checkin',
-          bypassDefaultredirection: 1,
-          provider: provider_data,
-          location: location_data,
-          sel_date: data.sel_date
-        },
-        datechangereq: data.chdatereq
-      }
-    });
+    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: false,
+    //     moreparams: {
+    //       source: 'provdet_checkin',
+    //       bypassDefaultredirection: 1,
+    //       provider: provider_data,
+    //       location: location_data,
+    //       sel_date: data.sel_date
+    //     },
+    //     datechangereq: data.chdatereq
+    //   }
+    // });
     this.checkindialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
       this.getWaitlist();
@@ -1051,7 +1050,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     //     'longitude': this.lat_lng.longitude
     //   },
     //   'travelMode': type,
-    //   'waitlistPhonenumber': this.consumerPhoneNo,
+    //   'waitlistPhoneNumber': this.consumerPhoneNo,
     //   'jaldeeStartTimeMod': this.notifyTime,
     //   'shareLocStatus': true
     // };
@@ -1117,7 +1116,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   startTracking(uid, id, i) {
     this.shared_services.startLiveTrack(uid, id)
       .subscribe(data => {
-        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1126,7 +1124,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   stopTracking(uid, id, i) {
     this.shared_services.stopLiveTrack(uid, id)
       .subscribe(data => {
-        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1146,21 +1143,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   liveTrackPolling() {
     const _this = this;
     if (_this.pollingSet && _this.pollingSet.length > 0) {
-      // console.log(_this.pollingSet);
       _this.setSystemDate().then(
         () => {
           for (const waitlist of _this.pollingSet) {
-            // console.log("for" +waitlist);
             if (waitlist.jaldeeWaitlistDistanceTime) {
-              // console.log(waitlist);
+             // console.log(waitlist);
               let pollingDtTim = '';
               let pollingDateTime = '';
               if (waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
                 pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
-                // console.log('pollingDateTime' + pollingDateTime);
-                // console.log('serverDateTime' + serverDateTime);
+               // console.log('pollingDateTime' + pollingDateTime);
+               // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)

@@ -227,7 +227,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   showCheckinED() {
-    this.maximizeTooltip = 'Go To Q manager';
+    this.maximizeTooltip = 'Go To Check-In Manager';
     if (this.showCheckinDiv === true) {
       this.showbottompopup = false;
       this.clearDivs();
