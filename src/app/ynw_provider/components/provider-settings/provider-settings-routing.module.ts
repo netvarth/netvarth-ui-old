@@ -9,6 +9,7 @@ const routes: Routes = [
       { path: 'bprofile', loadChildren: '../../../business/modules/bprofile/bprofile.module#BProfileModule'},
       { path: 'pos', loadChildren: '../../../business/modules/pos/pos.module#POSModule'},
       { path: 'miscellaneous', loadChildren: '../../../business/modules/miscellaneous/miscellaneous.module#MiscellaneousModule'},
+      { path: 'users', loadChildren: '../../../business/modules/users/users.module#UsersModule'},
       { path: 'home-service', loadChildren: '../../../business/modules/homeservice/homeservice.module#HomeServiceModule'},
       { path: 'q-manager', loadChildren: '../../../business/modules/waitlistmgr/waitlistmgr.module#WaitlistMgrModule' }
     ]
