@@ -25,6 +25,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     metricElement;
     cronHandle: Subscription;
     @ViewChildren('boardid') private boardstyle;
+    MainBlogo;
+    bProfile: any = [];
+    qualification: any = [];
+    subDomVirtualFields: any = [];
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) {
@@ -45,6 +49,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
+        this.getBusinessProfile();
         this.getBusinessdetFromLocalstorage();
         if (this.layout_id) {
             let layoutData;
@@ -61,16 +66,21 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     });
                 });
         }
-        this.cronHandle = Observable.interval(120000).subscribe(() => {
+        this.cronHandle = Observable.interval(30000).subscribe(() => {
             this.setDisplayboards(this.metricElement);
         });
     }
 
     getBusinessdetFromLocalstorage() {
+        const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
         if (bdetails) {
             this.bname = bdetails.bn || '';
             this.blogo = bdetails.logo || '';
+        }
+        if (MainBdetails) {
+            // this.MainBname = MainBdetails.bn || '';
+            this.MainBlogo = MainBdetails.logo || '';
         }
     }
 
@@ -90,6 +100,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             } else {
                 fieldValue = field.defaultValue;
             }
+        } else if (field.name === 'primaryMobileNo') {
+            fieldValue = checkin['waitlistingFor'][0]['primaryMobileNo'];
         } else {
             fieldValue = checkin[field.name];
         }
@@ -123,8 +135,29 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             } else {
                 api_filter['department-eq'] = element.id[0];
             }
-            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
+            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn,started';
         });
         return api_filter;
+    }
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                data => {
+                    this.bProfile = data;
+                    this.getQualification(this.bProfile.subDomainVirtualFields[0]);
+                });
+    }
+    getQualification(list) {
+        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const virtualfields = list[user.subSector];
+        this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
+            this.subDomVirtualFields = data;
+            for (let i = 0; i < this.subDomVirtualFields.length; i++) {
+                if (this.subDomVirtualFields[i].baseField === 'qualification') {
+                    const eduName = this.subDomVirtualFields[i]['name'];
+                    this.qualification = virtualfields[eduName];
+                }
+            }
+        });
     }
 }

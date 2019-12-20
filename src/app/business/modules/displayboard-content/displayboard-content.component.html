@@ -1,20 +1,31 @@
-<div style="display: flex;">
-    <div class="display-layout">
-        <div class="logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div>
-        <span class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</span>
+<div class="display-content">
+    <div class="display-layout col-md-12 mgn-up-10 mgn-bt-20">
+        <div class="branch-sp col-md-6 no-padding">
+            <div class="logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div>
+            <div>
+                <div class="title mgn-lt-10" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</div>
+                <div class="mgn-lt-10" *ngFor="let qualifi of qualification">
+                    {{qualifi.qualificationName}}
+                </div>
+                <div class="mgn-lt-10"
+                    *ngIf="bProfile && bProfile.specialization && bProfile.specialization.length > 0">
+                    <span class="categoryspec" *ngFor="let spec of bProfile.specialization; let i = index"><span
+                            *ngIf="i>0" class="spacer">, </span>{{spec}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="branch col-md-6 no-padding">
+            <div class="logo pull-right"> <img [src]="MainBlogo" *ngIf="MainBlogo!='' && MainBlogo!=null" alt="" style="height: 80px;
+        width: 100px;" /> </div>
+        </div>
     </div>
-    <div class="display-layout">
-    </div>
-</div>
-
-<div class="col-md-12" style="display: block;padding: 0px;">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-12 no-padding-small">
+    <div class="content-lst col-md-12 no-padding">
+        <div class="form-group">
+            <div class="tab-lst">
                 <div *ngFor="let row of createRange(boardRows)">
-                    <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}}"
-                        [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}"
-                        style="background: white;border: 1px solid #ccc;overflow: auto;">
+                    <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}} no-padding"
+                        [ngStyle]="{'height.px': boardHeight}" [ngStyle]="{'max-height.px': boardHeight}">
                         <div *ngIf="selectedDisplayboards[row + '_' + col]">
                             <!-- <div *ngIf="selectedDisplayboards[row + '_' + col]['board']" style="text-align: center;">
                                 <strong> {{selectedDisplayboards[row + '_' + col]['board'].displayName}}</strong>
@@ -29,7 +40,8 @@
                                     </tr>
                                 </thead>
                                 <tbody style="overflow: scroll;">
-                                    <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']">
+                                    <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
+                                        [class.startWaitlist]="checkin.waitlistStatus === 'started'">
                                         <td
                                             *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
                                             {{getFieldValue(field, checkin)}}
@@ -43,13 +55,12 @@
             </div>
         </div>
     </div>
-
-
-    <div class="card" style="padding: 10px;">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 1.1.5
+    <div class="clearfix"></div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs footer_info">
+            <!-- <b>Version</b> 1.1.5 -->
         </div>
-        <strong>Copyright &copy; 2019 Jaldee Inc.</strong> All rights
-        reserved.
-    </div>
+        <span class="footer_info">Copyright &copy; 2019 Jaldee Inc.</span> &nbsp; <span class="footer_info">All rights
+            reserved.</span>
+    </footer>
 </div>
