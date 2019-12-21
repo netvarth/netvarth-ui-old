@@ -11,8 +11,8 @@
                             <div class="card" *ngIf="api_loading">
                                 <app-common-innerloading-spinner></app-common-innerloading-spinner>
                             </div>
-                            <div class="col-md-12" *ngIf="actionparam !== 'view' && !api_loading">
-                                <div *ngIf="!filterBydept" class="create-dept">
+                            <div class="col-md-12" *ngIf="actionparam !== 'view' && !api_loading && userType.type === 'doctors'||userType.type === 'assistants'">
+                                <div *ngIf="!filterBydept && userType.type === 'doctors'" class="create-dept">
                                     <ul class="info-lst serviceadd-info">
                                         <li>Department feature needs to enabled to add a doctor. <a class="pointlist"
                                                 (click)="enabledepartment()">Click here</a> to enable in order to complete the process
@@ -21,7 +21,7 @@
                                 </div>
                                 <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
                                     onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'assistants'|| userType.type === 'doctors'">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="first_name"
@@ -42,7 +42,7 @@
                                             </app-field-error-display>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'assistants'||userType.type === 'doctors'">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="last_name"
@@ -64,7 +64,7 @@
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'assistants'||userType.type === 'doctors'">
                                         <div class="form-group mobile-field" style="width: 100%">
                                             <mat-form-field>
                                                 <div class="input-group">
@@ -89,7 +89,22 @@
                                             </app-field-error-display>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'assistants'||userType.type === 'doctors'">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input class="form-control" placeholder="Enter default password *"
+                                                    matInput formControlName="password" reverse="true" type="password">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'password')"
+                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'password',
+                                                    {'required' : 'Enter Password Required',
+                                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                     <div class="clearfix"></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'doctors'">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <mat-select placeholder="{{select_subdomain_cap}}" subdom
@@ -104,9 +119,9 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="clearfix"></div>
+                                    <!-- <div class="clearfix"></div> -->
                                     <div class="col-md-6 col-sm-6 col-xs-12"
-                                        *ngIf="filterBydept && departments.length > 0">
+                                        *ngIf="filterBydept && departments.length > 0 && userType.type === 'doctors'">
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <mat-select placeholder="Select department *"
@@ -119,25 +134,12 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input class="form-control" placeholder="Enter default password *"
-                                                    matInput formControlName="password" reverse="true" type="password">
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'password')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'password',
-                                                    {'required' : 'Enter Password Required',
-                                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="clearfix"></div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>
                                     </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection">
+                                    <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection && userType.type === 'doctors'">
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <mat-form-field>
@@ -195,6 +197,111 @@
                                     </div>
                                 </form>
                             </div>
+
+                            <!-- <div class="col-md-12" *ngIf="actionparam !== 'view' && !api_loading && userType.type === 'assistants'">
+                               
+                                <form [formGroup]="assistantForm" novalidate (ngSubmit)="assistantForm.valid &&
+                                    onSubmit(assistantForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="first_name1"
+                                                    placeholder="First Name *" formControlName="first_name1"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(assistantForm,'first_name1')"
+                                                [errorMsgs]="fed_service.getErrorMessage(assistantForm,'first_name1',
+                                                            {
+                                                            'required' : 'First name is required',
+                                                            'pattern' : 'Only alphabets are allowed'
+                                                            })">
+                                            </app-field-error-display>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="fnameerror != null && !fed_service.isFieldValid(assistantForm,'first_name1')"
+                                                [errorMsg]="fnameerror">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input matInput type="text" class="form-control" id="last_name1"
+                                                    placeholder="Last Name *" formControlName="last_name1"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(assistantForm,'last_name1')"
+                                                [errorMsgs]="fed_service.getErrorMessage(assistantForm,'last_name1',
+                                                            {
+                                                            'required' : 'Last name is required',
+                                                            'pattern' : 'Only alphabets are allowed'
+                                                            })">
+                                            </app-field-error-display>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="!fed_service.isFieldValid(assistantForm,'last_name1')"
+                                                [errorMsg]="lnameerror">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group mobile-field" style="width: 100%">
+                                            <mat-form-field>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend mob-prefix">
+                                                        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                                    </div>
+                                                    <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        class="form-control text-width" id="phonenumber1"
+                                                        placeholder="Enter Mobile # *" formControlName="phonenumber1"
+                                                        autocomplete="off" ngModel maxlength="10">
+                                                </div>
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(assistantForm,'phonenumber1')"
+                                                [errorMsgs]="fed_service.getErrorMessage(assistantForm,'phonenumber1',
+                                                {
+                                                'required' : 'Mobile number is required',
+                                                'minlength' : 'Enter a 10 digit mobile number',
+                                                'maxlength' : 'Enter a 10 digit mobile number',
+                                                'pattern' : 'Only numbers are allowed'
+                                                })">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <input class="form-control" placeholder="Enter default password *"
+                                                    matInput formControlName="password1" reverse="true" type="password">
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(assistantForm,'password1')"
+                                                [errorMsgs]="fed_service.getErrorMessage(assistantForm,'password1',
+                                                    {'required' : 'Enter Password Required',
+                                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    
+                                   
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="actiondiv labelsave" style="margin-top: 20px;">
+                                            <button (click)="onCancel()" type="button"
+                                                class="cs-btn bt2">{{cancel_btn}}</button>
+                                            &nbsp;
+                                            <button type="submit" mat-button [disabled]="!assistantForm.valid"
+                                                class="cs-btn bt2">{{button_title}}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> -->
+
+
                         </div>
                     </div>
                     <div class="clearfix"></div>

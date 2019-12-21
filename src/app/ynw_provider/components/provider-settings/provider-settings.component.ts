@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderServices } from '../../services/provider-services.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -359,7 +359,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
         break;
       case 'coupons':
-        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupon']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupons']);
         break;
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
@@ -430,11 +430,23 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'corporate':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
         break;
-        case 'users':
-          this.routerobj.navigate(['provider', 'settings', 'users']);
-          break;
-          case 'doctors':
+      case 'users':
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
+        break;
+      case 'doctors':
+
+          const navigationExtras: NavigationExtras = {
+            queryParams: { type: 'doctors' }
+        };
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
+       // this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
+        break;
+      case 'assistants':
+          const navigationExtras1: NavigationExtras = {
+            queryParams: { type: 'assistants' }
+        };
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras1);
+       // this.routerobj.navigate(['provider', 'settings', 'users', 'assistants']);
         break;
     }
   }

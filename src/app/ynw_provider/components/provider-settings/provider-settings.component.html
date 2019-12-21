@@ -350,8 +350,14 @@
                             <ul class="nav nav-stacked set-block-ul">
                                 <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('doctors')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">Doctors</span>
+                                        <span class="lnk setings">New Doctors</span>
                                         <p class="settings_info">Create or manage doctors</p>
+                                    </a>
+                                </li>
+                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('assistants')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">New Assistants</span>
+                                        <p class="settings_info">Create or manage assistants</p>
                                     </a>
                                 </li>
                             </ul>

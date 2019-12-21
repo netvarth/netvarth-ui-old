@@ -28,6 +28,7 @@ export class BranchDoctorDetailComponent implements OnInit {
     select_subdomain_cap = Messages.SELECT_SB_DMN_CAP;
     subdomain_displayname = projectConstants.SUBDOMAIN_DISPLAYNAME;
     amForm: FormGroup;
+    assistantForm: FormGroup;
     char_count = 0;
     max_char_count = 250;
     isfocused = false;
@@ -52,7 +53,7 @@ export class BranchDoctorDetailComponent implements OnInit {
         },
         {
             title: 'Users',
-            url: '/provider/settings/miscellaneous'
+            url: '/provider/settings/users'
         },
         {
             title: 'Doctors',
@@ -67,6 +68,7 @@ export class BranchDoctorDetailComponent implements OnInit {
     filterBydept = false;
     removeitemdialogRef;
     departments: any = [];
+    userType: any;
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -84,6 +86,8 @@ export class BranchDoctorDetailComponent implements OnInit {
         );
         this.activated_route.queryParams.subscribe(
             qparams => {
+                this.userType = qparams;
+                console.log(this.userType);
                 const breadcrumbs = [];
                 this.breadcrumbs_init.map((e) => {
                     breadcrumbs.push(e);
@@ -119,11 +123,18 @@ export class BranchDoctorDetailComponent implements OnInit {
             selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: []
         });
+        this.assistantForm = this.fb.group({
+            first_name1: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            last_name1: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            phonenumber1: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_PHONENUMBERCOUNT10)])],
+            password1: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])]
+        });
     }
     onItemSelect(subdomain) {
         // console.log(subdomain);
     }
     onSubmit(input) {
+        console.log(input);
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -179,7 +190,7 @@ export class BranchDoctorDetailComponent implements OnInit {
             };
             this.provider_services.createBranchSP(post_data).subscribe(data => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
-                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+                this.router.navigate(['provider', 'settings', 'users', 'doctors']);
             },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -187,7 +198,7 @@ export class BranchDoctorDetailComponent implements OnInit {
         }
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+        this.router.navigate(['provider', 'settings', 'users', 'doctors']);
     }
     resetApiErrors() {
     }

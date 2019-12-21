@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 @Component({
     'selector': 'app-doctorusers',
@@ -11,6 +11,7 @@ export class DoctorsComponent implements OnInit {
     users_list: any = [];
     breadcrumb_moreoptions: any = [];
     domain;
+    userType;
     breadcrumbs = [
         {
             url: '/provider/settings',
@@ -21,7 +22,7 @@ export class DoctorsComponent implements OnInit {
             title: 'users'
         },
         {
-            title: 'Doctors'
+            title: 'Doctors/Assistants'
         }
     ];
     api_loading: boolean;
@@ -29,7 +30,11 @@ export class DoctorsComponent implements OnInit {
         private router: Router,
         private routerobj: Router,
         private shared_services: ProviderServices,
+        private activatedRoot:ActivatedRoute,
         private shared_functions: SharedFunctions) {
+            this.activatedRoot.queryParams.subscribe(data => {
+                this.userType = data;
+            });
 
     }
     ngOnInit() {
@@ -39,8 +44,12 @@ export class DoctorsComponent implements OnInit {
         this.getBranchSPs();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
-    addBranchSP() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add']);
+    addBranchSP(usertype) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: usertype }
+        };
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
+        //this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add']);
     }
     getBranchSPs() {
         const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
