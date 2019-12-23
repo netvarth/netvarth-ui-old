@@ -6865,3 +6865,20 @@ input.jdn_ip { width: 50px !important}
 .display-content .main-footer{
   margin-left: 0px;
 }
+ .form-group .nonworkingg{
+  margin-bottom: 20px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+.selctDte{
+  cursor: pointer !important;
+
+}
+@media only screen and (max-width: 768px) {
+  .form-group .startendtime {
+    margin-bottom: 20px !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+  }
+  }
+
