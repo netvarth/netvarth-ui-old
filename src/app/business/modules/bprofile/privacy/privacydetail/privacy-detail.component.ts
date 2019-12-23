@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from './../../../../../shared/functions/shared-functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'privacy-detail',
@@ -70,71 +70,120 @@ export class PrivacyDetailComponent implements OnInit {
   privacy_id: any;
   action: string;
   data: any;
+  edit_ph_id: any;
+  edit_mail_id: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
+    private router: Router,
+    public shared_functions: SharedFunctions,
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.data = qParams;
       })
-    this.privacypermissiontxt.customersOnly = this.sharedfunctionObj.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
-    this.curmod = (this.data.editindx >= 0) ? 'edit' : 'add';
-    if (this.curmod === 'edit') {
-      this.curid = this.data.editindx;
-    } else {
-      this.curid = -1;
-    }
-    this.curtype = this.data.curtype;
-    this.bProfile = this.data.bprofile;
-    this.loadData = this.data;
-    // extracting the phone numbers and settings it to the required object
-    if (this.curtype === 'phone') {
-      if (this.curmod === 'add') {
-        this.phonepermission = 'all';
-      } else {
-        this.phonelabel = this.bProfile.phoneNumbers[this.curid].label;
-        this.phonenumber = this.bProfile.phoneNumbers[this.curid].instance;
-        this.phonepermission = this.bProfile.phoneNumbers[this.curid].permission;
-      }
-      if (this.bProfile.phoneNumbers) {
-        const ph_arr: any = [];
-        for (let i = 0; i < this.bProfile.phoneNumbers.length; i++) {
-          ph_arr[i] = {
-            label: this.bProfile.phoneNumbers[i].label,
-            number: this.bProfile.phoneNumbers[i].instance,
-            permission: this.bProfile.phoneNumbers[i].permission
-          };
-        }
-        this.extingphone_arr = ph_arr;
-      }
-    }
-    // extracting the email ids and settings it to the required object
-    if (this.curtype === 'email') {
-      if (this.curmod === 'add') {
-        this.emailpermission = 'all';
-      } else {
-        this.emaillabel = this.bProfile.emails[this.curid].label;
-        this.emailemailid = this.bProfile.emails[this.curid].instance;
-        this.emailpermission = this.bProfile.emails[this.curid].permission;
-      }
-      if (this.bProfile.emails) {
-        const em_arr: any = [];
-        for (let i = 0; i < this.bProfile.emails.length; i++) {
-          em_arr[i] = {
-            label: this.bProfile.emails[i].label,
-            emailid: this.bProfile.emails[i].instance,
-            permission: this.bProfile.emails[i].permission
-          };
-        }
-        this.extingemail_arr = em_arr;
-      }
-    }
+    this.provider_services.getBussinessProfile()
+      .subscribe(
+        profile => {
+          this.bProfile = profile;
+          this.privacypermissiontxt.customersOnly = this.sharedfunctionObj.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
+          this.curmod = (this.data.editindx >= 0) ? 'edit' : 'add';
+          if (this.curmod === 'edit') {
+            this.curid = this.data.editindx;
+            this.edit_ph_id = this.bProfile.phoneNumbers[this.curid].instance;
+            this.edit_mail_id = this.bProfile.emails[this.curid].instance;
+          } else {
+            this.curid = -1;
+            const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+              breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+              title: 'Add'
+            });
+            this.breadcrumbs = breadcrumbs;
+          }
+          this.curtype = this.data.curtype;
+          this.loadData = this.data;
+          // extracting the phone numbers and settings it to the required object
+          if (this.curtype === 'phone') {
+            if (this.curmod === 'add') {
+              this.phonepermission = 'all';
+            } else {
+              const breadcrumbs = [];
+              this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+              });
+              breadcrumbs.push({
+                title: this.edit_ph_id
+              });
+              this.breadcrumbs = breadcrumbs;
+              this.phonelabel = this.bProfile.phoneNumbers[this.curid].label;
+              this.phonenumber = this.bProfile.phoneNumbers[this.curid].instance;
+              this.phonepermission = this.bProfile.phoneNumbers[this.curid].permission;
+            }
+            if (this.bProfile.phoneNumbers) {
+              const ph_arr: any = [];
+              for (let i = 0; i < this.bProfile.phoneNumbers.length; i++) {
+                ph_arr[i] = {
+                  label: this.bProfile.phoneNumbers[i].label,
+                  number: this.bProfile.phoneNumbers[i].instance,
+                  permission: this.bProfile.phoneNumbers[i].permission
+                };
+              }
+              this.extingphone_arr = ph_arr;
+            }
+          }
+          // extracting the email ids and settings it to the required object
+          if (this.curtype === 'email') {
+            if (this.curmod === 'add') {
+              this.emailpermission = 'all';
+            } else {
+              const breadcrumbs = [];
+              this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+              });
+              breadcrumbs.push({
+                title: this.edit_mail_id
+              });
+              this.breadcrumbs = breadcrumbs;
+              this.emaillabel = this.bProfile.emails[this.curid].label;
+              this.emailemailid = this.bProfile.emails[this.curid].instance;
+              this.emailpermission = this.bProfile.emails[this.curid].permission;
+            }
+            if (this.bProfile.emails) {
+              const em_arr: any = [];
+              for (let i = 0; i < this.bProfile.emails.length; i++) {
+                em_arr[i] = {
+                  label: this.bProfile.emails[i].label,
+                  emailid: this.bProfile.emails[i].instance,
+                  permission: this.bProfile.emails[i].permission
+                };
+              }
+              this.extingemail_arr = em_arr;
+            }
+          }
+        },
+      );
   }
   ngOnInit() {
     this.api_loading = false;
+  }
+  addPhone() {
+    this.phone_arr.push({ label: '', number: '', permission: 'all' });
+    this.resetApiErrors();
+  }
+  removePhone(indx) {
+    this.phone_arr.splice(indx, 1);
+  }
+  addEmail() {
+    this.email_arr.push({ label: '', emailid: '', permission: 'all' });
+    this.resetApiErrors();
+  }
+  removeEmail(indx) {
+    this.email_arr.splice(indx, 1);
   }
   savePrivacySettings() {
     this.resetApiErrors();
@@ -142,27 +191,27 @@ export class PrivacyDetailComponent implements OnInit {
     this.phone_json = [];
     if (this.curtype === 'phone') { // case of phone numbers
       if (this.phonelabel === '' && this.phonenumber === '') {
-        this.api_error = Messages.BPROFILE_PHONEDET;
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PHONEDET, { 'panelClass': 'snackbarerror' });
         return;
       }
       const curlabel = this.phonelabel;
       const pattern2 = new RegExp(projectConstants.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONELABEL_REQ; // 'Phone label should not be blank';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONELABEL_REQ, { 'panelClass': 'snackbarerror' });// 'Phone label should not be blank';
         return;
       }
       const curphone = this.phonenumber;
       const pattern = new RegExp(projectConstants.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_INVALID, { 'panelClass': 'snackbarerror' });// 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstants.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_10DIGITS, { 'panelClass': 'snackbarerror' }); // 'Mobile number should have 10 digits';
         return;
       }
       if (this.curid >= 0) { // case of edit
@@ -193,21 +242,21 @@ export class PrivacyDetailComponent implements OnInit {
       this.UpdatePrimaryFields(post_itemdata);
     } else if (this.curtype === 'email') { // case of email ids
       if (this.emaillabel === '' && this.emailemailid === '') {
-        this.api_error = Messages.BPROFILE_EMAILDET;
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_EMAILDET, { 'panelClass': 'snackbarerror' });
         return;
       }
       const curlabel = this.emaillabel;
       const pattern1 = new RegExp(projectConstants.VALIDATOR_BLANK);
       const result1 = pattern1.test(curlabel);
       if (result1) {
-        this.api_error = Messages.BPROFILE_PRIVACY_EMAILLABEL_REQ; // 'Email label should not be blank';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_EMAILLABEL_REQ, { 'panelClass': 'snackbarerror' }); // 'Email label should not be blank';
         return;
       }
       const curemail = this.emailemailid;
       const pattern = new RegExp(projectConstants.VALIDATOR_EMAIL);
       const result = pattern.test(curemail);
       if (!result) {
-        this.api_error = Messages.BPROFILE_PRIVACY_EMAIL_INVALID; // 'Please enter a valid email id';
+        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_EMAIL_INVALID, { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       if (this.curid >= 0) { // case of edit
@@ -236,7 +285,6 @@ export class PrivacyDetailComponent implements OnInit {
       this.UpdatePrimaryFields(post_itemdata);
     }
   }
-
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
@@ -247,16 +295,36 @@ export class PrivacyDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.loadData = data;
-          this.api_success = Messages.BPROFILE_PRIVACY_SAVED;
+          this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_SAVED'));
+          this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           this.disableButton = false;
         }
       );
   }
-
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
+  }
+  onCancel() {
+    this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
+    this.api_loading = false;
+  }
+  loadDetails() {
+    //this.dialogRef.close({ data: this.loadData, message: 'reloadlist' });
+  }
+  show_privacyText(txt) {
+    let rettxt = '';
+    if (txt === 'customersOnly') {
+      if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
+        rettxt = 'My ' + this.sharedfunctionObj.firstToUpper(this.customernormal_label) + 's Only';
+      } else {
+        rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
+      }
+    } else {
+      rettxt = this.privacypermissiontxt[txt];
+    }
+    return rettxt;
   }
 }
