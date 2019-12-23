@@ -353,7 +353,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'discounts':
         if (this.nodiscountError) {
-          this.routerobj.navigate(['provider', 'settings', 'pos', 'discounts']);
+          this.routerobj.navigate(['provider', 'settings', 'pos', 'discount']);
         } else {
           this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
         }

@@ -51,7 +51,11 @@ const routes: Routes = [
     },
     {
         path: 'coupon', loadChildren: './coupons/pos-coupons.module#CouponsModule'
+    },
+    {
+        path: 'discount', loadChildren: './discount/discount.module#discountModule'
     }
+
 ];
 
 @NgModule({
