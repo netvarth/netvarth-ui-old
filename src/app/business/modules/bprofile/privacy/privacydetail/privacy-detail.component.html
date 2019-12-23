@@ -11,6 +11,7 @@
                 <div class="card p0">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <div class="col-md-12">
                             <div class="ynw-common-form-nm" *ngIf="!api_loading">
                                 <div class="phoneouter" *ngIf="curtype=='phone'">
                                     <div class="form-group  no-padding mobile-field">
@@ -89,6 +90,7 @@
                                 <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1"
                                     [disabled]="disableButton">{{save_btn_cap}}</button>
                             </div>
+                        </div>
                         </div>
                         <div class="lbr col-sm-12 col-md-8 col-lg-8"></div>
                     </div>
