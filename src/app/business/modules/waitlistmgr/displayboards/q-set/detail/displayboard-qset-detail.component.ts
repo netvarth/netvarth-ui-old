@@ -63,6 +63,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     submit_btn;
     id;
     filterByDept = false;
+    locName;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -98,6 +99,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     ngOnInit() {
         this.resetFields();
+        const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
+        this.locName = loc_details.place;
     }
     resetFields() {
         this.boardDisplayname = '';

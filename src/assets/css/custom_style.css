@@ -1282,7 +1282,7 @@ sup {
   margin-bottom: 20px !important;
 }
 .mgn-bt-5 {
-  margin-right: 5px !important;
+  margin-bottom: 5px !important;
 }
 .mgn-lt-3 {
   margin-left: 3px !important;
@@ -6531,7 +6531,7 @@ input.jdn_ip { width: 50px !important}
 .labelList .navbar-custom-menu>.navbar-nav>li>.dropdown-menu .menu a{
   white-space: initial !important;
 }
-@-webkit-keyframes startWaitlist {
+/* @-webkit-keyframes startWaitlist {
   from { background-color: #00cc96; }
   to { background-color: inherit; }
 }
@@ -6546,12 +6546,12 @@ input.jdn_ip { width: 50px !important}
 @keyframes startWaitlist {
   from { background-color: #00cc96; }
   to { background-color: inherit; }
-}
+} */
 .startWaitlist {
-  -webkit-animation: startWaitlist 1s infinite; /* Safari 4+ */
-  -moz-animation:    startWaitlist 1s infinite; /* Fx 5+ */
-  -o-animation:      startWaitlist 1s infinite; /* Opera 12+ */
-  animation:         startWaitlist 1s infinite; /* IE 10+ */
+  -webkit-animation: startWaitlist 1s infinite; 
+  -moz-animation:    startWaitlist 1s infinite; 
+  -o-animation:      startWaitlist 1s infinite; 
+  animation:         startWaitlist 1s infinite; 
 }
 .display-layout .branch-sp{
   display: flex;
@@ -6571,13 +6571,69 @@ input.jdn_ip { width: 50px !important}
   font-size: 1.2rem;
 }
 .display-content .content-lst .form-group .tab-lst{
-  min-height: calc(100vh - 180px);
+  min-height: calc(100vh - 272px);
 }
-.content-lst .tab-lst thead,
-.content-lst .tab-lst th,
-.content-lst .tab-lst td{
+/* .display-content .content-lst .tab-lst thead,
+.display-content .content-lst .tab-lst th,
+.display-content .content-lst .tab-lst td{
   border: 1px solid;
-}
+} */
 .display-content .main-footer{
   margin-left: 0px;
+}
+.board-box {
+  overflow-y: scroll;
+  background: white;
+  margin-bottom: 5px;
+}
+.display-content .content-lst .board-box table {
+  margin-bottom: 0px !important;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(153, 153, 153); 
+}
+.bdetails {
+  font-family: sans-serif !important;
+}
+.qset-name {
+  background: #3c8dbc8a;
+  color: black;
+  padding: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+.branch-det {
+  background: #3c8dbc;
+  color: white;
+  font-family: sans-serif !important;
+}
+.branch-det .title {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.blinking{
+  animation:blinkingText 1s infinite;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+@keyframes blinkingText{
+  0%{        color: red;    }
+  49%{    color: red;    }
+  50%{    color: transparent;    }
+  99%{    color:red;    }
+  100%{    color: red;    }
 }

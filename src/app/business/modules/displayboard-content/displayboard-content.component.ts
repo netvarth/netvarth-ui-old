@@ -29,6 +29,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     bProfile: any = [];
     qualification: any = [];
     subDomVirtualFields: any = [];
+    accountType;
+    MainBname;
+    locId;
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) {
@@ -41,7 +44,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
         const screenHeight = window.innerHeight;
-        this.boardHeight = (screenHeight - 150) / 2;
+        if (this.boardRows > 1) {
+            this.boardHeight = (screenHeight - 270) / 2;
+        } else {
+            this.boardHeight = (screenHeight - 270);
+        }
     }
     ngOnDestroy() {
         if (this.cronHandle) {
@@ -51,6 +58,15 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getBusinessProfile();
         this.getBusinessdetFromLocalstorage();
+        this.getStatusboard();
+        this.cronHandle = Observable.interval(30000).subscribe(() => {
+            this.getStatusboard();
+        });
+    }
+
+    getStatusboard() {
+        const loc_details = this.shared_functions.getitemFromGroupStorage('loc_id');
+        this.locId = loc_details.id;
         if (this.layout_id) {
             let layoutData;
             this.provider_services.getDisplayboard(this.layout_id).subscribe(
@@ -58,19 +74,16 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     layoutData = layoutInfo;
                     const layoutPosition = layoutData.layout.split('_');
                     this.boardRows = layoutPosition[0];
+                    this.onResize();
                     this.boardCols = layoutPosition[1];
                     layoutData.metric.forEach(element => {
                         this.metricElement = element;
                         this.selectedDisplayboards[element.position] = {};
-                        this.setDisplayboards(element);
+                        this.setDisplayboards(this.metricElement);
                     });
                 });
         }
-        this.cronHandle = Observable.interval(30000).subscribe(() => {
-            this.setDisplayboards(this.metricElement);
-        });
     }
-
     getBusinessdetFromLocalstorage() {
         const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
@@ -79,7 +92,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             this.blogo = bdetails.logo || '';
         }
         if (MainBdetails) {
-            // this.MainBname = MainBdetails.bn || '';
+            this.MainBname = MainBdetails.bn || '';
             this.MainBlogo = MainBdetails.logo || '';
         }
     }
@@ -87,7 +100,18 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     getFieldValue(field, checkin) {
         let fieldValue = '';
         if (field.name === 'waitlistingFor') {
-            fieldValue = checkin[field.name][0].firstName + ' ' + checkin[field.name][0].lastName;
+            const lastName = checkin[field.name][0].lastName;
+            const nameLength = lastName.length;
+            const encryptedName = [];
+            let lastname = '';
+            for (let i = 0; i < nameLength; i++) {
+                encryptedName[i] = lastName[i].replace(/./g, '*');
+            }
+            for (let i = 0; i < nameLength; i++) {
+                lastname += encryptedName[i];
+
+            }
+            fieldValue = checkin[field.name][0].firstName + ' ' + lastname;
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
         } else if (field.name === 'service') {
@@ -101,7 +125,19 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 fieldValue = field.defaultValue;
             }
         } else if (field.name === 'primaryMobileNo') {
-            fieldValue = checkin['waitlistingFor'][0]['primaryMobileNo'];
+            const full_phone = checkin['waitlistingFor'][0]['primaryMobileNo'];
+            const phLength = full_phone.length;
+            const tele = [];
+            for (let i = 0; i < phLength; i++) {
+                if (i < 6) {
+                    tele[i] = full_phone[i].replace(/^\d+$/, '*');
+                } else {
+                    tele[i] = full_phone[i];
+                }
+            }
+            for (let i = 0; i < phLength; i++) {
+                fieldValue += tele[i];
+            }
         } else {
             fieldValue = checkin[field.name];
         }
@@ -127,6 +163,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     }
     setFilterForApi(layout) {
         const api_filter = {};
+        api_filter['location-eq'] = this.locId;
         layout.queueSetFor.forEach(element => {
             if (element.type === 'SERVICE') {
                 api_filter['service-eq'] = element.id[0];
@@ -149,6 +186,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     }
     getQualification(list) {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         const virtualfields = list[user.subSector];
         this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
             this.subDomVirtualFields = data;

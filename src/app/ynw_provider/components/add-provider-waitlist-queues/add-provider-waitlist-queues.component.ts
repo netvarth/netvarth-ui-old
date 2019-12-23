@@ -77,6 +77,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   ifedit = false;
   iftokn = false;
   queue_list: any = [];
+  waitlist_manager;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -100,6 +101,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH:mm');
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
+    this.getWaitlistMgr();
     this.createForm();
     this.getProviderServices();
     this.getProviderQueues();
@@ -331,15 +333,23 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.provider_services.getProviderQueues()
       .subscribe(data => {
         this.queue_list = data;
-        for (let ii = 0; ii < this.queue_list.length; ii++) {
-          if (this.queue_list[ii].calculationMode === 'NoCalc' && this.queue_list[ii].showToken) {
+      });
+  }
+
+  getWaitlistMgr() {
+    this.waitlist_manager = null;
+    this.provider_services.getWaitlistMgr()
+      .subscribe(
+        data => {
+          this.waitlist_manager = data;
+          if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {
             this.iftokn = false;
           }
-        }
-      });
+        });
   }
+
   getDepartments() {
     this.departments = [];
     this.api_loading1 = true;
