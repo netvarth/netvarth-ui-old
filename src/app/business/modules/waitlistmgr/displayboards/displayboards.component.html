@@ -51,7 +51,8 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                         </span>
-                                        <h3 (click)="goDisplayboardLayoutDetails(layout)" class="pointer-cursor">
+                                        <h3 (click)="goDisplayboardLayoutDetails(layout, 'layout')"
+                                            class="pointer-cursor">
                                             {{layout.displayName | capitalizeFirst}}<span class="layout_name">
                                             </span></h3>
                                         <mat-menu #appMenu="matMenu">

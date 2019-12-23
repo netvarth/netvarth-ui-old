@@ -754,6 +754,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   changeLocation(location) {
     this.selected_location = location;
     this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
     this.today_waitlist_count = 0;
@@ -1797,62 +1798,62 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-    //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
-    //   this.distance = this.trackDetail.jaldeeDistance.distance;
-    //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
-    //   this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
-    //   this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
-    //   this.hours = Math.floor(this.travelTime / 60);
-    //   this.minutes = this.travelTime % 60;
-    //   const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
-    // }
+      //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
+      //   this.distance = this.trackDetail.jaldeeDistance.distance;
+      //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
+      //   this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
+      //   this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
+      //   this.hours = Math.floor(this.travelTime / 60);
+      //   this.minutes = this.travelTime % 60;
+      //   const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+      // }
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
  locateCustomerMsg(details) {
-  if (details && details.jaldeeDistance) {
-    const distance = details.jaldeeDistance.distance;
-    const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
-    const travelTime = details.jaldeelTravelTime.travelTime;
-    const hours = Math.floor(travelTime / 60);
-    const mode = details.jaldeelTravelTime.travelMode;
-    const minutes = travelTime % 60;
-   // const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
-    let message = '';
-    if (distance === 0) {
-      message += 'Your customer is close to you, will arrive shortly' ;
-    }  else {
-      message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
-      if (hours !== 0) {
-        message += ' ' + hours;
-        if (hours === 1) {
-          message += ' hr';
-        } else {
-          message += ' hrs';
+    if (details && details.jaldeeDistance) {
+      const distance = details.jaldeeDistance.distance;
+      const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+      const travelTime = details.jaldeelTravelTime.travelTime;
+      const hours = Math.floor(travelTime / 60);
+      const mode = details.jaldeelTravelTime.travelMode;
+      const minutes = travelTime % 60;
+      // const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+      let message = '';
+      if (distance === 0) {
+        message += 'Your customer is close to you, will arrive shortly';
+      } else {
+        message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
+        if (hours !== 0) {
+          message += ' ' + hours;
+          if (hours === 1) {
+            message += ' hr';
+          } else {
+            message += ' hrs';
+          }
         }
-      }
-      if (minutes !== 0) {
-        message += ' ' + minutes;
-        if (minutes === 1) {
-          message += ' min';
-        } else {
-          message += ' mins';
+        if (minutes !== 0) {
+          message += ' ' + minutes;
+          if (minutes === 1) {
+            message += ' min';
+          } else {
+            message += ' mins';
+          }
         }
+        if (mode === 'WALKING') {
+          message += ' walk';
+        } else if (mode === 'DRIVING') {
+          message += ' drive';
+        } else if (mode === 'BICYCLING') {
+          message += ' ride';
+        }
+        message += ' to reach here';
       }
-      if (mode === 'WALKING') {
-        message += ' walk';
-      } else if (mode === 'DRIVING') {
-        message += ' drive';
-      } else if (mode === 'BICYCLING') {
-        message += ' ride';
-      }
-      message += ' to reach here' ;
+      return message;
     }
-    return message;
   }
- }
 
   selectnewWaitlist(index) {
     this.newWaitlistforMsg = [];
