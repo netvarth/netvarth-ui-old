@@ -44,10 +44,14 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
         const screenHeight = window.innerHeight;
+        let hgt_reduced = 150;
+        if (this.accountType === 'BRANCH_SP') {
+            hgt_reduced = 270;
+        }
         if (this.boardRows > 1) {
-            this.boardHeight = (screenHeight - 270) / 2;
+            this.boardHeight = (screenHeight - hgt_reduced) / 2;
         } else {
-            this.boardHeight = (screenHeight - 270);
+            this.boardHeight = (screenHeight - hgt_reduced);
         }
     }
     ngOnDestroy() {
@@ -181,7 +185,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.bProfile = data;
-                    this.getQualification(this.bProfile.subDomainVirtualFields[0]);
+                    if (this.bProfile && this.bProfile.subDomainVirtualFields) {
+                        this.getQualification(this.bProfile.subDomainVirtualFields[0]);
+                    }
                 });
     }
     getQualification(list) {

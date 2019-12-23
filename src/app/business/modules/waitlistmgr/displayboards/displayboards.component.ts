@@ -75,7 +75,7 @@ export class DisplayboardsComponent implements OnInit {
     addDisplayboardLayout() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
     }
-    gotoDisplayboardQSet () {
+    gotoDisplayboardQSet() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set']);
     }
     editDisplayboardLayout(layout) {
@@ -85,12 +85,16 @@ export class DisplayboardsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'displayboards', 'edit'], navigationExtras);
     }
-    goDisplayboardLayoutDetails(layout) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { id: layout.id }
-        };
-        this.router.navigate(['provider', 'settings', 'q-manager',
-            'displayboards', 'view'], navigationExtras);
+    goDisplayboardLayoutDetails(layout, source?) {
+        if (source) {
+            window.open('#/displayboard/' + layout.id, '_blank');
+        } else {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { id: layout.id }
+            };
+            this.router.navigate(['provider', 'settings', 'q-manager',
+                'displayboards', 'view'], navigationExtras);
+        }
     }
     deleteDisplayboardLayout(layout) {
         this.provider_services.deleteDisplayboard(layout.id).subscribe(

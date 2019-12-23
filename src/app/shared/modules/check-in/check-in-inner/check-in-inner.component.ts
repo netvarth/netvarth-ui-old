@@ -184,6 +184,7 @@ export class CheckInInnerComponent implements OnInit {
   activeWt;
   bicycling: boolean;
   liveTrackMessage;
+  firstTimeClick = true;
   constructor(public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
@@ -914,7 +915,7 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-          //this.router.navigate(['/']);
+          // this.router.navigate(['/']);
         }
         // this.router.navigate(['/']);
         // setTimeout(() => {
@@ -1473,31 +1474,24 @@ export class CheckInInnerComponent implements OnInit {
   }
   locationEnableDisable(event) {
     if (event.checked) {
-      console.log("fghj");
       this.getCurrentLocation().then(
         (lat_long: any) => {
           this.lat_lng = lat_long;
-          if(this.liveTrackMessage){
+          if (!this.firstTimeClick) {
             this.updateLiveTrackInfo().then(
               (liveTInfo) => {
-                console.log(liveTInfo);
-                console.log(this.track_loading);
                 this.track_loading = false;
-                console.log(this.track_loading);
                 this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, this.travelMode);
-                }
-            );
-          }
-           else {
-            this.saveLiveTrackInfo().then(
-            (liveTInfo) => {
-              console.log(liveTInfo);
-              console.log(this.track_loading);
-              this.track_loading = false;
-              console.log(this.track_loading);
-              this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, this.travelMode);
               }
-          );
+            );
+          } else {
+            this.saveLiveTrackInfo().then(
+              (liveTInfo) => {
+                this.track_loading = false;
+                this.firstTimeClick = false;
+                this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, this.travelMode);
+              }
+            );
           }
           // this.saveLiveTrackInfo().then(
           //   (liveTInfo) => {
@@ -1511,7 +1505,7 @@ export class CheckInInnerComponent implements OnInit {
         }, (error) => {
           this.shareLoc = false;
         }
-        );
+      );
     } else {
       this.shareLoc = false;
       this.updateLiveTrackInfo();
@@ -1544,7 +1538,7 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   saveLiveTrackInfo() {
-   this.track_loading = true;
+    this.track_loading = true;
     const _this = this;
     return new Promise(function (resolve, reject) {
       const post_Data = {
@@ -1561,7 +1555,7 @@ export class CheckInInnerComponent implements OnInit {
         .subscribe(
           data => {
             resolve(data);
-            
+
           },
           () => {
             reject();
@@ -1573,7 +1567,7 @@ export class CheckInInnerComponent implements OnInit {
     if (status === 'livetrack') {
       if (this.shareLoc) {
         this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED'));
-      }else{
+      } else {
         this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED'));
       }
       this.dialogRef.close();
@@ -1586,23 +1580,23 @@ export class CheckInInnerComponent implements OnInit {
     this.updateLiveTrackInfo().then(
       data => {
         if (data) {
-          //this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+          // this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
-       // setTimeout(() => {
+        // setTimeout(() => {
 
-          // this.source['list'] = 'reloadlist';
-          // this.source['mode'] = this.page_source;
-          // this.dialogRef.close('reloadlist');
-          //this.returntoParent.emit('reloadlist');
-          this.trackClose('livetrack');
-          this.track_loading = false;
-       // }, projectConstants.TIMEOUT_DELAY_LARGE10);
+        // this.source['list'] = 'reloadlist';
+        // this.source['mode'] = this.page_source;
+        // this.dialogRef.close('reloadlist');
+        // this.returntoParent.emit('reloadlist');
+        this.trackClose('livetrack');
+        this.track_loading = false;
+        // }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
-      
+
   }
   updateLiveTrackInfo() {
     const _this = this;
@@ -1628,5 +1622,4 @@ export class CheckInInnerComponent implements OnInit {
         );
     });
   }
-
 }
