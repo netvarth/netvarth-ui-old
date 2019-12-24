@@ -798,6 +798,10 @@ export class ProviderServices {
     const url = 'provider/branch/createSp';
     return this.servicemeta.httpPost(url, post_data);
   }
+  createAssistant(post_data) {
+    const url = 'provider/assistant';
+    return this.servicemeta.httpPost(url, post_data);
+  }
   getCorporateDetails() {
     const url = 'provider/corp';
     return this.servicemeta.httpGet(url);

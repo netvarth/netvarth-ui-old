@@ -156,23 +156,8 @@ export class BranchDoctorDetailComponent implements OnInit {
             return;
         }
         if (this.actionparam === 'add') {
-            // {
-            //     "userProfile": {
-            //       "firstName": "BIJU",
-            //       "lastName": "XAVIER",
-            //       "city": "MANATAHAVDY",
-            //       "state": "KERALA",
-            //       "address": "HELLO",
-            //       "primaryMobileNo": "8086154624",
-            //       "alternativePhoneNo": "8956237411",
-            //       "dob": "2019-11-05",
-            //       "gender": "Male",
-            //       "email": "mani.ynwtest@netvarth.com",
-            //       "countryCode": "+91"
-            //     },
-            //     "isAdmin": true,
-            //     "commonPassword": "Netvarth1"
-            //    }
+            if (this.userType.type === 'doctors') {
+            
             const post_data = {
                 'userProfile': {
                     'firstName': input.first_name.trim() || null,
@@ -195,7 +180,30 @@ export class BranchDoctorDetailComponent implements OnInit {
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+        } else {
+            const post_data = {
+                'userProfile': {
+                    'firstName': input.first_name.trim() || null,
+                    'lastName': input.last_name.trim() || null,
+                    'dob': date_format || null,
+                    'gender': input.gender || null,
+                    'emil': input.email || '',
+                    'mobileNo': input.phonenumber
+                },
+              
+                'commonPassword': input.password,
+                'userType': true,
+                'address': input.selectedAddress
+            };
+            this.provider_services.createAssistant(post_data).subscribe(data => {
+                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.router.navigate(['provider', 'settings', 'users', 'doctors']);
+            },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
+    }
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'users', 'doctors']);
