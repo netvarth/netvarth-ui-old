@@ -1301,7 +1301,12 @@ export class SharedFunctions {
       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
   }
-
+  sortByMapkey(array, key1, key2) {
+    return array.sort(function (a, b) {
+      const x = a[key1][key2]; const y = b[key1][key2];
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+  }
   groupBy(xs, key) {
     return xs.reduce(function (rv, x) {
       (rv[x[key]] = rv[x[key]] || []).push(x);

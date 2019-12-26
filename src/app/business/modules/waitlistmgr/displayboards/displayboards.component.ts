@@ -20,7 +20,7 @@ export class DisplayboardsComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Statusboards'
+            title: 'Queue Status boards'
         }
     ];
     api_loading: boolean;

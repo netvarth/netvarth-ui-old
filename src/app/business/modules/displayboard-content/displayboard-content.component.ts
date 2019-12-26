@@ -154,7 +154,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 const Mfilter = this.setFilterForApi(displayboard);
                 this.provider_services.getTodayWaitlist(Mfilter).subscribe(
                     (waitlist) => {
-                        this.selectedDisplayboards[element.position]['checkins'] = waitlist;
+                        const wtlst = this.shared_functions.sortByMapkey(waitlist, 'label', 'lblTime');
+                        this.selectedDisplayboards[element.position]['checkins'] = wtlst;
                     });
             });
     }
