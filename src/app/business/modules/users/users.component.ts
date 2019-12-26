@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
     ];
     customer_label = '';
     provider_label = '';
+    breadcrumbs = this.breadcrumbs_init;
 
     constructor(
         private router: Router,
@@ -35,26 +36,8 @@ export class UsersComponent implements OnInit {
         
     }
     gotobranchsps() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+        this.router.navigate(['provider', 'settings','users','doctors']);
     }
-    gotocorporate() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
-    }
-    gotoNonworkingDays() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);
-    }
-    gotoNotifications() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'notifications']);
-    }
-    gotosaleschannel() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
-    }
-    gotothemes() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
-    }
-    gotoJdn() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'jdn']);
-    }
-   
+    
    
 }
