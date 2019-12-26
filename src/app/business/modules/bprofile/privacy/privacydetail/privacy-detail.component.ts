@@ -92,8 +92,6 @@ export class PrivacyDetailComponent implements OnInit {
           this.curmod = (this.data.editindx >= 0) ? 'edit' : 'add';
           if (this.curmod === 'edit') {
             this.curid = this.data.editindx;
-            this.edit_ph_id = this.bProfile.phoneNumbers[this.curid].instance;
-            this.edit_mail_id = this.bProfile.emails[this.curid].instance;
           } else {
             this.curid = -1;
             const breadcrumbs = [];
@@ -112,6 +110,7 @@ export class PrivacyDetailComponent implements OnInit {
             if (this.curmod === 'add') {
               this.phonepermission = 'all';
             } else {
+              this.edit_ph_id = this.bProfile.phoneNumbers[this.curid].instance;
               const breadcrumbs = [];
               this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -141,6 +140,7 @@ export class PrivacyDetailComponent implements OnInit {
             if (this.curmod === 'add') {
               this.emailpermission = 'all';
             } else {
+              this.edit_mail_id = this.bProfile.emails[this.curid].instance;
               const breadcrumbs = [];
               this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
