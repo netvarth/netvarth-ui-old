@@ -176,7 +176,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.action = 'edit';
             this.prepareInstantQForm(que);
         } else {
-            this.addEditProviderQueue('edit', que);
+            this.addEditProviderQueue('editFromList', que);
         }
     }
     /**
