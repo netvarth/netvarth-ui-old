@@ -96,6 +96,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+        this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.getProviderServices();
         this.getProviderQueues();
         if (this.action !== 'add') {

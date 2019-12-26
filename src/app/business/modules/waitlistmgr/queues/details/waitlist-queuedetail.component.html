@@ -84,12 +84,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" *ngIf="action !== 'view' && !api_loading">
-                    <div class="copy ynw-common-form-nm">
+                <div class="card queue-form" *ngIf="action !== 'view' && !api_loading">
+                    <div class="copy ynw-common-form-nm pro-schedule">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" class="ynw-common-form">
+onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                             <div class="form-group">
-                                <div *ngIf="action!='edit'">
+                                <div *ngIf="action!='edit' && action != 'editFromList'">
                                     <mat-form-field *ngIf="loc_list.length > 1">
                                         <mat-select placeholder="Location *" formControlName="qlocation">
                                             <mat-option *ngFor="let loc of loc_list" [value]="loc.id">
@@ -155,7 +155,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                     </div>
                                 </section>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group queue-selection">
                                 <label class="labelstyle">{{schedule_cap}}</label><a
                                     class="link exstschdlesze pointer-cursor"
                                     (click)="existingScheduletoggle()">{{existing_schedules}}</a>
@@ -179,7 +179,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                     </div>
                                 </section>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group schedulesub_outer">
                                 <div class="startendtime">
                                     <div class="starttimediv">
                                         <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
@@ -202,12 +202,9 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <mat-form-field class="example-full-width">
-                                    <mat-form-field>
-                                        <input matInput
-                                            placeholder="{{service_time_window_name}} (not visible to public)"
-                                            formControlName="qname" autocomplete="off" maxlength="20">
-                                    </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="{{service_time_window_name}} (not visible to public)"
+                                        formControlName="qname" autocomplete="off" maxlength="20">
                                 </mat-form-field>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
@@ -221,7 +218,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                 <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
                             </div>
                             <div class="form-group" *ngIf="showAdvancedSettings">
-                                <mat-form-field>
+                                <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
                                         class="form-control number-ip-sm"
                                         placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
@@ -251,7 +248,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
         })">
                                 </app-field-error-display>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings && action !== 'edit'">
+                            <div class="form-group" *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
@@ -260,7 +257,7 @@ onSubmit(amForm.value)" class="ynw-common-form">
                             </div>
                             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                                 <button type="button" (click)="closeClick()" class="cs-btn bt2"
-                                    [disabled]="disableButton">{{cancel_btn}}</button>
+                                    [disabled]="disableButton">{{cancel_btn}}</button> &nbsp;
                                 <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
                                     class="cs-btn bt1">{{save_btn}}
                                 </button>

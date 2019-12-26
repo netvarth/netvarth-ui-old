@@ -6645,8 +6645,6 @@ input.jdn_ip { width: 50px !important}
 }
 
 .pro-schedule .schedule_outer .schedulesub_outer .chk-section {
-  /* display: flex;
-  flex-wrap: wrap; */
   margin-bottom: 20px;
   height: auto;
 }
@@ -6677,9 +6675,7 @@ input.jdn_ip { width: 50px !important}
 }
 
 .pro-schedule .schedule_outer .schedulesub_outer .startendtime {
-  /* margin-bottom: 20px; */
   display: flex;
-  /* flex-wrap: wrap; */
 }
 
 .pro-schedule .schedule_outer .schedulesub_outer .startendtime .starttimediv, .pro-schedule .schedule_outer .schedulesub_outer .startendtime .endtimediv {
@@ -6803,6 +6799,31 @@ input.jdn_ip { width: 50px !important}
   font-weight: 500;
   text-align: left;
 }
+.queue-form .schselectall i {
+  padding: 5px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #00aef2;
+  cursor: pointer;
+}
+.queue-form .leftselectAll{
+  display: flex;
+}
+.queue-form .leftselectAll .mat-checkbox{
+  margin: 0 10px;
+}
+.queue-form .form-group .schselectall i:before{
+  font-family: 'fontAwesome';
+}
+.queue-form .leftselectAll .mat-checkbox label{
+  font-weight: 500;
+}
+.queue-form .pro-schedule .schedule_outer .schedulesub_outer {
+  background: none !important;
+  padding: 0px !important;
+  margin-bottom: 0px !important;
+}
 .cupn-price {
   width:auto !important;
 }
@@ -6880,5 +6901,4 @@ input.jdn_ip { width: 50px !important}
       display: flex !important;
       flex-wrap: wrap !important;
   }
-  }
-
+}
