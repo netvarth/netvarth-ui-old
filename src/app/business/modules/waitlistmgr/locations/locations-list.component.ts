@@ -80,7 +80,7 @@ export class LocationsListComponent implements OnInit {
     }
     performActions(action) {
         if (action === 'addlocation') {
-            this.addLocation('add');
+            this.addLocation();
         } else if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/checkinmanager->settings-locations']);
         }
@@ -196,11 +196,8 @@ export class LocationsListComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'locations', location_detail.id], navigationExtras);
     }
-    addLocation(action) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { action: action }
-        };
+    addLocation() {
         this.router.navigate(['provider', 'settings', 'q-manager',
-            'locations', 'add'], navigationExtras);
+            'locations', 'add']);
     }
 }

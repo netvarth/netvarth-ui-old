@@ -1129,7 +1129,7 @@ export const Messages = {
   'WIZ_GOOGLE_MAP_URL_CAP': 'Google Map URL',
   'WIZ_USED_FIND_EXACT_LOC_CAP': 'This can be used to find the exact location',
   'WIZ_BACK_CAP': 'Back',
-  'WIZ_WORKING_HOUR_CAP': 'General location hours',
+  'LOCATION_HOURS_CAP': 'General location hours',
   'WIZ_WORKING_HOURS_CAP': 'Queues',
   'WIZ_SHOWS_B_HOURS_CAP': 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP': 'Public Search',

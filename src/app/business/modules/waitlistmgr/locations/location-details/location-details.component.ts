@@ -43,6 +43,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     cancel_btn = Messages.CANCEL_BTN;
     save_btn = Messages.SAVE_BTN;
     map_url_cap = Messages.MAP_URL_CAP;
+    loca_hours = Messages.LOCATION_HOURS_CAP;
     location_id = null;
     location_data;
     queues: any = [];
@@ -78,6 +79,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     schedule_json: any = [];
     forbadge = false;
     disableButton = false;
+    params;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -93,12 +95,17 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.location_id = params.id;
         });
         this.activated_route.queryParams.subscribe(qparams => {
-            this.action = qparams.action;
+            this.params = qparams;
+            if (this.params.action === 'editbase') {
+                this.action = 'edit';
+            } else {
+                this.action = qparams.action;
+            }
         });
     }
     ngOnInit() {
         this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
-        if (this.action !== 'add') {
+        if (this.location_id !== 'add') {
             this.getLocationBadges();
             this.getLocationDetail();
         } else {
@@ -128,7 +135,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             loclongitude: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_FLOAT)])],
             locmapurl: [{ value: '', disabled: true }]
         });
-        if (this.action === 'edit' || this.action === 'editbase') {
+        if (this.action === 'edit') {
             this.updateForm();
         }
     }
@@ -197,7 +204,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                     if (this.location_data.lattitude !== '' && this.location_data.longitude !== '') {
                         this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.location_data.lattitude + ',' + this.location_data.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
                     }
-                    if (this.action === 'edit' || this.action === 'editbase') {
+                    if (this.action === 'edit') {
                         this.createForm();
                     }
                 },
@@ -425,7 +432,11 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                     () => {
                         this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_UPDATED, { 'panelclass': 'snackbarerror' });
                         this.getLocationDetail();
-                        this.action = 'view';
+                        if (this.params.action === 'editbase') {
+                            this.router.navigate(['provider', 'settings', 'bprofile']);
+                        } else {
+                            this.action = 'view';
+                        }
                         this.disableButton = false;
                     },
                     error => {
@@ -451,7 +462,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         }
     }
     closeClick() {
-        if (this.action === 'edit') {
+        if (this.action === 'edit' && this.params.action !== 'editbase') {
             this.action = 'view';
         } else {
             this._location.back();

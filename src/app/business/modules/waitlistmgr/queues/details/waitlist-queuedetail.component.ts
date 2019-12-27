@@ -77,6 +77,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     showAdvancedSettings = false;
     queue_list: any = [];
     action;
+    params;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -90,8 +91,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
             this.queue_id = params.id;
         });
         this.activated_route.queryParams.subscribe(qparams => {
-            this.action = qparams.action;
-            // this.activeSchedules = qparams.activeQueues;
+            this.params = qparams;
+            if (this.params.action === 'editFromList') {
+                this.action = 'edit';
+            } else {
+                this.action = qparams.action;
+            }
         });
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
@@ -100,10 +105,10 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.getProviderServices();
         this.getProviderQueues();
-        if (this.action !== 'add') {
+        if (this.queue_id !== 'add') {
             this.getQueueDetail();
-            this.getProviderLocations();
         } else {
+            this.action = this.queue_id;
             const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -113,7 +118,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             });
             this.breadcrumbs = breadcrumbs;
             this.createForm();
-            this.getProviderLocations();
         }
     }
 
@@ -130,10 +134,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 if (this.queue_data) {
                     this.loc_name = this.queue_data.location.place;
                 }
-                if (this.action === 'add' && this.queue_data &&
-                    this.queue_data.location.id) {
-                    this.amForm.get('qlocation').setValue(this.queue_data.location.id);
-                } else if (this.action === 'add' && this.loc_list.length === 1) {
+                if (this.action === 'add' && this.loc_list.length === 1) {
                     this.amForm.get('qlocation').setValue(this.loc_list[0].id);
                 }
             });
@@ -334,7 +335,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     });
                     this.breadcrumbs = breadcrumbs;
                     this.api_loading = false;
-                    if (this.action === 'edit' || this.action === 'editFromList') {
+                    if (this.action === 'edit') {
                         this.createForm();
                     }
                 },
@@ -356,7 +357,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'queues']);
     }
-    addEditProviderQueue(type) {
+    addEditProviderQueue() {
         this.action = 'edit';
         this.createForm();
     }
@@ -409,7 +410,17 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
 
     createForm() {
-        if (this.action === 'add') {
+        if (this.action === 'edit') {
+            this.amForm = this.fb.group({
+                qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+                qlocation: ['', Validators.compose([Validators.required])],
+                qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
+                qendtime: [this.dend_time, Validators.compose([Validators.required])],
+                qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+            });
+            this.updateForm();
+        } else {
             this.amForm = this.fb.group({
                 qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
                 qlocation: ['', Validators.compose([Validators.required])],
@@ -426,17 +437,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     }
                 );
         }
-        if (this.action === 'edit' || this.action === 'editFromList') {
-            this.amForm = this.fb.group({
-                qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-                qlocation: ['', Validators.compose([Validators.required])],
-                qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-                qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-            });
-            this.updateForm();
-        }
+        this.getProviderLocations();
     }
 
     updateForm() {
@@ -644,9 +645,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'services': selser,
                 'tokenStarts': form_data.tokennum
             };
-            if (this.action === 'edit' || this.action === 'editFromList') {
+            if (this.action === 'edit') {
                 this.editProviderQueue(post_data);
-            } else if (this.action === 'add') {
+            } else {
                 this.addProviderQueue(post_data);
             }
         }
@@ -655,9 +656,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.disableButton = true;
         this.provider_services.addProviderQueue(post_data)
             .subscribe(
-                () => {
+                (data) => {
                     this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_CREATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
+                    this.queue_id = data;
+                    this.getQueueDetail();
+                    this.action = 'view';
                 },
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -674,6 +678,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 () => {
                     this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_UPDATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
+                    this.getQueueDetail();
+                    if (this.params.action === 'editFromList') {
+                        this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
+                    } else {
+                        this.action = 'view';
+                    }
                 },
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -682,7 +692,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             );
     }
     closeClick() {
-        if (this.action === 'edit') {
+        if (this.action === 'edit' && this.params.action !== 'editFromList') {
             this.action = 'view';
         } else {
             this._location.back();

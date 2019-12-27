@@ -627,7 +627,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.routerobj.navigate(['/provider/' + this.domain + '/checkinmanager->settings-time_windows']);
         } else {
             const navigationExtras: NavigationExtras = {
-                queryParams: { action: 'add', activeQueues: this.provider_shared_functions.getActiveQueues() }
+                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
             };
             this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
         }
