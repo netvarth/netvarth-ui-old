@@ -6548,10 +6548,11 @@ input.jdn_ip { width: 50px !important}
   to { background-color: inherit; }
 } */
 .startWaitlist {
-  -webkit-animation: startWaitlist 1s infinite; 
+  /* -webkit-animation: startWaitlist 1s infinite; 
   -moz-animation:    startWaitlist 1s infinite; 
   -o-animation:      startWaitlist 1s infinite; 
-  animation:         startWaitlist 1s infinite; 
+  animation:         startWaitlist 1s infinite;  */
+  background-color: #00cc96 !important;
 }
 .display-layout .branch-sp{
   display: flex;
