@@ -1432,7 +1432,7 @@ export const Messages = {
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
-  'TRACKINGCANCELENABLED': ' able to track your ETA',
-  'TRACKINGCANCELDISABLED': ' disable to track your ETA',
+  'TRACKINGCANCELENABLED': 'You have allowed [provider_name] to track your ETA',
+  'TRACKINGCANCELDISABLED': 'You have not allowed [provider_name] to track your ETA',
   'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations'
 };

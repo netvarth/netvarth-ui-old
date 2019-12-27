@@ -1566,9 +1566,9 @@ export class CheckInInnerComponent implements OnInit {
   trackClose(status) {
     if (status === 'livetrack') {
       if (this.shareLoc) {
-        this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED'));
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
       } else {
-        this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED'));
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
       }
       this.dialogRef.close();
       this.router.navigate(['/']);
