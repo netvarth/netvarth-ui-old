@@ -50,6 +50,12 @@
                   [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
                   class="item-category">{{(kw.typ === 'kwtitle'? 'Business Name/Keyword ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
               </mat-option>
+              <mat-option *ngFor="let kw of displaykeywordList[kwgroup.name]" [value]="kw.autoname"
+                (click)="setKeyword(kw)">
+                <span
+                  [innerHTML]="highlightSelText(kw.autoname, 'search_autocompletehighlight', 'keyword', kw.typ)"></span>{{ value }}<span
+                  class="item-category">{{(kw.typ === 'onlineid'? 'Online ID ': (kwgroup.name === 'special'? 'specialization':''))}}</span>
+              </mat-option>
             </mat-optgroup>
           </div>
         </mat-autocomplete>

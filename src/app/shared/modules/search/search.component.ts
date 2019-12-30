@@ -423,8 +423,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchfields.kwtyp = '';
     } else {
       this.holdisplaySearchlist['kwtitle'] = new Array();
+      this.holdisplaySearchlist['onlineid'] = new Array();
       if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
         this.holdisplaySearchlist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle', origin: 'gloablsearch' });
+         this.holdisplaySearchlist['onlineid'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'onlineid', origin: 'gloablsearch' });
       }
     }
     // Defining the types of details that will be displayed for keywords autocomplete
@@ -454,6 +456,12 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       if (this.holdisplaySearchlist['kwtitle']) {
         if (this.holdisplaySearchlist['kwtitle'].length > 0) {
           const groupdomainobj = { displayname: 'Business Name/Keyword', name: 'kwtitle' };
+          keywordgroup_val.push(groupdomainobj);
+        }
+      }
+      if (this.holdisplaySearchlist['onlineid']) {
+        if (this.holdisplaySearchlist['onlineid'].length > 0) {
+          const groupdomainobj = { displayname: 'Online ID', name: 'onlineid' };
           keywordgroup_val.push(groupdomainobj);
         }
       }
@@ -734,6 +742,13 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         this.keywordholder.domain = '';
         this.keywordholder.subdomain = '';
         this.keywordholder.typ = 'kwtitle';
+      }
+      if (this.keywordholder.typ === '' || this.keywordholder.typ === undefined || this.keywordholder.typ === 'onlineid') {
+        this.keywordholder.name = this.kw_autoname;
+        this.keywordholder.autoname = this.kw_autoname;
+        this.keywordholder.domain = '';
+        this.keywordholder.subdomain = '';
+        this.keywordholder.typ = 'onlineid';
       }
     }
     let labelq = labelqpassed;
