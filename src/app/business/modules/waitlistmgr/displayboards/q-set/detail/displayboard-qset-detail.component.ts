@@ -49,12 +49,14 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     defaultLables: any = [];
     showLabelEdit: any = [];
     selectedCategory = '';
+    selectedSortField = '';
     selectedCategoryValue;
     labelDisplayname: any = [];
     labelDefaultvalue: any = [];
     labelOrder: any = [];
     labelsList: any = [];
     statusBoardfor: any = [];
+    sortByFieldsList;
     displayBoardData: any = [];
     boardName;
     boardDisplayname;
@@ -101,12 +103,17 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         this.locName = loc_details.place;
+        if (this.actionparam === 'add') {
+            this.selectedSortField = 'sort_token';
+            this.sortByField('sort_token');
+        }
     }
     resetFields() {
         this.boardDisplayname = '';
         this.boardName = '';
         this.labelsList = [];
         this.statusBoardfor = [];
+        this.sortByFieldsList = [];
     }
     ngOnChanges() {
         this.id = this.qsetId;
@@ -160,6 +167,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     this.departmentSelection(this.displayBoardData.queueSetFor[i].id[0]);
                 }
             }
+            Object.keys(this.displayBoardData.sortBy).forEach(key => {
+                console.log(key);
+                this.selectedSortField = key;
+            });
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
                 for (let j = 0; j < this.defaultLables.length; j++) {
                     if (this.displayBoardData.fieldList[i].name === this.defaultLables[j].name) {
@@ -196,7 +207,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'name': name,
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
-                'queueSetFor': this.statusBoardfor
+                'queueSetFor': this.statusBoardfor,
+                'sortBy': this.sortByFieldsList
             };
             this.provider_services.createDisplayboardQSet(post_data).subscribe(data => {
                 // this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
@@ -228,7 +240,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'name': name,
                 'displayName': this.boardDisplayname,
                 'fieldList': this.labelsList,
-                'queueSetFor': this.statusBoardfor
+                'queueSetFor': this.statusBoardfor,
+                'sortBy': this.sortByFieldsList
             };
             this.provider_services.updateDisplayboardQSet(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
@@ -462,5 +475,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             }
         }
         return displayName;
+    }
+    sortByField(field) {
+        this.sortByFieldsList = new Object();
+        this.sortByFieldsList[field] = 'asc';
     }
 }

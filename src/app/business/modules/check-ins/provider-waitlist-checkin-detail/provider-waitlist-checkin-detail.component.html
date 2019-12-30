@@ -108,7 +108,7 @@
                 <mat-expansion-panel [expanded]="false">
                   <mat-expansion-panel-header class="no-padding mgn-bt-10">
                     <mat-panel-title class="block-level">
-                      <h6> Display board Optional fields </h6>
+                      <span style="font-size: 1rem;"> Display board Optional fields </span>
                       <p class="form-level-settings">This appointment time is used only for display
                       </p>
                     </mat-panel-title>
@@ -123,7 +123,7 @@
                     <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding"
                       *ngIf="editAppntTime || (waitlist_data && !waitlist_data.appointmentTime)">
                       <div class="input-group">
-                        <ngb-timepicker meridian="true" [(ngModel)]="apptTime" (ngModelChange)="changetime($event)">
+                        <ngb-timepicker meridian="true" [(ngModel)]="appttime" (ngModelChange)="changetime($event)">
                         </ngb-timepicker>
                         <div class="wait-btn mgn-up-35">
                           <button class="cs-btn bt3 mgn-rt-5" style="margin-left: 5px;" (click)="cancelUpdation()"

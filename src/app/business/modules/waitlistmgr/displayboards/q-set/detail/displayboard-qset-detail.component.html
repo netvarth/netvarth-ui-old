@@ -162,6 +162,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group col-md-12 ">
+                    <label class="col-form-label mgn-bt-10">
+                        Sort by
+                    </label>
+                    <mat-radio-group [(ngModel)]="selectedSortField">
+                        <mat-radio-button class="mgright50" style="display: block;" [value]="'sort_token'"
+                            (change)="sortByField('sort_token')">
+                            Token</mat-radio-button>
+                        <mat-radio-button class="mgright50" [value]="'sort_appointmentTime'"
+                            (change)="sortByField('sort_appointmentTime')">
+                            Appointment Time
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
             </div>
             <div class="actiondiv col-md-12">
                 <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button>

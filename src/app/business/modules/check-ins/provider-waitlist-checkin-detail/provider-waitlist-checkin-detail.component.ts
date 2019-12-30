@@ -45,7 +45,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   waitlist_history: any = [];
   settings: any = [];
   esttime: string = null;
-  appttime = { hour: 0, minute: 0 };
+  appttime;
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
@@ -103,6 +103,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   ngOnInit() {
+    this.appttime = { hour: 0, minute: 0 };
     this.getDisplayboardCount();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');

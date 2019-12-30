@@ -152,6 +152,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             (displayboard) => {
                 this.selectedDisplayboards[element.position]['board'] = displayboard;
                 const Mfilter = this.setFilterForApi(displayboard);
+                Object.keys(displayboard['sortBy']).forEach(key => {
+                    Mfilter[key] = displayboard['sortBy'][key];
+                });
                 this.provider_services.getTodayWaitlist(Mfilter).subscribe(
                     (waitlist) => {
                         const wtlst = this.shared_functions.sortByMapkey(waitlist, 'label', 'lblTime');

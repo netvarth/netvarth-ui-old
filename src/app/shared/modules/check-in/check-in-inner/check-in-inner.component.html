@@ -140,11 +140,11 @@
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
                         <mat-expansion-panel class="mgn-bt-10" [expanded]="false">
-                            <mat-expansion-panel-header class="mgn-up-10">
+                            <mat-expansion-panel-header style="height: 35px; padding: 0 10px;">
                                 <mat-panel-title class="block-level">
                                     Display board Optional fields
-                                    <p class="form-level-settings">This appointment time is used only for display
-                                    </p>
+                                    <!-- <p class="form-level-settings">This appointment time is used only for display
+                                    </p> -->
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="form-group queue-outer">
