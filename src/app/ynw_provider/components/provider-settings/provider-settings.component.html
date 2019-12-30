@@ -338,25 +338,37 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small">
+                <div class="col-md-6 col-lg-4 col-12 set-block  no-padding-small" *ngIf="accountType=='BRANCH' && isMultilevel">
                     <!-- Widget: user widget style 1 -->
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('users')" class="pointer-cursor"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="users">users <i
+                                [matTooltipClass]="tooltipcls" [matTooltip]="users">Users <i
                                     class="fa fa-gears fl-right lnk"></i></h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-ul">
-                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('doctors')">
+                                    <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('doctorslist')">
+                                            <a class="pointer-cursor">
+                                                <span class="lnk setings">Doctors (4)</span>
+                                                <p class="settings_info">List of doctors</p>
+                                            </a>
+                                        </li>
+                                        <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('doctorslist','add')">
+                                                <a class="pointer-cursor">
+                                                    <span class="lnk setings">Assistants (4)</span>
+                                                    <p class="settings_info">List of assistants</p>
+                                                </a>
+                                            </li>
+                                <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('doctors','add')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">New Doctors</span>
+                                        <span class="lnk setings">New Doctor</span>
                                         <p class="settings_info">Create or manage doctors</p>
                                     </a>
                                 </li>
                                 <li *ngIf="accountType=='BRANCH' && isMultilevel" (click)="redirecTo('assistants')">
                                     <a class="pointer-cursor">
-                                        <span class="lnk setings">New Assistants</span>
+                                        <span class="lnk setings">New Assistant</span>
                                         <p class="settings_info">Create or manage assistants</p>
                                     </a>
                                 </li>

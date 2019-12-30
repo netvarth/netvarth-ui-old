@@ -19,7 +19,7 @@ export class DoctorsComponent implements OnInit {
         },
         {
             url: '/provider/settings/users',
-            title: 'users'
+            title: 'Users'
         },
         {
             title: 'Doctors/Assistants'
@@ -44,9 +44,12 @@ export class DoctorsComponent implements OnInit {
         this.getBranchSPs();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
-    addBranchSP(usertype) {
+    addBranchSP(usertype,usermode) {
+        console.log(usermode);
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: usertype }
+            queryParams: { type: usertype,
+                            mode : usermode
+             }
         };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
         //this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add']);
@@ -73,7 +76,8 @@ export class DoctorsComponent implements OnInit {
     //      console.log(user);
     // }
     manageProvider(accountId) {
-        window.open('#/manage/' + accountId, '_blank');
+        this.router.navigate(['provider', 'settings', 'users', 'doctors', 'doctors-view']);
+       // window.open('#/manage/' + accountId, '_blank');
     }
     performActions(action) {
         if (action === 'learnmore') {

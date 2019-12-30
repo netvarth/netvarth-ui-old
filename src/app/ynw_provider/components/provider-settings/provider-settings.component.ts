@@ -318,7 +318,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.getWaitlistMgr();
         });
   }
-  redirecTo(mod) {
+  redirecTo(mod,usermode?) {
     switch (mod) {
       case 'bprofile':
         this.routerobj.navigate(['provider', 'settings', 'bprofile']);
@@ -433,17 +433,22 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'users':
         this.routerobj.navigate(['provider', 'settings', 'users']);
         break;
+        case 'doctorslist':
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
+        break;
       case 'doctors':
 
           const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'doctors' }
+            queryParams: { type: 'doctors',
+                            mode : usermode }
         };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
        // this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
         break;
       case 'assistants':
           const navigationExtras1: NavigationExtras = {
-            queryParams: { type: 'assistants' }
+            queryParams: { type: 'assistants' ,
+                           mode : usermode }
         };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras1);
        // this.routerobj.navigate(['provider', 'settings', 'users', 'assistants']);

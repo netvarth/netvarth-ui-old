@@ -68,6 +68,7 @@ export class BranchDoctorDetailComponent implements OnInit {
     filterBydept = false;
     removeitemdialogRef;
     departments: any = [];
+    user_data: any = [];
     userType: any;
     // selected_dept;
     constructor(
@@ -80,13 +81,12 @@ export class BranchDoctorDetailComponent implements OnInit {
         private dialog: MatDialog,
         private fb: FormBuilder
     ) {
-        this.activated_route.params.subscribe(params => {
-            this.actionparam = params.id;
-        }
-        );
+        
         this.activated_route.queryParams.subscribe(
             qparams => {
                 this.userType = qparams;
+               this.actionparam = this.userType.mode;
+                console.log(this.actionparam);
                 console.log(this.userType);
                 const breadcrumbs = [];
                 this.breadcrumbs_init.map((e) => {
@@ -112,6 +112,25 @@ export class BranchDoctorDetailComponent implements OnInit {
                 break;
             }
         }
+        if (this.actionparam === 'add') {
+       this.createForm();
+    }
+    if(this.actionparam === 'edit') {
+        this.createForm();
+        this.amForm.setValue({
+            'first_name': this.user_data['firstName'] || this.amForm.get('first_name').value,
+            'last_name': this.user_data['lastName'] || this.amForm.get('last_name').value,
+            'gender': this.user_data['gender'] || this.amForm.get('gender').value,
+            'phonenumber': this.user_data['primaryMobileNo'] || this.amForm.get('phonenumber').value,
+            'dob': this.user_data['dob'] || this.amForm.get('dob').value,
+            'email': this.user_data['email'] || this.amForm.get('email').value,
+            'password': this.user_data['commonPassword'] || this.amForm.get('password').value,
+            'selectedSubDomain': this.user_data['subSector'] || this.amForm.get('selectedSubDomain').value,
+            'selectedDepartment': this.user_data['departmentCode'] || this.amForm.get('selectedDepartment').value,
+        });
+    }
+    }
+    createForm() {
         this.amForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -123,12 +142,7 @@ export class BranchDoctorDetailComponent implements OnInit {
             selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: []
         });
-        this.assistantForm = this.fb.group({
-            first_name1: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-            last_name1: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-            phonenumber1: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_PHONENUMBERCOUNT10)])],
-            password1: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])]
-        });
+
     }
     onItemSelect(subdomain) {
         // console.log(subdomain);
@@ -155,7 +169,7 @@ export class BranchDoctorDetailComponent implements OnInit {
         if (this.fnameerror !== null || this.lnameerror !== null) {
             return;
         }
-        if (this.actionparam === 'add') {
+      //  if (this.actionparam === 'add') {
             if (this.userType.type === 'doctors') {
             
             const post_data = {
@@ -203,7 +217,7 @@ export class BranchDoctorDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-    }
+   // }
     }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'users', 'doctors']);
