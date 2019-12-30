@@ -261,6 +261,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   newWaitlistforMsg: any = [];
   consumerTrackstatus = false;
   customerMsg = '';
+  board_count = 0;
+  sortBy = 'sort_token';
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -307,6 +309,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
+    if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
+      this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
+    } else {
+      this.shared_functions.setitemToGroupStorage('sortBy', 'sort_token');
+    }
+    this.getDisplayboardCount();
     this.showstatus['new'] = true;
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
       if (this.time_type === 1) {
@@ -870,6 +878,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
+    Mfilter[this.sortBy] = 'asc';
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
@@ -1781,10 +1790,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomer(source) {
     const waitlistData = this.selectedCheckin[source];
     this.provider_services.getCustomerTrackStatus(waitlistData.ynwUuid).subscribe(data => {
-      console.log(data);
       this.trackDetail = data;
       this.customerMsg = this.locateCustomerMsg(this.trackDetail);
-
       this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
         width: '40%',
         panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
@@ -1866,7 +1873,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
-      console.log(this.selectedCheckin['new']);
       if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
@@ -1992,5 +1998,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.startedwaitlistSelection = 0;
     this.cancelledwaitlistSelection = 0;
     this.completedwaitlistSelection = 0;
+  }
+  setSortByParam(sortBy) {
+    this.sortBy = sortBy;
+    this.shared_functions.setitemToGroupStorage('sortBy', this.sortBy);
+    this.getTodayCheckIn();
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
+        });
   }
 }

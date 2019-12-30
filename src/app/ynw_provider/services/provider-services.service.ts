@@ -858,4 +858,8 @@ export class ProviderServices {
     const url = 'provider/license/addonmetadata';
     return this.servicemeta.httpGet(url);
   }
+  updateApptTime(uuid, time) {
+    const url = 'provider/waitlist/' + uuid + '/' + time + '/appointmentTime';
+    return this.servicemeta.httpPut(url);
+  }
 }

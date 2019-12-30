@@ -45,6 +45,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   waitlist_history: any = [];
   settings: any = [];
   esttime: string = null;
+  appttime = { hour: 0, minute: 0 };
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
@@ -57,10 +58,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   api_success = null;
   api_error = null;
   userDet;
-
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   today = new Date();
@@ -68,7 +67,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   provider_label = '';
   checkin_label = '';
   checkin_upper = '';
-
   timeCaption = Messages.CHECKIN_TIME_CAPTION;
   minCaption = Messages.EST_WAIT_TIME_CAPTION;
   sendmsgdialogRef;
@@ -77,6 +75,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   showEditView = false;
   api_loading = true;
   pdtype;
+  editAppntTime = false;
+  board_count = 0;
+  showTimePicker = false;
 
   constructor(
     private provider_services: ProviderServices,
@@ -102,6 +103,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   ngOnInit() {
+    this.getDisplayboardCount();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -141,17 +143,16 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          // tslint:disable-next-line: radix
+          this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+          console.log(this.appttime);
           const waitlist_date = new Date(this.waitlist_data.date);
-
           this.today.setHours(0, 0, 0, 0);
           waitlist_date.setHours(0, 0, 0, 0);
-
           this.waitlist_data.history = false;
-
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-
           this.getWaitlistNotes();
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
@@ -243,9 +244,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   changeWaitlistStatus() {
-
     this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'CANCEL');
-
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -258,8 +257,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   addConsumerInboxMessage() {
-const waitlist = [];
-waitlist.push(this.waitlist_data);
+    const waitlist = [];
+    waitlist.push(this.waitlist_data);
     const uuid = this.waitlist_data.ynwUuid || null;
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
@@ -366,7 +365,7 @@ waitlist.push(this.waitlist_data);
   }
   cancelClicked() {
     this.showEditView = false;
-   this. esttime = '';
+    this.esttime = '';
   }
   saveClicked(esttime) {
     if (esttime) {
@@ -379,12 +378,49 @@ waitlist.push(this.waitlist_data);
         }
       );
     }
-    this. esttime = '';
+    this.esttime = '';
   }
   isNumeric(evt) {
     return this.shared_Functionsobj.isNumeric(evt);
   }
   isvalid(evt) {
     return this.shared_Functionsobj.isValid(evt);
+  }
+  editApptTime() {
+    // tslint:disable-next-line: radix
+    this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+    console.log(this.appttime);
+    this.editAppntTime = true;
+  }
+  cancelUpdation() {
+    this.editAppntTime = false;
+  }
+  changetime(passtime) {
+    this.appttime = passtime;
+  }
+  saveApptTime() {
+    const apptTimeFormat = moment(this.appttime).format('hh:mm A') || null;
+    if (this.appttime) {
+      this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, apptTimeFormat).subscribe(
+        () => {
+          this.editAppntTime = false;
+          this.getWaitlistDetail();
+        }, (error) => {
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+    }
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
+        });
+  }
+  setApptTime() {
+    (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
   }
 }

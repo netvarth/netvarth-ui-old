@@ -11,6 +11,7 @@ import { CommonDataStorageService } from '../../../../shared/services/common-dat
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 @Component({
   selector: 'app-check-in-inner',
   templateUrl: './check-in-inner.component.html',
@@ -185,7 +186,11 @@ export class CheckInInnerComponent implements OnInit {
   bicycling: boolean;
   liveTrackMessage;
   firstTimeClick = true;
+  apptTime: any;
+  showTimePicker = false;
+  board_count = 0;
   constructor(public fed_service: FormMessageDisplayService,
+    private provider_services: ProviderServices,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     public router: Router,
@@ -196,6 +201,8 @@ export class CheckInInnerComponent implements OnInit {
     @Inject(DOCUMENT) public document,
   ) { }
   ngOnInit() {
+    this.getDisplayboardCount();
+    this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.api_loading = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
@@ -269,9 +276,7 @@ export class CheckInInnerComponent implements OnInit {
       || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
       // this.search_obj = this.data.srchprovider;
       this.provider_id = this.data.moreparams.provider.unique_id;
-      console.log(this.provider_id);
       this.account_id = this.data.moreparams.provider.account_id;
-      console.log(this.account_id);
       const srch_fields = {
         fields: {
           title: this.data.moreparams.provider.name,
@@ -456,7 +461,6 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'businessProfile':
             this.businessjson = res;
-            console.log(res);
             this.getProviderDepart(this.businessjson.id);
             this.domain = this.businessjson.serviceSector.domain;
             if (this.domain === 'foodJoints') {
@@ -485,10 +489,10 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
-          this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-          this.consumerPhoneNo = this.userPhone;
           if (this.userData.userProfile !== undefined) {
             this.userEmail = this.userData.userProfile.email || '';
+            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+            this.consumerPhoneNo = this.userPhone;
           }
           if (this.userEmail) {
             this.emailExist = true;
@@ -806,18 +810,36 @@ export class CheckInInnerComponent implements OnInit {
     for (let i = 0; i < this.waitlist_for.length; i++) {
       waitlistarr.push({ id: this.waitlist_for[i].id });
     }
-    const post_Data = {
-      'queue': {
-        'id': this.sel_queue_id
-      },
-      'date': this.sel_checkindate,
-      'service': {
-        'id': this.sel_ser
-      },
-      'consumerNote': this.consumerNote,
-      'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
-      'coupons': this.selected_coupons
-    };
+    const apptTimeFormat = moment(this.apptTime).format('hh:mm A') || null;
+    let post_Data;
+    if (this.showTimePicker) {
+      post_Data = {
+        'queue': {
+          'id': this.sel_queue_id
+        },
+        'date': this.sel_checkindate,
+        'service': {
+          'id': this.sel_ser
+        },
+        'consumerNote': this.consumerNote,
+        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+        'coupons': this.selected_coupons,
+        'appointmentTime': apptTimeFormat
+      };
+    } else {
+      post_Data = {
+        'queue': {
+          'id': this.sel_queue_id
+        },
+        'date': this.sel_checkindate,
+        'service': {
+          'id': this.sel_ser
+        },
+        'consumerNote': this.consumerNote,
+        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+        'coupons': this.selected_coupons
+      };
+    }
     if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
     }
@@ -825,7 +847,6 @@ export class CheckInInnerComponent implements OnInit {
       this.holdenterd_partySize = this.enterd_partySize;
       post_Data['partySize'] = Number(this.holdenterd_partySize);
     }
-
     if (this.api_error === null) {
       if (this.page_source === 'provider_checkin') {
         post_Data['consumer'] = { id: this.customer_data.id };
@@ -846,7 +867,6 @@ export class CheckInInnerComponent implements OnInit {
         Object.keys(retData).forEach(key => {
           retUUID = retData[key];
           this.trackUuid = retData[key];
-          console.log(this.trackUuid);
         });
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUUID);
@@ -902,7 +922,6 @@ export class CheckInInnerComponent implements OnInit {
             () => {
             }
           );
-
           if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
             // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
           } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -919,7 +938,6 @@ export class CheckInInnerComponent implements OnInit {
         }
         // this.router.navigate(['/']);
         // setTimeout(() => {
-
         //   this.liveTrack = true;
         //   this.resetApi();
         // }, 2000);
@@ -928,19 +946,16 @@ export class CheckInInnerComponent implements OnInit {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
         });
-
   }
   addCheckInProvider(post_Data) {
     this.api_loading = true;
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe((data) => {
-        console.log(data);
         const retData = data;
         let retUuid;
         Object.keys(retData).forEach(key => {
           retUuid = retData[key];
           this.trackUuid = retData[key];
-          console.log(this.trackUuid);
         });
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUuid);
@@ -1423,7 +1438,6 @@ export class CheckInInnerComponent implements OnInit {
   getNotifyTime(time) {
     this.notifyTime = time;
   }
-
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -1443,11 +1457,9 @@ export class CheckInInnerComponent implements OnInit {
       }
     }
   }
-
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
   }
-
   consumerNoteAndFileSave(uuid) {
     const dataToSend: FormData = new FormData();
     dataToSend.append('message', this.consumerNote);
@@ -1525,7 +1537,6 @@ export class CheckInInnerComponent implements OnInit {
       const passdata = {
         'travelMode': _this.travelMode
       };
-
       _this.shared_services.updateTravelMode(_this.trackUuid, _this.account_id, passdata)
         .subscribe(
           data => {
@@ -1583,7 +1594,6 @@ export class CheckInInnerComponent implements OnInit {
           // this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
         // setTimeout(() => {
-
         // this.source['list'] = 'reloadlist';
         // this.source['mode'] = this.page_source;
         // this.dialogRef.close('reloadlist');
@@ -1596,7 +1606,6 @@ export class CheckInInnerComponent implements OnInit {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
-
   }
   updateLiveTrackInfo() {
     const _this = this;
@@ -1621,5 +1630,20 @@ export class CheckInInnerComponent implements OnInit {
           }
         );
     });
+  }
+  changetime(passtime) {
+    this.apptTime = passtime;
+  }
+  setApptTime() {
+    (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
+        });
   }
 }

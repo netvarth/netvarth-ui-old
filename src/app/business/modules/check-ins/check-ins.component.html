@@ -110,6 +110,18 @@
                     alt="" /> &nbsp;</i>
               </a>
             </span>
+            <span *ngIf="board_count > 0" class="pull-right">
+              <button style="display:flex;justify-content:center;align-items:center;" [matTooltipClass]="tooltipcls"
+                [matTooltip]="sortTooltip" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>swap_vert</mat-icon>
+              </button>
+              <mat-menu class="sort-menu" #menu="matMenu">
+                <button class="sort-menu-item" [class.active]="sortBy=='sort_token'" mat-menu-item (click)="setSortByParam('sort_token')">Order of
+                  Check-ins</button>
+                <button class="sort-menu-item" mat-menu-item [class.active]="sortBy=='sort_appointmentTime'"
+                  (click)="setSortByParam('sort_appointmentTime')">Appointment Time</button>
+              </mat-menu>
+            </span>
           </div>
         </div>
         <div class="dash-list">
@@ -267,13 +279,11 @@
                               {{checkin.service.name}}
                             </span>
                           </div>
-
                           <div class="col-md-3 col-xs-3 p0" *ngIf="checkin.waitlistStatus === 'cancelled'">
                             <span class="info-box-text" style="font-size: smaller;">
                               {{checkin.waitlistStatus}}
                             </span>
                           </div>
-
                           <div class="col-md-4 col-xs-4 p0">
                             <span class="pull-left icon-cloud icon-btn1" *ngIf="checkin.waitlistedBy == 'CONSUMER'"
                               [matTooltipClass]="tooltipcls" [matTooltip]="cloudTooltip">
@@ -486,11 +496,11 @@
                   <div class="statuslink " *ngIf="startedwaitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('started')"></i> </div>
                 </div>
-                <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 && 
+                <div class="no-dta col-md-12" *ngIf="started_checkins_list.length === 0 &&
                   showstatus['started']">
                   {{no_started_checkin_msg}}
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="started_checkins_list.length>0 && 
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="started_checkins_list.length>0 &&
                      showstatus['started']" [class.chk-scroll]="showstatus['started']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of started_checkins_list, let i=index"
@@ -877,11 +887,11 @@
                   <div class="statuslink " *ngIf="completedwaitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('completed')"></i> </div>
                 </div>
-                <div class="no-dta col-md-12" *ngIf="completed_checkins_list.length === 0 && 
+                <div class="no-dta col-md-12" *ngIf="completed_checkins_list.length === 0 &&
                   showstatus['completed']">
                   {{no_completed_checkin_msg}}
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="completed_checkins_list.length>0 && 
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="completed_checkins_list.length>0 &&
                       showstatus['completed']" [class.chk-scroll]="showstatus['completed']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of completed_checkins_list, let i=index"
@@ -1034,11 +1044,11 @@
                   <div class="statuslink " *ngIf="cancelledwaitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('cancelled')"></i> </div>
                 </div>
-                <div class="no-dta col-md-12" *ngIf="cancelled_checkins_list.length === 0 && 
+                <div class="no-dta col-md-12" *ngIf="cancelled_checkins_list.length === 0 &&
                   showstatus['cancelled']">
                   {{no_cancelled_checkin_msg}}
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="cancelled_checkins_list.length>0 && 
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="cancelled_checkins_list.length>0 &&
                       showstatus['cancelled']" [class.chk-scroll]="showstatus['cancelled']">
                   <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                     *ngFor="let checkin of cancelled_checkins_list, let i=index"

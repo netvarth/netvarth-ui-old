@@ -9,6 +9,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { CheckInComponent } from './check-in.component';
 import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CheckInInnerComponent } from './check-in-inner/check-in-inner.component
         FormMessageDisplayModule,
         FormsModule,
         CheckinAddMemberModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        NgbTimepickerModule
     ],
     entryComponents: [
         CheckInComponent

@@ -1,197 +1,212 @@
 <h1 [class.mat-dialog-title]="!fromKiosk" [class.kioskinnertitle]="fromKiosk" *ngIf="!liveTrack">{{main_heading}}
-        <button #queue mat-dialog-close class="modal_close" *ngIf="!fromKiosk">
-            <i class="fa fa-window-close" aria-hidden="true"></i>
-        </button>
-    </h1>
-    <div [class.mat-dialog-content]="!fromKiosk" [class.kioskcontent]="fromKiosk" *ngIf="!liveTrack">
-        <div class="mainouter checkin-page">
-            <ng-container *ngIf="step==1 && !api_loading1">
-                <!-- <div class="main-head">
+    <button #queue mat-dialog-close class="modal_close" *ngIf="!fromKiosk">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<div [class.mat-dialog-content]="!fromKiosk" [class.kioskcontent]="fromKiosk" *ngIf="!liveTrack">
+    <div class="mainouter checkin-page">
+        <ng-container *ngIf="step==1 && !api_loading1">
+            <!-- <div class="main-head">
                     <span class="pro-loc"><span class='prov_name'>{{search_obj.fields.title}},</span> <span class="loc_name">{{search_obj.fields.place1}}</span></span>
                     </div> -->
-                <!-- <div class="service-outer" *ngIf="businessjson.accountType === 'BRANCH'"> -->
-                <div class="service-outer" *ngIf="filterDepart">
-                    <ng-container *ngIf="step==1">
-                        <mat-form-field *ngIf="deptLength == 1">
-                            <input matInput *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
-                                value="{{dept.departmentName | capitalizeFirst}}">
-                        </mat-form-field>
-                        <mat-form-field *ngIf="deptLength > 1">
-                            <mat-select placeholder="{{select_deptment_cap}}" [ngModel]="selected_dept" #deptsel
-                                (selectionChange)="handleDeptSelction(deptsel.value)">
-                                <!-- <mat-option value="None">None</mat-option> -->
-                                <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
-                                    {{dept.departmentName | capitalizeFirst}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- departmentId -->
-                        <!-- <ng-container *ngIf="deptLength == 0">
+            <!-- <div class="service-outer" *ngIf="businessjson.accountType === 'BRANCH'"> -->
+            <div class="service-outer" *ngIf="filterDepart">
+                <ng-container *ngIf="step==1">
+                    <mat-form-field *ngIf="deptLength == 1">
+                        <input matInput *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
+                            value="{{dept.departmentName | capitalizeFirst}}">
+                    </mat-form-field>
+                    <mat-form-field *ngIf="deptLength > 1">
+                        <mat-select placeholder="{{select_deptment_cap}}" [ngModel]="selected_dept" #deptsel
+                            (selectionChange)="handleDeptSelction(deptsel.value)">
+                            <!-- <mat-option value="None">None</mat-option> -->
+                            <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
+                                {{dept.departmentName | capitalizeFirst}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- departmentId -->
+                    <!-- <ng-container *ngIf="deptLength == 0">
                     <span class='no-queue-available'>No departments</span>
                     </ng-container> -->
+                </ng-container>
+            </div>
+            <div class="service-outer" *ngIf="servicesjson.length > 0">
+                <!-- <div class="service-head" *ngIf="step==1">{{select_service_cap}}</div> -->
+                <ng-container *ngIf="step==1">
+                    <mat-form-field *ngIf="servicesjson.length == 1">
+                        <input matInput *ngFor="let serv of servicesjson" [readonly]="true" placeholder="Service"
+                            value="{{serv.name | capitalizeFirst}}">
+                    </mat-form-field>
+                    <mat-form-field *ngIf="servicesjson.length > 1">
+                        <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser" #servsel
+                            (selectionChange)="handleServiceSel(servsel.value)">
+                            <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
+                                {{serv.name | capitalizeFirst}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <ng-container *ngIf="servicesjson.length == 0">
+                        <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                     </ng-container>
-                </div>
-                <div class="service-outer" *ngIf="servicesjson.length > 0">
-                    <!-- <div class="service-head" *ngIf="step==1">{{select_service_cap}}</div> -->
-                    <ng-container *ngIf="step==1">
-                        <mat-form-field *ngIf="servicesjson.length == 1">
-                            <input matInput *ngFor="let serv of servicesjson" [readonly]="true" placeholder="Service"
-                                value="{{serv.name | capitalizeFirst}}">
-                        </mat-form-field>
-                        <mat-form-field *ngIf="servicesjson.length > 1">
-                            <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser" #servsel
-                                (selectionChange)="handleServiceSel(servsel.value)">
-                                <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
-                                    {{serv.name | capitalizeFirst}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <ng-container *ngIf="servicesjson.length == 0">
-                            <span class='no-queue-available'>{{no_services_avail_cap}}</span>
-                        </ng-container>
-                    </ng-container>
-                </div>
-                <!-- <div class="servicefor-outer btborder">
+                </ng-container>
+            </div>
+            <!-- <div class="servicefor-outer btborder">
                     Service is for <ng-container><span class="service-availer" *ngFor="let waitfor of waitlist_for; let i=index"><ng-container *ngIf="i>0">, </ng-container>{{waitfor.name}}</span> <span class="editbt" (click)="handleServiceForWhom()"></span></ng-container>
                     </div> -->
-                <div class="servicefor-outer btborder">
-                    <!-- <label class="title"> Service is for </label> -->
-                    <ul class="availer-ul">
-                        <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
-                            <li>
-                                {{waitfor.name | capitalizeFirst}} <span class="cs-btn bt8 changemember"
-                                    (click)="handleServiceForWhom()"
-                                    *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span>
-                            </li>
-                        </ng-container>
-                    </ul>
-                    <ng-container *ngIf="page_source != 'provider_checkin'">
-                        <div class="input-group">
-                            <label *ngIf="edit" class="col-form-label">
-                                <span class="chkin-ph" *ngIf="userPhone"><i
-                                        class="fa fa-mobile chkin-mobic"></i>&nbsp;{{userPhone}}</span>&nbsp;<i
-                                    class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
-                            </label>
-                            <label *ngIf="!edit">
-                                <input type="text" style="width: 75px; border-bottom: 1px solid; font-size:.75rem"
-                                    placeholder="Contact number" class=" emailPrepay"
-                                    [(ngModel)]="selected_phone" />
-                                <span  (click)="addPhone()" style="color: #00aef2; padding-left:5px">Ok</span>
-                                <app-field-error-display [displayError]="true" *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
-                                </app-field-error-display>
-                            </label>
-                        </div>
+            <div class="servicefor-outer btborder">
+                <!-- <label class="title"> Service is for </label> -->
+                <ul class="availer-ul">
+                    <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
+                        <li>
+                            {{waitfor.name | capitalizeFirst}} <span class="cs-btn bt8 changemember"
+                                (click)="handleServiceForWhom()"
+                                *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span>
+                        </li>
                     </ng-container>
-                </div>
-                <div class="date-outer" *ngIf="step==1 && data.datechangereq">
-                    <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
-                    <div class="date-body">
-                        <span class="selected-date"> <span class="icon-minus" [class.disable]="disableMinus()"
-                                (click)="calculateDate(-1)"
-                                *ngIf="futuredate_allowed && data.datechangereq"></span>{{sel_day}} {{sel_checkindate |
+                </ul>
+                <ng-container *ngIf="page_source != 'provider_checkin'">
+                    <div class="input-group">
+                        <label *ngIf="edit" class="col-form-label">
+                            <span class="chkin-ph" *ngIf="userPhone"><i
+                                    class="fa fa-mobile chkin-mobic"></i>&nbsp;{{userPhone}}</span>&nbsp;<i
+                                class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
+                        </label>
+                        <label *ngIf="!edit">
+                            <input type="text" style="width: 75px; border-bottom: 1px solid; font-size:.75rem"
+                                placeholder="Contact number" class=" emailPrepay" [(ngModel)]="selected_phone" />
+                            <span (click)="addPhone()" style="color: #00aef2; padding-left:5px">Ok</span>
+                            <app-field-error-display [displayError]="true" *ngIf="phoneerror != null"
+                                errorMsg={{phoneerror}}>
+                            </app-field-error-display>
+                        </label>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="date-outer" *ngIf="step==1 && data.datechangereq">
+                <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+                <div class="date-body">
+                    <span class="selected-date"> <span class="icon-minus" [class.disable]="disableMinus()"
+                            (click)="calculateDate(-1)"
+                            *ngIf="futuredate_allowed && data.datechangereq"></span>{{sel_day}} {{sel_checkindate |
                     date: dateFormat}} <span class="icon-add" (click)="calculateDate(1)"
-                                *ngIf="futuredate_allowed && data.datechangereq"></span></span>
-                        <div class="form-group dt" *ngIf="futuredate_allowed && data.datechangereq">
-                            <div class="pickerouter">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                                <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                                    [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
-                            </div>
+                            *ngIf="futuredate_allowed && data.datechangereq"></span></span>
+                    <div class="form-group dt" *ngIf="futuredate_allowed && data.datechangereq">
+                        <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
+                                [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                         </div>
                     </div>
                 </div>
-                <div class="queue-outer">
-                    <ng-container *ngIf="queuejson.length > 0">
-                        <!-- <mat-chip-list *ngIf="step==1 && queuejson.length > 1">
+            </div>
+            <div class="queue-outer">
+                <ng-container *ngIf="queuejson.length > 0">
+                    <!-- <mat-chip-list *ngIf="step==1 && queuejson.length > 1">
                     <mat-chip *ngFor="let que of queuejson" (click)="handleQueueSel(que)" [selected] ="isSelectedQueue(que.id)">
                     <span class="qname">{{que.name}}</span>
                     <span class="qtime">&nbsp; [ {{que.queueSchedule.timeSlots[0].sTime}} - {{que.queueSchedule.timeSlots[0].eTime}} ]</span>
                     </mat-chip>
                     </mat-chip-list> -->
-                        <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1">
-                            <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">{{serv_time_window_cap}}
-                                <div class="queue-body">
-                                    <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i
-                                            class="fa fa-angle-left"></i></span>
-                                    <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx <= 0"><i
-                                            class="fa fa-angle-left disable"></i></span>
-                                    <span class="sel-queue">
-                                        <!-- <span class="name">{{sel_queue_name}}</span> -->
-                                        {{sel_queue_timecaption}}</span>
-                                    <span class="rightarrow" (click)="handleQueueSel('next')"
-                                        *ngIf="(queuejson.length -1) > sel_queue_indx">
-                                        <i class="fa fa-angle-right"></i> </span>
-                                    <span class="rightarrow" (click)="handleQueueSel('next')"
-                                        *ngIf="(queuejson.length -1) == sel_queue_indx">
-                                        <i class="fa fa-angle-right disable"></i> </span>
+                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1">
+                        <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">{{serv_time_window_cap}}
+                            <div class="queue-body">
+                                <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i
+                                        class="fa fa-angle-left"></i></span>
+                                <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx <= 0"><i
+                                        class="fa fa-angle-left disable"></i></span>
+                                <span class="sel-queue">
+                                    <!-- <span class="name">{{sel_queue_name}}</span> -->
+                                    {{sel_queue_timecaption}}</span>
+                                <span class="rightarrow" (click)="handleQueueSel('next')"
+                                    *ngIf="(queuejson.length -1) > sel_queue_indx">
+                                    <i class="fa fa-angle-right"></i> </span>
+                                <span class="rightarrow" (click)="handleQueueSel('next')"
+                                    *ngIf="(queuejson.length -1) == sel_queue_indx">
+                                    <i class="fa fa-angle-right disable"></i> </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length == 1">
+                        <div class="queue-head" *ngIf="step==1 && queuejson.length == 1">{{serv_time_window_cap}}
+                            <div class="queue-body">
+                                <span class="sel-queue">
+                                    <!-- <span class="name">{{sel_queue_name}}</span> -->
+                                    {{sel_queue_timecaption}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+                    <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
+                        <mat-expansion-panel class="mgn-bt-10" [expanded]="false">
+                            <mat-expansion-panel-header class="mgn-up-10">
+                                <mat-panel-title class="block-level">
+                                    Display board Optional fields
+                                    <p class="form-level-settings">This appointment time is used only for display
+                                    </p>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="form-group queue-outer">
+                                <label class="col-form-label"> Appointment Time </label>
+                                <ngb-timepicker meridian="true" [(ngModel)]="apptTime"
+                                    (ngModelChange)="changetime($event)"></ngb-timepicker>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <div class="date-outer" *ngIf="step==1 && partySizeRequired">
+                        <div class="form-group party-size">
+                            <label class="col-form-label">{{enter_party_size_cap}}</label>
+                            <input class="partysize-input" type="text" matInput #partysize
+                                [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()"
+                                (blur)="checkPartySize(partysize.value)" maxlength="5" />
+                            <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
+                        </div>
+                    </div>
+                    <div class="consumer-comment" *ngIf="step==1">
+                        <div class="form-group">
+                            <label for="reason" class="col-form-label">{{have_note_click_here}} <span
+                                    [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"
+                                    (click)="handleNote()"></span></label>
+                            <ng-container *ngIf="dispCustomernote">
+                                <div>
+                                    <!-- <b>Note</b> -->
+                                    <textarea matInput class="form-control" #consumernote
+                                        (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
+                                        placeholder="{{note_placeholder}}"></textarea>
                                 </div>
-                            </div>
-                        </div>
-                        <div class='q-list-outer' *ngIf="step==1 && queuejson.length == 1">
-                            <div class="queue-head" *ngIf="step==1 && queuejson.length == 1">{{serv_time_window_cap}}
-                                <div class="queue-body">
-                                    <span class="sel-queue">
-                                        <!-- <span class="name">{{sel_queue_name}}</span> -->
-                                        {{sel_queue_timecaption}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-                        <div class="date-outer" *ngIf="step==1 && partySizeRequired">
-                            <div class="form-group party-size">
-                                <label class="col-form-label">{{enter_party_size_cap}}</label>
-                                <input class="partysize-input" type="text" matInput #partysize
-                                    [(ngModel)]="enterd_partySize" (focus)="clearerrorParty()"
-                                    (blur)="checkPartySize(partysize.value)" maxlength="5" />
-                                <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
-                            </div>
-                        </div>
-                        <div class="consumer-comment" *ngIf="step==1">
-                            <div class="form-group">
-                                <label for="reason" class="col-form-label">{{have_note_click_here}} <span
-                                        [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"
-                                        (click)="handleNote()"></span></label>
-                                <ng-container *ngIf="dispCustomernote">
-                                    <div>
-                                        <!-- <b>Note</b> -->
-                                        <textarea matInput class="form-control" #consumernote
-                                            (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
-                                            placeholder="{{note_placeholder}}"></textarea>
-                                    </div>
-                                    <!-- <button type="button" class="cs-btn btn-attach bt_attach" (click)="imagefile.click()"
+                                <!-- <button type="button" class="cs-btn btn-attach bt_attach" (click)="imagefile.click()"
                     [matTooltip]="'Attach files'">
                     <input #imagefile type="file" accept="image/*,application/pdf" style="display:none;"
                     multiple (change)="filesSelected($event)">
                     <span><i class="fa fa-upload"></i></span>
                     </button> -->
-                                    <ng-container *ngIf="selectedMessage">
-                                        <div class="row col-md-12" style="display: flex;"
-                                            *ngFor="let item of selectedMessage.files; let i = index">
-                                            <div class="col-md-7">
-                                                <span class="ln-hgt-40">{{item.name}}</span>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <span class="mbt comm-menu-imgs">
-                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                        <mat-icon>more_vert</mat-icon>
-                                                    </button>
-                                                    <mat-menu #menu="matMenu">
-                                                        <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
-                                                            <i class="icon-delete"></i>
-                                                            <span>delete</span>
-                                                        </button>
-                                                    </mat-menu>
-                                                </span>
-                                            </div>
-    
+                                <ng-container *ngIf="selectedMessage">
+                                    <div class="row col-md-12" style="display: flex;"
+                                        *ngFor="let item of selectedMessage.files; let i = index">
+                                        <div class="col-md-7">
+                                            <span class="ln-hgt-40">{{item.name}}</span>
                                         </div>
-                                    </ng-container>
+                                        <div class="col-md-5">
+                                            <span class="mbt comm-menu-imgs">
+                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu">
+                                                    <button type="button" (click)="deleteTempImage(i)" mat-menu-item>
+                                                        <i class="icon-delete"></i>
+                                                        <span>delete</span>
+                                                    </button>
+                                                </mat-menu>
+                                            </span>
+                                        </div>
+
+                                    </div>
                                 </ng-container>
-                            </div>
+                            </ng-container>
                         </div>
-    
-                        <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
+                    </div>
+                    <!-- <div class="showDetOuter" *ngIf="queuejson.length > 0">
                     <div class="showDetService">
                     Check-In for service: <span class='selsername'>{{ sel_ser_det.name }}</span>
                     </div>
@@ -202,57 +217,53 @@
                     <div class="queue-head">Check In Time: <span class="queue-avail-date">{{sel_queue_servicetime}}</span></div>
                     </div>
                     </div> -->
-                    </ng-container>
-                    <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
-                        <span class='no-queue-available' *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
-                        <span class='no-queue-available' *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
-                    </ng-container>
-                </div>
-                <ng-container *ngIf="step==1 && queuejson.length > 0">
-                    <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
-                        <div class="prepay-dur-pr">
-                            <!-- <div class="prepay-amt">{{service_needs_prepayment}} {{checkinLabel}}</div> -->
-                            <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls"><span>&#8377;
-                                    </span>{{prepaymentAmount}}</span></div>
-    
-    
-                            <div class="prepayEmail" *ngIf="!emailExist">
-                                <label for="reason" style="margin-bottom: 15px;" class="col-form-label"> Please enter your
-                                    email for payment</label>
-                                <ng-container>
-                                    <div class="form-group">
-                                        <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email"
-                                            placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail" autocomplete="off"
-                                            (keyup)="showConfrmEmail($event)" onpaste="return false;" oncopy="return false"
-                                            oncut="return false" ondrag="return false" ondrop="return false">
-    
-    
-                                        <app-field-error-display [displayError]="true" *ngIf="emailerror != null"
-                                            errorMsg={{emailerror}}>
-                                        </app-field-error-display>
-    
-    
-                                    </div>
-                                    <div class="form-group" *ngIf="confrmshow">
-                                        <!-- <mat-form-field> -->
-                                        <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email1"
-                                            placeholder="Re-enter Email(user@xyz.com)" [(ngModel)]="payEmail1"
-                                            autocomplete="off" onpaste="return false;" oncopy="return false"
-                                            oncut="return false" ondrag="return false" ondrop="return false">
-                                        <!-- </mat-form-field> -->
-                                        <app-field-error-display [displayError]="true" *ngIf="email1error != null"
-                                            errorMsg={{email1error}}>
-                                        </app-field-error-display>
-                                    </div>
-                                    <span class="input-group-btn" *ngIf="confrmshow">
-                                        <button class="btn bt3 btn-default" (click)="addEmail()" type="button">Add</button>
-                                    </span>
-                                </ng-container>
-                            </div>
-                            <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
-                                <div class='prepay-head-sorry'> {{no_pay_modes_avail_cap}} </div>
-                            </div>
-                            <!--<div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
+                </ng-container>
+                <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
+                    <span class='no-queue-available'
+                        *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
+                    <span class='no-queue-available'
+                        *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="step==1 && queuejson.length > 0">
+                <div class="prepay-outer" *ngIf="sel_ser_det.isPrePayment && page_source != 'provider_checkin'">
+                    <div class="prepay-dur-pr">
+                        <!-- <div class="prepay-amt">{{service_needs_prepayment}} {{checkinLabel}}</div> -->
+                        <div class="prepay-amt">{{prepayment_amnt_cap}} <span class="prepaymin-cls"><span>&#8377;
+                                </span>{{prepaymentAmount}}</span></div>
+                        <div class="prepayEmail" *ngIf="!emailExist">
+                            <label for="reason" style="margin-bottom: 15px;" class="col-form-label"> Please enter your
+                                email for payment</label>
+                            <ng-container>
+                                <div class="form-group">
+                                    <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email"
+                                        placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail" autocomplete="off"
+                                        (keyup)="showConfrmEmail($event)" onpaste="return false;" oncopy="return false"
+                                        oncut="return false" ondrag="return false" ondrop="return false">
+                                    <app-field-error-display [displayError]="true" *ngIf="emailerror != null"
+                                        errorMsg={{emailerror}}>
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group" *ngIf="confrmshow">
+                                    <!-- <mat-form-field> -->
+                                    <input style="border-bottom: 1px solid" class="form-control emailPrepay" id="email1"
+                                        placeholder="Re-enter Email(user@xyz.com)" [(ngModel)]="payEmail1"
+                                        autocomplete="off" onpaste="return false;" oncopy="return false"
+                                        oncut="return false" ondrag="return false" ondrop="return false">
+                                    <!-- </mat-form-field> -->
+                                    <app-field-error-display [displayError]="true" *ngIf="email1error != null"
+                                        errorMsg={{email1error}}>
+                                    </app-field-error-display>
+                                </div>
+                                <span class="input-group-btn" *ngIf="confrmshow">
+                                    <button class="btn bt3 btn-default" (click)="addEmail()" type="button">Add</button>
+                                </span>
+                            </ng-container>
+                        </div>
+                        <div class="prepay-gateway-outer" *ngIf="payModesQueried && !payModesExists">
+                            <div class='prepay-head-sorry'> {{no_pay_modes_avail_cap}} </div>
+                        </div>
+                        <!--<div class="prepay-gateway-outer" *ngIf="paymentModes.length == 0">
                     <div class='prepay-head-sorry'> Sorry not payment modes available </div>
                     </div>
                     <div class="prepay-gateway-outer" *ngIf="paymentModes.length > 0">
@@ -261,263 +272,269 @@
                     <mat-radio-button value="paytm" *ngFor="let paym of paymentModes" [value]="paym.name">{{paym.Displayname}}</mat-radio-button>
                     </mat-radio-group>
                     </div> -->
-                        </div>
                     </div>
-                </ng-container>
-                <ng-container
-                    *ngIf="(s3CouponsList.length > 0) && page_source != 'provider_checkin' && queuejson.length > 0">
-                    <div class="coupon-outer">
-                        <div class="form-group">
-                            <!-- <div>Coupon Codes</div> -->
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showCouponWB">
-                                    <p class="form-level-settings applybill"> <i
-                                            class="icon-bell"></i>{{applied_inbilltime}}</p>
-                                    <div class="input-group">
-                                        <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
-                                            placeholder="Enter coupon code" type="text" class="form-control"
-                                            [(ngModel)]="selected_coupon">
-                                        <span class="input-group-btn">
-                                            <button class="btn bt3 btn-default coupon-apply-btn"
-                                                (click)="applyCoupons(selected_coupon)" type="button">Add</button>
-                                        </span>
-                                    </div>
+                </div>
+            </ng-container>
+            <ng-container
+                *ngIf="(s3CouponsList.length > 0) && page_source != 'provider_checkin' && queuejson.length > 0">
+                <div class="coupon-outer">
+                    <div class="form-group">
+                        <!-- <div>Coupon Codes</div> -->
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="showCouponWB">
+                                <p class="form-level-settings applybill"> <i
+                                        class="icon-bell"></i>{{applied_inbilltime}}</p>
+                                <div class="input-group">
+                                    <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
+                                        placeholder="Enter coupon code" type="text" class="form-control"
+                                        [(ngModel)]="selected_coupon">
+                                    <span class="input-group-btn">
+                                        <button class="btn bt3 btn-default coupon-apply-btn"
+                                            (click)="applyCoupons(selected_coupon)" type="button">Add</button>
+                                    </span>
                                 </div>
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-12">
-                                    <div class="coupon-outer">
-                                        <div class="row" *ngFor="let coupon of couponsList let i=index">
-                                            <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
-                                                {{coupon.couponCode}} <div class="delteTC"><span *ngIf="coupon.instructions"
-                                                        (click)="toggleterms(i)"
-                                                        class="pointer-cursor read-more-checkin">Read
-                                                        T & C </span> <i class="pointer-cursor icon-delete"
-                                                        (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                                                        [matTooltip]="'Remove Coupon'"></i></div>
-                                            </div>
-                                            <div class="col-md-12 no-padding read-more-contents" *ngIf="coupon.showme">
-                                                {{coupon.instructions}}
-                                            </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-12">
+                                <div class="coupon-outer">
+                                    <div class="row" *ngFor="let coupon of couponsList let i=index">
+                                        <div class="col-md-12 col-sm-12 no-padding coupon-add-msg">
+                                            {{coupon.couponCode}} <div class="delteTC"><span *ngIf="coupon.instructions"
+                                                    (click)="toggleterms(i)"
+                                                    class="pointer-cursor read-more-checkin">Read
+                                                    T & C </span> <i class="pointer-cursor icon-delete"
+                                                    (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
+                                                    [matTooltip]="'Remove Coupon'"></i></div>
+                                        </div>
+                                        <div class="col-md-12 no-padding read-more-contents" *ngIf="coupon.showme">
+                                            {{coupon.instructions}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="coupon-outer" *ngIf="coupon_status">
-                        <div class="form-group">
-                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s) applied
-                                successfully</span>
-                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not valid</span>
-                        </div>
+                </div>
+                <div class="coupon-outer" *ngIf="coupon_status">
+                    <div class="form-group">
+                        <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s) applied
+                            successfully</span>
+                        <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not valid</span>
                     </div>
-                </ng-container>
+                </div>
             </ng-container>
-            <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
-            <ng-container *ngIf="step==3">
-                <div class="member-outer">
-                    <div class="member-head">
-                        {{select_the_cap}} <ng-container *ngIf="!multipleMembers_allowed">{{member_cap}}</ng-container>
-                        <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}</ng-container> {{for_whom_the_cap}}
-                        <span *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']"> token
-                        </span>
-                        <span
-                            *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
-                        </span>
-                        {{is_beingmade_cap}}
-                    </div>
-                    <div class="member-list">
-                        <div class="cs-btn bt3 member-add" (click)="addMember()" *ngIf="!showCreateMember">
-                            {{add_member_cap}}</div>
-                        <ul class="member-ul">
-                            <ng-container *ngIf="multipleMembers_allowed">
+        </ng-container>
+        <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
+        <ng-container *ngIf="step==3">
+            <div class="member-outer">
+                <div class="member-head">
+                    {{select_the_cap}} <ng-container *ngIf="!multipleMembers_allowed">{{member_cap}}</ng-container>
+                    <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}</ng-container> {{for_whom_the_cap}}
+                    <span *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']"> token
+                    </span>
+                    <span
+                        *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
+                    </span>
+                    {{is_beingmade_cap}}
+                </div>
+                <div class="member-list">
+                    <div class="cs-btn bt3 member-add" (click)="addMember()" *ngIf="!showCreateMember">
+                        {{add_member_cap}}</div>
+                    <ul class="member-ul">
+                        <ng-container *ngIf="multipleMembers_allowed">
+                            <li *ngFor="let memb of familymembers">
+                                <mat-checkbox
+                                    (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName, $event)"
+                                    [value]="memb.userProfile.id" [checked]="isChecked(memb.userProfile.id)">
+                                    {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
+                                </mat-checkbox>
+                            </li>
+                        </ng-container>
+                        <ng-container *ngIf="!multipleMembers_allowed">
+                            <mat-radio-group>
                                 <li *ngFor="let memb of familymembers">
-                                    <mat-checkbox
-                                        (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName, $event)"
+                                    <mat-radio-button
+                                        (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName, $event)"
                                         [value]="memb.userProfile.id" [checked]="isChecked(memb.userProfile.id)">
                                         {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
-                                    </mat-checkbox>
+                                    </mat-radio-button>
                                 </li>
-                            </ng-container>
-                            <ng-container *ngIf="!multipleMembers_allowed">
-                                <mat-radio-group>
-                                    <li *ngFor="let memb of familymembers">
-                                        <mat-radio-button
-                                            (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName + ' ' + memb.userProfile.lastName, $event)"
-                                            [value]="memb.userProfile.id" [checked]="isChecked(memb.userProfile.id)">
-                                            {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
-                                        </mat-radio-button>
-                                    </li>
-                                </mat-radio-group>
-                            </ng-container>
-                        </ul>
-                    </div>
+                            </mat-radio-group>
+                        </ng-container>
+                    </ul>
                 </div>
-            </ng-container>
-            <ng-container *ngIf="showCreateMember">
-                <div class="addmember-outer">
-                    <div class="addMemberHeader">{{add_member_cap}}</div>
-                    <!-- <app-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member> -->
-                    <app-checkin-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)">
-                    </app-checkin-consumer-add-member>
-                </div>
-            </ng-container>
-            <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
-        </div>
-    </div>
-    <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk"
-        *ngIf="queuejson.length > 0 && servicesjson.length > 0 && !liveTrack">
-        <div class="waitlist-button-outer">
-            <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
-                <div class="showDetService" *ngIf="sel_ser_det.name">
-                    <strong><span
-                            *ngIf="calc_mode!='NoCalc' || (calc_mode=='NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}</span>
-                        <span *ngIf="calc_mode=='NoCalc' && settingsjson['showTokenId']">{{token}}</span>
-                        {{for_cap}}</strong> <span class='selsername'> {{ sel_ser_det.name }}</span>
-                </div>
-                <div class="showDetService">
-                    <span *ngIf="calc_mode=='NoCalc'"><span *ngIf="!isFuturedate"><strong>Today </strong></span>
-                        <span *ngIf="isFuturedate"><strong>{{sel_day}}
-                                {{sel_checkindate | date: dateFormat}}</strong> </span></span>
-                </div>
-                <div class="queue-waitingdiv">
-                    <div class="queue-head"
-                        *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                        <strong>{{today_cap}} {{estimateCaption}}: </strong> <span
-                            class="queue-avail-date">{{sel_queue_waitingmins}}</span> </div>
-                    <div class="queue-head"
-                        *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
-                        <strong>{{persons_ahead_cap}}</strong> <span
-                            class="queue-avail-date">{{sel_queue_personaahead}}</span> </div>
-                </div>
-                <div class="queue-waitingdiv"
-                    *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                    <div class="queue-head">
-                        <ng-container *ngIf="isFuturedate"><span
-                                class="checkin-footer-date"><strong>{{nextavailableCaption}} <span
-                                        class="queue-avail-date">{{sel_day}} {{sel_checkindate | date: dateFormat}},
-                                        {{sel_queue_servicetime}}</span></strong></span></ng-container>
-                        <ng-container *ngIf="!isFuturedate"><strong>{{today_cap}} </strong> <strong>{{checkinsCaption}}:
-                            </strong> <span class="queue-avail-date">{{sel_queue_servicetime}}</span> </ng-container>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <ng-container *ngIf="step==1 && this.checkinLabel">
-            <div class="waitlist-action"> <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1"
-                    (click)="handleCheckinClicked()"
-                    [disabled]="api_loading ||(sel_ser_det.isPrePayment && page_source != 'provider_checkin'&& !emailExist)">{{showCheckinButtonCaption()}}</button>
-                <div class="disable-msg">{{checkindisablemsg}}</div>
             </div>
         </ng-container>
-        <ng-container *ngIf="step==3 && !showCreateMember"> <button mat-button class="cs-btn bt1 backtocheckin"
-                (click)="handleGoBack(1)">{{back_to_cap}} <span
-                    *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']"> {{get_token_cap}}
-                </span> <span
-                    *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
-                </span></button> </ng-container>
-        <ng-container *ngIf="step==3 && showCreateMember"> <button type="button" mat-button class="cs-btn bt2 backbtn"
-                (click)="handleGoBack(3)">{{cancel_btn}}</button> <button mat-button class="cs-btn bt1 savemember"
-                (click)="handleSaveMember()">{{save_member_cap}}</button> </ng-container>
+        <ng-container *ngIf="showCreateMember">
+            <div class="addmember-outer">
+                <div class="addMemberHeader">{{add_member_cap}}</div>
+                <!-- <app-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)"></app-consumer-add-member> -->
+                <app-checkin-consumer-add-member [calledFrom]="'checkin'" (returnDetails)="handleReturnDetails($event)">
+                </app-checkin-consumer-add-member>
+            </div>
+        </ng-container>
+        <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
     </div>
-    <div *ngIf="liveTrack" class="lv-trk">
-        <h4 class="mat-dialog-title"><button (click)="trackClose('livetrack')" class="modal_close" tabindex="-1" style="color: black"> <i
-                    class="fa fa-window-close" aria-hidden="true"></i> </button>
-        </h4>
-        <mat-dialog-content>
-            <div>
-                <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful!!
+</div>
+<div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk"
+    *ngIf="queuejson.length > 0 && servicesjson.length > 0 && !liveTrack">
+    <div class="waitlist-button-outer">
+        <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
+            <div class="showDetService" *ngIf="sel_ser_det.name">
+                <strong><span
+                        *ngIf="calc_mode!='NoCalc' || (calc_mode=='NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}</span>
+                    <span *ngIf="calc_mode=='NoCalc' && settingsjson['showTokenId']">{{token}}</span>
+                    {{for_cap}}</strong> <span class='selsername'> {{ sel_ser_det.name }}</span>
+            </div>
+            <div class="showDetService">
+                <span *ngIf="calc_mode=='NoCalc'"><span *ngIf="!isFuturedate"><strong>Today </strong></span>
+                    <span *ngIf="isFuturedate"><strong>{{sel_day}}
+                            {{sel_checkindate | date: dateFormat}}</strong> </span></span>
+            </div>
+            <div class="queue-waitingdiv">
+                <div class="queue-head"
+                    *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                    <strong>{{today_cap}} {{estimateCaption}}: </strong> <span
+                        class="queue-avail-date">{{sel_queue_waitingmins}}</span> </div>
+                <div class="queue-head"
+                    *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                    <strong>{{persons_ahead_cap}}</strong> <span
+                        class="queue-avail-date">{{sel_queue_personaahead}}</span> </div>
+            </div>
+            <div class="queue-waitingdiv"
+                *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                <div class="queue-head">
+                    <ng-container *ngIf="isFuturedate"><span
+                            class="checkin-footer-date"><strong>{{nextavailableCaption}} <span
+                                    class="queue-avail-date">{{sel_day}} {{sel_checkindate | date: dateFormat}},
+                                    {{sel_queue_servicetime}}</span></strong></span></ng-container>
+                    <ng-container *ngIf="!isFuturedate"><strong>{{today_cap}} </strong> <strong>{{checkinsCaption}}:
+                        </strong> <span class="queue-avail-date">{{sel_queue_servicetime}}</span> </ng-container>
                 </div>
-                <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="step==1 && this.checkinLabel">
+        <div class="waitlist-action"> <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1"
+                (click)="handleCheckinClicked()"
+                [disabled]="api_loading ||(sel_ser_det.isPrePayment && page_source != 'provider_checkin'&& !emailExist)">{{showCheckinButtonCaption()}}</button>
+            <div class="disable-msg">{{checkindisablemsg}}</div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="step==3 && !showCreateMember"> <button mat-button class="cs-btn bt1 backtocheckin"
+            (click)="handleGoBack(1)">{{back_to_cap}} <span
+                *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']"> {{get_token_cap}}
+            </span> <span
+                *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
+            </span></button> </ng-container>
+    <ng-container *ngIf="step==3 && showCreateMember"> <button type="button" mat-button class="cs-btn bt2 backbtn"
+            (click)="handleGoBack(3)">{{cancel_btn}}</button> <button mat-button class="cs-btn bt1 savemember"
+            (click)="handleSaveMember()">{{save_member_cap}}</button> </ng-container>
+</div>
+<div *ngIf="liveTrack" class="lv-trk">
+    <h4 class="mat-dialog-title"><button (click)="trackClose('livetrack')" class="modal_close" tabindex="-1"
+            style="color: black"> <i class="fa fa-window-close" aria-hidden="true"></i> </button>
+    </h4>
+    <mat-dialog-content>
+        <div>
+            <div class="successmsg">Your check-in for {{activeWt.service.name}} is successful !!
+            </div>
+            <!-- <div class="">From your current location you are {{"1"}} away and it takes around {{"3"}}. </div>
                     <div class="" *ngIf="">From your current location you are {{"!"}} away and it takes around {{"3"}}. </div> -->
-                <div class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your 
-                    <p class="bold">Estimated Time of Arrival <span  class="mgn-lt-30">
-                            <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
-                        </span></p>
-                    <!-- <span >
+            <div class="mgn-up-20">Allow {{activeWt.provider.businessName}} to track your
+                <p class="bold">Estimated Time of Arrival <span class="mgn-lt-30">
+                        <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)>
+                        </mat-slide-toggle>
+                    </span></p>
+                <!-- <span >
                         <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
                     </span> -->
-                </div>                     
-                <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
-                    <span class="mgn-lt-10">
-                        <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
-                    </span>
-                    <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee will start tracking 1 hour prior to your turn. </span></div>
-                    <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is turned off, you will have to enable tracking manually from your check-in. </span></div>
-                </div>
-                <!-- <div class="form-group mgn-up-5"><label> Share my live ETA with {{activeWt.provider.businessName}}</label>
+            </div>
+            <div class="mgn-up-20" *ngIf="shareLoc">Automatically track your ETA
+                <span class="mgn-lt-10">
+                    <mat-slide-toggle [(ngModel)]="notifyAutomatic" (change)=notifyEvent($event)></mat-slide-toggle>
+                </span>
+                <div><span class="info-lst form-level-settings" *ngIf="notifyAutomatic">In "Automatic tracking" Jaldee
+                        will start tracking 1 hour prior to your turn. </span></div>
+                <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is
+                        turned off, you will have to enable tracking manually from your check-in. </span></div>
+            </div>
+            <!-- <div class="form-group mgn-up-5"><label> Share my live ETA with {{activeWt.provider.businessName}}</label>
                     <span class="mgn-lt-10">
                         <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
                     </span>
                     <label class="mgn-lt-10"><b>{{shareLoc ? 'On' : 'Off'}}</b></label>
                 </div> -->
-                <div class="form-group" *ngIf="shareLoc">
-                    <!-- Jaldee will track your ETA -->
-                    <!-- <span *ngIf="notifyTime=='ONEHOUR'">automatically. </span> -->
-                    <!-- <span *ngIf="notifyTime=='TWOHOUR'">2 hour prior to your expected arrival</span> -->
-                    <!-- <span *ngIf="notifyTime=='AFTERSTART'">manually.</span>
+            <div class="form-group" *ngIf="shareLoc">
+                <!-- Jaldee will track your ETA -->
+                <!-- <span *ngIf="notifyTime=='ONEHOUR'">automatically. </span> -->
+                <!-- <span *ngIf="notifyTime=='TWOHOUR'">2 hour prior to your expected arrival</span> -->
+                <!-- <span *ngIf="notifyTime=='AFTERSTART'">manually.</span>
                     <i class="fa fa-pencil link" (click)="trackTimeChange=!trackTimeChange"></i> -->
-                    <!-- <div class="col-md-12 mgn-up-10 no-padding"> -->
-                        <!-- <label>When should Jaldee track your ETA?</label> -->
-                        <!-- <mat-radio-group [(ngModel)]="notifyTime" (change)="trackTimeChange=!trackTimeChange"> -->
-                        <!-- <ul class="trackIcons tracktime">
+                <!-- <div class="col-md-12 mgn-up-10 no-padding"> -->
+                <!-- <label>When should Jaldee track your ETA?</label> -->
+                <!-- <mat-radio-group [(ngModel)]="notifyTime" (change)="trackTimeChange=!trackTimeChange"> -->
+                <!-- <ul class="trackIcons tracktime">
                             <li [class.trackingtimeselect]="notifyTime == 'ONEHOUR'"
                                 (click)="notifyTime = 'ONEHOUR'; trackTimeChange=!trackTimeChange">
                                 <div>Automatically <i class="fa fa-info-circle "
                                         matTooltip="1 hour prior to your expected arrival"></i></div>
                             </li> -->
-                            <!-- <li [class.driving]="notifyTime == 'TWOHOUR'" (click)="notifyTime = 'TWOHOUR';trackTimeChange=!trackTimeChange">
+                <!-- <li [class.driving]="notifyTime == 'TWOHOUR'" (click)="notifyTime = 'TWOHOUR';trackTimeChange=!trackTimeChange">
                     <div>2 hour before</div>
                     </li> -->
-                            <!-- <li [class.trackingtimeselect]="notifyTime == 'AFTERSTART'"
+                <!-- <li [class.trackingtimeselect]="notifyTime == 'AFTERSTART'"
                                 (click)="notifyTime = 'AFTERSTART'; trackTimeChange=!trackTimeChange">
                                 <div>Manually <i class="fa fa-info-circle "
                                         matTooltip="as soon as you turn on 'Live Tracking'"></i></div>
                             </li>
                         </ul> -->
-                        <!-- <mat-radio-button value='ONEHOUR'>1 hour before 
+                <!-- <mat-radio-button value='ONEHOUR'>1 hour before 
                     </mat-radio-button>
                     <mat-radio-button value='TWOHOUR'>2 hour before
                     </mat-radio-button>
                     <mat-radio-button value='AFTERSTART'>manually enable 'Live Track'
                     </mat-radio-button>
                     </mat-radio-group> -->
-                        <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
-                    <!-- </div> -->
-                    <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
-                        Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod('DRIVING')"></i>
-                        <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i> -->
-                        <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20" src="./assets/images/walking.png" alt=""  style="width: 15px;height:15px;" />
-                        <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"  src="./assets/images/walking-selected.png" alt=""  style="width: 15px;height:15px;" />
-                        <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
-                        <!-- <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> -->
-                    </div>    
-                    <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-10 lv-msg no-padding">
-                        {{liveTrackMessage}}       
-                    </div>
-                        <!-- <div class="pull-left">Mode of transport</div>
+                <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
+                <!-- </div> -->
+                <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                    Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true"
+                        (click)="getTravelMod('DRIVING')"></i>
+                    <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')" aria-hidden="true"></i> -->
+                    <img *ngIf="!walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"
+                        src="./assets/images/walking.png" alt="" style="width: 15px;height:15px;" />
+                    <img *ngIf="walking" (click)="getTravelMod('WALKING')" class="mgn-lt-20"
+                        src="./assets/images/walking-selected.png" alt="" style="width: 15px;height:15px;" />
+                    <!-- <i class="fa fa-male mgn-lt-20" [class.walking] aria-hidden="true" (click)="getTravelMod('WALKING')"></i> -->
+                    <!-- <i class="fa fa-pencil link pull-right" (click)="changemode[i] = !changemode[i]"></i> -->
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-10 lv-msg no-padding">
+                    {{liveTrackMessage}}
+                </div>
+                <!-- <div class="pull-left">Mode of transport</div>
                         <div  class="pull-left">
                             <ul class="trackIcons">
                                 <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
                                     <div class="travelmodechange"><i class="fa fa-car" aria-hidden="true"></i></div> -->
-                                    <!-- <div class="textsize">Driving</div> -->
-                                <!-- </li>
+                <!-- <div class="textsize">Driving</div> -->
+                <!-- </li>
                                 <li matTooltip="Bicycling" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')">
                                     <div class="travelmodechange"><i class="fa fa-bicycle" aria-hidden="true"></i></div> -->
-                                    <!-- <div class="textsize">Bicycling</div> -->
-                                <!-- </li>
+                <!-- <div class="textsize">Bicycling</div> -->
+                <!-- </li>
                                 <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
                                     <div class="travelmodechange"><i class="fa fa-male" aria-hidden="true"></i></div> -->
-                                    <!-- <div class="textsize">Walking</div> -->
-                                <!-- </li>
+                <!-- <div class="textsize">Walking</div> -->
+                <!-- </li>
                             </ul>
                         </div> -->
-                        <!-- <label>Mode of transport :
+                <!-- <label>Mode of transport :
                     <span *ngIf="driving">I am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
                     <span *ngIf="bicycling">I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></span>
                     <span *ngIf="walking">I am Walking <img src="./assets/images/walking.png" alt=""
                     style="width: 15px;height:15px;" /></span></label><i class="fa fa-pencil link"
                     (click)="trackMode = !trackMode"></i> -->
-                    <!-- </div>
+                <!-- </div>
                     <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
                         <ul class="trackIcons">
                             <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
@@ -533,8 +550,7 @@
                                 <div class="textsize">Walking</div>
                             </li>
                         </ul> -->
-    
-                        <!-- <ul class="trackIcons" *ngIf="trackMode">
+                <!-- <ul class="trackIcons" *ngIf="trackMode">
                     <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
                     <div>I am Driving <i class="fa fa-car" aria-hidden="true"></i></div>
                     </li>
@@ -546,19 +562,19 @@
                     style="width: 15px;height:15px;" /></div>
                     </li>
                     </ul> -->
-                    <!-- </div> -->
-                </div>
-                <ng-container>
-                    <div *ngIf="shareLoc" class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
-                        <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
-                        <button type="button"  [class.disabled]="track_loading" class="cs-btn bt1 small-btn" (click)="saveLiveTrackDetails()">Ok</button>
-                        <app-common-innerloading-spinner *ngIf="track_loading"></app-common-innerloading-spinner>
-                    </div>
-                    
-                </ng-container>
+                <!-- </div> -->
             </div>
-        </mat-dialog-content>
-    </div>
-    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-    </app-form-success-display>
+            <ng-container>
+                <div *ngIf="shareLoc" class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
+                    <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
+                    <button type="button" [class.disabled]="track_loading" class="cs-btn bt1 small-btn"
+                        (click)="saveLiveTrackDetails()">Ok</button>
+                    <app-common-innerloading-spinner *ngIf="track_loading"></app-common-innerloading-spinner>
+                </div>
+            </ng-container>
+        </div>
+    </mat-dialog-content>
+</div>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+</app-form-success-display>
