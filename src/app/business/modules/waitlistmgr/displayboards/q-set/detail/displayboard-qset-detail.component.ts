@@ -168,8 +168,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
             }
             Object.keys(this.displayBoardData.sortBy).forEach(key => {
-                console.log(key);
                 this.selectedSortField = key;
+                this.sortByField(key);
             });
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
                 for (let j = 0; j < this.defaultLables.length; j++) {

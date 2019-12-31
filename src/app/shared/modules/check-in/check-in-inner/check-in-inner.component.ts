@@ -43,6 +43,7 @@ export class CheckInInnerComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   save_member_cap = Messages.SAVE_MEMBER_BTN;
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
+  optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   token = Messages.TOKEN;
   get_token_cap;
   domain;
@@ -189,6 +190,8 @@ export class CheckInInnerComponent implements OnInit {
   apptTime: any;
   showTimePicker = false;
   board_count = 0;
+  editAppntTime = false;
+  apptTimetoDisplay = '';
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -201,7 +204,6 @@ export class CheckInInnerComponent implements OnInit {
     @Inject(DOCUMENT) public document,
   ) { }
   ngOnInit() {
-    this.getDisplayboardCount();
     this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.api_loading = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
@@ -248,6 +250,7 @@ export class CheckInInnerComponent implements OnInit {
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     if (this.page_source === 'provider_checkin') {
+      this.getDisplayboardCount();
       if (this.fromKiosk) {
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
       } else {
@@ -1634,8 +1637,12 @@ export class CheckInInnerComponent implements OnInit {
   changetime(passtime) {
     this.apptTime = passtime;
   }
-  setApptTime() {
-    (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
+  setApptTime(source) {
+    if (source === 'open') {
+      this.showTimePicker = true;
+    } else {
+      this.showTimePicker = false;
+    }
   }
   getDisplayboardCount() {
     let layout_list: any = [];
@@ -1645,5 +1652,15 @@ export class CheckInInnerComponent implements OnInit {
           layout_list = data;
           this.board_count = layout_list.length;
         });
+  }
+  saveApptTime() {
+    this.apptTimetoDisplay = moment(this.apptTime).format('hh:mm A') || null;
+    this.editAppntTime = true;
+  }
+  editApptTime() {
+    this.editAppntTime = false;
+  }
+  cancelUpdation() {
+    this.editAppntTime = true;
   }
 }

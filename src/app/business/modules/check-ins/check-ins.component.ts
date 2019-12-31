@@ -906,7 +906,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.grouped_list && this.grouped_list['arrived']) {
             Array.prototype.push.apply(this.new_checkins_list, this.grouped_list['arrived'].slice());
           }
-          this.sortCheckins(this.new_checkins_list);
+          if (this.sortBy === 'sort_token') {
+            this.sortCheckins(this.new_checkins_list);
+          }
           if (this.filterapplied === true) {
             this.noFilter = false;
           } else {

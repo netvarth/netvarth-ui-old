@@ -139,18 +139,33 @@
                     </div>
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
-                        <mat-expansion-panel class="mgn-bt-10" [expanded]="false">
-                            <mat-expansion-panel-header style="height: 35px; padding: 0 10px;">
-                                <mat-panel-title class="block-level">
-                                    Display board Optional fields
-                                    <!-- <p class="form-level-settings">This appointment time is used only for display
-                                    </p> -->
+                        <mat-expansion-panel class="statusboard-expansion" [expanded]="false"
+                            (closed)="setApptTime('close')" (opened)="setApptTime('open')">
+                            <mat-expansion-panel-header class="no-padding" style="height: 35px; padding: 0 10px;">
+                                <mat-panel-title class="block-level" style="font-weight: 500;">
+                                    {{optinal_fields}}
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="form-group queue-outer">
-                                <label class="col-form-label"> Appointment Time </label>
-                                <ngb-timepicker meridian="true" [(ngModel)]="apptTime"
-                                    (ngModelChange)="changetime($event)"></ngb-timepicker>
+                                <label class="col-form-label" style="font-weight: 400;"> Appointment Time </label>
+                                <span style="font-weight: 600;" *ngIf="editAppntTime!='' && editAppntTime">
+                                    {{apptTimetoDisplay}} </span>
+                                <span *ngIf="apptTimetoDisplay!='' && editAppntTime" style="margin-left: 30px"
+                                    class="editbt" (click)="editApptTime()"></span>
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="!editAppntTime">
+                                    <div class="input-group" style="display: block;">
+                                        <ngb-timepicker meridian="true" [(ngModel)]="apptTime"
+                                            (ngModelChange)="changetime($event)">
+                                        </ngb-timepicker>
+                                        <div class="wait-btn mgn-up-10">
+                                            <button *ngIf="apptTimetoDisplay!=''" class="cs-btn bt3 mgn-rt-5"
+                                                style="margin-left: 5px;" (click)="cancelUpdation()"
+                                                type="button">Cancel</button>
+                                            <button type="submit" class="cs-btn bt3"
+                                                (click)="saveApptTime()">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -200,7 +215,6 @@
                                                 </mat-menu>
                                             </span>
                                         </div>
-
                                     </div>
                                 </ng-container>
                             </ng-container>

@@ -116,8 +116,8 @@
                 <mat-icon>swap_vert</mat-icon>
               </button>
               <mat-menu class="sort-menu" #menu="matMenu">
-                <button class="sort-menu-item" [class.active]="sortBy=='sort_token'" mat-menu-item (click)="setSortByParam('sort_token')">Order of
-                  Check-ins</button>
+                <button class="sort-menu-item" [class.active]="sortBy=='sort_token'" mat-menu-item
+                  (click)="setSortByParam('sort_token')">Token</button>
                 <button class="sort-menu-item" mat-menu-item [class.active]="sortBy=='sort_appointmentTime'"
                   (click)="setSortByParam('sort_appointmentTime')">Appointment Time</button>
               </mat-menu>
@@ -719,6 +719,9 @@
                                 <!-- {{getDisplayname(label.key)}} : {{label.value}} -->
                                 {{label.value}}
                               </span>
+                              <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
+                                <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
+                              </div>
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"

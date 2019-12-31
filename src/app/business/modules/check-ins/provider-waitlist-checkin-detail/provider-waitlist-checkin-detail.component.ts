@@ -39,6 +39,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   waitlist_id = null;
   waitlist_data;
   waitlist_notes: any = [];
@@ -103,7 +104,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   ngOnInit() {
-    this.appttime = { hour: 0, minute: 0 };
+    // this.appttime = { hour: 0, minute: 0 };
+    // this.appttime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.getDisplayboardCount();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
@@ -144,9 +146,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.appointmentTime) {
           // tslint:disable-next-line: radix
           this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
           console.log(this.appttime);
+          } else {
+          this.appttime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+          }
           const waitlist_date = new Date(this.waitlist_data.date);
           this.today.setHours(0, 0, 0, 0);
           waitlist_date.setHours(0, 0, 0, 0);

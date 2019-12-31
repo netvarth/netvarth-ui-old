@@ -1287,6 +1287,9 @@ sup {
 .mgn-lt-3 {
   margin-left: 3px !important;
 }
+.mgn-lt-5 {
+  margin-left: 5px !important;
+}
 .mgn-lt-10 {
   margin-left: 10px !important;
 }
@@ -6621,8 +6624,8 @@ input.jdn_ip { width: 50px !important}
   font-weight: 600;
 }
 .branch-det {
-  background: #3c8dbc;
-  color: white;
+  background: #a8d2ea;
+  color: black;
   font-family: sans-serif !important;
 }
 .branch-det .title {
@@ -6640,4 +6643,9 @@ input.jdn_ip { width: 50px !important}
   50%{    color: transparent;    }
   99%{    color:red;    }
   100%{    color: red;    }
+}
+.statusboard-expansion {
+  border-bottom: 1px dashed #dbdbdb !important;
+  margin-bottom: 10px !important;
+  box-shadow: none !important;
 }

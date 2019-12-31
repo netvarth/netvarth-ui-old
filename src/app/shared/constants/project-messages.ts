@@ -1434,5 +1434,6 @@ export const Messages = {
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
   'TRACKINGCANCELENABLED': 'You have allowed [provider_name] to track your ETA',
   'TRACKINGCANCELDISABLED': 'You have not allowed [provider_name] to track your ETA',
-  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations'
+  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations',
+  'DISPLAYBOARD_OPTIONAL_FIELDS': 'Queue Status board optional field',
 };
