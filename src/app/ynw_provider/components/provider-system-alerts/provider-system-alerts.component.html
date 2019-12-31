@@ -20,21 +20,19 @@
                                         <th>
                                             <table class="fltr-tbl">
                                                 <tr>
-                                                    <td class="cl-fltr" *ngIf="filterapplied === true"
+                                                    <!-- <td class="cl-fltr" *ngIf="filterapplied === true"
                                                         (click)="clearFilter()" [matTooltipClass]="tooltipcls"
                                                         [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
                                                         <img src="../../../../assets/images/icons8-clear-filters-40.png"
                                                             alt="" />
-                                                    </td>
+                                                    </td> -->
                                                     <td>
                                                         <span>
-                                                            <i class="icon-filter-one-op" (click)="toggleFilter()"
+                                                            <!-- <i class="icon-filter-one-op" (click)="toggleFilter()"
                                                                 *ngIf="open_filter" [matTooltipClass]="tooltipcls"
-                                                                [matTooltip]="'Close filter window'"></i>
-                                                            <i class="icon-filter-one" (click)="toggleFilter()"
-                                                                [matTooltipClass]="tooltipcls"
-                                                                [matTooltip]="filtericonTooltip"
-                                                                *ngIf="!open_filter"></i>
+                                                                [matTooltip]="'Close filter window'"></i> -->
+                                                                <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                                                [matTooltip]="filtericonTooltip"></i>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -44,7 +42,39 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
+                                            <aside class="filterSidebar" *ngIf="filter_sidebar">
+                                                    <section class="sidebar">
+                                                        <div class="filterClosebtn">
+                                                            <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                                            <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"> Clear All</span>
+                                                        </div>
+                                                        <ul class="sidebar-menu">
+                                                            <li>
+                                                                <div>
+                                                                    <label class="filterHeaders">{{acknow_status_cap}}</label>
+                                                                        <li class="filterli filterCheckboxborder filtercheckboxSize">
+                                                                              <mat-checkbox [value]="'true'"> {{acknowledged_cap}}</mat-checkbox>
+                                                                        </li>
+                                                                        <li class="filterli filterCheckboxborder filtercheckboxSize">
+                                                                                <mat-checkbox [value]="'true'"> {{not_acknowledged_cap}}</mat-checkbox>
+                                                                        </li>
+                                                                </div>
+                                                                <div>
+                                                                    <label class="filterHeaders">Filter By Date</label>
+                                                                    <li class="filterli filterDatepicker">
+                                                                        <input class="filterTextbox" type="text" [(ngModel)]="alertSeldate" [min]="minday"
+                                                                        [matDatepicker]="picker" #Fdate (dateChange)="do_search(false)" (blur)="do_search(false)" placeholder="Date">
+                                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                                        </mat-datepicker-toggle>
+                                                                        <mat-datepicker #picker></mat-datepicker>
+                                                                    </li>
+                                                                </div>
+                
+                                                            </li>
+                                                        </ul>
+                                                    </section>
+                                                </aside>
+                                        <!-- <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
                                             <div id="customers-filter-toolbar" class="box-content filter-toolbar">
                                                 <a [class.button_filter]="filters['ack_status']"
                                                     (click)="filterClicked('ack_status')"
@@ -75,7 +105,7 @@
                                                 <input type="button" value=" Go " (click)="do_search(false)" id="btnGo"
                                                     class="genMarginLeft genTextHeight btn_black qo_bt">
                                             </div>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                                 <tbody>

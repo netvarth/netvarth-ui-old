@@ -22,6 +22,7 @@ export class CustomersListComponent implements OnInit {
     last_visit_cap = Messages.LAST_VISIT_CAP;
     customers: any = [];
     customer_count: any = 0;
+    filter_sidebar = false;
     filterapplied = false;
     open_filter = false;
     filter = {
@@ -252,5 +253,11 @@ export class CustomersListComponent implements OnInit {
 
         });
     }
+    showFilterSidebar() {
+        this.filter_sidebar = true;
+      }
+      hideFilterSidebar() {
+        this.filter_sidebar = false;
+      }
 }
 

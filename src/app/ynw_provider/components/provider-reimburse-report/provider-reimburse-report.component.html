@@ -23,18 +23,18 @@
                     <th>
                       <table class="fltr-tbl">
                         <tr>
-                          <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
+                          <!-- <td class="cl-fltr" *ngIf="filterapplied === true" (click)="clearFilter()"
                             [matTooltipClass]="tooltipcls" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'">
                             <img src="../../../../assets/images/icons8-clear-filters-40.png" alt="" />
                           </td>
                           <td>
                             <span>
                               <i class="icon-filter-one-op" (click)="toggleFilter()" *ngIf="open_filter"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                              <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
-                            </span>
-                          </td>
+                                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i> -->
+                                <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip"></i>
+                            <!-- </span>
+                          </td> -->
                         </tr>
                       </table>
                     </th>
@@ -42,10 +42,56 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td colspan="5" *ngIf="open_filter === true" class="tble-filtr-td">
-                      <div id="customers-filter-toolbar" class="box-content filter-toolbar">
+                    <!-- <td colspan="5" class="tble-filtr-td"> -->
+                      <!-- <div id="customers-filter-toolbar" class="box-content filter-toolbar"> -->
 
-                        <a [class.button_filter]="filters['from_date']" (click)="filterClicked('from_date')"
+                          <aside class="filterSidebar" *ngIf="filter_sidebar">
+                              <section class="sidebar">
+                                  <div class="filterClosebtn">
+                                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                      <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                                      [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                              </div>
+                              <ul class="sidebar-menu">
+                                  <li class="filterTextinput">
+                                      <div>
+                                          <label class="filterHeaders">Filter By Date</label>
+                                              <li class="filterli filterDatepicker">
+                                                  <input class="filterTextbox" type="text" [(ngModel)]="filter.from_date" [min]="minday" [matDatepicker]="picker1"
+                                                  #Fdate (dateChange)="doSearch()" (blur)="doSearch()" placeholder="From Date">
+                                                  <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                  </mat-datepicker-toggle>
+                                                  <mat-datepicker #picker1></mat-datepicker>
+                                              </li>
+                                              <li class="filterli filterDatepicker">
+                                                  <input class="filterTextbox" type="text" [(ngModel)]="filter.to_date" [min]="minday" [matDatepicker]="picker2" #Tdate
+                                                  (dateChange)="doSearch()" (blur)="doSearch()" placeholder="To Date">
+                                                  <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                  </mat-datepicker-toggle>
+                                                  <mat-datepicker #picker1></mat-datepicker>
+                                              </li>
+                                      </div>
+                                  </li>
+                                  <li>
+                                      <div>
+                                          <label class="filterHeaders">Select payment status</label>
+                                          <li class="filterli filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox (click)="setFilterData('status', 'all')" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                                          </li>
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                            <mat-checkbox *ngFor="let status of report_status_filter"
+                                            (click)="setFilterData('status', status.value)" [value]="status.value">
+                                            {{status.displayName}}
+                                            </mat-checkbox>
+                                          </li>
+                                        </div>
+                                    </li>
+                              </ul>
+                              </section>
+                          </aside>
+
+
+                        <!-- <a [class.button_filter]="filters['from_date']" (click)="filterClicked('from_date')"
                           class="anchorbutton remMarginRight genMarginLeft" name="from_date"
                           id="btn_date_filter_id"><span>{{date_from_cap}}</span></a>
                         <input type="text" [(ngModel)]="filter.from_date" [min]="minday" [matDatepicker]="picker1"
@@ -81,9 +127,9 @@
                         </mat-form-field>
 
                         <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
-                          class="genMarginLeft genTextHeight btn_black qo_bt">
-                      </div>
-                    </td>
+                          class="genMarginLeft genTextHeight btn_black qo_bt"> -->
+                      <!-- </div> -->
+                    <!-- </td> -->
                   </tr>
                 </tbody>
                 <tbody>

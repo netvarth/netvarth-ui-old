@@ -115,6 +115,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   pos = false;
   bname = '';
   cust_note_tooltip;
+  filter_sidebar = false;
   filter = {
     first_name: '',
     last_name: '',
@@ -1991,4 +1992,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelledwaitlistSelection = 0;
     this.completedwaitlistSelection = 0;
   }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+    //console.log(this.filter_sidebar);
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+    //console.log(this.filter_sidebar);
+  }
 }
+
+

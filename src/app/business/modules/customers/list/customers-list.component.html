@@ -19,7 +19,14 @@
         </div>
         <div class="col-md-12 no-padding">
           <ul class="nav cust-dash jd-custom-nav">
-            <li class="dropdown notifications-menu cl-fltr fltr-tbl">
+              <li class="dropdown notifications-menu">
+                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+                      <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="filtericonTooltip">
+                      </i>
+                    </a>
+              </li>
+            <!-- <li class="dropdown notifications-menu cl-fltr fltr-tbl">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i *ngIf="filterapplied === true" class="pointer" (click)="clearFilter()" [matTooltipClass]="tooltipcls"
                   [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"><img
@@ -29,7 +36,7 @@
                 <i class="icon-filter-one" (click)="toggleFilter()" [matTooltipClass]="tooltipcls"
                   [matTooltip]="filtericonTooltip" *ngIf="!open_filter"></i>
               </a>
-            </li>
+            </li> -->
             <li class="dropdown notifications-menu">
               <a (click)="searchCustomer('createCustomer')"
                 class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
@@ -38,8 +45,47 @@
             </li>
           </ul>
         </div>
+
+        <aside class="filterSidebar" *ngIf="filter_sidebar">
+            <section class="sidebar">
+                <div class="filterClosebtn">
+                    <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                    <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()" [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                </div>
+                <ul class="sidebar-menu">
+                    <div class="filterTextinput">
+                        <li class="filterli">
+                            <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                                class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                        </li>
+                    </div>
+                    <div class="filterTextinput">
+                        <li class="filterli filterDatepicker">
+                            <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
+                            (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date">
+                              <mat-datepicker-toggle matSuffix [for]="picker">
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                        </li>
+                    </div>
+                        <div class="filterTextinput">
+                            <li class="filterli">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                                (keyup)="focusInput($event, Femail)" maxlength="10" class="filterTextbox" placeholder="Phone Number">
+                            </li>
+                        </div>
+                        <div class="filterTextinput">
+                            <li class="filterli filterDatepicker">
+                                <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                                (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
+                            </li>
+                        </div>
+                </ul>
+            </section>
+        </aside>
+
         <div class="col-md-12 cust-sect no-padding">
-          <div id="customers-filter-cont" *ngIf="open_filter === true">
+          <!-- <div id="customers-filter-cont" *ngIf="open_filter === true">
             <div id="customers-filter-toolbar" class="box-content filter-toolbar">
               <a [class.button_filter]="filters['first_name']" (click)="filterClicked('first_name')"
                 class="anchorbutton remMarginRight genMarginLeft" name="first_name"
@@ -69,7 +115,7 @@
               <input type="button" value=" Go " (click)="doSearch()" id="btnGo"
                 class="genMarginLeft genTextHeight btn_black qo_bt">
             </div>
-          </div>
+          </div> -->
           <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers">
             <div class="col-md-4 col-sm-7 mt5">
               {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}              

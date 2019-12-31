@@ -95,7 +95,7 @@
             </span>
             <span class="btn-primary-n" (click)="setTimeType(0)" [ngClass]="{'active': time_type==0}">
               {{history_cap}}</span>
-            <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
+            <!-- <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
                   [matTooltip]="'Close filter window'"></i>
@@ -109,9 +109,190 @@
                   [matTooltip]="'Reset filter'"><img src="../../../../assets/images/icons8-clear-filters-40.png"
                     alt="" /> &nbsp;</i>
               </a>
-            </span>
+            </span> -->
+            <!--Filter sidebar-->
+            <span class="btn-primary-n pull-right clr-fltr ">
+                
+                    
+                  <a class="dropdown-toggle navbar-item-color bold pointer-cursor" href="#" data-toggle="control-sidebar">
+                    <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="filtericonTooltip">
+                    </i>
+                  </a>
+                    
+                
+            </span> 
+
+            
           </div>
         </div>
+        <div>
+            
+          <aside class="filterSidebar" *ngIf="filter_sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+              <div class="filterClosebtn">
+                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                  <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"> Clear All</span>
+              </div>
+               <!-- <span><input type="button" value=" Go " (click)="doSearch()" id="btn1Go"
+                  class="genMarginLeft genTextHeight btn_black qo_bt"></span> -->
+              <!-- Sidebar user panel -->
+              
+              <ul class="sidebar-menu">
+                  <div class="filterTextinput">
+                      <li class="filterli">
+                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,Ffname)"
+                              class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                      </li>
+                        <li class="filterli">
+                          <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Flname)"
+                              class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
+                          <li class="filterli">
+                              <input *ngIf="time_type == 0" type="text" #Fphnumber (blur)="doSearch()"
+                              (keyup)="focusInput($event,Fphnumber)" class="filterTextbox" [(ngModel)]="filter.phone_number"
+                              placeholder="Phone Number">
+                          </li>
+                  </div>
+                
+                  
+                
+                  <!-- <mat-form-field *ngIf="time_type !== 1">
+                    <mat-select [(value)]="filter.queue" #Fqueue>
+                      <mat-option (click)="setFilterData('queue', 'all')" [value]="'all'">
+                        {{all_cap}}
+                      </mat-option>
+                      <mat-option *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)"
+                        [value]="queue.id">
+                        <span class="day_label">{{queue.displayschedule.dstr}} </span>:
+                        <span class="time_label">{{queue.displayschedule.time}}</span>
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <li class="filterTextinput"  *ngIf="time_type !== 1">
+                  <div>
+                      <label class="filterHeaders">Select Queue</label>
+                      <li class="filterli filterCheckboxborder filtercheckboxSize">
+                        <mat-checkbox (click)="setFilterData('queue', 'all')" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                      </li>
+                      <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        <mat-checkbox *ngFor="let queue of all_queues" (click)="setFilterData('queue', queue.id)" [value]="queue.id">
+                          <span class="day_label">{{queue.displayschedule.dstr}}</span>
+                          <div class="time_label">{{queue.displayschedule.time}}</div>
+                        </mat-checkbox>                          
+                      </li>
+                    </div>
+                </li>
+                <li class="filterTextinput">
+                  <!-- <mat-form-field *ngIf="filters['service']"> -->
+                    <div class="filterCheckbox">
+                      <label class="filterHeaders">Select Service</label>
+                      <li class="filterli filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox (click)="setFilterData('service', 'all')" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                      </li>
+                        
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let service of services" (click)="setFilterData('service', service.id)" [value]="service.id">
+                            {{service.name}}
+                          </mat-checkbox>
+                        </li>
+                      </div>
+
+                    <!-- <mat-form-field>
+                    <mat-select [(value)]="filter.service">
+                      <mat-option (click)="setFilterData('service', 'all')" [value]="'all'">
+                        {{all_cap}}
+                      </mat-option>
+                      <mat-option *ngFor="let service of services" (click)="setFilterData('service', service.id)"
+                        [value]="service.id">
+                        {{service.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                </li>
+
+                <li class="filterTextinput" *ngIf="time_type !== 1">
+                    <div>
+                        <label class="filterHeaders">Select status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox (click)="setFilterData('waitlist_status', 'all')" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let status of check_in_statuses_filter"
+                          (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
+                          {{status.displayName}}
+                          </mat-checkbox>
+                        </li>
+                      </div>
+                  </li>
+                <!-- <li>
+                  <mat-form-field *ngIf="time_type !== 1">
+                    <mat-select [(value)]="filter.waitlist_status">
+                      <mat-option (click)="setFilterData('waitlist_status', 'all')" [value]="'all'">
+                        {{all_cap}}
+                      </mat-option>
+                      <mat-option *ngFor="let status of check_in_statuses_filter"
+                        (click)="setFilterData('waitlist_status', status.value)" [value]="status.value">
+                        {{status.displayName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </li> -->
+                <li class="filterTextinput" *ngIf="time_type == 0">
+                    <div>
+                        <label class="filterHeaders">Select payment status</label>
+                        <li class="filterli filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox (click)="setFilterData('payment_status', 'all')" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let pstat of payStatusList"
+                          (click)="setFilterData('payment_status', pstat.pk)" [value]="pstat.pk">
+                          {{pstat.value}}
+                          </mat-checkbox>
+                        </li>
+                      </div>
+                  </li>
+
+                <!-- <li>
+                  <mat-form-field *ngIf="time_type == 0">
+                    <mat-select [(value)]="filter.payment_status">
+                      <mat-option (click)="setFilterData('payment_status', 'all')" [value]="'all'">
+                        {{all_cap}}
+                      </mat-option>
+                      <mat-option *ngFor="let pstat of payStatusList"
+                        (click)="setFilterData('payment_status', pstat.pk)" [value]="pstat.pk">
+                        {{pstat.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </li> -->
+                <div>
+                    <li class="filterli filterDatepicker">
+                        <input *ngIf="time_type !== 1" type="text" [(ngModel)]="filter.check_in_start_date"
+                            [min]="filter_date_start_min" [matDatepicker]="picker" #Fstartdate
+                            (dateChange)="checkFilterDateMaxMin('check_in_start_date')" [max]="filter_date_start_max"
+                            class="filterTextbox" placeholder="Start Date">
+                          <mat-datepicker-toggle *ngIf="time_type !== 1" matSuffix [for]="picker">
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                      </li>
+                      <li class="filterli filterDatepicker">
+                        <input *ngIf="time_type !== 1" type="text" [(ngModel)]="filter.check_in_end_date"
+                            [min]="filter_date_end_min" [matDatepicker]="picker1" #Fenddate
+                            (dateChange)="checkFilterDateMaxMin('check_in_end_date')" [max]="filter_date_end_max"
+                            class="filterTextbox" placeholder="End Date">
+                          <mat-datepicker-toggle *ngIf="time_type !== 1" matSuffix [for]="picker1">
+                          </mat-datepicker-toggle>
+                          <mat-datepicker class="filterDatepicker" #picker1></mat-datepicker>
+                      </li>
+                </div>
+              </ul>
+            </section>
+            <!-- /.sidebar -->
+          </aside>
+        </div>
+        
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">

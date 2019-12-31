@@ -42,6 +42,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   holdlogSeldate = '';
   holdlogSelaction = '';
   filterapplied;
+  filter_sidebar = false;
   open_filter = false;
   filter = {
     date: null,
@@ -212,5 +213,13 @@ export class ProviderSystemAuditLogComponent implements OnInit {
       this.logSeldate = '';
       this.do_search(false);
     }
+  }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+    //console.log(this.filter_sidebar);
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+    //console.log(this.filter_sidebar);
   }
 }

@@ -71,6 +71,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   requestdialogRef;
   isCheckin;
   filterapplied = false;
+  filter_sidebar = false;
   filters: any = {
     'from_date': false,
     'to_date': false,
@@ -355,5 +356,13 @@ export class ProviderReimburseReportComponent implements OnInit {
       }
       this.doSearch();
     }
+  }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+    //console.log(this.filter_sidebar);
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+    //console.log(this.filter_sidebar);
   }
 }

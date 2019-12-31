@@ -6902,3 +6902,78 @@ input.jdn_ip { width: 50px !important}
       flex-wrap: wrap !important;
   }
 }
+/* New Filter Styles */
+.filterSidebar{
+  right: 0;
+  position: absolute;
+  z-index: 500;
+  margin-top: 50px;
+  top: 0;
+  width: 250px;
+  transition: right .3s ease-in-out;
+  background-color: #222d32;
+  border-left: 1px solid #c4b7b7;  
+  border-bottom: 1px solid #c4b7b7;
+  min-height : 100%;
+}
+.filterTextinput{
+   padding-top: 15px;
+   padding-bottom: 15px;
+   border-bottom: solid 1px #c4b7b7;    
+}
+
+.filterli{
+ font-size: 12px;
+ margin-left: 20px;
+}
+.filterCheckbox{
+ display: grid;
+}
+.filterTextbox{
+ height: 25px;
+ margin-bottom: 7px;
+ width: 180px;
+ background-color: #ffffff;
+ padding: 6px 12px;
+ border: 1px solid #ccc;
+}
+.filterSidebar label{
+ font-weight: normal !important;
+ color: #b8c7ce;
+}
+label.filterHeaders{
+ font-weight: 600 !important;
+ text-transform: uppercase;
+ font-size: 13px;
+ clear: both;
+ color: #ffffff;
+ display: block;
+ margin-left: 20px;
+ margin-top: 7px;
+}
+.filterDatepicker{
+ z-index: 1020;
+}
+.clearFilter{
+   font-weight: 500;
+   color: #ffffff;
+   font-size: 13px;
+   cursor: pointer;
+   margin-left: 5px;
+}
+.filterDatepicker .mat-icon-button .mat-button-wrapper>* {
+color: white !important;
+}
+.filterCheckboxborder .mat-checkbox-frame {
+ border-color: #b8c7ce !important;
+ border-width: 1px;
+}
+.filtercheckboxSize .mat-checkbox-inner-container{
+ height: 10px !important;
+ width: 10px !important;
+}
+.filterClosebtn {
+ color: white;
+ margin-top: 8px;
+ margin-left: 18px;
+}
