@@ -115,15 +115,32 @@ export class BranchDoctorDetailComponent implements OnInit {
         if (this.actionparam === 'add') {
        this.createForm();
     }
-    if(this.actionparam === 'edit') {
+    if (this.actionparam === 'edit') {
+        console.log(this.actionparam);
+        this.user_data = {
+            "userProfile": {
+                "firstName": "aziz",
+                "lastName": "k",
+                "dob": "2019-12-01",
+                "gender": "male",
+                "email": "athiraa.ynwtest@netvarth.com",
+                "countryCode": "+91",
+                "primaryMobileNo": "5555555566"
+            },
+            "subSector": "dentists",
+            "commonPassword": "Netvarth1",
+            "isAdmin": true,
+            "departmentCode": "default"
+        }
         this.createForm();
+        console.log(this.user_data['userProfile']['firstName']);
         this.amForm.setValue({
-            'first_name': this.user_data['firstName'] || this.amForm.get('first_name').value,
-            'last_name': this.user_data['lastName'] || this.amForm.get('last_name').value,
-            'gender': this.user_data['gender'] || this.amForm.get('gender').value,
-            'phonenumber': this.user_data['primaryMobileNo'] || this.amForm.get('phonenumber').value,
-            'dob': this.user_data['dob'] || this.amForm.get('dob').value,
-            'email': this.user_data['email'] || this.amForm.get('email').value,
+            'first_name': this.user_data['userProfile']['firstName'] || this.amForm.get('first_name').value,
+            'last_name': this.user_data['userProfile']['lastName'] || this.amForm.get('last_name').value,
+            'gender': this.user_data['userProfile']['gender'] || this.amForm.get('gender').value,
+            'phonenumber': this.user_data['userProfile']['primaryMobileNo'] || this.amForm.get('phonenumber').value,
+            'dob': this.user_data['userProfile']['dob'] || this.amForm.get('dob').value,
+            'email': this.user_data['userProfile']['email'] || this.amForm.get('email').value,
             'password': this.user_data['commonPassword'] || this.amForm.get('password').value,
             'selectedSubDomain': this.user_data['subSector'] || this.amForm.get('selectedSubDomain').value,
             'selectedDepartment': this.user_data['departmentCode'] || this.amForm.get('selectedDepartment').value,
@@ -131,6 +148,7 @@ export class BranchDoctorDetailComponent implements OnInit {
     }
     }
     createForm() {
+        console.log('edit');
         this.amForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],

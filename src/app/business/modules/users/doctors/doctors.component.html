@@ -45,14 +45,15 @@
                                 </div>
                             </div>
                             <div class="col-md-12 no-padding" *ngIf="users_list.length!==0">
-                                <div class="col-md-12 pt10 mt5 dboard" *ngFor="let user of users_list">
-                                    <div class="copy">
+                                <div class="col-md-12 pt10 mt5 dboard" *ngFor="let user of users_list" [class.selected-waitlist]="userlistSelected[i]">
+                                   
+                                    <div class="copy" (click)="selectUserlist(i)">
                                         <!-- <span class="mbt">
                                             <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                         </span> -->
-                                        <h3 class="pointer-cursor" (click)="manageProvider(user.id)">
+                                        <h3 class="pointer-cursor" (click)="manageProvider('doctors','edit')">
                                             {{user.businessName}} <span class="layout_name">({{user.departmentCode}})
                                             </span></h3>
                                         <!-- <mat-menu #appMenu="matMenu">
@@ -63,7 +64,8 @@
                                                     (click)="manageProvider(user.id)"> Manage
                                                 </a> </button>
                                         </mat-menu> -->
-                                    </div>
+                                   
+                                </div>
                                 </div>
                             </div>
                         </div>

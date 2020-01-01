@@ -12,6 +12,8 @@ export class DoctorsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     domain;
     userType;
+    userlistSelected: any = [];
+    userlistSelection = 0;
     breadcrumbs = [
         {
             url: '/provider/settings',
@@ -75,8 +77,14 @@ export class DoctorsComponent implements OnInit {
     // gotoBranchspDetails(user) {
     //      console.log(user);
     // }
-    manageProvider(accountId) {
-        this.router.navigate(['provider', 'settings', 'users', 'doctors', 'doctors-view']);
+    manageProvider(accountId,mode) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: accountId,
+                            mode : mode
+             }
+        };
+        //this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
        // window.open('#/manage/' + accountId, '_blank');
     }
     performActions(action) {
@@ -84,4 +92,15 @@ export class DoctorsComponent implements OnInit {
           this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
         }
       }
+
+      selectUserlist(index) {
+          console.log("hj");
+        if (this.userlistSelected[index]) {
+          delete this.userlistSelected[index];
+          this.userlistSelection--;
+        } else {
+          this.userlistSelected[index] = true;
+          this.userlistSelection++;
+        }
+    }
 }
