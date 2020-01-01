@@ -14,6 +14,7 @@ export class DoctorsComponent implements OnInit {
     userType;
     userlistSelected: any = [];
     userlistSelection = 0;
+    profileStatus = false;
     breadcrumbs = [
         {
             url: '/provider/settings',
@@ -102,5 +103,14 @@ export class DoctorsComponent implements OnInit {
           this.userlistSelected[index] = true;
           this.userlistSelection++;
         }
+        if(this.userlistSelection === 1) {
+           this.profileStatus = true;
+
+        }else{
+            this.profileStatus = false;
+        }
+    }
+    userProfile(info) {
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
     }
 }

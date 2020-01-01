@@ -5034,6 +5034,9 @@ i.notavail {
 .cust-sect .custs:nth-child(even), .qset:nth-child(even), .dboard:nth-child(even), .custlabl:nth-child(even) {
   background: transparent !important;
 }
+.dboarduser{
+  border-bottom: 1px solid !important;
+}
 
 .custs h6 span {
   font-weight: 500;

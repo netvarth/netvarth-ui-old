@@ -33,6 +33,15 @@
                                             </span>
                                         </a>
                                     </li>
+                                    <li class="dropdown notifications-menu pull-right"  *ngIf="profileStatus">
+                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="profile"
+                                            (click)="userProfile('additionalinfo')"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                <i class="fa fa-user"></i>Profile
+                                            </span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-md-12" *ngIf="users_list.length==0">
@@ -45,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 no-padding" *ngIf="users_list.length!==0">
-                                <div class="col-md-12 pt10 mt5 dboard" *ngFor="let user of users_list" [class.selected-waitlist]="userlistSelected[i]">
+                                <div class="col-md-12 pt10 mt5 dboarduser" *ngFor="let user of users_list,let i=index" [class.selected-waitlist]="userlistSelected[i]">
                                    
                                     <div class="copy" (click)="selectUserlist(i)">
                                         <!-- <span class="mbt">
