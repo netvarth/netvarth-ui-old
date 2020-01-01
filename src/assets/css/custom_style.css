@@ -6606,7 +6606,7 @@ input.jdn_ip { width: 50px !important}
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #cac8c8; 
 }
 
 /* Handle on hover */
@@ -6648,4 +6648,7 @@ input.jdn_ip { width: 50px !important}
   border-bottom: 1px dashed #dbdbdb !important;
   margin-bottom: 10px !important;
   box-shadow: none !important;
+}
+.border-btm {
+  border-bottom: 1px solid #eeee !important;
 }

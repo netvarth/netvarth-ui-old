@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription, Observable } from 'rxjs';
+import { SharedServices } from '../../../shared/services/shared-services';
 
 @Component({
     selector: 'app-displayboard-content',
@@ -32,8 +33,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     accountType;
     MainBname;
     locId;
+    provider_id;
+    businessJson: any = [];
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
+        private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
         this.onResize();
         this.activated_route.params.subscribe(
@@ -184,6 +188,24 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         });
         return api_filter;
     }
+    gets3curl() {
+        this.shared_functions.getS3Url('provider')
+            .then(
+                res => {
+                    this.getbusinessprofiledetails_json(res, 'businessProfile', true);
+                }
+            );
+    }
+    getbusinessprofiledetails_json(url, section, modDateReq: boolean) {
+        let UTCstring = null;
+        if (modDateReq) {
+            UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+        }
+        this.shared_services.getbusinessprofiledetails_json(this.provider_id, url, section, UTCstring)
+            .subscribe(res => {
+                this.businessJson = res;
+            });
+    }
     getBusinessProfile() {
         this.provider_services.getBussinessProfile()
             .subscribe(
@@ -192,8 +214,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     if (this.bProfile && this.bProfile.subDomainVirtualFields) {
                         this.getQualification(this.bProfile.subDomainVirtualFields[0]);
                     }
+                    this.provider_id = this.bProfile.uniqueId;
+                    this.gets3curl();
                 });
     }
+
     getQualification(list) {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;

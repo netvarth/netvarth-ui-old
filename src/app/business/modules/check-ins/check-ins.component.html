@@ -687,9 +687,9 @@
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
                   *ngIf="new_checkins_list.length>0 && showstatus['new']">
-                  <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
-                    <div class="info-box" style="box-shadow:none"
+                    <div class="info-box" style="box-shadow:none" [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
                       *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">
                       <div class="info-box-icon" *ngIf="checkin.token || calculationmode!=='NoCalc'">
                         <div class="tkn pointer-cursor" *ngIf="checkin.token" (click)="goCheckinDetail(checkin)">

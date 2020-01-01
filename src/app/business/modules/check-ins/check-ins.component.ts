@@ -1872,7 +1872,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.waitlistSelection++;
     }
     if (this.waitlistSelection === 1) {
-      this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
+      this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
       if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
@@ -1883,8 +1883,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     for (let i = 0; i < this.waitlistSelected.length; i++) {
       if (this.waitlistSelected[i]) {
-        if (this.newWaitlistforMsg.indexOf(this.new_checkins_list[i]) === -1) {
-          this.newWaitlistforMsg.push(this.new_checkins_list[i]);
+        if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
+          this.newWaitlistforMsg.push(this.check_in_list[i]);
         }
       }
     }
