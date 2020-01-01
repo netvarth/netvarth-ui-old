@@ -66,6 +66,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     id;
     filterByDept = false;
     locName;
+    board_count = 0;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -100,6 +101,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         // });
     }
     ngOnInit() {
+        // this.getDisplayboardCount();
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         this.locName = loc_details.place;
@@ -180,7 +182,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                             this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
                         }
                         this.defaultLables[j].checked = true;
+                        // if ((this.board_count > 0 && this.defaultLables[j].name === 'appointmentTime') || this.defaultLables[j].name !== 'appointmentTime') {
                         this.labelSelection(j, 'edit');
+                        // }
                     }
                 }
             }
@@ -479,5 +483,14 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     sortByField(field) {
         this.sortByFieldsList = new Object();
         this.sortByFieldsList[field] = 'asc';
+    }
+    getDisplayboardCount() {
+        let layout_list: any = [];
+        this.provider_services.getDisplayboards()
+            .subscribe(
+                data => {
+                    layout_list = data;
+                    this.board_count = layout_list.length;
+                });
     }
 }

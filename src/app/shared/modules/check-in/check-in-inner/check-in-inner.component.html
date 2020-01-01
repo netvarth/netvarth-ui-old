@@ -139,8 +139,7 @@
                     </div>
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
-                        <mat-expansion-panel class="statusboard-expansion" [expanded]="false"
-                            (closed)="setApptTime('close')" (opened)="setApptTime('open')">
+                        <mat-expansion-panel class="statusboard-expansion" [expanded]="false">
                             <mat-expansion-panel-header class="no-padding" style="height: 35px; padding: 0 10px;">
                                 <mat-panel-title class="block-level" style="font-weight: 500;">
                                     {{optinal_fields}}

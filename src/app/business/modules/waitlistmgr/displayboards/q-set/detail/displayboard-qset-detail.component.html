@@ -130,6 +130,8 @@
                 <div class="form-group col-md-12 ">
                     <label class="col-form-label">Status Board Field to display</label>
                     <div class="disply-field" *ngFor="let label of defaultLables; let i = index">
+                        <!-- <mat-checkbox class="example-margin" style="margin-left: 30px" *ngIf="(label.name=='appointmentTime' && board_count > 0) || label.name!='appointmentTime'"
+                            (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked"> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
                             (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked">
                             {{label.displayname}}

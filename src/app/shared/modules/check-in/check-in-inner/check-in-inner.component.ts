@@ -188,7 +188,7 @@ export class CheckInInnerComponent implements OnInit {
   liveTrackMessage;
   firstTimeClick = true;
   apptTime: any;
-  showTimePicker = false;
+  // showTimePicker = false;
   board_count = 0;
   editAppntTime = false;
   apptTimetoDisplay = '';
@@ -815,7 +815,7 @@ export class CheckInInnerComponent implements OnInit {
     }
     const apptTimeFormat = moment(this.apptTime).format('hh:mm A') || null;
     let post_Data;
-    if (this.showTimePicker) {
+    if (this.editAppntTime) {
       post_Data = {
         'queue': {
           'id': this.sel_queue_id
@@ -1637,13 +1637,13 @@ export class CheckInInnerComponent implements OnInit {
   changetime(passtime) {
     this.apptTime = passtime;
   }
-  setApptTime(source) {
-    if (source === 'open') {
-      this.showTimePicker = true;
-    } else {
-      this.showTimePicker = false;
-    }
-  }
+  // setApptTime(source) {
+  //   if (source === 'open') {
+  //     this.showTimePicker = true;
+  //   } else {
+  //     this.showTimePicker = false;
+  //   }
+  // }
   getDisplayboardCount() {
     let layout_list: any = [];
     this.provider_services.getDisplayboards()
