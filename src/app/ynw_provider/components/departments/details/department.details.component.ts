@@ -50,6 +50,7 @@ export class DepartmentDetailComponent implements OnInit {
     removeitemdialogRef;
     deptObj: ArrayBuffer;
     departments: any;
+    dept_default = false;
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private dialog: MatDialog,
@@ -237,6 +238,9 @@ export class DepartmentDetailComponent implements OnInit {
                         data => {
                             this.add_it_now_show = true;
                             this.dept_data = data;
+                            if(this.dept_data.isDefault === true) {
+                                this.dept_default = true;
+                            }
                             this.dept_services = this.dept_data.serviceIds;
                             this.selected_action = 'show';
                             const breadcrumbs = [];
