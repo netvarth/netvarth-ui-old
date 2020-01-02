@@ -101,24 +101,27 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.api_loading = true;
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.getProviderServices();
         this.getProviderQueues();
-        if (this.queue_id !== 'add') {
-            this.getQueueDetail();
-        } else {
-            this.action = this.queue_id;
-            const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: 'Add'
-            });
-            this.breadcrumbs = breadcrumbs;
-            this.createForm();
-        }
+        setTimeout(() => {
+            if (this.queue_id !== 'add') {
+                this.getQueueDetail();
+            } else {
+                this.action = this.queue_id;
+                const breadcrumbs = [];
+                this.breadcrumbs_init.map((e) => {
+                    breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: 'Add'
+                });
+                this.breadcrumbs = breadcrumbs;
+                this.createForm();
+            }
+        }, 100);
     }
 
     getProviderLocations() {
@@ -188,6 +191,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             this.departments[deptIndex].checked = false;
             this.SelService[deptIndex] = false;
         }
+        console.log(count);
         if (count === 0) {
             this.SelServcall = true;
         }
@@ -437,6 +441,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     }
                 );
         }
+        this.api_loading = false;
         this.getProviderLocations();
     }
 
@@ -487,6 +492,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
             }
             let count = 0;
+            console.log(this.serviceSelection);
             for (let j = 0; j < this.departments.length; j++) {
                 for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
                     for (let i = 0; i < this.serviceSelection[this.departments[j].departmentName].length; i++) {
@@ -496,6 +502,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     }
                 }
             }
+            console.log(count);
             if (count === 0) {
                 this.SelServcall = true;
             }
@@ -508,6 +515,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     }
                 }
             }
+            console.log(this.services_selected.length);
+            console.log(this.services_list.length);
             if (this.services_selected.length === this.services_list.length) {
                 this.SelServcall = true;
             }

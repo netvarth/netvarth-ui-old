@@ -35,6 +35,7 @@ export class GoogleMapComponent implements OnInit {
   mapaddress;
   show_search = true;
   locationName;
+  api_error = '';
 
   constructor(
     public dialogRef: MatDialogRef<GoogleMapComponent>,
@@ -52,7 +53,7 @@ export class GoogleMapComponent implements OnInit {
   ngOnInit() {
     // if ((this.data.passloc.lat === '' && this.data.passloc.lon === '') || (this.data.passloc.lat === undefined && this.data.passloc.lon === undefined)) {
     if (this.data.passloc.lat && this.data.passloc.lon) {
-     this.setLocationtoMap();
+      this.setLocationtoMap();
       this.getAddressonDragorClick('edit');
     } else {
       this.getCurrentLocation();
@@ -141,6 +142,7 @@ export class GoogleMapComponent implements OnInit {
       });
   }
   placeMarker(location, map) {
+    this.api_error = '';
     if (this.marker) {
       this.marker.setPosition(location);
     } else {
@@ -161,11 +163,12 @@ export class GoogleMapComponent implements OnInit {
     this.dialogRef.close(retvalues);
   }
   mapaddress_change(addressR) {
+    this.api_error = '';
     this.obtained_address = addressR.address;
     this.obtained_pin = addressR.pin;
     // this.mapselectionDone();
   }
-  getCurrentLocation() {
+  getCurrentLocation(action?) {
     if (navigator) {
       navigator.geolocation.getCurrentPosition(pos => {
         this.lat_lng.longitude = +pos.coords.longitude;
@@ -174,8 +177,12 @@ export class GoogleMapComponent implements OnInit {
         this.getAddressonDragorClick();
       },
         error => {
-          this.setLocationtoMap();
-          this.getAddressonDragorClick();
+          if (action) {
+            this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+          } else {
+            this.setLocationtoMap();
+            this.getAddressonDragorClick();
+          }
         });
     }
   }
@@ -204,4 +211,3 @@ export class GoogleMapComponent implements OnInit {
     });
   }
 }
-
