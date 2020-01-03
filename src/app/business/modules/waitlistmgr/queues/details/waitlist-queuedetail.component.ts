@@ -482,8 +482,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
             for (let j = 0; j < this.departments.length; j++) {
                 this.serviceSelection[this.departments[j].departmentName] = [];
                 for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
-                    for (let i = 0; i < this.queue_data.services.length; i++) {
-                        if (this.queue_data.services[i].name === this.departments[j].serviceIds[k]) {
+                    for (let i = 0; i < this.services_list.length; i++) {
+                        if (this.services_list[i].name === this.departments[j].serviceIds[k]) {
                             this.departments[j].checked = true;
                             this.SelService[j] = true;
                             this.serviceSelection[this.departments[j].departmentName][k] = this.departments[j].serviceIds[k];
@@ -492,7 +492,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
             }
             let count = 0;
-            console.log(this.serviceSelection);
             for (let j = 0; j < this.departments.length; j++) {
                 for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
                     for (let i = 0; i < this.serviceSelection[this.departments[j].departmentName].length; i++) {
@@ -507,16 +506,14 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.SelServcall = true;
             }
         } else {
-            for (let j = 0; j < this.queue_data.services.length; j++) {
+            for (let j = 0; j < this.services_list.length; j++) {
                 for (let k = 0; k < this.services_list.length; k++) {
-                    if (this.queue_data.services[j].id === this.services_list[k].id) {
+                    if (this.services_list[j].id === this.services_list[k].id) {
                         this.services_list[k].checked = true;
-                        this.services_selected.push(this.queue_data.services[j].id);
+                        this.services_selected.push(this.services_list[j].id);
                     }
                 }
             }
-            console.log(this.services_selected.length);
-            console.log(this.services_list.length);
             if (this.services_selected.length === this.services_list.length) {
                 this.SelServcall = true;
             }

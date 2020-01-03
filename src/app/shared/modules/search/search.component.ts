@@ -426,7 +426,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.holdisplaySearchlist['onlineid'] = new Array();
       if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
         this.holdisplaySearchlist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle', origin: 'gloablsearch' });
-         this.holdisplaySearchlist['onlineid'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'onlineid', origin: 'gloablsearch' });
+        this.holdisplaySearchlist['onlineid'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'onlineid', origin: 'gloablsearch' });
       }
     }
     // Defining the types of details that will be displayed for keywords autocomplete
@@ -1005,7 +1005,8 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         this.isCurrentLocation = true;
       },
         error => {
-          this.setDefaultLocation();
+          this.shared_functions.openSnackBar('You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.', { 'panelClass': 'snackbarerror' });
+          // this.setDefaultLocation();
         });
     }
   }
