@@ -106,7 +106,7 @@
                                         </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
-                                <div *ngIf="waitlist.waitlistStatus=='checkedIn'">
+                                <div *ngIf="waitlist.waitlistStatus=='checkedIn'|| 'prepaymentPending'">
                                 
                                 <!-- <div class="lt0"
                                     *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime"> -->

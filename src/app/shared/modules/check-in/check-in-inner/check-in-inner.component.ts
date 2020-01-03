@@ -874,76 +874,52 @@ export class CheckInInnerComponent implements OnInit {
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUUID);
         }
-        if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
-          if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
-            this.dialogRef.close();
-            // this.sel_ser_det.minPrePaymentAmount
-            const payData = {
-              'amount': this.prepaymentAmount,
-              // 'paymentMode': this.paytype,
-              'uuid': retUUID,
-              'accountId': this.account_id,
-              'purpose': 'prePayment'
-            };
-            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-              width: '50%',
-              panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-              disableClose: true,
-              data: {
-                'details': payData,
-                'origin': 'consumer'
-              }
-            });
-
-          } else {
-            this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
-            this.api_loading = false;
-          }
-        } else {
           this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
             (wailist: any) => {
               this.activeWt = wailist;
               this.liveTrack = true;
-              // if(this.shareLoc){
-              // this.getCurrentLocation().then(
-              //   (lat_long: any) => {
-              //     this.lat_lng = lat_long;
-              //     this.saveLiveTrackInfo().then(
-              //       (liveTInfo) => {
-              //         console.log(liveTInfo);
-              //         // this.shareLoc = true;
-              //         this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-              //       }
-              //     );
-              //   }, (error) => {
-              //     this.shareLoc = false;
-              //   }
-              //   );
-              // }
               this.resetApi();
             },
             () => {
             }
           );
-          if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+         //if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
             // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
-          } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+         // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
             // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
-          }
-          // setTimeout(() => {
-          // this.source['list'] = 'reloadlist';
-          // this.source['mode'] = this.page_source;
-          // // this.dialogRef.close('reloadlist');
-          // console.log(this.source);
-          // this.returntoParent.emit(this.source);
-          // }, projectConstants.TIMEOUT_DELAY);
-          // this.router.navigate(['/']);
-        }
-        // this.router.navigate(['/']);
-        // setTimeout(() => {
-        //   this.liveTrack = true;
-        //   this.resetApi();
-        // }, 2000);
+         // }
+         
+       
+
+
+        // if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
+        //   if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+        //     this.dialogRef.close();
+        //     // this.sel_ser_det.minPrePaymentAmount
+        //     const payData = {
+        //       'amount': this.prepaymentAmount,
+        //       // 'paymentMode': this.paytype,
+        //       'uuid': retUUID,
+        //       'accountId': this.account_id,
+        //       'purpose': 'prePayment'
+        //     };
+        //     const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+        //       width: '50%',
+        //       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        //       disableClose: true,
+        //       data: {
+        //         'details': payData,
+        //         'origin': 'consumer'
+        //       }
+        //     });
+
+        //   } else {
+        //     this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+        //     this.api_loading = false;
+        //   }
+       // } 
+       
+        
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -979,6 +955,39 @@ export class CheckInInnerComponent implements OnInit {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
         });
+  }
+
+  prePaymentcheckin(retUUID) {
+      if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+            this.dialogRef.close();
+            // this.sel_ser_det.minPrePaymentAmount
+            const payData = {
+              'amount': this.prepaymentAmount,
+              // 'paymentMode': this.paytype,
+              'uuid': retUUID,
+              'accountId': this.account_id,
+              'purpose': 'prePayment'
+            };
+            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+              width: '50%',
+              panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+              disableClose: true,
+              data: {
+                'details': payData,
+                'origin': 'consumer'
+              }
+            });
+
+          } else {
+            this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+            this.api_loading = false;
+          }
+          if (this.shareLoc) {
+            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+          } else {
+            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+          }
+
   }
   handleGoBack(cstep) {
     if (this.page_source !== 'provider_checkin') {
@@ -1586,7 +1595,15 @@ export class CheckInInnerComponent implements OnInit {
       }
       this.dialogRef.close();
       this.router.navigate(['/']);
-    }
+    } 
+    // else if (status === 'livetrack' && this.sel_ser_det.isPrePayment) {
+    //   this.prePaymentcheckin(this.trackUuid);
+    //   if (this.shareLoc) {
+    //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    //   } else {
+    //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    //   }
+    // }
   }
   saveLiveTrackDetails() {
     this.track_loading = true;
