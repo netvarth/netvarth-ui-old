@@ -25,25 +25,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     @Output() idSelected = new EventEmitter<any>();
     departments: any = [];
     services_list: any = [];
-    // breadcrumbs_init = [
-    //     {
-    //         title: 'Settings',
-    //         url: '/provider/settings'
-    //     },
-    //     {
-    //         title: Messages.WAITLIST_MANAGE_CAP,
-    //         url: '/provider/settings/q-manager'
-    //     },
-    //     {
-    //         title: 'Queue Statusboards',
-    //         url: '/provider/settings/q-manager/displayboards'
-    //     },
-    //     {
-    //         title: 'Queue-Set',
-    //         url: '/provider/settings/q-manager/displayboards/q-set'
-    //     }
-    // ];
-    // breadcrumbs = this.breadcrumbs_init;
     actionparam;
     display_schedule: any = [];
     defaultLables: any = [];
@@ -67,6 +48,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     filterByDept = false;
     locName;
     board_count = 0;
+    categoryIds: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -75,33 +57,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         public provider_shared_functions: ProviderSharedFuctions
     ) {
         this.resetFields();
-        // this.activated_route.params.subscribe(params => {
-        //     // this.actionparam = params.id;
-        // }
-        // );
-        // this.getProviderServices();
-        // this.getDepartments();
-        // this.getProviderQueues();
-        // alert(this.id);
-        // if (this.id) {
-        //     this.getDisplaydashboardbyId(this.id);
-        //     this.submit_btn = Messages.UPDATE_BTN;
-        // } else {
-        //     this.submit_btn = Messages.SAVE_BTN;
-        //     this.getLabels();
-        //     // const breadcrumbs = [];
-        //     // this.breadcrumbs_init.map((e) => {
-        //     //     breadcrumbs.push(e);
-        //     // });
-        //     // breadcrumbs.push({
-        //     //     title: 'Add'
-        //     // });
-        //     // this.breadcrumbs = breadcrumbs;
-        // }
-        // });
     }
     ngOnInit() {
-        // this.getDisplayboardCount();
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         this.locName = loc_details.place;
@@ -121,7 +78,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.id = this.qsetId;
         this.resetFields();
         this.actionparam = this.action;
-        // this.id = this.id;
         this.getDepartments();
         this.getProviderQueues();
         this.getProviderServices();
@@ -131,42 +87,24 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         } else {
             this.submit_btn = Messages.SAVE_BTN;
             this.getLabels();
-            // const breadcrumbs = [];
-            // this.breadcrumbs_init.map((e) => {
-            //     breadcrumbs.push(e);
-            // });
-            // breadcrumbs.push({
-            //     title: 'Add'
-            // });
-            // this.breadcrumbs = breadcrumbs;
         }
-        // });
     }
     getDisplaydashboardbyId(id) {
         this.getLabels();
         this.provider_services.getDisplayboardQSetbyId(id).subscribe(data => {
             this.displayBoardData = data;
-            const breadcrumbs = [];
-            // this.breadcrumbs_init.map((e) => {
-            //     breadcrumbs.push(e);
-            // });
-            // breadcrumbs.push({
-            //     title: this.displayBoardData.displayName
-            // });
-            // this.breadcrumbs = breadcrumbs;
             this.boardName = this.displayBoardData.name;
             this.boardDisplayname = this.displayBoardData.displayName;
             for (let i = 0; i < this.displayBoardData.queueSetFor.length; i++) {
                 this.selectedCategory = this.displayBoardData.queueSetFor[i].type;
-                this.selectedCategoryValue = this.displayBoardData.queueSetFor[i].id[0];
                 if (this.displayBoardData.queueSetFor[i].type === 'SERVICE') {
-                    this.serviceSelection(this.displayBoardData.queueSetFor[i].id[0]);
+                    this.selectedService(this.displayBoardData.queueSetFor[i].id);
                 }
                 if (this.displayBoardData.queueSetFor[i].type === 'QUEUE') {
-                    this.queueSelection(this.displayBoardData.queueSetFor[i].id[0]);
+                    this.selectedQueues(this.displayBoardData.queueSetFor[i].id);
                 }
                 if (this.displayBoardData.queueSetFor[i].type === 'DEPARTMENT') {
-                    this.departmentSelection(this.displayBoardData.queueSetFor[i].id[0]);
+                    this.selectedDept(this.displayBoardData.queueSetFor[i].id);
                 }
             }
             Object.keys(this.displayBoardData.sortBy).forEach(key => {
@@ -182,13 +120,41 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                             this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
                         }
                         this.defaultLables[j].checked = true;
-                        // if ((this.board_count > 0 && this.defaultLables[j].name === 'appointmentTime') || this.defaultLables[j].name !== 'appointmentTime') {
                         this.labelSelection(j, 'edit');
-                        // }
                     }
                 }
             }
         });
+    }
+    selectedService(ids) {
+        for (let i = 0; i < this.services_list.length; i++) {
+            for (let j = 0; j < ids.length; j++) {
+                this.serviceSelection(ids[j]);
+                if (this.services_list[i].id === ids[j]) {
+                    this.services_list[i].checked = true;
+                }
+            }
+        }
+    }
+    selectedDept(ids) {
+        for (let i = 0; i < this.departments.length; i++) {
+            for (let j = 0; j < ids.length; j++) {
+                this.departmentSelection(ids[j]);
+                if (this.departments[i].departmentId === ids[j]) {
+                    this.departments[i].checked = true;
+                }
+            }
+        }
+    }
+    selectedQueues(ids) {
+        for (let i = 0; i < this.display_schedule.length; i++) {
+            for (let j = 0; j < ids.length; j++) {
+                this.queueSelection(ids[j]);
+                if (this.display_schedule[i].id === ids[j]) {
+                    this.display_schedule[i].checked = true;
+                }
+            }
+        }
     }
     editStatusBoard(id) {
         this.source = 'QLIST';
@@ -215,10 +181,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'sortBy': this.sortByFieldsList
             };
             this.provider_services.createDisplayboardQSet(post_data).subscribe(data => {
-                // this.shared_Functionsobj.openSnackBar('Displayboard added successfully', { 'panelclass': 'snackbarerror' });
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_ADD'), { 'panelclass': 'snackbarerror' });
-                // this.getDisplaydashboardbyId(data);
-                // this.actionparam = 'view';
                 const actionObj = {
                     source: this.source,
                     refresh: true
@@ -234,9 +197,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 error => {
                     this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-            // } else {
-            //     this.shared_Functionsobj.openSnackBar('Please enter the name for your queue-set', { 'panelClass': 'snackbarerror' });
-            // }
         }
         if (this.actionparam === 'edit') {
             const post_data = {
@@ -249,7 +209,6 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             };
             this.provider_services.updateDisplayboardQSet(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
-                // this.getDisplaydashboardbyId(this.displayBoardData.id);
                 const actionObj = {
                     source: this.source,
                     refresh: true
@@ -292,8 +251,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.services_list = data;
                 if (this.actionparam === 'add' && this.selectedCategory === '' && this.services_list.length > 0) {
                     this.selectedCategory = 'SERVICE';
-                    this.selectedCategoryValue = this.services_list[0].id;
-                    this.serviceSelection(this.services_list[0].id);
+                    // this.selectedCategoryValue = this.services_list[0].id;
+                    // this.serviceSelection(this.services_list[0].id);
                 }
             });
     }
@@ -311,8 +270,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     this.filterByDept = this.deptObj.filterByDept;
                     if (this.actionparam === 'add' && this.departments.length > 0 && this.filterByDept) {
                         this.selectedCategory = 'DEPARTMENT';
-                        this.selectedCategoryValue = this.departments[0].departmentId;
-                        this.departmentSelection(this.departments[0].departmentId);
+                        // this.selectedCategoryValue = this.departments[0].departmentId;
+                        // this.departmentSelection(this.departments[0].departmentId);
                     }
                 },
                 error => {
@@ -328,8 +287,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.display_schedule = data;
                 if (this.actionparam === 'add' && this.selectedCategory === '' && this.display_schedule.length > 0) {
                     this.selectedCategory = 'QUEUE';
-                    this.selectedCategoryValue = this.display_schedule[0].id;
-                    this.queueSelection(this.display_schedule[0].id);
+                    // this.selectedCategoryValue = this.display_schedule[0].id;
+                    // this.queueSelection(this.display_schedule[0].id);
                 }
                 for (let ii = 0; ii < this.display_schedule.length; ii++) {
                     let schedule_arr = [];
@@ -410,14 +369,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     categorySelection(value) {
         this.selectedCategory = value;
+        this.categoryIds = [];
         if (this.selectedCategory === 'SERVICE') {
-            this.selectedCategoryValue = this.services_list[0].id;
             this.serviceSelection(this.services_list[0].id);
         } else if (this.selectedCategory === 'QUEUE') {
-            this.selectedCategoryValue = this.display_schedule[0].id;
             this.queueSelection(this.display_schedule[0].id);
         } else if (this.selectedCategory === 'DEPARTMENT') {
-            this.selectedCategoryValue = this.departments[0].departmentId;
             if (this.departments.length > 0) {
                 this.departmentSelection(this.departments[0].departmentId);
             }
@@ -434,27 +391,30 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service) {
+        if (this.categoryIds.indexOf(service) === -1) {
+            this.categoryIds.push(service);
+        }
         this.statusBoardfor = [{
             'type': 'SERVICE',
-            'id': [
-                service
-            ]
+            'id': this.categoryIds
         }];
     }
     departmentSelection(dept) {
+        if (this.categoryIds.indexOf(dept) === -1) {
+            this.categoryIds.push(dept);
+        }
         this.statusBoardfor = [{
             'type': 'DEPARTMENT',
-            'id': [
-                dept
-            ]
+            'id': this.categoryIds
         }];
     }
     queueSelection(queue) {
+        if (this.categoryIds.indexOf(queue) === -1) {
+            this.categoryIds.push(queue);
+        }
         this.statusBoardfor = [{
             'type': 'QUEUE',
-            'id': [
-                queue
-            ]
+            'id': this.categoryIds
         }];
     }
     getNamefromId(id, type) {

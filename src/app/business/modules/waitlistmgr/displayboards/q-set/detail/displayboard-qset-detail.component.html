@@ -94,37 +94,50 @@
                     <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Services</label>
                     <div class="mgn-lt-20" *ngFor="let service of services_list; index as i">
-                        <mat-radio-group [(ngModel)]="selectedCategoryValue">
+                        <!-- <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button [value]="service.id" [checked]="services_list[i].checked"
                                 (change)="serviceSelection(service.id)">
                                 {{service.name | capitalizeFirst}}
                             </mat-radio-button>
-                        </mat-radio-group>
+                        </mat-radio-group> -->
+                        <mat-checkbox class="example-margin" style="margin-left: 30px"
+                        (change)="serviceSelection(service.id)" [checked]="services_list[i].checked">
+                        {{service.name | capitalizeFirst}}
+                    </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'DEPARTMENT'">
                     <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Department</label>
                     <div class="mgn-lt-20" *ngFor="let department of departments; index as i">
-                        <mat-radio-group [(ngModel)]="selectedCategoryValue">
+                        <!-- <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button [value]="department.departmentId" [checked]="departments[i].checked"
                                 (change)="departmentSelection(department.departmentId)">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-radio-button>
-                        </mat-radio-group>
+                        </mat-radio-group> -->
+                        <mat-checkbox class="example-margin" style="margin-left: 30px"
+                        (change)="departmentSelection(department.departmentId)" [checked]="departments[i].checked">
+                        {{department.departmentName | capitalizeFirst}}
+                    </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'QUEUE'">
                     <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Queues</label>
                     <div class="mgn-lt-20" *ngFor="let schedule of display_schedule; index as i">
-                        <mat-radio-group [(ngModel)]="selectedCategoryValue">
+                        <!-- <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button *ngIf="schedule.queueState === 'ENABLED'" [value]="schedule.id"
                                 [checked]="display_schedule[i].checked" (change)="queueSelection(schedule.id)">
                                 {{schedule.displayQ.dstr | capitalizeFirst}}
                                 {{schedule.displayQ.time}}
                             </mat-radio-button>
-                        </mat-radio-group>
+                        </mat-radio-group> -->
+                        <mat-checkbox class="example-margin" style="margin-left: 30px"
+                        (change)="queueSelection(schedule.id)" [checked]="display_schedule[i].checked">
+                        {{schedule.displayQ.dstr | capitalizeFirst}}
+                                {{schedule.displayQ.time}}
+                    </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 ">

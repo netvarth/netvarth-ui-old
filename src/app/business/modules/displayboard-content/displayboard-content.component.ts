@@ -35,6 +35,103 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     locId;
     provider_id;
     businessJson: any = [];
+
+    StatusboardJson = [{
+        'id': 131,
+        'name': 'dfhd',
+        'displayName': 'dfhd',
+        'layout': '1_1',
+        'metric': [
+            {
+                'providerId': 72407,
+                'sbId': {
+                    'id': 196,
+                    'name': 'Appt Criteria',
+                    'displayName': 'Appt Criteria',
+                    'fieldList': [{
+                        'name': 'waitlistingFor',
+                        'label': false,
+                        'order': 2,
+                        'displayName': 'Customer',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'primaryMobileNo',
+                        'label': false,
+                        'order': 3,
+                        'displayName': 'Mobile',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'appointmentTime',
+                        'label': false,
+                        'order': 4,
+                        'displayName': 'Appointment Time',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'service',
+                        'label': false,
+                        'order': 6,
+                        'displayName': 'Service',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'queue',
+                        'label': false,
+                        'order': 7,
+                        'displayName': 'Queue',
+                        'defaultValue': ''
+                    }],
+                    'queueSetFor': [{
+                        'id': [4783],
+                        'type': 'QUEUE'
+                    }],
+                    'sortBy': {
+                        'sort_appointmentTime': 'asc'
+                    }
+                },
+                'position': '0_0'
+            },
+            {
+                'providerId': 72404,
+                'sbId': {
+                    'id': 198,
+                    'name': 'Token',
+                    'displayName': 'Token',
+                    'fieldList': [{
+                        'name': 'token',
+                        'label': false,
+                        'order': 1,
+                        'displayName': 'Token',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'waitlistingFor',
+                        'label': false,
+                        'order': 2,
+                        'displayName': 'Customer',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'primaryMobileNo',
+                        'label': false,
+                        'order': 3,
+                        'displayName': 'Mobile',
+                        'defaultValue': ''
+                    }, {
+                        'name': 'queue',
+                        'label': false,
+                        'order': 7,
+                        'displayName': 'Queue',
+                        'defaultValue': ''
+                    }],
+                    'queueSetFor': [{
+                        'id': [4784],
+                        'type': 'QUEUE'
+                    }],
+                    'sortBy': {
+                        'sort_token': 'asc'
+                    }
+                },
+                'position': '0_0'
+            }]
+    }];
+
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
@@ -67,6 +164,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         this.getBusinessProfile();
         this.getBusinessdetFromLocalstorage();
         this.getStatusboard();
+        console.log(this.StatusboardJson);
         this.cronHandle = Observable.interval(30000).subscribe(() => {
             this.getStatusboard();
         });
