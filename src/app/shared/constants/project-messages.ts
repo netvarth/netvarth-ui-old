@@ -51,7 +51,7 @@ export const Messages = {
 
   // notifications
   'GENRL_NOTIFICATION_MSG': 'Inorder to send and receive notifications, the [provider] has to purchase atleast one of the Jaldee Messaging ADD-ON.',
-  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Sent notifications to your [customer]s!',
+  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Send notifications to your [customer]s!',
   'FRM_LEVEL_PROVIDER_NOTIFICATION_MSG': 'Get notifications from [customer]!',
   'CUSTOMER_NAME': '[customer]',
   'PROVIDER_NAME': '[provider]',
