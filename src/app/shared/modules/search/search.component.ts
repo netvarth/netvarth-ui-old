@@ -538,16 +538,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   getDomainList() {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
-    if (bconfig) {
-      if (bconfig.bdata) { // case if data is there in local storage
-        const bdate = bconfig.cdate;
-        const bdata = bconfig.bdata;
-        const saveddate = new Date(bdate);
-        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-          run_api = false;
-          this.domainlist_data = bdata;
-        }
+    if (bconfig && bconfig.bdata && bconfig.cdate) {
+      const bdate = bconfig.cdate;
+      const bdata = bconfig.bdata;
+      const saveddate = new Date(bdate);
+      const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+        run_api = false;
+        this.domainlist_data = bdata;
       }
     }
     if (run_api) { // case if data is not there in data

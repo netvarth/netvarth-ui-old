@@ -173,7 +173,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       loop: false,
       easing: 'ease'
     };
-
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
@@ -189,7 +188,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.cronHandleTrack = Observable.interval(this.refreshTime * 2000).subscribe(x => {
       this.liveTrackPolling();
     });
-
 
     this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
       switch (message.ttype) {
@@ -304,7 +302,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               if (waitlist.jaldeeWaitlistDistanceTime && waitlist.waitlistStatus === 'checkedIn') {
                 this.statusOfLiveTrack(waitlist, i);
                 this.pollingSet.push(waitlist);
-                console.log(this.pollingSet);
               }
               this.waitlists[i].estimated_time = retval.time;
               this.waitlists[i].estimated_timenow = retval.timenow;
@@ -410,7 +407,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
 
-
   getHistroy() {
     this.loadcomplete.history = false;
     const params = this.setPaginationFilter();
@@ -453,7 +449,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.loadcomplete.fav_provider = true;
           this.fav_providers = data;
-          console.log(this.fav_providers);
           this.fav_providers_id_list = [];
           // this.setWaitlistTimeDetails();
           for (const x of this.fav_providers) {
@@ -694,7 +689,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
@@ -712,7 +706,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(data, origin = 'consumer') {
-    console.log(data);
     const provider_data = data.provider_data;
     const location_data = data.location_data;
     this.checkindialogRef = this.dialog.open(CheckInComponent, {
@@ -760,18 +753,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       'sel_date': currdate,
       'chdatereq': chdatereq
     };
-
     post_data.provider_data = {
       'unique_id': provider.uniqueId,
       'account_id': provider.id,
       'name': provider.businessName
     };
-
     post_data.location_data = {
       'id': location.id,
       'name': location.place
     };
-    console.log(post_data);
     this.showCheckin(post_data);
   }
   gets3curl() {
@@ -798,7 +788,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
         switch (section) {
-
           case 'settings': {
             this.fav_providers[index]['settings'] = res;
             break;
@@ -807,11 +796,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.terminologiesJson = res;
             break;
           }
-
         }
       },
         error => {
-
         }
       );
   }
@@ -870,7 +857,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       });
       this.billdialogRef.afterClosed().subscribe(result => {
-
         if (this.billdialogRef) {
           this.billdialogRef = null;
         }
@@ -937,7 +923,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-
   confirmSettleBill(waitlist) {
     const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
       width: '50%',
@@ -967,7 +952,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 'accountId': waitlist.provider.id,
                 'purpose': 'prePayment'
               };
-
               const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
                 width: '50%',
                 panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -977,25 +961,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   'origin': 'consumer'
                 }
               });
-
-
-
-
-              // this.shared_services.consumerPayment(payData)
-              // .subscribe(pData => {
-              // if (pData['response']) {
-              // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-              // this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-              // setTimeout(() => {
-              // this.document.getElementById('payuform').submit();
-              // }, 2000);
-              // } else {
-              // this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-              // }
-              // },
-              // error => {
-              // this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              // });
             } else {
               this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
             }
@@ -1024,42 +989,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const passdata = {
       'travelMode': type
     };
-
-    // getTravelMod(event) {
-    //   this.trackMode = false;
-    //   this.travelMode = event;
-    //   if (event === 'DRIVING') {
-    //     this.driving = true;
-    //     this.walking = false;
-    //     this.bicycling = false;
-    //   } else if  (event === 'WALKING') {
-    //     this.walking = true;
-    //     this.driving = false;
-    //     this.bicycling = false;
-    //   } else {
-    //     this.walking = false;
-    //     this.driving = false;
-    //     this.bicycling = true;
-    //   }
-    // }
-
-    // const post_Data = {
-    //   'jaldeeGeoLocation': {
-    //     'latitude': this.lat_lng.latitude,
-    //     'longitude': this.lat_lng.longitude
-    //   },
-    //   'travelMode': type,
-    //   'waitlistPhoneNumber': this.consumerPhoneNo,
-    //   'jaldeeStartTimeMod': this.notifyTime,
-    //   'shareLocStatus': true
-    // };
-    // this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
-    //   .subscribe(data => {
-    //     console.log(data);
-    //   });
-
-
-
     this.shared_services.updateTravelMode(uid, id, passdata)
       .subscribe(data => {
         this.changemode[i] = false;
@@ -1068,7 +997,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
-
   }
   getMintuesToHour(time) {
     return this.shared_functions.providerConvertMinutesToHourMinute(time);
@@ -1092,9 +1020,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       },
         error => {
         });
-
     }
-
   }
   updateLatLong(uid, id, passdata) {
     this.shared_services.updateLatLong(uid, id, passdata)
@@ -1144,21 +1070,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   liveTrackPolling() {
     const _this = this;
     if (_this.pollingSet && _this.pollingSet.length > 0) {
-      // console.log(_this.pollingSet);
       _this.setSystemDate().then(
         () => {
           for (const waitlist of _this.pollingSet) {
-            // console.log("for" +waitlist);
             if (waitlist.jaldeeWaitlistDistanceTime) {
-              // console.log(waitlist);
               let pollingDtTim = '';
               let pollingDateTime = '';
               if (waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
                 pollingDtTim = waitlist.date + ' ' + waitlist.jaldeeWaitlistDistanceTime.pollingTime;
                 pollingDateTime = moment(pollingDtTim).format('YYYY-MM-DD HH:mm');
                 const serverDateTime = moment(_this.server_date).format('YYYY-MM-DD HH:mm');
-                // console.log('pollingDateTime' + pollingDateTime);
-                // console.log('serverDateTime' + serverDateTime);
                 if (serverDateTime >= pollingDateTime) {
                   _this.getCurrentLocation();
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
@@ -1168,7 +1089,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                       });
                 }
               } else {
-                console.log('trackStatus' + waitlist.trackStatus);
                 if (waitlist.trackStatus) {
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
                     .subscribe(data => { },

@@ -182,7 +182,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.setSystemDate();
     this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
@@ -248,35 +247,25 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  setSystemDate() {
-    this.shared_service.getSystemDate()
-      .subscribe(
-        res => {
-          this.server_date = res;
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
-        });
-  }
-
   getDomainListMain() {
     return new Promise((resolve, reject) => {
       const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
       let run_api = true;
-      if (bconfig) { // case if data is there in local storage
-        if (bconfig.bdata) {
-          const bdate = bconfig.cdate;
-          const bdata = bconfig.bdata;
-          const saveddate = new Date(bdate);
-          const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
-          if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-            run_api = false;
-            resolve(bdata);
-          }
+      if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
+        const bdate = bconfig.cdate;
+        const bdata = bconfig.bdata;
+        const saveddate = new Date(bdate);
+        const diff = this.shared_functions.getdaysdifffromDates('now', saveddate);
+        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+          run_api = false;
+          resolve(bdata);
         }
       }
       if (run_api) { // case if data is not there in data
         this.shared_service.bussinessDomains()
           .subscribe(
             res => {
+              this.domainlist_data = res;
               const today = new Date();
               const postdata = {
                 cdate: today,
@@ -1196,8 +1185,21 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     let retarr = { 'dom': '', 'subdom_name': '', 'subdom_dispname': '' };
     if (this.domainlist_data === undefined) {
       const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-      if (bconfig) { // case if data is there in local storage
+      if (bconfig && bconfig.bdata) { // case if data is there in local storage
         this.domainlist_data = bconfig.bdata;
+      } else {
+        this.shared_service.bussinessDomains()
+          .subscribe(
+            res => {
+              this.domainlist_data = res;
+              const today = new Date();
+              const postdata = {
+                cdate: today,
+                bdata: this.domainlist_data
+              };
+              this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+            }
+          );
       }
     }
     if (this.domainlist_data) {
@@ -1604,7 +1606,6 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
-      // this.router.navigate(['/']);
     });
   }
   checkProvider(type) {
