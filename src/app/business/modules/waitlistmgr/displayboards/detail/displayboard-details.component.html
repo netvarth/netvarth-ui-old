@@ -23,9 +23,11 @@
                             <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="showMode == 'DBOARD'">
                                 <div *ngIf="actionparam === 'add'" class="create-dept">
                                     <ul class="info-lst serviceadd-info">
-                                        <li>To create a Queue Statusboard, You need to purchase a 'Queue Statusboard'
+                                        <li *ngIf="!frm_lvl_msg">To create a Queue Statusboard, You need to purchase a 'Queue Statusboard'
                                             add-on from the License section. <a class="pointlist"
                                                 (click)="gotoLicense()">Go to addons</a>
+                                        </li>
+                                        <li *ngIf="frm_lvl_msg">To create a Queue Statusboard,contact administrator
                                         </li>
                                     </ul>
                                 </div>
