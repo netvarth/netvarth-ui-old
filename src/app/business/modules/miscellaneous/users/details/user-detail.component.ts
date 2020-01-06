@@ -45,6 +45,8 @@ export class BranchUserDetailComponent implements OnInit {
     email1error = null;
     subDomains: any = [];
     id;
+    tday = new Date();
+    minday = new Date(1900, 0, 1);
     breadcrumbs_init = [
         {
             title: 'Settings',

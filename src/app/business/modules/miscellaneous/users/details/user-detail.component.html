@@ -1,205 +1,205 @@
 <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section>
-    <div class="content loc-list bsp">
-        <div class="col-md-12 no-padding-small">
-            <div class="row">
-                <div class="card p0">
-                    <div class="copy locd">
-                        <div class="lbl col-md-12 no padding">
-                            <div class="card" *ngIf="api_loading">
-                                <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                            </div>
-                            <div class="col-md-12" *ngIf="actionparam !== 'view' && !api_loading">
-                                <div *ngIf="!filterBydept" class="create-dept">
-                                    <ul class="info-lst serviceadd-info">
-                                        <li>Department feature needs to enabled to add a doctor. <a class="pointlist"
-                                                (click)="enabledepartment()">Click here</a> to enable in order to complete the process
-                                        </li>
-                                    </ul>
-                                </div>
-                                <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-                                    onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input matInput type="text" class="form-control" id="first_name"
-                                                    placeholder="First Name *" formControlName="first_name"
-                                                    autocomplete="off">
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'first_name')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
-                                                            {
-                                                            'required' : 'First name is required',
-                                                            'pattern' : 'Only alphabets are allowed'
-                                                            })">
-                                            </app-field-error-display>
-                                            <app-field-error-display [displayError]="true"
-                                                *ngIf="fnameerror != null && !fed_service.isFieldValid(amForm,'first_name')"
-                                                [errorMsg]="fnameerror">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input matInput type="text" class="form-control" id="last_name"
-                                                    placeholder="Last Name *" formControlName="last_name"
-                                                    autocomplete="off">
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'last_name')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
-                                                            {
-                                                            'required' : 'Last name is required',
-                                                            'pattern' : 'Only alphabets are allowed'
-                                                            })">
-                                            </app-field-error-display>
-                                            <app-field-error-display [displayError]="true"
-                                                *ngIf="!fed_service.isFieldValid(amForm,'last_name')"
-                                                [errorMsg]="lnameerror">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group mobile-field" style="width: 100%">
-                                            <mat-form-field>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend mob-prefix">
-                                                        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-                                                    </div>
-                                                    <input type="text" (keypress)="isNumeric($event)" matInput
-                                                        class="form-control text-width" id="phonenumber"
-                                                        placeholder="Enter Mobile # *" formControlName="phonenumber"
-                                                        autocomplete="off" ngModel maxlength="10">
-                                                </div>
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'phonenumber')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'phonenumber',
-                                                {
-                                                'required' : 'Mobile number is required',
-                                                'minlength' : 'Enter a 10 digit mobile number',
-                                                'maxlength' : 'Enter a 10 digit mobile number',
-                                                'pattern' : 'Only numbers are allowed'
-                                                })">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <mat-select placeholder="{{select_subdomain_cap}}" subdom
-                                                    formControlName="selectedSubDomain" #subdom
-                                                    (selectionChange)="onItemSelect(subdom.value)">
-                                                    <mat-option *ngFor="let subdomain of subDomains; let i = index"
-                                                        [value]="subdomain">
-                                                        <!-- {{subdomain.displayName}} -->
-                                                        {{subdomain_displayname[subdomain.id]}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12"
-                                        *ngIf="filterBydept && departments.length > 0">
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <mat-select placeholder="Select department *"
-                                                    formControlName="selectedDepartment" #deptsel>
-                                                    <mat-option *ngFor="let dept of departments"
-                                                        [value]="dept.departmentCode">
-                                                        {{dept.departmentName}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <mat-form-field>
-                                                <input class="form-control" placeholder="Enter default password *"
-                                                    matInput formControlName="password" reverse="true" type="password">
-                                            </mat-form-field>
-                                            <app-field-error-display
-                                                [displayError]="fed_service.isFieldValid(amForm,'password')"
-                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'password',
-                                                    {'required' : 'Enter Password Required',
-                                                    'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
-                                            </app-field-error-display>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="email"
-                                                        formControlName="email" placeholder="Email(user@xyz.com)"
-                                                        autocomplete="off" onpaste="return false;" oncopy="return false"
-                                                        oncut="return false" ondrag="return false"
-                                                        ondrop="return false">
-                                                </mat-form-field>
-                                                <app-field-error-display [displayError]="true"
-                                                    *ngIf="emailerror != null && !fed_service.isFieldValid(amForm,'email')"
-                                                    [errorMsg]="emailerror">
-                                                </app-field-error-display>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group col-md-7 no-padding picker-form-group">
-                                                <mat-form-field>
-                                                    <input matInput [matDatepicker]="picker" placeholder="Date of birth"
-                                                        #inputdob formControlName="dob" [max]="tday" [min]="minday"
-                                                        disabled class="nofocus" tabindex="-1">
-                                                    <mat-datepicker-toggle matSuffix [for]="picker">
-                                                    </mat-datepicker-toggle>
-                                                    <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-                                                </mat-form-field>
-                                                <app-field-error-display
-                                                    [displayError]="fed_service.isFieldValid(amForm,'dob')"
-                                                    errorMsg="Please select the date of birth.">
-                                                </app-field-error-display>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-form-label" for="gender">{{gender_cap}} </label>
-                                                <mat-radio-group formControlName="gender">
-                                                    <mat-radio-button class="mgright50" value="male">{{male_cap}}
-                                                    </mat-radio-button>
-                                                    <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
-                                                </mat-radio-group>
-                                                <app-field-error-display
-                                                    [displayError]="fed_service.isFieldValid(amForm,'gender')"
-                                                    errorMsg="Please select the gender.">
-                                                </app-field-error-display>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="actiondiv labelsave" style="margin-top: 20px;">
-                                            <button (click)="onCancel()" type="button"
-                                                class="cs-btn bt2">{{cancel_btn}}</button>
-                                            &nbsp;
-                                            <button type="submit" mat-button [disabled]="!amForm.valid"
-                                                class="cs-btn bt2">{{button_title}}</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
+<div class="content loc-list bsp">
+<div class="col-md-12 no-padding-small">
+<div class="row">
+<div class="card p0">
+<div class="copy locd">
+<div class="lbl col-md-12 no padding">
+<div class="card" *ngIf="api_loading">
+<app-common-innerloading-spinner></app-common-innerloading-spinner>
+</div>
+<div class="col-md-12" *ngIf="actionparam !== 'view' && !api_loading">
+<div *ngIf="!filterBydept" class="create-dept">
+<ul class="info-lst serviceadd-info">
+    <li>Department feature needs to enabled to add a doctor. <a class="pointlist"
+            (click)="enabledepartment()">Click here</a> to enable in order to complete the process
+    </li>
+</ul>
+</div>
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="first_name"
+                placeholder="First Name *" formControlName="first_name"
+                autocomplete="off">
+        </mat-form-field>
+        <app-field-error-display
+            [displayError]="fed_service.isFieldValid(amForm,'first_name')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+                        {
+                        'required' : 'First name is required',
+                        'pattern' : 'Only alphabets are allowed'
+                        })">
+        </app-field-error-display>
+        <app-field-error-display [displayError]="true"
+            *ngIf="fnameerror != null && !fed_service.isFieldValid(amForm,'first_name')"
+            [errorMsg]="fnameerror">
+        </app-field-error-display>
+    </div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="last_name"
+                placeholder="Last Name *" formControlName="last_name"
+                autocomplete="off">
+        </mat-form-field>
+        <app-field-error-display
+            [displayError]="fed_service.isFieldValid(amForm,'last_name')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+                        {
+                        'required' : 'Last name is required',
+                        'pattern' : 'Only alphabets are allowed'
+                        })">
+        </app-field-error-display>
+        <app-field-error-display [displayError]="true"
+            *ngIf="!fed_service.isFieldValid(amForm,'last_name')"
+            [errorMsg]="lnameerror">
+        </app-field-error-display>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group mobile-field" style="width: 100%">
+        <mat-form-field>
+            <div class="input-group">
+                <div class="input-group-prepend mob-prefix">
+                    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                 </div>
+                <input type="text" (keypress)="isNumeric($event)" matInput
+                    class="form-control text-width" id="phonenumber"
+                    placeholder="Enter Mobile # *" formControlName="phonenumber"
+                    autocomplete="off" ngModel maxlength="10">
             </div>
+        </mat-form-field>
+        <app-field-error-display
+            [displayError]="fed_service.isFieldValid(amForm,'phonenumber')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'phonenumber',
+            {
+            'required' : 'Mobile number is required',
+            'minlength' : 'Enter a 10 digit mobile number',
+            'maxlength' : 'Enter a 10 digit mobile number',
+            'pattern' : 'Only numbers are allowed'
+            })">
+        </app-field-error-display>
+    </div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <mat-select placeholder="{{select_subdomain_cap}}" subdom
+                formControlName="selectedSubDomain" #subdom
+                (selectionChange)="onItemSelect(subdom.value)">
+                <mat-option *ngFor="let subdomain of subDomains; let i = index"
+                    [value]="subdomain">
+                    <!-- {{subdomain.displayName}} -->
+                    {{subdomain_displayname[subdomain.id]}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-6 col-sm-6 col-xs-12"
+    *ngIf="filterBydept && departments.length > 0">
+    <div class="form-group">
+        <mat-form-field>
+            <mat-select placeholder="Select department *"
+                formControlName="selectedDepartment" #deptsel>
+                <mat-option *ngFor="let dept of departments"
+                    [value]="dept.departmentCode">
+                    {{dept.departmentName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <input class="form-control" placeholder="Enter default password *"
+                matInput formControlName="password" reverse="true" type="password">
+        </mat-form-field>
+        <app-field-error-display
+            [displayError]="fed_service.isFieldValid(amForm,'password')"
+            [errorMsgs]="fed_service.getErrorMessage(amForm,'password',
+                {'required' : 'Enter Password Required',
+                'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
+        </app-field-error-display>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12" *ngIf="showAdvancedSection">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <mat-form-field>
+                <input matInput type="text" class="form-control" id="email"
+                    formControlName="email" placeholder="Email(user@xyz.com)"
+                    autocomplete="off" onpaste="return false;" oncopy="return false"
+                    oncut="return false" ondrag="return false"
+                    ondrop="return false">
+            </mat-form-field>
+            <app-field-error-display [displayError]="true"
+                *ngIf="emailerror != null && !fed_service.isFieldValid(amForm,'email')"
+                [errorMsg]="emailerror">
+            </app-field-error-display>
         </div>
     </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group col-md-7 no-padding picker-form-group">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Date of birth"
+                    #inputdob formControlName="dob" [max]="tday" [min]="minday"
+                    disabled class="nofocus" tabindex="-1">
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+            </mat-form-field>
+            <app-field-error-display
+                [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                errorMsg="Please select the date of birth.">
+            </app-field-error-display>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="col-form-label" for="gender">{{gender_cap}} </label>
+            <mat-radio-group formControlName="gender">
+                <mat-radio-button class="mgright50" value="male">{{male_cap}}
+                </mat-radio-button>
+                <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
+            </mat-radio-group>
+            <app-field-error-display
+                [displayError]="fed_service.isFieldValid(amForm,'gender')"
+                errorMsg="Please select the gender.">
+            </app-field-error-display>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="actiondiv labelsave" style="margin-top: 20px;">
+        <button (click)="onCancel()" type="button"
+            class="cs-btn bt2">{{cancel_btn}}</button>
+        &nbsp;
+        <button type="submit" mat-button [disabled]="!amForm.valid"
+            class="cs-btn bt2">{{button_title}}</button>
+    </div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div>
 </section>
