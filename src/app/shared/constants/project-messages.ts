@@ -1344,7 +1344,7 @@ export const Messages = {
   'FRM_LEVEL_DISCOUNTS_MSG': 'Create your discounts here.',
 
   // form-level-provider-items
-  'FRM_LEVEL_ITEMS_MSG': 'Create new items and related information here.',
+  'FRM_LEVEL_ITEMS_MSG': 'Create new products/items and related information here.',
 
   // form-level-provider-miscellaneous
   'FRM_LEVEL_NON_WORKING_MSG': 'Unavailability of your services on particular days (holidays), mention here.',
