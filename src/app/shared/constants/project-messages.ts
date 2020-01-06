@@ -1434,5 +1434,12 @@ export const Messages = {
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
   'TRACKINGCANCELENABLED': ' able to track your ETA',
   'TRACKINGCANCELDISABLED': ' disable to track your ETA',
-  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations'
+  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations',
+  //Doctor
+  'BRANCHDOCTOR_ADDED': 'Doctor created successfully',
+  'BRANCHDOCTOR_UPDATED': 'Doctor updated successfully',
+  //Assistants
+  'BRANCHASSISTANT_ADDED': 'Assistant created successfully',
+  'BRANCHASSISTANT_UPDATED': 'Assistant updated successfully',
+  'BRANCHUSER_DELETED':'User deleted successfully'
 };

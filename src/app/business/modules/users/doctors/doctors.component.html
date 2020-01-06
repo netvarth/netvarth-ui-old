@@ -42,6 +42,15 @@
                                             </span>
                                         </a>
                                     </li>
+                                    <li class="dropdown notifications-menu pull-right"  *ngIf="profileStatus">
+                                        <a 
+                                            (click)="deleteUser()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                <i class="fa fa-trash"></i>Delete
+                                            </span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-md-12" *ngIf="users_list.length==0">

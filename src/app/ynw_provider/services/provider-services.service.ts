@@ -802,6 +802,10 @@ export class ProviderServices {
     const url = 'provider/assistant';
     return this.servicemeta.httpPost(url, post_data);
   }
+  updateAssistant(post_data) {
+    const url = 'provider/assistant';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   getCorporateDetails() {
     const url = 'provider/corp';
     return this.servicemeta.httpGet(url);
@@ -861,5 +865,9 @@ export class ProviderServices {
   getLicenseAddonmetaData() {
     const url = 'provider/license/addonmetadata';
     return this.servicemeta.httpGet(url);
+  }
+  deleteUser(id) {
+    const url = 'provider/assistant/' + id;
+    return this.servicemeta.httpDelete(url);
   }
 }

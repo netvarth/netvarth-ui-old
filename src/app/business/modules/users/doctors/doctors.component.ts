@@ -14,6 +14,8 @@ export class DoctorsComponent implements OnInit {
     userType;
     userlistSelected: any = [];
     userlistSelection = 0;
+    selectedUserlist: any = [];
+    new_users_list: any = [];
     profileStatus = false;
     breadcrumbs = [
         {
@@ -95,7 +97,6 @@ export class DoctorsComponent implements OnInit {
       }
 
       selectUserlist(index) {
-          console.log("hj");
         if (this.userlistSelected[index]) {
           delete this.userlistSelected[index];
           this.userlistSelection--;
@@ -103,12 +104,21 @@ export class DoctorsComponent implements OnInit {
           this.userlistSelected[index] = true;
           this.userlistSelection++;
         }
-        if(this.userlistSelection === 1) {
-           this.profileStatus = true;
+        if (this.userlistSelection === 1) {
+            this.selectedUserlist = this.users_list[this.userlistSelected.indexOf(true)];
+            console.log(this.selectedUserlist);
+            this.profileStatus = true;
 
-        }else{
+        } else {
             this.profileStatus = false;
         }
+    }
+    deleteUser() {
+        this.shared_services.deleteUser(this.selectedUserlist.id).subscribe(data => {
+        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_DELETED'), { 'panelclass': 'snackbarerror' });                  
+        }, error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
     }
     userProfile(info) {
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);

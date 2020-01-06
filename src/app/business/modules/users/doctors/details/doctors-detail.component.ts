@@ -112,40 +112,7 @@ export class BranchDoctorDetailComponent implements OnInit {
                 break;
             }
         }
-        if (this.actionparam === 'add') {
        this.createForm();
-    }
-    if (this.actionparam === 'edit') {
-        console.log(this.actionparam);
-        this.user_data = {
-            "userProfile": {
-                "firstName": "aziz",
-                "lastName": "k",
-                "dob": "2019-12-01",
-                "gender": "male",
-                "email": "athiraa.ynwtest@netvarth.com",
-                "countryCode": "+91",
-                "primaryMobileNo": "5555555566"
-            },
-            "subSector": "dentists",
-            "commonPassword": "Netvarth1",
-            "isAdmin": true,
-            "departmentCode": "default"
-        }
-        this.createForm();
-        console.log(this.user_data['userProfile']['firstName']);
-        this.amForm.setValue({
-            'first_name': this.user_data['userProfile']['firstName'] || this.amForm.get('first_name').value,
-            'last_name': this.user_data['userProfile']['lastName'] || this.amForm.get('last_name').value,
-            'gender': this.user_data['userProfile']['gender'] || this.amForm.get('gender').value,
-            'phonenumber': this.user_data['userProfile']['primaryMobileNo'] || this.amForm.get('phonenumber').value,
-            'dob': this.user_data['userProfile']['dob'] || this.amForm.get('dob').value,
-            'email': this.user_data['userProfile']['email'] || this.amForm.get('email').value,
-            'password': this.user_data['commonPassword'] || this.amForm.get('password').value,
-            'selectedSubDomain': this.user_data['subSector'] || this.amForm.get('selectedSubDomain').value,
-            'selectedDepartment': this.user_data['departmentCode'] || this.amForm.get('selectedDepartment').value,
-        });
-    }
     }
     createForm() {
         console.log('edit');
@@ -161,6 +128,40 @@ export class BranchDoctorDetailComponent implements OnInit {
             selectedDepartment: []
         });
 
+        if (this.actionparam === 'edit') {
+            this.updateForm();
+        }
+
+    }
+    updateForm() {
+        this.user_data = {
+            "userProfile": {
+                "firstName": "aziz",
+                "lastName": "k",
+                "dob": "2019-12-01",
+                "gender": "male",
+                "email": "athiraa.ynwtest@netvarth.com",
+                "countryCode": "+91",
+                "primaryMobileNo": "5555555566"
+            },
+            "subSector": "dentists",
+            "commonPassword": "Netvarth1",
+            "isAdmin": true,
+            "departmentCode": "default"
+        }
+       // this.createForm();
+        console.log(this.user_data['userProfile']['firstName']);
+        this.amForm.setValue({
+            'first_name': this.user_data['userProfile']['firstName'] || this.amForm.get('first_name').value,
+            'last_name': this.user_data['userProfile']['lastName'] || this.amForm.get('last_name').value,
+            'gender': this.user_data['userProfile']['gender'] || this.amForm.get('gender').value,
+            'phonenumber': this.user_data['userProfile']['primaryMobileNo'] || this.amForm.get('phonenumber').value,
+            'dob': this.user_data['userProfile']['dob'] || this.amForm.get('dob').value,
+            'email': this.user_data['userProfile']['email'] || this.amForm.get('email').value,
+            'password': this.user_data['commonPassword'] || this.amForm.get('password').value,
+            'selectedSubDomain': this.user_data['subSector'] || this.amForm.get('selectedSubDomain').value,
+            'selectedDepartment': this.user_data['departmentCode'] || this.amForm.get('selectedDepartment').value,
+        });
     }
     onItemSelect(subdomain) {
         // console.log(subdomain);
@@ -206,7 +207,7 @@ export class BranchDoctorDetailComponent implements OnInit {
                 'departmentCode': input.selectedDepartment
             };
             this.provider_services.createBranchSP(post_data).subscribe(data => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHDOCTOR_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'users', 'doctors']);
             },
                 error => {
@@ -227,13 +228,25 @@ export class BranchDoctorDetailComponent implements OnInit {
                 'userType': true,
                 'address': input.selectedAddress
             };
-            this.provider_services.createAssistant(post_data).subscribe(data => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
-                this.router.navigate(['provider', 'settings', 'users', 'doctors']);
-            },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+            if (this.actionparam === 'edit') {
+                post_data.userProfile['id'] = this.user_data['userProfile']['id'];
+                this.provider_services.updateAssistant(post_data).subscribe(data => {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHASSISTANT_ADDED'), { 'panelclass': 'snackbarerror' });
+                    this.router.navigate(['provider', 'settings', 'users', 'doctors']);
+                },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+            } else {
+                this.provider_services.createAssistant(post_data).subscribe(data => {
+                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHASSISTANT_UPDATED'), { 'panelclass': 'snackbarerror' });
+                    this.router.navigate(['provider', 'settings', 'users', 'doctors']);
+                },
+                    error => {
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+            }
+            
         }
    // }
     }
