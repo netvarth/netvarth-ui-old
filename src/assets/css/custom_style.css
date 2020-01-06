@@ -1356,7 +1356,7 @@ sup {
   width: 400px;
   margin: auto !important;
   max-width: 450px !important;
-  min-height: 300px !important;
+  min-height: 200px !important;
 }
 
 .checkin-provider .mat-dialog-container {

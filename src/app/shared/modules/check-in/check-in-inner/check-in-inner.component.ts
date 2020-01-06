@@ -1527,6 +1527,7 @@ export class CheckInInnerComponent implements OnInit {
           //     }
           // );
         }, (error) => {
+          this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
           this.shareLoc = false;
         }
       );
