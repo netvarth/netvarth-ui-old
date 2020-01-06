@@ -158,10 +158,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselOne: NgxCarousel;
 
   ngOnInit() {
+    this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    if (!this.server_date) {
-      this.setSystemDate();
-    }
     this.carouselOne = {
       grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
       slide: 3,

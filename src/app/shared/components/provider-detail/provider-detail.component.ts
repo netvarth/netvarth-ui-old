@@ -209,6 +209,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.setSystemDate();
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
@@ -249,6 +250,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       soc => soc.key === key);
     const returndet = retdet[0][field];
     return returndet;
+  }
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
+        });
   }
   gets3curl() {
     this.retval = this.sharedFunctionobj.getS3Url('provider')
@@ -863,10 +872,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.checkindialogRef.afterClosed().subscribe(result => {
-      //if (result === 'reloadlist') {
+      // if (result === 'reloadlist') {
       this.getbusinessprofiledetails_json('location', true);
-      //this.routerobj.navigate(['/']);
-
+      // this.routerobj.navigate(['/']);
       // }
     });
   }
