@@ -15,6 +15,7 @@ export class discountdetailscomponent implements OnInit
 {
   bill_discount_cap = Messages.BILL_DISCOUNT_CAP;
   name_mand_cap = Messages.NAME_MAND_CAP;
+  discount_pl_holdr = Messages.DISCOUNT_NAME_CAP;
   type_mand_cap = Messages.TYPE_MAND_CAP;
   fixed_cap = Messages.FIXED_CAP;
   percentage_cap = Messages.PERCENTAGE_CAP;
