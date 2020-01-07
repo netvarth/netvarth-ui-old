@@ -182,6 +182,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.setSystemDate();
     this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
@@ -246,7 +247,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.hideRefineifOneresultchk = false;
     }
   }
-
+  setSystemDate() {
+    this.shared_service.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.shared_functions.setitemonLocalStorage('sysdate', res);
+        });
+  }
   getDomainListMain() {
     return new Promise((resolve, reject) => {
       const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
