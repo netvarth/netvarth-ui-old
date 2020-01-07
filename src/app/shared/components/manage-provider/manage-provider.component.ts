@@ -22,7 +22,7 @@ export class ManageProviderComponent implements OnInit {
             (data: any) => {
                 console.log(data);
                 this.sharedFunctions.setitemOnSessionStorage('tabId', data.tabId);
-                this.sharedFunctions.setitemOnSessionStorage('accoutid', this.accountId);
+                this.sharedFunctions.setitemOnSessionStorage('accountid', this.accountId);
                 data['accountType'] = 'BRANCH_SP';
                 this.sharedFunctions.setitemToGroupStorage('ynw-user', data);
                 this.router.navigate(['/provider/check-ins']);

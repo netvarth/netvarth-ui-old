@@ -262,7 +262,7 @@ export class SharedFunctions {
 
   public getGroup() {
     if (this.getitemfromSessionStorage('tabId')) {
-      return this.getitemfromSessionStorage('accoutid');
+      return this.getitemfromSessionStorage('accountid');
     } else {
       return 0;
     }

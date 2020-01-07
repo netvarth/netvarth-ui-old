@@ -313,9 +313,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   //       });
   // }
   gotoBranch() {
-    const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accoutid');
+    const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromLocalStorage(accountid);
-    this.sharedfunctionobj.removeitemfromSessionStorage('accoutid');
+    this.sharedfunctionobj.removeitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromSessionStorage('tabId');
     window.location.reload();
   }

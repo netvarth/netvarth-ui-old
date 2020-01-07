@@ -93,7 +93,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   ngOnInit() {
     this.activeSchedules = this.data.schedules;
-    // this.activeSchedules = this.data.queue.displayschedule;
     this.api_loading = false;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -105,8 +104,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     this.createForm();
     this.getProviderServices();
     this.getProviderQueues();
-    // this.getDepartments();
-    // this.getProviderLocations();
     this.getBusinessConfiguration();
     // Get the provider services
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
@@ -144,14 +141,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         // onlineCheckIn: [false]
       });
     }
-    // if (this.data.type === 'edit') {
-    //     this.updateForm();
-    // }
-    // if (this.data.source === 'location_detail' &&
-    //   this.data.type === 'add' &&
-    //   this.data.queue.location.id) {
-    //   this.amForm.get('qlocation').setValue(this.data.queue.location.id);
-    // }
   }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
@@ -165,11 +154,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   existingScheduletoggle() {
     this.show_dialog = !this.show_dialog;
     this.activeQueues = [];
-    //  let queue_list: any = [];
     if (this.show_dialog) {
-      //  this.provider_services.getProviderQueues()
-      //   .subscribe(data => {
-      //     queue_list = data;
       for (let ii = 0; ii < this.queue_list.length; ii++) {
         let schedule_arr = [];
         // extracting the schedule intervals
@@ -182,7 +167,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           this.activeQueues.push(display_schedule[0]);
         }
       }
-      //   });
     }
   }
   // sets up the form with the values filled in
@@ -323,9 +307,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       .subscribe(data => {
         this.services_list = data;
         this.getDepartments();
-        // if (this.data.type === 'edit') {
-        //   this.updateForm();
-        // }
       });
     this.api_loading1 = false;
   }
@@ -365,6 +346,14 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
                 if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
                   this.departments[j].serviceIds[k] = this.services_list[i].name;
                 }
+              }
+            }
+          }
+          for (let j = 0; j < this.departments.length; j++) {
+            for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+              // tslint:disable-next-line: radix
+              if (parseInt(this.departments[j].serviceIds[k])) {
+                delete this.departments[j].serviceIds[k];
               }
             }
           }
