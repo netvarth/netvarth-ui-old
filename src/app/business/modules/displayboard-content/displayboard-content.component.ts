@@ -10,6 +10,7 @@ import { projectConstants } from '../../../shared/constants/project-constants';
     selector: 'app-displayboard-content',
     templateUrl: './displayboard-content.component.html'
 })
+
 export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     layout_id;
     boardLayouts = [

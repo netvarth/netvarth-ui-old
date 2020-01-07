@@ -102,6 +102,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // Get the provider locations
     this.getWaitlistMgr();
     this.createForm();
+    
     this.getProviderServices();
     this.getProviderQueues();
     this.getBusinessConfiguration();

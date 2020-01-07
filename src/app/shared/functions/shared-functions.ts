@@ -267,6 +267,7 @@ export class SharedFunctions {
       return 0;
     }
   }
+  
   public setitemToGroupStorage(itemname, itemvalue) {
     const group = this.getGroup();
     let groupObj = {};

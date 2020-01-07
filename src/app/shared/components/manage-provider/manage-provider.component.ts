@@ -17,6 +17,7 @@ export class ManageProviderComponent implements OnInit {
                 this.accountId = params.id;
               });
     }
+    
     ngOnInit() {
         this.provider_service.manageProvider(this.accountId).subscribe(
             (data: any) => {

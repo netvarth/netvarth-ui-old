@@ -312,6 +312,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   //       error => {
   //       });
   // }
+  
   gotoBranch() {
     const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromLocalStorage(accountid);
