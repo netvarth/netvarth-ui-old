@@ -15,7 +15,7 @@
                         <div class="copy">
                             <div class="col-md-12 no-padding">
                                 <ul class="nav jd-custom-nav chkn-dash">
-                                    <li class="dropdown notifications-menu pull-right">
+                                    <li class="dropdown notifications-menu pull-right" *ngIf="userType.type === 'doctors'">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                             (click)="addBranchSP('doctors','add')"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">
@@ -24,7 +24,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="dropdown notifications-menu pull-right">
+                                    <li class="dropdown notifications-menu pull-right" *ngIf="userType.type === 'assistants'">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                             (click)="addBranchSP('assistants','add')"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">

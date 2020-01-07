@@ -102,6 +102,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   provider_label = '';
   cust_domain_name = '';
   provider_domain_name = '';
+  assistantCount;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -434,23 +435,32 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['provider', 'settings', 'users']);
         break;
         case 'doctorslist':
-        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
+            const navigationExtras: NavigationExtras = {
+              queryParams: { type: 'doctors'}
+          };
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras);
         break;
+        case 'assistantslist':
+            const navigationExtras1: NavigationExtras = {
+              queryParams: { type: 'assistants'}
+          };
+          this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras1);
+          break;
       case 'doctors':
 
-          const navigationExtras: NavigationExtras = {
+          const navigationExtras2: NavigationExtras = {
             queryParams: { type: 'doctors',
                             mode : usermode }
         };
-        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras2);
        // this.routerobj.navigate(['provider', 'settings', 'users', 'doctors']);
         break;
       case 'assistants':
-          const navigationExtras1: NavigationExtras = {
+          const navigationExtras3: NavigationExtras = {
             queryParams: { type: 'assistants' ,
                            mode : usermode }
         };
-        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras1);
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras3);
        // this.routerobj.navigate(['provider', 'settings', 'users', 'assistants']);
         break;
     }
@@ -564,7 +574,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         }
       });
   }
-
+getAssistantCount(){
+  this.provider_services.assistantFilterCount()
+      .subscribe(data => {
+        this.assistantCount = data;
+       
+      });
+}
   // onFormChange(event) {
   //   const is_check = event.checked;
   //   const postData = {
