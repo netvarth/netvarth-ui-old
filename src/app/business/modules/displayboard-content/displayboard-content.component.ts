@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription, Observable } from 'rxjs';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
+import { promise } from 'protractor';
 
 @Component({
     selector: 'app-displayboard-content',
@@ -181,9 +182,22 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
 
         // this.getBusinessProfile();
         // this.getStatusboard();
-
-        this.initContainer();
-        this.generateDisplayboardJson();
+        this.inputStatusboards = [
+            {
+                sbId: 153,
+                providerId: 72570
+            },
+            {
+                sbId: 154,
+                providerId: 72571
+            }
+        ];
+        this.initContainer().then(
+            () => {
+                this.generateDisplayboardJson();
+            }
+        );
+        
         // this.cronHandle = Observable.interval(30000).subscribe(() => {
         //     this.getStatusboard();
         // });
@@ -235,29 +249,31 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             });
     }
     initContainer() {
-        this.inputStatusboards = [
-            {
-                sbId: 131,
-                providerId: 72407
-            },
-            {
-                sbId: 132,
-                providerId: 72404
-            }
-        ];
-
-        for (let i = 0; i < this.inputStatusboards.length; i++) {
-            const accountId = this.inputStatusboards[i].providerId;
-            this.provider_services.manageProvider(accountId).subscribe(
+const self = this;
+        return new Promise(function (resolve) {
+     
+let count = 0;
+        while (count < self.inputStatusboards.length) {
+            const accountId = self.inputStatusboards[count].providerId;
+            self.provider_services.manageProvider(accountId).subscribe(
                 (data: any) => {
-                    this.tabid[this.inputStatusboards[i].providerId] = data.tabId;
-                    this.shared_functions.setitemOnSessionStorage('accountid', accountId);
-                    this.shared_functions.setitemToGroupStorage('ynw-user', data);
-                    this.shared_functions.setitemonLocalStorage('tabIds', this.tabid);
+                    self.tabid[self.inputStatusboards[count].providerId] = data.tabId;
+                    self.shared_functions.setitemOnSessionStorage('accountid', accountId);
+                    self.shared_functions.setitemToGroupStorage('ynw-user', data);
+                    self.shared_functions.setitemonLocalStorage('tabIds', self.tabid);
+count ++;
                 }, error => {
+                    count ++;
                 });
         }
-        console.log(this.tabid);
+        if (count === self.inputStatusboards.length) {
+resolve();
+        }
+        // for (let i = 0; i < this.inputStatusboards.length; i++) {
+        
+        // }
+    });
+        console.log(self.tabid);
     }
     generateDisplayboardJson() {
         const displayboardSet = [];
