@@ -689,7 +689,8 @@
                   *ngIf="new_checkins_list.length>0 && showstatus['new']">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
-                    <div class="info-box" style="box-shadow:none" [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
+                    <div class="info-box" style="box-shadow:none"
+                      [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
                       *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">
                       <div class="info-box-icon" *ngIf="checkin.token || calculationmode!=='NoCalc'">
                         <div class="tkn pointer-cursor" *ngIf="checkin.token" (click)="goCheckinDetail(checkin)">
@@ -744,17 +745,27 @@
                             </div>
                           </div>
                           <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
-                            <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'REPORT')"
+                            <a class="statusText btn-play pointer-cursor" (click)="callingWaitlist(checkin)"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Call'">
+                              <i class="fa fa-phone" *ngIf="checkin.callingStatus" style="color: red;"></i> <span
+                                *ngIf="!small_device_display && checkin.callingStatus">Stop Calling</span>
+                              <i class="fa fa-phone" *ngIf="!checkin.callingStatus" style="color: green;"></i>
+                              <span *ngIf="!small_device_display && !checkin.callingStatus"> Call</span>
+                            </a>
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(checkin, 'REPORT')"
                               *ngIf="checkin.waitlistStatus != 'arrived' && !section_new[i]"
                               [matTooltipClass]="tooltipcls" [matTooltip]="'Arrived'">
                               <i class="fa icon-arrived" style="font-size: smaller;"></i> <span
                                 *ngIf="!small_device_display">Arrived </span>
                             </a>
-                            <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'STARTED')"
-                              *ngIf="!section_new[i]" [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(checkin, 'STARTED')" *ngIf="!section_new[i]"
+                              [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                               <i class="fa fa-play"></i> <span *ngIf="!small_device_display"> Start</span>
                             </a>
-                            <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
+                            <a class="statusText btn-play pointer-cursor"
+                              (click)="changeWaitlistStatus(checkin, 'CHECK_IN')"
                               *ngIf="checkin.billStatus != 'Settled' && checkin.waitlistStatus == 'arrived'"
                               [matTooltipClass]="tooltipcls" [matTooltip]="'Change status to ' + checkin_label">
                               <!-- <img src="assets/images/checkin-02.png" alt="" style="height: 17px;"> -->

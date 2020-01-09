@@ -6652,3 +6652,16 @@ input.jdn_ip { width: 50px !important}
 .border-btm {
   border-bottom: 1px solid #eeee !important;
 }
+@media (min-width: 1040px) and (max-width: 1132px) {
+    .statusText span{
+      font-size: smaller !important;
+    } 
+    .statusText .fa{
+      font-size: x-small !important;
+    } 
+}
+@media (max-width: 430px) {
+  .statusText {
+    padding: 5px !important;
+  }
+}

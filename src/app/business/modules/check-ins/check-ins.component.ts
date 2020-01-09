@@ -529,7 +529,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.small_device_display = false;
       this.show_small_device_queue_display = false;
     }
-    if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+    if (this.screenWidth <= 1040) {
       this.small_device_display = true;
       this.noshowCount = 2;
     } else {
@@ -2012,5 +2012,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           layout_list = data;
           this.board_count = layout_list.length;
         });
+  }
+
+  callingWaitlist(checkin) {
+    const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
+    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
+      () => {
+        this.loadApiSwitch('reloadAPIs');
+      });
   }
 }

@@ -862,4 +862,8 @@ export class ProviderServices {
     const url = 'provider/waitlist/' + uuid + '/' + time + '/appointmentTime';
     return this.servicemeta.httpPut(url);
   }
+  setCallStatus(uuid, status) {
+    const url = 'provider/waitlist/callingStatus/' + uuid + '/' + status;
+    return this.servicemeta.httpPut(url);
+  }
 }
