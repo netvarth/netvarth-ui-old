@@ -51,12 +51,15 @@
                                     </tr>
                                 </thead>
                                 <tbody style="overflow: scroll;">
+                                    <!-- <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
+                                        [class.startWaitlist]="checkin.waitlistStatus === 'started'"> -->
                                     <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
-                                        [class.startWaitlist]="checkin.waitlistStatus === 'started'">
+                                        [class.startWaitlist]="checkin.callingStatus">
                                         <td
                                             *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
-                                            {{getFieldValue(field, checkin)}} <span class="blinking"
-                                                *ngIf="field.name === 'waitlistingFor' && checkin.waitlistStatus === 'started'">
+                                            {{getFieldValue(field, checkin)}}
+                                            <span class="blinking"
+                                                *ngIf="field.name === 'calling' && checkin.callingStatus">
                                                 Calling .....</span>
                                         </td>
                                     </tr>

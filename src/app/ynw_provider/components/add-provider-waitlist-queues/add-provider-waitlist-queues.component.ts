@@ -100,9 +100,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH:mm');
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
-    this.getWaitlistMgr();
     this.createForm();
-    
+    this.getWaitlistMgr();
     this.getProviderServices();
     this.getProviderQueues();
     this.getBusinessConfiguration();
@@ -120,6 +119,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
+        timeSlot: ['', Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
@@ -138,6 +138,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+        timeSlot: ['', Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
@@ -191,6 +192,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
       qserveonce: this.data.queue.parallelServing || null,
+      timeSlot: this.data.queue.timeInterval
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
@@ -319,16 +321,19 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
 
   getWaitlistMgr() {
+    this.api_loading1 = true;
     this.waitlist_manager = null;
     this.provider_services.getWaitlistMgr()
       .subscribe(
         data => {
           this.waitlist_manager = data;
+          this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
           if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {
             this.iftokn = false;
           }
+          this.api_loading1 = false;
         });
   }
 
@@ -551,7 +556,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           'id': form_data.qlocation
         },
         'services': selser,
-        'tokenStarts': form_data.tokennum
+        'tokenStarts': form_data.tokennum,
+        'timeInterval': form_data.timeSlot
       };
       if (this.data.type === 'edit') {
         this.ifedit = true;

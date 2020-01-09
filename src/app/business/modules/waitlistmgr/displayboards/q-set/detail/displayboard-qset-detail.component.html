@@ -20,7 +20,7 @@
             </li>
         </ul>
     </div>
-    <div class="cli col-md-12 col-xs-12 col-sm-12" *ngIf="actionparam === 'view' && displayBoardData">
+    <div class="cli col-md-12 col-xs-12 col-sm-12" *ngIf="!api_loading && actionparam === 'view' && displayBoardData">
         <span class="editbt" (click)="editStatusBoard(displayBoardData.id)" style="float: right;"></span>
         <h3> {{displayBoardData.displayName | capitalizeFirst}}</h3>
         <div class="c-ot" *ngFor="let labelfor of displayBoardData.queueSetFor">
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="ynw-common-form-nm" *ngIf="actionparam !== 'view'">
+    <div class="ynw-common-form-nm" *ngIf="!api_loading && actionparam !== 'view'">
         <ng-container>
             <div class="form-group col-md-12">
                 <!-- <div class="col-md-6">
@@ -101,7 +101,7 @@
                             </mat-radio-button>
                         </mat-radio-group> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
-                        (change)="serviceSelection(service.id)" [checked]="services_list[i].checked">
+                        (change)="serviceSelection(service.id, $event)" [checked]="services_list[i].checked">
                         {{service.name | capitalizeFirst}}
                     </mat-checkbox>
                     </div>
@@ -117,7 +117,7 @@
                             </mat-radio-button>
                         </mat-radio-group> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
-                        (change)="departmentSelection(department.departmentId)" [checked]="departments[i].checked">
+                        (change)="departmentSelection(department.departmentId, $event)" [checked]="departments[i].checked">
                         {{department.departmentName | capitalizeFirst}}
                     </mat-checkbox>
                     </div>
@@ -134,7 +134,7 @@
                             </mat-radio-button>
                         </mat-radio-group> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
-                        (change)="queueSelection(schedule.id)" [checked]="display_schedule[i].checked">
+                        (change)="queueSelection(schedule.id, $event)" [checked]="display_schedule[i].checked">
                         {{schedule.displayQ.dstr | capitalizeFirst}}
                                 {{schedule.displayQ.time}}
                     </mat-checkbox>
@@ -199,6 +199,10 @@
             </div>
         </ng-container>
     </div>
+
+
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+
 </div>
 <!-- </div>
             </div>

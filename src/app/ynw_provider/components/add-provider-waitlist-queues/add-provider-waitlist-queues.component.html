@@ -203,6 +203,17 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
             </mat-form-field>
         </div>
+
+
+        <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'" >
+            <mat-form-field class="example-full-width">
+                <input matInput min="0" max="100000" type="text"
+                    placeholder="Time Slot (min)" formControlName="timeSlot"
+                    autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+            </mat-form-field>
+        </div>
+
+
         <!-- <div class="form-group inline">
             <label>Online check-ins
                 <mat-slide-toggle class="example-margin" formControlName="onlineCheckIn">
