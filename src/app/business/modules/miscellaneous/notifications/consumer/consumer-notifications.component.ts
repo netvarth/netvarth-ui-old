@@ -78,8 +78,8 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getNotificationSettings();
     this.getNotificationList();
-    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
-    this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]',this.customer_label);
+    this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
+    this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
   }
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);

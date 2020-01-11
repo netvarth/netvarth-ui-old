@@ -25,7 +25,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="dropdown notifications-menu pull-right">
+                                    <li class="dropdown notifications-menu pull-right" *ngIf="accountType=='BRANCH'">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                             (click)="listContainers()"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">

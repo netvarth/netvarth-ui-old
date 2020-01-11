@@ -9,7 +9,6 @@ import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
-import { start } from 'repl';
 @Injectable()
 
 export class SharedFunctions {
@@ -523,7 +522,7 @@ export class SharedFunctions {
           }
         }
       }
-	} else {
+    } else {
       this.shared_service.bussinessDomains()
         .subscribe(
           res => {
@@ -922,7 +921,7 @@ export class SharedFunctions {
     while (!exitLoop) {
       const nextTime = moment(startingDTime).add(interval, 'm');
       const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
-      if (nextTimeDt.getTime() <= endDTime.getTime()  ) {
+      if (nextTimeDt.getTime() <= endDTime.getTime()) {
         slotList.push(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
 
       } else {
@@ -937,13 +936,13 @@ export class SharedFunctions {
     const startTime = new Date();
     const parts = time.match(/(\d+):(\d+) (AM|PM)/);
     if (parts) {
-        let hours = parseInt(parts[1], 0);
-        const minutes = parseInt(parts[2], 0);
-        const tt = parts[3];
-        if (tt === 'PM' && hours < 12) {
-          hours += 12;
-        }
-        startTime.setHours(hours, minutes, 0, 0);
+      let hours = parseInt(parts[1], 0);
+      const minutes = parseInt(parts[2], 0);
+      const tt = parts[3];
+      if (tt === 'PM' && hours < 12) {
+        hours += 12;
+      }
+      startTime.setHours(hours, minutes, 0, 0);
     }
     return startTime;
   }

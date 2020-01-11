@@ -35,6 +35,7 @@ export class DisplayboardsComponent implements OnInit {
         { displayName: '2x2', value: '2_2', row: 2, col: 2 }
     ];
     container_count = 0;
+    accountType: any;
 
     constructor(
         private router: Router,
@@ -51,6 +52,7 @@ export class DisplayboardsComponent implements OnInit {
         this.getDisplayboardLayouts();
         this.getDisplayboardContainers();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
     }
     getDisplayboardLayouts() {

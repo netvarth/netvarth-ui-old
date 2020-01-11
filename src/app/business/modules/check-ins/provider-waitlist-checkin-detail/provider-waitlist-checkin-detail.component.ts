@@ -402,7 +402,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.editAppntTime = true;
     this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, this.waitlist_data.queue.timeInterval);
     this.apptTime = this.waitlist_data.appointmentTime;
-    // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };    
+    // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
   }
   cancelUpdation() {
     this.editAppntTime = false;

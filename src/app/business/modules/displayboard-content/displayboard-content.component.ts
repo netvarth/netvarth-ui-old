@@ -105,7 +105,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 (container: any) => {
                     this.inputStatusboards = container.sbContainer;
                     setTimeout(() => {
-                    this.setTabIds();
+                        this.setTabIds();
                     }, 1000);
                     setTimeout(() => {
                         this.getStatusboard(this.inputStatusboards[this.showIndex]);
@@ -348,11 +348,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                             } else {
                                 logo = '';
                             }
-                            // calling function which saves the business related details to show in the header                           
+                            // calling function which saves the business related details to show in the header
                             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
                                 || '', bProfile['serviceSector']['displayName'] || '', '', logo);
                             this.getBusinessdetFromLocalstorage();
-                    });
+                        });
                     if (bProfile && bProfile.subDomainVirtualFields) {
                         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
                         if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
