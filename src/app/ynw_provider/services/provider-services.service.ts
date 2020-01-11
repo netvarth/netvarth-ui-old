@@ -762,6 +762,22 @@ export class ProviderServices {
     const url = 'provider/statusBoard/dimension/' + id;
     return this.servicemeta.httpDelete(url);
   }
+  createDisplayboardContainer(input) {
+    const url = 'provider/statusBoard/container';
+    return this.servicemeta.httpPost(url, input);
+  }
+  getDisplayboardContainers() {
+    const url = 'provider/statusBoard/container';
+    return this.servicemeta.httpGet(url);
+  }
+  updateDisplayboardContainer(id, data) {
+    const url = 'provider/statusBoard/container/' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
+  getDisplayboardContainer(id) {
+    const url = 'provider/statusBoard/container/' + id;
+    return this.servicemeta.httpGet(url);
+  }
   addLabeltoCheckin(uuid, data) {
     const url = 'provider/waitlist/label/' + uuid;
     return this.servicemeta.httpPost(url, data);
@@ -830,6 +846,10 @@ export class ProviderServices {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
   }
+  getGlobalSettings() {
+    const url = 'provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
   setSMSglobalSettings(state) {
     const url = 'provider/account/settings/sms/' + state;
     return this.servicemeta.httpPut(url);
@@ -864,6 +884,14 @@ export class ProviderServices {
   }
   setCallStatus(uuid, status) {
     const url = 'provider/waitlist/callingStatus/' + uuid + '/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getProviderOnlinePresence() {
+    const url = 'provider/onlinePresence';
+    return this.servicemeta.httpGet(url);
+  }
+  setOnlinePresence(status) {
+    const url = 'provider/onlinePresence/' + status;
     return this.servicemeta.httpPut(url);
   }
 }

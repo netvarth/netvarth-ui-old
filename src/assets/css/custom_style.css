@@ -1308,6 +1308,9 @@ sup {
 .mgn-up-35 {
   margin-top: 35px !important;
 }
+.mgn-up-25 {
+  margin-top: 25px !important;
+}
 .mgn-rt-5 {
   margin-right: 5px !important;
 }
@@ -6664,4 +6667,16 @@ input.jdn_ip { width: 50px !important}
   .statusText {
     padding: 5px !important;
   }
+}
+.check-in-chip .mat-chip {
+  width: 85px !important;
+  font-size: .75rem !important;
+  text-align: center !important;
+}
+.check-in-chip .mat-chip.mat-chip-selected.mat-primary, .check-in-chip .mat-chip.mat-chip-selected.mat-primary {
+  background : #29b6f6 !important;
+  color: #fff !important;
+  width: 85px !important;
+  font-size: .75rem !important;
+  border: none !important;
 }

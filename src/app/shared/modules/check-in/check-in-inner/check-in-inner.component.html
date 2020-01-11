@@ -137,8 +137,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 form-group queue-outer mgn-up-20" *ngIf="page_source == 'provider_checkin' && board_count > 0 && availableSlots.length>0">
+                        <mat-chip-list class="check-in-chip">
+                            <mat-chip *ngFor="let slot of availableSlots" [selected]="slot === apptTime" (click)="timeSelected(slot);">{{slot}}</mat-chip>
+                        </mat-chip-list>
+                        <!-- <mat-form-field>
+                        <mat-select placeholder="Appointment Time" [ngModel]="apptTime" #appttime>
+                            <mat-option *ngFor="let slot of availableSlots" [value]="slot">
+                                {{slot}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field> -->
+                    </div>
+
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-                    <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
+                    <!-- <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
                         <mat-expansion-panel class="statusboard-expansion" [expanded]="false">
                             <mat-expansion-panel-header class="no-padding" style="height: 35px; padding: 0 10px;">
                                 <mat-panel-title class="block-level" style="font-weight: 500;">
@@ -146,29 +159,11 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="form-group queue-outer">
-                                <label class="col-form-label" style="font-weight: 400;"> Appointment Time </label>
-                                <span style="font-weight: 600;" *ngIf="editAppntTime!='' && editAppntTime">
-                                    {{apptTimetoDisplay}} </span>
-                                <span *ngIf="apptTimetoDisplay!='' && editAppntTime" style="margin-left: 30px"
-                                    class="editbt" (click)="editApptTime()"></span>
-                                <div class="col-md-12 col-sm-12 col-lg-12 col-12 no-padding" *ngIf="!editAppntTime">
-                                    <div class="input-group" style="display: block;">
-                                        <ngb-timepicker meridian="true" [(ngModel)]="apptTime"
-                                            (ngModelChange)="changetime($event)">
-                                        </ngb-timepicker>
-                                        <div class="wait-btn mgn-up-10">
-                                            <button *ngIf="apptTimetoDisplay!=''" class="cs-btn bt3 mgn-rt-5"
-                                                style="margin-left: 5px;" (click)="cancelUpdation()"
-                                                type="button">Cancel</button>
-                                            <button type="submit" class="cs-btn bt3"
-                                                (click)="saveApptTime()">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
+                              
                             </div>
                         </mat-expansion-panel>
-                    </mat-accordion>
-                    <div class="date-outer" *ngIf="step==1 && partySizeRequired">
+                    </mat-accordion> -->
+                    <div class="date-outer mgn-up-20" *ngIf="step==1 && partySizeRequired">
                         <div class="form-group party-size">
                             <label class="col-form-label">{{enter_party_size_cap}}</label>
                             <input class="partysize-input" type="text" matInput #partysize
@@ -177,7 +172,7 @@
                             <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
                         </div>
                     </div>
-                    <div class="consumer-comment" *ngIf="step==1">
+                    <div class="consumer-comment mgn-up-20" *ngIf="step==1" >
                         <div class="form-group">
                             <label for="reason" class="col-form-label">{{have_note_click_here}} <span
                                     [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"
@@ -475,45 +470,7 @@
                 <div><span class="info-lst form-level-settings" *ngIf="!notifyAutomatic">If "Automatic tracking" is
                         turned off, you will have to enable tracking manually from your check-in. </span></div>
             </div>
-            <!-- <div class="form-group mgn-up-5"><label> Share my live ETA with {{activeWt.provider.businessName}}</label>
-                    <span class="mgn-lt-10">
-                        <mat-slide-toggle [(ngModel)]="shareLoc" (change)=locationEnableDisable($event)></mat-slide-toggle>
-                    </span>
-                    <label class="mgn-lt-10"><b>{{shareLoc ? 'On' : 'Off'}}</b></label>
-                </div> -->
             <div class="form-group" *ngIf="shareLoc">
-                <!-- Jaldee will track your ETA -->
-                <!-- <span *ngIf="notifyTime=='ONEHOUR'">automatically. </span> -->
-                <!-- <span *ngIf="notifyTime=='TWOHOUR'">2 hour prior to your expected arrival</span> -->
-                <!-- <span *ngIf="notifyTime=='AFTERSTART'">manually.</span>
-                    <i class="fa fa-pencil link" (click)="trackTimeChange=!trackTimeChange"></i> -->
-                <!-- <div class="col-md-12 mgn-up-10 no-padding"> -->
-                <!-- <label>When should Jaldee track your ETA?</label> -->
-                <!-- <mat-radio-group [(ngModel)]="notifyTime" (change)="trackTimeChange=!trackTimeChange"> -->
-                <!-- <ul class="trackIcons tracktime">
-                            <li [class.trackingtimeselect]="notifyTime == 'ONEHOUR'"
-                                (click)="notifyTime = 'ONEHOUR'; trackTimeChange=!trackTimeChange">
-                                <div>Automatically <i class="fa fa-info-circle "
-                                        matTooltip="1 hour prior to your expected arrival"></i></div>
-                            </li> -->
-                <!-- <li [class.driving]="notifyTime == 'TWOHOUR'" (click)="notifyTime = 'TWOHOUR';trackTimeChange=!trackTimeChange">
-                    <div>2 hour before</div>
-                    </li> -->
-                <!-- <li [class.trackingtimeselect]="notifyTime == 'AFTERSTART'"
-                                (click)="notifyTime = 'AFTERSTART'; trackTimeChange=!trackTimeChange">
-                                <div>Manually <i class="fa fa-info-circle "
-                                        matTooltip="as soon as you turn on 'Live Tracking'"></i></div>
-                            </li>
-                        </ul> -->
-                <!-- <mat-radio-button value='ONEHOUR'>1 hour before 
-                    </mat-radio-button>
-                    <mat-radio-button value='TWOHOUR'>2 hour before
-                    </mat-radio-button>
-                    <mat-radio-button value='AFTERSTART'>manually enable 'Live Track'
-                    </mat-radio-button>
-                    </mat-radio-group> -->
-                <!-- <ul class="trackIcons"> <li style="margin-right: 15px;" (click)="getNotifyTime('ONEHOUR')">1hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('TWOHOUR')">2hr before</li> <li style="margin-right: 15px;" (click)="getNotifyTime('AFTERSTART')">After start</li> </ul> -->
-                <!-- </div> -->
                 <div class="track-mode col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
                     Mode of transport <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true"
                         (click)="getTravelMod('DRIVING')"></i>
@@ -528,72 +485,23 @@
                 <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-10 lv-msg no-padding">
                     {{liveTrackMessage}}
                 </div>
-                <!-- <div class="pull-left">Mode of transport</div>
-                        <div  class="pull-left">
-                            <ul class="trackIcons">
-                                <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
-                                    <div class="travelmodechange"><i class="fa fa-car" aria-hidden="true"></i></div> -->
-                <!-- <div class="textsize">Driving</div> -->
-                <!-- </li>
-                                <li matTooltip="Bicycling" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')">
-                                    <div class="travelmodechange"><i class="fa fa-bicycle" aria-hidden="true"></i></div> -->
-                <!-- <div class="textsize">Bicycling</div> -->
-                <!-- </li>
-                                <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
-                                    <div class="travelmodechange"><i class="fa fa-male" aria-hidden="true"></i></div> -->
-                <!-- <div class="textsize">Walking</div> -->
-                <!-- </li>
-                            </ul>
-                        </div> -->
-                <!-- <label>Mode of transport :
-                    <span *ngIf="driving">I am Driving <i class="fa fa-car" aria-hidden="true"></i></span>
-                    <span *ngIf="bicycling">I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></span>
-                    <span *ngIf="walking">I am Walking <img src="./assets/images/walking.png" alt=""
-                    style="width: 15px;height:15px;" /></span></label><i class="fa fa-pencil link"
-                    (click)="trackMode = !trackMode"></i> -->
-                <!-- </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
-                        <ul class="trackIcons">
-                            <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
-                                <div class="travelmodechange"><i class="fa fa-car" aria-hidden="true"></i></div>
-                                <div class="textsize">Driving</div>
-                            </li>
-                            <li matTooltip="Bicycling" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')">
-                                <div class="travelmodechange"><i class="fa fa-bicycle" aria-hidden="true"></i></div>
-                                <div class="textsize">Bicycling</div>
-                            </li>
-                            <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
-                                <div class="travelmodechange"><i class="fa fa-male" aria-hidden="true"></i></div>
-                                <div class="textsize">Walking</div>
-                            </li>
-                        </ul> -->
-                <!-- <ul class="trackIcons" *ngIf="trackMode">
-                    <li matTooltip="Driving" [class.driving]="driving" (click)="getTravelMod('DRIVING')">
-                    <div>I am Driving <i class="fa fa-car" aria-hidden="true"></i></div>
-                    </li>
-                    <li matTooltip="Bicycling" [class.bicycling]="bicycling" (click)="getTravelMod('BICYCLING')">
-                    <div>I am Bicycling <i class="fa fa-bicycle" aria-hidden="true"></i></div>
-                    </li>
-                    <li matTooltip="Walking" [class.walking]="walking" (click)="getTravelMod('WALKING')">
-                    <div>I am Walking <img src="./assets/images/walking.png" alt=""
-                    style="width: 15px;height:15px;" /></div>
-                    </li>
-                    </ul> -->
-                <!-- </div> -->
             </div>
             <ng-container>
-                <div *ngIf="shareLoc && !sel_ser_det.isPrePayment" class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
+                <div *ngIf="shareLoc && !sel_ser_det.isPrePayment"
+                    class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
                     <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
                     <button type="button" [class.disabled]="track_loading" class="cs-btn bt1 small-btn"
                         (click)="saveLiveTrackDetails()">Ok</button>
                     <app-common-innerloading-spinner *ngIf="track_loading"></app-common-innerloading-spinner>
                 </div>
-                <div *ngIf="sel_ser_det.isPrePayment" class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
+                <div *ngIf="sel_ser_det.isPrePayment"
+                    class="mgn-up-10 col-md-12 col-xs-12 col-sm-12 no-padding actiondiv labelsave">
                     <!-- <button type="button" mat-dialog-close class="cs-btn bt2 small-btn" tabindex="-1"> Cancel </button>&nbsp; -->
                     <label>For prepayment</label>
-                    <button type="button" [class.disabled]="track_loading && shareLoc" class="cs-btn bt1 small-btn mgn-lt-10"
-                        (click)="prePaymentcheckin(trackUuid)">Continue</button>
-                    <app-common-innerloading-spinner *ngIf="track_loading && shareLoc"></app-common-innerloading-spinner>
+                    <button type="button" [class.disabled]="track_loading && shareLoc"
+                        class="cs-btn bt1 small-btn mgn-lt-10" (click)="prePaymentcheckin(trackUuid)">Continue</button>
+                    <app-common-innerloading-spinner *ngIf="track_loading && shareLoc">
+                    </app-common-innerloading-spinner>
                 </div>
 
             </ng-container>

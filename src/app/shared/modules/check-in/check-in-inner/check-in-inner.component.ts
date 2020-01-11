@@ -188,10 +188,9 @@ export class CheckInInnerComponent implements OnInit {
   liveTrackMessage;
   firstTimeClick = true;
   apptTime: any;
-  // showTimePicker = false;
   board_count = 0;
-  editAppntTime = false;
-  apptTimetoDisplay = '';
+  allSlots: any = [];
+  availableSlots: any = [];
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -204,7 +203,7 @@ export class CheckInInnerComponent implements OnInit {
     @Inject(DOCUMENT) public document,
   ) { }
   ngOnInit() {
-    this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+    // this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.api_loading = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
@@ -642,6 +641,9 @@ export class CheckInInnerComponent implements OnInit {
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
             this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
             this.setTerminologyLabels();
+            if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval  && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+              this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+            }
           } else {
             this.sel_queue_indx = -1;
             this.sel_queue_id = 0;
@@ -719,6 +721,14 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
       this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
       // this.queueReloaded = true;
+      this.availableSlots = [];
+      // this.api_loading = true;
+      console.log(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime']);
+      console.log(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime']);
+      console.log(this.queuejson[this.sel_queue_indx]);
+      if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+      this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+      }
     }
   }
   handleFuturetoggle() {
@@ -813,36 +823,41 @@ export class CheckInInnerComponent implements OnInit {
     for (let i = 0; i < this.waitlist_for.length; i++) {
       waitlistarr.push({ id: this.waitlist_for[i].id });
     }
-    const apptTimeFormat = moment(this.apptTime).format('hh:mm A') || null;
+    // const apptTimeFormat = moment(this.apptTime).format('hh:mm A') || null;
     let post_Data;
-    if (this.editAppntTime) {
-      post_Data = {
-        'queue': {
-          'id': this.sel_queue_id
-        },
-        'date': this.sel_checkindate,
-        'service': {
-          'id': this.sel_ser
-        },
-        'consumerNote': this.consumerNote,
-        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
-        'coupons': this.selected_coupons,
-        'appointmentTime': apptTimeFormat
-      };
-    } else {
-      post_Data = {
-        'queue': {
-          'id': this.sel_queue_id
-        },
-        'date': this.sel_checkindate,
-        'service': {
-          'id': this.sel_ser
-        },
-        'consumerNote': this.consumerNote,
-        'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
-        'coupons': this.selected_coupons
-      };
+    // if (this.editAppntTime) {
+    post_Data = {
+      'queue': {
+        'id': this.sel_queue_id
+      },
+      'date': this.sel_checkindate,
+      'service': {
+        'id': this.sel_ser
+      },
+      'consumerNote': this.consumerNote,
+      'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+      'coupons': this.selected_coupons
+    };
+    if (this.apptTime) {
+      post_Data['appointmentTime'] = this.apptTime;
     }
+    // }
+
+    // 'appointmentTime': apptTimeFormat
+    // else {
+    //   post_Data = {
+    //     'queue': {
+    //       'id': this.sel_queue_id
+    //     },
+    //     'date': this.sel_checkindate,
+    //     'service': {
+    //       'id': this.sel_ser
+    //     },
+    //     'consumerNote': this.consumerNote,
+    //     'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+    //     'coupons': this.selected_coupons
+    //   };
+    // }
     if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
     }
@@ -874,22 +889,22 @@ export class CheckInInnerComponent implements OnInit {
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUUID);
         }
-          this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
-            (wailist: any) => {
-              this.activeWt = wailist;
-              this.liveTrack = true;
-              this.resetApi();
-            },
-            () => {
-            }
-          );
-         //if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-            // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
-         // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
-            // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
-         // }
-         
-       
+        this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
+          (wailist: any) => {
+            this.activeWt = wailist;
+            this.liveTrack = true;
+            this.resetApi();
+          },
+          () => {
+          }
+        );
+        //if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+        // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+        // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+        // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
+        // }
+
+
 
 
         // if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
@@ -917,9 +932,7 @@ export class CheckInInnerComponent implements OnInit {
         //     this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
         //     this.api_loading = false;
         //   }
-       // } 
-       
-        
+        // }
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -958,35 +971,35 @@ export class CheckInInnerComponent implements OnInit {
   }
 
   prePaymentcheckin(retUUID) {
-      if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
-            this.dialogRef.close();
-            // this.sel_ser_det.minPrePaymentAmount
-            const payData = {
-              'amount': this.prepaymentAmount,
-              // 'paymentMode': this.paytype,
-              'uuid': retUUID,
-              'accountId': this.account_id,
-              'purpose': 'prePayment'
-            };
-            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-              width: '50%',
-              panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-              disableClose: true,
-              data: {
-                'details': payData,
-                'origin': 'consumer'
-              }
-            });
+    if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+      this.dialogRef.close();
+      // this.sel_ser_det.minPrePaymentAmount
+      const payData = {
+        'amount': this.prepaymentAmount,
+        // 'paymentMode': this.paytype,
+        'uuid': retUUID,
+        'accountId': this.account_id,
+        'purpose': 'prePayment'
+      };
+      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'details': payData,
+          'origin': 'consumer'
+        }
+      });
 
-          } else {
-            this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
-            this.api_loading = false;
-          }
-          if (this.shareLoc) {
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
-          } else {
-            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
-          }
+    } else {
+      this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+      this.api_loading = false;
+    }
+    if (this.shareLoc) {
+      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    } else {
+      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    }
 
   }
   handleGoBack(cstep) {
@@ -1517,15 +1530,6 @@ export class CheckInInnerComponent implements OnInit {
               }
             );
           }
-          // this.saveLiveTrackInfo().then(
-          //   (liveTInfo) => {
-          //     console.log(liveTInfo);
-          //     console.log(this.track_loading);
-          //     this.track_loading = false;
-          //     console.log(this.track_loading);
-          //     this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-          //     }
-          // );
         }, (error) => {
           this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
           this.shareLoc = false;
@@ -1597,32 +1601,15 @@ export class CheckInInnerComponent implements OnInit {
       }
       this.dialogRef.close();
       this.router.navigate(['/']);
-    } 
-    // else if (status === 'livetrack' && this.sel_ser_det.isPrePayment) {
-    //   this.prePaymentcheckin(this.trackUuid);
-    //   if (this.shareLoc) {
-    //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
-    //   } else {
-    //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
-    //   }
-    // }
+    }
   }
   saveLiveTrackDetails() {
     this.track_loading = true;
     this.resetApi();
     this.updateLiveTrackInfo().then(
       data => {
-        if (data) {
-          // this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
-        }
-        // setTimeout(() => {
-        // this.source['list'] = 'reloadlist';
-        // this.source['mode'] = this.page_source;
-        // this.dialogRef.close('reloadlist');
-        // this.returntoParent.emit('reloadlist');
         this.trackClose('livetrack');
         this.track_loading = false;
-        // }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
@@ -1653,16 +1640,6 @@ export class CheckInInnerComponent implements OnInit {
         );
     });
   }
-  changetime(passtime) {
-    this.apptTime = passtime;
-  }
-  // setApptTime(source) {
-  //   if (source === 'open') {
-  //     this.showTimePicker = true;
-  //   } else {
-  //     this.showTimePicker = false;
-  //   }
-  // }
   getDisplayboardCount() {
     let layout_list: any = [];
     this.provider_services.getDisplayboards()
@@ -1672,14 +1649,58 @@ export class CheckInInnerComponent implements OnInit {
           this.board_count = layout_list.length;
         });
   }
-  saveApptTime() {
-    this.apptTimetoDisplay = moment(this.apptTime).format('hh:mm A') || null;
-    this.editAppntTime = true;
+  getAvailableTimeSlots(QStartTime, QEndTime, interval) {
+    const _this = this;
+    const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
+    console.log(_this.isFuturedate);
+    this.availableSlots = allSlots;
+    const filter = {};
+    const activeSlots = [];
+    filter['queue-eq'] = _this.sel_queue_id;
+    filter['location-eq'] = _this.sel_loc;
+    let future = false;
+    const waitlist_date = new Date(this.sel_checkindate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    waitlist_date.setHours(0, 0, 0, 0);
+    console.log(today);
+    console.log(waitlist_date);
+    if (today.valueOf() < waitlist_date.valueOf()) {
+      future = true;
+    }
+    this.apptTime = '';
+    console.log(_this.sel_loc + ':' + _this.sel_queue_id);
+    if (!future) {
+      _this.provider_services.getTodayWaitlist(filter).subscribe(
+        (waitlist: any) => {
+          for (let i = 0; i < waitlist.length; i++) {
+            console.log(waitlist[i]['appointmentTime']);
+            if (waitlist[i]['appointmentTime']) {
+              activeSlots.push(waitlist[i]['appointmentTime']);
+            }
+          }
+          const slots = allSlots.filter(x => !activeSlots.includes(x));
+          this.availableSlots = slots;
+          this.apptTime = this.availableSlots[0];
+        }
+      );
+    } else {
+      filter['date-eq'] = _this.sel_checkindate;
+      _this.provider_services.getFutureWaitlist(filter).subscribe(
+        (waitlist: any) => {
+          for (let i = 0; i < waitlist.length; i++) {
+            if (waitlist[i]['appointmentTime']) {
+              activeSlots.push(waitlist[i]['appointmentTime']);
+            }
+          }
+          const slots = allSlots.filter(x => !activeSlots.includes(x));
+          this.availableSlots = slots;
+          this.apptTime = this.availableSlots[0];
+        }
+      );
+    }
   }
-  editApptTime() {
-    this.editAppntTime = false;
-  }
-  cancelUpdation() {
-    this.editAppntTime = true;
+  timeSelected(slot) {
+    this.apptTime = slot;
   }
 }

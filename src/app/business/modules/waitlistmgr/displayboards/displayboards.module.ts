@@ -10,6 +10,8 @@ import { DisplayboardsComponent } from './displayboards.component';
 import { DisplayboardsRoutingModule } from './displayboards.routing.module';
 import { DisplayboardDetailComponent } from './detail/displayboard-details.component';
 import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
+import { ContainersComponent } from './containers/containers.component';
+import { ContainerDetailComponent } from './containers/detail/container-detail.component';
 
 
 @NgModule({

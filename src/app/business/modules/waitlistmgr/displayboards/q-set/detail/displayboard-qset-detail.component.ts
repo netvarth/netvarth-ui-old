@@ -82,19 +82,19 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
         this.actionparam = this.action;
         this.getDepartments().then(() => {
-            this.getProviderQueues().then(() => {
-                this.getProviderServices().then(() => {
-                    if (this.id) {
-                        this.getDisplaydashboardbyId(this.id);
-                        this.submit_btn = Messages.UPDATE_BTN;
-                    } else {
-                        this.submit_btn = Messages.SAVE_BTN;
-                        this.getLabels();
-                    }
-                    this.api_loading = false;
-                });
-            });
         });
+        this.getProviderQueues().then(() => {
+        });
+        this.getProviderServices().then(() => {
+        });
+        if (this.id) {
+            this.getDisplaydashboardbyId(this.id);
+            this.submit_btn = Messages.UPDATE_BTN;
+        } else {
+            this.submit_btn = Messages.SAVE_BTN;
+            this.getLabels();
+        }
+        this.api_loading = false;
     }
     getDisplaydashboardbyId(id) {
         this.getLabels();

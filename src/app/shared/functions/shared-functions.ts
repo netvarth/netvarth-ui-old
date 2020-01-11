@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
-
+import * as moment from 'moment';
+import { start } from 'repl';
 @Injectable()
 
 export class SharedFunctions {
@@ -270,6 +271,7 @@ export class SharedFunctions {
   
   public setitemToGroupStorage(itemname, itemvalue) {
     const group = this.getGroup();
+    console.log(group);
     let groupObj = {};
     if (localStorage.getItem(group)) {
       groupObj = JSON.parse(localStorage.getItem(group));
@@ -933,6 +935,40 @@ export class SharedFunctions {
     }
   }
 
+  getTimeSlotsFromQTimings(interval, startTime, endTime) {
+    const slotList = [];
+    slotList.push(startTime);
+    const endDTime = this.getDateFromTimeString(endTime);
+    let startingDTime = this.getDateFromTimeString(startTime);
+    let exitLoop = false;
+    while (!exitLoop) {
+      const nextTime = moment(startingDTime).add(interval, 'm');
+      const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+      if (nextTimeDt.getTime() <= endDTime.getTime()  ) {
+        slotList.push(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+
+      } else {
+        exitLoop = true;
+      }
+      startingDTime = nextTimeDt;
+    }
+    return slotList;
+  }
+
+  getDateFromTimeString(time) {
+    const startTime = new Date();
+    const parts = time.match(/(\d+):(\d+) (AM|PM)/);
+    if (parts) {
+        let hours = parseInt(parts[1], 0);
+        const minutes = parseInt(parts[2], 0);
+        const tt = parts[3];
+        if (tt === 'PM' && hours < 12) {
+          hours += 12;
+        }
+        startTime.setHours(hours, minutes, 0, 0);
+    }
+    return startTime;
+  }
   convertMinutesToHourMinute(mins) {
     let rethr = '';
     let retmin = '';

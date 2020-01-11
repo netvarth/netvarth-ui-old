@@ -15,7 +15,6 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider
 })
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
-
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   details_cap = Messages.CHECK_DET_DETAILS_CAP;
   name_cap = Messages.CHECK_DET_NAME_CAP;
@@ -46,7 +45,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   waitlist_history: any = [];
   settings: any = [];
   esttime: string = null;
-  appttime;
+  apptTime;
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
@@ -79,7 +78,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   editAppntTime = false;
   board_count = 0;
   showTimePicker = false;
-
+  availableSlots: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -88,7 +87,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private activated_route: ActivatedRoute,
     private locationobj: Location,
     private provider_shared_functions: ProviderSharedFuctions) {
-
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
     });
@@ -102,10 +100,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       'title': this.checkin_upper
     });
   }
-
   ngOnInit() {
-    // this.appttime = { hour: 0, minute: 0 };
-    // this.appttime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.getDisplayboardCount();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
@@ -121,7 +116,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
     this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
   }
-
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -148,9 +142,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.waitlist_data = data;
           if (this.waitlist_data.appointmentTime) {
             // tslint:disable-next-line: radix
-            this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+            // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+            this.apptTime = this.waitlist_data.appointmentTime;
           } else {
-            this.appttime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+            this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
           }
           const waitlist_date = new Date(this.waitlist_data.date);
           this.today.setHours(0, 0, 0, 0);
@@ -279,7 +274,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   gotoPrev() {
     this.locationobj.back();
   }
-
+  getTimeSlots(QStartTime, QEndTime, interval) {
+    const _this = this;
+    console.log(QStartTime);
+    console.log(QEndTime);
+    this.availableSlots = [];
+    // if(interval && (interval !== 0)) {
+    const allSlots = _this.shared_Functionsobj.getTimeSlotsFromQTimings(30, QStartTime, QEndTime);
+    this.availableSlots = allSlots;
+    console.log(allSlots);
+  // }
+  }
   getAppxTime(waitlist, retcap?) {
     /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
       return 'Now';
@@ -394,19 +399,20 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
   editApptTime() {
     // tslint:disable-next-line: radix
-    this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
     this.editAppntTime = true;
+    this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, this.waitlist_data.queue.timeInterval);
+    this.apptTime = this.waitlist_data.appointmentTime;
+    // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };    
   }
   cancelUpdation() {
     this.editAppntTime = false;
   }
-  changetime(passtime) {
-    this.appttime = passtime;
-  }
-  saveApptTime() {
-    const apptTimeFormat = moment(this.appttime).format('hh:mm A') || null;
-    if (this.appttime) {
-      this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, apptTimeFormat).subscribe(
+  // changetime(passtime) {
+  //   this.appttime = passtime;
+  // }
+  saveApptTime(time) {
+    // const apptTimeFormat = moment(this.appttime).format('hh:mm A') || null;
+      this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, time).subscribe(
         () => {
           this.editAppntTime = false;
           this.getWaitlistDetail();
@@ -414,7 +420,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-    }
   }
   getDisplayboardCount() {
     let layout_list: any = [];
