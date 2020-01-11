@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 
 @Component({
   selector: 'app-consumer-notifications',
@@ -60,10 +61,13 @@ export class ConsumerNotificationsComponent implements OnInit {
   showButton: any = {};
   customer_label = '';
   cSettings: any = {'EARLY': false, 'PREFINAL': false, 'FINAL': false};
+  consumerNotification;
+  notification_statusstr: string;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    public provider_services: ProviderServices) {
+    public provider_services: ProviderServices,
+    private provider_datastorage: ProviderDataStorageService) {
       this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     }
 
@@ -72,6 +76,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.getNotificationSettings();
     this.getNotificationList();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]',this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]',this.customer_label);
@@ -96,6 +101,35 @@ export class ConsumerNotificationsComponent implements OnInit {
         }
       );
   }
+  handleNotificationSettings(event) {
+    const value = (event.checked) ? true : false;
+    const status = (value) ? 'enabled' : 'disabled';
+    // const state = (value) ? 'Enable' : 'Disable';
+    const notificationSettings = {
+      'sendNotification': value
+    };
+    this.provider_services.setWaitlistMgr(notificationSettings).subscribe(data => {
+        this.shared_functions.openSnackBar('Notifications ' + status + ' successfully');
+        this.getNotificationSettings();
+    }, (error) => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.getNotificationSettings();
+    });
+}
+getNotificationSettings() {
+  this.provider_services.getWaitlistMgr()
+    .subscribe(
+      (data: any) => {
+        const waitlist_manager = data;
+        this.consumerNotification = waitlist_manager.sendNotification;
+        this.notification_statusstr = (this.consumerNotification) ? 'On' : 'Off';
+        this.provider_datastorage.set('waitlistManage', data);
+      },
+      () => {
+
+      }
+    );
+}
   setNotifications(notificationList: any) {
     notificationList.forEach(notificationObj => {
       if (notificationObj['eventType'] === 'EARLY') {

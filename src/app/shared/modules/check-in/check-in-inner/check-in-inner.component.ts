@@ -641,7 +641,7 @@ export class CheckInInnerComponent implements OnInit {
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
             this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
             this.setTerminologyLabels();
-            if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval  && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+            if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
               this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
             }
           } else {
@@ -727,7 +727,7 @@ export class CheckInInnerComponent implements OnInit {
       console.log(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime']);
       console.log(this.queuejson[this.sel_queue_indx]);
       if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
-      this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+        this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
       }
     }
   }
@@ -898,7 +898,7 @@ export class CheckInInnerComponent implements OnInit {
           () => {
           }
         );
-        //if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+        // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
         // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
         // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
         // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');

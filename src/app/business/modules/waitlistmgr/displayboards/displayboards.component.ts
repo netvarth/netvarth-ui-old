@@ -97,7 +97,6 @@ export class DisplayboardsComponent implements OnInit {
                 this.container_count = data.length;
             });
     }
-    
     goDisplayboardLayoutDetails(layout, source?) {
         if (source) {
             window.open('#/displayboard/' + layout.id, '_blank');

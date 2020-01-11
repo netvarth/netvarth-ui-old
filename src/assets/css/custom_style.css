@@ -6680,3 +6680,6 @@ input.jdn_ip { width: 50px !important}
   font-size: .75rem !important;
   border: none !important;
 }
+label.notifi-togl {
+  margin-bottom: 0px !important;
+}
