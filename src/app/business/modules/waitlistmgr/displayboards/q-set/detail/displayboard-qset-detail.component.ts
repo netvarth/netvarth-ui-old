@@ -38,7 +38,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     labelOrder: any = [];
     labelsList: any = [];
     statusBoardfor: any = [];
-    sortByFieldsList;
+    sortByFieldsList = {};
     displayBoardData: any = [];
     boardName;
     boardDisplayname;
@@ -74,7 +74,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.boardName = '';
         this.labelsList = [];
         this.statusBoardfor = [];
-        this.sortByFieldsList = [];
+        this.sortByFieldsList = {};
     }
     ngOnChanges() {
         this.api_loading = true;
