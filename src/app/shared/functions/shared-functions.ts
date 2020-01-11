@@ -6,7 +6,7 @@ import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
 import { start } from 'repl';
@@ -97,7 +97,6 @@ export class SharedFunctions {
     return promise;
   }
   consumerLogin(post_data, moreParams?) {
-
     post_data.mUniqueId = localStorage.getItem('mUniqueId');
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
@@ -129,7 +128,6 @@ export class SharedFunctions {
               reject(error);
             }
           });
-
     });
     return promise;
   }
@@ -143,7 +141,6 @@ export class SharedFunctions {
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
             this.router.navigate(['/provider']);
-
           },
           error => {
             this.sendMessage({ ttype: 'main_loading', action: false });
@@ -170,7 +167,6 @@ export class SharedFunctions {
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
             this.router.navigate(['/provider']);
-
           },
           error => {
             this.sendMessage({ ttype: 'main_loading', action: false });
@@ -271,7 +267,6 @@ export class SharedFunctions {
 
   public setitemToGroupStorage(itemname, itemvalue) {
     const group = this.getGroup();
-    console.log(group);
     let groupObj = {};
     if (localStorage.getItem(group)) {
       groupObj = JSON.parse(localStorage.getItem(group));
@@ -365,7 +360,6 @@ export class SharedFunctions {
       if (!user.id) {
         this.router.navigate(['logout']);
       }
-
       this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
         .subscribe(
           data => {
@@ -466,12 +460,9 @@ export class SharedFunctions {
         });
         break;
     }
-    // if (!this.getitemfromLocalStorage('popularSearch') || this.getitemfromLocalStorage('popularSearch') === undefined
-    // || this.getitemfromLocalStorage('popularSearch') === '') {
     this.setitemonLocalStorage('popularSearch', retdet);
     const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
     this.sendMessage(pdata);
-    // }
     return retdet;
   }
 
@@ -532,7 +523,7 @@ export class SharedFunctions {
           }
         }
       }
-    } else {
+	} else {
       this.shared_service.bussinessDomains()
         .subscribe(
           res => {
@@ -541,7 +532,6 @@ export class SharedFunctions {
               cdate: today,
               bdata: res
             };
-            console.log(postdata);
             this.setitemonLocalStorage('ynw-bconf', postdata);
             this.getSearchLabels(selected_domain);
           }
@@ -558,15 +548,11 @@ export class SharedFunctions {
     const image_max_size = projectConstants.IMAGE_MAX_SIZE;
     const error = [];
     let is_error = false;
-
     if (file.type && file_types.indexOf(file.type) === -1) {
-
       error['type'] = true;
       is_error = true;
     }
-
     if (file.size && file.size > image_max_size) {
-
       error['size'] = true;
       is_error = true;
     }
@@ -575,7 +561,6 @@ export class SharedFunctions {
     } else {
       return error;
     }
-
   }
 
   getApiError(error) {
@@ -617,11 +602,9 @@ export class SharedFunctions {
     });
 
     ob.delgaldialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         ob.deleteImage(file);
       }
-
     });
   }
   confirmSearchChangeStatus(ob, stat) {
@@ -643,11 +626,9 @@ export class SharedFunctions {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         ob.handle_searchstatus();
       }
-
     });
   }
   confirmLogoImageDelete(ob, file) {
@@ -662,11 +643,9 @@ export class SharedFunctions {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         ob.removeLogo(file);
       }
-
     });
   }
 
@@ -675,7 +654,6 @@ export class SharedFunctions {
   }
 
   repeatFunction(ob) {
-
     setInterval(
       () => {
         ob.repeatFunctions();
@@ -838,7 +816,7 @@ export class SharedFunctions {
   }
   retSubSectorNameifRequired(domain, subdomainname) {
     const bprof = this.getitemfromLocalStorage('ynw-bconf');
-    if (bprof === null || bprof === undefined) {
+    if (bprof === null || bprof === undefined || bprof.bdata === null || bprof.bdata === undefined) {
       this.shared_service.bussinessDomains()
         .subscribe(
           res => {
@@ -975,7 +953,6 @@ export class SharedFunctions {
     if (mins > 0) {
       const hr = Math.floor(mins / 60);
       const min = Math.floor(mins % 60);
-
       if (hr > 0) {
         if (hr > 1) {
           rethr = hr + ' hours';
