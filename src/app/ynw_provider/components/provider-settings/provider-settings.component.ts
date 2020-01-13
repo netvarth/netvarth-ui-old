@@ -447,7 +447,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras1);
           break;
       case 'doctors':
-
           const navigationExtras2: NavigationExtras = {
             queryParams: { type: 'doctors',
                             mode : usermode }

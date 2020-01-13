@@ -86,8 +86,8 @@ export class BranchDoctorDetailComponent implements OnInit {
             qparams => {
                 this.userType = qparams;
                this.actionparam = this.userType.mode;
-                console.log(this.actionparam);
-                console.log(this.userType);
+                //console.log(this.actionparam);
+                //console.log(this.userType);
                 const breadcrumbs = [];
                 this.breadcrumbs_init.map((e) => {
                     breadcrumbs.push(e);
@@ -115,7 +115,7 @@ export class BranchDoctorDetailComponent implements OnInit {
        this.createForm();
     }
     createForm() {
-        console.log('edit');
+        //console.log('edit');
         this.amForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -150,7 +150,7 @@ export class BranchDoctorDetailComponent implements OnInit {
             "departmentCode": "default"
         }
        // this.createForm();
-        console.log(this.user_data['userProfile']['firstName']);
+       // console.log(this.user_data['userProfile']['firstName']);
         this.amForm.setValue({
             'first_name': this.user_data['userProfile']['firstName'] || this.amForm.get('first_name').value,
             'last_name': this.user_data['userProfile']['lastName'] || this.amForm.get('last_name').value,
@@ -167,7 +167,7 @@ export class BranchDoctorDetailComponent implements OnInit {
         // console.log(subdomain);
     }
     onSubmit(input) {
-        console.log(input);
+        //console.log(input);
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -225,7 +225,7 @@ export class BranchDoctorDetailComponent implements OnInit {
                 },
               
                 'commonPassword': input.password,
-                'userType': true,
+                'userType': 'ASSISTANT',
                 'address': input.selectedAddress
             };
             if (this.actionparam === 'edit') {

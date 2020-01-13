@@ -50,7 +50,7 @@ export class DoctorsComponent implements OnInit {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     addBranchSP(usertype,usermode) {
-        console.log(usermode);
+      //  console.log(usermode);
         const navigationExtras: NavigationExtras = {
             queryParams: { type: usertype,
                             mode : usermode
@@ -73,7 +73,7 @@ export class DoctorsComponent implements OnInit {
                 }
                 this.users_list = users;
                 this.api_loading = false;
-                console.log(this.users_list);
+                //console.log(this.users_list);
             }
         );
     }
@@ -106,7 +106,7 @@ export class DoctorsComponent implements OnInit {
         }
         if (this.userlistSelection === 1) {
             this.selectedUserlist = this.users_list[this.userlistSelected.indexOf(true)];
-            console.log(this.selectedUserlist);
+           // console.log(this.selectedUserlist);
             this.profileStatus = true;
 
         } else {
