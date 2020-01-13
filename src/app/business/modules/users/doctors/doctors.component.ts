@@ -17,7 +17,7 @@ export class DoctorsComponent implements OnInit {
     selectedUserlist: any = [];
     new_users_list: any = [];
     profileStatus = false;
-    breadcrumbs = [
+    breadcrumbs_init = [
         {
             url: '/provider/settings',
             title: 'Settings'
@@ -25,11 +25,9 @@ export class DoctorsComponent implements OnInit {
         {
             url: '/provider/settings/users',
             title: 'Users'
-        },
-        {
-            title: 'Doctors/Assistants'
         }
     ];
+    breadcrumbs = this.breadcrumbs_init;
     api_loading: boolean;
     constructor(
         private router: Router,
@@ -39,6 +37,7 @@ export class DoctorsComponent implements OnInit {
         private shared_functions: SharedFunctions) {
             this.activatedRoot.queryParams.subscribe(data => {
                 this.userType = data;
+
             });
 
     }
@@ -46,6 +45,14 @@ export class DoctorsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
+        const breadcrumbs = [];
+                        this.breadcrumbs_init.map((e) => {
+                            breadcrumbs.push(e);
+                        });
+                        breadcrumbs.push({
+                            title: this.userType.type
+                        });
+                        this.breadcrumbs = breadcrumbs;
         this.getBranchSPs();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }

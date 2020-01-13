@@ -4,12 +4,12 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 @Component({
     'selector': 'app-branchdoctors-detail',
     'templateUrl': './doctors-detail.component.html'
@@ -54,11 +54,12 @@ export class BranchDoctorDetailComponent implements OnInit {
         {
             title: 'Users',
             url: '/provider/settings/users'
-        },
-        {
-            title: 'Doctors',
-            url: '/provider/settings/users/doctors'
         }
+        // ,
+        // {
+        //     title: 'Doctors',
+        //     url: '/provider/settings/users/doctors'
+        // }
     ];
     breadcrumbs = this.breadcrumbs_init;
     actionparam = 'show';
@@ -91,6 +92,10 @@ export class BranchDoctorDetailComponent implements OnInit {
                 const breadcrumbs = [];
                 this.breadcrumbs_init.map((e) => {
                     breadcrumbs.push(e);
+                });
+                breadcrumbs.push({
+                    title: this.userType.type,
+                    url: '/provider/settings/users/doctors'
                 });
                 breadcrumbs.push({
                     title: 'Add'
@@ -251,7 +256,12 @@ export class BranchDoctorDetailComponent implements OnInit {
    // }
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'users', 'doctors']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: this.userType.type
+                           
+             }
+        };
+        this.router.navigate(['provider', 'settings', 'users', 'doctors'],navigationExtras);
     }
     resetApiErrors() {
     }
