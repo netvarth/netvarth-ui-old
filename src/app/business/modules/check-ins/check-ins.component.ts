@@ -679,7 +679,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQueueListByDate() {
     this.load_queue = 0;
-    if (this.selected_location.id) {
+    if (this.selected_location && this.selected_location.id) {
       this.provider_services.getProviderLocationQueuesByDate(
         this.selected_location.id, this.queue_date)
         .subscribe(
@@ -804,7 +804,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureCheckinCount(Mfilter = null) {
     let no_filter = false;
-    if (!Mfilter) {
+    if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id,
       };
@@ -823,7 +823,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryCheckinCount(Mfilter = null) {
     let no_filter = false;
-    if (!Mfilter) {
+    if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id
       };
