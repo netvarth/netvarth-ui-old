@@ -6,7 +6,6 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
-import { promise } from 'protractor';
 
 @Component({
     selector: 'app-displayboard-qset-detail',
@@ -63,7 +62,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
-        this.locName = loc_details.place;
+        if (loc_details) {
+            this.locName = loc_details.place;
+        }
         if (this.actionparam === 'add') {
             this.selectedSortField = 'sort_token';
             this.sortByField('sort_token');
@@ -87,14 +88,16 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
         this.getProviderServices().then(() => {
         });
-        if (this.id) {
-            this.getDisplaydashboardbyId(this.id);
-            this.submit_btn = Messages.UPDATE_BTN;
-        } else {
-            this.submit_btn = Messages.SAVE_BTN;
-            this.getLabels();
-        }
-        this.api_loading = false;
+        setTimeout(() => {
+            if (this.id) {
+                this.getDisplaydashboardbyId(this.id);
+                this.submit_btn = Messages.UPDATE_BTN;
+            } else {
+                this.submit_btn = Messages.SAVE_BTN;
+                this.getLabels();
+            }
+            this.api_loading = false;
+        }, 100);
     }
     getDisplaydashboardbyId(id) {
         this.getLabels();

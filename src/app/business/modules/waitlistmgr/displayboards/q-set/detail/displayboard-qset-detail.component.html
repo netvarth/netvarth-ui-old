@@ -1,11 +1,3 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
-<!-- <section>
-    <div class="content loc-list qset-detail">
-        <div class="row col-md-12 no-padding-small">
-            <div class="card">
-                <div class="copy"> -->
 <div class="lbl qset-detail">
     <div class="col-md-12 no-padding">
         <ul class="nav jd-custom-nav stat-brd-qset">
@@ -59,7 +51,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12" *ngIf="locName">
                 <div class="col-md-12">
                     <label style="margin: 0px;">Location &nbsp;</label>{{locName}}
                     <ul class="info-lst serviceadd-info">
@@ -75,7 +67,6 @@
                         <!-- <span class="form-level-settings">Choose one from below to be displayed on
                             your statusboard </span> -->
                     </label>
-
                     <mat-radio-group [(ngModel)]="selectedCategory">
                         <mat-radio-button class="mgright50" [value]="'DEPARTMENT'"
                             *ngIf="departments.length > 0 && filterByDept" (change)="categorySelection('DEPARTMENT')">
@@ -101,9 +92,9 @@
                             </mat-radio-button>
                         </mat-radio-group> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
-                        (change)="serviceSelection(service.id, $event)" [checked]="services_list[i].checked">
-                        {{service.name | capitalizeFirst}}
-                    </mat-checkbox>
+                            (change)="serviceSelection(service.id, $event)" [checked]="services_list[i].checked">
+                            {{service.name | capitalizeFirst}}
+                        </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'DEPARTMENT'">
@@ -117,9 +108,10 @@
                             </mat-radio-button>
                         </mat-radio-group> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
-                        (change)="departmentSelection(department.departmentId, $event)" [checked]="departments[i].checked">
-                        {{department.departmentName | capitalizeFirst}}
-                    </mat-checkbox>
+                            (change)="departmentSelection(department.departmentId, $event)"
+                            [checked]="departments[i].checked">
+                            {{department.departmentName | capitalizeFirst}}
+                        </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'QUEUE'">
@@ -133,15 +125,16 @@
                                 {{schedule.displayQ.time}}
                             </mat-radio-button>
                         </mat-radio-group> -->
-                        <mat-checkbox class="example-margin" style="margin-left: 30px"
-                        (change)="queueSelection(schedule.id, $event)" [checked]="display_schedule[i].checked">
-                        {{schedule.displayQ.dstr | capitalizeFirst}}
-                                {{schedule.displayQ.time}}
-                    </mat-checkbox>
+                        <mat-checkbox *ngIf="schedule.queueState === 'ENABLED'" class="example-margin"
+                            style="margin-left: 30px" (change)="queueSelection(schedule.id, $event)"
+                            [checked]="display_schedule[i].checked">
+                            {{schedule.displayQ.dstr | capitalizeFirst}}
+                            {{schedule.displayQ.time}}
+                        </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 ">
-                    <label class="col-form-label">Status Board Field to display</label>
+                    <label class="col-form-label">Status board field to display</label>
                     <div class="disply-field" *ngFor="let label of defaultLables; let i = index">
                         <!-- <mat-checkbox class="example-margin" style="margin-left: 30px" *ngIf="(label.name=='appointmentTime' && board_count > 0) || label.name!='appointmentTime'"
                             (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked"> -->
@@ -199,14 +192,5 @@
             </div>
         </ng-container>
     </div>
-
-
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-
 </div>
-<!-- </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</section> -->

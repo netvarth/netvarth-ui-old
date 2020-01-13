@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
-import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -39,7 +38,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
-    private _scrollToService: ScrollToService,
     private renderer: Renderer2,
     public shared_service: SharedServices) {
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
@@ -194,7 +192,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {
         this.active_license = cuser.new_lic;
-      } else {
+      } else if (cuser.accountLicenseDetails) {
         this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
       }
     }
@@ -312,7 +310,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   //       error => {
   //       });
   // }
-  
+
   gotoBranch() {
     const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromLocalStorage(accountid);
@@ -321,4 +319,3 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 }
-

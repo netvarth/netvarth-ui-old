@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -619,56 +619,58 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQueueList() {
     this.selected_queue = null;
-    this.provider_services.getProviderLocationQueues(this.selected_location.id)
-      .subscribe(
-        (data: any) => {
-          const Cqueues = data;
-          this.all_queues = [];
-          let indx = 0;
-          for (const que of Cqueues) {
-            if (que.queueState === 'ENABLED') {
-              que.qindx = indx;
-              this.all_queues.push(que);
-              indx += 1;
+    if (this.selected_location && this.selected_location.id) {
+      this.provider_services.getProviderLocationQueues(this.selected_location.id)
+        .subscribe(
+          (data: any) => {
+            const Cqueues = data;
+            this.all_queues = [];
+            let indx = 0;
+            for (const que of Cqueues) {
+              if (que.queueState === 'ENABLED') {
+                que.qindx = indx;
+                this.all_queues.push(que);
+                indx += 1;
+              }
             }
-          }
-          if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
-            return;
-          }
-          const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
-          if (!getsavedqueueid) {
-            const selid = this.findCurrentActiveQueue(this.all_queues);
-            this.selectedQueue(this.all_queues[selid]);
-          }
-          let selqid = 0;
-          for (let ii = 0; ii < this.all_queues.length; ii++) {
-            let schedule_arr = [];
-            // extracting the schedule intervals
-            if (this.all_queues[ii].queueSchedule) {
-              schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+            if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+              return;
             }
-            let display_schedule = [];
-            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-            this.all_queues[ii]['displayschedule'] = display_schedule[0];
-            if (this.all_queues[ii].id === getsavedqueueid) {
-              selqid = ii;
+            const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
+            if (!getsavedqueueid) {
+              const selid = this.findCurrentActiveQueue(this.all_queues);
+              this.selectedQueue(this.all_queues[selid]);
             }
-          }
-          this.selected_queue = this.all_queues[selqid];
-          this.getTodayCheckinCount();
-          // if (this.time_type === 1) {
-          //   this.getTodayCheckIn();
-          // }
-          if (this.time_type === 0) {
-            this.getHistoryCheckIn();
-          }
-          if (this.time_type === 2) {
-            this.getFutureCheckIn();
-          }
-        },
-        () => { },
-        () => { }
-      );
+            let selqid = 0;
+            for (let ii = 0; ii < this.all_queues.length; ii++) {
+              let schedule_arr = [];
+              // extracting the schedule intervals
+              if (this.all_queues[ii].queueSchedule) {
+                schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+              }
+              let display_schedule = [];
+              display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+              this.all_queues[ii]['displayschedule'] = display_schedule[0];
+              if (this.all_queues[ii].id === getsavedqueueid) {
+                selqid = ii;
+              }
+            }
+            this.selected_queue = this.all_queues[selqid];
+            this.getTodayCheckinCount();
+            // if (this.time_type === 1) {
+            //   this.getTodayCheckIn();
+            // }
+            if (this.time_type === 0) {
+              this.getHistoryCheckIn();
+            }
+            if (this.time_type === 2) {
+              this.getFutureCheckIn();
+            }
+          },
+          () => { },
+          () => { }
+        );
+    }
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
