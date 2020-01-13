@@ -205,7 +205,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 <mat-form-field>
                                     <input class="form-control" matInput
                                         placeholder="{{service_time_window_name}} (not visible to public)"
-                                        formControlName="qname" autocomplete="off" maxlength="20">
+                                        formControlName="qname" autocomplete="off">
                                 </mat-form-field>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
