@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="content-lst col-md-12 no-padding">
-        <div class="form-group">
+        <div class="form-group">            
             <div class="tab-lst">
                 <div *ngFor="let row of createRange(boardRows)">
                     <div *ngFor="let col of createRange(boardCols)" class="col-md-{{12/boardCols}} no-padding board-box"
@@ -68,6 +68,7 @@
                         </div>
                     </div>
                 </div>
+                <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
             </div>
         </div>
     </div>

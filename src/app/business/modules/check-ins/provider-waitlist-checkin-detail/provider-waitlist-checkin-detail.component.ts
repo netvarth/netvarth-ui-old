@@ -276,13 +276,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
   getTimeSlots(QStartTime, QEndTime, interval) {
     const _this = this;
-    console.log(QStartTime);
-    console.log(QEndTime);
     this.availableSlots = [];
     // if(interval && (interval !== 0)) {
     const allSlots = _this.shared_Functionsobj.getTimeSlotsFromQTimings(30, QStartTime, QEndTime);
     this.availableSlots = allSlots;
-    console.log(allSlots);
   // }
   }
   getAppxTime(waitlist, retcap?) {

@@ -17,11 +17,9 @@ export class ManageProviderComponent implements OnInit {
                 this.accountId = params.id;
               });
     }
-    
     ngOnInit() {
         this.provider_service.manageProvider(this.accountId).subscribe(
             (data: any) => {
-                console.log(data);
                 this.sharedFunctions.setitemOnSessionStorage('tabId', data.tabId);
                 this.sharedFunctions.setitemOnSessionStorage('accountid', this.accountId);
                 data['accountType'] = 'BRANCH_SP';

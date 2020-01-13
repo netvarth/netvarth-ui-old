@@ -723,9 +723,6 @@ export class CheckInInnerComponent implements OnInit {
       // this.queueReloaded = true;
       this.availableSlots = [];
       // this.api_loading = true;
-      console.log(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime']);
-      console.log(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime']);
-      console.log(this.queuejson[this.sel_queue_indx]);
       if (this.page_source === 'provider_checkin' && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
         this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
       }
@@ -1652,7 +1649,6 @@ export class CheckInInnerComponent implements OnInit {
   getAvailableTimeSlots(QStartTime, QEndTime, interval) {
     const _this = this;
     const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
-    console.log(_this.isFuturedate);
     this.availableSlots = allSlots;
     const filter = {};
     const activeSlots = [];
@@ -1663,18 +1659,14 @@ export class CheckInInnerComponent implements OnInit {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     waitlist_date.setHours(0, 0, 0, 0);
-    console.log(today);
-    console.log(waitlist_date);
     if (today.valueOf() < waitlist_date.valueOf()) {
       future = true;
     }
     this.apptTime = '';
-    console.log(_this.sel_loc + ':' + _this.sel_queue_id);
     if (!future) {
       _this.provider_services.getTodayWaitlist(filter).subscribe(
         (waitlist: any) => {
           for (let i = 0; i < waitlist.length; i++) {
-            console.log(waitlist[i]['appointmentTime']);
             if (waitlist[i]['appointmentTime']) {
               activeSlots.push(waitlist[i]['appointmentTime']);
             }

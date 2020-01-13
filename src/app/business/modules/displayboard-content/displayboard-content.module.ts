@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AuthGuardProvider } from '../../../shared/guard/auth.guard';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 @NgModule({
     declarations: [
         DisplayboardLayoutContentComponent
@@ -13,7 +14,8 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
     imports: [
         CommonModule,
         DisplayboardContentRoutingModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        LoadingSpinnerModule
     ],
     exports: [],
     providers: [

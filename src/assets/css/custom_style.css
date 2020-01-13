@@ -6683,3 +6683,7 @@ input.jdn_ip { width: 50px !important}
 label.notifi-togl {
   margin-bottom: 0px !important;
 }
+.display-content thead th {
+  background:#d0e0ea;
+  border:1px solid #bad1de; 
+}

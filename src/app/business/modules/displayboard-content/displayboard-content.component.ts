@@ -42,27 +42,12 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     cronHandle1: Subscription;
     index;
     bProfiles: any = [];
-    // containerJson = {
-    //     containerId: 1,
-    //     howMany: 4,
-    //     interval: '30000',
-    //     displayboards: []
-    // };
-    // inputStatusboards = [
-    //     {
-    //         sbId: 153,
-    //         providerId: 72570
-    //     },
-    //     {
-    //         sbId: 154,
-    //         providerId: 72571
-    //     }
-    // ];
     inputStatusboards: any = [];
     tabid: any = {};
     manageTabCalled = false;
     s3Url;
     showIndex = 0;
+    api_loading = true;
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
@@ -100,27 +85,32 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this.gets3curl();
+        const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
+        if (MainBdetails) {
+            this.MainBname = MainBdetails.bn || '';
+            this.MainBlogo = MainBdetails.logo || '';
+        }
         if (this.type) {
             this.provider_services.getDisplayboardContainer(this.layout_id).subscribe(
                 (container: any) => {
                     this.inputStatusboards = container.sbContainer;
-                    setTimeout(() => {
-                        this.setTabIds();
-                    }, 1000);
-                    setTimeout(() => {
-                        this.getStatusboard(this.inputStatusboards[this.showIndex]);
-                        this.cronHandle = Observable.interval(container.interval * 1000).subscribe(() => {
-                            if (this.showIndex === (this.inputStatusboards.length - 1)) {
-                                this.showIndex = 0;
-                            } else {
-                                ++this.showIndex;
-                            }
-                            console.log(this.inputStatusboards[this.showIndex]);
+                    this.setTabIds().then(
+                        (tabInfo: any) => {
+                            this.api_loading = false;
+                            this.accountType = 'BRANCH_SP';
+                            this.shared_functions.setitemOnSessionStorage('tabSession', tabInfo);
                             this.getStatusboard(this.inputStatusboards[this.showIndex]);
-                        });
-                    }, 2000);
-                }
-            );
+                            this.cronHandle = Observable.interval(container.interval * 1000).subscribe(() => {
+                                if (this.showIndex === (this.inputStatusboards.length - 1)) {
+                                    this.showIndex = 0;
+                                } else {
+                                    ++this.showIndex;
+                                }
+                                this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                            });
+                        }
+                    );
+                });
         } else {
             this.getSingleStatusboard();
         }
@@ -146,7 +136,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                                 // calling function which saves the business related details to show in the header
                             }
                             this.accountType = user.accountType;
-                            console.log(this.accountType);
                             const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
                             this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(
                                 (data1: any) => {
@@ -164,11 +153,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                         this.getBusinessdetFromLocalstorage();
                         // this.gets3curl();
                         let UTCstring = null;
-                        console.log(bProfile);
                         UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
                         this.shared_services.getbusinessprofiledetails_json(bProfile.uniqueId, this.s3Url, 'businessProfile', UTCstring)
                             .subscribe((businessJson: any) => {
                                 this.businessJson = businessJson;
+                                this.api_loading = false;
                             });
                     });
             });
@@ -194,7 +183,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             .then(
                 res => {
                     this.s3Url = res;
-                    // this.getbusinessprofiledetails_json(res, 'businessProfile', true);
                 }
             );
     }
@@ -208,179 +196,105 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 this.businessJson = res;
             });
     }
-    setTabIds() {
-        console.log(this.inputStatusboards);
-        this.inputStatusboards.forEach(sb => {
-            const accountId = sb.providerId;
-            console.log(accountId);
-            this.provider_services.manageProvider(accountId).subscribe(
+
+    setTabId(accountId) {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.provider_services.manageProvider(accountId).subscribe(
                 (data: any) => {
-                    this.tabid[sb.providerId] = data.tabId;
-                    this.shared_functions.setitemOnSessionStorage('accountid', accountId);
-                    this.shared_functions.setitemOnSessionStorage('tabId', data.tabId);
+                    const dispcont = {};
+                    _this.tabid[accountId] = data.tabId;
+                    _this.shared_functions.setitemOnSessionStorage('accountid', accountId);
+                    _this.shared_functions.setitemOnSessionStorage('tabId', data.tabId);
                     data['accountType'] = 'BRANCH_SP';
-                    this.shared_functions.setitemToGroupStorage('ynw-user', data);
-                    this.shared_functions.setitemonLocalStorage('tabIds', this.tabid);
-                    console.log(data);
-                }, error => {
+                    _this.shared_functions.setitemToGroupStorage('ynw-user', data);
+                    _this.shared_functions.setitemonLocalStorage('tabIds', _this.tabid);
+                    _this.provider_services.getBussinessProfile().subscribe(
+                        (bProfile: any) => {
+                            _this.provider_services.getProviderLogo().subscribe(
+                                (logoinfo: any) => {
+                                    const blogo = logoinfo;
+                                    let logo = '';
+                                    if (blogo[0]) { logo = blogo[0].url; } else { logo = ''; }
+                                    dispcont['logo'] = logo;
+                                    dispcont['businessName'] = bProfile['businessName'];
+                                });
+                            let UTCstring = null;
+                            UTCstring = _this.shared_functions.getCurrentUTCdatetimestring();
+                            _this.shared_services.getbusinessprofiledetails_json(bProfile.uniqueId, _this.s3Url, 'businessProfile', UTCstring)
+                                .subscribe((businessJson: any) => {
+                                    dispcont['businessJson'] = businessJson;
+                                    if (bProfile && bProfile.subDomainVirtualFields) {
+                                        const user = _this.shared_functions.getitemFromGroupStorage('ynw-user');
+                                        const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
+                                        _this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
+                                            _this.subDomVirtualFields = data;
+                                            for (let i = 0; i < _this.subDomVirtualFields.length; i++) {
+                                                if (_this.subDomVirtualFields[i].baseField === 'qualification') {
+                                                    const eduName = _this.subDomVirtualFields[i]['name'];
+                                                    dispcont['qualification'] = virtualfields[eduName];
+                                                }
+                                            }
+                                            resolve(dispcont);
+                                        });
+                                    } else {
+                                        resolve(dispcont);
+                                    }
+                                });
+                        });
                 });
         });
-        console.log(this.tabid);
     }
-    // generateDisplayboardJson() {
-    //     const displayboardSet = [];
-    //     this.inputStatusboards.forEach(sbSet => {
-    //         setTimeout(() => {
-    //             const sboard = {};
-    //         const tabIds = this.shared_functions.getitemfromLocalStorage('tabIds');
-    //         if (tabIds[sbSet['providerId']]) {
-    //             this.shared_functions.setitemOnSessionStorage('tabId', tabIds[sbSet['providerId']]);
-    //             this.shared_functions.setitemOnSessionStorage('accountid', sbSet['providerId']);
-    //             console.log(tabIds[sbSet['providerId']]);
-    //             console.log(sbSet['providerId']);
-    //         }
-    //         console.log(tabIds);
-    //         this.getBusinessdetFromLocalstorage();
-    //         this.provider_services.getDisplayboard(sbSet.sbId).subscribe(
-    //             (sbInfo: any) => {
-    //                 sboard['id'] = sbInfo['id'];
-    //                 sboard['layout'] = sbInfo['layout'];
-    //                 const provider = {};
-    //                 console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
-    //                 console.log(this.shared_functions.getitemfromSessionStorage('accountid'));
-    //                 setTimeout(() => {
-    //                 this.provider_services.getBussinessProfile().subscribe(
-    //                     (bProfile: any) => {
-    //                         if (bProfile && bProfile.subDomainVirtualFields) {
-    //                             const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    //                             console.log(user);
-    //                             this.accountType = user.accountType;
-    //                             const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
-    //                             this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
-    //                                 this.subDomVirtualFields = data;
-    //                                 for (let i = 0; i < this.subDomVirtualFields.length; i++) {
-    //                                     if (this.subDomVirtualFields[i].baseField === 'qualification') {
-    //                                         const eduName = this.subDomVirtualFields[i]['name'];
-    //                                         provider['qualification'] = eduName;
-    //                                     }
-    //                                 }
-    //                             });
-    //                         }
-    //                         // this.gets3curl();
-    //                         let UTCstring = null;
-    //                         console.log(bProfile);
-    //                         UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    //                         this.shared_services.getbusinessprofiledetails_json(bProfile.uniqueId, this.s3Url, 'businessProfile', UTCstring)
-    //                             .subscribe((businessJson: any) => {
-    //                                 provider['specialization'] = businessJson.specialization;
-    //                             });
-    //                         sboard['provider'] = provider;
-    //                         const criteriaSet = [];
-    //                         sbInfo.metric.forEach(metric => {
-    //                             this.provider_services.getDisplayboardQSetbyId(metric.sbId).subscribe(
-    //                                 (qSetInfo: any) => {
-    //                                     const criteriaInfo = {};
-    //                                     criteriaInfo['position'] = metric.position;
-    //                                     criteriaInfo['criteria'] = qSetInfo;
-    //                                     criteriaSet.push(criteriaInfo);
-    //                                 });
-    //                         });
-    //                         sboard['metric'] = criteriaSet;
-    //                         displayboardSet.push(sboard);
-    //                         console.log(sboard);
-    //                     }
-    //                 );
-    //             }, 5000);
-    //             });
-    //         }, 5000);
-    //         console.log(sbSet);
-    //     });
-    //     this.containerJson.displayboards = displayboardSet;
-    //     console.log(displayboardSet);
-    // }
-    // getProviderId() {
-    //     this.index = 0;
-    //     this.getTabid(this.StatusboardJson.metric[this.index]);
-    //     this.cronHandle1 = Observable.interval(this.refreshTime * 1000).subscribe(() => {
-    //         // for (let i = 0; i < this.StatusboardJson.metric.length; i++) {
-    //         // this.setDisplayboards(metric);
-    //         // }
-
-    //         if (this.index < this.StatusboardJson.metric.length) {
-    //             this.index++;
-    //         } else {
-    //             this.index = 0;
-    //         }
-    //         this.getTabid(this.StatusboardJson.metric[this.index]);
-    //     });
-    // }
-
-    // getTabid(statusboardMetric) {
-    //     const accountId = statusboardMetric.providerId;
-    //     const tabIds = this.shared_functions.getitemfromLocalStorage('tabIds');
-    //     console.log(tabIds[accountId]);
-    //     if (tabIds[accountId]) {
-    //         this.shared_functions.setitemOnSessionStorage('tabId', tabIds[accountId]);
-    //     }
-    //     this.setDisplayboards(statusboardMetric.sbId);
-    // }
+    setTabIds() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            const tabInfo = {};
+            let count = 0;
+            // countOfProviders
+            const processList = [];
+            const intervalCall = setInterval(() => {
+                const accountId = _this.inputStatusboards[count].providerId;
+                if (processList.indexOf(accountId) === -1) {
+                    processList.push(accountId);
+                    _this.setTabId(accountId).then(
+                         (data: any) => {
+                             tabInfo[accountId] = data;
+                            if (count === (_this.inputStatusboards.length - 1)) {
+                                clearInterval(intervalCall);
+                                resolve(tabInfo);
+                            } else {
+                                ++count;
+                            }
+                         });
+                } else if (tabInfo[accountId]) {
+                    if (count === (_this.inputStatusboards.length - 1)) {
+                        clearInterval(intervalCall);
+                        resolve(tabInfo);
+                    }
+                    ++count;
+                }
+            }, (1000));
+        });
+    }
     getStatusboard(boardObj) {
-        console.log(boardObj);
         const tabIds = this.shared_functions.getitemfromLocalStorage('tabIds');
-        console.log(tabIds);
         if (tabIds[boardObj['providerId']]) {
             this.shared_functions.setitemOnSessionStorage('tabId', tabIds[boardObj['providerId']]);
             this.shared_functions.setitemOnSessionStorage('accountid', boardObj['providerId']);
         }
         if (boardObj.sbId) {
             let layoutData;
-            this.provider_services.getBussinessProfile().subscribe(
-                (bProfile: any) => {
-                    console.log(this.shared_functions.getitemfromSessionStorage('tabId'));
-                    console.log(this.shared_functions.getitemfromSessionStorage('accountid'));
-                    console.log(bProfile);
-                    this.provider_services.getProviderLogo().subscribe(
-                        data => {
-                            const blogo = data;
-                            let logo = '';
-                            if (blogo[0]) {
-                                logo = blogo[0].url;
-                            } else {
-                                logo = '';
-                            }
-                            // calling function which saves the business related details to show in the header
-                            this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-                                || '', bProfile['serviceSector']['displayName'] || '', '', logo);
-                            this.getBusinessdetFromLocalstorage();
-                        });
-                    if (bProfile && bProfile.subDomainVirtualFields) {
-                        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-                        if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
-                            // calling function which saves the business related details to show in the header
-                            const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
-                        }
-                        this.accountType = user.accountType;
-                        console.log(this.accountType);
-                        const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
-                        this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
-                            this.subDomVirtualFields = data;
-                            for (let i = 0; i < this.subDomVirtualFields.length; i++) {
-                                if (this.subDomVirtualFields[i].baseField === 'qualification') {
-                                    const eduName = this.subDomVirtualFields[i]['name'];
-                                    this.qualification = virtualfields[eduName];
-                                }
-                            }
-                        });
-                    }
-                    // this.gets3curl();
-                    let UTCstring = null;
-                    console.log(bProfile);
-                    UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-                    this.shared_services.getbusinessprofiledetails_json(bProfile.uniqueId, this.s3Url, 'businessProfile', UTCstring)
-                        .subscribe((businessJson: any) => {
-                            this.businessJson = businessJson;
-                        });
-                });
+            const accountId = this.shared_functions.getitemfromSessionStorage('accountid');
+            const tabSession = this.shared_functions.getitemfromSessionStorage('tabSession');
+            const accountInfo = tabSession[accountId];
+            this.businessJson = accountInfo.businessJson;
+            if (accountInfo.qualification) {
+                this.qualification = accountInfo.qualification;
+            }
+            if (accountInfo.logo) {
+                this.blogo = accountInfo.logo;
+            }
+            this.bname = accountInfo.businessName;
             this.provider_services.getDisplayboard(boardObj.sbId).subscribe(
                 layoutInfo => {
                     layoutData = layoutInfo;
@@ -399,7 +313,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     getBusinessdetFromLocalstorage() {
         const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
         const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
-        console.log(bdetails);
         if (bdetails) {
             this.bname = bdetails.bn || '';
             this.blogo = bdetails.logo || '';
@@ -467,10 +380,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         this.provider_services.getTodayWaitlist(Mfilter).subscribe(
             (waitlist) => {
                 this.selectedDisplayboards[element.position]['checkins'] = waitlist;
-                console.log(this.selectedDisplayboards);
             });
         // });
-        // console.log(this.StatusboardJson);
     }
     createRange(number) {
         const items = [];

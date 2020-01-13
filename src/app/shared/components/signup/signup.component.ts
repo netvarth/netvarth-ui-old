@@ -269,11 +269,9 @@ export class SignUpComponent implements OnInit {
   setSubDomains(i) {
     this.subDomainList = [];
     const sub_domains = (this.business_domains[i]) ? this.business_domains[i]['subDomains'] : [];
-    console.log(sub_domains);
     const sub_domains_sortbyorder = this.shared_functions.sortByKey(sub_domains, 'order');
     sub_domains_sortbyorder.forEach((element, index) => {
       if (this.subdomainSettings[element.subDomain]) {
-        console.log(this.subdomainSettings[element.subDomain]);
       }
       const ob = { 'id': index, 'itemName': element.displayName, 'value': element.subDomain };
       this.subDomainList.push(ob);
