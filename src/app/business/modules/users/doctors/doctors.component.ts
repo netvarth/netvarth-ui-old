@@ -16,6 +16,7 @@ export class DoctorsComponent implements OnInit {
     userlistSelection = 0;
     selectedUserlist: any = [];
     new_users_list: any = [];
+    assistantData: any = [];
     profileStatus = false;
     breadcrumbs_init = [
         {
@@ -29,6 +30,7 @@ export class DoctorsComponent implements OnInit {
     ];
     breadcrumbs = this.breadcrumbs_init;
     api_loading: boolean;
+    totalCnt: any;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -54,6 +56,7 @@ export class DoctorsComponent implements OnInit {
                         });
                         this.breadcrumbs = breadcrumbs;
         this.getBranchSPs();
+        this.getAssistantlist();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     addBranchSP(usertype,usermode) {
@@ -72,6 +75,7 @@ export class DoctorsComponent implements OnInit {
         this.shared_services.getBranchSPs(accountId).subscribe(
             (data: any) => {
                 this.users_list = data;
+                console.log(data);
                 for (let i = 0; i < this.users_list.length; i++) {
                     if (this.users_list[i]['accountType'] === 'BRANCH') {
                     } else {
@@ -83,6 +87,56 @@ export class DoctorsComponent implements OnInit {
                 //console.log(this.users_list);
             }
         );
+    }
+getAssistantlist(){
+    const promise = this.getAssistants();
+    promise.then(
+      result => {
+          console.log(result);
+        this.totalCnt = result;
+    });
+}
+
+    getAssistants() {
+        this.assistantData = [
+            {
+              "id": 1,
+              "firstName": "ashly",
+              "lastName": "pol",
+              "address": "kuttikad",
+              "mobileNo": "5588996655",
+              "dob": "2019-12-21T05:22:11.702Z",
+              "gender": "female",
+              "userType": "ASSISTANT",
+              "status": "ACTIVE",
+              "emil": "xyz@gmail.com"
+            },
+            {
+                "id": 3,
+                "firstName": "angel",
+                "lastName": "kol",
+                "address": "puttikad",
+                "mobileNo": "9988996655",
+                "dob": "2019-12-21T05:22:11.702Z",
+                "gender": "female",
+                "userType": "ASSISTANT",
+                "status": "ACTIVE",
+                "emil": "fgygz@gmail.com"
+              }
+
+          ];
+          console.log(this.assistantData);
+
+          return new Promise((resolve) => {
+           // this.shared_services.getAssistants()
+             // .subscribe(
+              //  data => {
+                  resolve(this.assistantData);
+                  
+               // },
+               // () => {
+               // });
+          });
     }
     // gotoBranchspDetails(user) {
     //      console.log(user);
@@ -127,7 +181,8 @@ export class DoctorsComponent implements OnInit {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
+
     userProfile(info) {
-        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
+        this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'additionalinfo']);
     }
 }

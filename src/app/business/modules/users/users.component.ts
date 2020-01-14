@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -23,7 +23,6 @@ export class UsersComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
 
     constructor(
-        private router: Router,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices,
@@ -35,8 +34,12 @@ export class UsersComponent implements OnInit {
     ngOnInit() {
         
     }
-    gotobranchsps() {
-        this.router.navigate(['provider', 'settings','users','doctors']);
+    gotobranchsps(type) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: type}
+        };
+      this.routerobj.navigate(['provider', 'settings', 'users', 'doctors'], navigationExtras);
+       // this.router.navigate(['provider', 'settings','users','doctors']);
     }
     
    

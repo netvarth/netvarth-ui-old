@@ -8,11 +8,15 @@ import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loadin
 import { BranchDoctorDetailComponent } from './details/doctors-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
+import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 @NgModule({
     declarations: [
         DoctorsComponent,
-        BranchDoctorDetailComponent
+        BranchDoctorDetailComponent,
+        AdditionalInfoComponent
     ],
     imports: [
         DoctorsRoutingModule,
@@ -22,7 +26,9 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
         FormMessageDisplayModule,
         FormsModule,
         LoadingSpinnerModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CapitalizeFirstPipeModule,
+        Nl2BrPipeModule
     ],
     entryComponents: [],
     exports: [DoctorsComponent]

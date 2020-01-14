@@ -806,6 +806,10 @@ export class ProviderServices {
     const url = 'provider/assistant';
     return this.servicemeta.httpPut(url, post_data);
   }
+  getAssistants() {
+    const url = 'provider/assistant/filter';
+    return this.servicemeta.httpGet(url);
+  }
   getCorporateDetails() {
     const url = 'provider/corp';
     return this.servicemeta.httpGet(url);

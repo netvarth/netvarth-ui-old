@@ -53,16 +53,26 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-12" *ngIf="users_list.length==0">
+                            <div class="col-md-12" *ngIf="users_list.length==0 && userType.type === 'doctors'">
                                 <div class="row">
                                     <div class="no-dta">
-                                        <p>No users Found</p>
+                                        <p>No doctors Found</p>
                                         <!-- <span class="cs-btn bt3" (click)="addBranchSP('doctors')">Add
                                             Doctor</span> -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 no-padding" *ngIf="users_list.length!==0">
+                            <div class="col-md-12" *ngIf="totalCnt.length==0 && userType.type === 'assistants'">
+                                <div class="row">
+                                    <div class="no-dta">
+                                        <p>No assistants Found</p>
+                                        <!-- <span class="cs-btn bt3" (click)="addBranchSP('doctors')">Add
+                                            Doctor</span> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 no-padding" *ngIf="users_list.length!==0 && userType.type === 'doctors'">
                                 <div class="col-md-12 pt10 mt5 dboarduser" *ngFor="let user of users_list,let i=index" [class.selected-waitlist]="userlistSelected[i]">
                                    
                                     <div class="copy" (click)="selectUserlist(i)">
@@ -72,8 +82,10 @@
                                             </button>
                                         </span> -->
                                         <h3 class="pointer-cursor" (click)="manageProvider('doctors','edit')">
-                                            {{user.businessName}} <span class="layout_name">({{user.departmentCode}})
-                                            </span></h3>
+                                            {{user.businessName}} 
+                                            <!-- <span class="layout_name">({{user.departmentCode}})
+                                            </span> -->
+                                        </h3>
                                         <!-- <mat-menu #appMenu="matMenu">
                                             <button mat-menu-item>
                                                 <i class="fa fa-folder-open"></i>
@@ -82,6 +94,20 @@
                                                     (click)="manageProvider(user.id)"> Manage
                                                 </a> </button>
                                         </mat-menu> -->
+                                   
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 no-padding" *ngIf="totalCnt.length!==0 && userType.type === 'assistants'">
+                                <div class="col-md-12 pt10 mt5 dboarduser" *ngFor="let assistants of totalCnt,let i=index" [class.selected-waitlist]="userlistSelected[i]">
+                                   
+                                    <div class="copy" (click)="selectUserlist(i)">
+                                        
+                                        <h3 class="pointer-cursor" (click)="manageProvider('assistants','edit')">
+                                            {{assistants.firstName}} {{assistants.lastName}} 
+                                           
+                                        </h3>
+                                       
                                    
                                 </div>
                                 </div>
