@@ -178,6 +178,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
+        this.metric = [];
         let name = '';
         if (this.displayName) {
             name = this.displayName.trim().replace(/ /g, '_');
