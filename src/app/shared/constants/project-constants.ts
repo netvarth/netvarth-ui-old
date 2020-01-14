@@ -248,6 +248,8 @@ export const projectConstants = {
   VALIDATOR_MAX6: 6, // max char count
   VALIDATOR_MAX9: 9, // max char count
   VALIDATOR_MAX10: 10, // max char count
+  VALIDATOR_MAX15_DEPT_CDE: 15, // max char count
+  VALIDATOR_MAX100_DEPT_NME: 100, // max char count
   VALIDATOR_MAX50: 50, // max char count
   VALIDATOR_MAX100: 100, // max char count
   VALIDATOR_MAX150: 150, // max char count
