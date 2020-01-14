@@ -5,7 +5,19 @@
 <section class="content comn-cls lic-page notifications">
   <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small  ynw-common-form-nm">
     <div class="row">
-      <div class="card w-dta p0 ">
+      <div class="card w-dta p0">
+        <div class="paysettings-tab col-md-6 col-xs-12 col-sm-12 no-padding">
+          <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-20">
+              <label class="notifi-togl" style="display: flex">Send Notifications&nbsp;&nbsp;
+                  <mat-slide-toggle
+                          class="example-margin"
+                          [(ngModel)]="consumerNotification"
+                          (change)="handleNotificationSettings($event)">
+                  </mat-slide-toggle>
+              </label>
+              <p class="sts" [class.active]="consumerNotification">{{notification_statusstr}}</p>
+          </div>
+      </div>
         <mat-accordion>
           <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>

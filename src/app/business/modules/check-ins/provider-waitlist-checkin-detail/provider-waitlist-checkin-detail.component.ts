@@ -15,7 +15,6 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider
 })
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
-
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   details_cap = Messages.CHECK_DET_DETAILS_CAP;
   name_cap = Messages.CHECK_DET_NAME_CAP;
@@ -39,12 +38,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP;
   no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
   check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   waitlist_id = null;
   waitlist_data;
   waitlist_notes: any = [];
   waitlist_history: any = [];
   settings: any = [];
   esttime: string = null;
+  apptTime;
   communication_history: any = [];
   est_tooltip = Messages.ESTDATE;
   breadcrumbs_init: any = [
@@ -57,10 +58,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   api_success = null;
   api_error = null;
   userDet;
-
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
-
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   today = new Date();
@@ -68,7 +67,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   provider_label = '';
   checkin_label = '';
   checkin_upper = '';
-
   timeCaption = Messages.CHECKIN_TIME_CAPTION;
   minCaption = Messages.EST_WAIT_TIME_CAPTION;
   sendmsgdialogRef;
@@ -77,7 +75,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   showEditView = false;
   api_loading = true;
   pdtype;
-
+  editAppntTime = false;
+  board_count = 0;
+  showTimePicker = false;
+  availableSlots: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -86,7 +87,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private activated_route: ActivatedRoute,
     private locationobj: Location,
     private provider_shared_functions: ProviderSharedFuctions) {
-
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
     });
@@ -100,8 +100,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       'title': this.checkin_upper
     });
   }
-
   ngOnInit() {
+    this.getDisplayboardCount();
     this.api_loading = true;
     this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
@@ -116,7 +116,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
     this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
   }
-
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -141,17 +140,20 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if (this.waitlist_data.appointmentTime) {
+            // tslint:disable-next-line: radix
+            // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+            this.apptTime = this.waitlist_data.appointmentTime;
+          } else {
+            this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
+          }
           const waitlist_date = new Date(this.waitlist_data.date);
-
           this.today.setHours(0, 0, 0, 0);
           waitlist_date.setHours(0, 0, 0, 0);
-
           this.waitlist_data.history = false;
-
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-
           this.getWaitlistNotes();
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
@@ -243,9 +245,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   changeWaitlistStatus() {
-
     this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'CANCEL');
-
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -258,9 +258,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   addConsumerInboxMessage() {
-
+	const waitlist = [];
+    waitlist.push(this.waitlist_data);
     const uuid = this.waitlist_data.ynwUuid || null;
-    this.provider_shared_functions.addConsumerInboxMessage(this.waitlist_data, this)
+    this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => {
           this.getCommunicationHistory(uuid);
@@ -273,7 +274,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   gotoPrev() {
     this.locationobj.back();
   }
-
+  getTimeSlots(QStartTime, QEndTime, interval) {
+    const _this = this;
+    this.availableSlots = [];
+    // if(interval && (interval !== 0)) {
+    const allSlots = _this.shared_Functionsobj.getTimeSlotsFromQTimings(30, QStartTime, QEndTime);
+    this.availableSlots = allSlots;
+  // }
+  }
   getAppxTime(waitlist, retcap?) {
     /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
       return 'Now';
@@ -365,7 +373,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
   cancelClicked() {
     this.showEditView = false;
-   this. esttime = '';
+    this.esttime = '';
   }
   saveClicked(esttime) {
     if (esttime) {
@@ -378,12 +386,48 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
     }
-    this. esttime = '';
+    this.esttime = '';
   }
   isNumeric(evt) {
     return this.shared_Functionsobj.isNumeric(evt);
   }
   isvalid(evt) {
     return this.shared_Functionsobj.isValid(evt);
+  }
+  editApptTime() {
+    // tslint:disable-next-line: radix
+    this.editAppntTime = true;
+    this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, this.waitlist_data.queue.timeInterval);
+    this.apptTime = this.waitlist_data.appointmentTime;
+    // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
+  }
+  cancelUpdation() {
+    this.editAppntTime = false;
+  }
+  // changetime(passtime) {
+  //   this.appttime = passtime;
+  // }
+  saveApptTime(time) {
+    // const apptTimeFormat = moment(this.appttime).format('hh:mm A') || null;
+      this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, time).subscribe(
+        () => {
+          this.editAppntTime = false;
+          this.getWaitlistDetail();
+        }, (error) => {
+          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
+        });
+  }
+  setApptTime() {
+    (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
   }
 }

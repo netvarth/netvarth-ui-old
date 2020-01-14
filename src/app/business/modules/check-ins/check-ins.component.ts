@@ -262,6 +262,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   newWaitlistforMsg: any = [];
   consumerTrackstatus = false;
   customerMsg = '';
+  board_count = 0;
+  sortBy = 'sort_token';
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -308,6 +310,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
+    if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
+      this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
+    } else {
+      this.shared_functions.setitemToGroupStorage('sortBy', 'sort_token');
+    }
+    this.getDisplayboardCount();
     this.showstatus['new'] = true;
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
       if (this.time_type === 1) {
@@ -522,7 +530,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.small_device_display = false;
       this.show_small_device_queue_display = false;
     }
-    if (this.screenWidth <= projectConstants.SMALL_DEVICE_BOUNDARY) {
+    if (this.screenWidth <= 1040) {
       this.small_device_display = true;
       this.noshowCount = 2;
     } else {
@@ -612,56 +620,58 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQueueList() {
     this.selected_queue = null;
-    this.provider_services.getProviderLocationQueues(this.selected_location.id)
-      .subscribe(
-        (data: any) => {
-          const Cqueues = data;
-          this.all_queues = [];
-          let indx = 0;
-          for (const que of Cqueues) {
-            if (que.queueState === 'ENABLED') {
-              que.qindx = indx;
-              this.all_queues.push(que);
-              indx += 1;
+    if (this.selected_location && this.selected_location.id) {
+      this.provider_services.getProviderLocationQueues(this.selected_location.id)
+        .subscribe(
+          (data: any) => {
+            const Cqueues = data;
+            this.all_queues = [];
+            let indx = 0;
+            for (const que of Cqueues) {
+              if (que.queueState === 'ENABLED') {
+                que.qindx = indx;
+                this.all_queues.push(que);
+                indx += 1;
+              }
             }
-          }
-          if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
-            return;
-          }
-          const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
-          if (!getsavedqueueid) {
-            const selid = this.findCurrentActiveQueue(this.all_queues);
-            this.selectedQueue(this.all_queues[selid]);
-          }
-          let selqid = 0;
-          for (let ii = 0; ii < this.all_queues.length; ii++) {
-            let schedule_arr = [];
-            // extracting the schedule intervals
-            if (this.all_queues[ii].queueSchedule) {
-              schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+            if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
+              return;
             }
-            let display_schedule = [];
-            display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
-            this.all_queues[ii]['displayschedule'] = display_schedule[0];
-            if (this.all_queues[ii].id === getsavedqueueid) {
-              selqid = ii;
+            const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
+            if (!getsavedqueueid) {
+              const selid = this.findCurrentActiveQueue(this.all_queues);
+              this.selectedQueue(this.all_queues[selid]);
             }
-          }
-          this.selected_queue = this.all_queues[selqid];
-          this.getTodayCheckinCount();
-          // if (this.time_type === 1) {
-          //   this.getTodayCheckIn();
-          // }
-          if (this.time_type === 0) {
-            this.getHistoryCheckIn();
-          }
-          if (this.time_type === 2) {
-            this.getFutureCheckIn();
-          }
-        },
-        () => { },
-        () => { }
-      );
+            let selqid = 0;
+            for (let ii = 0; ii < this.all_queues.length; ii++) {
+              let schedule_arr = [];
+              // extracting the schedule intervals
+              if (this.all_queues[ii].queueSchedule) {
+                schedule_arr = this.shared_functions.queueSheduleLoop(this.all_queues[ii].queueSchedule);
+              }
+              let display_schedule = [];
+              display_schedule = this.shared_functions.arrageScheduleforDisplay(schedule_arr);
+              this.all_queues[ii]['displayschedule'] = display_schedule[0];
+              if (this.all_queues[ii].id === getsavedqueueid) {
+                selqid = ii;
+              }
+            }
+            this.selected_queue = this.all_queues[selqid];
+            this.getTodayCheckinCount();
+            // if (this.time_type === 1) {
+            //   this.getTodayCheckIn();
+            // }
+            if (this.time_type === 0) {
+              this.getHistoryCheckIn();
+            }
+            if (this.time_type === 2) {
+              this.getFutureCheckIn();
+            }
+          },
+          () => { },
+          () => { }
+        );
+    }
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
@@ -670,7 +680,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQueueListByDate() {
     this.load_queue = 0;
-    if (this.selected_location.id) {
+    if (this.selected_location && this.selected_location.id) {
       this.provider_services.getProviderLocationQueuesByDate(
         this.selected_location.id, this.queue_date)
         .subscribe(
@@ -755,6 +765,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   changeLocation(location) {
     this.selected_location = location;
     this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
     this.selected_queue = null;
     this.loadApiSwitch('changeLocation');
     this.today_waitlist_count = 0;
@@ -794,7 +805,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureCheckinCount(Mfilter = null) {
     let no_filter = false;
-    if (!Mfilter) {
+    if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id,
       };
@@ -813,7 +824,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryCheckinCount(Mfilter = null) {
     let no_filter = false;
-    if (!Mfilter) {
+    if (!Mfilter && this.selected_location && this.selected_location.id) {
       Mfilter = {
         'location-eq': this.selected_location.id
       };
@@ -870,6 +881,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getTodayCheckIn() {
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
+    Mfilter[this.sortBy] = 'asc';
     this.resetPaginationData();
     this.pagination.startpageval = 1;
     this.pagination.totalCnt = 0; // no need of pagination in today
@@ -1867,8 +1879,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.waitlistSelection++;
     }
     if (this.waitlistSelection === 1) {
-      this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
-      console.log(this.selectedCheckin['new']);
+      this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
+      console.log(this.check_in_list['new']);
       if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
@@ -1878,8 +1890,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     for (let i = 0; i < this.waitlistSelected.length; i++) {
       if (this.waitlistSelected[i]) {
-        if (this.newWaitlistforMsg.indexOf(this.new_checkins_list[i]) === -1) {
-          this.newWaitlistforMsg.push(this.new_checkins_list[i]);
+        if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
+          this.newWaitlistforMsg.push(this.check_in_list[i]);
         }
       }
     }
@@ -2001,5 +2013,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   hideFilterSidebar() {
     this.filter_sidebar = false;
     //console.log(this.filter_sidebar);
+  }
+  setSortByParam(sortBy) {
+    this.sortBy = sortBy;
+    this.shared_functions.setitemToGroupStorage('sortBy', this.sortBy);
+    this.getTodayCheckIn();
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
+        });
+  }
+
+  callingWaitlist(checkin) {
+    const status = (checkin.callingStatus) ? 'Disable' : 'Enable';
+    this.provider_services.setCallStatus(checkin.ynwUuid, status).subscribe(
+      () => {
+        this.loadApiSwitch('reloadAPIs');
+      });
   }
 }

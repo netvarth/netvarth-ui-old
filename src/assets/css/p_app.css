@@ -40,3 +40,5 @@ html, body {
 .centeralign {text-align: center !important}
 /* h2 { font-size: 1.5rem !important} */
 .login-form .form-group {margin-bottom: 0.5rem !important}
+.signupterms {text-align: justify !important;}
+.signupterms .p-subouter {font-size: 0.75rem !important;}

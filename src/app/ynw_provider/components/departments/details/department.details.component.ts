@@ -305,7 +305,7 @@ export class DepartmentDetailComponent implements OnInit {
         this.provider_services.updateDepartment(post_data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('SERVICE_UPDATED'));
+                    this.shared_Functionsobj.openSnackBar('Departments updated successfully');
                     this.getDepartmentDetails();
                 },
                 error => {
@@ -314,4 +314,3 @@ export class DepartmentDetailComponent implements OnInit {
             );
     }
 }
-

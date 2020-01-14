@@ -100,15 +100,29 @@ export class BranchUserDetailComponent implements OnInit {
         this.getWaitlistMgr();
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        for (let i = 0; i < bConfig.bdata.length; i++) {
-            if (user.sector === bConfig.bdata[i].domain) {
-                for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
-                    if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
-                        this.subDomains.push(bConfig.bdata[i].subDomains[j]);
+        if (bConfig && bConfig.bdata) {
+            for (let i = 0; i < bConfig.bdata.length; i++) {
+                if (user.sector === bConfig.bdata[i].domain) {
+                    for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
+                        if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
+                            this.subDomains.push(bConfig.bdata[i].subDomains[j]);
+                        }
                     }
+                    break;
                 }
-                break;
             }
+        } else {
+            this.shared_services.bussinessDomains()
+                .subscribe(
+                    res => {
+                        const today = new Date();
+                        const postdata = {
+                            cdate: today,
+                            bdata: res
+                        };
+                        this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+                    }
+                );
         }
         this.amForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -147,23 +161,6 @@ export class BranchUserDetailComponent implements OnInit {
             return;
         }
         if (this.actionparam === 'add') {
-            // {
-            //     "userProfile": {
-            //       "firstName": "BIJU",
-            //       "lastName": "XAVIER",
-            //       "city": "MANATAHAVDY",
-            //       "state": "KERALA",
-            //       "address": "HELLO",
-            //       "primaryMobileNo": "8086154624",
-            //       "alternativePhoneNo": "8956237411",
-            //       "dob": "2019-11-05",
-            //       "gender": "Male",
-            //       "email": "mani.ynwtest@netvarth.com",
-            //       "countryCode": "+91"
-            //     },
-            //     "isAdmin": true,
-            //     "commonPassword": "Netvarth1"
-            //    }
             const post_data = {
                 'userProfile': {
                     'firstName': input.first_name.trim() || null,

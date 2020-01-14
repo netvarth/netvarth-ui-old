@@ -526,12 +526,10 @@ export class SharedServices {
     return this.servicemeta.httpPut(url);
   }
   updateLatLong(uid, id, data) {
-    console.log(data);
     const url = 'consumer/waitlist/update/latlong/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url, data);
   }
   updateTravelMode(uid, id, data) {
-    console.log(data);
     const url = 'consumer/waitlist/update/travelmode/' + uid + '?account=' + id;
     return this.servicemeta.httpPut(url, data);
   }
