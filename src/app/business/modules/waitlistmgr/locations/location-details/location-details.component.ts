@@ -313,12 +313,12 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     addEditProviderQueue(type, queue = null) {
         if (type === 'edit') {
             const navigationExtras: NavigationExtras = {
-                queryParams: { action: 'location_detail', activeQueues: this.provider_shared_functions.getActiveQueues() }
+                queryParams: { action: 'edit', source: 'location_detail', activeQueues: this.provider_shared_functions.getActiveQueues(), locationId: this.location_id }
             };
             this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
         } else {
             const navigationExtras: NavigationExtras = {
-                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
+                queryParams: { source: 'location_detail', activeQueues: this.provider_shared_functions.getActiveQueues(), locationId: this.location_id }
             };
             this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
         }

@@ -88,7 +88,7 @@
                     <div class="copy ynw-common-form-nm pro-schedule">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="params.source !== 'location_detail'">
                                 <div *ngIf="action!='edit' && action != 'editFromList'">
                                     <mat-form-field *ngIf="loc_list.length > 1">
                                         <mat-select placeholder="Location *" formControlName="qlocation">

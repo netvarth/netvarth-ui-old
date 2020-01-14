@@ -92,7 +92,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.params = qparams;
-            if (this.params.action === 'editFromList' || this.params.action === 'location_detail') {
+            if (this.params.action === 'editFromList') {
                 this.action = 'edit';
             } else {
                 this.action = qparams.action;
@@ -137,10 +137,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 if (this.queue_data) {
                     this.loc_name = this.queue_data.location.place;
                 }
-                if (this.action === 'add' && this.loc_list.length === 1) {
+                if (this.action === 'add' && this.params.source === 'location_detail' && this.params.locationId) {
+                    this.amForm.get('qlocation').setValue(this.params.locationId);
+                } else if (this.action === 'add' && this.loc_list.length === 1) {
                     this.amForm.get('qlocation').setValue(this.loc_list[0].id);
                 }
             });
+
     }
     selectdeprtservice(index, event, deptName) {
         this.serviceSelection[deptName] = [];
@@ -690,7 +693,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.getQueueDetail();
                     if (this.params.action === 'editFromList') {
                         this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
-                    } else if (this.params.action === 'location_detail') {
+                    } else if (this.params.source === 'location_detail') {
                         this._location.back();
                     } else {
                         this.action = 'view';
@@ -703,7 +706,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             );
     }
     closeClick() {
-        if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.action !== 'location_detail') {
+        if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.source !== 'location_detail') {
             this.action = 'view';
         } else {
             this._location.back();
