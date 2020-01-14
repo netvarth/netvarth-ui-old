@@ -144,7 +144,7 @@ export class CheckInInnerComponent implements OnInit {
   server_date;
   api_loading1 = true;
   api_loading = true;
-  track_loading = true;
+  track_loading = false;
   departmentlist: any = [];
   departments: any = [];
   selected_dept;
@@ -914,7 +914,7 @@ export class CheckInInnerComponent implements OnInit {
           // console.log(this.source);
           // this.returntoParent.emit(this.source);
           // }, projectConstants.TIMEOUT_DELAY);
-          //this.router.navigate(['/']);
+          // this.router.navigate(['/']);
         }
         // this.router.navigate(['/']);
         // setTimeout(() => {
@@ -1473,11 +1473,10 @@ export class CheckInInnerComponent implements OnInit {
   }
   locationEnableDisable(event) {
     if (event.checked) {
-      console.log("fghj");
       this.getCurrentLocation().then(
         (lat_long: any) => {
           this.lat_lng = lat_long;
-          if(this.liveTrackMessage){
+          if (this.liveTrackMessage) {
             this.updateLiveTrackInfo().then(
               (liveTInfo) => {
                 console.log(liveTInfo);
@@ -1487,8 +1486,7 @@ export class CheckInInnerComponent implements OnInit {
                 this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, this.travelMode);
                 }
             );
-          }
-           else {
+          } else {
             this.saveLiveTrackInfo().then(
             (liveTInfo) => {
               console.log(liveTInfo);
@@ -1499,22 +1497,12 @@ export class CheckInInnerComponent implements OnInit {
               }
           );
           }
-          // this.saveLiveTrackInfo().then(
-          //   (liveTInfo) => {
-          //     console.log(liveTInfo);
-          //     console.log(this.track_loading);
-          //     this.track_loading = false;
-          //     console.log(this.track_loading);
-          //     this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-          //     }
-          // );
         }, (error) => {
           this.shareLoc = false;
         }
         );
     } else {
       this.shareLoc = false;
-      this.updateLiveTrackInfo();
     }
   }
 
@@ -1544,7 +1532,6 @@ export class CheckInInnerComponent implements OnInit {
     });
   }
   saveLiveTrackInfo() {
-   this.track_loading = true;
     const _this = this;
     return new Promise(function (resolve, reject) {
       const post_Data = {
@@ -1561,7 +1548,6 @@ export class CheckInInnerComponent implements OnInit {
         .subscribe(
           data => {
             resolve(data);
-            
           },
           () => {
             reject();
@@ -1573,7 +1559,7 @@ export class CheckInInnerComponent implements OnInit {
     if (status === 'livetrack') {
       if (this.shareLoc) {
         this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED'));
-      }else{
+      } else {
         this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED'));
       }
       this.dialogRef.close();
@@ -1586,14 +1572,14 @@ export class CheckInInnerComponent implements OnInit {
     this.updateLiveTrackInfo().then(
       data => {
         if (data) {
-          //this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
+          // this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
         }
        // setTimeout(() => {
 
           // this.source['list'] = 'reloadlist';
           // this.source['mode'] = this.page_source;
           // this.dialogRef.close('reloadlist');
-          //this.returntoParent.emit('reloadlist');
+          // this.returntoParent.emit('reloadlist');
           this.trackClose('livetrack');
           this.track_loading = false;
        // }, projectConstants.TIMEOUT_DELAY_LARGE10);
@@ -1602,7 +1588,6 @@ export class CheckInInnerComponent implements OnInit {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
-      
   }
   updateLiveTrackInfo() {
     const _this = this;

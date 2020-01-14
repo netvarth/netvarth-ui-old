@@ -6,14 +6,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-check-in',
   templateUrl: './check-in.component.html',
 })
-export class CheckInoldComponent implements OnInit {
+export class CheckInComponent implements OnInit {
 
     customer_data: any = [];
     page_source = null;
     showinner = false;
 
     constructor(
-    // public dialogRef: MatDialogRef<CheckInComponent>,
+    public dialogRef: MatDialogRef<CheckInComponent>,
     public _sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {

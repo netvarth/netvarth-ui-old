@@ -37,6 +37,7 @@
               "src/assets/css/kiosk_style.css",
               "src/assets/css/custom_style.css",
               "src/assets/css/home.css",
+              "src/assets/css/style.css",
               "src/assets/third-party/Admin-LTE/css/_all-skins.css"
             ],
             "scripts": [

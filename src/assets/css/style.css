@@ -1,0 +1,646 @@
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-minus:before, 
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-add:before {
+    width: 20px !important;
+    height: 20px !important;
+    display: -webkit-box !important;
+    display: flex !important;
+    -webkit-box-align: center !important;
+    align-items: center !important;
+    -webkit-box-pack: center !important;
+    justify-content: center !important;
+}
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-add {
+    margin-left: 10px !important;
+}
+.p-checkin .mainouter .queue-outer .q-list-outer {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #dbdbdb;
+}
+
+.p-checkin .mainouter .main-head, .p-checkin .mainouter .date-outer, .p-checkin .mainouter .service-outer, .p-checkin .mainouter .queue-outer, .p-checkin .mainouter .prepay-outer {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 1rem;
+}
+
+.p-checkin .mainouter .main-head .prov_name, .p-checkin .mainouter .main-head .loc_name, .p-checkin .mainouter .main-head .selected-date, .p-checkin .mainouter .main-head .prepaymin-cls, .p-checkin .mainouter .date-outer .prov_name, .p-checkin .mainouter .date-outer .loc_name, .p-checkin .mainouter .date-outer .selected-date, .p-checkin .mainouter .date-outer .prepaymin-cls, .p-checkin .mainouter .service-outer .prov_name, .p-checkin .mainouter .service-outer .loc_name, .p-checkin .mainouter .service-outer .selected-date, .p-checkin .mainouter .service-outer .prepaymin-cls, .p-checkin .mainouter .queue-outer .prov_name, .p-checkin .mainouter .queue-outer .loc_name, .p-checkin .mainouter .queue-outer .selected-date, .p-checkin .mainouter .queue-outer .prepaymin-cls, .p-checkin .mainouter .prepay-outer .prov_name, .p-checkin .mainouter .prepay-outer .loc_name, .p-checkin .mainouter .prepay-outer .selected-date, .p-checkin .mainouter .prepay-outer .prepaymin-cls {
+    color: #222223;
+    font-weight: 600;
+}
+
+.p-checkin .mainouter .main-head .prov_name, .p-checkin .mainouter .date-outer .prov_name, .p-checkin .mainouter .service-outer .prov_name, .p-checkin .mainouter .queue-outer .prov_name, .p-checkin .mainouter .prepay-outer .prov_name {
+    font-weight: 700;
+}
+
+.p-checkin .mainouter .main-head .loc_name, .p-checkin .mainouter .date-outer .loc_name, .p-checkin .mainouter .service-outer .loc_name, .p-checkin .mainouter .queue-outer .loc_name, .p-checkin .mainouter .prepay-outer .loc_name {
+    font-size: .875rem;
+}
+
+.p-checkin .mainouter .date-outer {
+    font-size: .875rem;
+    border-bottom: 1px dashed #dbdbdb;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .date-outer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .date-outer .date-head {
+        margin-bottom: 5px;
+    }
+}
+
+.p-checkin .mainouter .date-outer .date-body {
+    display: flex;
+}
+
+.p-checkin .mainouter .date-outer .date-body .selected-date {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .date-outer .date-body .selected-date {
+        margin-left: 0;
+    }
+}
+
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-add, .p-checkin .mainouter .date-outer .date-body .selected-date .icon-minus {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 1.2rem;
+    color: #00aef2;
+    cursor: pointer;
+}
+
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-add:before, .p-checkin .mainouter .date-outer .date-body .selected-date .icon-minus:before {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-add.disable, .p-checkin .mainouter .date-outer .date-body .selected-date .icon-minus.disable {
+    pointer-events: none;
+    color: #999999;
+}
+
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-add {
+    margin-left: 10px;
+}
+
+.p-checkin .mainouter .date-outer .date-body .selected-date .icon-minus {
+    margin-right: 10px;
+}
+
+.p-checkin .mainouter .date-outer .form-group {
+    margin-bottom: 0;
+}
+
+.p-checkin .mainouter .date-outer .form-group.dt {
+    width: 30px;
+    margin-left: 15px;
+}
+
+.p-checkin .mainouter .date-outer .form-group.dt .pickerouter input[type="text"] {
+    height: 30px;
+    visibility: hidden;
+}
+
+.p-checkin .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle {
+    margin-right: 5px;
+}
+
+.p-checkin .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+}
+
+.p-checkin .mainouter .date-outer .form-group.dt .pickerouter .mat-datepicker-toggle button svg {
+    width: 20px;
+}
+
+.p-checkin .mainouter .date-outer .form-group.party-size {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.p-checkin .mainouter .date-outer .form-group.party-size .col-form-label {
+    width: 130px;
+    padding: 0;
+    font-weight: 500;
+}
+
+.p-checkin .mainouter .date-outer .form-group.party-size .partysize-input {
+    width: 48px;
+    margin-right: 5px;
+}
+
+.p-checkin .mainouter .date-outer .form-group.party-size .error {
+    padding: 5px;
+    color: #f24949;
+    font-size: .75rem;
+}
+
+.p-checkin .mainouter .date-outer .future-text {
+    display: table;
+    cursor: pointer;
+    color: #00aef2;
+    text-decoration: underline;
+    font-weight: 500;
+    font-size: .75rem;
+}
+
+.p-checkin .mainouter .date-outer .future-date-outer {
+    margin-top: 5px;
+}
+
+.p-checkin .mainouter .date-outer .future-date-outer .form-group {
+    margin-bottom: 0px;
+    display: flex;
+}
+
+.p-checkin .mainouter .date-outer .future-date-outer .form-group .col-form-label {
+    font-weight: 500;
+    margin-right: 10px;
+    align-self: center;
+}
+
+.p-checkin .mainouter .date-outer .future-date-outer .form-group .pickerouter .mat-datepicker-toggle {
+    margin-right: 0;
+}
+
+.p-checkin .mainouter .date-outer .future-date-outer .form-group .pickerouter .form-control {
+    background: #fff;
+}
+
+.p-checkin .mainouter .service-outer, .p-checkin .mainouter .queue-outer {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #dbdbdb;
+}
+
+.p-checkin .mainouter .service-outer .service-head, .p-checkin .mainouter .service-outer .queue-head, .p-checkin .mainouter .queue-outer .service-head, .p-checkin .mainouter .queue-outer .queue-head {
+    font-size: .875rem;
+    margin-bottom: 5px;
+    color: #222223;
+    font-weight: 600;
+}
+
+.p-checkin .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper, .p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper {
+    margin-bottom: 5px;
+}
+
+.p-checkin .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary, .p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip.mat-chip-selected.mat-primary {
+    font-weight: 600;
+    background: #00cc96;
+    color: #fff;
+    border: none;
+    border: 1px solid #00cc96;
+}
+
+.p-checkin .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip, .p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-left: 0;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #999999;
+    display: inline-block;
+}
+
+.p-checkin .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname, .p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qname {
+    display: inline-block;
+}
+
+.p-checkin .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime, .p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip .qtime {
+    display: inline-block;
+}
+
+.p-checkin .mainouter .service-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus, .p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip:focus {
+    box-shadow: none;
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-dur-pr, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr {
+    display: flex;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .service-outer .service-details .service-dur-pr, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr {
+        flex-direction: column;
+    }
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-dur-pr .service-duration, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr .service-duration {
+    width: 200px;
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-dur-pr .service-duration .min-cls, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr .service-duration .min-cls {
+    font-weight: 600;
+    color: #222223;
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-dur-pr .service-price, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+    flex-grow: 1;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .service-outer .service-details .service-dur-pr .service-price, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr .service-price {
+        margin-top: 10px;
+    }
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-dur-pr .service-price .price, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr .service-price .price {
+    font-weight: 600;
+    color: #222223;
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-dur-pr .service-price .taxable, .p-checkin .mainouter .queue-outer .service-details .service-dur-pr .service-price .taxable {
+    font-size: .75rem;
+}
+
+.p-checkin .mainouter .service-outer .service-details .service-desc, .p-checkin .mainouter .queue-outer .service-details .service-desc {
+    margin-top: 5px;
+}
+
+.p-checkin .mainouter .service-outer .selected-ser, .p-checkin .mainouter .service-outer .selected-que, .p-checkin .mainouter .queue-outer .selected-ser, .p-checkin .mainouter .queue-outer .selected-que {
+    margin-bottom: 5px;
+}
+
+.p-checkin .mainouter .service-outer .selected-ser .selected-ser-name, .p-checkin .mainouter .service-outer .selected-que .selected-ser-name, .p-checkin .mainouter .queue-outer .selected-ser .selected-ser-name, .p-checkin .mainouter .queue-outer .selected-que .selected-ser-name {
+    font-weight: 600;
+    color: #222223;
+}
+
+.p-checkin .mainouter .service-outer .queue-waitingdiv .queue-head, .p-checkin .mainouter .queue-outer .queue-waitingdiv .queue-head {
+    font-weight: 500;
+    color: #666;
+}
+
+.p-checkin .mainouter .service-outer .queue-waitingdiv .queue-head .queue-avail-date, .p-checkin .mainouter .queue-outer .queue-waitingdiv .queue-head .queue-avail-date {
+    font-weight: 600;
+    color: #222223;
+}
+
+.p-checkin .mainouter .service-outer .no-queue-available, .p-checkin .mainouter .service-outer .no-service-available, .p-checkin .mainouter .queue-outer .no-queue-available, .p-checkin .mainouter .queue-outer .no-service-available {
+    font-size: .875rem;
+    color: #f24949;
+}
+
+.p-checkin .mainouter .service-outer .showDetOuter .showDetService, .p-checkin .mainouter .queue-outer .showDetOuter .showDetService {
+    margin-bottom: 10px;
+}
+
+.p-checkin .mainouter .service-outer .showDetOuter .showDetService .selsername, .p-checkin .mainouter .queue-outer .showDetOuter .showDetService .selsername {
+    font-weight: 600;
+    color: #222223;
+}
+
+.p-checkin .mainouter .service-outer .showDetOuter .queue-waitingdiv .queue-head, .p-checkin .mainouter .queue-outer .showDetOuter .queue-waitingdiv .queue-head {
+    margin-bottom: 0;
+}
+
+.p-checkin .mainouter .service-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date, .p-checkin .mainouter .queue-outer .showDetOuter .queue-waitingdiv .queue-head .queue-avail-date {
+    color: #00cc96;
+}
+
+.p-checkin .mainouter .queue-outer {
+    margin-bottom: 0;
+    padding: 0;
+    border: none;
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #dbdbdb;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .queue-outer .q-list-outer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-head {
+    font-size: .875rem;
+    margin-bottom: 0px;
+    margin-right: 10px;
+    color: #666;
+    font-weight: 500;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .queue-outer .q-list-outer .queue-head {
+        margin-bottom: 5px;
+    }
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-body {
+    display: flex;
+    align-items: center;
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-body .sel-queue {
+    color: #222223;
+    font-weight: 600;
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i, .p-checkin .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #00aef2;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    color: #00aef2;
+    cursor: pointer;
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-body .leftarrow i.disable, .p-checkin .mainouter .queue-outer .q-list-outer .queue-body .rightarrow i.disable {
+    pointer-events: none;
+    color: #999999;
+    border-color: #999999;
+    cursor: default;
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-body .leftarrow {
+    margin-right: 10px;
+}
+
+.p-checkin .mainouter .queue-outer .q-list-outer .queue-body .rightarrow {
+    margin-left: 10px;
+}
+
+.p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip {
+    border-color: #f2f2f2;
+    background: #f2f2f2;
+}
+
+.p-checkin .mainouter .queue-outer .no-queue-available {
+    padding-bottom: 15px;
+    color: #f24949;
+}
+
+.p-checkin .mainouter .servicefor-outer {
+    margin-bottom: 15px;
+}
+
+.p-checkin .mainouter .servicefor-outer .title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.p-checkin .mainouter .servicefor-outer .availer-ul {
+    padding: 0;
+}
+
+.p-checkin .mainouter .servicefor-outer .availer-ul li {
+    list-style: none;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.p-checkin .mainouter .servicefor-outer .availer-ul li .changemember {
+    margin-left: 15px;
+}
+
+.p-checkin .mainouter .servicefor-outer .availer-ul li:before {
+    position: absolute;
+    content: "\67";
+    font-family: "custom-ynw" !important;
+    left: -14px;
+    top: 4px;
+    font-size: .50rem;
+    display: none;
+}
+
+.p-checkin .mainouter .servicefor-outer .availer-ul li:last-child {
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 400px) {
+    .p-checkin .mainouter .servicefor-outer .availer-ul li {
+        display: flex;
+    }
+    .p-checkin .mainouter .servicefor-outer .availer-ul li .changemember {
+        margin-left: auto;
+        font-size: .75rem;
+    }
+}
+
+.p-checkin .mainouter .servicefor-outer .service-availer {
+    color: #222223;
+    font-weight: 600;
+}
+
+.p-checkin .mainouter .servicefor-outer .change-button {
+    cursor: pointer;
+    display: table;
+    color: #00aef2;
+    font-size: .75rem;
+    text-decoration: underline;
+}
+
+.p-checkin .mainouter .servicefor-outer .editbt {
+    margin-left: 3px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.p-checkin .mainouter .servicefor-outer.btborder {
+    border-bottom: 1px dashed #dbdbdb;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.p-checkin .mainouter .revealdiv {
+    margin-top: 15px;
+}
+
+.p-checkin .mainouter .revealdiv .form-group {
+    margin-bottom: 0;
+}
+
+.p-checkin .mainouter .revealdiv .form-group .mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+    white-space: pre-wrap;
+}
+
+.p-checkin .mainouter .consumer-comment {
+    padding-bottom: 15px;
+}
+
+.p-checkin .mainouter .consumer-comment .form-group {
+    margin-bottom: 0px;
+}
+
+.p-checkin .mainouter .consumer-comment .form-group .col-form-label {
+    font-weight: 500;
+    color: #666;
+    display: table;
+    padding: 0;
+}
+
+.p-checkin .mainouter .consumer-comment .form-group .col-form-label .icon-add, .p-checkin .mainouter .consumer-comment .form-group .col-form-label .icon-minus {
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 1.2rem;
+    color: #00aef2;
+    cursor: pointer;
+}
+
+.p-checkin .mainouter .consumer-comment .form-group .col-form-label .icon-add:before, .p-checkin .mainouter .consumer-comment .form-group .col-form-label .icon-minus:before {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-checkin .mainouter .consumer-comment .form-group textarea {
+    margin-top: 5px;
+}
+
+.p-checkin .mainouter .prepay-outer {
+    margin-bottom: 0;
+    margin-top: 15px;
+    /*padding-top: 15px;
+        border-top: 1px dashed $cc-ash;*/
+}
+
+.p-checkin .mainouter .prepay-outer .prepay-dur-pr {
+    padding: 15px;
+    border: 1px solid #dbdbdb;
+    -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    /*@include top-to-bottom(#f8f8f8, #fff);*/
+}
+
+.p-checkin .mainouter .prepay-outer .prepay-dur-pr .prepay-amt {
+    margin-bottom: 15px;
+    font-size: .875rem;
+    font-weight: 600;
+    color: #222223;
+}
+
+.p-checkin .mainouter .prepay-outer .prepay-dur-pr .prepay-amt .prepaymin-cls {
+    font-weight: 700;
+    color: #00cc96;
+    font-size: 1rem;
+}
+
+.p-checkin .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer {
+    padding-top: 15px;
+    border-top: 1px solid #dbdbdb;
+}
+
+.p-checkin .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer .prepay-head {
+    margin-bottom: 5px;
+    color: #222223;
+    font-weight: 600;
+}
+
+.p-checkin .mainouter .prepay-outer .prepay-dur-pr .prepay-gateway-outer .mat-radio-group .mat-radio-button {
+    color: #222223;
+}
+
+.p-checkin .mainouter .member-outer .member-head {
+    margin-bottom: 15px;
+}
+
+.p-checkin .mainouter .member-outer .member-list .member-ul {
+    margin: 0 0 20px 20px;
+    padding: 0;
+}
+
+.p-checkin .mainouter .member-outer .member-list .member-ul li {
+    list-style: none;
+}
+
+.p-checkin .mainouter .member-outer .member-list .member-add {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    display: table;
+    font-size: .75rem;
+    font-weight: 500;
+}
+
+.p-checkin .mainouter .addmember-outer {
+    padding: 20px;
+    -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.p-checkin .mainouter .addmember-outer .outer {
+    display: flex;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .addmember-outer .outer {
+        flex-direction: column;
+    }
+}
+
+.p-checkin .mainouter .addmember-outer .outer .form-group {
+    flex-grow: 1;
+}
+
+.p-checkin .mainouter .addmember-outer .outer .form-group:first-child {
+    margin-right: 15px;
+}
+
+@media only screen and (max-width: 575px) {
+    .p-checkin .mainouter .addmember-outer .outer .form-group:first-child {
+        margin-right: 0;
+    }
+}
+
+.p-checkin .mainouter .addMemberHeader {
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.p-checkin .mainouter .servicefor-outer .availer-ul {
+    padding: 0 !important;
+}
+.p-checkin .mainouter .servicefor-outer .availer-ul li:last-child {
+    margin-bottom: 0 !important;
+}
+.p-checkin .mainouter .servicefor-outer .availer-ul li {
+    list-style: none !important;
+    position: relative !important;
+    margin-bottom: 15px !important;
+}

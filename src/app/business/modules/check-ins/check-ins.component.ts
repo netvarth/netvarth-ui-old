@@ -184,7 +184,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   makPaydialogRef;
   sendmsgdialogRef;
   locateCustomerdialogRef;
-  
+
   screenWidth;
   isCheckin;
   small_device_display = false;
@@ -1472,40 +1472,42 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
   }
-
   checkinClicked() {
-    if (this.isCheckinActive()) {
-      this.provider_services.getServicesList()
-        .subscribe(
-          data => {
-            if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
-              this.isCheckin = 4;
-              this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
-              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
-              return false;
-            } else {
-              this.provider_services.getProviderQueues()
-                .subscribe(
-                  data1 => {
-                    if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
-                      this.isCheckin = 5;
-                      this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
-                      this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
-                      return false;
-                    } else {
-                      this.searchCustomer('providerCheckin');
-                      return true;
-                    }
-                  },
-                  () => {
-                  });
-            }
-          },
-          () => {
-          }
-        );
-    }
+    this.router.navigate(['provider', 'check-ins', 'add']);
   }
+  // checkinClicked() {
+  //   if (this.isCheckinActive()) {
+  //     this.provider_services.getServicesList()
+  //       .subscribe(
+  //         data => {
+  //           if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
+  //             this.isCheckin = 4;
+  //             this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
+  //             this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+  //             return false;
+  //           } else {
+  //             this.provider_services.getProviderQueues()
+  //               .subscribe(
+  //                 data1 => {
+  //                   if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
+  //                     this.isCheckin = 5;
+  //                     this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
+  //                     this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+  //                     return false;
+  //                   } else {
+  //                     this.searchCustomer('providerCheckin');
+  //                     return true;
+  //                   }
+  //                 },
+  //                 () => {
+  //                 });
+  //           }
+  //         },
+  //         () => {
+  //         }
+  //       );
+  //   }
+  // }
   searchCustomer(source) {
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
@@ -1798,62 +1800,62 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-    //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
-    //   this.distance = this.trackDetail.jaldeeDistance.distance;
-    //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
-    //   this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
-    //   this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
-    //   this.hours = Math.floor(this.travelTime / 60);
-    //   this.minutes = this.travelTime % 60;
-    //   const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
-    // }
+      //   if (this.trackDetail && this.trackDetail.jaldeeDistance) {
+      //   this.distance = this.trackDetail.jaldeeDistance.distance;
+      //   this.unit = projectConstants.LIVETRACK_CONST[this.trackDetail.jaldeeDistance.unit];
+      //   this.travelTime = this.trackDetail.jaldeelTravelTime.travelTime;
+      //   this.timeUnit = this.trackDetail.jaldeelTravelTime.timeUnit;
+      //   this.hours = Math.floor(this.travelTime / 60);
+      //   this.minutes = this.travelTime % 60;
+      //   const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+      // }
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
- locateCustomerMsg(details) {
-  if (details && details.jaldeeDistance) {
-    const distance = details.jaldeeDistance.distance;
-    const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
-    const travelTime = details.jaldeelTravelTime.travelTime;
-    const hours = Math.floor(travelTime / 60);
-    const mode = details.jaldeelTravelTime.travelMode;
-    const minutes = travelTime % 60;
-   // const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
-    let message = '';
-    if (distance === 0) {
-      message += 'Your customer is close to you, will arrive shortly' ;
-    }  else {
-      message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
-      if (hours !== 0) {
-        message += ' ' + hours;
-        if (hours === 1) {
-          message += ' hr';
-        } else {
-          message += ' hrs';
+  locateCustomerMsg(details) {
+    if (details && details.jaldeeDistance) {
+      const distance = details.jaldeeDistance.distance;
+      const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+      const travelTime = details.jaldeelTravelTime.travelTime;
+      const hours = Math.floor(travelTime / 60);
+      const mode = details.jaldeelTravelTime.travelMode;
+      const minutes = travelTime % 60;
+      // const popup = document.getElementById('myPopup'); popup.classList.toggle('show');
+      let message = '';
+      if (distance === 0) {
+        message += 'Your customer is close to you, will arrive shortly';
+      } else {
+        message += 'Your customer is ' + distance + ' ' + unit + ' away and will take around';
+        if (hours !== 0) {
+          message += ' ' + hours;
+          if (hours === 1) {
+            message += ' hr';
+          } else {
+            message += ' hrs';
+          }
         }
-      }
-      if (minutes !== 0) {
-        message += ' ' + minutes;
-        if (minutes === 1) {
-          message += ' min';
-        } else {
-          message += ' mins';
+        if (minutes !== 0) {
+          message += ' ' + minutes;
+          if (minutes === 1) {
+            message += ' min';
+          } else {
+            message += ' mins';
+          }
         }
+        if (mode === 'WALKING') {
+          message += ' walk';
+        } else if (mode === 'DRIVING') {
+          message += ' drive';
+        } else if (mode === 'BICYCLING') {
+          message += ' ride';
+        }
+        message += ' to reach here';
       }
-      if (mode === 'WALKING') {
-        message += ' walk';
-      } else if (mode === 'DRIVING') {
-        message += ' drive';
-      } else if (mode === 'BICYCLING') {
-        message += ' ride';
-      }
-      message += ' to reach here' ;
+      return message;
     }
-    return message;
   }
- }
 
   selectnewWaitlist(index) {
     this.newWaitlistforMsg = [];
@@ -1867,7 +1869,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.new_checkins_list[this.waitlistSelected.indexOf(true)];
       console.log(this.selectedCheckin['new']);
-      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART') ){
+      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
         this.consumerTrackstatus = true;
       } else {
         this.consumerTrackstatus = false;
@@ -2001,5 +2003,3 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //console.log(this.filter_sidebar);
   }
 }
-
-
