@@ -92,7 +92,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         });
         this.activated_route.queryParams.subscribe(qparams => {
             this.params = qparams;
-            if (this.params.action === 'editFromList') {
+            if (this.params.action === 'editFromList' || this.params.action === 'location_detail') {
                 this.action = 'edit';
             } else {
                 this.action = qparams.action;
@@ -164,13 +164,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
             if (this.serviceSelection[this.departments[i].departmentName] && this.serviceSelection[this.departments[i].departmentName].length > 0) {
                 for (let j = 0; j < this.serviceSelection[this.departments[i].departmentName].length; j++) {
                     if (this.serviceSelection[this.departments[i].departmentName][j]) {
-                        count = i;
+                        count++;
                     }
                 }
             }
         }
         if (count === this.departments.length) {
-            this.SelServcall = false;
+            this.SelServcall = true;
         }
     }
 
@@ -191,7 +191,6 @@ export class WaitlistQueueDetailComponent implements OnInit {
             this.departments[deptIndex].checked = false;
             this.SelService[deptIndex] = false;
         }
-        console.log(count);
         if (count === 0) {
             this.SelServcall = true;
         }
@@ -370,19 +369,19 @@ export class WaitlistQueueDetailComponent implements OnInit {
     }
     getProviderQueues() {
         const activeQueues: any = [];
-        let queue_list: any = [];
+        // let queue_list: any = [];
         this.provider_services.getProviderQueues()
             .subscribe(data => {
-                queue_list = data;
-                for (let ii = 0; ii < queue_list.length; ii++) {
+                this.queue_list = data;
+                for (let ii = 0; ii < this.queue_list.length; ii++) {
                     let schedule_arr = [];
                     // extracting the schedule intervals
-                    if (queue_list[ii].queueSchedule) {
-                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(queue_list[ii].queueSchedule);
+                    if (this.queue_list[ii].queueSchedule) {
+                        schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_list[ii].queueSchedule);
                     }
                     let display_schedule = [];
                     display_schedule = this.shared_Functionsobj.arrageScheduleforDisplay(schedule_arr);
-                    if (queue_list[ii].queueState === 'ENABLED') {
+                    if (this.queue_list[ii].queueState === 'ENABLED') {
                         activeQueues.push(display_schedule[0]);
                     }
                 }
@@ -396,7 +395,12 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 data => {
                     this.deptObj = data;
                     this.filterbyDept = this.deptObj.filterByDept;
-                    this.departments = this.deptObj.departments;
+                    // this.departments = this.deptObj.departments;
+                    for (let i = 0; i < this.deptObj.departments.length; i++) {
+                        if (this.deptObj.departments[i].serviceIds.length > 0) {
+                            this.departments.push(this.deptObj.departments[i]);
+                        }
+                    }
                     for (let i = 0; i < this.services_list.length; i++) {
                         for (let j = 0; j < this.departments.length; j++) {
                             for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
@@ -495,14 +499,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
             for (let j = 0; j < this.departments.length; j++) {
                 for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
                     for (let i = 0; i < this.serviceSelection[this.departments[j].departmentName].length; i++) {
-                        if (this.departments[j].serviceIds[j] !== this.serviceSelection[this.departments[j].departmentName][i]) {
+                        if (this.departments[j].serviceIds[k] === this.serviceSelection[this.departments[j].departmentName][i]) {
                             count++;
                         }
                     }
                 }
             }
-            console.log(count);
-            if (count === 0) {
+            if (count === this.services_list.length) {
                 this.SelServcall = true;
             }
         } else {
@@ -687,6 +690,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.getQueueDetail();
                     if (this.params.action === 'editFromList') {
                         this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
+                    } else if (this.params.action === 'location_detail') {
+                        this._location.back();
                     } else {
                         this.action = 'view';
                     }
@@ -698,7 +703,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             );
     }
     closeClick() {
-        if (this.action === 'edit' && this.params.action !== 'editFromList') {
+        if (this.action === 'edit' && this.params.action !== 'editFromList' && this.params.action !== 'location_detail') {
             this.action = 'view';
         } else {
             this._location.back();

@@ -174,7 +174,7 @@ export class ProviderSharedFuctions {
     } else if (source === 'queue_detail') {
       ob.getQueueDetail();
     } else if (source === 'location_detail') {
-      ob.getProviderQueues();
+      ob.getQueueList();
     }
   }
 
