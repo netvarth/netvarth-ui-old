@@ -55,7 +55,7 @@
                                             <input class="jdn_ip" *ngIf="rewrite ==='edit' || status ==='Create'"
                                         [disabled]="status === 'DISABLED'" (keypress)="isNumeric($event)"
                                         (keyup)="isvalid($event)"
-                                        [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext"></div>
+                                        [(ngModel)]="jdnmaxDiscounttext" id="jdnmaxDiscounttext" maxlength="10"></div>
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
