@@ -29,7 +29,7 @@ onSubmit(deptForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
                         [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentName',
         {
           'required' : 'Please enter the department name.',
-          'maxlength' : 'Name can contain only 100 characters'
+          'maxlength' : 'Name can contain only' + maxcharDept_name + 'characters'
         })">
                     </app-field-error-display>
                 </div>
@@ -42,7 +42,7 @@ onSubmit(deptForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
                         [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentCode',
             {
               'required' : 'Please enter the department code.',
-              'maxlength' : 'Name can contain only 15 characters'
+              'maxlength' : 'Name can contain only' + maxcharDept_code + 'characters'
             })">
                     </app-field-error-display>
                 </div>

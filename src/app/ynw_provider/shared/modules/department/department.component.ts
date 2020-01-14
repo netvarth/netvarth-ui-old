@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 
 @Component({
     'selector': 'app-jaldee-department',
@@ -18,6 +19,8 @@ export class DepartmentComponent implements OnInit, OnChanges {
     isfocused = false;
     dept_data;
     cancel_btn = Messages.CANCEL_BTN;
+    maxcharDept_name = projectConstants.VALIDATOR_MAX100_DEPT_NME;
+    maxcharDept_code = projectConstants.VALIDATOR_MAX15_DEPT_CDE;
     button_title = 'Save';
     constructor(
         private fb: FormBuilder,
@@ -80,9 +83,9 @@ export class DepartmentComponent implements OnInit, OnChanges {
 
     createForm() {
         this.deptForm = this.fb.group({
-            departmentName: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+            departmentName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDept_name)])],
             departmentDescription: ['', Validators.compose([Validators.maxLength(500)])],
-            departmentCode: ['', Validators.compose([Validators.maxLength(500)])]
+            departmentCode: ['', Validators.compose([Validators.maxLength(this.maxcharDept_code)])]
         });
     }
     resetApiErrors() {

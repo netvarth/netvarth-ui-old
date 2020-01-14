@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
@@ -191,7 +191,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                     for (let i = 0; i < this.schedule_ar.length; i++) {
                         this.display_schedule[i] = this.schedule_ar[i][0];
                     }
-                    this.getQueueList(this.location_id);
+                    this.getQueueList();
                     // remove multiple end breadcrumb on edit function
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
@@ -242,9 +242,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                     this.getLocationDetail();
                 });
     }
-    getQueueList(location_id) {
-        if (location_id) {
-            this.provider_services.getProviderLocationQueues(location_id)
+    getQueueList() {
+        if (this.location_id) {
+            this.provider_services.getProviderLocationQueues(this.location_id)
                 .subscribe(
                     data => {
                         this.queues = data;
@@ -311,14 +311,23 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         this.provider_shared_functions.changeProviderQueueStatus(this, obj, 'location_detail');
     }
     addEditProviderQueue(type, queue = null) {
-        if (this.location_id && type === 'add') {
-            queue = { 'location': { id: null } };
-            queue.location.id = this.location_id;
+        if (type === 'edit') {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { action: 'location_detail', activeQueues: this.provider_shared_functions.getActiveQueues() }
+            };
+            this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
+        } else {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
+            };
+            this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
         }
-        this.provider_shared_functions.addEditQueuePopup(this, type, 'location_detail', queue, this.provider_shared_functions.getActiveQueues());
     }
     goQueueDetail(queue) {
-        this.router.navigate(['provider/settings/q-manager/', 'queues', queue.id]);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'view' }
+        };
+        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
     }
     public GetControl(form: FormGroup, field: string) {
         return form.get(field);
