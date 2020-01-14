@@ -5035,7 +5035,7 @@ i.notavail {
   background: transparent !important;
 }
 .dboarduser{
-  border-bottom: 1px solid !important;
+  border-bottom: 1px solid #ddd !important;
 }
 
 .custs h6 span {

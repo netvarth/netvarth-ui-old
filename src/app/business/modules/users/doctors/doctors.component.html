@@ -81,7 +81,7 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                         </span> -->
-                                        <h3 class="pointer-cursor" (click)="manageProvider('doctors','edit')">
+                                        <h3 class="pointer-cursor" (click)="manageProvider('doctors',user.businessName)">
                                             {{user.businessName}} 
                                             <!-- <span class="layout_name">({{user.departmentCode}})
                                             </span> -->
@@ -101,9 +101,9 @@
                             <div class="col-md-12 no-padding" *ngIf="totalCnt.length!==0 && userType.type === 'assistants'">
                                 <div class="col-md-12 pt10 mt5 dboarduser" *ngFor="let assistants of totalCnt,let i=index" [class.selected-waitlist]="userlistSelected[i]">
                                    
-                                    <div class="copy" (click)="selectUserlist(i)">
+                                    <div class="copy" >
                                         
-                                        <h3 class="pointer-cursor" (click)="manageProvider('assistants','edit')">
+                                        <h3 class="pointer-cursor" (click)="manageProvider('assistants',assistants.firstName)">
                                             {{assistants.firstName}} {{assistants.lastName}} 
                                            
                                         </h3>

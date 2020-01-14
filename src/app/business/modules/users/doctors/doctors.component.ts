@@ -52,7 +52,7 @@ export class DoctorsComponent implements OnInit {
                             breadcrumbs.push(e);
                         });
                         breadcrumbs.push({
-                            title: this.userType.type
+                            title: this.userType.type.charAt(0).toUpperCase() + this.userType.type.slice(1)
                         });
                         this.breadcrumbs = breadcrumbs;
         this.getBranchSPs();
@@ -75,7 +75,6 @@ export class DoctorsComponent implements OnInit {
         this.shared_services.getBranchSPs(accountId).subscribe(
             (data: any) => {
                 this.users_list = data;
-                console.log(data);
                 for (let i = 0; i < this.users_list.length; i++) {
                     if (this.users_list[i]['accountType'] === 'BRANCH') {
                     } else {
@@ -92,7 +91,6 @@ getAssistantlist(){
     const promise = this.getAssistants();
     promise.then(
       result => {
-          console.log(result);
         this.totalCnt = result;
     });
 }
@@ -125,7 +123,6 @@ getAssistantlist(){
               }
 
           ];
-          console.log(this.assistantData);
 
           return new Promise((resolve) => {
            // this.shared_services.getAssistants()
@@ -141,10 +138,11 @@ getAssistantlist(){
     // gotoBranchspDetails(user) {
     //      console.log(user);
     // }
-    manageProvider(accountId,mode) {
+    manageProvider(accountId,name) {
         const navigationExtras: NavigationExtras = {
             queryParams: { type: accountId,
-                            mode : mode
+                            mode : 'edit',
+                            username : name
              }
         };
         //this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);

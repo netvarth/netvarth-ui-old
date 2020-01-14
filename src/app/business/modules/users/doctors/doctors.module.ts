@@ -11,12 +11,15 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { ProviderBprofileSearchDynamicComponent } from '../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { BProfileModule } from '../../bprofile/bprofile.module';
 
 @NgModule({
     declarations: [
         DoctorsComponent,
         BranchDoctorDetailComponent,
-        AdditionalInfoComponent
+        AdditionalInfoComponent,
+        
     ],
     imports: [
         DoctorsRoutingModule,
@@ -28,7 +31,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
         LoadingSpinnerModule,
         ReactiveFormsModule,
         CapitalizeFirstPipeModule,
-        Nl2BrPipeModule
+        Nl2BrPipeModule,
+        BProfileModule
     ],
     entryComponents: [],
     exports: [DoctorsComponent]

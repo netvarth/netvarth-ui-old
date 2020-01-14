@@ -71,6 +71,7 @@ export class BranchDoctorDetailComponent implements OnInit {
     departments: any = [];
     user_data: any = [];
     userType: any;
+    name: any;
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -87,6 +88,13 @@ export class BranchDoctorDetailComponent implements OnInit {
             qparams => {
                 this.userType = qparams;
                this.actionparam = this.userType.mode;
+               this.name = this.userType.username;
+               let breadTitle;
+               if (this.actionparam === 'edit') {
+                breadTitle = this.name;
+               } else {
+                breadTitle = 'Add';
+               }
                 //console.log(this.actionparam);
                 //console.log(this.userType);
                 const breadcrumbs = [];
@@ -94,16 +102,17 @@ export class BranchDoctorDetailComponent implements OnInit {
                     breadcrumbs.push(e);
                 });
                 breadcrumbs.push({
-                    title: this.userType.type,
+                    title: this.userType.type.charAt(0).toUpperCase() + this.userType.type.slice(1),
                     url: '/provider/settings/users/doctors'
                 });
                 breadcrumbs.push({
-                    title: 'Add'
+                    title: breadTitle
                 });
                 this.breadcrumbs = breadcrumbs;
             });
     }
     ngOnInit() {
+        
         this.getWaitlistMgr();
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
