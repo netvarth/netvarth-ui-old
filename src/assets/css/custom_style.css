@@ -7061,3 +7061,6 @@ label.notifi-togl {
   background:#d0e0ea;
   border:1px solid #bad1de; 
 }
+.gallery-class{
+  width:auto !important;
+}
