@@ -6,6 +6,7 @@ import { DisplayboardDetailComponent } from './detail/displayboard-details.compo
 const routes: Routes = [
     { path: '', component: DisplayboardsComponent},
     { path: 'q-set', loadChildren: './q-set/displayboard-qset.module#DisplayboardQSetModule' },
+    { path: 'containers', loadChildren: './containers/container.module#ContainerModule' },
     { path: ':id', component: DisplayboardDetailComponent }
 ];
 

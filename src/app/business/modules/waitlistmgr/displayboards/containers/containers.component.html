@@ -18,37 +18,20 @@
                                 <ul class="nav jd-custom-nav chkn-dash">
                                     <li class="dropdown notifications-menu pull-right">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                            (click)="addDisplayboardLayout()"
+                                            (click)="addDisplayboardContainer()"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">
                                             <span>
-                                                <i class="fa fa-plus"></i> {{statusboard_cap}}
+                                                <i class="fa fa-plus"></i> Container
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="dropdown notifications-menu pull-right" *ngIf="accountType=='BRANCH'">
-                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                            (click)="listContainers()"
-                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                            <span>
-                                               Containers ({{container_count}})
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <!-- <li class="dropdown notifications-menu pull-right">
-                                        <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
-                                            (click)="gotoDisplayboardQSet()"
-                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
-                                            <span>Queue-Set
-                                            </span>
-                                        </a>
-                                    </li> -->
                                 </ul>
                             </div>
                             <div class="col-md-12" *ngIf="layout_list.length==0">
                                 <div class="row">
                                     <div class="no-dta">
-                                        <p>No {{statusboard_cap}}s created yet.</p>
-                                        <span class="cs-btn bt3" (click)="addDisplayboardLayout()">Create</span>
+                                        <p>No Containers created yet.</p>
+                                        <span class="cs-btn bt3" (click)="addDisplayboardContainer()">Create</span>
                                     </div>
                                 </div>
                             </div>
@@ -60,24 +43,24 @@
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
                                         </span>
-                                        <h3 (click)="goDisplayboardLayoutDetails(layout, 'layout')"
+                                        <h3 (click)="goDisplayboardContainerDetails(layout, 'layout')"
                                             class="pointer-cursor">
-                                            {{layout.displayName | capitalizeFirst}}<span class="layout_name"> (Id - {{layout.id}})
+                                            {{layout.displayName | capitalizeFirst}}<span class="layout_name">
                                             </span></h3>
                                         <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item (click)="editDisplayboardLayout(layout)">
+                                            <button mat-menu-item (click)="editDisplayboardContainer(layout)">
                                                 <i class="icon-edit"></i>
                                                 Edit
                                             </button>
-                                            <button mat-menu-item (click)="deleteDisplayboardLayout(layout)">
+                                            <!-- <button mat-menu-item (click)="deleteDisplayboardContainer(layout)">
                                                 <i class="icon-delete"></i>
                                                 Delete
-                                            </button>
+                                            </button> -->
                                             <button mat-menu-item>
                                                 <i class="fa fa-folder-open"></i>
                                                 <a class="pointer-cursor" target="_blank"
                                                     style="color: black; font-weight: 400;"
-                                                    routerLink="/displayboard/{{layout.id}}"> Open
+                                                    (click)="goDisplayboardContainerDetails(layout, 'layout')"> Open
                                                 </a> </button>
                                         </mat-menu>
                                     </div>

@@ -52,6 +52,7 @@ export class GalleryComponent implements OnInit, OnChanges {
             }
         ]
     };
+    img_lst_lngth: any;
     constructor(private sharedfunctionObj: SharedFunctions, private dialog: MatDialog,
         private galleryService: GalleryService) {
     }
@@ -99,6 +100,7 @@ export class GalleryComponent implements OnInit, OnChanges {
                 this.image_list_popup.push(imgobj);
             }
         }
+        this.img_lst_lngth=this.image_list_popup.length;
     }
     confirmDelete(file, indx) {
         const skey = this.image_list[indx].keyName;

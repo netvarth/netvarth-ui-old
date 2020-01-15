@@ -20,7 +20,7 @@ export class DisplayboardsComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Statusboards'
+            title: 'Queue Status boards'
         }
     ];
     api_loading: boolean;
@@ -34,6 +34,8 @@ export class DisplayboardsComponent implements OnInit {
         { displayName: '2x1', value: '2_1', row: 2, col: 1 },
         { displayName: '2x2', value: '2_2', row: 2, col: 2 }
     ];
+    container_count = 0;
+    accountType: any;
 
     constructor(
         private router: Router,
@@ -48,7 +50,9 @@ export class DisplayboardsComponent implements OnInit {
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
+        this.getDisplayboardContainers();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
         this.domain = user.sector;
     }
     getDisplayboardLayouts() {
@@ -75,7 +79,10 @@ export class DisplayboardsComponent implements OnInit {
     addDisplayboardLayout() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
     }
-    gotoDisplayboardQSet () {
+    listContainers() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+    }
+    gotoDisplayboardQSet() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set']);
     }
     editDisplayboardLayout(layout) {
@@ -85,12 +92,23 @@ export class DisplayboardsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'displayboards', 'edit'], navigationExtras);
     }
-    goDisplayboardLayoutDetails(layout) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { id: layout.id }
-        };
-        this.router.navigate(['provider', 'settings', 'q-manager',
-            'displayboards', 'view'], navigationExtras);
+    getDisplayboardContainers() {
+        this.provider_services.getDisplayboardContainers()
+        .subscribe(
+            (data: any) => {
+                this.container_count = data.length;
+            });
+    }
+    goDisplayboardLayoutDetails(layout, source?) {
+        if (source) {
+            window.open('#/displayboard/' + layout.id, '_blank');
+        } else {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { id: layout.id }
+            };
+            this.router.navigate(['provider', 'settings', 'q-manager',
+                'displayboards', 'view'], navigationExtras);
+        }
     }
     deleteDisplayboardLayout(layout) {
         this.provider_services.deleteDisplayboard(layout.id).subscribe(

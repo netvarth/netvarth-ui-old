@@ -53,7 +53,7 @@ export const Messages = {
 
   // notifications
   'GENRL_NOTIFICATION_MSG': 'Inorder to send and receive notifications, the [provider] has to purchase atleast one of the Jaldee Messaging ADD-ON.',
-  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Sent notifications to your [customer]s!',
+  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Send notifications to your [customer]s!',
   'FRM_LEVEL_PROVIDER_NOTIFICATION_MSG': 'Get notifications from [customer]!',
   'CUSTOMER_NAME': '[customer]',
   'PROVIDER_NAME': '[provider]',
@@ -671,6 +671,7 @@ export const Messages = {
   'FIXED_CAP': 'Fixed',
   'PERCENTAGE_CAP': 'Percentage',
   'DESCRIPTION_MAND_CAP': 'Description *',
+  'DISCOUNT_NAME_CAP': 'Enter the name of discount',
 
   // App-ynw_provider-components-add-provider-customers
   'CREATE_CAP': 'Create',
@@ -1419,12 +1420,12 @@ export const Messages = {
   'HOME_SERVICE_HEADING': 'Home Service',
   'JDN_FUL_CAP': 'Jaldee Discount Network',
   'JDN_CAP': 'JDN',
-  'DISPLAYBOARD_HEADING': 'Queue Statusboard',
+  'DISPLAYBOARD_HEADING': 'Queue Status board',
   'DISPLAYBOARD__INHELP': 'display help',
-  'QSET_ADD': 'Statusboard criteria added successfully',
-  'QSET_UPDATE': 'Statusboard criteria updated successfully',
-  'DISPLAYBOARD_ADD': 'Queue Statusboard added successfully',
-  'DISPLAYBOARD_UPDATE': 'Queue Statusboard updated successfully',
+  'QSET_ADD': 'Status board criteria added successfully',
+  'QSET_UPDATE': 'Status board criteria updated successfully',
+  'DISPLAYBOARD_ADD': 'Queue Status board added successfully',
+  'DISPLAYBOARD_UPDATE': 'Queue Status board updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
   'MANAGE_LABELS': 'Manage Labels',
@@ -1444,7 +1445,8 @@ export const Messages = {
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
-  'TRACKINGCANCELENABLED': ' able to track your ETA',
-  'TRACKINGCANCELDISABLED': ' disable to track your ETA',
-  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations'
+  'TRACKINGCANCELENABLED': 'You have allowed [provider_name] to track your ETA',
+  'TRACKINGCANCELDISABLED': 'You have not allowed [provider_name] to track your ETA',
+  'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations',
+  'DISPLAYBOARD_OPTIONAL_FIELDS': 'Queue Status board optional field',
 };

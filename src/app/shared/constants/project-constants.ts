@@ -248,6 +248,8 @@ export const projectConstants = {
   VALIDATOR_MAX6: 6, // max char count
   VALIDATOR_MAX9: 9, // max char count
   VALIDATOR_MAX10: 10, // max char count
+  VALIDATOR_MAX15_DEPT_CDE: 15, // max char count
+  VALIDATOR_MAX100_DEPT_NME: 100, // max char count
   VALIDATOR_MAX50: 50, // max char count
   VALIDATOR_MAX100: 100, // max char count
   VALIDATOR_MAX150: 150, // max char count
@@ -484,34 +486,49 @@ export const projectConstants = {
       'displayname': 'Customer',
       'label': false,
       'checked': false,
-      'order': 5,
+      'order': 2,
     },
     {
       'name': 'primaryMobileNo',
       'displayname': 'Mobile',
       'label': false,
       'checked': false,
-      'order': 6,
-    }, {
+      'order': 3,
+    },
+    {
+      'name': 'appointmentTime',
+      'displayname': 'Appointment Time',
+      'label': false,
+      'checked': false,
+      'order': 4,
+    },
+    {
       'name': 'appxWaitingTime',
       'displayname': 'Waiting Time',
       'label': false,
       'checked': false,
-      'order': 3,
+      'order': 5,
     },
     {
       'name': 'service',
       'displayname': 'Service',
       'label': false,
       'checked': false,
-      'order': 2,
+      'order': 6,
     },
     {
       'name': 'queue',
       'displayname': 'Queue',
       'label': false,
       'checked': false,
-      'order': 4,
+      'order': 7,
+    },
+    {
+      'name': 'calling',
+      'displayname': 'Calling',
+      'label': false,
+      'checked': false,
+      'order': 8,
     }
   ],
   ADWORDSPLIT: '__',

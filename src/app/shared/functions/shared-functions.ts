@@ -6,9 +6,9 @@ import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { CommonDataStorageService } from '../services/common-datastorage.service';
-
+import * as moment from 'moment';
 @Injectable()
 
 export class SharedFunctions {
@@ -96,7 +96,6 @@ export class SharedFunctions {
     return promise;
   }
   consumerLogin(post_data, moreParams?) {
-
     post_data.mUniqueId = localStorage.getItem('mUniqueId');
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
@@ -128,7 +127,6 @@ export class SharedFunctions {
               reject(error);
             }
           });
-
     });
     return promise;
   }
@@ -142,7 +140,6 @@ export class SharedFunctions {
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
             this.router.navigate(['/provider']);
-
           },
           error => {
             this.sendMessage({ ttype: 'main_loading', action: false });
@@ -169,7 +166,6 @@ export class SharedFunctions {
             resolve(data);
             this.setLoginData(data, post_data, 'provider');
             this.router.navigate(['/provider']);
-
           },
           error => {
             this.sendMessage({ ttype: 'main_loading', action: false });
@@ -262,11 +258,12 @@ export class SharedFunctions {
 
   public getGroup() {
     if (this.getitemfromSessionStorage('tabId')) {
-      return this.getitemfromSessionStorage('accoutid');
+      return this.getitemfromSessionStorage('accountid');
     } else {
       return 0;
     }
   }
+
   public setitemToGroupStorage(itemname, itemvalue) {
     const group = this.getGroup();
     let groupObj = {};
@@ -362,7 +359,6 @@ export class SharedFunctions {
       if (!user.id) {
         this.router.navigate(['logout']);
       }
-
       this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))
         .subscribe(
           data => {
@@ -463,12 +459,9 @@ export class SharedFunctions {
         });
         break;
     }
-    // if (!this.getitemfromLocalStorage('popularSearch') || this.getitemfromLocalStorage('popularSearch') === undefined
-    // || this.getitemfromLocalStorage('popularSearch') === '') {
     this.setitemonLocalStorage('popularSearch', retdet);
     const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
     this.sendMessage(pdata);
-    // }
     return retdet;
   }
 
@@ -510,23 +503,38 @@ export class SharedFunctions {
   getSearchLabels(selected_domain) {
     const searchLabelsList = [];
     const ynw_conf = this.getitemfromLocalStorage('ynw-bconf');
-    for (let i = 0; i < ynw_conf.bdata.length; i++) {
-      if (ynw_conf.bdata[i].domain === selected_domain) {
-        for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
-          searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
-          for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
-            searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
+    if (ynw_conf.bdata) {
+      for (let i = 0; i < ynw_conf.bdata.length; i++) {
+        if (ynw_conf.bdata[i].domain === selected_domain) {
+          for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
+            searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].domain, 'type': 'subdomain' });
+            for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
+              searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
+            }
+          }
+        }
+        if (selected_domain === 'All') {
+          for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
+            searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
+            for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
+              searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
+            }
           }
         }
       }
-      if (selected_domain === 'All') {
-        for (let subdom = 0; subdom < ynw_conf.bdata[i].subDomains.length; subdom++) {
-          searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'displayname': ynw_conf.bdata[i].subDomains[subdom].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' sub_sector:\'' + ynw_conf.bdata[i].subDomains[subdom].subDomain + '\')&q.parser=structured&return=_all_fields' });
-          for (let special = 0; special < ynw_conf.bdata[i].subDomains[subdom].specializations.length; special++) {
-            searchLabelsList.push({ 'name': ynw_conf.bdata[i].subDomains[subdom].specializations[special].name, 'displayname': ynw_conf.bdata[i].subDomains[subdom].specializations[special].displayName, 'query': '?q=( and [loc_details] sector:\'' + ynw_conf.bdata[i].domain + '\' specialization:\'' + ynw_conf.bdata[i].subDomains[subdom].specializations[special].name + '\')&q.parser=structured&return=_all_fields', 'group': ynw_conf.bdata[i].subDomains[subdom].subDomain, 'type': 'special' });
+    } else {
+      this.shared_service.bussinessDomains()
+        .subscribe(
+          res => {
+            const today = new Date();
+            const postdata = {
+              cdate: today,
+              bdata: res
+            };
+            this.setitemonLocalStorage('ynw-bconf', postdata);
+            this.getSearchLabels(selected_domain);
           }
-        }
-      }
+        );
     }
     return searchLabelsList;
   }
@@ -539,15 +547,11 @@ export class SharedFunctions {
     const image_max_size = projectConstants.IMAGE_MAX_SIZE;
     const error = [];
     let is_error = false;
-
     if (file.type && file_types.indexOf(file.type) === -1) {
-
       error['type'] = true;
       is_error = true;
     }
-
     if (file.size && file.size > image_max_size) {
-
       error['size'] = true;
       is_error = true;
     }
@@ -556,7 +560,6 @@ export class SharedFunctions {
     } else {
       return error;
     }
-
   }
 
   getApiError(error) {
@@ -598,11 +601,9 @@ export class SharedFunctions {
     });
 
     ob.delgaldialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         ob.deleteImage(file);
       }
-
     });
   }
   confirmSearchChangeStatus(ob, stat) {
@@ -624,11 +625,9 @@ export class SharedFunctions {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         ob.handle_searchstatus();
       }
-
     });
   }
   confirmLogoImageDelete(ob, file) {
@@ -643,11 +642,9 @@ export class SharedFunctions {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         ob.removeLogo(file);
       }
-
     });
   }
 
@@ -656,7 +653,6 @@ export class SharedFunctions {
   }
 
   repeatFunction(ob) {
-
     setInterval(
       () => {
         ob.repeatFunctions();
@@ -819,7 +815,7 @@ export class SharedFunctions {
   }
   retSubSectorNameifRequired(domain, subdomainname) {
     const bprof = this.getitemfromLocalStorage('ynw-bconf');
-    if (bprof === null || bprof === undefined) {
+    if (bprof === null || bprof === undefined || bprof.bdata === null || bprof.bdata === undefined) {
       this.shared_service.bussinessDomains()
         .subscribe(
           res => {
@@ -916,13 +912,46 @@ export class SharedFunctions {
     }
   }
 
+  getTimeSlotsFromQTimings(interval, startTime, endTime) {
+    const slotList = [];
+    slotList.push(startTime);
+    const endDTime = this.getDateFromTimeString(endTime);
+    let startingDTime = this.getDateFromTimeString(startTime);
+    let exitLoop = false;
+    while (!exitLoop) {
+      const nextTime = moment(startingDTime).add(interval, 'm');
+      const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+      if (nextTimeDt.getTime() <= endDTime.getTime()) {
+        slotList.push(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+
+      } else {
+        exitLoop = true;
+      }
+      startingDTime = nextTimeDt;
+    }
+    return slotList;
+  }
+
+  getDateFromTimeString(time) {
+    const startTime = new Date();
+    const parts = time.match(/(\d+):(\d+) (AM|PM)/);
+    if (parts) {
+      let hours = parseInt(parts[1], 0);
+      const minutes = parseInt(parts[2], 0);
+      const tt = parts[3];
+      if (tt === 'PM' && hours < 12) {
+        hours += 12;
+      }
+      startTime.setHours(hours, minutes, 0, 0);
+    }
+    return startTime;
+  }
   convertMinutesToHourMinute(mins) {
     let rethr = '';
     let retmin = '';
     if (mins > 0) {
       const hr = Math.floor(mins / 60);
       const min = Math.floor(mins % 60);
-
       if (hr > 0) {
         if (hr > 1) {
           rethr = hr + ' hours';
@@ -1301,7 +1330,12 @@ export class SharedFunctions {
       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
   }
-
+  sortByMapkey(array, key1, key2) {
+    return array.sort(function (a, b) {
+      const x = a[key1][key2]; const y = b[key1][key2];
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+  }
   groupBy(xs, key) {
     return xs.reduce(function (rv, x) {
       (rv[x[key]] = rv[x[key]] || []).push(x);

@@ -13,6 +13,8 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 export class DisplayboardDetailComponent implements OnInit {
     amForm: FormGroup;
     char_count = 0;
+    accountType;
+    frm_lvl_msg = false;
     max_char_count = 250;
     isfocused = false;
     layout_id;
@@ -58,7 +60,7 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Statusboard',
+            title: 'Queue Status board',
             url: '/provider/settings/q-manager/displayboards'
         }
     ];
@@ -96,6 +98,11 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
+            const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+            this.accountType = cuser.accountType;
+            if (this.accountType === 'BRANCH' || this.accountType === 'BRANCH_SP') {
+               this.frm_lvl_msg = true;
+            }
     }
     addQSet() {
         this.qsetAction = 'add';
