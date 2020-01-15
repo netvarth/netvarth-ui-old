@@ -78,6 +78,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
     queue_list: any = [];
     action;
     params;
+    selected_location;
+    selected_locationId;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -136,11 +138,19 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 }
                 if (this.queue_data) {
                     this.loc_name = this.queue_data.location.place;
+                } else if (this.loc_list.length === 1) {
+                    this.loc_name = this.loc_list[0];
+                }
+                if (this.action === 'add') {
+                    this.selected_location = this.loc_list[0];
+                    this.selected_locationId = this.loc_list[0].id;
                 }
                 if (this.action === 'add' && this.params.source === 'location_detail' && this.params.locationId) {
-                    this.amForm.get('qlocation').setValue(this.params.locationId);
+                    // this.amForm.get('qlocation').setValue(this.params.locationId);
+                    this.selected_locationId = this.params.locationId;
                 } else if (this.action === 'add' && this.loc_list.length === 1) {
-                    this.amForm.get('qlocation').setValue(this.loc_list[0].id);
+                    // this.amForm.get('qlocation').setValue(this.loc_list[0].id);
+                    this.selected_locationId = this.loc_list[0].id;
                 }
             });
 
@@ -424,7 +434,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         if (this.action === 'edit') {
             this.amForm = this.fb.group({
                 qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-                qlocation: ['', Validators.compose([Validators.required])],
+                // qlocation: ['', Validators.compose([Validators.required])],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
@@ -434,7 +444,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         } else {
             this.amForm = this.fb.group({
                 qname: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
-                qlocation: ['', Validators.compose([Validators.required])],
+                // qlocation: ['', Validators.compose([Validators.required])],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
@@ -465,15 +475,17 @@ export class WaitlistQueueDetailComponent implements OnInit {
             minute: parseInt(moment(this.queue_data.queueSchedule.timeSlots[0].eTime,
                 ['h:mm A']).format('mm'), 10)
         };
+        this.selected_location = this.queue_data.location;
+        this.selected_locationId = this.queue_data.location.id;
         this.amForm.setValue({
             qname: this.queue_data.name || null,
-            qlocation: this.queue_data.location.id || null,
+            // qlocation: this.queue_data.location.id || null,
             qstarttime: sttime || null,
             qendtime: edtime || null,
             qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
         });
-        this.amForm.get('qlocation').disable();
+        // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
         // extracting the selected days
         for (let j = 0; j < this.queue_data.queueSchedule.repeatIntervals.length; j++) {
@@ -652,7 +664,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 'parallelServing': form_data.qserveonce,
                 'capacity': form_data.qcapacity,
                 'location': {
-                    'id': form_data.qlocation
+                    'id': this.selected_locationId
                 },
                 'services': selser,
                 'tokenStarts': form_data.tokennum
@@ -711,5 +723,9 @@ export class WaitlistQueueDetailComponent implements OnInit {
         } else {
             this._location.back();
         }
+    }
+    onChangeLocationSelect(ev) {
+        this.selected_location = this.loc_list[ev];
+        this.selected_locationId = this.loc_list[ev].id;
     }
 }

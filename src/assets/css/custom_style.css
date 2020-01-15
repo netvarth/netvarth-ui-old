@@ -7064,3 +7064,14 @@ label.notifi-togl {
 .gallery-class{
   width:auto !important;
 }
+.queue-nav {
+  width: 100% !important;
+  margin-bottom: 0 !important;
+}
+.queue-nav .dropdown-menu{
+  left: auto !important;
+}
+.queue-nav .queue-menu li.active, .queue-nav .queue-menu li.active a h4 {
+  color: #3c8dbc !important;
+  font-weight: 800;
+}
