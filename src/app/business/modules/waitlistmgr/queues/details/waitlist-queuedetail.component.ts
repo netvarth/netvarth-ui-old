@@ -729,3 +729,4 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.selected_locationId = this.loc_list[ev].id;
     }
 }
+
