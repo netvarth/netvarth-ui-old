@@ -23,6 +23,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     boardCols: any;
     selectedDisplayboards: any = {};
     boardHeight;
+    fullHeight;
     bname;
     blogo;
     metricElement;
@@ -65,10 +66,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
         const screenHeight = window.innerHeight;
-        let hgt_reduced = 150;
+        let hgt_reduced = 200;
+        let fullhgt_reduced = 134;
         if (this.accountType === 'BRANCH_SP') {
-            hgt_reduced = 270;
+            hgt_reduced = 320;
+            fullhgt_reduced = 294;
         }
+        this.fullHeight = screenHeight - fullhgt_reduced;
         if (this.boardRows > 1) {
             this.boardHeight = (screenHeight - hgt_reduced) / 2;
         } else {
@@ -112,7 +116,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     );
                 });
         } else {
+            this.cronHandle = Observable.interval(20000).subscribe(() => {
             this.getSingleStatusboard();
+        });
         }
     }
     getSingleStatusboard() {
@@ -128,14 +134,14 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                             logo = '';
                         }
                         let subsectorname = '';
+                        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+                        this.accountType = user.accountType;
                         if (bProfile && bProfile.subDomainVirtualFields) {
-                            const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
                             if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
                                 // calling function which saves the business related details to show in the header
                                 subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
                                 // calling function which saves the business related details to show in the header
                             }
-                            this.accountType = user.accountType;
                             const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
                             this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(
                                 (data1: any) => {
@@ -257,15 +263,15 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 if (processList.indexOf(accountId) === -1) {
                     processList.push(accountId);
                     _this.setTabId(accountId).then(
-                         (data: any) => {
-                             tabInfo[accountId] = data;
+                        (data: any) => {
+                            tabInfo[accountId] = data;
                             if (count === (_this.inputStatusboards.length - 1)) {
                                 clearInterval(intervalCall);
                                 resolve(tabInfo);
                             } else {
                                 ++count;
                             }
-                         });
+                        });
                 } else if (tabInfo[accountId]) {
                     if (count === (_this.inputStatusboards.length - 1)) {
                         clearInterval(intervalCall);

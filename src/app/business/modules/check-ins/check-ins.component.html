@@ -122,8 +122,17 @@
                   (click)="setSortByParam('sort_appointmentTime')">Appointment Time</button>
               </mat-menu>
             </span>
+
+            <span *ngIf="time_type === 1" (click)="showSlots()">click</span>
           </div>
         </div>
+
+
+       
+        <mat-chip-list class="check-in-chip" *ngIf="showAvailableSlots">
+          <mat-chip *ngFor="let slot of availableSlots" [selected]="getcheckins(slot)">{{slot}}</mat-chip>
+      </mat-chip-list>
+
         <div class="dash-list">
           <div class="dash-list">
             <div class="chkins-sect m0">

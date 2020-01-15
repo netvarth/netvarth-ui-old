@@ -263,6 +263,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerMsg = '';
   board_count = 0;
   sortBy = 'sort_token';
+  showAvailableSlots = false;
+  availableSlots: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -2022,5 +2024,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.loadApiSwitch('reloadAPIs');
       });
+  }
+  showSlots() {
+    (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
+    this.availableSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
+  }
+  getcheckins(slot) {
+    // return 'true' if the array contains 'slot' value
+    return this.check_in_list.some(item => item.appointmentTime === slot);
   }
 }

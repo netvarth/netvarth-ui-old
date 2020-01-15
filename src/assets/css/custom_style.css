@@ -6568,20 +6568,20 @@ input.jdn_ip { width: 50px !important}
 }
 
 .display-layout .branch-sp .categoryspec{
-  font-size: 0.80rem;
+  font-size: 1.2rem;
 }
 
 .display-layout .logo img {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 120px;
 }
 
 .display-layout .title {
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.75rem;
 }
 .display-content .content-lst .form-group .tab-lst{
-  min-height: calc(100vh - 272px);
+  min-height: calc(100vh - 300px);
 }
 /* .display-content .content-lst .tab-lst thead,
 .display-content .content-lst .tab-lst th,
@@ -6625,6 +6625,7 @@ input.jdn_ip { width: 50px !important}
   padding: 5px;
   text-align: center;
   font-weight: 600;
+  font-size: 1.25rem;
 }
 .branch-det {
   background: #a8d2ea;
@@ -6633,7 +6634,7 @@ input.jdn_ip { width: 50px !important}
 }
 .branch-det .title {
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 .blinking{
   animation:blinkingText 1s infinite;
@@ -6686,4 +6687,7 @@ label.notifi-togl {
 .display-content thead th {
   background:#d0e0ea;
   border:1px solid #bad1de; 
+}
+.display-content .content-lst .tab-lst table td, .display-content .content-lst .tab-lst table th{
+  font-size: 1.2rem !important;
 }
