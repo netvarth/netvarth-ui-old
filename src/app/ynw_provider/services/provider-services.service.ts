@@ -490,6 +490,11 @@ export class ProviderServices {
     const url = 'provider/license/invoices/' + status + '/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getInvoiceStatus(filter){
+    
+    const url='provider/license/invoice';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
   getLicenseSubscription() {
     // const url = 'provider/license/getSubscription';
     const url = 'provider/license/billing';

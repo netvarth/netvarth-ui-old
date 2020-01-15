@@ -32,6 +32,8 @@ export const Messages = {
   'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
   'DISCOUNT_DELETED': 'Discount deleted successfully',
   'DISCOUNT_LISTEMPTY': 'No Discounts exist',
+  //Bill/Discountdetails
+  'DISCOUNT_NAME_MAND_CAP':'Enter the name of discount *',
 
   // Bill Coupons
   'COUPON_CREATED': 'Coupon created successfully',
@@ -939,6 +941,16 @@ export const Messages = {
   'PAY_BUTTON': 'Statement to Pay',
   'DUE_DATE_CAP': 'Due Date',
   'SUBSC_PACKAGE': 'Subscription/Package',
+   
+  // App-ynw_provider-component-provider-license-invoicestatus
+  'INVOICE_STATUS_CAP':'Invoice Status',
+  'PAID':'Paid',
+  'UNPAID':'Notpaid',
+  'CANCEL':'Cancel',
+  'WAIVED':'Waived',
+  'OBSOLETE':'Obsolete',
+
+
 
   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
@@ -1343,7 +1355,7 @@ export const Messages = {
   'FRM_LEVEL_DISCOUNTS_MSG': 'Create your discounts here.',
 
   // form-level-provider-items
-  'FRM_LEVEL_ITEMS_MSG': 'Create new items and related information here.',
+  'FRM_LEVEL_ITEMS_MSG': 'Create new products/items and related information here.',
 
   // form-level-provider-miscellaneous
   'FRM_LEVEL_NON_WORKING_MSG': 'Unavailability of your services on particular days (holidays), mention here.',
@@ -1391,7 +1403,7 @@ export const Messages = {
   'NO_RESULT_FOUND': 'No results found',
   'TOKEN': 'Token',
   'COUPON_UPGRADE_LICENSE': 'You are not allowed to do this operation. Please upgrade license package',
-  'WAITLIST_CAP': 'You can create multiple working hours here.',
+  'WAITLIST_CAP': 'You can create multiple queues here.',
   'WORK_ON_CAP': 'Enabled',
   'WORK_OFF_CAP': 'Disabled',
   'ENABLE_MSG_CAP': 'If the status is disabled, online check ins cannot be done for this schedule.',

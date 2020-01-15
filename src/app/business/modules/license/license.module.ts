@@ -17,6 +17,7 @@ import { ProviderLicenseUsageComponent } from '../../../ynw_provider/components/
 import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
 import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
 @NgModule({
     imports: [
         SharedModule,
@@ -35,6 +36,8 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
+        invoicestatuscomponent,
+        
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,

@@ -14,6 +14,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+
 @Component({
     selector: 'app-license',
     templateUrl: './license.component.html',
@@ -281,6 +282,13 @@ export class LicenseComponent implements OnInit, OnDestroy {
                 }
             );
     }
+    showInvoiceStatus()
+    {
+       
+        this.router.navigate(['provider', 'license', 'invoicestatus']);
+       
+    }
+    
     getSubscriptionDetail() {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()

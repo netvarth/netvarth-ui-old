@@ -1,0 +1,78 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+</section>
+<section>
+    
+    <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
+                <div class="card p0 w-dta">
+                    <div class="table-responsive dash-list">
+                        <table class="table">
+                            <thead>
+                                <tr class="tble-filtr-tr">
+                                <th>BillingPeriod</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Invoice/Statement </th>
+                                            <th>
+                                            <table class="fltr-tbl">
+                                                    <tr>
+                                                        <td>
+                                                            <span>
+                                                                
+                                                                <i class="icon-filter-one" (click)="showFilterSidebar()"  [matTooltipClass]="tooltipcls"
+                                                                [matTooltip]="'Use filters to find specific data'" ></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                            </table>
+                                    </th>
+                             </thead>
+                        <tbody>
+
+                                <tr *ngFor="let status of statusDetail" >
+                                    <td>{{status.periodFrom}}-to-{{status.periodTo}}</td>
+                                    <td>{{status.amount}}</td>
+                                    <td>{{status.licensePaymentStatus}}</td>
+                                    <td>
+                                        <button *ngIf="status.licensePaymentStatus === 'Paid' || status.licensePaymentStatus === 'NotPaid'" type="button" (click)="jaldeeStatement(status)">JaldeeStatement</button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        </table>
+                            <div>
+                                <aside class="filterSidebar" *ngIf="filter_sidebar" >
+                                        <section class="sidebar">
+                                            <div class="filterClosebtn">
+                                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>                                                   
+                                                 <span *ngIf="filterapplied === true" class="clearFilter"  (click)="clearFilter()"[matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'" > Clear All</span>
+                                            </div>
+                                                <ul class="sidebar-menu">
+                                                    <li > 
+                                                        <div>
+                                                            <label class="filterHeaders">{{invoice_status_cap}}</label>
+                                                            <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                                            </li> 
+                                                              
+                                                                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                                                      <mat-checkbox *ngFor="let status of invoice_status_filter" [checked]= "check_status"  (click)="setFilterData(
+                                                                          'invoiceStatus',status.value)" [value]="status.value" >
+                                                                        {{status.displayName}}</mat-checkbox>
+                                                                </li>
+                                                            
+                                                        </div>
+                                                        
+                                                     </li>
+                                                </ul>
+                                        </section>
+                                </aside>
+
+                                            </div>
+                            </div>
+                    
+                       
+                       
+                        
+                   
+                                     

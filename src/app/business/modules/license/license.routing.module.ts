@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
 import { LicenseComponent } from './license.component';
 import { ProviderPaymentHistoryComponent } from '../../../ynw_provider/components/provider-payment-history/provider-payment-history.component';
 import { AddonsComponent } from './addons/addons.component';
 import { KeywordsComponent } from './keywords/keywords.component';
+import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
 
 const routes: Routes = [
   { path: '', component: LicenseComponent },
@@ -21,13 +22,19 @@ const routes: Routes = [
       {
         path: 'keywords',
         component: KeywordsComponent
+      },
+      {
+        path: 'invoicestatus',
+        component: invoicestatuscomponent
       }
+     
     ]
   },
   {
     path: ':type',
     component: LicenseComponent
   },
+  
 ];
 
 @NgModule({
