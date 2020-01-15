@@ -37,7 +37,6 @@ import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component'
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
         invoicestatuscomponent,
-        
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,

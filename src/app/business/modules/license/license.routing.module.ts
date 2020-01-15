@@ -24,7 +24,7 @@ const routes: Routes = [
         component: KeywordsComponent
       },
       {
-        path: 'invoicestatus',
+        path: 'invoicestatus', 
         component: invoicestatuscomponent
       }
      

@@ -945,15 +945,15 @@ export const Messages = {
    
   // App-ynw_provider-component-provider-license-invoicestatus
   'INVOICE_STATUS_CAP':'Invoice Status',
-  'PAID':'Paid',
+  'PAID':'Paid', 
   'UNPAID':'Notpaid',
   'CANCEL':'Cancel',
   'WAIVED':'Waived',
   'OBSOLETE':'Obsolete',
 
+ 
 
-
-  // App-ynw_provider-components-provider-license-usage
+   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
   'USED_CAP': 'Used',
   'COMPLIANCE_CAP': 'Compliance Info',

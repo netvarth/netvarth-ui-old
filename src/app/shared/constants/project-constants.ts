@@ -385,16 +385,14 @@ export const projectConstants = {
     Cancelled: 'Cancelled'
   },
   INVOICE_STATUS_FILTER:[
-      {displayName: 'Paid', value: 'Paid' },
+      {displayName: 'Paid', value: 'Paid' },  
       {displayName: 'NotPaid', value: 'NotPaid' },
       {displayName: 'Cancel', value: 'Cancel' },
       {displayName: 'Waived' , value: 'Waived' },
       {displayName: 'Obsolete', value: 'Obsolete' },
           ],
     
-          
-
-  
+           
   CHECK_IN_STATUSES_FILTER: [
     { displayName: 'checked in', value: 'checkedIn' },
     { displayName: 'Arrived', value: 'arrived' },

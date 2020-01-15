@@ -26,7 +26,7 @@ export class invoicestatuscomponent {
     }
   ];
   //invoice: any = null;
-  //invoice_status = [];
+  invoice_status = [];
   selected = 0;
   check_status ;
   invoiceStatus =[];

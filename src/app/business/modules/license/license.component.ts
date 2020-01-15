@@ -165,7 +165,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             this.hide_invoiceperiod = false;
         }
     }
-    performActions(action) {
+    performActions(action) {  
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/license']);
         }
