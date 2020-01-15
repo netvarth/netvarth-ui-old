@@ -212,6 +212,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   showCustomId = false;
   licenseMetadata: any = [];
   licenseMetrics: any = [];
+  parkingType: any;
+  park_type: any;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -357,6 +359,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
       .then(
         data => {
           this.bProfile = data;
+          this.parkingType = this.bProfile.baseLocation.parkingType;
+          this.park_type = this.parkingType.charAt(0).toUpperCase() + this.parkingType.substring(1);
           this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
