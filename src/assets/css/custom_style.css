@@ -5626,7 +5626,7 @@ li.separator.setsplit {
   height: 62px !important;
   min-height: 60px !important;
   width: 90px !important;
-  background: #f7f7f7 !important;
+  background: #f7f7f7;
 }
 
 .today .info-box-icon {

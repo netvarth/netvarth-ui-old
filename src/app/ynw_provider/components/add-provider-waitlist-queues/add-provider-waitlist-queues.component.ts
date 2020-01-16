@@ -78,6 +78,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   iftokn = false;
   queue_list: any = [];
   waitlist_manager;
+  timeSlotStatus = false;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -739,5 +740,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         break;
       }
     }
+  }
+  changeTimeslotStatus(ev) {
+    (ev.checked) ? this.timeSlotStatus = true : this.timeSlotStatus = false;
   }
 }
