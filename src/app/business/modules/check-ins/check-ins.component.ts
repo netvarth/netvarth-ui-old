@@ -880,6 +880,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getTodayCheckIn() {
+    this.showSlots();
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     Mfilter[this.sortBy] = 'asc';
@@ -2025,9 +2026,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadApiSwitch('reloadAPIs');
       });
   }
-  showSlots() {
-    (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
-    this.availableSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
+  showSlots(ev?) {
+    this.availableSlots = [];
+    if (this.selected_queue.timeInterval) {
+      this.availableSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
+      if (ev) {
+        (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
+      }
+    }
   }
   getcheckins(slot) {
     // return 'true' if the array contains 'slot' value
