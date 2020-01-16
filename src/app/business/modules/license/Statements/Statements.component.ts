@@ -1,19 +1,23 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
+import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../../shared/constants/project-constants';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../services/provider-services.service';
-import { Messages } from '../../../shared/constants/project-messages';
-import { projectConstants } from '../../../shared/constants/project-constants';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+// import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
+import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-provider-licence-invoice-detail',
-  templateUrl: './provider-licence-invoice-detail.component.html'
+    selector: 'app-Statements',
+    templateUrl: './Statements.component.html'
 })
-export class ProviderLicenceInvoiceDetailComponent implements OnInit {
+
+export class statementcomponent implements OnInit {
+
 
   service_cap = Messages.SERVICES_CAP;
   amount_cap = Messages.AMOUNT_CAP;
@@ -47,7 +51,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   pay_data = {
     amount: 0,
-    // paymentMode: 'DC', // 'null', changes as per request from Manikandan
+    //  paymentMode: 'DC', // 'null', changes as per request from Manikandan
     uuid: null,
     purpose: null
   };
@@ -69,11 +73,27 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   };
   showPreviousDue = false;
   show = false;
+  temp;
   discountDetailsTxt = 'Show discount details';
-
+    // activated_route: any;
+    
+  
+    breadcrumbs_init = [
+      {
+          title: 'License & Invoice',
+          url: '/provider/license'
+      }
+      // {
+      //     title: 'Statements'
+      // }
+  ];
+  breadcrumbs = this.breadcrumbs_init;
+  customer_label: any;
   constructor(
-    public dialogRef: MatDialogRef<ProviderLicenceInvoiceDetailComponent>,
+    public dialogRef: MatDialogRef<statementcomponent>,
     private dialog: MatDialog,
+    private router: Router,
+    private activated_route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -83,11 +103,58 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document
   ) {
-    this.invoice = data.invoice || null;
-    this.source = data.source || 'payment-history';
-    this.payMentShow = data.payMent;
-    this.pay_data.amount = this.invoice.amount;
-    this.pay_data.uuid = this.invoice.ynwUuid;
+       this.activated_route.queryParams.subscribe(
+        (qParams) => {
+          this.data = qParams;
+          this.temp= this.data.source;
+
+          console.log(this.data.source);
+         });    
+                      
+    if(this.temp ==='payment-history'){
+      const breadcrumbs = [];
+      this.breadcrumbs_init.map((e) => {
+        breadcrumbs.push(e);
+      });
+      breadcrumbs.push({
+        title: 'Payment History',
+        url: '/provider/license/payment/history'
+       });
+      this.breadcrumbs = breadcrumbs;
+
+      breadcrumbs.push({
+        title: 'Payment Details'
+      });
+      this.breadcrumbs = breadcrumbs;
+    }
+    else{
+      const breadcrumbs = [];
+      this.breadcrumbs_init.map((e) => {
+        breadcrumbs.push(e);
+      });
+      breadcrumbs.push({
+        title: 'Statements',
+      });
+      this.breadcrumbs = breadcrumbs;
+      
+    }
+
+    // this.invoice = data.invoice || null;
+    // this.source = data.source || 'payment-history';
+    // this.payMentShow = data.payMent;
+
+    this.invoice = this.data.invoice || null;
+    console.log(this.invoice);
+    console.log(JSON.parse(this.invoice));
+    let invoiceJson = JSON.parse(this.invoice);
+    
+    this.source = this.data.source || 'payment-history';
+    this.payMentShow = this.data.payMent;
+
+    this.pay_data.amount = invoiceJson.amount;
+    // this.pay_data.amount = this.invoice.null;
+    
+    this.pay_data.uuid =invoiceJson.ynwUuid;
     console.log(this.pay_data.uuid);
   }
 
@@ -110,17 +177,21 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       this.getPaymentDetails();
     } else if (this.source === 'payment-history') {
       this.getPaymentDetails();
-    } else {
-      this.dialogRef.close();
+    } else {     
+    // this.dialogRef.close();
     }
+  
     this.loading = false;
   }
 
+
   invoiceDetail() {
-    this.provider_services.getInvoice(this.invoice.ynwUuid)
+    this.provider_services.getInvoice(this.pay_data.uuid)
       .subscribe(
         data => {
           this.invoice = data;
+          //  console.log(this.invoice)
+          //  console.log(this.invoice.periodFrom)
           if (this.invoice.creditDebitJson) {
             this.credt_debtJson = JSON.parse(this.invoice.creditDebitJson);
             this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
@@ -208,7 +279,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
         });
   }
   getPaymentDetails() {
-    this.provider_services.getPaymentDetail(this.invoice.ynwUuid)
+    // this.provider_services.getPaymentDetail(this.invoice.ynwUuid)
+    this.provider_services.getPaymentDetail(this.pay_data.uuid)
       .subscribe(
         data => {
           this.payment_detail = data;
@@ -228,12 +300,12 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   }
 
   makePayment() {
-    this.dialogRef.close();
+    // this.dialogRef.close();
     this.disablebutton = true;
     this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0) {
-
+        console.log('dvd')
       this.payment_loading = true;
 
       const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
@@ -470,3 +542,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   //   printWindow.close();
   // }
 }
+
+
+    
+

@@ -6,7 +6,7 @@ import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrad
 import { DomSanitizer } from '@angular/platform-browser';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DOCUMENT } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../shared/constants/project-constants';
@@ -14,7 +14,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
-
+import { statementcomponent } from './Statements/Statements.component';
+// import { constants } from 'fs';
 @Component({
     selector: 'app-license',
     templateUrl: './license.component.html',
@@ -165,7 +166,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             this.hide_invoiceperiod = false;
         }
     }
-    performActions(action) {  
+    performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/license']);
         }
@@ -372,38 +373,60 @@ export class LicenseComponent implements OnInit, OnDestroy {
         }
     }
     getInvoice(invoice) {
-        if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
+        const invoiceJson = JSON.stringify(invoice);
+         if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
             this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
-            this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-                width: '50%',
-                data: {
-                    invoice: invoice,
-                    source: 'license-home'
-                },
-                panelClass: ['popup-class', 'commonpopupmainclass'],
-                disableClose: true
-            });
-            this.invoicedialogRef.afterClosed().subscribe(() => {
-            });
+            // this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
+            // this.invoicedialogRef = this.dialog.open(statementcomponent, {
+            //     width: '50%',
+            //     data: {
+            //         invoice: invoice,
+            //         source: 'license-home'
+            //     },
+            //     panelClass: ['popup-class', 'commonpopupmainclass'],
+            //     disableClose: true
+            // });
+            // this.invoicedialogRef.afterClosed().subscribe(() => {
+            // });
+       
+            const navigationExtras: NavigationExtras = {
+                queryParams: {  invoice: invoiceJson,
+                                source: 'license-home' }
+              };
+            //   console.log(navigationExtras);
+            this.router.navigate(['provider', 'license', 'Statements'] , navigationExtras);
+            //  this.router.navigate(['provider', 'license', 'Statements']);
         }
     }
     getInvoicePay(invoice, payMentShow) {
+        const invoiceJson = JSON.stringify(invoice);
         if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
             this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
-            this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-                width: '50%',
-                data: {
-                    invoice: invoice,
-                    payMent: payMentShow,
-                    source: 'license-home'
-                },
-                panelClass: ['popup-class', 'commonpopupmainclass'],
-                disableClose: true
-            });
-            this.invoicedialogRef.afterClosed().subscribe(() => {
-            });
+             // this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
+                // this.invoicedialogRef = this.dialog.open(statementcomponent, {
+                //     width: '50%',
+                //     data: {
+                //         invoice: invoice,
+                //         payMent: payMentShow,
+                //         source: 'license-home'
+                //     },
+                //     panelClass: ['popup-class', 'commonpopupmainclass'],
+                //     disableClose: true
+                // });
+                // this.invoicedialogRef.afterClosed().subscribe(() => {
+                // });
+    
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {  invoice: invoiceJson,
+                                    payMent: payMentShow,
+                                    source: 'license-home' }
+                };
+                // console.log(navigationExtras);
+
+                 this.router.navigate(['provider', 'license', 'Statements'] , navigationExtras);
+                //  this.router.navigate(['provider', 'license', 'Statements']);
         }
     }
     openAnnualSection() {
@@ -505,5 +528,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     gotoPaymentHistory() {
         this.router.navigate(['provider', 'license', 'payment', 'history']);
+    }
+    gotoStatements() {
+        this.router.navigate(['provider', 'license', 'Statements']);
     }
 }

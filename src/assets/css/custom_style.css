@@ -1,3 +1,4 @@
+
 /*General*/
 
 html {
@@ -6146,6 +6147,13 @@ border-color: #3c8dbc !important;
 .dashboard a.dropdown-toggle:hover {
   color: #00aef2 !important;
   background: transparent !important;
+}
+.stat-style{
+  font-size: 0.9rem;
+  position: relative;
+    display: block;
+    padding: 10px 15px;
+    float: left !important;
 }
 @media only screen and (max-width: 575px) {
   header .dashb .lgo img {
