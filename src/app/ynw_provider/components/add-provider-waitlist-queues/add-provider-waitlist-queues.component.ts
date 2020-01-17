@@ -331,9 +331,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_manager = data;
-          if (this.timeSlotStatus) {
-            this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
-          }
+          // this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
           if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {
@@ -747,5 +745,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
   changeTimeslotStatus(ev) {
     (ev.checked) ? this.timeSlotStatus = true : this.timeSlotStatus = false;
+    if (ev.checked) {
+      this.timeSlotStatus = true;
+      this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+    } else {
+      this.timeSlotStatus = false;
+      this.amForm.get('timeSlot').setValue(0);
+    }
   }
 }

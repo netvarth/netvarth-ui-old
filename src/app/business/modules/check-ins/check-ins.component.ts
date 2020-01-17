@@ -1228,6 +1228,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   setFilterForApi() {
+    console.log(this.selected_queue);
     const api_filter = {};
     if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;

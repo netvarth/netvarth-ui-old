@@ -208,7 +208,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                 class="example-margin" style="margin: 0px;" (change)="changeTimeslotStatus($event)"
                 [checked]="timeSlotStatus">Enable time slot
             </mat-checkbox>
-            <mat-form-field class="example-full-width mgn-up-5" *ngIf="timeSlotStatus">
+            <mat-form-field class="example-full-width mgn-up-5" *ngIf="showAdvancedSettings && timeSlotStatus">
                 <input class="number-ip-sm" matInput min="0" max="100000" type="text" placeholder="Time Slot (min)"
                     formControlName="timeSlot" autocomplete="off" (keypress)="isNumeric($event)"
                     (keyup)="isvalid($event)">
