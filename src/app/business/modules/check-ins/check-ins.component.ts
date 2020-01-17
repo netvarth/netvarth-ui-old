@@ -261,6 +261,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   newWaitlistforMsg: any = [];
   consumerTrackstatus = false;
   customerMsg = '';
+  departments: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -325,6 +326,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getServiceList();
     // this.getLocationList();
     this.getLabel();
+    this.getDepartments();
     this.getLocationList().then(
       () => {
         this.breadcrumb_moreoptions = {
@@ -1982,6 +1984,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.resetAll();
     }
   }
+  getDepartments() {
+    this.provider_services.getDepartments()
+        .subscribe(
+            data => {
+                this.departments = data['departments'];
+            },
+            error => {
+            }
+        );
+}
+
   resetAll() {
     this.waitlistSelected = [];
     this.startedwaitlistSelected = [];

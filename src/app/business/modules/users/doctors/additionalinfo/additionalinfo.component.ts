@@ -46,6 +46,13 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         {
             title: 'Users',
             url: '/provider/settings/users'
+        },
+        {
+            title: 'Doctors',
+            url: '/provider/settings/users/doctors'
+        },
+        {
+            title: 'Additional Info'
         }
     ];
     constructor(

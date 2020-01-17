@@ -81,6 +81,33 @@
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
+                <li class="mgn-lt-10">
+                  <div class="ynw-common-form-nm">
+                  <mat-form-field>
+                    <mat-label>Departments</mat-label>
+                    <mat-select>
+                      <mat-option *ngFor="let dept of departments"[value]="dept.departmentCode">
+                          {{dept.departmentName}}
+                     </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  </div>
+                </li>
+                <li class="mgn-lt-10">
+                    <div class="ynw-common-form-nm">
+                    <mat-form-field>
+                      <mat-label>Doctors</mat-label>
+                      <mat-select>
+                          <mat-option>
+                              Dr.kishu
+                         </mat-option>
+                        <!-- <mat-option *ngFor="let doc of Doctors"[value]="dept.departmentCode">
+                            {{doc.docName}}
+                       </mat-option> -->
+                      </mat-select>
+                    </mat-form-field>
+                    </div>
+                  </li>
               </ul>
             </div>
           </nav>

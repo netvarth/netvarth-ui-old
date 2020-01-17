@@ -72,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 no-padding" *ngIf="users_list.length!==0 && userType.type === 'doctors'">
+                            <div class="col-md-12 no-padding" *ngIf="users_list.length!==0 && typeOfUser === 'doctors'">
                                 <div class="col-md-12 pt10 mt5 dboarduser" *ngFor="let user of users_list,let i=index" [class.selected-waitlist]="userlistSelected[i]">
                                    
                                     <div class="copy" (click)="selectUserlist(i)">
@@ -98,7 +98,7 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 no-padding" *ngIf="totalCnt.length!==0 && userType.type === 'assistants'">
+                            <div class="col-md-12 no-padding" *ngIf="totalCnt.length!==0 && typeOfUser === 'assistants'">
                                 <div class="col-md-12 pt10 mt5 dboarduser" *ngFor="let assistants of totalCnt,let i=index" [class.selected-waitlist]="userlistSelected[i]">
                                    
                                     <div class="copy" >

@@ -63,6 +63,25 @@
                                             </app-field-error-display>
                                         </div>
                                     </div>
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'assistants'||userType.type === 'doctors'">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                               <textarea matInput class="form-control" id="address" placeholder="address" formControlName="address"> </textarea>
+                                            </mat-form-field>
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(amForm,'address')"
+                                                [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
+                                                            {
+                                                            'required' : 'Last name is required',
+                                                            'pattern' : 'Only alphabets are allowed'
+                                                            })">
+                                            </app-field-error-display>
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="!fed_service.isFieldValid(amForm,'address')"
+                                                [errorMsg]="addresserror">
+                                            </app-field-error-display>
+                                        </div>
+                                    </div> -->
                                     <div class="clearfix"></div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="userType.type === 'assistants'||userType.type === 'doctors'">
                                         <div class="form-group mobile-field" style="width: 100%">

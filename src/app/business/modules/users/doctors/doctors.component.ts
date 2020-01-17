@@ -31,6 +31,7 @@ export class DoctorsComponent implements OnInit {
     breadcrumbs = this.breadcrumbs_init;
     api_loading: boolean;
     totalCnt: any;
+    typeOfUser;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -47,12 +48,23 @@ export class DoctorsComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
+        console.log(this.userType.type);
+        let type = '';
+        if (this.userType.type === undefined) {
+            type = this.shared_functions.getitemfromLocalStorage('type');
+        } else {
+            type = this.userType.type;
+            this.shared_functions.setitemonLocalStorage('type', this.userType.type);
+        }
+        
+        this.typeOfUser = type;
+        console.log(this.typeOfUser);
         const breadcrumbs = [];
                         this.breadcrumbs_init.map((e) => {
                             breadcrumbs.push(e);
                         });
                         breadcrumbs.push({
-                            title: this.userType.type.charAt(0).toUpperCase() + this.userType.type.slice(1)
+                            title: type.charAt(0).toUpperCase() + type.slice(1)
                         });
                         this.breadcrumbs = breadcrumbs;
         this.getBranchSPs();
