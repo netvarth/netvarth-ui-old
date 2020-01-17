@@ -1385,7 +1385,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (source === 'single') {
       waitlist.push(waitlst);
     }
-    console.log(waitlist);
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => { },
@@ -1492,7 +1491,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   checkinClicked(appttime) {
-    console.log(appttime);
     if (this.isCheckinActive()) {
       this.provider_services.getServicesList()
         .subscribe(
@@ -1526,7 +1524,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   searchCustomer(source, appttime) {
-    console.log(appttime);
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
@@ -1743,7 +1740,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   printCheckin(source) {
     const checkinlist = this.selectedCheckin[source];
-
     const params = [
       'height=' + screen.height,
       'width=' + screen.width,
@@ -1889,7 +1885,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.waitlistSelected[index] = true;
       this.waitlistSelection++;
     }
-    console.log(this.waitlistSelected);
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = wtlst;
       if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
@@ -1897,21 +1892,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.consumerTrackstatus = false;
       }
-console.log(this.selectedCheckin['new']);
       this.labels(this.selectedCheckin['new']);
     }
-    console.log(this.newWaitlistforMsg);
-    console.log(this.timeSlotCheckins);
     for (let i = 0; i < this.waitlistSelected.length; i++) {
-      console.log(this.waitlistSelected[i]);
       if (this.waitlistSelected[i]) {
-        console.log(this.waitlistSelected[i]);
-        if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[i]) === -1) {
-          this.newWaitlistforMsg.push(this.timeSlotCheckins[i]);
+        if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[this.availableSlots[i]]) === -1) {
+          this.newWaitlistforMsg.push(this.timeSlotCheckins[this.availableSlots[i]][0]);
         }
       }
     }
-        console.log(this.newWaitlistforMsg);
   } else {
     if (this.waitlistSelected[index]) {
       delete this.waitlistSelected[index];
@@ -1920,7 +1909,6 @@ console.log(this.selectedCheckin['new']);
       this.waitlistSelected[index] = true;
       this.waitlistSelection++;
     }
-    console.log(this.waitlistSelected);
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
       if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
@@ -1928,18 +1916,15 @@ console.log(this.selectedCheckin['new']);
       } else {
         this.consumerTrackstatus = false;
       }
-      console.log(this.selectedCheckin['new']);
       this.labels(this.selectedCheckin['new']);
     }
     for (let i = 0; i < this.waitlistSelected.length; i++) {
-      this.waitlistSelected[i]
       if (this.waitlistSelected[i]) {
         if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
           this.newWaitlistforMsg.push(this.check_in_list[i]);
         }
       }
     }
-    console.log(this.newWaitlistforMsg);
   }
   }
 
@@ -2083,14 +2068,9 @@ console.log(this.selectedCheckin['new']);
       }
       this.timeSlotCheckins = this.shared_functions.groupBy(this.check_in_list, 'appointmentTime');
       this.loading = false;
-      console.log(this.availableSlots);
-      console.log(this.timeSlotCheckins);
-      console.log(this.loading);
     } else {
       this.loading = false;
     }
-
-
   }
   getcheckins(slot) {
     // return 'true' if the array contains 'slot' value
