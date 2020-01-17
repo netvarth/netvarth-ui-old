@@ -655,7 +655,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
             this.selected_queue = this.all_queues[selqid];
-           
+
             if (!getsavedqueueid) {
               const selid = this.findCurrentActiveQueue(this.all_queues);
               this.selectedQueue(this.all_queues[selid]);
@@ -1875,57 +1875,57 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.newWaitlistforMsg = [];
     let wtlst;
     if (waitlist) {
-    wtlst = waitlist[0];
-  }
+      wtlst = waitlist[0];
+    }
     if (wtlst) {
-    if (this.waitlistSelected[index]) {
-      delete this.waitlistSelected[index];
-      this.waitlistSelection--;
-    } else {
-      this.waitlistSelected[index] = true;
-      this.waitlistSelection++;
-    }
-    if (this.waitlistSelection === 1) {
-      this.selectedCheckin['new'] = wtlst;
-      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
-        this.consumerTrackstatus = true;
+      if (this.waitlistSelected[index]) {
+        delete this.waitlistSelected[index];
+        this.waitlistSelection--;
       } else {
-        this.consumerTrackstatus = false;
+        this.waitlistSelected[index] = true;
+        this.waitlistSelection++;
       }
-      this.labels(this.selectedCheckin['new']);
-    }
-    for (let i = 0; i < this.waitlistSelected.length; i++) {
-      if (this.waitlistSelected[i]) {
-        if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[this.availableSlots[i]]) === -1) {
-          this.newWaitlistforMsg.push(this.timeSlotCheckins[this.availableSlots[i]][0]);
+      if (this.waitlistSelection === 1) {
+        this.selectedCheckin['new'] = wtlst;
+        if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
+          this.consumerTrackstatus = true;
+        } else {
+          this.consumerTrackstatus = false;
+        }
+        this.labels(this.selectedCheckin['new']);
+      }
+      for (let i = 0; i < this.waitlistSelected.length; i++) {
+        if (this.waitlistSelected[i]) {
+          if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[this.availableSlots[i]]) === -1) {
+            this.newWaitlistforMsg.push(this.timeSlotCheckins[this.availableSlots[i]][0]);
+          }
+        }
+      }
+    } else {
+      if (this.waitlistSelected[index]) {
+        delete this.waitlistSelected[index];
+        this.waitlistSelection--;
+      } else {
+        this.waitlistSelected[index] = true;
+        this.waitlistSelection++;
+      }
+      if (this.waitlistSelection === 1) {
+        this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
+        if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
+          this.consumerTrackstatus = true;
+        } else {
+          this.consumerTrackstatus = false;
+        }
+        this.labels(this.selectedCheckin['new']);
+      }
+      for (let i = 0; i < this.waitlistSelected.length; i++) {
+        if (this.waitlistSelected[i]) {
+          if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
+            this.newWaitlistforMsg.push(this.check_in_list[i]);
+          }
         }
       }
     }
-  } else {
-    if (this.waitlistSelected[index]) {
-      delete this.waitlistSelected[index];
-      this.waitlistSelection--;
-    } else {
-      this.waitlistSelected[index] = true;
-      this.waitlistSelection++;
-    }
-    if (this.waitlistSelection === 1) {
-      this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
-      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
-        this.consumerTrackstatus = true;
-      } else {
-        this.consumerTrackstatus = false;
-      }
-      this.labels(this.selectedCheckin['new']);
-    }
-    for (let i = 0; i < this.waitlistSelected.length; i++) {
-      if (this.waitlistSelected[i]) {
-        if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
-          this.newWaitlistforMsg.push(this.check_in_list[i]);
-        }
-      }
-    }
-  }
   }
 
   selectcompletedWaitlist(index) {
@@ -2062,12 +2062,24 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   showSlots(ev?) {
     this.availableSlots = [];
     if (this.selected_queue.timeInterval) {
-      this.availableSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
+      const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
       if (ev) {
         (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
       }
-      this.timeSlotCheckins = this.shared_functions.groupBy(this.check_in_list, 'appointmentTime');
       this.loading = false;
+      const activeSlots = [];
+      const checkins = [];
+      for (let i = 0; i < this.check_in_list.length; i++) {
+        if (this.check_in_list[i].waitlistStatus === 'started' || this.check_in_list[i].waitlistStatus === 'done') {
+          if (this.check_in_list[i].appointmentTime) {
+            activeSlots.push(this.check_in_list[i].appointmentTime);
+          }
+        } else if (this.check_in_list[i].waitlistStatus === 'arrived' || this.check_in_list[i].waitlistStatus === 'checkedIn') {
+          checkins.push(this.check_in_list[i]);
+        }
+      }
+      this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
+      this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
     } else {
       this.loading = false;
     }

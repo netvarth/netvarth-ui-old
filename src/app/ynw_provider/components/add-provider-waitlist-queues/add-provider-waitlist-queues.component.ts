@@ -197,6 +197,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
+    if (this.data.queue.timeInterval) {
+      this.timeSlotStatus = true;
+    }
     this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
