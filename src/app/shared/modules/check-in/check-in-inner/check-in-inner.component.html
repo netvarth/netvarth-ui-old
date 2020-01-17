@@ -109,7 +109,7 @@
                     <span class="qtime">&nbsp; [ {{que.queueSchedule.timeSlots[0].sTime}} - {{que.queueSchedule.timeSlots[0].eTime}} ]</span>
                     </mat-chip>
                     </mat-chip-list> -->
-                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1">
+                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1 && !data.queue">
                         <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">{{serv_time_window_cap}}
                             <div class="queue-body">
                                 <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i
@@ -128,8 +128,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length == 1">
-                        <div class="queue-head" *ngIf="step==1 && queuejson.length == 1">{{serv_time_window_cap}}
+                    <div class='q-list-outer' *ngIf="(step==1 && queuejson.length == 1) || data.queue">
+                        <div class="queue-head">{{serv_time_window_cap}}
                             <div class="queue-body">
                                 <span class="sel-queue">
                                     <!-- <span class="name">{{sel_queue_name}}</span> -->
@@ -137,10 +137,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 form-group queue-outer mgn-up-20" *ngIf="page_source == 'provider_checkin' && availableSlots.length>0">
-                        <div class="ttle mgn-bt-10" >Select Appointment Time</div>
+                    <div class="col-md-12 form-group queue-outer mgn-bt-20"
+                        *ngIf="page_source == 'provider_checkin' && availableSlots.length>0 && showEditView">
+                        <div class="ttle mgn-bt-10">Select Appointment Time</div>
                         <mat-chip-list class="check-in-chip">
-                            <mat-chip *ngFor="let slot of availableSlots" [selected]="slot === apptTime" (click)="timeSelected(slot);">{{slot}}</mat-chip>
+                            <mat-chip *ngFor="let slot of availableSlots" [selected]="slot === apptTime"
+                                (click)="timeSelected(slot);">{{slot}}</mat-chip>
                         </mat-chip-list>
                         <!-- <mat-form-field>
                         <mat-select placeholder="Appointment Time" [ngModel]="apptTime" #appttime>
@@ -150,7 +152,12 @@
                         </mat-select>
                         </mat-form-field> -->
                     </div>
-
+                    <div class="col-md-12 form-group queue-outer mgn-bt-20"
+                        *ngIf="page_source == 'provider_checkin' && apptTime && !showEditView">
+                        <div class="ttle mgn-bt-10">Appointment Time</div>
+                        <span class="label-bold">{{apptTime}} </span>
+                        <span style="margin-left: 30px" class="editbt" (click)="editClicked()"></span>
+                    </div>
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <!-- <mat-accordion *ngIf="page_source == 'provider_checkin' && board_count > 0">
                         <mat-expansion-panel class="statusboard-expansion" [expanded]="false">
@@ -173,7 +180,7 @@
                             <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
                         </div>
                     </div>
-                    <div class="consumer-comment mgn-up-20" *ngIf="step==1" >
+                    <div class="consumer-comment mgn-up-20" *ngIf="step==1">
                         <div class="form-group">
                             <label for="reason" class="col-form-label">{{have_note_click_here}} <span
                                     [class.icon-add]="!dispCustomernote" [class.icon-minus]="dispCustomernote"
@@ -386,7 +393,8 @@
 </div>
 <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk"
     *ngIf="queuejson.length > 0 && servicesjson.length > 0 && !liveTrack">
-    <div class="waitlist-button-outer">
+
+    <div class="waitlist-button-outer" *ngIf="!apptTime">
         <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
             <div class="showDetService" *ngIf="sel_ser_det.name">
                 <strong><span
@@ -422,6 +430,8 @@
             </div>
         </div>
     </div>
+
+
     <ng-container *ngIf="step==1 && this.checkinLabel">
         <div class="waitlist-action"> <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1"
                 (click)="handleCheckinClicked()"

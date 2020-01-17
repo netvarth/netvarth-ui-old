@@ -197,7 +197,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
-
     this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
@@ -329,7 +328,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_manager = data;
-          this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+          if (this.timeSlotStatus) {
+            this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+          }
           if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {

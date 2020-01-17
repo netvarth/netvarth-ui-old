@@ -203,13 +203,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     (keyup)="isvalid($event)">
             </mat-form-field>
         </div>
-
-        <mat-checkbox *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'"
-            class="example-margin" (change)="changeTimeslotStatus($event)" [checked]="timeSlotStatus">Enable time slot
-        </mat-checkbox>
-        <div class="form-group" *ngIf="timeSlotStatus">
-            <mat-form-field class="example-full-width">
-                <input matInput min="0" max="100000" type="text" placeholder="Time Slot (min)"
+        <div class="form-group">
+            <mat-checkbox *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'"
+                class="example-margin" style="margin: 0px;" (change)="changeTimeslotStatus($event)"
+                [checked]="timeSlotStatus">Enable time slot
+            </mat-checkbox>
+            <mat-form-field class="example-full-width mgn-up-5" *ngIf="timeSlotStatus">
+                <input class="number-ip-sm" matInput min="0" max="100000" type="text" placeholder="Time Slot (min)"
                     formControlName="timeSlot" autocomplete="off" (keypress)="isNumeric($event)"
                     (keyup)="isvalid($event)">
             </mat-form-field>

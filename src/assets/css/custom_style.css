@@ -6694,3 +6694,8 @@ label.notifi-togl {
 .display-content .content-lst .tab-lst table td, .display-content .content-lst .tab-lst table th{
   font-size: 1.2rem !important;
 }
+.label-bold {
+  color: #222223;
+  font-weight: 600;
+  font-size: .875rem;
+}

@@ -265,12 +265,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   sortBy = 'sort_token';
   showAvailableSlots = false;
   availableSlots: any = [];
+  timeSlotCheckins: any = [];
+  loading = false;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    private sharedfunctionobj: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices,
     public dateformat: DateFormatPipe) {
@@ -639,10 +640,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               return;
             }
             const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
-            if (!getsavedqueueid) {
-              const selid = this.findCurrentActiveQueue(this.all_queues);
-              this.selectedQueue(this.all_queues[selid]);
-            }
             let selqid = 0;
             for (let ii = 0; ii < this.all_queues.length; ii++) {
               let schedule_arr = [];
@@ -658,6 +655,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
             this.selected_queue = this.all_queues[selqid];
+           
+            if (!getsavedqueueid) {
+              const selid = this.findCurrentActiveQueue(this.all_queues);
+              this.selectedQueue(this.all_queues[selid]);
+            }
             this.getTodayCheckinCount();
             // if (this.time_type === 1) {
             //   this.getTodayCheckIn();
@@ -880,6 +882,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getTodayCheckIn() {
+    this.loading = true;
     this.showSlots();
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
@@ -1382,6 +1385,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (source === 'single') {
       waitlist.push(waitlst);
     }
+    console.log(waitlist);
     this.provider_shared_functions.addConsumerInboxMessage(waitlist, this)
       .then(
         () => { },
@@ -1487,7 +1491,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  checkinClicked() {
+  checkinClicked(appttime) {
+    console.log(appttime);
     if (this.isCheckinActive()) {
       this.provider_services.getServicesList()
         .subscribe(
@@ -1507,7 +1512,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                       this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
                       return false;
                     } else {
-                      this.searchCustomer('providerCheckin');
+                      this.searchCustomer('providerCheckin', appttime);
                       return true;
                     }
                   },
@@ -1520,7 +1525,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
   }
-  searchCustomer(source) {
+  searchCustomer(source, appttime) {
+    console.log(appttime);
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
@@ -1533,15 +1539,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.srchcustdialogRef.afterClosed().subscribe(result => {
       if (result && result.message && result.message === 'haveCustomer' && source === 'providerCheckin') {
-        this.createCheckin(result.data);
+        this.createCheckin(result.data, appttime);
       } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
-        this.createCustomer(result.data, source);
+        this.createCustomer(result.data, source, appttime);
       } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
-        this.createCustomer(result.data, source);
+        this.createCustomer(result.data, source, appttime);
       }
     });
   }
-  createCustomer(search_data, next_page = null) {
+  createCustomer(search_data, next_page = null, appttime) {
     this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
@@ -1552,12 +1558,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.crtCustdialogRef.afterClosed().subscribe(result => {
       if (next_page !== 'createCustomer' && result.message === 'reloadlist') {
-        this.createCheckin(result.data);
+        this.createCheckin(result.data, appttime);
       }
     });
   }
 
-  createCheckin(user_data) {
+  createCheckin(user_data, appttime) {
     const post_data = {};
     // let selected_location = null;
     // const cookie_location_id = this.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider home page
@@ -1611,7 +1617,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           location: post_data['location'],
           sel_date: curdate
         },
-        datechangereq: true
+        datechangereq: true,
+        apptTime: appttime,
+        queue: this.selected_queue
       }
     });
     this.ChkindialogRef.afterClosed().subscribe(result => {
@@ -1867,8 +1875,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  selectnewWaitlist(index) {
+  selectnewWaitlist(index, waitlist?) {
     this.newWaitlistforMsg = [];
+    let wtlst;
+    if (waitlist) {
+    wtlst = waitlist[0];
+  }
+    if (wtlst) {
     if (this.waitlistSelected[index]) {
       delete this.waitlistSelected[index];
       this.waitlistSelection--;
@@ -1876,6 +1889,38 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.waitlistSelected[index] = true;
       this.waitlistSelection++;
     }
+    console.log(this.waitlistSelected);
+    if (this.waitlistSelection === 1) {
+      this.selectedCheckin['new'] = wtlst;
+      if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
+        this.consumerTrackstatus = true;
+      } else {
+        this.consumerTrackstatus = false;
+      }
+console.log(this.selectedCheckin['new']);
+      this.labels(this.selectedCheckin['new']);
+    }
+    console.log(this.newWaitlistforMsg);
+    console.log(this.timeSlotCheckins);
+    for (let i = 0; i < this.waitlistSelected.length; i++) {
+      console.log(this.waitlistSelected[i]);
+      if (this.waitlistSelected[i]) {
+        console.log(this.waitlistSelected[i]);
+        if (this.newWaitlistforMsg.indexOf(this.timeSlotCheckins[i]) === -1) {
+          this.newWaitlistforMsg.push(this.timeSlotCheckins[i]);
+        }
+      }
+    }
+        console.log(this.newWaitlistforMsg);
+  } else {
+    if (this.waitlistSelected[index]) {
+      delete this.waitlistSelected[index];
+      this.waitlistSelection--;
+    } else {
+      this.waitlistSelected[index] = true;
+      this.waitlistSelection++;
+    }
+    console.log(this.waitlistSelected);
     if (this.waitlistSelection === 1) {
       this.selectedCheckin['new'] = this.check_in_list[this.waitlistSelected.indexOf(true)];
       if (this.selectedCheckin['new'].jaldeeWaitlistDistanceTime && this.selectedCheckin['new'].jaldeeWaitlistDistanceTime.jaldeeDistanceTime && (this.selectedCheckin['new'].jaldeeStartTimeType === 'ONEHOUR' || this.selectedCheckin['new'].jaldeeStartTimeType === 'AFTERSTART')) {
@@ -1883,16 +1928,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.consumerTrackstatus = false;
       }
-
+      console.log(this.selectedCheckin['new']);
       this.labels(this.selectedCheckin['new']);
     }
     for (let i = 0; i < this.waitlistSelected.length; i++) {
+      this.waitlistSelected[i]
       if (this.waitlistSelected[i]) {
         if (this.newWaitlistforMsg.indexOf(this.check_in_list[i]) === -1) {
           this.newWaitlistforMsg.push(this.check_in_list[i]);
         }
       }
     }
+    console.log(this.newWaitlistforMsg);
+  }
   }
 
   selectcompletedWaitlist(index) {
@@ -2033,7 +2081,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (ev) {
         (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
       }
+      this.timeSlotCheckins = this.shared_functions.groupBy(this.check_in_list, 'appointmentTime');
+      this.loading = false;
+      console.log(this.availableSlots);
+      console.log(this.timeSlotCheckins);
+      console.log(this.loading);
+    } else {
+      this.loading = false;
     }
+
+
   }
   getcheckins(slot) {
     // return 'true' if the array contains 'slot' value
