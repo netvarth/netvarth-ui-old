@@ -164,7 +164,7 @@
                                         <!-- <b>Note</b> -->
                                         <textarea matInput class="form-control" #consumernote
                                             (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
-                                            placeholder="{{note_placeholder}}"></textarea>
+                                            placeholder="{{note_placeholder}}">{{prev_note}}</textarea>
                                     </div>
                                     <!-- <button type="button" class="cs-btn btn-attach bt_attach" (click)="imagefile.click()"
                     [matTooltip]="'Attach files'">

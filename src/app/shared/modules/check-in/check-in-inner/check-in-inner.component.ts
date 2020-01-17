@@ -191,6 +191,7 @@ export class CheckInInnerComponent implements OnInit {
   board_count = 0;
   allSlots: any = [];
   availableSlots: any = [];
+  prev_note: any;
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -743,6 +744,9 @@ export class CheckInInnerComponent implements OnInit {
   }
   handleConsumerNote(vale) {
     this.consumerNote = vale;
+    if(vale){
+      this.prev_note = vale;
+    }
   }
   handleFutureDateChange(e) {
     const tdate = e.targetElement.value;
