@@ -883,7 +883,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getTodayCheckIn() {
     this.loading = true;
-    this.showSlots();
     this.load_waitlist = 0;
     const Mfilter = this.setFilterForApi();
     Mfilter[this.sortBy] = 'asc';
@@ -926,6 +925,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.changeStatusType('all');
           }
+          this.getAvaiableSlots();
         },
         () => {
           this.load_waitlist = 1;
@@ -1228,7 +1228,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.doSearch();
   }
   setFilterForApi() {
-    console.log(this.selected_queue);
     const api_filter = {};
     if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;
@@ -2060,14 +2059,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadApiSwitch('reloadAPIs');
       });
   }
-  showSlots(ev?) {
+  getAvaiableSlots(ev?) {
     this.availableSlots = [];
     if (this.selected_queue.timeInterval) {
       const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
       if (ev) {
         (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
       }
-      this.loading = false;
       const activeSlots = [];
       const checkins = [];
       for (let i = 0; i < this.check_in_list.length; i++) {
@@ -2081,12 +2079,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
       this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
+      this.loading = false;
     } else {
       this.loading = false;
     }
-  }
-  getcheckins(slot) {
-    // return 'true' if the array contains 'slot' value
-    return this.check_in_list.some(item => item.appointmentTime === slot);
   }
 }

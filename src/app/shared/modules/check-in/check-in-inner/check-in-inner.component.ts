@@ -212,7 +212,6 @@ export class CheckInInnerComponent implements OnInit {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
     this.customer_data = this.data.customer_data || [];
-    console.log(this.data);
     if (this.data.apptTime) {
       this.apptTime = this.data.apptTime;
     }
@@ -638,22 +637,18 @@ export class CheckInInnerComponent implements OnInit {
                 selindx = i;
               }
             }
-            this.sel_queue_id = this.queuejson[selindx].id;
             this.sel_queue_indx = selindx;
             // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
             this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
             this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
             this.sel_queue_name = this.queuejson[selindx].name;
             // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-
-
-
             if (!this.data.queue) {
               this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+              this.sel_queue_id = this.queuejson[selindx].id;
+            } else {
+              this.sel_queue_id = this.data.queue.id;
             }
-
-
-
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
             this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
             this.setTerminologyLabels();
@@ -743,12 +738,9 @@ export class CheckInInnerComponent implements OnInit {
       // this.queueReloaded = true;
       this.availableSlots = [];
       // this.api_loading = true;
-
       // if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
       //   this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
       // }
-
-
       if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
         if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
           this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
@@ -930,10 +922,6 @@ export class CheckInInnerComponent implements OnInit {
         // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
         // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
         // }
-
-
-
-
         // if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
         //   if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
         //     this.dialogRef.close();
@@ -1676,7 +1664,7 @@ export class CheckInInnerComponent implements OnInit {
           this.board_count = layout_list.length;
         });
   }
-  getAvailableTimeSlots(QStartTime, QEndTime, interval) {
+  getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
     const _this = this;
     const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
     this.availableSlots = allSlots;
@@ -1684,6 +1672,7 @@ export class CheckInInnerComponent implements OnInit {
     const activeSlots = [];
     filter['queue-eq'] = _this.sel_queue_id;
     filter['location-eq'] = _this.sel_loc;
+    filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
     let future = false;
     const waitlist_date = new Date(this.sel_checkindate);
     const today = new Date();
@@ -1692,7 +1681,9 @@ export class CheckInInnerComponent implements OnInit {
     if (today.valueOf() < waitlist_date.valueOf()) {
       future = true;
     }
-    this.apptTime = '';
+    if (!edit) {
+      this.apptTime = '';
+    }
     if (!future) {
       _this.provider_services.getTodayWaitlist(filter).subscribe(
         (waitlist: any) => {
@@ -1703,7 +1694,9 @@ export class CheckInInnerComponent implements OnInit {
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
-          this.apptTime = this.availableSlots[0];
+          if (!edit) {
+            this.apptTime = this.availableSlots[0];
+          }
         }
       );
     } else {
@@ -1717,7 +1710,9 @@ export class CheckInInnerComponent implements OnInit {
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
-          this.apptTime = this.availableSlots[0];
+          if (!edit) {
+            this.apptTime = this.availableSlots[0];
+          }
         }
       );
     }
@@ -1727,7 +1722,7 @@ export class CheckInInnerComponent implements OnInit {
     this.showEditView = false;
   }
   editClicked() {
-    this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
+    this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval, 'edit');
     this.showEditView = true;
   }
 }
