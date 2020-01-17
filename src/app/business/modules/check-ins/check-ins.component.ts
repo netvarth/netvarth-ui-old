@@ -267,6 +267,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   availableSlots: any = [];
   timeSlotCheckins: any = [];
   loading = false;
+  tomorrow = new Date();
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -312,6 +313,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => { this.apis_loaded = true; });
   }
   ngOnInit() {
+    this.tomorrow.setDate(new Date().getDate()+1);
     if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
       this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
     } else {
