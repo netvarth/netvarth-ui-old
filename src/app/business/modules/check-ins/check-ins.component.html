@@ -720,12 +720,12 @@
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12"
-                  *ngIf="!selected_queue.timeInterval && new_checkins_list.length === 0 && showstatus['new']">
+                  *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
 
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="!selected_queue.timeInterval && new_checkins_list.length>0 && showstatus['new']">
+                  *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new']">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none"
@@ -845,7 +845,7 @@
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="showstatus['new'] && selected_queue.timeInterval && !loading">
+                  *ngIf="showstatus['new'] && selected_queue.appointment === 'Enable' && !loading">
                   <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let slot of availableSlots, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none">

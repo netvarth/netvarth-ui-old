@@ -120,6 +120,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
+        appointment: [false],
         timeSlot: ['', Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
@@ -139,6 +140,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+        appointment: [false],
         timeSlot: ['', Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
@@ -193,13 +195,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
       qserveonce: this.data.queue.parallelServing || null,
+      appointment: (this.data.queue.appointment === 'Enable') ? true : false,
       timeSlot: this.data.queue.timeInterval || 0
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
-    if (this.data.queue.timeInterval) {
-      this.timeSlotStatus = true;
-    }
+    this.timeSlotStatus = (this.data.queue.appointment === 'Enable') ? true : false;
     this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
@@ -561,6 +562,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         },
         'services': selser,
         'tokenStarts': form_data.tokennum,
+        'appointment': (form_data.appointment) ? 'Enable' : 'Disable',
         'timeInterval': form_data.timeSlot
       };
       if (this.data.type === 'edit') {
@@ -744,7 +746,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     }
   }
   changeTimeslotStatus(ev) {
-    (ev.checked) ? this.timeSlotStatus = true : this.timeSlotStatus = false;
     if (ev.checked) {
       this.timeSlotStatus = true;
       this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
