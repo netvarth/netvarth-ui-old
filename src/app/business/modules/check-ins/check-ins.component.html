@@ -109,14 +109,14 @@
                       </li>
                     </ul>
                   </li>
-                  <li class="dropdown messages-menu mgn-up-10"> 
-                        <input *ngIf="time_type !== 1" matInput type="text" [(ngModel)]="futurecheckin_date"
+                  <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2"> 
+                        <input  matInput type="text" [(ngModel)]="futurecheckin_date"
                           [matDatepicker]="picker" [min]="tomorrow" #futuredate
                           (dateChange)="checkFutureCheckins('futurecheckin_date')" 
                           class="genTextHeight" >
                         <mat-datepicker-toggle matSuffix [for]="picker" >
                         </mat-datepicker-toggle>
-                        <mat-datepicker #picker [hidden]="!filters['futurecheckin_date']"></mat-datepicker>
+                        <mat-datepicker #picker ></mat-datepicker>
                       </li>
               </ul>
             </div>
@@ -286,12 +286,12 @@
             </div>
             <!--Future-->
             <div class="col-md-12 future col-xs-12 future col-sm-12 no-padding-small" *ngIf="time_type==2">
-              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0">
+              <div class="no-dta col-md-12" *ngIf="tomorrow_checkins_list.length === 0">
                 {{no_future_checkins}}
               </div>
-              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_list.length>0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="tomorrow_checkins_list.length>0">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
-                  *ngFor="let checkin of check_in_list, let i=index">
+                  *ngFor="let checkin of tomorrow_checkins_list, let i=index">
                   <div class="info-box">
                     <!-- <div class="info-box-icon" [ngClass]="{cancelled: checkin.waitlistStatus == 'cancelled'}"> -->
                     <div class="info-box-icon">
@@ -727,7 +727,7 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
                   *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new']">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                    *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
+                    *ngFor="let checkin of tomorrow_checkins_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none"
                       [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
                       *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">

@@ -268,6 +268,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   timeSlotCheckins: any = [];
   loading = false;
   tomorrow = new Date();
+  tomorrow_checkins_list: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -959,7 +960,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.new_checkins_list = [];
+              this.tomorrow_checkins_list = [];
               this.check_in_list = this.check_in_filtered_list = data;
+              console.log(this.check_in_list);
+              for (const futureCheckin of this.check_in_list ) {
+                // console.log(futureCheckin.date);
+                // console.log(this.tomorrow.toISOString().split('T')[0]);
+                const tommarowDate = this.tomorrow.toISOString().split('T')[0];
+               if (futureCheckin.date === tommarowDate) {
+                this.tomorrow_checkins_list.push(futureCheckin);
+               }
+              }
+              console.log(this.tomorrow_checkins_list);
               // this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
               // if (this.grouped_list && this.grouped_list['checkedIn']) {
               //   this.new_checkins_list = this.grouped_list['checkedIn'].slice();
