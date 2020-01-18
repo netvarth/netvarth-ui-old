@@ -40,6 +40,7 @@ export class DisplayboardDetailComponent implements OnInit {
     name;
     layout = this.boardLayouts[0];
     displayName;
+    serviceRoom;
     metric: any = [];
     metricSelected = {};
     id;
@@ -163,6 +164,7 @@ export class DisplayboardDetailComponent implements OnInit {
             this.breadcrumbs = breadcrumbs;
             this.name = this.layoutData.name;
             this.displayName = this.layoutData.displayName;
+            this.serviceRoom = this.layoutData.serviceRoom;
             // this.layout = this.layoutData.layout;
             this.id = this.layoutData.id;
             const layoutPosition = this.layoutData.layout.split('_');
@@ -193,6 +195,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
+                'serviceRoom': this.serviceRoom,
                 'metric': this.metric,
             };
             this.provider_services.createDisplayboard(post_data).subscribe(data => {
@@ -214,6 +217,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
+                'serviceRoom': this.serviceRoom,
                 'metric': this.metric
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {

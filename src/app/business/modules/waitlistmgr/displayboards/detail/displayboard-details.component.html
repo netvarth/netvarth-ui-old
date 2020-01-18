@@ -78,6 +78,15 @@
                                                 </mat-form-field>
                                             </div>
                                             <div class="clearfix"></div>
+                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="serviceRoom"
+                                                        placeholder="Enter the serviceroom"
+                                                        [(ngModel)]="serviceRoom" [ngModelOptions]="{standalone: true}"
+                                                        autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="clearfix"></div>
                                             <div class="card no-padding mgn-up-20" *ngIf="qset_list.length>0">
                                                 <div class="form-group">
                                                     <div class="row">
