@@ -121,7 +121,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
         appointment: [false],
-        timeSlot: ['', Validators.compose([Validators.required])]
+        timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
@@ -141,7 +141,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         appointment: [false],
-        timeSlot: ['', Validators.compose([Validators.required])]
+        timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });

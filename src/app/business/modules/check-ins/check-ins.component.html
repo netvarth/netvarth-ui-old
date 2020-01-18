@@ -82,42 +82,40 @@
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
                 <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==2 && apis_loaded && selected_queue">
-                    <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
-                    <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
-                      *ngIf="selected_location">
-                      <span *ngIf="!small_device_display">
-                        {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
-                        {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
-                          *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
-                        <div class="instantQ" *ngIf="selected_queue.instantQueue"> [Only for today]</div>
-                      </span>
-                    </a>
-                    <ul class="dropdown-menu ques">
-                      <li>
-                        <ul class="menu">
-                          <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
-                            *ngFor="let queue of queues;let i = index">
-                            <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
-                              <span class="qtime">{{queue.queueSchedule.timeSlots[0].sTime }} -
-                                {{queue.queueSchedule.timeSlots[0].eTime }}<div *ngIf="!queue.instantQueue"
-                                  class="dashboard-qname">[{{ queue.name | capitalizeFirst }}]</div>
-                                <div *ngIf="queue.instantQueue" class="instantQ"> [Only for today]</div>
-                              </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2"> 
-                        <input  matInput type="text" [(ngModel)]="futurecheckin_date"
-                          [matDatepicker]="picker" [min]="tomorrow" #futuredate
-                          (dateChange)="checkFutureCheckins('futurecheckin_date')" 
-                          class="genTextHeight" >
-                        <mat-datepicker-toggle matSuffix [for]="picker" >
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker ></mat-datepicker>
-                      </li>
+                  <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
+                  <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
+                    *ngIf="selected_location">
+                    <span *ngIf="!small_device_display">
+                      {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
+                      {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
+                        *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
+                      <div class="instantQ" *ngIf="selected_queue.instantQueue"> [Only for today]</div>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu ques">
+                    <li>
+                      <ul class="menu">
+                        <li [ngClass]="{'active': (selected_queue && queue.id == selected_queue.id )}"
+                          *ngFor="let queue of queues;let i = index">
+                          <a class="pointer-cursor pull-left" (click)="selectedQueue(queue)">
+                            <span class="qtime">{{queue.queueSchedule.timeSlots[0].sTime }} -
+                              {{queue.queueSchedule.timeSlots[0].eTime }}<div *ngIf="!queue.instantQueue"
+                                class="dashboard-qname">[{{ queue.name | capitalizeFirst }}]</div>
+                              <div *ngIf="queue.instantQueue" class="instantQ"> [Only for today]</div>
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
+                  <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
+                    [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="genTextHeight">
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </li>
               </ul>
             </div>
           </nav>
@@ -190,7 +188,7 @@
                         [hidden]="!filters['phone_number']">
                     </span>
                     <span class="inl-blk filtr">
-                      <a [class.button_filter]="filters['queue']" *ngIf="time_type !== 1"
+                      <a [class.button_filter]="filters['queue']" *ngIf="time_type === 0"
                         (click)="filterClicked('queue')" class="anchorbutton remMarginRight genMarginLeft"
                         name="service_window" id="btn_service_window_filter_id"><span>{{service_window_cap}}</span></a>
                       <mat-form-field *ngIf="time_type !== 1 && filters['queue']">
@@ -255,7 +253,7 @@
                       </mat-form-field>
                     </span>
                     <span class="date inl-blk filtr">
-                      <a [class.button_filter]="filters['check_in_start_date']" *ngIf="time_type !== 1"
+                      <a [class.button_filter]="filters['check_in_start_date']" *ngIf="time_type === 0"
                         (click)="filterClicked('check_in_start_date')" class="anchorbutton remMarginRight genMarginLeft"
                         name="start_date" id="btn_start_date_filter_id"><span>{{start_date}}</span></a>
                       <input *ngIf="time_type !== 1" type="text" [(ngModel)]="filter.check_in_start_date"
@@ -267,7 +265,7 @@
                       <mat-datepicker #picker [hidden]="!filters['check_in_start_date']"></mat-datepicker>
                     </span>
                     <span class="date inl-blk filtr">
-                      <a [class.button_filter]="filters['check_in_end_date']" *ngIf="time_type !== 1"
+                      <a [class.button_filter]="filters['check_in_end_date']" *ngIf="time_type === 0"
                         (click)="filterClicked('check_in_end_date')" class="anchorbutton remMarginRight genMarginLeft"
                         name="end_date" id="btn_end_date_filter_id"><span>{{end_date}}</span></a>
                       <input *ngIf="time_type !== 1" type="text" [(ngModel)]="filter.check_in_end_date"
@@ -286,12 +284,12 @@
             </div>
             <!--Future-->
             <div class="col-md-12 future col-xs-12 future col-sm-12 no-padding-small" *ngIf="time_type==2">
-              <div class="no-dta col-md-12" *ngIf="tomorrow_checkins_list.length === 0">
+              <div class="no-dta col-md-12" *ngIf="check_in_list.length === 0">
                 {{no_future_checkins}}
               </div>
-              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="tomorrow_checkins_list.length>0">
+              <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10" *ngIf="check_in_list.length>0">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
-                  *ngFor="let checkin of tomorrow_checkins_list, let i=index">
+                  *ngFor="let checkin of check_in_list, let i=index">
                   <div class="info-box">
                     <!-- <div class="info-box-icon" [ngClass]="{cancelled: checkin.waitlistStatus == 'cancelled'}"> -->
                     <div class="info-box-icon">
@@ -727,7 +725,7 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
                   *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new']">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                    *ngFor="let checkin of tomorrow_checkins_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
+                    *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none"
                       [class.border-btm]="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'"
                       *ngIf="checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn'">
