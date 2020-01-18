@@ -113,7 +113,11 @@
 																			[value]="value"
 																			
 																			(onSelectionChange)="itemServiceSelected(group.type,value)">
-																			{{ value }} <span
+																			<span *ngIf="value.length>='19'">{{ value.substring(0,17) }}...</span>
+																			<span *ngIf="value.length<'18'">
+																				{{value}}
+																			</span>
+																			<span
 																				class="bill_item_service">{{(group.type=='Items')? 'Item' : 'Service'}}</span>
 																		</mat-option>
 																	</ng-container>

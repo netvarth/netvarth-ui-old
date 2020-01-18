@@ -23,7 +23,8 @@
                         <li *ngFor="let location of locations;let i = index" [(value)]="i"
                           [ngClass]="{'active': (location.place == selected_location.place)}">
                           <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
-                            <h4>{{ location.place | capitalizeFirst }}</h4>
+                            <h4 *ngIf="location.place.length>='27'">{{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
+                            <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
                           </a>
                         </li>
                       </ul>
