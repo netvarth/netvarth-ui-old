@@ -386,6 +386,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
             this.normal_profile_active = 2;
           }
           if (this.bProfile.baseLocation) {
+            this.parkingType = this.bProfile.baseLocation.parkingType;
+            if(this.parkingType){
+              this.park_type = this.parkingType.charAt(0).toUpperCase() + this.parkingType.substring(1);
+            }
             if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
               || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
               this.normal_locationamenities_show = 3;
