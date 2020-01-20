@@ -6571,17 +6571,17 @@ input.jdn_ip { width: 50px !important}
 }
 
 .display-layout .branch-sp .categoryspec{
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .display-layout .logo img {
-  width: 150px;
-  height: 120px;
+  width: 180px;
+  height: 150px;
 }
 
 .display-layout .title {
   font-weight: 600;
-  font-size: 1.75rem;
+  font-size: 2rem;
 }
 .display-content .content-lst .form-group .tab-lst{
   min-height: calc(100vh - 300px);
@@ -6628,7 +6628,7 @@ input.jdn_ip { width: 50px !important}
   padding: 5px;
   text-align: center;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
 }
 .branch-det {
   background: #a8d2ea;
@@ -6637,7 +6637,7 @@ input.jdn_ip { width: 50px !important}
 }
 .branch-det .title {
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 2.2rem;
 }
 .blinking{
   animation:blinkingText 1s infinite;
@@ -6719,4 +6719,11 @@ label.notifi-togl {
 }
 .appt-wl-section .app-info-box-icon.active {
   cursor: pointer !important;
+}
+.roomname {
+  font-weight: 600;
+  font-size: 1.5rem;
+  display: table-cell;
+  height: 150px;
+  vertical-align: middle;
 }

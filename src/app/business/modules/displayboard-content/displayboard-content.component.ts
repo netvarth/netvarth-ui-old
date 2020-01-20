@@ -49,6 +49,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     s3Url;
     showIndex = 0;
     api_loading = true;
+    roomName = '';
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
@@ -171,7 +172,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             let layoutData;
             this.provider_services.getDisplayboard(this.layout_id).subscribe(
                 layoutInfo => {
+                    console.log(layoutInfo);
                     layoutData = layoutInfo;
+                    this.roomName = layoutData['serviceRoom'];
                     const layoutPosition = layoutData.layout.split('_');
                     this.boardRows = layoutPosition[0];
                     this.onResize();
@@ -388,6 +391,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 this.selectedDisplayboards[element.position]['checkins'] = waitlist;
             });
         // });
+        console.log(this.selectedDisplayboards);
     }
     createRange(number) {
         const items = [];

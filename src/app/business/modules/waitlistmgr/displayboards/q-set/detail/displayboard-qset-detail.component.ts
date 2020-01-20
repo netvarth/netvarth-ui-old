@@ -386,13 +386,22 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.categoryIds = [];
     }
     saveLabels(index) {
-        this.labelsList.push({
+        // this.labelsList.push({
+        //     'name': this.defaultLables[index].name,
+        //     'displayName': this.labelDisplayname[index],
+        //     'defaultValue': this.labelDefaultvalue[index] || '',
+        //     'label': this.defaultLables[index].label,
+        //     'order': this.labelOrder[index]
+        // });
+
+          this.labelsList[index] = {
             'name': this.defaultLables[index].name,
             'displayName': this.labelDisplayname[index],
             'defaultValue': this.labelDefaultvalue[index] || '',
             'label': this.defaultLables[index].label,
             'order': this.labelOrder[index]
-        });
+        };
+        console.log(this.labelsList);
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service, ev) {
