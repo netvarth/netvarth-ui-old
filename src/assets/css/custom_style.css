@@ -6699,3 +6699,24 @@ label.notifi-togl {
   font-weight: 600;
   font-size: .875rem;
 }
+.appt-wl-section .appt-wl-section-row {
+  min-height: 50px !important;
+}
+.appt-wl-section .app-info-box-icon {
+  min-width: 90px !important;
+  max-width: 100px !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  vertical-align: middle !important;
+}
+.appt-wl-section .dashboard-wait {
+  font-size: inherit !important;
+  margin-top: 0px !important;
+}
+.appt-wl-section .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary{
+  background: #29b6f6 !important;
+  color: #fff !important;
+}
+.appt-wl-section .app-info-box-icon.active {
+  cursor: pointer !important;
+}

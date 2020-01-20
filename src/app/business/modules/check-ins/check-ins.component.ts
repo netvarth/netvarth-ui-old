@@ -962,7 +962,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.changeStatusType('all');
           }
-          this.getAvaiableSlots();
+          this.getAvaiableSlots('today');
         },
         () => {
           this.load_waitlist = 1;
@@ -2105,13 +2105,28 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadApiSwitch('reloadAPIs');
       });
   }
-  getAvaiableSlots(ev?) {
+  getAvaiableSlots(type?) {
+    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+
+    console.log(type);
     this.availableSlots = [];
+    const filteredSlots = [];
     if (this.selected_queue.timeInterval) {
       const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
-      if (ev) {
-        (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
+      if (type) {
+        for (let i = 0; i < allSlots.length; i++) {
+            const slotTime = moment(this.shared_functions.getDateFromTimeString(allSlots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+            console.log(allSlots[i]);
+            console.log(curTime);
+            console.log(slotTime);
+            if (curTime <= slotTime) {
+              filteredSlots.push(allSlots[i]);
+            }
+        }
       }
+      // if (ev) {
+      //   (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
+      // }
       const activeSlots = [];
       const checkins = [];
       for (let i = 0; i < this.check_in_list.length; i++) {
@@ -2120,9 +2135,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             activeSlots.push(this.check_in_list[i].appointmentTime);
           }
         } else if (this.check_in_list[i].waitlistStatus === 'arrived' || this.check_in_list[i].waitlistStatus === 'checkedIn') {
-          checkins.push(this.check_in_list[i]);
+              checkins.push(this.check_in_list[i]);
         }
       }
+      console.log(allSlots);
+      console.log(filteredSlots);
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
       this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
       this.loading = false;
