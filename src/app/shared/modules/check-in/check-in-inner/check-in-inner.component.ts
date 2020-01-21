@@ -295,11 +295,13 @@ export class CheckInInnerComponent implements OnInit {
       this.search_obj = srch_fields;
       // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
       this.sel_loc = this.data.moreparams.location.id;
-      if (this.page_source === 'provider_checkin') {
-        this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-      } else {
+      console.log(this.page_source);
+      console.log(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT));
+      // if (this.page_source === 'provider_checkin') {
+      //   this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+      // } else {
         this.sel_checkindate = this.data.moreparams.sel_date;
-      }
+      // }
       this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
     }
     if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
