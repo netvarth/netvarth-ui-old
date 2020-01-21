@@ -10,30 +10,59 @@
     </div> -->
     <div class="display-layout mgn-up-5 mgn-bt-5">
         <div class="branch-sp">
-            <div class="logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div>
-            <div class="bdetails col-md-11 no-padding">
+            <div class="col-md-9 no-padding">
+                <div class="logo pull-left"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div>
+                <div class="bdetails mgn-lt-10 pull-left">
+                    <div class="title" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</div>
+                    <div class="mgn-bt-5" *ngIf="qualification && qualification.length>0">
+                        <span class="categoryspec" *ngFor="let qualifi of qualification; let i = index">
+                            <span *ngIf="i>0" class="spacer">, </span>{{qualifi.qualificationName}}</span>
+                    </div>
+                    <!-- <div class="mgn-lt-10"
+                        *ngIf="bProfile && bProfile.specialization && bProfile.specialization.length > 0">
+                        <span class="categoryspec" *ngFor="let spec of bProfile.specialization; let i = index"><span
+                                *ngIf="i>0" class="spacer">,</span>{{spec}}
+                        </span>
+                    </div> -->
+                    <div class="mgn-bt-5"
+                        *ngIf="businessJson && businessJson.specialization && businessJson.specialization.length > 0">
+                        <span class="categoryspec" *ngFor="let spec of businessJson.specialization; let i = index"><span
+                                *ngIf="i>0" class="spacer">, </span>{{spec}}</span>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="bdetails col-md-3 pull-right room-style">
+                <span class="mgn-rt-5 roomname" *ngIf="roomName != '' && roomName != undefined">
+                    {{roomName | capitalizeFirst}}</span>
+            </div>
+
+
+
+            <!-- <div class="logo pull-left"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div>
+            <div class="bdetails">
                 <div class="title mgn-lt-10" *ngIf="bname != '' && bname != undefined">{{bname | capitalizeFirst}}</div>
                 <div class="mgn-lt-10 mgn-bt-5" *ngIf="qualification && qualification.length>0">
                     <span class="categoryspec" *ngFor="let qualifi of qualification; let i = index">
                         <span *ngIf="i>0" class="spacer">, </span>{{qualifi.qualificationName}}</span>
-                </div>
+                </div> -->
                 <!-- <div class="mgn-lt-10"
                     *ngIf="bProfile && bProfile.specialization && bProfile.specialization.length > 0">
                     <span class="categoryspec" *ngFor="let spec of bProfile.specialization; let i = index"><span
                             *ngIf="i>0" class="spacer">,</span>{{spec}}
                     </span>
                 </div> -->
-                <div class="mgn-lt-10 mgn-bt-5"
+                <!-- <div class="mgn-lt-10 mgn-bt-5"
                     *ngIf="businessJson && businessJson.specialization && businessJson.specialization.length > 0">
                     <span class="categoryspec" *ngFor="let spec of businessJson.specialization; let i = index"><span
                             *ngIf="i>0" class="spacer">, </span>{{spec}}</span>
-                </div>
-            </div>
-            <div class="bdetails mgn-rt-5">
+                </div> -->
+            <!-- </div>
+            <div class="bdetails mgn-rt-5 pull-right"> -->
                 <!-- <div class="mgn-rt-5 logo"><img [src]="blogo" *ngIf="blogo!='' && blogo!=null" alt="" /></div> -->
-                <div class="mgn-rt-5 roomname" *ngIf="roomName != '' && roomName != undefined">
+                <!-- <div class="mgn-rt-5 roomname" *ngIf="roomName != '' && roomName != undefined">
                     {{roomName | capitalizeFirst}}</div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="content-lst col-md-12 no-padding" [ngStyle]="{'height.px': fullHeight}">

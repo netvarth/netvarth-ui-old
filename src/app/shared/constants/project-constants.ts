@@ -99,9 +99,10 @@ export const projectConstants = {
   PIPE_DISPLAY_DATE_FORMAT: 'dd/MM/y',
   PIPE_DISPLAY_DATE_FORMAT_WITH_DAY: 'E, dd/MM/y',
   PIPE_DISPLAY_TIME_FORMAT: 'h:mm a',
+  // PIPE_DISPLAY_TIME_FORMAT: 'HH:mm a',
   PIPE_DISPLAY_DATE_TIME_FORMAT: 'dd/MM/y h:mm a',
   POST_DATE_FORMAT: 'YYYY-MM-DD',
-  POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD hh:mm a',
+  POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD HH:mm a',
   BASE_SCHEDULE: [
     {
       day: 4,

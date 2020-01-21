@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +40,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
     private renderer: Renderer2,
-    public shared_service: SharedServices) {
+    public shared_service: SharedServices,
+    private titleService: Title) {
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
@@ -116,6 +118,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.doLogout()
       .then(
         () => {
+          this.titleService.setTitle('Jaldee');
           this.router.navigate(['/home']);
         },
         () => {

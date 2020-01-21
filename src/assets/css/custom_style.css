@@ -1270,7 +1270,9 @@ sup {
 .pad-rt-10 {
   padding-right: 10px !important;
 }
-
+.pad-rt-0 {
+  padding-right: 0px !important;
+}
 .pad-bt-10 {
   padding-bottom: 10px !important;
 }
@@ -6638,6 +6640,7 @@ input.jdn_ip { width: 50px !important}
 .branch-det .title {
   font-weight: 600;
   font-size: 2.2rem;
+  color: #006cab !important;
 }
 .blinking{
   animation:blinkingText 1s infinite;
@@ -6703,12 +6706,13 @@ label.notifi-togl {
   min-height: 50px !important;
 }
 .appt-wl-section .app-info-box-icon {
-  min-width: 90px !important;
+  min-width: 95px !important;
   max-width: 100px !important;
   margin-top: 10px !important;
   margin-bottom: 10px !important;
   vertical-align: middle !important;
 }
+
 .appt-wl-section .dashboard-wait {
   font-size: inherit !important;
   margin-top: 0px !important;
@@ -6723,7 +6727,9 @@ label.notifi-togl {
 .roomname {
   font-weight: 600;
   font-size: 1.5rem;
-  display: table-cell;
+}
+.room-style {
   height: 150px;
-  vertical-align: middle;
+  line-height: 150px;
+  text-align: center;
 }

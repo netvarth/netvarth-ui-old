@@ -293,6 +293,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         }
         if (boardObj.sbId) {
             let layoutData;
+            this.roomName = '';
+            this.blogo = '';
+            this.qualification = '';
+            this.bname = '';
             const accountId = this.shared_functions.getitemfromSessionStorage('accountid');
             const tabSession = this.shared_functions.getitemfromSessionStorage('tabSession');
             const accountInfo = tabSession[accountId];
@@ -307,6 +311,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             this.provider_services.getDisplayboard(boardObj.sbId).subscribe(
                 layoutInfo => {
                     layoutData = layoutInfo;
+                    this.roomName = layoutData['serviceRoom'];
                     const layoutPosition = layoutData.layout.split('_');
                     this.boardRows = layoutPosition[0];
                     this.onResize();
