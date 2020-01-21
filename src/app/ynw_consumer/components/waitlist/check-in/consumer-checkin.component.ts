@@ -3,18 +3,20 @@ import { Subscription } from 'rxjs/Subscription';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { CheckInService } from '../../../../business/modules/check-ins/check-in/check-in.service';
 
 @Component({
-    selector: 'app-provider-checkin',
-    templateUrl: './provider-checkin.component.html'
+    selector: 'app-consumer-checkin',
+    templateUrl: './consumer-checkin.component.html'
 })
-export class ProviderCheckinComponent implements OnInit {
+export class ConsumerCheckinComponent implements OnInit {
     checkinSubscribtion: Subscription;
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -155,42 +157,150 @@ export class ProviderCheckinComponent implements OnInit {
         base64: [],
         caption: []
     };
-    breadcrumbs;
-    breadcrumb_moreoptions: any = [];
     activeWt;
     searchForm: FormGroup;
     apptTime: any;
     board_count = 0;
     allSlots: any = [];
     availableSlots: any = [];
+    data;
+    provider_id: any;
+    isfirstCheckinOffer: any;
+    s3CouponsList: any = [];
+    subscription: Subscription;
+    showCouponWB: boolean;
+    change_date: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
-        public provider_services: ProviderServices) {
+        public route: ActivatedRoute,
+        public provider_services: ProviderServices,
+        public datastorage: CommonDataStorageService) {
+        this.route.queryParams.subscribe(
+            params => {
+                this.sel_loc = params.loc_id;
+                if (params.qid) {
+                    this.sel_queue_id = params.qid;
+                }
+                this.change_date = params.cur;
+                this.account_id = params.account_id;
+                this.provider_id = params.unique_id;
+                this.sel_checkindate = params.sel_date;
+                this.hold_sel_checkindate = this.sel_checkindate;
+            });
     }
     ngOnInit() {
-        this.createForm();
-        this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-        this.api_loading = false;
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+        const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        // this.api_loading = false;
+        if (activeUser) {
+            this.isfirstCheckinOffer = activeUser.firstCheckIn;
+        }
+        this.main_heading = this.checkinLabel; // 'Check-in';
         this.get_token_cap = Messages.GET_TOKEN;
-        this.breadcrumbs = [
-            {
-                title: 'Dashboard',
-                url: 'provider/check-ins'
-            },
-            {
-                title: this.get_token_cap
-            }
-        ];
         this.maxsize = 1;
         this.step = 1;
+        this.getProfile();
+        this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        this.gets3curl();
+        this.getFamilyMembers();
         // this.getCurrentLocation();
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.today);
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.minDate);
+        const dd = this.today.getDate();
+        const mm = this.today.getMonth() + 1; // January is 0!
+        const yyyy = this.today.getFullYear();
+        let cday = '';
+        if (dd < 10) {
+            cday = '0' + dd;
+        } else {
+            cday = '' + dd;
+        }
+        let cmon;
+        if (mm < 10) {
+            cmon = '0' + mm;
+        } else {
+            cmon = '' + mm;
+        }
+        const dtoday = yyyy + '-' + cmon + '-' + cday;
+        this.todaydate = dtoday;
+        this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+        this.waitlist_for.push({ id: this.loggedinuser.id, name: this.loggedinuser.firstName + ' ' + this.loggedinuser.lastName });
+        // if (this.page_source === 'searchlist_checkin') { // case check-in from search result pages
+        // this.search_obj = this.data.srchprovider;
+        // if (this.data.dept) {
+        //     this.provider_id = this.search_obj.unique_id;
+        //     this.sel_queue_id = this.search_obj.waitingtime_res.nextAvailableQueue.id;
+        //     this.sel_loc = this.search_obj.location_id1;
+        //     this.sel_checkindate = this.search_obj.waitingtime_res.nextAvailableQueue.availableDate;
+        // } else {
+        //     this.provider_id = this.search_obj.fields.unique_id;
+        //     this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
+        //     this.sel_loc = this.search_obj.fields.location_id1;
+        //     this.sel_checkindate = this.search_obj.fields.waitingtime_res.nextAvailableQueue.availableDate;
+        // }
+        // const providarr = this.search_obj.id.split('-');
+        // this.account_id = providarr[0];
+        this.minDate = this.sel_checkindate;
+        // } else if (this.page_source === 'provdet_checkin') { // case check-in from provider details page or provider dashboard
+        // this.search_obj = this.data.srchprovider;
+        // this.provider_id = this.data.moreparams.provider.unique_id;
+        // this.account_id = this.data.moreparams.provider.account_id;
+        // const srch_fields = {
+        //     fields: {
+        //         title: this.data.moreparams.provider.name,
+        //         place1: this.data.moreparams.location.name,
+        //     }
+        // };
+        // this.search_obj = srch_fields;
+        // this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+        // }
+        // if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
+        if (this.change_date) {
+            const seldateChecker = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            const seldate_checker = new Date(seldateChecker);
+            const todaydateChecker = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            const todaydate_checker = new Date(todaydateChecker);
+            if (seldate_checker.getTime() === todaydate_checker.getTime()) { // if the next available date is today itself, then add 1 day to the date and use it
+                // const nextdate = new Date(seldate_checker.setDate(seldate_checker.getDate() + 1));
+                const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                const serverdate = moment(server).format();
+                const servdate = new Date(serverdate);
+                const nextdate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
+                this.sel_checkindate = nextdate.getFullYear() + '-' + (nextdate.getMonth() + 1) + '-' + nextdate.getDate();
+                this.minDate = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }); // done to set the min date in the calendar view
+                this.minDate = new Date(this.minDate.replace(/-/g, '/'));
+            }
+        }
+        // }
+        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const ddd = new Date(day);
+        this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        this.hold_sel_checkindate = this.sel_checkindate;
+        this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+        // if (this.data.moreparams.terminologies) {
+        //     this.terminologiesjson = this.data.moreparams.terminologies;
+        //     this.setTerminologyLabels();
+        // }
+        // if ( this.page_source !== 'provider_checkin') {
+        // this.getPaymentModesofProvider(this.account_id);
+        // }
+        const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const date1 = new Date(dt1);
+        const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const date2 = new Date(dt2);
+        // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+            this.isFuturedate = true;
+        }
+        // const retdatedet = this.getQueueDateTimeDetails(this.search_obj.fields.waitingtime_res.nextAvailableQueue);
+        // this.sel_queue_det = retdatedet;
         this.showfuturediv = false;
         this.revealphonenumber = true;
-        this.getDisplayboardCount();
     }
     createForm() {
         this.searchForm = this.fb.group({
@@ -199,47 +309,8 @@ export class ProviderCheckinComponent implements OnInit {
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
         });
     }
-    findCustomer(form_data, event) {
-        console.log(event.key);
-        if (event.key === 'Enter') {
-            this.searchCustomer(form_data);
-        }
-    }
-    searchCustomer(form_data) {
-        // this.resetApiErrors();
-        this.form_data = null;
-        this.create_new = false;
-        if (form_data.first_last_name.length >= 3) {
-            const post_data = {
-                'firstName-eq': form_data.first_last_name,
-                'lastName-eq': form_data.first_last_name,
-                'primaryMobileNo-eq': form_data.mobile_number
-            };
-
-            this.provider_services.getCustomer(post_data)
-                .subscribe(
-                    (data: any) => {
-                        if (data.length === 0) {
-                            this.form_data = form_data;
-                            this.create_new = true;
-                        } else {
-                            this.customer_data = data[0];
-                            this.getFamilyMembers();
-                            this.initCheckIn();
-                        }
-                    },
-                    error => {
-                        this.sharedFunctionobj.apiErrorAutoHide(this, error);
-                    }
-                );
-        } else {
-            this.sharedFunctionobj.openSnackBar('Please enter atleast the first 3 letters of First/Last Name', { 'panelClass': 'snackbarerror' });
-            // this.sharedFunctionobj.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
-        }
-    }
     initCheckIn() {
         this.showCheckin = true;
-
         this.waitlist_for = [];
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1151,5 +1222,97 @@ export class ProviderCheckinComponent implements OnInit {
     }
     timeSelected(slot) {
         this.apptTime = slot;
+    }
+    getProfile() {
+        this.sharedFunctionobj.getProfile()
+            .then(
+                data => {
+                    this.userData = data;
+                    console.log(this.userData);
+                    if (this.userData.userProfile !== undefined) {
+                        this.userEmail = this.userData.userProfile.email || '';
+                        this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        this.consumerPhoneNo = this.userPhone;
+                    }
+                    if (this.userEmail) {
+                        this.emailExist = true;
+                    } else {
+                        this.emailExist = false;
+                    }
+                });
+    }
+    gets3curl() {
+        this.api_loading1 = true;
+        this.retval = this.sharedFunctionobj.getS3Url()
+            .then(
+                res => {
+                    this.s3url = res;
+                    this.getbusinessprofiledetails_json('businessProfile', true);
+                    this.getbusinessprofiledetails_json('settings', true);
+                    this.getbusinessprofiledetails_json('coupon', true);
+                    if (!this.terminologiesjson) {
+                        this.getbusinessprofiledetails_json('terminologies', true);
+                    } else {
+                        if (this.terminologiesjson.length === 0) {
+                            this.getbusinessprofiledetails_json('terminologies', true);
+                        } else {
+                            this.datastorage.set('terminologies', this.terminologiesjson);
+                            this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                        }
+                    }
+                    this.api_loading1 = false;
+                },
+                () => {
+                    this.api_loading1 = false;
+                }
+            );
+    }
+    // gets the various json files based on the value of "section" parameter
+    getbusinessprofiledetails_json(section, modDateReq: boolean) {
+        let UTCstring = null;
+        if (modDateReq) {
+            UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+        }
+        this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+            .subscribe(res => {
+                switch (section) {
+                    case 'settings':
+                        this.settingsjson = res;
+                        this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
+                        /*this.maxsize = this.settingsjson.maxPartySize;
+                        if (this.maxsize === undefined) {
+                        this.maxsize = 1;
+                        }*/
+                        break;
+                    case 'terminologies':
+                        this.terminologiesjson = res;
+                        this.datastorage.set('terminologies', this.terminologiesjson);
+                        this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                        this.setTerminologyLabels();
+                        break;
+                    case 'businessProfile':
+                        this.businessjson = res;
+                        this.getProviderDepart(this.businessjson.id);
+                        this.domain = this.businessjson.serviceSector.domain;
+                        if (this.domain === 'foodJoints') {
+                            this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+                            this.note_placeholder = 'Item No Item Name Item Quantity';
+                        } else {
+                            this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+                            this.note_placeholder = '';
+                        }
+                        this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
+                        break;
+                    case 'coupon':
+                        this.s3CouponsList = res;
+                        if (this.s3CouponsList.length > 0) {
+                            this.showCouponWB = true;
+                        }
+                        break;
+                }
+            },
+                () => {
+                }
+            );
     }
 }

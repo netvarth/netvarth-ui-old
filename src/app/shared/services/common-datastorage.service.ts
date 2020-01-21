@@ -8,6 +8,8 @@ export class CommonDataStorageService {
     'terminologies': null
   };
 
+  public checkinInfo;
+
   constructor() {}
 
   get(type) {
@@ -16,6 +18,7 @@ export class CommonDataStorageService {
 
   set(type, data) {
     this.storage[type] = data;
+    console.log(this.storage[type]);
   }
 
   clear() {

@@ -1601,20 +1601,21 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(origin?) {
-    this.checkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: this.checkProvider(origin),
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
-        srchprovider: this.current_provider,
-        datechangereq: this.changedate_req
-      }
-    });
-    this.checkindialogRef.afterClosed().subscribe(result => {
-    });
+    this.router.navigate(['consumer', 'checkin']);
+    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: this.checkProvider(origin),
+    //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 },
+    //     srchprovider: this.current_provider,
+    //     datechangereq: this.changedate_req
+    //   }
+    // });
+    // this.checkindialogRef.afterClosed().subscribe(result => {
+    // });
   }
   checkProvider(type) {
     return (type === 'consumer') ? 'false' : 'true';

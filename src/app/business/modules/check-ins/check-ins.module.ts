@@ -19,7 +19,6 @@ import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
-import { CheckInService } from './check-in/check-in.service';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 @NgModule({
     imports: [
@@ -53,9 +52,6 @@ import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-memb
         AdjustQueueDelayComponent,
         LocateCustomerComponent,
         ApplyLabelComponent
-    ],
-    providers: [
-        CheckInService
     ],
     exports: [CheckInsComponent]
 })

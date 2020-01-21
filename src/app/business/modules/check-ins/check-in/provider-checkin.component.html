@@ -20,7 +20,7 @@
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                         <mat-form-field>
                                             <input matInput placeholder="Enter Phone Number" type="text"
-                                                class="form-control" formControlName="mobile_number">
+                                                class="form-control" formControlName="mobile_number" (keypress)="findCustomer(searchForm.value, $event)">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -126,6 +126,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12 form-group queue-outer mgn-up-20"
+                                                *ngIf="board_count > 0 && availableSlots.length>0">
+                                                <div class="ttle mgn-bt-10">Select Appointment Time</div>
+                                                <mat-chip-list class="check-in-chip">
+                                                    <mat-chip *ngFor="let slot of availableSlots"
+                                                        [selected]="slot === apptTime" (click)="timeSelected(slot);">
+                                                        {{slot}}</mat-chip>
+                                                </mat-chip-list>
+                                            </div>
+                                            <div class="clearfix"></div>
                                             <div *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                                                 <div class="waitlist-button-outer">
                                                     <div class="showDetOuter" *ngIf="queuejson.length > 0">

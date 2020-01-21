@@ -112,7 +112,6 @@
                         </ul>
                     </div>
                 </nav>
-
                 <div class="card queue-form" *ngIf="action !== 'view' && !api_loading">
                     <div class="copy ynw-common-form-nm pro-schedule">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
@@ -285,6 +284,13 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
                                         (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'" >
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="100000" type="text"
+                                        placeholder="Time Slot (min)" formControlName="timeSlot"
+                                        autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-12 no-padding" style="margin-top: 15px;display: inline-flex;">

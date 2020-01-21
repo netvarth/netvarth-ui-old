@@ -78,6 +78,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
     queue_list: any = [];
     action;
     params;
+    waitlist_manager;
+    iftokn = false;
     selected_location;
     selected_locationId;
     constructor(
@@ -103,6 +105,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.getWaitlistMgr();
         this.api_loading = true;
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -125,7 +128,22 @@ export class WaitlistQueueDetailComponent implements OnInit {
             }
         }, 100);
     }
-
+    getWaitlistMgr() {
+        this.api_loading = true;
+        this.waitlist_manager = null;
+        this.provider_services.getWaitlistMgr()
+          .subscribe(
+            data => {
+              this.waitlist_manager = data;
+              this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+              if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
+                this.iftokn = true;
+              } else {
+                this.iftokn = false;
+              }
+              this.api_loading = false;
+            });
+      }
     getProviderLocations() {
         this.provider_services.getProviderLocations()
             .subscribe(data => {
@@ -439,6 +457,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                timeSlot: ['', Validators.compose([Validators.required])],
             });
             this.updateForm();
         } else {
@@ -450,6 +469,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
                 tokennum: [''],
+                timeSlot: ['', Validators.compose([Validators.required])]
             });
             this.provider_services.getQStartToken()
                 .subscribe(
@@ -484,6 +504,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             qendtime: edtime || null,
             qcapacity: this.queue_data.capacity || null,
             qserveonce: this.queue_data.parallelServing || null,
+            timeSlot: this.queue_data.timeInterval || 0
         });
         // this.amForm.get('qlocation').disable();
         this.selday_arr = [];
@@ -667,7 +688,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     'id': this.selected_locationId
                 },
                 'services': selser,
-                'tokenStarts': form_data.tokennum
+                'tokenStarts': form_data.tokennum,
+                'timeInterval': form_data.timeSlot
             };
             if (this.action === 'edit') {
                 this.editProviderQueue(post_data);
@@ -683,6 +705,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 (data) => {
                     this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_CREATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
+                    this.api_loading = false;
                     this.queue_id = data;
                     this.getQueueDetail();
                     this.action = 'view';
@@ -702,6 +725,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 () => {
                     this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_UPDATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
+                    this.api_loading = false;
                     this.getQueueDetail();
                     if (this.params.action === 'editFromList') {
                         this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
