@@ -899,4 +899,8 @@ export class ProviderServices {
     const url = 'provider/onlinePresence/' + status;
     return this.servicemeta.httpPut(url);
   }
+  changeApptStatus(status, queueId) {
+    const url = 'provider/waitlist/queues/appointment/' + status + '/' + queueId;
+    return this.servicemeta.httpPut(url);
+  }
 }

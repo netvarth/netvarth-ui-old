@@ -82,12 +82,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.id = this.qsetId;
         this.resetFields();
         this.actionparam = this.action;
-        this.getDepartments().then(() => {
-        });
-        this.getProviderQueues().then(() => {
-        });
-        this.getProviderServices().then(() => {
-        });
+        this.getDepartments();
+        this.getProviderQueues();
+        this.getProviderServices();
         setTimeout(() => {
             if (this.id) {
                 this.getDisplaydashboardbyId(this.id);

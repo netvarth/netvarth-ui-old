@@ -1270,7 +1270,9 @@ sup {
 .pad-rt-10 {
   padding-right: 10px !important;
 }
-
+.pad-rt-0 {
+  padding-right: 0px !important;
+}
 .pad-bt-10 {
   padding-bottom: 10px !important;
 }
@@ -5642,7 +5644,7 @@ li.separator.setsplit {
   height: 62px !important;
   min-height: 60px !important;
   width: 90px !important;
-  background: #f7f7f7 !important;
+  background: #f7f7f7;
 }
 
 .today .info-box-icon {
@@ -6862,16 +6864,16 @@ input.jdn_ip { width: 50px !important}
 }
 
 .display-layout .logo img {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
 }
 
 .display-layout .title {
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 .display-content .content-lst .form-group .tab-lst{
-  min-height: calc(100vh - 272px);
+  min-height: calc(100vh - 300px);
 }
 /* .display-content .content-lst .tab-lst thead,
 .display-content .content-lst .tab-lst th,
@@ -7006,19 +7008,28 @@ board-box {
   padding: 5px;
   text-align: center;
   font-weight: 600;
+  font-size: 1.3rem;
 }
 .branch-det {
   background: #a8d2ea;
   color: black;
   font-family: sans-serif !important;
+  height: 100px;
 }
 .branch-det .title {
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 2.2rem;
+  color: #006cab !important;
+  padding-top: 20px;
+}
+.branch-det img {
+  width: 100px;
+  height: 100px;
+  float: right;
 }
 .blinking{
   animation:blinkingText 1s infinite;
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 @keyframes blinkingText{
@@ -7067,6 +7078,45 @@ label.notifi-togl {
 .display-content thead th {
   background:#d0e0ea;
   border:1px solid #bad1de; 
+}
+.display-content .content-lst .tab-lst table td, .display-content .content-lst .tab-lst table th{
+  font-size: 1.2rem !important;
+}
+.label-bold {
+  color: #222223;
+  font-weight: 600;
+  font-size: .875rem;
+}
+.appt-wl-section .appt-wl-section-row {
+  min-height: 50px !important;
+}
+.appt-wl-section .app-info-box-icon {
+  min-width: 95px !important;
+  max-width: 100px !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  vertical-align: middle !important;
+}
+
+.appt-wl-section .dashboard-wait {
+  font-size: inherit !important;
+  margin-top: 0px !important;
+}
+.appt-wl-section .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary{
+  background: #29b6f6 !important;
+  color: #fff !important;
+}
+.appt-wl-section .app-info-box-icon.active {
+  cursor: pointer !important;
+}
+.roomname {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.room-style {
+  height: 150px;
+  line-height: 150px;
+  text-align: center;
 }
 .queue-waitingdiv {line-height:25px !important}
 .gallery-class{

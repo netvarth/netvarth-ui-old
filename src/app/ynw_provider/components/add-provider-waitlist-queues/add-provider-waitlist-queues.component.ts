@@ -78,6 +78,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   iftokn = false;
   queue_list: any = [];
   waitlist_manager;
+  timeSlotStatus = false;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -119,7 +120,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
-        timeSlot: ['', Validators.compose([Validators.required])]
+        appointment: [false],
+        timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
@@ -138,7 +140,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-        timeSlot: ['', Validators.compose([Validators.required])]
+        appointment: [false],
+        timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
@@ -192,11 +195,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
       qserveonce: this.data.queue.parallelServing || null,
+      appointment: (this.data.queue.appointment === 'Enable') ? true : false,
       timeSlot: this.data.queue.timeInterval || 0
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
-
+    this.timeSlotStatus = (this.data.queue.appointment === 'Enable') ? true : false;
     this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
@@ -328,7 +332,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_manager = data;
-          this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+          // this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
           if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {
@@ -558,6 +562,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         },
         'services': selser,
         'tokenStarts': form_data.tokennum,
+        'appointment': (form_data.appointment) ? 'Enable' : 'Disable',
         'timeInterval': form_data.timeSlot
       };
       if (this.data.type === 'edit') {
@@ -738,6 +743,15 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         this.SelServcall = false;
         break;
       }
+    }
+  }
+  changeTimeslotStatus(ev) {
+    if (ev.checked) {
+      this.timeSlotStatus = true;
+      this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+    } else {
+      this.timeSlotStatus = false;
+      this.amForm.get('timeSlot').setValue(0);
     }
   }
 }

@@ -142,7 +142,8 @@
                             (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked">
                             {{label.displayname}}
                         </mat-checkbox>
-                        <div class="form-group col-md-12 row otp_scr fieldval" *ngIf="showLabelEdit[i]">
+                        <div class="form-group col-md-12 row otp_scr fieldval"
+                            *ngIf="showLabelEdit[i] && label.name !== 'calling'">
                             <div class="col-md-4">
                                 <mat-form-field>
                                     <input matInput type="text" class="form-control" id="fieldName"

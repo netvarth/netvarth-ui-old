@@ -916,14 +916,21 @@ export class SharedFunctions {
     const slotList = [];
     slotList.push(startTime);
     const endDTime = this.getDateFromTimeString(endTime);
+    // tslint:disable-next-line:radix
+    const endDate = parseInt(moment(endDTime, ['DD']).format('DD').toString());
     let startingDTime = this.getDateFromTimeString(startTime);
     let exitLoop = false;
     while (!exitLoop) {
       const nextTime = moment(startingDTime).add(interval, 'm');
+      // tslint:disable-next-line:radix
+      const nextDate = parseInt(nextTime.format('DD'));
       const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
-      if (nextTimeDt.getTime() <= endDTime.getTime()) {
-        slotList.push(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
-
+      if (nextDate === endDate) {
+        if (nextTimeDt.getTime() <= endDTime.getTime()) {
+          slotList.push(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+        } else {
+          exitLoop = true;
+        }
       } else {
         exitLoop = true;
       }
