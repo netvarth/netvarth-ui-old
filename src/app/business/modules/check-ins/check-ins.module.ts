@@ -18,6 +18,8 @@ import { CustomerModule } from '../customer/customer.module';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProviderCheckinComponent } from './check-in/provider-checkin.component';
+import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
 @NgModule({
     imports: [
         CheckinsRoutingModule,
@@ -31,10 +33,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         InboxModule,
         CustomerModule,
         FormMessageDisplayModule,
+        CheckinAddMemberModule,
         NgbModule
     ],
     declarations: [
         CheckInsComponent,
+        ProviderCheckinComponent,
         AddProviderWaitlistCheckInProviderNoteComponent,
         ProviderWaitlistCheckInConsumerNoteComponent,
         AdjustQueueDelayComponent,

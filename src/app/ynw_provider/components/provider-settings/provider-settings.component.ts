@@ -103,6 +103,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   cust_domain_name = '';
   provider_domain_name = '';
   assistantCount;
+  onlinepresence_status: any;
+  onlinepresence_statusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -171,6 +173,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
     this.getCoupons();
     this.getitems();
     this.getPOSSettings();
+    this.getOnlinePresence();
     this.getDisplayboardCount();
     this.getBusinessConfiguration();
     // this.getStatusboardLicenseStatus();
@@ -199,6 +202,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
           this.futurewaitlist_statusstr = (this.futureDateWaitlist) ? 'On' : 'Off';
           this.filterbydepartment = data['filterByDept'];
         });
+  }
+  handle_jaldeeOnlinePresence(event) {
+    const is_check = (event.checked) ? 'Enable' : 'Disable';
+    this.provider_services.setOnlinePresence(is_check)
+      .subscribe(
+        () => {
+          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.getOnlinePresence();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.getOnlinePresence();
+        }
+      );
   }
   handle_waitliststatus(event) {
     const is_check = (event.checked) ? 'Enable' : 'Disable';
@@ -283,6 +300,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
     });
   }
+  getOnlinePresence() {
+    this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+      this.onlinepresence_status = data.onlinePresence;
+      this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
+    });
+  }
   handle_posStatus(event) {
     const value = (event.checked) ? true : false;
     const status = (value) ? 'enabled' : 'disabled';
@@ -354,13 +378,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         break;
       case 'discounts':
         if (this.nodiscountError) {
-          this.routerobj.navigate(['provider', 'settings', 'pos', 'discounts']);
+          this.routerobj.navigate(['provider', 'settings', 'pos', 'discount']);
         } else {
           this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
         }
         break;
       case 'coupons':
-        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupons']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'coupon']);
         break;
       case 'nonworking':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'holidays']);

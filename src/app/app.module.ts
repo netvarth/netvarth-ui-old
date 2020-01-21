@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -64,6 +64,7 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
+import { CheckInService } from './business/modules/check-ins/check-in/check-in.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -151,6 +152,8 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
     FormMessageDisplayService,
     SearchDetailServices,
     ProviderDetailService,
+    CheckInService,
+    Title,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },

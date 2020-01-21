@@ -3,11 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Subscription, Observable } from 'rxjs';
+import { SharedServices } from '../../../shared/services/shared-services';
+import { projectConstants } from '../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-displayboard-content',
     templateUrl: './displayboard-content.component.html'
 })
+
 export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     layout_id;
     boardLayouts = [
@@ -20,6 +23,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     boardCols: any;
     selectedDisplayboards: any = {};
     boardHeight;
+    fullHeight;
     bname;
     blogo;
     metricElement;
@@ -32,22 +36,44 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     accountType;
     MainBname;
     locId;
+    provider_id;
+    businessJson: any = [];
+    type;
+    refreshTime = projectConstants.INBOX_REFRESH_TIME;
+    cronHandle1: Subscription;
+    index;
+    bProfiles: any = [];
+    inputStatusboards: any = [];
+    tabid: any = {};
+    manageTabCalled = false;
+    s3Url;
+    showIndex = 0;
+    api_loading = true;
+    roomName = '';
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
+        private shared_services: SharedServices,
         private shared_functions: SharedFunctions) {
         this.onResize();
         this.activated_route.params.subscribe(
             qparams => {
                 this.layout_id = qparams.id;
             });
+        this.activated_route.queryParams.subscribe(
+            queryparams => {
+                this.type = queryparams.type;
+            });
     }
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
         const screenHeight = window.innerHeight;
-        let hgt_reduced = 150;
+        let hgt_reduced = 200;
+        let fullhgt_reduced = 134;
         if (this.accountType === 'BRANCH_SP') {
-            hgt_reduced = 270;
+            hgt_reduced = 320;
+            fullhgt_reduced = 294;
         }
+        this.fullHeight = screenHeight - fullhgt_reduced;
         if (this.boardRows > 1) {
             this.boardHeight = (screenHeight - hgt_reduced) / 2;
         } else {
@@ -58,24 +84,233 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         if (this.cronHandle) {
             this.cronHandle.unsubscribe();
         }
+        if (this.cronHandle1) {
+            this.cronHandle1.unsubscribe();
+        }
     }
     ngOnInit() {
-        this.getBusinessProfile();
-        this.getBusinessdetFromLocalstorage();
-        this.getStatusboard();
-        this.cronHandle = Observable.interval(30000).subscribe(() => {
-            this.getStatusboard();
-        });
+        this.gets3curl();
+        const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
+        if (MainBdetails) {
+            this.MainBname = MainBdetails.bn || '';
+            this.MainBlogo = MainBdetails.logo || '';
+        }
+        if (this.type) {
+            this.provider_services.getDisplayboardContainer(this.layout_id).subscribe(
+                (container: any) => {
+                    this.inputStatusboards = container.sbContainer;
+                    this.setTabIds().then(
+                        (tabInfo: any) => {
+                            this.api_loading = false;
+                            this.accountType = 'BRANCH_SP';
+                            this.shared_functions.setitemOnSessionStorage('tabSession', tabInfo);
+                            this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                            this.cronHandle = Observable.interval(container.interval * 1000).subscribe(() => {
+                                if (this.showIndex === (this.inputStatusboards.length - 1)) {
+                                    this.showIndex = 0;
+                                } else {
+                                    ++this.showIndex;
+                                }
+                                this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                            });
+                        }
+                    );
+                });
+        } else {
+            this.cronHandle = Observable.interval(20000).subscribe(() => {
+                this.getSingleStatusboard();
+            });
+        }
     }
-
-    getStatusboard() {
-        const loc_details = this.shared_functions.getitemFromGroupStorage('loc_id');
-        this.locId = loc_details.id;
+    getSingleStatusboard() {
+        this.provider_services.getBussinessProfile().subscribe(
+            (bProfile: any) => {
+                this.provider_services.getProviderLogo().subscribe(
+                    data => {
+                        const blogo = data;
+                        let logo = '';
+                        if (blogo[0]) {
+                            logo = blogo[0].url;
+                        } else {
+                            logo = '';
+                        }
+                        let subsectorname = '';
+                        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+                        this.accountType = user.accountType;
+                        if (bProfile && bProfile.subDomainVirtualFields) {
+                            if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
+                                // calling function which saves the business related details to show in the header
+                                subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
+                                // calling function which saves the business related details to show in the header
+                            }
+                            const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
+                            this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(
+                                (data1: any) => {
+                                    this.subDomVirtualFields = data1;
+                                    for (let i = 0; i < this.subDomVirtualFields.length; i++) {
+                                        if (this.subDomVirtualFields[i].baseField === 'qualification') {
+                                            const eduName = this.subDomVirtualFields[i]['name'];
+                                            this.qualification = virtualfields[eduName];
+                                        }
+                                    }
+                                });
+                        }
+                        this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
+                            || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
+                        this.getBusinessdetFromLocalstorage();
+                        // this.gets3curl();
+                        let UTCstring = null;
+                        UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+                        this.shared_services.getbusinessprofiledetails_json(bProfile.uniqueId, this.s3Url, 'businessProfile', UTCstring)
+                            .subscribe((businessJson: any) => {
+                                this.businessJson = businessJson;
+                                this.api_loading = false;
+                            });
+                    });
+            });
         if (this.layout_id) {
             let layoutData;
             this.provider_services.getDisplayboard(this.layout_id).subscribe(
                 layoutInfo => {
                     layoutData = layoutInfo;
+                    this.roomName = layoutData['serviceRoom'];
+                    const layoutPosition = layoutData.layout.split('_');
+                    this.boardRows = layoutPosition[0];
+                    this.onResize();
+                    this.boardCols = layoutPosition[1];
+                    layoutData.metric.forEach(element => {
+                        this.metricElement = element;
+                        this.selectedDisplayboards[element.position] = {};
+                        this.setDisplayboards(this.metricElement);
+                    });
+                });
+        }
+    }
+    gets3curl() {
+        this.shared_functions.getS3Url('provider')
+            .then(
+                res => {
+                    this.s3Url = res;
+                }
+            );
+    }
+    getbusinessprofiledetails_json(url, section, modDateReq: boolean) {
+        let UTCstring = null;
+        if (modDateReq) {
+            UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+        }
+        this.shared_services.getbusinessprofiledetails_json(this.provider_id, url, section, UTCstring)
+            .subscribe(res => {
+                this.businessJson = res;
+            });
+    }
+
+    setTabId(accountId) {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.provider_services.manageProvider(accountId).subscribe(
+                (data: any) => {
+                    const dispcont = {};
+                    _this.tabid[accountId] = data.tabId;
+                    _this.shared_functions.setitemOnSessionStorage('accountid', accountId);
+                    _this.shared_functions.setitemOnSessionStorage('tabId', data.tabId);
+                    data['accountType'] = 'BRANCH_SP';
+                    _this.shared_functions.setitemToGroupStorage('ynw-user', data);
+                    _this.shared_functions.setitemonLocalStorage('tabIds', _this.tabid);
+                    _this.provider_services.getBussinessProfile().subscribe(
+                        (bProfile: any) => {
+                            _this.provider_services.getProviderLogo().subscribe(
+                                (logoinfo: any) => {
+                                    const blogo = logoinfo;
+                                    let logo = '';
+                                    if (blogo[0]) { logo = blogo[0].url; } else { logo = ''; }
+                                    dispcont['logo'] = logo;
+                                    dispcont['businessName'] = bProfile['businessName'];
+                                });
+                            let UTCstring = null;
+                            UTCstring = _this.shared_functions.getCurrentUTCdatetimestring();
+                            _this.shared_services.getbusinessprofiledetails_json(bProfile.uniqueId, _this.s3Url, 'businessProfile', UTCstring)
+                                .subscribe((businessJson: any) => {
+                                    dispcont['businessJson'] = businessJson;
+                                    if (bProfile && bProfile.subDomainVirtualFields) {
+                                        const user = _this.shared_functions.getitemFromGroupStorage('ynw-user');
+                                        const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
+                                        _this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
+                                            _this.subDomVirtualFields = data;
+                                            for (let i = 0; i < _this.subDomVirtualFields.length; i++) {
+                                                if (_this.subDomVirtualFields[i].baseField === 'qualification') {
+                                                    const eduName = _this.subDomVirtualFields[i]['name'];
+                                                    dispcont['qualification'] = virtualfields[eduName];
+                                                }
+                                            }
+                                            resolve(dispcont);
+                                        });
+                                    } else {
+                                        resolve(dispcont);
+                                    }
+                                });
+                        });
+                });
+        });
+    }
+    setTabIds() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            const tabInfo = {};
+            let count = 0;
+            // countOfProviders
+            const processList = [];
+            const intervalCall = setInterval(() => {
+                const accountId = _this.inputStatusboards[count].providerId;
+                if (processList.indexOf(accountId) === -1) {
+                    processList.push(accountId);
+                    _this.setTabId(accountId).then(
+                        (data: any) => {
+                            tabInfo[accountId] = data;
+                            if (count === (_this.inputStatusboards.length - 1)) {
+                                clearInterval(intervalCall);
+                                resolve(tabInfo);
+                            } else {
+                                ++count;
+                            }
+                        });
+                } else if (tabInfo[accountId]) {
+                    if (count === (_this.inputStatusboards.length - 1)) {
+                        clearInterval(intervalCall);
+                        resolve(tabInfo);
+                    }
+                    ++count;
+                }
+            }, (1000));
+        });
+    }
+    getStatusboard(boardObj) {
+        const tabIds = this.shared_functions.getitemfromLocalStorage('tabIds');
+        if (tabIds[boardObj['providerId']]) {
+            this.shared_functions.setitemOnSessionStorage('tabId', tabIds[boardObj['providerId']]);
+            this.shared_functions.setitemOnSessionStorage('accountid', boardObj['providerId']);
+        }
+        if (boardObj.sbId) {
+            let layoutData;
+            this.roomName = '';
+            this.blogo = '';
+            this.qualification = '';
+            this.bname = '';
+            const accountId = this.shared_functions.getitemfromSessionStorage('accountid');
+            const tabSession = this.shared_functions.getitemfromSessionStorage('tabSession');
+            const accountInfo = tabSession[accountId];
+            this.businessJson = accountInfo.businessJson;
+            if (accountInfo.qualification) {
+                this.qualification = accountInfo.qualification;
+            }
+            if (accountInfo.logo) {
+                this.blogo = accountInfo.logo;
+            }
+            this.bname = accountInfo.businessName;
+            this.provider_services.getDisplayboard(boardObj.sbId).subscribe(
+                layoutInfo => {
+                    layoutData = layoutInfo;
+                    this.roomName = layoutData['serviceRoom'];
                     const layoutPosition = layoutData.layout.split('_');
                     this.boardRows = layoutPosition[0];
                     this.onResize();
@@ -100,7 +335,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             this.MainBlogo = MainBdetails.logo || '';
         }
     }
-
     getFieldValue(field, checkin) {
         let fieldValue = '';
         if (field.name === 'waitlistingFor') {
@@ -148,15 +382,21 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         return fieldValue;
     }
     setDisplayboards(element) {
-        this.provider_services.getDisplayboardQSetbyId(element.sbId).subscribe(
-            (displayboard) => {
-                this.selectedDisplayboards[element.position]['board'] = displayboard;
-                const Mfilter = this.setFilterForApi(displayboard);
-                this.provider_services.getTodayWaitlist(Mfilter).subscribe(
-                    (waitlist) => {
-                        this.selectedDisplayboards[element.position]['checkins'] = waitlist;
-                    });
+        const displayboard = element.queueSet;
+        // this.provider_services.getDisplayboardQSetbyId(element.sbId).subscribe(
+        //     (displayboard) => {
+        const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
+        displayboard.fieldList = fieldlistasc;
+        this.selectedDisplayboards[element.position]['board'] = displayboard;
+        const Mfilter = this.setFilterForApi(displayboard);
+        Object.keys(displayboard['sortBy']).forEach(key => {
+            Mfilter[key] = displayboard['sortBy'][key];
+        });
+        this.provider_services.getTodayWaitlist(Mfilter).subscribe(
+            (waitlist) => {
+                this.selectedDisplayboards[element.position]['checkins'] = waitlist;
             });
+        // });
     }
     createRange(number) {
         const items = [];
@@ -167,7 +407,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     }
     setFilterForApi(layout) {
         const api_filter = {};
-        api_filter['location-eq'] = this.locId;
+        //    api_filter['location-eq'] = this.locId;
         layout.queueSetFor.forEach(element => {
             if (element.type === 'SERVICE') {
                 api_filter['service-eq'] = element.id[0];
@@ -176,32 +416,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             } else {
                 api_filter['department-eq'] = element.id[0];
             }
-            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn,started';
+            api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
         });
         return api_filter;
-    }
-    getBusinessProfile() {
-        this.provider_services.getBussinessProfile()
-            .subscribe(
-                data => {
-                    this.bProfile = data;
-                    if (this.bProfile && this.bProfile.subDomainVirtualFields) {
-                        this.getQualification(this.bProfile.subDomainVirtualFields[0]);
-                    }
-                });
-    }
-    getQualification(list) {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.accountType = user.accountType;
-        const virtualfields = list[user.subSector];
-        this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
-            this.subDomVirtualFields = data;
-            for (let i = 0; i < this.subDomVirtualFields.length; i++) {
-                if (this.subDomVirtualFields[i].baseField === 'qualification') {
-                    const eduName = this.subDomVirtualFields[i]['name'];
-                    this.qualification = virtualfields[eduName];
-                }
-            }
-        });
     }
 }

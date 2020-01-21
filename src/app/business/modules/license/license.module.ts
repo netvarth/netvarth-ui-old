@@ -16,7 +16,11 @@ import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrad
 import { ProviderLicenseUsageComponent } from '../../../ynw_provider/components/provider-license-usage/provider-license-usage.component';
 import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
 import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
+
+import { statementcomponent } from './Statements/Statements.component';
+import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+
 @NgModule({
     imports: [
         SharedModule,
@@ -25,7 +29,9 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         BreadCrumbModule,
         LicenseRoutingModule,
         PagerModule,
-        CapitalizeFirstPipeModule
+        // CapitalizeFirstPipeMAodule,
+        CapitalizeFirstPipeModule 
+
     ],
     declarations: [
         ProviderBprofileSearchAdwordsComponent,
@@ -35,10 +41,12 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         AddproviderAddonComponent,
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
+        invoicestatuscomponent,
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
         ProviderLicenceInvoiceDetailComponent,
+        statementcomponent,
     ],
     entryComponents: [
         AddproviderAddonComponent,
@@ -47,6 +55,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,
         ProviderLicenceInvoiceDetailComponent,
+        statementcomponent,
     ],
     exports: [LicenseComponent]
 })

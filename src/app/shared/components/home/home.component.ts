@@ -7,10 +7,7 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../constants/project-constants';
-import { NgxCarousel } from 'ngx-carousel';
-import { rootRenderNodes } from '@angular/core/src/view';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
-// import { } from '@types/googlemaps';
 
 @Component({
   selector: 'app-home',
@@ -58,7 +55,6 @@ export class HomeComponent implements OnInit {
     this.setSystemDate();
     // calling the method to get the list of domains
     this.getDomainList();
-
     // callling method to set the captions for sectors / subdomains or specializations in the home page
     this.setRequiredCaptions();
     this.carouselPackages = {
@@ -180,7 +176,7 @@ export class HomeComponent implements OnInit {
   getDomainList() {
     const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
-    if (bconfig) { // case if data is there in local storage
+    if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
       const bdate = bconfig.cdate;
       const bdata = bconfig.bdata;
       const saveddate = new Date(bdate);

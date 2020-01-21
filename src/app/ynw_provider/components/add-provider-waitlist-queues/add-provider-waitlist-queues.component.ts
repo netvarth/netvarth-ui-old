@@ -78,6 +78,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   iftokn = false;
   queue_list: any = [];
   waitlist_manager;
+  timeSlotStatus = false;
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistQueuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -93,7 +94,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
 
   ngOnInit() {
     this.activeSchedules = this.data.schedules;
-    // this.activeSchedules = this.data.queue.displayschedule;
     this.api_loading = false;
     this.bProfile = this.provider_datastorageobj.get('bProfile');
     this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
@@ -101,12 +101,10 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
     // moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH:mm');
     // this.dend_time =  moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH:mm');
     // Get the provider locations
-    this.getWaitlistMgr();
     this.createForm();
+    this.getWaitlistMgr();
     this.getProviderServices();
     this.getProviderQueues();
-    // this.getDepartments();
-    // this.getProviderLocations();
     this.getBusinessConfiguration();
     // Get the provider services
     // this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
@@ -122,6 +120,8 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
+        appointment: [false],
+        timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
@@ -140,18 +140,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+        appointment: [false],
+        timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
       });
     }
-    // if (this.data.type === 'edit') {
-    //     this.updateForm();
-    // }
-    // if (this.data.source === 'location_detail' &&
-    //   this.data.type === 'add' &&
-    //   this.data.queue.location.id) {
-    //   this.amForm.get('qlocation').setValue(this.data.queue.location.id);
-    // }
   }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
@@ -165,11 +159,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   existingScheduletoggle() {
     this.show_dialog = !this.show_dialog;
     this.activeQueues = [];
-    //  let queue_list: any = [];
     if (this.show_dialog) {
-      //  this.provider_services.getProviderQueues()
-      //   .subscribe(data => {
-      //     queue_list = data;
       for (let ii = 0; ii < this.queue_list.length; ii++) {
         let schedule_arr = [];
         // extracting the schedule intervals
@@ -182,7 +172,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           this.activeQueues.push(display_schedule[0]);
         }
       }
-      //   });
     }
   }
   // sets up the form with the values filled in
@@ -206,9 +195,12 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
       qserveonce: this.data.queue.parallelServing || null,
+      appointment: (this.data.queue.appointment === 'Enable') ? true : false,
+      timeSlot: this.data.queue.timeInterval || 0
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
+    this.timeSlotStatus = (this.data.queue.appointment === 'Enable') ? true : false;
     this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
@@ -323,9 +315,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       .subscribe(data => {
         this.services_list = data;
         this.getDepartments();
-        // if (this.data.type === 'edit') {
-        //   this.updateForm();
-        // }
       });
     this.api_loading1 = false;
   }
@@ -337,16 +326,19 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
   }
 
   getWaitlistMgr() {
+    this.api_loading1 = true;
     this.waitlist_manager = null;
     this.provider_services.getWaitlistMgr()
       .subscribe(
         data => {
           this.waitlist_manager = data;
+          // this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
           if (this.waitlist_manager.calculationMode === 'NoCalc' && this.waitlist_manager.showTokenId) {
             this.iftokn = true;
           } else {
             this.iftokn = false;
           }
+          this.api_loading1 = false;
         });
   }
 
@@ -365,6 +357,14 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
                 if (this.departments[j].serviceIds[k] === this.services_list[i].id) {
                   this.departments[j].serviceIds[k] = this.services_list[i].name;
                 }
+              }
+            }
+          }
+          for (let j = 0; j < this.departments.length; j++) {
+            for (let k = 0; k < this.departments[j].serviceIds.length; k++) {
+              // tslint:disable-next-line: radix
+              if (parseInt(this.departments[j].serviceIds[k])) {
+                delete this.departments[j].serviceIds[k];
               }
             }
           }
@@ -561,7 +561,9 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
           'id': form_data.qlocation
         },
         'services': selser,
-        'tokenStarts': form_data.tokennum
+        'tokenStarts': form_data.tokennum,
+        'appointment': (form_data.appointment) ? 'Enable' : 'Disable',
+        'timeInterval': form_data.timeSlot
       };
       if (this.data.type === 'edit') {
         this.ifedit = true;
@@ -741,6 +743,15 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         this.SelServcall = false;
         break;
       }
+    }
+  }
+  changeTimeslotStatus(ev) {
+    if (ev.checked) {
+      this.timeSlotStatus = true;
+      this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+    } else {
+      this.timeSlotStatus = false;
+      this.amForm.get('timeSlot').setValue(0);
     }
   }
 }

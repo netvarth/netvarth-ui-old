@@ -20,8 +20,8 @@
                                     <div style="margin-bottom: 20px">
                                         <div style="display:flex; margin-bottom: 10px; margin-top: 5px">
                                             <b *ngIf="showServc"> Services Under Department</b>
-                                            <span *ngIf="!showAllServices && dept_services && dept_services.length > 0"
-                                                style="color: #00aef2; background: white; padding-left:10px;float:right; margin-top:-3px; font-size:1.25rem"
+                                            <span *ngIf="!showAllServices && dept_services && dept_services.length > 0 && srvcArry.length != 0 && !dept_default"
+                                                style="color: #00aef2; background:#fafafa; padding-left:10px;float:right; margin-top:-3px; font-size:1.25rem"
                                                 (click)="addnewClick()"><i
                                                     *ngIf="srvcArry.length!=0 && !dept_data.isDefault"
                                                     class="fa fa-plus-circle"></i></span>

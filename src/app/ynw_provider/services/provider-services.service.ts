@@ -490,6 +490,11 @@ export class ProviderServices {
     const url = 'provider/license/invoices/' + status + '/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getInvoiceStatus(filter){
+     
+    const url='provider/license/invoice';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
   getLicenseSubscription() {
     // const url = 'provider/license/getSubscription';
     const url = 'provider/license/billing';
@@ -762,6 +767,22 @@ export class ProviderServices {
     const url = 'provider/statusBoard/dimension/' + id;
     return this.servicemeta.httpDelete(url);
   }
+  createDisplayboardContainer(input) {
+    const url = 'provider/statusBoard/container';
+    return this.servicemeta.httpPost(url, input);
+  }
+  getDisplayboardContainers() {
+    const url = 'provider/statusBoard/container';
+    return this.servicemeta.httpGet(url);
+  }
+  updateDisplayboardContainer(id, data) {
+    const url = 'provider/statusBoard/container/' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
+  getDisplayboardContainer(id) {
+    const url = 'provider/statusBoard/container/' + id;
+    return this.servicemeta.httpGet(url);
+  }
   addLabeltoCheckin(uuid, data) {
     const url = 'provider/waitlist/label/' + uuid;
     return this.servicemeta.httpPost(url, data);
@@ -842,6 +863,10 @@ export class ProviderServices {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
   }
+  getGlobalSettings() {
+    const url = 'provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
   setSMSglobalSettings(state) {
     const url = 'provider/account/settings/sms/' + state;
     return this.servicemeta.httpPut(url);
@@ -869,6 +894,26 @@ export class ProviderServices {
   getLicenseAddonmetaData() {
     const url = 'provider/license/addonmetadata';
     return this.servicemeta.httpGet(url);
+  }
+  updateApptTime(uuid, time) {
+    const url = 'provider/waitlist/' + uuid + '/' + time + '/appointmentTime';
+    return this.servicemeta.httpPut(url);
+  }
+  setCallStatus(uuid, status) {
+    const url = 'provider/waitlist/callingStatus/' + uuid + '/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  getProviderOnlinePresence() {
+    const url = 'provider/onlinePresence';
+    return this.servicemeta.httpGet(url);
+  }
+  setOnlinePresence(status) {
+    const url = 'provider/onlinePresence/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+  changeApptStatus(status, queueId) {
+    const url = 'provider/waitlist/queues/appointment/' + status + '/' + queueId;
+    return this.servicemeta.httpPut(url);
   }
   deleteUser(id) {
     const url = 'provider/assistant/' + id;

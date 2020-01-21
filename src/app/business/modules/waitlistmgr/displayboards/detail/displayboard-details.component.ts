@@ -13,6 +13,8 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 export class DisplayboardDetailComponent implements OnInit {
     amForm: FormGroup;
     char_count = 0;
+    accountType;
+    frm_lvl_msg = false;
     max_char_count = 250;
     isfocused = false;
     layout_id;
@@ -40,6 +42,7 @@ export class DisplayboardDetailComponent implements OnInit {
     name;
     layout = this.boardLayouts[0];
     displayName;
+    serviceRoom;
     metric: any = [];
     metricSelected = {};
     id;
@@ -58,7 +61,7 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Statusboard',
+            title: 'Queue Status board',
             url: '/provider/settings/q-manager/displayboards'
         }
     ];
@@ -96,6 +99,11 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
+            const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+            this.accountType = cuser.accountType;
+            if (this.accountType === 'BRANCH' || this.accountType === 'BRANCH_SP') {
+               this.frm_lvl_msg = true;
+            }
     }
     addQSet() {
         this.qsetAction = 'add';
@@ -163,6 +171,7 @@ export class DisplayboardDetailComponent implements OnInit {
             this.breadcrumbs = breadcrumbs;
             this.name = this.layoutData.name;
             this.displayName = this.layoutData.displayName;
+            this.serviceRoom = this.layoutData.serviceRoom;
             // this.layout = this.layoutData.layout;
             this.id = this.layoutData.id;
             const layoutPosition = this.layoutData.layout.split('_');
@@ -178,6 +187,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
+        this.metric = [];
         let name = '';
         if (this.displayName) {
             name = this.displayName.trim().replace(/ /g, '_');
@@ -192,6 +202,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
+                'serviceRoom': this.serviceRoom,
                 'metric': this.metric,
             };
             this.provider_services.createDisplayboard(post_data).subscribe(data => {
@@ -213,6 +224,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 'name': name,
                 'layout': this.layout.value,
                 'displayName': this.displayName,
+                'serviceRoom': this.serviceRoom,
                 'metric': this.metric
             };
             this.provider_services.updateDisplayboard(post_data).subscribe(data => {

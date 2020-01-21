@@ -59,7 +59,7 @@ export class ProviderbWizardComponent implements OnInit {
   google_map_url_cap = Messages.WIZ_GOOGLE_MAP_URL_CAP;
   used_find_exact_loc = Messages.WIZ_USED_FIND_EXACT_LOC_CAP;
   back_cap = Messages.WIZ_BACK_CAP;
-  working_hr_cap = Messages.WIZ_WORKING_HOUR_CAP;
+  working_hr_cap = Messages.LOCATION_HOURS_CAP;
   shows_b_hrs_cap = Messages.WIZ_SHOWS_B_HOURS_CAP;
   public_search_cap = Messages.WIZ_PUBLIC_SEARCH_CAP;
   turn_on_off_cap = Messages.WIZ_TURN_ON_OFF_CAP;

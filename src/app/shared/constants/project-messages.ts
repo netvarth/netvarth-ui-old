@@ -32,6 +32,8 @@ export const Messages = {
   'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
   'DISCOUNT_DELETED': 'Discount deleted successfully',
   'DISCOUNT_LISTEMPTY': 'No Discounts exist',
+  //Bill/Discountdetails
+  'DISCOUNT_NAME_MAND_CAP':'Enter the name of discount *',
 
   // Bill Coupons
   'COUPON_CREATED': 'Coupon created successfully',
@@ -51,7 +53,7 @@ export const Messages = {
 
   // notifications
   'GENRL_NOTIFICATION_MSG': 'Inorder to send and receive notifications, the [provider] has to purchase atleast one of the Jaldee Messaging ADD-ON.',
-  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Sent notifications to your [customer]s!',
+  'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Send notifications to your [customer]s!',
   'FRM_LEVEL_PROVIDER_NOTIFICATION_MSG': 'Get notifications from [customer]!',
   'CUSTOMER_NAME': '[customer]',
   'PROVIDER_NAME': '[provider]',
@@ -669,6 +671,7 @@ export const Messages = {
   'FIXED_CAP': 'Fixed',
   'PERCENTAGE_CAP': 'Percentage',
   'DESCRIPTION_MAND_CAP': 'Description *',
+  'DISCOUNT_NAME_CAP': 'Enter the name of discount',
 
   // App-ynw_provider-components-add-provider-customers
   'CREATE_CAP': 'Create',
@@ -939,8 +942,18 @@ export const Messages = {
   'PAY_BUTTON': 'Statement to Pay',
   'DUE_DATE_CAP': 'Due Date',
   'SUBSC_PACKAGE': 'Subscription/Package',
+   
+  // App-ynw_provider-component-provider-license-invoicestatus
+  'INVOICE_STATUS_CAP':'Invoice Status',
+  'PAID':'Paid', 
+  'UNPAID':'Notpaid',
+  'CANCEL':'Cancel',
+  'WAIVED':'Waived',
+  'OBSOLETE':'Obsolete',
 
-  // App-ynw_provider-components-provider-license-usage
+ 
+
+   // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
   'USED_CAP': 'Used',
   'COMPLIANCE_CAP': 'Compliance Info',
@@ -1130,6 +1143,7 @@ export const Messages = {
   'WIZ_USED_FIND_EXACT_LOC_CAP': 'This can be used to find the exact location',
   'WIZ_BACK_CAP': 'Back',
   'WIZ_WORKING_HOUR_CAP': 'General location hours',
+  'LOCATION_HOURS_CAP': 'General location hours',
   'WIZ_WORKING_HOURS_CAP': 'Queues',
   'WIZ_SHOWS_B_HOURS_CAP': 'This shows your office/business hours',
   'WIZ_PUBLIC_SEARCH_CAP': 'Public Search',
@@ -1343,7 +1357,7 @@ export const Messages = {
   'FRM_LEVEL_DISCOUNTS_MSG': 'Create your discounts here.',
 
   // form-level-provider-items
-  'FRM_LEVEL_ITEMS_MSG': 'Create new items and related information here.',
+  'FRM_LEVEL_ITEMS_MSG': 'Create new products/items and related information here.',
 
   // form-level-provider-miscellaneous
   'FRM_LEVEL_NON_WORKING_MSG': 'Unavailability of your services on particular days (holidays), mention here.',
@@ -1391,7 +1405,7 @@ export const Messages = {
   'NO_RESULT_FOUND': 'No results found',
   'TOKEN': 'Token',
   'COUPON_UPGRADE_LICENSE': 'You are not allowed to do this operation. Please upgrade license package',
-  'WAITLIST_CAP': 'You can create multiple working hours here.',
+  'WAITLIST_CAP': 'You can create multiple queues here.',
   'WORK_ON_CAP': 'Enabled',
   'WORK_OFF_CAP': 'Disabled',
   'ENABLE_MSG_CAP': 'If the status is disabled, online check ins cannot be done for this schedule.',
@@ -1407,12 +1421,12 @@ export const Messages = {
   'HOME_SERVICE_HEADING': 'Home Service',
   'JDN_FUL_CAP': 'Jaldee Discount Network',
   'JDN_CAP': 'JDN',
-  'DISPLAYBOARD_HEADING': 'Queue Statusboard',
+  'DISPLAYBOARD_HEADING': 'Queue Status board',
   'DISPLAYBOARD__INHELP': 'display help',
-  'QSET_ADD': 'Statusboard criteria added successfully',
-  'QSET_UPDATE': 'Statusboard criteria updated successfully',
-  'DISPLAYBOARD_ADD': 'Queue Statusboard added successfully',
-  'DISPLAYBOARD_UPDATE': 'Queue Statusboard updated successfully',
+  'QSET_ADD': 'Status board criteria added successfully',
+  'QSET_UPDATE': 'Status board criteria updated successfully',
+  'DISPLAYBOARD_ADD': 'Queue Status board added successfully',
+  'DISPLAYBOARD_UPDATE': 'Queue Status board updated successfully',
   'CUSTOMFIELDS_CAPTION': 'Custom fields / Labels',
   'DISPLAYBOARDLAYOUT_CAP': 'Layout',
   'MANAGE_LABELS': 'Manage Labels',
@@ -1432,9 +1446,10 @@ export const Messages = {
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
-  'TRACKINGCANCELENABLED': ' able to track your ETA',
-  'TRACKINGCANCELDISABLED': ' disable to track your ETA',
+   'TRACKINGCANCELENABLED': 'You have allowed [provider_name] to track your ETA',
+  'TRACKINGCANCELDISABLED': 'You have not allowed [provider_name] to track your ETA',
   'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations',
+  'DISPLAYBOARD_OPTIONAL_FIELDS': 'Queue Status board optional field',
   //Doctor
   'BRANCHDOCTOR_ADDED': 'Doctor created successfully',
   'BRANCHDOCTOR_UPDATED': 'Doctor updated successfully',

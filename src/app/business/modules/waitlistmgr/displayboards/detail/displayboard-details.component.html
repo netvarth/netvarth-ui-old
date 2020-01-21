@@ -17,15 +17,17 @@
                                     </mat-panel-description>
                                 </li> -->
                                 <li class="dropdown notifications-menu pull-right">
-                                    <a class="title link" (click)="qSetListClicked()">Queue Selection Criterias</a>
+                                    <a class="title link" (click)="qSetListClicked()">Status board Criterias</a>
                                 </li>
                             </ul>
                             <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="showMode == 'DBOARD'">
                                 <div *ngIf="actionparam === 'add'" class="create-dept">
                                     <ul class="info-lst serviceadd-info">
-                                        <li>To create a Queue Statusboard, You need to purchase a 'Queue Statusboard'
+                                        <li *ngIf="!frm_lvl_msg">To create a Queue Status board, You need to purchase a 'Queue Status board'
                                             add-on from the License section. <a class="pointlist"
                                                 (click)="gotoLicense()">Go to addons</a>
+                                        </li>
+                                        <li *ngIf="frm_lvl_msg">To create a Queue Statusboard,contact administrator
                                         </li>
                                     </ul>
                                 </div>
@@ -59,7 +61,23 @@
                                         </div> -->
                                             <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                 <mat-form-field>
-                                                    <mat-select placeholder="Choose the statusboard layout" id="layout"
+                                                    <input matInput type="text" class="form-control" id="displayName"
+                                                        placeholder="Enter the name for the Status board *"
+                                                        [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}"
+                                                        autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                                <mat-form-field>
+                                                    <input matInput type="text" class="form-control" id="serviceRoom"
+                                                        placeholder="Enter the service room" [(ngModel)]="serviceRoom"
+                                                        [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                                <mat-form-field>
+                                                    <mat-select placeholder="Choose the Status board layout" id="layout"
                                                         (selectionChange)="handleLayout(layout)" [(ngModel)]="layout"
                                                         [ngModelOptions]="{standalone: true}">
                                                         <mat-option *ngFor="let layout of boardLayouts"
@@ -69,14 +87,14 @@
                                                     </mat-select>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                            <!-- <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                 <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="displayName"
-                                                        placeholder="Enter the name for the statusboard *"
-                                                        [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}"
+                                                    <input matInput type="text" class="form-control" id="serviceRoom"
+                                                        placeholder="Enter the service room"
+                                                        [(ngModel)]="serviceRoom" [ngModelOptions]="{standalone: true}"
                                                         autocomplete="off">
                                                 </mat-form-field>
-                                            </div>
+                                            </div> -->
                                             <div class="clearfix"></div>
                                             <div class="card no-padding mgn-up-20" *ngIf="qset_list.length>0">
                                                 <div class="form-group">
@@ -87,7 +105,7 @@
                                                                     class="col-md-{{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}">
                                                                     <mat-form-field>
                                                                         <mat-select
-                                                                            placeholder="Choose Statusboard Criteria"
+                                                                            placeholder="Choose Status board Criteria"
                                                                             [(ngModel)]="boardSelectedItems[row + '_' + col]"
                                                                             [ngModelOptions]="{standalone: true}"
                                                                             (selectionChange)="handleLayoutMetric(boardSelectedItems[row + '_' + col], row + '_' + col)">
@@ -111,7 +129,7 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-md-12 card qset_add"> To create a queue
-                                                            statusboard, set the statusboard criteria <span
+                                                            Status board, set the Status board criteria <span
                                                                 class="cs-btn bt3" (click)="addQSet()">Set Now </span>
                                                             <div class="clearfix"></div>
                                                         </div>

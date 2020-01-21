@@ -1,26 +1,18 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
-<!-- <section>
-    <div class="content loc-list qset-detail">
-        <div class="row col-md-12 no-padding-small">
-            <div class="card">
-                <div class="copy"> -->
 <div class="lbl qset-detail">
     <div class="col-md-12 no-padding">
         <ul class="nav jd-custom-nav stat-brd-qset">
             <li class="dropdown notifications-menu pull-left">
-                <div class="title">Statusboard Criteria</div>
+                <div class="title">Status board Criteria</div>
             </li>
             <li class="dropdown notifications-menu pull-right">
                 <a class="bk-ctrl link">
                     <span class="bold pointer-cursor" (click)="goBack()"><i class="bold fa fa-angle-left"></i><span
-                            class="backicon">Statusboard</span></span>
+                            class="backicon">Status board</span></span>
                 </a>
             </li>
         </ul>
     </div>
-    <div class="cli col-md-12 col-xs-12 col-sm-12" *ngIf="actionparam === 'view' && displayBoardData">
+    <div class="cli col-md-12 col-xs-12 col-sm-12" *ngIf="!api_loading && actionparam === 'view' && displayBoardData">
         <span class="editbt" (click)="editStatusBoard(displayBoardData.id)" style="float: right;"></span>
         <h3> {{displayBoardData.displayName | capitalizeFirst}}</h3>
         <div class="c-ot" *ngFor="let labelfor of displayBoardData.queueSetFor">
@@ -43,7 +35,7 @@
         </div>
     </div>
 
-    <div class="ynw-common-form-nm" *ngIf="actionparam !== 'view'">
+    <div class="ynw-common-form-nm" *ngIf="!api_loading && actionparam !== 'view'">
         <ng-container>
             <div class="form-group col-md-12">
                 <!-- <div class="col-md-6">
@@ -55,15 +47,15 @@
                 <div class="col-md-6">
                     <mat-form-field>
                         <input matInput type="text" class="form-control" id="bName" autocomplete="off"
-                            [(ngModel)]="boardDisplayname" placeholder="Name the statusboard criteria *">
+                            [(ngModel)]="boardDisplayname" placeholder="Name the Status board criteria *">
                     </mat-form-field>
                 </div>
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12" *ngIf="locName">
                 <div class="col-md-12">
                     <label style="margin: 0px;">Location &nbsp;</label>{{locName}}
                     <ul class="info-lst serviceadd-info">
-                        <li>To change location for this statusboard, go to Dashboard.
+                        <li>To change location for this Status board, go to Dashboard.
                         </li>
                     </ul>
                 </div>
@@ -71,11 +63,10 @@
             <div class="col-md-12 criteria-fields">
                 <div class="form-group col-md-12 ">
                     <label class="col-form-label mgn-bt-10">Choose one from below to be displayed on
-                        your statusboard
+                        your Status board
                         <!-- <span class="form-level-settings">Choose one from below to be displayed on
                             your statusboard </span> -->
                     </label>
-
                     <mat-radio-group [(ngModel)]="selectedCategory">
                         <mat-radio-button class="mgright50" [value]="'DEPARTMENT'"
                             *ngIf="departments.length > 0 && filterByDept" (change)="categorySelection('DEPARTMENT')">
@@ -94,47 +85,65 @@
                     <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Services</label>
                     <div class="mgn-lt-20" *ngFor="let service of services_list; index as i">
-                        <mat-radio-group [(ngModel)]="selectedCategoryValue">
+                        <!-- <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button [value]="service.id" [checked]="services_list[i].checked"
                                 (change)="serviceSelection(service.id)">
                                 {{service.name | capitalizeFirst}}
                             </mat-radio-button>
-                        </mat-radio-group>
+                        </mat-radio-group> -->
+                        <mat-checkbox class="example-margin" style="margin-left: 30px"
+                            (change)="serviceSelection(service.id, $event)" [checked]="services_list[i].checked">
+                            {{service.name | capitalizeFirst}}
+                        </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'DEPARTMENT'">
                     <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Department</label>
                     <div class="mgn-lt-20" *ngFor="let department of departments; index as i">
-                        <mat-radio-group [(ngModel)]="selectedCategoryValue">
+                        <!-- <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button [value]="department.departmentId" [checked]="departments[i].checked"
                                 (change)="departmentSelection(department.departmentId)">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-radio-button>
-                        </mat-radio-group>
+                        </mat-radio-group> -->
+                        <mat-checkbox class="example-margin" style="margin-left: 30px"
+                            (change)="departmentSelection(department.departmentId, $event)"
+                            [checked]="departments[i].checked">
+                            {{department.departmentName | capitalizeFirst}}
+                        </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 " *ngIf="selectedCategory === 'QUEUE'">
                     <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                         Queues</label>
                     <div class="mgn-lt-20" *ngFor="let schedule of display_schedule; index as i">
-                        <mat-radio-group [(ngModel)]="selectedCategoryValue">
+                        <!-- <mat-radio-group [(ngModel)]="selectedCategoryValue">
                             <mat-radio-button *ngIf="schedule.queueState === 'ENABLED'" [value]="schedule.id"
                                 [checked]="display_schedule[i].checked" (change)="queueSelection(schedule.id)">
                                 {{schedule.displayQ.dstr | capitalizeFirst}}
                                 {{schedule.displayQ.time}}
                             </mat-radio-button>
-                        </mat-radio-group>
+                        </mat-radio-group> -->
+                        <mat-checkbox *ngIf="schedule.queueState === 'ENABLED'" class="example-margin"
+                            style="margin-left: 30px" (change)="queueSelection(schedule.id, $event)"
+                            [checked]="display_schedule[i].checked">
+                            {{schedule.displayQ.dstr | capitalizeFirst}}
+                            {{schedule.displayQ.time}}
+                        </mat-checkbox>
                     </div>
                 </div>
                 <div class="form-group col-md-12 ">
-                    <label class="col-form-label">Status Board Field to display</label>
+                    <label class="col-form-label">Status board field to display</label>
                     <div class="disply-field" *ngFor="let label of defaultLables; let i = index">
+                        <!-- <mat-checkbox class="example-margin" style="margin-left: 30px" *ngIf="(label.name=='appointmentTime' && board_count > 0) || label.name!='appointmentTime'"
+                            (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked"> -->
                         <mat-checkbox class="example-margin" style="margin-left: 30px"
                             (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked">
                             {{label.displayname}}
                         </mat-checkbox>
-                        <div class="form-group col-md-12 row otp_scr fieldval" *ngIf="showLabelEdit[i]">
+                        <div class="form-group col-md-12 row otp_scr fieldval"
+                            *ngIf="showLabelEdit[i] && label.name !== 'calling'">
                             <div class="col-md-4">
                                 <mat-form-field>
                                     <input matInput type="text" class="form-control" id="fieldName"
@@ -162,6 +171,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group col-md-12 ">
+                    <label class="col-form-label mgn-bt-10">
+                        Sort by
+                    </label>
+                    <mat-radio-group [(ngModel)]="selectedSortField">
+                        <mat-radio-button class="mgright50" style="display: block;" [value]="'sort_token'"
+                            (change)="sortByField('sort_token')">
+                            Token</mat-radio-button>
+                        <mat-radio-button class="mgright50" [value]="'sort_appointmentTime'"
+                            (change)="sortByField('sort_appointmentTime')">
+                            Appointment Time
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
             </div>
             <div class="actiondiv col-md-12">
                 <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button>
@@ -170,10 +193,5 @@
             </div>
         </ng-container>
     </div>
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 </div>
-<!-- </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</section> -->

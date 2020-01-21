@@ -66,12 +66,13 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     <div *ngFor="let services of department.serviceIds;let j = index">
                         <mat-checkbox class="example-margin"
                             (change)="serviceunderdept(j,department.departmentName, i, services)"
-                            [checked]="serviceSelection[department.departmentName][j]" *ngIf="SelService[i]"
+                            [checked]="serviceSelection[department.departmentName][j]" *ngIf="SelService[i] && services"
                             style="display:block">{{services}}</mat-checkbox>
                     </div>
                 </section>
             </div>
         </div>
+
 
         <div class="form-group" *ngIf="!filterbyDept">
             <label class="labelstyle">{{service_cap}}</label>
@@ -153,8 +154,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         <div class="form-group">
             <mat-form-field class="example-full-width">
                 <mat-form-field>
-                    <input matInput placeholder="{{service_time_window_name}} (not visible to public)" formControlName="qname"
-                        autocomplete="off" maxlength="20">
+                    <input matInput placeholder="{{service_time_window_name}} (not visible to public)"
+                        formControlName="qname" autocomplete="off" maxlength="20">
                 </mat-form-field>
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
@@ -195,11 +196,22 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
         })">
             </app-field-error-display>
         </div>
-        <div class="form-group" *ngIf="showAdvancedSettings && !ifedit && iftokn" >
+        <div class="form-group" *ngIf="showAdvancedSettings && !ifedit && iftokn">
             <mat-form-field class="example-full-width">
-                <input matInput min="0" max="100000" type="text" class="number-ip-sm"
-                    placeholder="Token starts from" formControlName="tokennum"
-                    autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                <input matInput min="0" max="100000" type="text" class="number-ip-sm" placeholder="Token starts from"
+                    formControlName="tokennum" autocomplete="off" (keypress)="isNumeric($event)"
+                    (keyup)="isvalid($event)">
+            </mat-form-field>
+        </div>
+        <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'">
+            Enable time slot  {{timeSlot}}
+            <mat-slide-toggle class="example-margin" formControlName="appointment"
+                (change)="changeTimeslotStatus($event)">
+            </mat-slide-toggle>
+            <mat-form-field class="example-full-width mgn-up-5" *ngIf="timeSlotStatus">
+                <input class="number-ip-sm" matInput min="0" max="100000" type="text" placeholder="Time Slot (min)"
+                    formControlName="timeSlot" autocomplete="off" (keypress)="isNumeric($event)"
+                    (keyup)="isvalid($event)">
             </mat-form-field>
         </div>
         <!-- <div class="form-group inline">

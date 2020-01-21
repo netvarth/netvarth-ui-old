@@ -44,7 +44,7 @@ export class AddProviderItemComponent implements OnInit {
   img_exists = false;
   maxChars = projectConstants.VALIDATOR_MAX50;
   maxCharslong = projectConstants.VALIDATOR_MAX500;
-  maxNumbers = projectConstants.VALIDATOR_MAX6;
+  maxNumbers = projectConstants.VALIDATOR_MAX10;
   max_num_limit = projectConstants.VALIDATOR_MAX_LAKH;
   api_loading = true;
   api_loading1 = true;

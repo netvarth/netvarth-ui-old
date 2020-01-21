@@ -23,7 +23,7 @@
                                                 Pin : {{location_data.pinCode}}
                                             </span> -->
                                     <div class="locSchedule" *ngIf="display_schedule.length > 0" style="margin-top: 20px">
-                                        <span class="sub-title">General location hours</span>
+                                        <span class="sub-title">{{loca_hours}}</span>
                                         <ul>
                                             <li *ngFor="let schedule of display_schedule">
                                                 <span class="day">{{schedule.dstr}}&nbsp;:</span> <span

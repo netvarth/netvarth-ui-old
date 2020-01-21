@@ -6,6 +6,7 @@ import { ProviderDataStorageService } from '../../../../ynw_provider/services/pr
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { NavigationExtras } from '@angular/router';
 import { AddProviderBprofilePrivacysettingsComponent } from '../../../../ynw_provider/components/provider-bprofile-privacysettings/provider-bprofile-privacysettings.component';
 import { Router } from '@angular/router';
 @Component({
@@ -208,26 +209,11 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         });
     }
     handlePrivacysettings(typ?, peditindx?) {
-        //this.privacydialogRef = this.dialog.open(AddProviderBprofilePrivacysettingsComponent, {
-        //     width: '50%',
-        //     // panelClass: 'privacysettingsmainclass',
-        //     panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
-        //     disableClose: true,
-        //     autoFocus: true,
-        //     data: {
-        //         bprofile: this.bProfile,
-        //         editindx: peditindx,
-        //         curtype: typ
-        //     }
-        // });
-        // this.privacydialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         if (result.message === 'reloadlist') {
-        //             this.bProfile = result.data;
-        //             this.setPrivacyDetails();
-        //         }
-        //     }
-        // });
-            this.router.navigate(['provider', 'settings', 'bprofile', 'privacy', 'add']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { bprofile: this.bProfile,
+            editindx: peditindx,
+            curtype: typ }
+          };
+            this.router.navigate(['provider', 'settings', 'bprofile', 'privacy', 'add'], navigationExtras);
     }
 }

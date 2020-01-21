@@ -4,6 +4,8 @@ import { LicenseComponent } from './license.component';
 import { ProviderPaymentHistoryComponent } from '../../../ynw_provider/components/provider-payment-history/provider-payment-history.component';
 import { AddonsComponent } from './addons/addons.component';
 import { KeywordsComponent } from './keywords/keywords.component';
+import { statementcomponent } from './Statements/Statements.component';
+import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
 
 const routes: Routes = [
   { path: '', component: LicenseComponent },
@@ -21,6 +23,14 @@ const routes: Routes = [
       {
         path: 'keywords',
         component: KeywordsComponent
+      },
+      {
+        path: 'Statements',
+        component: statementcomponent
+      },
+      {
+        path: 'invoicestatus', 
+        component: invoicestatuscomponent
       }
     ]
   },

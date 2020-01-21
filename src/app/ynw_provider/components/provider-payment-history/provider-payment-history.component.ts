@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { ProviderLicenceInvoiceDetailComponent } from '../provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-provider-payment-history',
@@ -40,12 +41,32 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     totalCnt: 0,
     perPage: projectConstants.PERPAGING_LIMIT
   };
+  activated_route: any;
+  data: any;
+
+        // this.activated_route.queryParams.subscribe(
+        //   (qParams) => {
+        //     this.data = qParams;
+        //     console.log(this.data);
+        //   });     
+      
+
+
+
+
+
 
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
+    private router: Router,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location
-  ) { }
+  )  {  
+       
+
+
+
+  }
 
   ngOnInit() {
     this.getPaymentHistoryCount();
@@ -83,22 +104,36 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   goback() {
     this.locationobj.back();
   }
+   getInvoice(invoice){
+    console.log(invoice);
+    // const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
+    //   width: '50%',
+    //   data: {
+    //     invoice: invoice,
+    //     source: 'payment-history'
+    //   },
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'smallform'],
+    //   disableClose: true
+    // });
+    // dialogRef.afterClosed().subscribe(() => {
+    // });
 
-  getInvoice(invoice) {
-    const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-      width: '50%',
-      data: {
-        invoice: invoice,
-        source: 'payment-history'
-      },
-      panelClass: ['popup-class', 'commonpopupmainclass', 'smallform'],
-      disableClose: true
-    });
 
-    dialogRef.afterClosed().subscribe(() => {
+    // const url = 'provider/license/Statements';
+ 
+    const invoiceJson = JSON.stringify(invoice);
+    const navigationExtras: NavigationExtras = {
+      queryParams: { invoice: invoiceJson,
+        source: 'payment-history'}
+      // sample_data: '2'}
+        };
+      console.log(navigationExtras);
+       this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
+      
 
-    });
 
+
+       
   }
 
   handle_pageclick(pg) {
@@ -113,4 +148,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
     return api_filter;
   }
+  gotoStatements() {
+    this.router.navigate(['provider', 'license', 'Statements']);
+}
 }

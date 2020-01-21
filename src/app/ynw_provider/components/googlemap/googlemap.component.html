@@ -1,19 +1,18 @@
 <h1 class="mat-dialog-title">{{choose_location_cap}} <span>{{mark_map_cap}}</span> <button mat-dialog-close
         class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
 <mat-dialog-content>
-
     <div class="card">
-        <span class="text-link" (click)="getCurrentLocation()"> <i data-icon="j"></i> Use current location</span>
+        <span class="text-link" (click)="getCurrentLocation('userAction')"> <i data-icon="j"></i> Use current
+            location</span>
     </div>
     <!-- older class obtained-address-outer-->
     <mat-accordion>
-    <mat-expansion-panel *ngIf="mapaddress && mapaddress.length>1" [expanded]="true">
+        <mat-expansion-panel *ngIf="mapaddress && mapaddress.length>1" [expanded]="true">
             <mat-expansion-panel-header [collapsedHeight]="'48px'" [expandedHeight]="'48px'">
                 <mat-panel-title class="title">
                     {{select_address_cap}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-
             <table class="googleaddresstable">
                 <tr *ngFor="let addressrow of mapaddress; let i = index">
                     <td class="googlecheckboxtd">
@@ -23,10 +22,8 @@
                     <td class="googleaddresstd">{{addressrow.address}}</td>
                 </tr>
             </table>
-
         </mat-expansion-panel>
     </mat-accordion>
-
     <div>
         <!-- [style.visibility]="!show_search ? 'hidden': 'initial'" -->
         <input id="pac-input" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search
@@ -37,3 +34,4 @@
 <mat-dialog-actions>
     <button mat-button type="button" (click)="mapselectionDone()">{{yes_done_cap}}</button>
 </mat-dialog-actions>
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

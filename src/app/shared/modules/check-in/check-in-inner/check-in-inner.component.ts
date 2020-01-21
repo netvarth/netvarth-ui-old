@@ -11,6 +11,7 @@ import { CommonDataStorageService } from '../../../../shared/services/common-dat
 import * as moment from 'moment';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 @Component({
   selector: 'app-check-in-inner',
   templateUrl: './check-in-inner.component.html',
@@ -42,6 +43,7 @@ export class CheckInInnerComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   save_member_cap = Messages.SAVE_MEMBER_BTN;
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
+  optinal_fields = Messages.DISPLAYBOARD_OPTIONAL_FIELDS;
   token = Messages.TOKEN;
   get_token_cap;
   domain;
@@ -185,7 +187,13 @@ export class CheckInInnerComponent implements OnInit {
   bicycling: boolean;
   liveTrackMessage;
   firstTimeClick = true;
+  apptTime: any;
+  board_count = 0;
+  allSlots: any = [];
+  availableSlots: any = [];
+  showEditView = false;
   constructor(public fed_service: FormMessageDisplayService,
+    private provider_services: ProviderServices,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     public router: Router,
@@ -196,6 +204,7 @@ export class CheckInInnerComponent implements OnInit {
     @Inject(DOCUMENT) public document,
   ) { }
   ngOnInit() {
+    // this.apptTime = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
     this.api_loading = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
@@ -203,6 +212,12 @@ export class CheckInInnerComponent implements OnInit {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
     this.customer_data = this.data.customer_data || [];
+    if (this.data.apptTime) {
+      this.apptTime = this.data.apptTime;
+    }
+    if (this.data.queue) {
+      this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
+    }
     if (this.data.fromKiosk !== undefined) {
       if (this.data.fromKiosk) {
         this.fromKiosk = true;
@@ -241,6 +256,7 @@ export class CheckInInnerComponent implements OnInit {
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     if (this.page_source === 'provider_checkin') {
+      this.getDisplayboardCount();
       if (this.fromKiosk) {
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
       } else {
@@ -269,9 +285,7 @@ export class CheckInInnerComponent implements OnInit {
       || this.page_source === 'provider_checkin') { // case check-in from provider details page or provider dashboard
       // this.search_obj = this.data.srchprovider;
       this.provider_id = this.data.moreparams.provider.unique_id;
-      console.log(this.provider_id);
       this.account_id = this.data.moreparams.provider.account_id;
-      console.log(this.account_id);
       const srch_fields = {
         fields: {
           title: this.data.moreparams.provider.name,
@@ -456,7 +470,6 @@ export class CheckInInnerComponent implements OnInit {
             break;
           case 'businessProfile':
             this.businessjson = res;
-            console.log(res);
             this.getProviderDepart(this.businessjson.id);
             this.domain = this.businessjson.serviceSector.domain;
             if (this.domain === 'foodJoints') {
@@ -485,10 +498,10 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
-          this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-          this.consumerPhoneNo = this.userPhone;
           if (this.userData.userProfile !== undefined) {
             this.userEmail = this.userData.userProfile.email || '';
+            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+            this.consumerPhoneNo = this.userPhone;
           }
           if (this.userEmail) {
             this.emailExist = true;
@@ -624,17 +637,28 @@ export class CheckInInnerComponent implements OnInit {
                 selindx = i;
               }
             }
-            this.sel_queue_id = this.queuejson[selindx].id;
             this.sel_queue_indx = selindx;
             // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
             this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
             this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
             this.sel_queue_name = this.queuejson[selindx].name;
             // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-            this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+            if (!this.data.queue) {
+              this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+              this.sel_queue_id = this.queuejson[selindx].id;
+            } else {
+              this.sel_queue_id = this.data.queue.id;
+            }
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
             this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
             this.setTerminologyLabels();
+            if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
+              if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
+                this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
+              } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+              }
+            }
           } else {
             this.sel_queue_indx = -1;
             this.sel_queue_id = 0;
@@ -712,6 +736,18 @@ export class CheckInInnerComponent implements OnInit {
       this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
       this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
       // this.queueReloaded = true;
+      this.availableSlots = [];
+      // this.api_loading = true;
+      // if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+      //   this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+      // }
+      if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
+        if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
+          this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
+        } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+          this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+        }
+      }
     }
   }
   handleFuturetoggle() {
@@ -806,7 +842,10 @@ export class CheckInInnerComponent implements OnInit {
     for (let i = 0; i < this.waitlist_for.length; i++) {
       waitlistarr.push({ id: this.waitlist_for[i].id });
     }
-    const post_Data = {
+    // const apptTimeFormat = moment(this.apptTime).format('hh:mm A') || null;
+    let post_Data;
+    // if (this.editAppntTime) {
+    post_Data = {
       'queue': {
         'id': this.sel_queue_id
       },
@@ -818,6 +857,26 @@ export class CheckInInnerComponent implements OnInit {
       'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
       'coupons': this.selected_coupons
     };
+    if (this.apptTime) {
+      post_Data['appointmentTime'] = this.apptTime;
+    }
+    // }
+
+    // 'appointmentTime': apptTimeFormat
+    // else {
+    //   post_Data = {
+    //     'queue': {
+    //       'id': this.sel_queue_id
+    //     },
+    //     'date': this.sel_checkindate,
+    //     'service': {
+    //       'id': this.sel_ser
+    //     },
+    //     'consumerNote': this.consumerNote,
+    //     'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr)),
+    //     'coupons': this.selected_coupons
+    //   };
+    // }
     if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
     }
@@ -825,7 +884,6 @@ export class CheckInInnerComponent implements OnInit {
       this.holdenterd_partySize = this.enterd_partySize;
       post_Data['partySize'] = Number(this.holdenterd_partySize);
     }
-
     if (this.api_error === null) {
       if (this.page_source === 'provider_checkin') {
         post_Data['consumer'] = { id: this.customer_data.id };
@@ -846,101 +904,65 @@ export class CheckInInnerComponent implements OnInit {
         Object.keys(retData).forEach(key => {
           retUUID = retData[key];
           this.trackUuid = retData[key];
-          console.log(this.trackUuid);
         });
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUUID);
         }
-        if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
-          if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
-            this.dialogRef.close();
-            // this.sel_ser_det.minPrePaymentAmount
-            const payData = {
-              'amount': this.prepaymentAmount,
-              // 'paymentMode': this.paytype,
-              'uuid': retUUID,
-              'accountId': this.account_id,
-              'purpose': 'prePayment'
-            };
-            const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-              width: '50%',
-              panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-              disableClose: true,
-              data: {
-                'details': payData,
-                'origin': 'consumer'
-              }
-            });
-
-          } else {
-            this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
-            this.api_loading = false;
+        this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
+          (wailist: any) => {
+            this.activeWt = wailist;
+            this.liveTrack = true;
+            this.resetApi();
+          },
+          () => {
           }
-        } else {
-          this.shared_services.getCheckinByConsumerUUID(this.trackUuid, this.account_id).subscribe(
-            (wailist: any) => {
-              this.activeWt = wailist;
-              this.liveTrack = true;
-              // if(this.shareLoc){
-              // this.getCurrentLocation().then(
-              //   (lat_long: any) => {
-              //     this.lat_lng = lat_long;
-              //     this.saveLiveTrackInfo().then(
-              //       (liveTInfo) => {
-              //         console.log(liveTInfo);
-              //         // this.shareLoc = true;
-              //         this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-              //       }
-              //     );
-              //   }, (error) => {
-              //     this.shareLoc = false;
-              //   }
-              //   );
-              // }
-              this.resetApi();
-            },
-            () => {
-            }
-          );
+        );
+        // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+        // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
+        // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+        // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
+        // }
+        // if (this.sel_ser_det.isPrePayment) { // case if prepayment is to be done
+        //   if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+        //     this.dialogRef.close();
+        //     // this.sel_ser_det.minPrePaymentAmount
+        //     const payData = {
+        //       'amount': this.prepaymentAmount,
+        //       // 'paymentMode': this.paytype,
+        //       'uuid': retUUID,
+        //       'accountId': this.account_id,
+        //       'purpose': 'prePayment'
+        //     };
+        //     const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+        //       width: '50%',
+        //       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        //       disableClose: true,
+        //       data: {
+        //         'details': payData,
+        //         'origin': 'consumer'
+        //       }
+        //     });
 
-          if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-            // this.api_success = this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC');
-          } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
-            // this.api_success = this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION');
-          }
-          // setTimeout(() => {
-          // this.source['list'] = 'reloadlist';
-          // this.source['mode'] = this.page_source;
-          // // this.dialogRef.close('reloadlist');
-          // console.log(this.source);
-          // this.returntoParent.emit(this.source);
-          // }, projectConstants.TIMEOUT_DELAY);
-          // this.router.navigate(['/']);
-        }
-        // this.router.navigate(['/']);
-        // setTimeout(() => {
-
-        //   this.liveTrack = true;
-        //   this.resetApi();
-        // }, 2000);
+        //   } else {
+        //     this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+        //     this.api_loading = false;
+        //   }
+        // }
       },
         error => {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
         });
-
   }
   addCheckInProvider(post_Data) {
     this.api_loading = true;
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe((data) => {
-        console.log(data);
         const retData = data;
         let retUuid;
         Object.keys(retData).forEach(key => {
           retUuid = retData[key];
           this.trackUuid = retData[key];
-          console.log(this.trackUuid);
         });
         if (this.selectedMessage.files.length > 0) {
           this.consumerNoteAndFileSave(retUuid);
@@ -961,6 +983,39 @@ export class CheckInInnerComponent implements OnInit {
           this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
           this.api_loading = false;
         });
+  }
+
+  prePaymentcheckin(retUUID) {
+    if (this.paytype !== '' && retUUID && this.sel_ser_det.isPrePayment && this.sel_ser_det.minPrePaymentAmount > 0) {
+      this.dialogRef.close();
+      // this.sel_ser_det.minPrePaymentAmount
+      const payData = {
+        'amount': this.prepaymentAmount,
+        // 'paymentMode': this.paytype,
+        'uuid': retUUID,
+        'accountId': this.account_id,
+        'purpose': 'prePayment'
+      };
+      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'details': payData,
+          'origin': 'consumer'
+        }
+      });
+
+    } else {
+      this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
+      this.api_loading = false;
+    }
+    if (this.shareLoc) {
+      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    } else {
+      this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
+    }
+
   }
   handleGoBack(cstep) {
     if (this.page_source !== 'provider_checkin') {
@@ -1423,7 +1478,6 @@ export class CheckInInnerComponent implements OnInit {
   getNotifyTime(time) {
     this.notifyTime = time;
   }
-
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -1443,11 +1497,9 @@ export class CheckInInnerComponent implements OnInit {
       }
     }
   }
-
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
   }
-
   consumerNoteAndFileSave(uuid) {
     const dataToSend: FormData = new FormData();
     dataToSend.append('message', this.consumerNote);
@@ -1493,17 +1545,10 @@ export class CheckInInnerComponent implements OnInit {
               }
             );
           }
-          // this.saveLiveTrackInfo().then(
-          //   (liveTInfo) => {
-          //     console.log(liveTInfo);
-          //     console.log(this.track_loading);
-          //     this.track_loading = false;
-          //     console.log(this.track_loading);
-          //     this.liveTrackMessage = this.sharedFunctionobj.getLiveTrackStatusMessage(liveTInfo, this.activeWt.provider.businessName, 'DRIVING');
-          //     }
-          // );
         }, (error) => {
+          this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
           this.shareLoc = false;
+          this.track_loading = false;
         }
       );
     } else {
@@ -1525,7 +1570,6 @@ export class CheckInInnerComponent implements OnInit {
       const passdata = {
         'travelMode': _this.travelMode
       };
-
       _this.shared_services.updateTravelMode(_this.trackUuid, _this.account_id, passdata)
         .subscribe(
           data => {
@@ -1566,9 +1610,9 @@ export class CheckInInnerComponent implements OnInit {
   trackClose(status) {
     if (status === 'livetrack') {
       if (this.shareLoc) {
-        this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED'));
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.provider.businessName));
       } else {
-        this.sharedFunctionobj.openSnackBar(this.activeWt.provider.businessName + this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED'));
+        this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.provider.businessName));
       }
       this.dialogRef.close();
       this.router.navigate(['/']);
@@ -1579,24 +1623,13 @@ export class CheckInInnerComponent implements OnInit {
     this.resetApi();
     this.updateLiveTrackInfo().then(
       data => {
-        if (data) {
-          // this.api_success = this.sharedFunctionobj.getLiveTrackStatusMessage(data, this.activeWt.provider.businessName, this.travelMode);
-        }
-        // setTimeout(() => {
-
-        // this.source['list'] = 'reloadlist';
-        // this.source['mode'] = this.page_source;
-        // this.dialogRef.close('reloadlist');
-        // this.returntoParent.emit('reloadlist');
         this.trackClose('livetrack');
         this.track_loading = false;
-        // }, projectConstants.TIMEOUT_DELAY_LARGE10);
       },
       error => {
         this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
         this.api_loading = false;
       });
-
   }
   updateLiveTrackInfo() {
     const _this = this;
@@ -1621,5 +1654,75 @@ export class CheckInInnerComponent implements OnInit {
           }
         );
     });
+  }
+  getDisplayboardCount() {
+    let layout_list: any = [];
+    this.provider_services.getDisplayboards()
+      .subscribe(
+        data => {
+          layout_list = data;
+          this.board_count = layout_list.length;
+        });
+  }
+  getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
+    const _this = this;
+    const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
+    this.availableSlots = allSlots;
+    const filter = {};
+    const activeSlots = [];
+    filter['queue-eq'] = _this.sel_queue_id;
+    filter['location-eq'] = _this.sel_loc;
+    filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
+    let future = false;
+    const waitlist_date = new Date(this.sel_checkindate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    waitlist_date.setHours(0, 0, 0, 0);
+    if (today.valueOf() < waitlist_date.valueOf()) {
+      future = true;
+    }
+    if (!edit) {
+      this.apptTime = '';
+    }
+    if (!future) {
+      _this.provider_services.getTodayWaitlist(filter).subscribe(
+        (waitlist: any) => {
+          for (let i = 0; i < waitlist.length; i++) {
+            if (waitlist[i]['appointmentTime']) {
+              activeSlots.push(waitlist[i]['appointmentTime']);
+            }
+          }
+          const slots = allSlots.filter(x => !activeSlots.includes(x));
+          this.availableSlots = slots;
+          if (!edit) {
+            this.apptTime = this.availableSlots[0];
+          }
+        }
+      );
+    } else {
+      filter['date-eq'] = _this.sel_checkindate;
+      _this.provider_services.getFutureWaitlist(filter).subscribe(
+        (waitlist: any) => {
+          for (let i = 0; i < waitlist.length; i++) {
+            if (waitlist[i]['appointmentTime']) {
+              activeSlots.push(waitlist[i]['appointmentTime']);
+            }
+          }
+          const slots = allSlots.filter(x => !activeSlots.includes(x));
+          this.availableSlots = slots;
+          if (!edit) {
+            this.apptTime = this.availableSlots[0];
+          }
+        }
+      );
+    }
+  }
+  timeSelected(slot) {
+    this.apptTime = slot;
+    this.showEditView = false;
+  }
+  editClicked() {
+    this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval, 'edit');
+    this.showEditView = true;
   }
 }

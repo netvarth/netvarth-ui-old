@@ -50,6 +50,7 @@ export class DepartmentDetailComponent implements OnInit {
     removeitemdialogRef;
     deptObj: ArrayBuffer;
     departments: any;
+    dept_default = false;
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private dialog: MatDialog,
@@ -237,6 +238,9 @@ export class DepartmentDetailComponent implements OnInit {
                         data => {
                             this.add_it_now_show = true;
                             this.dept_data = data;
+                            if(this.dept_data.isDefault === true) {
+                                this.dept_default = true;
+                            }
                             this.dept_services = this.dept_data.serviceIds;
                             this.selected_action = 'show';
                             const breadcrumbs = [];
@@ -301,7 +305,7 @@ export class DepartmentDetailComponent implements OnInit {
         this.provider_services.updateDepartment(post_data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('SERVICE_UPDATED'));
+                    this.shared_Functionsobj.openSnackBar('Departments updated successfully');
                     this.getDepartmentDetails();
                 },
                 error => {
@@ -310,4 +314,3 @@ export class DepartmentDetailComponent implements OnInit {
             );
     }
 }
-

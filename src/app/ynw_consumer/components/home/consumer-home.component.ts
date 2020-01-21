@@ -12,7 +12,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
 import { SearchFields } from '../../../shared/modules/search/searchfields';
-// import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
+import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
@@ -101,6 +101,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   cronHandleTrack: Subscription;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
+  refreshTimeForTracking = 600000;
   counterrefreshTime = 60; // seconds, set to reduce the counter every minute, if required
   open_fav_div = null;
   hideShowAnimator = false;
@@ -157,10 +158,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselOne: NgxCarousel;
 
   ngOnInit() {
+    this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    if (!this.server_date) {
-      this.setSystemDate();
-    }
     this.carouselOne = {
       grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
       slide: 3,
@@ -174,7 +173,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       loop: false,
       easing: 'ease'
     };
-
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
@@ -187,10 +185,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = Observable.interval(this.refreshTime * 250).subscribe(x => {
+    this.cronHandleTrack = Observable.interval(this.refreshTime * 2000).subscribe(x => {
       this.liveTrackPolling();
     });
-
 
     this.subscription = this.shared_functions.getSwitchMessage().subscribe(message => {
       switch (message.ttype) {
@@ -305,7 +302,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
               if (waitlist.jaldeeWaitlistDistanceTime && waitlist.waitlistStatus === 'checkedIn') {
                 this.statusOfLiveTrack(waitlist, i);
                 this.pollingSet.push(waitlist);
-                console.log(this.pollingSet);
               }
               this.waitlists[i].estimated_time = retval.time;
               this.waitlists[i].estimated_timenow = retval.timenow;
@@ -411,7 +407,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
 
-
   getHistroy() {
     this.loadcomplete.history = false;
     const params = this.setPaginationFilter();
@@ -454,7 +449,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.loadcomplete.fav_provider = true;
           this.fav_providers = data;
-          console.log(this.fav_providers);
           this.fav_providers_id_list = [];
           // this.setWaitlistTimeDetails();
           for (const x of this.fav_providers) {
@@ -695,7 +689,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
     this.addnotedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-
       }
     });
   }
@@ -713,26 +706,25 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   showCheckin(data, origin = 'consumer') {
-    console.log(data);
     const provider_data = data.provider_data;
     const location_data = data.location_data;
-    // this.checkindialogRef = this.dialog.open(CheckInComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-    //   disableClose: true,
-    //   data: {
-    //     type: origin,
-    //     is_provider: false,
-    //     moreparams: {
-    //       source: 'provdet_checkin',
-    //       bypassDefaultredirection: 1,
-    //       provider: provider_data,
-    //       location: location_data,
-    //       sel_date: data.sel_date
-    //     },
-    //     datechangereq: data.chdatereq
-    //   }
-    // });
+    this.checkindialogRef = this.dialog.open(CheckInComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: false,
+        moreparams: {
+          source: 'provdet_checkin',
+          bypassDefaultredirection: 1,
+          provider: provider_data,
+          location: location_data,
+          sel_date: data.sel_date
+        },
+        datechangereq: data.chdatereq
+      }
+    });
     this.checkindialogRef.afterClosed().subscribe(result => {
       // if (result === 'reloadlist') {
       this.getWaitlist();
@@ -761,18 +753,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       'sel_date': currdate,
       'chdatereq': chdatereq
     };
-
     post_data.provider_data = {
       'unique_id': provider.uniqueId,
       'account_id': provider.id,
       'name': provider.businessName
     };
-
     post_data.location_data = {
       'id': location.id,
       'name': location.place
     };
-    console.log(post_data);
     this.showCheckin(post_data);
   }
   gets3curl() {
@@ -799,7 +788,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
         switch (section) {
-
           case 'settings': {
             this.fav_providers[index]['settings'] = res;
             break;
@@ -808,11 +796,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.terminologiesJson = res;
             break;
           }
-
         }
       },
         error => {
-
         }
       );
   }
@@ -871,7 +857,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       });
       this.billdialogRef.afterClosed().subscribe(result => {
-
         if (this.billdialogRef) {
           this.billdialogRef = null;
         }
@@ -938,7 +923,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-
   confirmSettleBill(waitlist) {
     const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
       width: '50%',
@@ -968,7 +952,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 'accountId': waitlist.provider.id,
                 'purpose': 'prePayment'
               };
-
               const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
                 width: '50%',
                 panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -978,25 +961,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                   'origin': 'consumer'
                 }
               });
-
-
-
-
-              // this.shared_services.consumerPayment(payData)
-              // .subscribe(pData => {
-              // if (pData['response']) {
-              // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-              // this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-              // setTimeout(() => {
-              // this.document.getElementById('payuform').submit();
-              // }, 2000);
-              // } else {
-              // this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-              // }
-              // },
-              // error => {
-              // this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              // });
             } else {
               this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
             }
@@ -1025,42 +989,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const passdata = {
       'travelMode': type
     };
-
-    // getTravelMod(event) {
-    //   this.trackMode = false;
-    //   this.travelMode = event;
-    //   if (event === 'DRIVING') {
-    //     this.driving = true;
-    //     this.walking = false;
-    //     this.bicycling = false;
-    //   } else if  (event === 'WALKING') {
-    //     this.walking = true;
-    //     this.driving = false;
-    //     this.bicycling = false;
-    //   } else {
-    //     this.walking = false;
-    //     this.driving = false;
-    //     this.bicycling = true;
-    //   }
-    // }
-
-    // const post_Data = {
-    //   'jaldeeGeoLocation': {
-    //     'latitude': this.lat_lng.latitude,
-    //     'longitude': this.lat_lng.longitude
-    //   },
-    //   'travelMode': type,
-    //   'waitlistPhoneNumber': this.consumerPhoneNo,
-    //   'jaldeeStartTimeMod': this.notifyTime,
-    //   'shareLocStatus': true
-    // };
-    // this.shared_services.addLiveTrackDetails(this.trackUuid, this.businessjson.id, post_Data)
-    //   .subscribe(data => {
-    //     console.log(data);
-    //   });
-
-
-
     this.shared_services.updateTravelMode(uid, id, passdata)
       .subscribe(data => {
         this.changemode[i] = false;
@@ -1069,7 +997,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
-
   }
   getMintuesToHour(time) {
     return this.shared_functions.providerConvertMinutesToHourMinute(time);
@@ -1093,9 +1020,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       },
         error => {
         });
-
     }
-
   }
   updateLatLong(uid, id, passdata) {
     this.shared_services.updateLatLong(uid, id, passdata)
@@ -1116,6 +1041,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   startTracking(uid, id, i) {
     this.shared_services.startLiveTrack(uid, id)
       .subscribe(data => {
+        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1124,6 +1050,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   stopTracking(uid, id, i) {
     this.shared_services.stopLiveTrack(uid, id)
       .subscribe(data => {
+        this.getWaitlist();
       },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1147,7 +1074,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         () => {
           for (const waitlist of _this.pollingSet) {
             if (waitlist.jaldeeWaitlistDistanceTime) {
-             // console.log(waitlist);
               let pollingDtTim = '';
               let pollingDateTime = '';
               if (waitlist.jaldeeStartTimeType !== 'AFTERSTART') {
@@ -1165,7 +1091,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                       });
                 }
               } else {
-                console.log('trackStatus' + waitlist.trackStatus);
                 if (waitlist.trackStatus) {
                   _this.shared_services.updateLatLong(waitlist.ynwUuid, waitlist.provider.id, _this.lat_lng)
                     .subscribe(data => { },

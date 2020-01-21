@@ -99,8 +99,10 @@ export const projectConstants = {
   PIPE_DISPLAY_DATE_FORMAT: 'dd/MM/y',
   PIPE_DISPLAY_DATE_FORMAT_WITH_DAY: 'E, dd/MM/y',
   PIPE_DISPLAY_TIME_FORMAT: 'h:mm a',
+  // PIPE_DISPLAY_TIME_FORMAT: 'HH:mm a',
   PIPE_DISPLAY_DATE_TIME_FORMAT: 'dd/MM/y h:mm a',
   POST_DATE_FORMAT: 'YYYY-MM-DD',
+  POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD HH:mm a',
   BASE_SCHEDULE: [
     {
       day: 4,
@@ -248,6 +250,8 @@ export const projectConstants = {
   VALIDATOR_MAX6: 6, // max char count
   VALIDATOR_MAX9: 9, // max char count
   VALIDATOR_MAX10: 10, // max char count
+  VALIDATOR_MAX15_DEPT_CDE: 15, // max char count
+  VALIDATOR_MAX100_DEPT_NME: 100, // max char count
   VALIDATOR_MAX50: 50, // max char count
   VALIDATOR_MAX100: 100, // max char count
   VALIDATOR_MAX150: 150, // max char count
@@ -382,6 +386,15 @@ export const projectConstants = {
     CheckedIn: 'Checked in',
     Cancelled: 'Cancelled'
   },
+  INVOICE_STATUS_FILTER:[
+      {displayName: 'Paid', value: 'Paid' },  
+      {displayName: 'NotPaid', value: 'NotPaid' },
+      {displayName: 'Cancel', value: 'Cancel' },
+      {displayName: 'Waived' , value: 'Waived' },
+      {displayName: 'Obsolete', value: 'Obsolete' },
+          ],
+    
+           
   CHECK_IN_STATUSES_FILTER: [
     { displayName: 'checked in', value: 'checkedIn' },
     { displayName: 'Arrived', value: 'arrived' },
@@ -473,34 +486,49 @@ export const projectConstants = {
       'displayname': 'Customer',
       'label': false,
       'checked': false,
-      'order': 5,
+      'order': 2,
     },
     {
       'name': 'primaryMobileNo',
       'displayname': 'Mobile',
       'label': false,
       'checked': false,
-      'order': 6,
-    }, {
+      'order': 3,
+    },
+    {
+      'name': 'appointmentTime',
+      'displayname': 'Appointment Time',
+      'label': false,
+      'checked': false,
+      'order': 4,
+    },
+    {
       'name': 'appxWaitingTime',
       'displayname': 'Waiting Time',
       'label': false,
       'checked': false,
-      'order': 3,
+      'order': 5,
     },
     {
       'name': 'service',
       'displayname': 'Service',
       'label': false,
       'checked': false,
-      'order': 2,
+      'order': 6,
     },
     {
       'name': 'queue',
       'displayname': 'Queue',
       'label': false,
       'checked': false,
-      'order': 4,
+      'order': 7,
+    },
+    {
+      'name': 'calling',
+      'displayname': 'Calling',
+      'label': false,
+      'checked': false,
+      'order': 8,
     }
   ],
   ADWORDSPLIT: '__',

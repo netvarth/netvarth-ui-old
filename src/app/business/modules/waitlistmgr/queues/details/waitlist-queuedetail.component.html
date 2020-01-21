@@ -13,7 +13,7 @@
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
-                                <span class="editbt" (click)="addEditProviderQueue('edit')"
+                                <span class="editbt" (click)="addEditProviderQueue()"
                                     *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft">
@@ -84,35 +84,83 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" *ngIf="action !== 'view' && !api_loading">
-                    <div class="copy ynw-common-form-nm">
+                <nav class="queue-nav navbar navbar-static-top jd-custom-nav" role="navigation"
+                    *ngIf="action !== 'view' && !api_loading && params.source !== 'location_detail'">
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav jd-custom-nav chkn-dash pull-right">
+                            <li class="dropdown messages-menu queue-menu">
+                                <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+                                <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon"
+                                    data-toggle="dropdown" *ngIf="selected_location"
+                                    style="padding-top: 12px !important;">
+                                    <span>
+                                        {{selected_location.place | capitalizeFirst}}</span>
+                                </a>
+                                <ul class="dropdown-menu" *ngIf="action=='add' && loc_list.length > 1">
+                                    <li>
+                                        <ul class="menu">
+                                            <li *ngFor="let loc of loc_list;let i = index" [(value)]="i"
+                                                [ngClass]="{'active': (loc.place == selected_location.place)}">
+                                                <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                                                    <h4>{{ loc.place | capitalizeFirst }}</h4>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="card queue-form" *ngIf="action !== 'view' && !api_loading">
+                    <div class="copy ynw-common-form-nm pro-schedule">
                         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" class="ynw-common-form">
-                            <div class="form-group">
-                                <div *ngIf="action!='edit'">
-                                    <mat-form-field *ngIf="loc_list.length > 1">
-                                        <mat-select placeholder="Location *" formControlName="qlocation">
-                                            <mat-option *ngFor="let loc of loc_list" [value]="loc.id">
-                                                {{ loc.place | capitalizeFirst }}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <div *ngIf="loc_list.length ===1 || action=='edit' || action == 'editFromList'">
-                                        <label class="labelstyle">{{location_cap}}</label>
-                                        <div *ngFor="let loc of loc_list">
-                                            {{ loc.place | capitalizeFirst }}
-                                        </div>
+onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
+                            <div class="form-group queue-selection">
+                                <label class="labelstyle">{{schedule_cap}}</label><a
+                                    class="link exstschdlesze pointer-cursor"
+                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a>
+                                <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
+                                    <ul class="item">
+                                        <li *ngFor="let schedule of this.activeQueues"><span
+                                                class="day">{{schedule.dstr}}:
+                                            </span><span class="time">{{schedule.time}}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="schselectall">
+                                    <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">
+                                        {{select_All}}</i>
+                                    <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()">
+                                        {{select_All}}</i>
+                                </div>
+                                <section class="schedule-section leftselectAll">
+                                    <div *ngFor="let wday of weekdays; index as i">
+                                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecbox(i)"
+                                            [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="form-group schedulesub_outer">
+                                <div class="startendtime">
+                                    <div class="starttimediv">
+                                        <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
+                                        <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time
+                                            (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
+                                            errorMsg="Please enter the start time">
+                                        </app-field-error-display>
+                                    </div>
+                                    <div class="endtimediv">
+                                        <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
+                                        <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time
+                                            (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
+                                        <app-field-error-display
+                                            [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
+                                            errorMsg="Please enter the end time">
+                                        </app-field-error-display>
                                     </div>
                                 </div>
-                                <div *ngIf="action=='edit' || action == 'editFromList'">
-                                    <label class="labelstyle">{{location_cap}}</label>
-                                    <div>
-                                        {{loc_name}}
-                                    </div>
-                                </div>
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qlocation')"
-                                    errorMsg="Please enter the location">
-                                </app-field-error-display>
                             </div>
                             <div class="form-group" *ngIf="filterbyDept">
                                 <label class="labelstyle">{{service_cap}}</label>
@@ -156,58 +204,10 @@ onSubmit(amForm.value)" class="ynw-common-form">
                                 </section>
                             </div>
                             <div class="form-group">
-                                <label class="labelstyle">{{schedule_cap}}</label><a
-                                    class="link exstschdlesze pointer-cursor"
-                                    (click)="existingScheduletoggle()">{{existing_schedules}}</a>
-                                <div class="jd_stw actvques" *ngIf="this.activeQueues.length>0 && show_dialog">
-                                    <ul class="item">
-                                        <li *ngFor="let schedule of this.activeQueues"><span
-                                                class="day">{{schedule.dstr}}:
-                                            </span><span class="time">{{schedule.time}}</span></li>
-                                    </ul>
-                                </div>
-                                <div class="schselectall">
-                                    <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">
-                                        {{select_All}}</i>
-                                    <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()">
-                                        {{select_All}}</i>
-                                </div>
-                                <section class="schedule-section leftselectAll">
-                                    <div *ngFor="let wday of weekdays; index as i">
-                                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecbox(i)"
-                                            [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="form-group">
-                                <div class="startendtime">
-                                    <div class="starttimediv">
-                                        <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
-                                        <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time
-                                            (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
-                                        <app-field-error-display
-                                            [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
-                                            errorMsg="Please enter the start time">
-                                        </app-field-error-display>
-                                    </div>
-                                    <div class="endtimediv">
-                                        <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
-                                        <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time
-                                            (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
-                                        <app-field-error-display
-                                            [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
-                                            errorMsg="Please enter the end time">
-                                        </app-field-error-display>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="example-full-width">
-                                    <mat-form-field>
-                                        <input matInput
-                                            placeholder="{{service_time_window_name}} (not visible to public)"
-                                            formControlName="qname" autocomplete="off" maxlength="20">
-                                    </mat-form-field>
+                                <mat-form-field>
+                                    <input class="form-control" matInput
+                                        placeholder="{{service_time_window_name}} (not visible to public)"
+                                        formControlName="qname" autocomplete="off">
                                 </mat-form-field>
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qname')"
                                     [errorMsgs]="fed_service.getErrorMessage(amForm,'qname',
@@ -217,11 +217,38 @@ onSubmit(amForm.value)" class="ynw-common-form">
             })">
                                 </app-field-error-display>
                             </div>
+                            <!-- <div class="form-group col-md-6 mgn-up-10" *ngIf="params.source !== 'location_detail'">
+                                    <div *ngIf="action!='edit' && action != 'editFromList'">
+                                        <mat-form-field *ngIf="loc_list.length > 1">
+                                            <mat-select placeholder="Location *" formControlName="qlocation">
+                                                <mat-option *ngFor="let loc of loc_list" [value]="loc.id">
+                                                    {{ loc.place | capitalizeFirst }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div *ngIf="loc_list.length ===1 || action=='edit' || action == 'editFromList'">
+                                            <label class="labelstyle">{{location_cap}}</label>
+                                            <div *ngFor="let loc of loc_list">
+                                                {{ loc.place | capitalizeFirst }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="action=='edit' || action == 'editFromList'">
+                                        <label class="labelstyle">{{location_cap}}</label>
+                                        <div>
+                                            {{loc_name}}
+                                        </div>
+                                    </div>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'qlocation')"
+                                        errorMsg="Please enter the location">
+                                    </app-field-error-display>
+                                </div> -->
                             <div class="form-group">
                                 <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
                             </div>
                             <div class="form-group" *ngIf="showAdvancedSettings">
-                                <mat-form-field>
+                                <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="{{capacitylimit}}" maxlength="4" type="text"
                                         class="form-control number-ip-sm"
                                         placeholder="Maximum {{customer_label}}s that can be served in this schedule *"
@@ -251,16 +278,24 @@ onSubmit(amForm.value)" class="ynw-common-form">
         })">
                                 </app-field-error-display>
                             </div>
-                            <div class="form-group" *ngIf="showAdvancedSettings && action !== 'edit'">
+                            <div class="form-group"
+                                *ngIf="showAdvancedSettings && action !== 'edit' && action !== 'editFromList'">
                                 <mat-form-field class="example-full-width">
                                     <input matInput min="0" max="100000" type="text" class="number-ip-sm"
                                         placeholder="Token starts from" formControlName="tokennum" autocomplete="off"
                                         (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+                            <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'" >
+                                <mat-form-field class="example-full-width">
+                                    <input matInput min="0" max="100000" type="text"
+                                        placeholder="Time Slot (min)" formControlName="timeSlot"
+                                        autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12 no-padding" style="margin-top: 15px;display: inline-flex;">
                                 <button type="button" (click)="closeClick()" class="cs-btn bt2"
-                                    [disabled]="disableButton">{{cancel_btn}}</button>
+                                    [disabled]="disableButton">{{cancel_btn}}</button> &nbsp;
                                 <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
                                     class="cs-btn bt1">{{save_btn}}
                                 </button>

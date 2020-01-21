@@ -9,7 +9,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ProviderBprofileSearchPrimaryComponent } from '../../../ynw_provider/components/provider-bprofile-search-primary/provider-bprofile-search-primary.component';
@@ -198,6 +198,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   frm_working_hr_cap = Messages.FRM_LEVEL_WORKING_MSG;
   frm_verified_cap = Messages.FRM_LEVEL_VERI_MSG;
   verified_level = Messages.VERIFIED_LEVEL;
+  loca_hours = Messages.LOCATION_HOURS_CAP;
   isCheckin;
   success_error = null;
   error_list = [];
@@ -211,6 +212,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   showCustomId = false;
   licenseMetadata: any = [];
   licenseMetrics: any = [];
+  parkingType: any;
+  park_type: any;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -383,6 +386,10 @@ export class BProfileComponent implements OnInit, OnDestroy {
             this.normal_profile_active = 2;
           }
           if (this.bProfile.baseLocation) {
+            this.parkingType = this.bProfile.baseLocation.parkingType;
+            if(this.parkingType){
+              this.park_type = this.parkingType.charAt(0).toUpperCase() + this.parkingType.substring(1);
+            }
             if ((this.bProfile.baseLocation.parkingType && this.bProfile.baseLocation.parkingType !== 'none') || this.bProfile.baseLocation.open24hours
               || this.objectKeys(this.bProfile.baseLocation.locationVirtualFields).length > 0) {
               this.normal_locationamenities_show = 3;
@@ -505,37 +512,43 @@ export class BProfileComponent implements OnInit, OnDestroy {
       });
   }
   editLocation(badge?) {
-    if (this.bProfile.baseLocation) {
+    if (badge) {
+      this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'locationoutermainclass'],
+        disableClose: true,
+        autoFocus: false,
+        data: {
+          location: this.base_loc,
+          badges: this.loc_badges,
+          type: 'edit',
+          source: 'waitlist',
+          forbadge: true
+        }
+      });
+      this.loceditdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result === 'reloadlist') {
+            this.getBusinessProfile();
+            this.getProviderLocations();
+          }
+        }
+      });
+    } else if (this.bProfile.baseLocation) {
       const locid = this.bProfile.baseLocation.id;
       if (locid) {
-        // this.routerobj.navigate(['/provider/settings/q-manager/location-detail/' + locid]);
-        this.loceditdialogRef = this.dialog.open(AddProviderWaitlistLocationsComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'locationoutermainclass'],
-          disableClose: true,
-          autoFocus: false,
-          data: {
-            location: this.base_loc,
-            badges: this.loc_badges,
-            type: 'edit',
-            // source: 'bprofile',
-            source: 'waitlist',
-            forbadge: (badge) ? true : false
-          }
-        });
-        this.loceditdialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            if (result === 'reloadlist') {
-              this.getBusinessProfile();
-              this.getProviderLocations();
-            }
-          }
-        });
+        const navigationExtras: NavigationExtras = {
+          queryParams: { action: 'editbase' }
+        };
+        this.routerobj.navigate(['provider', 'settings', 'q-manager',
+          'locations', locid], navigationExtras);
       }
     } else {
-      // come to base profile from wizard and profile is disabled
-      // chance for no base profile
-      this.addLocation();
+      const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'add' }
+      };
+      this.routerobj.navigate(['provider', 'settings', 'q-manager',
+        'locations', 'add'], navigationExtras);
     }
   }
   editQueue() {

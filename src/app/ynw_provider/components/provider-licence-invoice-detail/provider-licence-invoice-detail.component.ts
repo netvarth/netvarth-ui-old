@@ -88,6 +88,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     this.payMentShow = data.payMent;
     this.pay_data.amount = this.invoice.amount;
     this.pay_data.uuid = this.invoice.ynwUuid;
+    console.log(this.pay_data.uuid);
   }
 
   ngOnInit() {

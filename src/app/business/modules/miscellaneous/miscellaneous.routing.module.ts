@@ -8,10 +8,10 @@ import { SaleschannelSettingsComponent } from './saleschannel/sc-settings.compon
 
 const routes: Routes = [
     { path: '', component: MiscellaneousComponent },
-    {
-      path: 'holidays',
-      component: ProviderNonworkingdaysComponent
-    },
+    // {
+    //   path: 'holidays',
+    //   component: ProviderNonworkingdaysComponent
+    // },
     {
       path: 'saleschannel',
       component: SaleschannelSettingsComponent
@@ -20,6 +20,8 @@ const routes: Routes = [
       path: 'jdn',
       component: JDNComponent
     },
+
+    { path: 'holidays', loadChildren: './NonWorkingDay/NonWorkingDay.module#NonWorkingDaymodule'},
     { path: 'labels', loadChildren: './labels/labels.module#LabelsModule'},
     { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' },
     { path: 'users', loadChildren: './users/users.module#UsersModule' },

@@ -125,7 +125,7 @@ export class POSComponent implements OnInit {
   }
   gotoDiscounts() {
     if (this.nodiscountError) {
-      this.router.navigate(['provider', 'settings', 'pos', 'discounts']);
+      this.router.navigate(['provider', 'settings', 'pos', 'discount']);
     } else {
       this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
     }

@@ -7,7 +7,7 @@
     <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
         <ul class="ph-gal">
             <ng-container *ngFor="let file of image_list_popup;let i = index">
-                <li *ngIf="i<2">
+                <li *ngIf="i<2" [ngClass]="{'gallery-class': img_lst_lngth=='2'}">
                     <div class="galbx">
                         <span class="mbt">
                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">

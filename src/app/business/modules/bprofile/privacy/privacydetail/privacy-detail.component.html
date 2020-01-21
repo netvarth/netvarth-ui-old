@@ -1,21 +1,101 @@
 <section>
-        <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-        </section>
-        <section>
-                <div class="content loc-list">
-                <div class="col-md-12 no-padding-small">
-                <div class="row">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div class="content loc-list">
+        <div class="col-md-12 no-padding-small">
+            <div class="row">
                 <div class="card p0" *ngIf="api_loading">
-                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <div class="card p0">
-                <div class="copy locd">
-                <div class="lbl col-sm-12 col-md-8 col-lg-8">ADD
+                    <div class="copy locd">
+                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                            <div class="col-md-12">
+                            <div class="ynw-common-form-nm" *ngIf="!api_loading">
+                                <div class="phoneouter" *ngIf="curtype=='phone'">
+                                    <div class="form-group  no-padding mobile-field">
+                                        <mat-form-field>
+                                            <div style="display:flex;">
+                                                <div class="input-group-prepend mob-prefix">
+                                                    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                                                </div>
+                                                <div>
+                                                    <input type="text" (keypress)="isNumeric($event)" matInput
+                                                        id="phone1" placeholder="{{mobile_cap}}"
+                                                        [(ngModel)]="phonenumber" [ngModelOptions]="{standalone: true}"
+                                                        autocomplete="off" maxlength="10" style="display: inline;">
+                                                </div>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- <label class="col-form-label" for="label1">{{phone_label_cap}}</label> -->
+                                        <mat-form-field>
+                                            <input type="text" matInput class="form-control"
+                                                placeholder="{{phone_label_cap}} (e.g: Mobile, Emergency, Main line, others, etc)"
+                                                [(ngModel)]="phonelabel" [ngModelOptions]="{standalone: true}"
+                                                autocomplete="off" maxlength="50">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <label class="col-form-label">{{phone_no_visible_cap}}</label>
+                                            <mat-radio-group [(ngModel)]="phonepermission"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <mat-radio-button value="all">{{privacypermissiontxt['all']}}
+                                                </mat-radio-button> &nbsp;&nbsp;
+                                                <!-- <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button> -->
+                                                <mat-radio-button value="self">{{privacypermissiontxt['self']}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="emailouter" *ngIf="curtype=='email'">
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input type="text" matInput class="form-control" id="phone1"
+                                                placeholder="{{email_id_cap}}(user@xyz.com)*" [(ngModel)]="emailemailid"
+                                                [ngModelOptions]="{standalone: true}" autocomplete="off">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-group">
+                                        <mat-form-field>
+                                            <input type="text" matInput class="form-control"
+                                                placeholder="{{email_label_cap}}(E.g. Office Email, Personal Email, etc)*"
+                                                [(ngModel)]="emaillabel" [ngModelOptions]="{standalone: true}"
+                                                autocomplete="off" maxlength="50">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <label class="col-form-label">{{email_visible_cap}}</label>
+                                            <mat-radio-group [(ngModel)]="emailpermission"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <mat-radio-button value="all">{{privacypermissiontxt['all']}}
+                                                </mat-radio-button>&nbsp;&nbsp;
+                                                <!-- <mat-radio-button value="customersOnly">{{show_privacyText('customersOnly')}}</mat-radio-button> -->
+                                                <mat-radio-button value="self">{{privacypermissiontxt['self']}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                style="display: inline-flex;">
+                                <button type="button" (click)="onCancel()" class="cs-btn bt2"
+                                    [disabled]="disableButton">{{cancel_btn_cap}}</button> &nbsp;
+                                <button (click)="savePrivacySettings()" type="button" mat-button class="cs-btn bt1"
+                                    [disabled]="disableButton">{{save_btn_cap}}</button>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="lbr col-sm-12 col-md-8 col-lg-8"></div>
                     </div>
-                    <div class="lbr col-sm-12 col-md-8 col-lg-8"></div>
                 </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                </section>
+            </div>
+        </div>
+    </div>
+</section>

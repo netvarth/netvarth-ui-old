@@ -52,7 +52,6 @@ export class DisplayboardQSetComponent implements OnInit {
         this.domain = user.sector;
     }
     goBack() {
-        console.log('back' + this.source);
         const actionObj = {
             source: this.source
         };

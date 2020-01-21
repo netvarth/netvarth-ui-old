@@ -33,6 +33,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   holdalertSelAck = '';
   holdalertSeldate = '';
   filterapplied;
+  filter_sidebar = false;
   open_filter = false;
   api_loading = true;
   alertStatus = 1;
@@ -211,5 +212,11 @@ export class ProviderSystemAlertComponent implements OnInit {
       }
       this.do_search(false);
     }
+  }
+  showFilterSidebar() {
+    this.filter_sidebar = true;
+  }
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
   }
 }

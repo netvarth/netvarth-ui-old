@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
-import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -39,9 +39,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sharedfunctionobj: SharedFunctions,
-    private _scrollToService: ScrollToService,
     private renderer: Renderer2,
-    public shared_service: SharedServices) {
+    public shared_service: SharedServices,
+    private titleService: Title) {
     this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
@@ -118,6 +118,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.doLogout()
       .then(
         () => {
+          this.titleService.setTitle('Jaldee');
           this.router.navigate(['/home']);
         },
         () => {
@@ -194,7 +195,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {
         this.active_license = cuser.new_lic;
-      } else {
+      } else if (cuser.accountLicenseDetails) {
         this.active_license = cuser.accountLicenseDetails.accountLicense.displayName;
       }
     }
@@ -312,12 +313,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   //       error => {
   //       });
   // }
+
   gotoBranch() {
-    const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accoutid');
+    const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromLocalStorage(accountid);
-    this.sharedfunctionobj.removeitemfromSessionStorage('accoutid');
+    this.sharedfunctionobj.removeitemfromSessionStorage('accountid');
     this.sharedfunctionobj.removeitemfromSessionStorage('tabId');
     window.location.reload();
   }
 }
-

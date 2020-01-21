@@ -74,7 +74,7 @@
         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
             <button type="button" mat-dialog-close class="cs-btn bt2"
                 [disabled]="disableButton">{{cancel_btn_cap}}</button>
-            <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+            <button type="submit" mat-button [disabled]="!amForm.valid || disableButton ||(!pushnotify && !sms &&!email)"
                 class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
             <button type="button"
                 *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist')"
