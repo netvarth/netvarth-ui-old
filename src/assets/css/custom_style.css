@@ -6644,7 +6644,7 @@ input.jdn_ip { width: 50px !important}
 }
 .blinking{
   animation:blinkingText 1s infinite;
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 @keyframes blinkingText{

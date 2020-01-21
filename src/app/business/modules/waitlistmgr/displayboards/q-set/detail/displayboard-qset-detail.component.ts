@@ -82,12 +82,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.id = this.qsetId;
         this.resetFields();
         this.actionparam = this.action;
-        this.getDepartments().then(() => {
-        });
-        this.getProviderQueues().then(() => {
-        });
-        this.getProviderServices().then(() => {
-        });
+        this.getDepartments();
+        this.getProviderQueues();
+        this.getProviderServices();
         setTimeout(() => {
             if (this.id) {
                 this.getDisplaydashboardbyId(this.id);
@@ -386,22 +383,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.categoryIds = [];
     }
     saveLabels(index) {
-        // this.labelsList.push({
-        //     'name': this.defaultLables[index].name,
-        //     'displayName': this.labelDisplayname[index],
-        //     'defaultValue': this.labelDefaultvalue[index] || '',
-        //     'label': this.defaultLables[index].label,
-        //     'order': this.labelOrder[index]
-        // });
-
-          this.labelsList[index] = {
+        this.labelsList.push({
             'name': this.defaultLables[index].name,
             'displayName': this.labelDisplayname[index],
             'defaultValue': this.labelDefaultvalue[index] || '',
             'label': this.defaultLables[index].label,
             'order': this.labelOrder[index]
-        };
-        console.log(this.labelsList);
+        });
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service, ev) {

@@ -128,8 +128,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     check_in_end_date: null,
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1,
-    futurecheckin_date: null
+    page: 1
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -270,8 +269,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   availableSlots: any = [];
   timeSlotCheckins: any = [];
   loading = false;
-  tomorrowDate;
-  tomorrow_checkins_list: any = [];
   unAvailableSlots: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -316,24 +313,23 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'FullyPaid', value: 'Fully Paid' }
   ];
   ngAfterViewInit(): void {
-    setTimeout(() => { this.apis_loaded = true;
+    setTimeout(() => {
+      this.apis_loaded = true;
       if (this.unAvailableSlots.length > 0) {
         this.scrollToSection();
       }
     });
   }
   scrollToSection() {
-      this.slotIds.toArray().forEach(element => {
-        if (element.nativeElement.innerText === this.unAvailableSlots[0]) {
-          element.nativeElement.scrollIntoViewIfNeeded();
-          return false;
-        }
-      });
+    this.slotIds.toArray().forEach(element => {
+      if (element.nativeElement.innerText === this.unAvailableSlots[0]) {
+        element.nativeElement.scrollIntoViewIfNeeded();
+        return false;
+      }
+    });
   }
   ngOnInit() {
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    // this.tomorrow.setDate(new Date().getDate()+1);
-    this.getTomorrowDate();
     if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
       this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
     } else {
@@ -418,15 +414,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  getTomorrowDate() {
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    const serverdate = moment(server).format();
-    const servdate = new Date(serverdate);
-    const seldate_checker = new Date(server);
-    this.tomorrowDate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-    this.filter.futurecheckin_date = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-    console.log(this.filter.futurecheckin_date);
-  }
   getLocationList() {
     const self = this;
     return new Promise(function (resolve, reject) {
@@ -713,19 +700,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQueueListByDate() {
     this.load_queue = 0;
-    console.log(this.queue_date);
-    console.log(this.filter.futurecheckin_date);
-    console.log(this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
-    console.log(this.time_type);
-    if (this.time_type === 2) {
-      if (this.filter.futurecheckin_date === null) {
-        this.getTomorrowDate();
-      }
-      this.queue_date = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
-    } else {
-      this.queue_date = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-    }
-    console.log(this.queue_date);
     if (this.selected_location && this.selected_location.id) {
       this.provider_services.getProviderLocationQueuesByDate(
         this.selected_location.id, this.queue_date)
@@ -738,7 +712,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             let indx = 0;
             for (const que of Cqueues) {
               if (que.queueState === 'ENABLED') {
-                if (que.id === savedQ || this.time_type === 2) {
+                if (que.id === savedQ) {
                   savedQok.push(que);
                 }
                 que.qindx = indx;
@@ -746,7 +720,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 indx += 1;
               }
             }
-            console.log(savedQok);
             if (savedQok.length > 0) {
               this.selectedQueue(savedQok[0]);
             } else {
@@ -827,20 +800,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       );
   }
   selectedQueue(selected_queue) {
-    // this.selected_queue = '';
-    if (selected_queue.id && this.time_type === 1) {
+    if (selected_queue.id) {
       this.sel_queue_indx = selected_queue.qindx;
       this.shared_functions.setitemToGroupStorage('pdq', selected_queue.id);
-      console.log('in if');
     }
     this.selected_queue = selected_queue;
-    console.log(this.selected_queue);
-    if (this.time_type === 2) {
-      this.getFutureCheckIn();
-    }
-    if (this.time_type === 1) {
-      this.getTodayCheckIn();
-    }
+    this.getTodayCheckIn();
     this.resetAll();
     this.today_waitlist_count = 0;
   }
@@ -981,7 +946,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.getAvaiableSlots('today');
             if (this.unAvailableSlots.length > 0) {
               setTimeout(() => {
-              this.scrollToSection();
+                this.scrollToSection();
               }, 500);
             }
           }
@@ -1002,7 +967,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // const config: ScrollToConfigOptions = {
     //   target: '03:00_PM'
     // };
-    element.scrollIntoView( {alignTop: true});
+    element.scrollIntoView({ alignTop: true });
     // this._scrollToService.scrollTo(element);
   }
   sortCheckins(checkins) {
@@ -1019,7 +984,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   getFutureCheckIn() {
     this.load_waitlist = 0;
     let Mfilter = this.setFilterForApi();
-    console.log(Mfilter);
     const promise = this.getFutureCheckinCount(Mfilter);
     promise.then(
       result => {
@@ -1029,7 +993,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.new_checkins_list = [];
-              this.tomorrow_checkins_list = [];
               this.check_in_list = this.check_in_filtered_list = data;
               // this.grouped_list = this.shared_functions.groupBy(this.check_in_list, 'waitlistStatus');
               // if (this.grouped_list && this.grouped_list['checkedIn']) {
@@ -1167,8 +1130,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       case 1: this.getQueueListByDate();
         this.noOfColumns = 8;
         break;
-      case 2: this.getQueueListByDate();
-        // this.getQueueList();
+      case 2: this.getQueueList();
         this.noOfColumns = 8;
         break;
     }
@@ -1303,9 +1265,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setFilterForApi() {
     const api_filter = {};
-    if (this.time_type === 1 || this.time_type === 2) {
+    if (this.time_type === 1) {
       api_filter['queue-eq'] = this.selected_queue.id;
-      if (this.token && this.time_type === 1) {
+      if (this.token) {
         api_filter['token-eq'] = this.token;
       }
     } else if (this.filter.queue !== 'all') {
@@ -1336,10 +1298,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
       }
-      if (this.filter.futurecheckin_date != null) {
-        api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
-      }
-      console.log(api_filter);
     }
     if (this.time_type === 0) {
       if (this.filter.payment_status !== 'all') {
@@ -1390,8 +1348,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       check_in_end_date: null,
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
-      page: 0,
-      futurecheckin_date: null
+      page: 0
     };
   }
   goCheckinDetail(checkin) {
@@ -1661,7 +1618,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       account_id: this.bprofile.id,
       name: this.bprofile.businessName
     };
-    console.log(this.queue_date);
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const cdate = new Date(todaydt);
     const mn = cdate.getMonth() + 1;
@@ -2181,7 +2137,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       this.unAvailableSlots = this.unAvailableSlots.filter(x => !availableSlots.includes(x));
-      console.log(this.unAvailableSlots);
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
       this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
       this.loading = false;

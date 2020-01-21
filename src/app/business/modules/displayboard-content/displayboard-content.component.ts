@@ -118,8 +118,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 });
         } else {
             this.cronHandle = Observable.interval(20000).subscribe(() => {
-            this.getSingleStatusboard();
-        });
+                this.getSingleStatusboard();
+            });
         }
     }
     getSingleStatusboard() {
@@ -172,7 +172,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             let layoutData;
             this.provider_services.getDisplayboard(this.layout_id).subscribe(
                 layoutInfo => {
-                    console.log(layoutInfo);
                     layoutData = layoutInfo;
                     this.roomName = layoutData['serviceRoom'];
                     const layoutPosition = layoutData.layout.split('_');
@@ -386,6 +385,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         const displayboard = element.queueSet;
         // this.provider_services.getDisplayboardQSetbyId(element.sbId).subscribe(
         //     (displayboard) => {
+        const fieldlistasc = this.shared_functions.sortByKey(displayboard.fieldList, 'order');
+        displayboard.fieldList = fieldlistasc;
         this.selectedDisplayboards[element.position]['board'] = displayboard;
         const Mfilter = this.setFilterForApi(displayboard);
         Object.keys(displayboard['sortBy']).forEach(key => {
@@ -396,7 +397,6 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 this.selectedDisplayboards[element.position]['checkins'] = waitlist;
             });
         // });
-        console.log(this.selectedDisplayboards);
     }
     createRange(number) {
         const items = [];

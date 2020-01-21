@@ -81,7 +81,7 @@
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
                 </li>
-                <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==2 && apis_loaded && selected_queue">
+                <!-- <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==2 && apis_loaded && selected_queue">
                   <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
                     *ngIf="selected_location">
@@ -108,14 +108,14 @@
                       </ul>
                     </li>
                   </ul>
-                </li>
-                <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
+                </li> -->
+                <!-- <li class="dropdown messages-menu mgn-up-10" *ngIf="time_type == 2">
                   <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
                     [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="genTextHeight">
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
-                </li>
+                </li> -->
               </ul>
             </div>
           </nav>
@@ -721,9 +721,9 @@
                   *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
-
+                <!-- Timeslor disabled queue statusboard -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new']">
+                  *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new'] && !loading">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none"
@@ -842,9 +842,7 @@
                   </div>
                 </div>
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-
-
-
+                <!-- Timeslor enabled queue statusboard -->
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
                   [class.chk-scroll]="showstatus['new']"
                   *ngIf="showstatus['new'] && selected_queue.appointment === 'Enable' && !loading">
@@ -855,7 +853,7 @@
                     *ngFor="let slot of availableSlots, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                       <mat-chip-list>
-                        <mat-chip #appSlots id = "{{replaceSlotwithUnderScore(slot)}}" class="app-info-box-icon"
+                        <mat-chip #appSlots id="{{replaceSlotwithUnderScore(slot)}}" class="app-info-box-icon"
                           [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot)"
                           (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked(slot)"
                           [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
@@ -866,8 +864,6 @@
                       *ngIf="timeSlotCheckins && timeSlotCheckins[slot] && timeSlotCheckins[slot][0] && (timeSlotCheckins[slot][0].waitlistStatus === 'arrived' || timeSlotCheckins[slot][0].waitlistStatus === 'checkedIn')"
                       [class.tkn-leftbox]="calculationmode=='NoCalc' && !showToken">
                       <div class="right" (click)="selectnewWaitlist(i, timeSlotCheckins[slot])">
-
-
                         <div class="col-md-7 col-xs-7 p0">
                           <div class="col-md-8 col-xs-8 p0 hidden-xs">
                             <div class="info-box-text forwhom pointer-cursor"
@@ -922,7 +918,6 @@
                               </span>
                             </div>
                           </div>
-
                           <div class="col-md-4 col-xs-4 p0 hidden-xs">
                             <span class="icon-cloud icon-btn1 "
                               *ngIf="timeSlotCheckins[slot][0].waitlistedBy == 'CONSUMER'"
@@ -984,10 +979,6 @@
                     </div>
                   </div>
                 </div>
-
-
-
-
               </div>
               <div class="clearfix"></div>
               <div class="chkins col-md-12 col-xs-12  no-padding">
