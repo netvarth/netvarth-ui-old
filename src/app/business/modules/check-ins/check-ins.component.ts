@@ -264,6 +264,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   newWaitlistforMsg: any = [];
   consumerTrackstatus = false;
   customerMsg = '';
+  board_count = 0;
+  sortBy = 'sort_token';
+  showAvailableSlots = false;
+  availableSlots: any = [];
+  timeSlotCheckins: any = [];
+  loading = false;
+  unAvailableSlots: any = [];
   departments: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
@@ -1621,32 +1628,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       day = '' + dy;
     }
     const curdate = cdate.getFullYear() + '-' + mon + '-' + day;
-    this.ChkindialogRef = this.dialog.open(CheckInComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
-      disableClose: true,
-      data: {
-        type: 'provider',
-        is_provider: 'true',
-        customer_data: user_data,
-        moreparams: {
-          source: 'provider_checkin',
-          bypassDefaultredirection: 1,
-          provider: post_data['provider'],
-          location: post_data['location'],
-          sel_date: curdate
-        },
-        datechangereq: true,
-        apptTime: appttime,
-        queue: this.selected_queue
-      }
-    });
-    this.ChkindialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.reloadActionSubheader.emit(result);
-        this.reloadAPIs();
-      }
-    });
+    // this.ChkindialogRef = this.dialog.open(CheckInComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'consumerpopupmainclass', 'checkin-consumer'],
+    //   disableClose: true,
+    //   data: {
+    //     type: 'provider',
+    //     is_provider: 'true',
+    //     customer_data: user_data,
+    //     moreparams: {
+    //       source: 'provider_checkin',
+    //       bypassDefaultredirection: 1,
+    //       provider: post_data['provider'],
+    //       location: post_data['location'],
+    //       sel_date: curdate
+    //     },
+    //     datechangereq: true,
+    //     apptTime: appttime,
+    //     queue: this.selected_queue
+    //   }
+    // });
+    // this.ChkindialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'reloadlist') {
+    //     this.reloadActionSubheader.emit(result);
+    //     this.reloadAPIs();
+    //   }
+    // });
   }
   applyLabel(checkin) {
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid, 'add-label'], { queryParams: checkin.label });
