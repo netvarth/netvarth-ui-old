@@ -6577,7 +6577,7 @@ input.jdn_ip { width: 50px !important}
 }
 
 .display-layout .logo img {
-  width: 180px;
+  width: 150px;
   height: 150px;
 }
 
@@ -6636,11 +6636,18 @@ input.jdn_ip { width: 50px !important}
   background: #a8d2ea;
   color: black;
   font-family: sans-serif !important;
+  height: 100px;
 }
 .branch-det .title {
   font-weight: 600;
   font-size: 2.2rem;
   color: #006cab !important;
+  padding-top: 20px;
+}
+.branch-det img {
+  width: 100px;
+  height: 100px;
+  float: right;
 }
 .blinking{
   animation:blinkingText 1s infinite;

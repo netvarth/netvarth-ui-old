@@ -39,7 +39,7 @@
                       {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
                       {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
                         *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
-                      <div class="instantQ" *ngIf="selected_queue.instantQueue"> [Only for today]</div>
+                      <div class="instantQ" *ngIf="selected_queue && selected_queue.instantQueue"> [Only for today]</div>
                     </span>
                   </a>
                   <ul class="dropdown-menu ques">
@@ -718,12 +718,12 @@
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12"
-                  *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length === 0 && showstatus['new']">
+                  *ngIf="selected_queue && selected_queue.appointment === 'Disable' && new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
                 <!-- Timeslor disabled queue statusboard -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new'] && !loading">
+                  *ngIf="selected_queue && selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new'] && !loading">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none"
@@ -845,7 +845,7 @@
                 <!-- Timeslor enabled queue statusboard -->
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
                   [class.chk-scroll]="showstatus['new']"
-                  *ngIf="showstatus['new'] && selected_queue.appointment === 'Enable' && !loading">
+                  *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && !loading">
                   <!-- <span class="addbt" style="padding-left: 100px !important;padding-bottom: 40px !important;"
                         *ngIf="timeSlotCheckins && !timeSlotCheckins[slot]" (click)="checkinClicked(slot)">
                       </span> -->
@@ -853,7 +853,7 @@
                     *ngFor="let slot of availableSlots, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
                       <mat-chip-list>
-                        <mat-chip #appSlots id="{{replaceSlotwithUnderScore(slot)}}" class="app-info-box-icon"
+                        <mat-chip #appSlots class="app-info-box-icon"
                           [selected]="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot)"
                           (click)="timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot) && checkinClicked(slot)"
                           [ngClass]="{'active': (timeSlotCheckins && !timeSlotCheckins[slot] && !isAvailableSlot(slot))}">
@@ -872,7 +872,7 @@
                               {{timeSlotCheckins[slot][0].waitlistingFor[0].firstName}}
                               {{timeSlotCheckins[slot][0].waitlistingFor[0].lastName}}
                             </div>
-                            <div *ngIf="selected_queue.services.length>1" class="info-box-text service">
+                            <div *ngIf="selected_queue && selected_queue.services.length>1" class="info-box-text service">
                               {{timeSlotCheckins[slot][0].service.name}}
                             </div>
                             <div class="checkin-label" *ngFor="let label of timeSlotCheckins[slot][0].label | keyvalue"
@@ -887,7 +887,7 @@
                               {{timeSlotCheckins[slot][0].waitlistingFor[0].firstName}}
                               {{timeSlotCheckins[slot][0].waitlistingFor[0].lastName}}
                             </div>
-                            <div *ngIf="selected_queue.services.length>1" class="info-box-text service">
+                            <div *ngIf="selected_queue && selected_queue.services.length>1" class="info-box-text service">
                               {{timeSlotCheckins[slot][0].service.name}}
                             </div>
                             <div class="checkin-label" *ngFor="let label of timeSlotCheckins[slot][0].label | keyvalue"

@@ -943,13 +943,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.changeStatusType('all');
           }
           if (this.selected_queue && this.selected_queue.appointment === 'Enable') {
-            this.getAvaiableSlots('today');
+             this.getAvaiableSlots('today');
             if (this.unAvailableSlots.length > 0) {
               setTimeout(() => {
                 this.scrollToSection();
               }, 500);
             }
           }
+          this.loading = false;
         },
         () => {
           this.load_waitlist = 1;
@@ -958,17 +959,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.load_waitlist = 1;
         });
 
-  }
-  replaceSlotwithUnderScore(slot) {
-    return slot.replace(/ /g, '_');
-  }
-  public triggerScrollTo(element) {
-    // console.log(sec);
-    // const config: ScrollToConfigOptions = {
-    //   target: '03:00_PM'
-    // };
-    element.scrollIntoView({ alignTop: true });
-    // this._scrollToService.scrollTo(element);
   }
   sortCheckins(checkins) {
     checkins.sort(function (message1, message2) {
@@ -2139,9 +2129,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.unAvailableSlots = this.unAvailableSlots.filter(x => !availableSlots.includes(x));
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
       this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
-      this.loading = false;
-    } else {
-      this.loading = false;
     }
   }
 }
