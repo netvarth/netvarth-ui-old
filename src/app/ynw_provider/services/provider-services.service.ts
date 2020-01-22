@@ -11,13 +11,13 @@ export class ProviderServices {
     return this.servicemeta.httpGet('accounts/conf');
   }
   getBussinessProfile() {
-    return this.servicemeta.httpGet('provider/bProfile');
+    return this.servicemeta.httpGet('account/bProfile');
   }
   getPublicSearch() {
-    return this.servicemeta.httpGet('provider/search');
+    return this.servicemeta.httpGet('account/search');
   }
   updatePublicSearch(value) {
-    const path = 'provider/search/' + value;
+    const path = 'account/search/' + value;
     return this.servicemeta.httpPut(path);
   }
   getVirtualFields(domain, subdomain = null) {
@@ -75,7 +75,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet('provider/license/metric');
   }
   getTotalAllowedAdwordsCnt() {
-    return this.servicemeta.httpGet('provider/license/adwords/count');
+    return this.servicemeta.httpGet('account/license/adwords/count');
   }
   getUpgradableLicensePackages() {
     return this.servicemeta.httpGet('provider/license/upgradablePackages');
@@ -196,51 +196,51 @@ export class ProviderServices {
     return this.servicemeta.httpPost('provider/bProfile', data);
   }
   patchbProfile(data) {
-    return this.servicemeta.httpPatch('provider/bProfile', data);
+    return this.servicemeta.httpPatch('account/bProfile', data);
   }
   updatePrimaryFields(data) {
-    return this.servicemeta.httpPut('provider/bProfile', data);
+    return this.servicemeta.httpPut('account/bProfile', data);
   }
   updateDomainSubDomainFields(data, domain, subdomain = null) {
-    const path = (!subdomain) ? 'provider/bProfile/domain' :
-      'provider/bProfile/' + subdomain;
+    const path = (!subdomain) ? 'account/bProfile/domain' :
+      'account/bProfile/' + subdomain;
     return this.servicemeta.httpPut(path, data);
   }
   updateSocialMediaLinks(data) {
-    return this.servicemeta.httpPut('provider/bProfile/socialMedia', data);
+    return this.servicemeta.httpPut('account/bProfile/socialMedia', data);
   }
   getGalleryImages() {
     return this.servicemeta.httpGet('provider/gallery');
   }
   uploadGalleryImages(postdata) {
-    return this.servicemeta.httpPost('provider/gallery', postdata);
+    return this.servicemeta.httpPost('account/gallery', postdata);
   }
   deleteProviderGalleryImage(filename) {
-    return this.servicemeta.httpDelete('provider/gallery/' + filename);
+    return this.servicemeta.httpDelete('account/gallery/' + filename);
   }
   getProviderLogo() {
     return this.servicemeta.httpGet('provider/logo');
   }
   uploadLogo(data) {
-    return this.servicemeta.httpPost('provider/logo', data);
+    return this.servicemeta.httpPost('account/logo', data);
   }
   deleteLogo(name) {
-    const url = 'provider/logo/' + name;
+    const url = 'account/logo/' + name;
     return this.servicemeta.httpDelete(url);
   }
   // Addwords
   getAdwords() {
-    return this.servicemeta.httpGet('provider/license/adwords');
+    return this.servicemeta.httpGet('account/license/adwords');
   }
   addAdwords(data) {
-    const url = 'provider/license/adwords/' + data;
+    const url = 'account/license/adwords/' + data;
     return this.servicemeta.httpPost(url);
   }
   deleteAdwords(id) {
-    const url = 'provider/license/adwords/' + id;
+    const url = 'account/license/adwords/' + id;
     return this.servicemeta.httpDelete(url);
   }
-  // Check-In Manager
+  // Q manager
   setAcceptOnlineCheckin(status) {
     const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
     return this.servicemeta.httpPut(url);
@@ -262,7 +262,7 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url);
   }
   getProviderLocations() {
-    return this.servicemeta.httpGet('provider/locations');
+    return this.servicemeta.httpGet('account/locations');
   }
   setWaitlistMgr(data) {
     const url = 'provider/settings/waitlistMgr/';
@@ -316,10 +316,10 @@ export class ProviderServices {
   }
   // Waiting listing location
   addProviderLocation(data) {
-    return this.servicemeta.httpPost('provider/locations', data);
+    return this.servicemeta.httpPost('account/locations', data);
   }
   changeProviderLocationStatus(id, chstatus) {
-    const url = 'provider/locations/' + id + '/' + chstatus;
+    const url = 'account/locations/' + id + '/' + chstatus;
     if (chstatus === 'enable') {
       return this.servicemeta.httpPut(url);
     } else if (chstatus === 'disable') {
@@ -327,11 +327,11 @@ export class ProviderServices {
     }
   }
   changeProviderBaseLocationStatus(id) {
-    const url = 'provider/bProfile/baseLocation/' + id;
+    const url = 'account/bProfile/baseLocation/' + id;
     return this.servicemeta.httpPut(url);
   }
   editProviderLocation(data) {
-    return this.servicemeta.httpPut('provider/locations', data);
+    return this.servicemeta.httpPut('account/locations', data);
   }
   getLicenseUsage() {
     const url = 'provider/license/usageInfo';
@@ -379,7 +379,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
   getProviderInbox(filter = {}) {
-    return this.servicemeta.httpGet('provider/communications', null, filter);
+    return this.servicemeta.httpGet('account/communications', null, filter);
   }
   getWaitlistFutureCount(filter = {}) {
     const url = 'provider/waitlist/future/count/';
@@ -446,7 +446,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getLocationDetail(location_id) {
-    const url = 'provider/locations/' + location_id;
+    const url = 'account/locations/' + location_id;
     return this.servicemeta.httpGet(url);
   }
 
@@ -459,7 +459,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getLocationCount() {
-    const url = 'provider/locations/count';
+    const url = 'account/locations/count';
     return this.servicemeta.httpGet(url);
   }
   getServiceCount() {
@@ -608,15 +608,15 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   addCustomId(id) {
-    const url = 'provider/business/' + id;
+    const url = 'account/business/' + id;
     return this.servicemeta.httpPost(url);
   }
   editCustomId(id) {
-    const url = 'provider/business/' + id;
+    const url = 'account/business/' + id;
     return this.servicemeta.httpPut(url);
   }
   removeCustomId(customid) {
-    const url = 'provider/business/' + customid;
+    const url = 'account/business/' + customid;
     return this.servicemeta.httpDelete(url);
   }
   editWaitTime(uuid, waittime) {
@@ -792,11 +792,11 @@ export class ProviderServices {
     return this.servicemeta.httpDelete(url);
   }
   addSalesCode(id) {
-    const url = 'provider/salesChannel/' + id;
+    const url = 'account/salesChannel/' + id;
     return this.servicemeta.httpPost(url);
   }
   getSalesChannel() {
-    const url = 'provider/salesChannel';
+    const url = 'account/salesChannel';
     return this.servicemeta.httpGet(url);
   }
   getbillCycle() {
@@ -848,7 +848,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getSearchSCdetails(scId) {
-    const url = 'provider/salesChannel/' + scId;
+    const url = 'account/salesChannel/' + scId;
     return this.servicemeta.httpGet(url);
   }
   getsearchPhonedetails(phoneNumber) {

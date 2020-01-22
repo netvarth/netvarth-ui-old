@@ -510,7 +510,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.searchclick.emit(ob);
   }
   getInboxUnreadCnt() {
-    const usertype = this.ctype;
+    let usertype;
+    if (this.ctype === 'provider') {
+      usertype = 'account';
+    } else {
+      usertype = this.ctype;
+    }
     this.shared_service.getInboxUnreadCount(usertype)
       .subscribe(data => {
         this.inboxCntFetched = true;

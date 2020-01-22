@@ -165,7 +165,7 @@ export class EditProfileComponent implements OnInit {
             'email': sub_data.email || ''
           }
         };
-        passtyp = 'provider/profile';
+        passtyp = 'account/profile';
       }
       this.shared_services.updateProfile(post_data, passtyp)
         .subscribe(

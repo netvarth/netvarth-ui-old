@@ -163,7 +163,13 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         this.cronHandle.unsubscribe();
       }
     }
-    this.shared_service.getInboxUnreadCount(usertype)
+    let type;
+    if (usertype === 'provider') {
+      type = 'account';
+    } else {
+      type = usertype;
+    }
+    this.shared_service.getInboxUnreadCount(type)
       .subscribe(data => {
         this.inboxCntFetched = true;
         this.inboxUnreadCnt = data;
