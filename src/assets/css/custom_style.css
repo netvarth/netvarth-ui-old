@@ -5530,7 +5530,7 @@ li.separator.setsplit {
 
 @media (min-width: 768px) {
   .sidebar-mini.sidebar-collapse .main-sidebar {
-    z-index: 1 !important;
+    z-index: 6 !important;
   }
 }
 
