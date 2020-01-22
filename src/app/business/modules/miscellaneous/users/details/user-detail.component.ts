@@ -159,6 +159,40 @@ export class BranchUserDetailComponent implements OnInit {
             return;
         }
         if (this.actionparam === 'add') {
+
+
+            // const data = {
+            //     'firstName': 'string',
+            //     'lastName': 'string',
+            //     'address': 'string',
+            //     'mobileNo': 0,
+            //     'dob': '2020-01-21T09:12:18.734Z',
+            //     'gender': 'string',
+            //     'userType': 'CONSUMER',
+            //     'email': 'string',
+            //     'city': 'string',
+            //     'state': 'string'
+            // };
+
+            // const post_data = {
+            //     'userProfile': {
+            //         'firstName': input.first_name.trim() || null,
+            //         'lastName': input.last_name.trim() || null,
+            //         'address': 'ff',
+            //         'mobileNo': input.phonenumber,
+            //         'dob': date_format || null,
+            //         'gender': input.gender || null,
+            //         'userType': 'CONSUMER',
+            //         'email': input.email || '',
+            //         'city': 'string',
+            //         'state': 'string'
+            //     },
+            //     'subSector': input.selectedSubDomain.subDomain,
+            //     'commonPassword': input.password,
+            //     'isAdmin': true,
+            //     'departmentCode': input.selectedDepartment
+            // };
+
             const post_data = {
                 'userProfile': {
                     'firstName': input.first_name.trim() || null,
@@ -174,7 +208,7 @@ export class BranchUserDetailComponent implements OnInit {
                 'isAdmin': true,
                 'departmentCode': input.selectedDepartment
             };
-            this.provider_services.createBranchSP(post_data).subscribe(data => {
+            this.provider_services.createBranchSP(post_data).subscribe(() => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
             },

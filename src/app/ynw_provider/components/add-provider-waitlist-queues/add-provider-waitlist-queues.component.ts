@@ -745,13 +745,13 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       }
     }
   }
-  changeTimeslotStatus(ev) {
-    if (ev.checked) {
-      this.timeSlotStatus = true;
-      this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
-    } else {
-      this.timeSlotStatus = false;
-      this.amForm.get('timeSlot').setValue(0);
-    }
-  }
+  // changeTimeslotStatus(ev) {
+  //   if (ev.checked) {
+  //     this.timeSlotStatus = true;
+  //     this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
+  //   } else {
+  //     this.timeSlotStatus = false;
+  //     this.amForm.get('timeSlot').setValue(0);
+  //   }
+  // }
 }

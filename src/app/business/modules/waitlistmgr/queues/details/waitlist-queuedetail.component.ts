@@ -50,7 +50,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
     customer_label = '';
     queuedialogRef;
     api_loading = true;
-
+    appointment = false;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -63,7 +63,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
-       this.api_loading = true;
+        this.api_loading = true;
         if (this.queue_id) {
             this.getQueueDetail();
 
@@ -83,6 +83,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.queue_data = data;
+                    this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
                         schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
@@ -110,7 +111,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
     goBack() {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'queues']);
-            this.api_loading = false;
+        this.api_loading = false;
     }
     addEditProviderQueue(type) {
         this.provider_shared_functions.addEditQueuePopup(this, type, 'queue_detail', this.queue_data, this.provider_shared_functions.getActiveQueues());
@@ -137,6 +138,14 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
                     }
                 }
                 this.provider_shared_functions.setActiveQueues(activeQueues);
+            });
+    }
+
+    changeTimeslotStatus(ev) {
+        const status = (ev.checked) ? 'Enable' : 'Disable';
+        this.provider_services.changeApptStatus(status, this.queue_id).subscribe(
+            () => {
+                this.appointment = (status === 'Enable') ? true : false;
             });
     }
 }
