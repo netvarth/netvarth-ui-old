@@ -165,7 +165,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     }
     let type;
     if (usertype === 'provider') {
-      type = 'provider';
+      type = 'account';
     } else {
       type = usertype;
     }

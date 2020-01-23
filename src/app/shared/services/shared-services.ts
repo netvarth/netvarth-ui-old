@@ -10,7 +10,7 @@ export class SharedServices {
   constructor(private servicemeta: ServiceMeta, private http: HttpClient) {
   }
   getSystemDate() {
-    return this.servicemeta.httpGet('provider/server/date');
+    return this.servicemeta.httpGet('account/server/date');
   }
   adminLogin(body) {
     return this.servicemeta.httpPost('superadmin/login', body);
@@ -59,17 +59,17 @@ export class SharedServices {
   }
   signUpProvider(body) {
 
-    return this.servicemeta.httpPost('provider', body);
+    return this.servicemeta.httpPost('account', body);
   }
   signUpConsumer(body) {
     return this.servicemeta.httpPost('consumer', body);
   }
   saveReferralInfo(otp, body) {
-    const path = 'provider/' + otp + '/howDoYouHear';
+    const path = 'account/' + otp + '/howDoYouHear';
     return this.servicemeta.httpPost(path, body);
   }
   OtpSignUpProviderValidate(otp) {
-    const path = 'provider/' + otp + '/verify';
+    const path = 'account/' + otp + '/verify';
     return this.servicemeta.httpPost(path);
   }
   OtpSignUpConsumerValidate(otp) {
@@ -81,15 +81,15 @@ export class SharedServices {
     return this.servicemeta.httpPut(path, body);
   }
   ProviderSetPassword(otp, body) {
-    const path = 'provider/' + otp + '/activate';
+    const path = 'account/' + otp + '/activate';
     return this.servicemeta.httpPut(path, body);
   }
   /* By Sony - Starts here*/
   GetsearchLocation(params) {
-    return this.servicemeta.httpGet('provider/search/suggester/location', '', params);
+    return this.servicemeta.httpGet('account/search/suggester/location', '', params);
   }
   getBusinessUniqueId(customId) {
-    return this.servicemeta.httpGet('provider/business/' + customId);
+    return this.servicemeta.httpGet('account/business/' + customId);
   }
   getFeatures(subdomain) {
     return this.servicemeta.httpGet('provider/ynwConf/features/' + subdomain);
@@ -369,7 +369,7 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, message);
   }
   addProvidertoConsumerNote(uuid, message) {
-    const url = 'provider/communications/' + uuid;
+    const url = 'account/communications/' + uuid;
     return this.servicemeta.httpPost(url, message);
   }
   addProviderWaitlistNote(uuid, body) {
@@ -495,7 +495,7 @@ export class SharedServices {
     return this.servicemeta.httpGet('provider/bProfile');
   }
   getAddressfromLatLong(data) {
-    return this.servicemeta.httpPost('provider/signup/location', data);
+    return this.servicemeta.httpPost('account/signup/location', data);
   }
   addLiveTrackDetails(uid, id, data) {
     const url = 'consumer/waitlist/saveMyLoc/' + uid + '?account=' + id;

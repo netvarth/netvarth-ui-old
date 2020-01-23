@@ -512,7 +512,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getInboxUnreadCnt() {
     let usertype;
     if (this.ctype === 'provider') {
-      usertype = 'provider';
+      usertype = 'account';
     } else {
       usertype = this.ctype;
     }
