@@ -410,11 +410,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         //    api_filter['location-eq'] = this.locId;
         layout.queueSetFor.forEach(element => {
             if (element.type === 'SERVICE') {
-                api_filter['service-eq'] = element.id[0];
+                api_filter['service-eq'] = element.id;
             } else if (element.type === 'QUEUE') {
-                api_filter['queue-eq'] = element.id[0];
+                api_filter['queue-eq'] = element.id;
             } else {
-                api_filter['department-eq'] = element.id[0];
+                api_filter['department-eq'] = element.id;
             }
             api_filter['waitlistStatus-eq'] = 'arrived,checkedIn';
         });
