@@ -146,6 +146,7 @@ export class WaitlistQueueDetailComponent implements OnInit, OnDestroy {
         this.provider_services.changeApptStatus(status, this.queue_id).subscribe(
             () => {
                 this.appointment = (status === 'Enable') ? true : false;
+                this.getQueueDetail();
             });
     }
 }

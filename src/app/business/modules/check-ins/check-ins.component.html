@@ -86,9 +86,24 @@
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
-                  <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
+                    <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
                     [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="genTextHeight">
                 </li>
+                <!-- <div class="date-outer" *ngIf="time_type == 2">
+                  <div class="date-body">
+                      <span class="selected-date"> <span class="icon-minus" [class.disable]="disableMinus()"
+                              (click)="calculateDate(-1)"></span>{{sel_day}} {{sel_checkindate |
+                      date: dateFormat}} <span class="icon-add" (click)="calculateDate(1)"></span></span>
+                      <div class="form-group dt">
+                          <div class="pickerouter">
+                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                              <input [(ngModel)]="filter.futurecheckin_date" class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
+                                  [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
                 <li class="dropdown messages-menu queue-menu" *ngIf="time_type ==2 && apis_loaded && selected_queue">
                   <i class="icon-time dropdown-toggle" data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold sel-que" data-toggle="dropdown"
