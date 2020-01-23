@@ -240,6 +240,8 @@ export class BranchDoctorDetailComponent implements OnInit {
               
                 'commonPassword': input.password,
                 'userType': 'ASSISTANT',
+                // 'city':'',
+                // 'state':'',
                 'address': input.selectedAddress
             };
             if (this.actionparam === 'edit') {
