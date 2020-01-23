@@ -295,12 +295,10 @@ export class CheckInInnerComponent implements OnInit {
       this.search_obj = srch_fields;
       // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
       this.sel_loc = this.data.moreparams.location.id;
-      console.log(this.page_source);
-      console.log(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT));
       // if (this.page_source === 'provider_checkin') {
       //   this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
       // } else {
-        this.sel_checkindate = this.data.moreparams.sel_date;
+      this.sel_checkindate = this.data.moreparams.sel_date;
       // }
       this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
     }
@@ -1667,11 +1665,10 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
+    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
     const _this = this;
-    const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
-    this.availableSlots = allSlots;
     const filter = {};
-    const activeSlots = [];
+    this.availableSlots = [];
     filter['queue-eq'] = _this.sel_queue_id;
     filter['location-eq'] = _this.sel_loc;
     filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
@@ -1686,6 +1683,8 @@ export class CheckInInnerComponent implements OnInit {
     if (!edit) {
       this.apptTime = '';
     }
+    const activeSlots = [];
+    const allSlots = this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
     if (!future) {
       _this.provider_services.getTodayWaitlist(filter).subscribe(
         (waitlist: any) => {
@@ -1695,7 +1694,12 @@ export class CheckInInnerComponent implements OnInit {
             }
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
-          this.availableSlots = slots;
+          for (let i = 0; i < slots.length; i++) {
+            const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+            if (curTime <= slotTime) {
+              this.availableSlots.push(slots[i]);
+            }
+          }
           if (!edit) {
             this.apptTime = this.availableSlots[0];
           }
