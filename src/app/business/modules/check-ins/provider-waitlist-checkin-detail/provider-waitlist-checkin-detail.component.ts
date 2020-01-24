@@ -298,6 +298,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
               activeSlots.push(waitlist[i]['appointmentTime']);
             }
           }
+          activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           for (let i = 0; i < slots.length; i++) {
             const slotTime = moment(this.shared_Functionsobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
@@ -316,9 +317,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
               activeSlots.push(waitlist[i]['appointmentTime']);
             }
           }
-          console.log(activeSlots);
           activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
-          console.log(activeSlots);
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
         }

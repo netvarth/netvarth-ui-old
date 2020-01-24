@@ -79,7 +79,7 @@
                                                     *ngIf="!queue_data.futureWaitlist">Off</span>
                                             </div>
                                         </div>
-                                        <div class="c-ot row col-sm-12">
+                                        <div class="c-ot row col-sm-12" *ngIf="queue_data.calculationMode === 'Fixed'">
                                             <div class="item" style="display: flex;">
                                                 <span class="ttle mgn-rt-20">Enable time slot</span>
                                                 <mat-slide-toggle class="example-margin" [checked]="appointment"
