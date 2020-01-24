@@ -43,6 +43,7 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   removeitemdialogRef;
   message;
   account_type;
+  is_data_chnge: any;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionObj: SharedFunctions,
@@ -159,6 +160,7 @@ this.account_type = user.accountType;
 
   cancelChange() {
     this.formChange = 0;
+    this.is_data_chnge = 0;
     this.setValue(this.reset_waitlist_manager);
   }
 
