@@ -275,22 +275,20 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.locationobj.back();
   }
   getTimeSlots(QStartTime, QEndTime, interval) {
-    console.log(this.waitlist_data.appointmentTime);
     this.availableSlots = [];
     const _this = this;
     // const allSlots = _this.shared_Functionsobj.getTimeSlotsFromQTimings(30, QStartTime, QEndTime);
     // this.availableSlots = allSlots;
     const locId = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
     const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+    const curTimeSub = moment(curTime).subtract(interval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
     const filter = {};
     this.availableSlots = [];
     filter['queue-eq'] = _this.shared_Functionsobj.getitemFromGroupStorage('pdq');
     filter['location-eq'] = locId.id;
     filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
     const activeSlots = [];
-    console.log(interval);
-    console.log(QStartTime);
-    console.log(QEndTime);
     const allSlots = this.shared_Functionsobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
     if (this.pdtype === 1) {
       _this.provider_services.getTodayWaitlist(filter).subscribe(
@@ -303,7 +301,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           for (let i = 0; i < slots.length; i++) {
             const slotTime = moment(this.shared_Functionsobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-            if (curTime <= slotTime) {
+            if (curTimeSubDt <= slotTime) {
               this.availableSlots.push(slots[i]);
             }
           }
@@ -318,12 +316,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
               activeSlots.push(waitlist[i]['appointmentTime']);
             }
           }
+          console.log(activeSlots);
+          activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
+          console.log(activeSlots);
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           this.availableSlots = slots;
         }
       );
     }
-console.log(this.availableSlots);
+
   }
   getAppxTime(waitlist, retcap?) {
     /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
@@ -439,12 +440,10 @@ console.log(this.availableSlots);
   }
   editApptTime() {
     // tslint:disable-next-line: radix
-    console.log(this.waitlist_data);
     this.editAppntTime = true;
     const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
     this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
     this.apptTime = this.waitlist_data.appointmentTime;
-    // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
   }
   cancelUpdation() {
     this.editAppntTime = false;

@@ -86,7 +86,7 @@
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
-                    <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
+                  <input matInput type="text" [(ngModel)]="filter.futurecheckin_date" [matDatepicker]="picker"
                     [min]="tomorrowDate" #futuredate (dateChange)="doSearch()" class="genTextHeight">
                 </li>
                 <!-- <div class="date-outer" *ngIf="time_type == 2">

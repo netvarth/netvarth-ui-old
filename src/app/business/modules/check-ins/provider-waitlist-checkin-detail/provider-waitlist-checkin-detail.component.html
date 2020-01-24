@@ -113,36 +113,37 @@
                       </p>
                     </mat-panel-title>
                   </mat-expansion-panel-header> -->
-                  <div class="item otp_scr mgn-bt-20">
-                    <div class="ttle mgn-bt-10" > Appointment Time</div>
-                    <span style="font-weight: 600;"
-                      *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime">
-                      {{waitlist_data.appointmentTime}} </span>
-                    <span *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime"
-                      style="margin-left: 30px" class="editbt" (click)="editApptTime()"></span>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-bt-20 no-padding ynw-common-form-nm"
-                      *ngIf="editAppntTime || (waitlist_data && !waitlist_data.appointmentTime)">
-                        <mat-chip-list class="check-in-chip">
-                          <mat-chip *ngFor="let slot of availableSlots" [selected]="slot === waitlist_data.appointmentTime" (click)="saveApptTime(slot)">{{slot}}</mat-chip>
-                        </mat-chip-list>
-                        <!-- <mat-form-field>
+              <div class="item otp_scr mgn-bt-20">
+                <div class="ttle mgn-bt-10"> Appointment Time</div>
+                <span style="font-weight: 600;"
+                  *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime">
+                  {{waitlist_data.appointmentTime}} </span>
+                <span *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime" style="margin-left: 30px"
+                  class="editbt" (click)="editApptTime()"></span>
+                <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-bt-20 no-padding ynw-common-form-nm"
+                  *ngIf="editAppntTime || (waitlist_data && !waitlist_data.appointmentTime)">
+                  <mat-chip-list class="check-in-chip">
+                    <mat-chip *ngFor="let slot of availableSlots" [selected]="slot === waitlist_data.appointmentTime"
+                      (click)="saveApptTime(slot)">{{slot}}</mat-chip>
+                  </mat-chip-list>
+                  <!-- <mat-form-field>
                           <mat-select placeholder="Appointment Time" [(ngModel)]="apptTime" #appttime>
                               <mat-option *ngFor="let slot of availableSlots" [value]="slot">
                                   {{slot}}
                               </mat-option>
                           </mat-select>
                           </mat-form-field> -->
-                        <!-- <ngb-timepicker meridian="true" [(ngModel)]="appttime" (ngModelChange)="changetime($event)">
+                  <!-- <ngb-timepicker meridian="true" [(ngModel)]="appttime" (ngModelChange)="changetime($event)">
                         </ngb-timepicker> -->
-                        <!-- <div class="wait-btn mgn-up-25">
+                  <!-- <div class="wait-btn mgn-up-25">
                           <button class="cs-btn bt3 mgn-rt-5"
                             style="margin-left: 5px;" (click)="cancelUpdation()" type="button">Cancel</button>
                           <button type="submit" class="cs-btn bt3" (click)="saveApptTime()">Save</button>
                         </div> -->
-                      </div>
-                  </div>
-                  <div class="clearfix"></div>
-                <!-- </mat-expansion-panel>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <!-- </mat-expansion-panel>
               </mat-accordion> -->
               <div class="btm" *ngIf="waitlist_data">
                 <button class="cs-btn bt3 communicate" (click)="addConsumerInboxMessage()">{{send_msg_cap}}</button>

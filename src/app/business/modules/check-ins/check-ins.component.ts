@@ -273,7 +273,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   unAvailableSlots: any = [];
   futureUnAvailableSlots: any = [];
   tomorrowDate;
-  // sel_checkindate;
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -348,8 +347,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    // this.tomorrow.setDate(new Date().getDate()+1);
     this.getTomorrowDate();
     if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
       this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
@@ -381,7 +380,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-        if (!this.server_date) { this.setSystemDate(); }
+        // if (!this.server_date) { this.setSystemDate(); }
         this.router.events
           .pipe(filter((e: any) => e instanceof RoutesRecognized),
             pairwise()
@@ -729,8 +728,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const servdate = new Date(serverdate);
     const seldate_checker = new Date(server);
     this.tomorrowDate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-    this.filter.futurecheckin_date = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-    // this.sel_checkindate = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
+    if (this.shared_functions.getitemFromGroupStorage('futureDate')) {
+      this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
+    } else {
+      this.filter.futurecheckin_date = new Date(seldate_checker.setDate(servdate.getDate() + 1));
+    }
   }
   getQueueListByDate() {
     this.load_queue = 0;
@@ -865,7 +867,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.future_waitlist_count = 0;
       this.getFutureCheckIn();
     }
-    // this.selected_queue = selected_queue;
     this.resetAll();
   }
   handleQueueSel(mod) {
@@ -1380,6 +1381,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date) {
@@ -2183,6 +2185,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getAvaiableSlots(type?) {
     const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+    const curTimeSub = moment(curTime).subtract(this.selected_queue.timeInterval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
     this.availableSlots = [];
     this.unAvailableSlots = [];
     this.futureUnAvailableSlots = [];
@@ -2193,14 +2197,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         for (let i = 0; i < allSlots.length; i++) {
           const slotTime = moment(this.shared_functions.getDateFromTimeString(allSlots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
           // if (startTime.isAfter(endTime))
-          if (curTime <= slotTime) {
+          if (curTimeSubDt <= slotTime) {
             this.unAvailableSlots.push(allSlots[i]);
           }
         }
       }
-      // if (ev) {
-      //   (!this.showAvailableSlots) ? this.showAvailableSlots = true : this.showAvailableSlots = false;
-      // }
       const activeSlots = [];
       const availableSlots = [];
       const checkins = [];
