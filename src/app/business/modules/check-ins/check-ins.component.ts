@@ -20,7 +20,6 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { Observable } from 'rxjs/Observable';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
-import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -273,6 +272,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   unAvailableSlots: any = [];
   futureUnAvailableSlots: any = [];
   tomorrowDate;
+  historyCheckins: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -280,8 +280,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private shared_functions: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices,
-    public dateformat: DateFormatPipe,
-    private _scrollToService: ScrollToService) {
+    public dateformat: DateFormatPipe) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -705,7 +704,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             // if (this.time_type === 1) {
             //   this.getTodayCheckIn();
             // }
-            if (this.time_type === 0) {
+            if (this.time_type === 3) {
               this.getHistoryCheckIn();
             }
             if (this.time_type === 2) {
@@ -1133,7 +1132,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.section_future = [];
     this.section_history = [];
     this.section_new = [];
-    if (time_type !== 0) {
+    if (time_type !== 3) {
       this.shared_functions.removeitemfromLocalStorage('hP');
       this.shared_functions.removeitemfromLocalStorage('hPFil');
     }
@@ -1152,7 +1151,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter_date_start_max = null;
     this.filter_date_end_min = null;
     this.filter_date_end_max = null;
-    if (this.time_type === 0) {
+    if (this.time_type === 3) {
       this.filter_date_start_max = moment(new Date()).add(-1, 'days');
       this.filter_date_end_max = moment(new Date()).add(-1, 'days');
     } else if (this.time_type === 2) {
@@ -1171,7 +1170,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   loadApiSwitch(source) {
     this.resetAll();
     let chkSrc = true;
-    if (source === 'changeLocation' && this.time_type === 0) {
+    if (source === 'changeLocation' && this.time_type === 3) {
       const hisPage = this.shared_functions.getitemFromGroupStorage('hP');
       const hFilter = this.shared_functions.getitemFromGroupStorage('hPFil');
       if (hisPage !== null) {
@@ -1188,15 +1187,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     switch (this.time_type) {
-      case 0: this.getQueueList();
-        this.noOfColumns = 9;
-        break;
       case 1: this.getQueueListByDate();
         this.noOfColumns = 8;
         break;
       case 2: this.getQueueListByDate();
         // this.getQueueList();
         this.noOfColumns = 8;
+        break;
+      case 3: this.getQueueList();
+        this.noOfColumns = 9;
         break;
     }
   }
@@ -1363,11 +1362,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.dateformat.transformTofilterDate(this.filter.check_in_end_date);
       }
-      if (this.filter.futurecheckin_date != null) {
+      if (this.filter.futurecheckin_date != null && this.time_type === 2) {
         api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       }
     }
-    if (this.time_type === 0) {
+    if (this.time_type === 3) {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
@@ -1422,7 +1421,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   goCheckinDetail(checkin) {
-    if (this.time_type === 0) {
+    if (this.time_type === 3) {
       this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
       this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
     }
@@ -1884,6 +1883,49 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     printWindow.print();
     // printWindow.close();
   }
+
+  printHistoryCheckin() {
+    const Mfilter = this.setFilterForApi();
+    this.provider_services.getHistroryWaitlist(Mfilter)
+      .subscribe(
+        data => {
+          this.historyCheckins = data;
+          const params = [
+            'height=' + screen.height,
+            'width=' + screen.width,
+            'fullscreen=yes'
+          ].join(',');
+          const printWindow = window.open('', '', params);
+          let checkin_html = '';
+          checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
+          checkin_html += '<thead style="font-weight:600;font-size:1.2rem;">';
+          checkin_html += '<td style="padding:10px;"></td>';
+          checkin_html += '<td style="padding:10px;">Date & Time</td>';
+          checkin_html += '<td style="padding:10px;">Customer Name</td>';
+          checkin_html += '<td style="padding:10px;">Service</td>';
+          checkin_html += '</thead>';
+          for (let i = 0; i < this.historyCheckins.length; i++) {
+            checkin_html += '<tr style="line-height:20px;padding:10px">';
+            checkin_html += '<td style="padding:10px">#' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
+            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].date + ' ' + this.historyCheckins[i].checkInTime + '</td>';
+            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
+            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
+            checkin_html += '</tr>';
+          }
+          checkin_html += '</table>';
+          printWindow.document.write('<html><head><title></title>');
+          printWindow.document.write('</head><body >');
+          printWindow.document.write(checkin_html);
+          printWindow.document.write('</body></html>');
+          printWindow.moveTo(0, 0);
+          printWindow.print();
+          printWindow.document.close();
+          setTimeout(() => {
+            printWindow.close();
+          }, 500);
+        });
+  }
+
   filterbyStatus(status) {
     this.filterStatus = false;
     if (this.showStausFilters[status]) {
