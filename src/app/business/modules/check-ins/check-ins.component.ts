@@ -348,7 +348,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    this.getTomorrowDate();
+    if (this.server_date) {
+      this.getTomorrowDate();
+    }
     if (this.shared_functions.getitemFromGroupStorage('sortBy')) {
       this.sortBy = this.shared_functions.getitemFromGroupStorage('sortBy');
     } else {
@@ -726,11 +728,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     const seldate_checker = new Date(server);
-    this.tomorrowDate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-    if (this.shared_functions.getitemFromGroupStorage('futureDate')) {
+    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
       this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
+      this.tomorrowDate = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.futurecheckin_date = new Date(seldate_checker.setDate(servdate.getDate() + 1));
+      this.tomorrowDate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
     }
   }
   getQueueListByDate() {
@@ -1115,6 +1118,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   setTimeType(time_type) {
+    if (time_type === 3) {
+      this.getTomorrowDate();
+    }
     if (this.open_filter === true) {
       this.toggleFilter();
     }
