@@ -59,7 +59,7 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Status board',
+            title: 'Queue Board',
             url: '/provider/settings/q-manager/displayboards'
         }
     ];

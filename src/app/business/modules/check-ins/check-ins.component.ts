@@ -1650,7 +1650,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.createCheckin(result.data, appttime);
       } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
         this.createCustomer(result.data, source, appttime);
-      } else if (result && result.message && result.message === 'noCustomer' && source === 'providerCheckin') {
+      } else if (result && result.message && (result.message === 'noCustomer' || result.message === 'newCustomer') && source === 'providerCheckin') {
         this.createCustomer(result.data, source, appttime);
       }
     });

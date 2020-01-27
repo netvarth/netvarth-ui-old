@@ -27,18 +27,18 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
             <div class="form-group mobile-field">
                 <p class="form-level-settings" *ngIf="source=='createCustomer'">
                     {{frm_create_customer_cap_one}}{{frm_create_customer_cap_two}}{{frm_create_customer_cap_three}}</p>
-                    <div style="display: flex;">
-                            <div class="input-group-prepend mob-prefix">
-                                    <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-                                </div>
-                        <mat-form-field> 
-                            <div>     
-                                <input matInput type="text" class="form-control" id="mobile_number"
-                                    (keypress)="isNumeric($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
-                                    autocomplete="off" maxlength=10>
-                            </div>
-                        </mat-form-field>
+                <div style="display: flex;">
+                    <div class="input-group-prepend mob-prefix">
+                        <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
                     </div>
+                    <mat-form-field>
+                        <div>
+                            <input matInput type="text" class="form-control" id="mobile_number"
+                                (keypress)="isNumeric($event)" placeholder="{{mob_cap}}" formControlName="mobile_number"
+                                autocomplete="off" maxlength=10>
+                        </div>
+                    </mat-form-field>
+                </div>
 
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
@@ -81,13 +81,17 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
             </div>
 
         </mat-dialog-content>
+
         <mat-dialog-actions>
+            <div>
+                I don't have a mobile number, <a class="pointer-cursor" (click)="skip()">Skip >></a>
+            </div>
             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                 <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
-            <button mat-button [disabled]="!amForm.valid || create_new" class="cs-btn bt1">
-                <ng-container *ngIf="source=='createCustomer'">{{create_cap}}</ng-container>
-                <ng-container *ngIf="source=='providerCheckin'">Confirm</ng-container>
-            </button>
+                <button mat-button [disabled]="!amForm.valid || create_new" class="cs-btn bt1">
+                    <ng-container *ngIf="source=='createCustomer'">{{create_cap}}</ng-container>
+                    <ng-container *ngIf="source=='providerCheckin'">Confirm</ng-container>
+                </button>
             </div>
         </mat-dialog-actions>
     </form>

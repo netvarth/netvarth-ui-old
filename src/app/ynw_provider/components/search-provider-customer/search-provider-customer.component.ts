@@ -147,4 +147,10 @@ export class SearchProviderCustomerComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
+  skip() {
+    const return_data = {
+      'message': 'newCustomer'
+    };
+    this.dialogRef.close(return_data);
+  }
 }

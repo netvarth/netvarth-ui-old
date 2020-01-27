@@ -64,9 +64,10 @@ export class AddProviderCustomerComponent implements OnInit {
       gender: [''],
       address: ['']
     });
-
-    this.amForm.get('mobile_number').setValue(this.search_data.mobile_number);
-    this.amForm.get('first_name').setValue(this.search_data.first_last_name);
+    if (this.search_data) {
+      this.amForm.get('mobile_number').setValue(this.search_data.mobile_number);
+      this.amForm.get('first_name').setValue(this.search_data.first_last_name);
+    }
     this.api_loading = false;
   }
 
