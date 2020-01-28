@@ -12,15 +12,15 @@ import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/conf
 import {
   AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
 } from 'angular-modal-gallery';
-import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { ExistingCheckinComponent } from '../existing-checkin/existing-checkin.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { SignUpComponent } from '../signup/signup.component';
-import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+// import { SignUpComponent } from '../signup/signup.component';
+// import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 
 @Component({
   selector: 'app-provider-detail',
@@ -759,30 +759,30 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const providforCommunicate = this.provider_bussiness_id;
     // check whether logged in as consumer
     if (this.sharedFunctionobj.checkLogin()) {
-      this.showCommunicate(providforCommunicate);
+      // this.showCommunicate(providforCommunicate);
     } else { // show consumer login
 
     }
   }
-  showCommunicate(provid) {
-    this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        caption: 'Enquiry',
-        user_id: provid,
-        source: 'consumer-common',
-        type: 'send',
-        terminologies: this.terminologiesjson,
-        name: this.businessjson.businessName
-      }
-    });
+  // showCommunicate(provid) {
+  //   this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       caption: 'Enquiry',
+  //       user_id: provid,
+  //       source: 'consumer-common',
+  //       type: 'send',
+  //       terminologies: this.terminologiesjson,
+  //       name: this.businessjson.businessName
+  //     }
+  //   });
 
-    this.commdialogRef.afterClosed().subscribe(() => {
+  //   this.commdialogRef.afterClosed().subscribe(() => {
 
-    });
-  }
+  //   });
+  // }
   getFavProviders() {
     this.shared_services.getFavProvider()
       .subscribe(data => {
@@ -1063,18 +1063,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  openJdn() {
-    this.jdndialogRef = this.dialog.open(JdnComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: {
-        jdnList: this.jaldeediscountJson
-      }
-    });
-    this.jdndialogRef.afterClosed().subscribe(() => {
-    });
-  }
+  // openJdn() {
+  //   this.jdndialogRef = this.dialog.open(JdnComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+  //     disableClose: true,
+  //     data: {
+  //       jdnList: this.jaldeediscountJson
+  //     }
+  //   });
+  //   this.jdndialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
 
   firstChckinCuponCunt(CouponList) {
     for (let index = 0; index < CouponList.length; index++) {
@@ -1206,24 +1206,24 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             sector: claimdata['sector'],
             subSector: claimdata['subSector']
           };
-          this.SignupforClaimmable(pass_data);
+          // this.SignupforClaimmable(pass_data);
         }, error => {
           this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
     }
   }
-  SignupforClaimmable(passData) {
-    this.claimdialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true',
-        claimData: passData
-      }
-    });
-    this.claimdialogRef.afterClosed().subscribe(result => {
-    });
-  }
+  // SignupforClaimmable(passData) {
+  //   this.claimdialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'true',
+  //       claimData: passData
+  //     }
+  //   });
+  //   this.claimdialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
 }

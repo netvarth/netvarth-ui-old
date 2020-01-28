@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { SignUpComponent } from '../../components/signup/signup.component';
+// import { SignUpComponent } from '../../components/signup/signup.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
@@ -202,19 +202,19 @@ export class LoginComponent implements OnInit {
       this.dialogRef.close('showsignupfromlogin'); // closing the signin window
     }
     if (this.data.moreparams && (this.data.moreparams.source === 'businesshome_page')) {
-      this.doSignup();
+      // this.doSignup();
     }
   }
-  doSignup() {
-    const dialogReflog = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: { is_provider: this.is_provider }
-    });
-    dialogReflog.afterClosed().subscribe(() => {
-    });
-  }
+  // doSignup() {
+  //   const dialogReflog = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: { is_provider: this.is_provider }
+  //   });
+  //   dialogReflog.afterClosed().subscribe(() => {
+  //   });
+  // }
   handlekeyup(ev) {
     if (ev.keyCode !== 13) {
       this.resetApiErrors();

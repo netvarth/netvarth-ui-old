@@ -7,16 +7,16 @@ import { SharedServices } from '../../services/shared-services';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { LoginComponent } from '../../components/login/login.component';
-import { SignUpComponent } from '../../components/signup/signup.component';
-import { SearchFields } from '../../modules/search/searchfields';
-import { Messages } from '../../../shared/constants/project-messages';
+// import { SignUpComponent } from '../../components/signup/signup.component';
+// import { SearchFields } from '../../modules/search/searchfields';
+ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
-import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
-import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+// import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 
 @Component({
   selector: 'app-search-detail',
@@ -131,7 +131,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   waitlisttime_arr: any = [];
   sidebarheight = '';
   waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
-  searchfields: SearchFields = new SearchFields();
+  
   screenHeight;
   screenWidth;
   kwdet: any = [];
@@ -315,7 +315,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
     this.showsearchsection = true;
     if (!bypassotherfunction) {
-      this.setfields();
+      // this.setfields();
       if (this.labelq === '') {
         this.getRefinedSearch(true, 0, 'domainlist');
       } else {
@@ -1032,30 +1032,30 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   private getdomain() {
     return this.domain;
   }
-  private setfields() {
-    this.searchfields = {
-      domain: this.domain,
-      location: this.locname,
-      locationautoname: this.locautoname,
-      locationtype: this.loctype,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      sortfield: this.sortfield,
-      sortorder: this.sortorder,
-      kw: this.kw,
-      kwautoname: this.kwautoname,
-      kwdomain: this.kwdomain,
-      kwsubdomain: this.kwsubdomain,
-      kwtyp: this.kwtyp,
-      labelq: this.labelq,
-      subsector: this.subsector,
-      specialization: this.specialization,
-      rating: this.rating,
-      commonfilters: this.commonfilters || '',
-      passrefinedfilters: []
-    };
-    return this.searchfields;
-  }
+  // private setfields() {
+  //   this.searchfields = {
+  //     domain: this.domain,
+  //     location: this.locname,
+  //     locationautoname: this.locautoname,
+  //     locationtype: this.loctype,
+  //     latitude: this.latitude,
+  //     longitude: this.longitude,
+  //     sortfield: this.sortfield,
+  //     sortorder: this.sortorder,
+  //     kw: this.kw,
+  //     kwautoname: this.kwautoname,
+  //     kwdomain: this.kwdomain,
+  //     kwsubdomain: this.kwsubdomain,
+  //     kwtyp: this.kwtyp,
+  //     labelq: this.labelq,
+  //     subsector: this.subsector,
+  //     specialization: this.specialization,
+  //     rating: this.rating,
+  //     commonfilters: this.commonfilters || '',
+  //     passrefinedfilters: []
+  //   };
+  //   return this.searchfields;
+  // }
   private selected_sortfield(boolDistance) {
     let selfield = '';
     let selorder = '';
@@ -1497,26 +1497,26 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             sector: claimdata['sector'],
             subSector: claimdata['subSector']
           };
-          this.SignupforClaimmable(pass_data);
+          // this.SignupforClaimmable(pass_data);
         }, error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
     }
   }
-  SignupforClaimmable(passData) {
-    this.claimdialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true',
-        claimData: passData
-      }
-    });
-    this.claimdialogRef.afterClosed().subscribe(result => {
-    });
-  }
+  // SignupforClaimmable(passData) {
+  //   this.claimdialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'true',
+  //       claimData: passData
+  //     }
+  //   });
+  //   this.claimdialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
 
   checkinClicked(obj, chdatereq) {
     this.current_provider = obj;
@@ -1529,34 +1529,34 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-  doSignup(passParam?) {
-    // this.api_loading = false;
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'false',
-        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.shared_functions.sendMessage(pdata);
-        this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
-        } else if (passParam['callback'] === 'providerdetail') {
-          this.showProviderDetails(passParam['providerId']);
-        } else if (passParam['callback'] === 'servicedetail') {
-          this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
-        } else {
-          this.showCheckin('consumer');
-        }
-      }
-    });
-  }
+  // doSignup(passParam?) {
+  //   // this.api_loading = false;
+  //   const dialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'false',
+  //       moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'success') {
+  //       const pdata = { 'ttype': 'updateuserdetails' };
+  //       this.shared_functions.sendMessage(pdata);
+  //       this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
+  //       if (passParam['callback'] === 'communicate') {
+  //         this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+  //       } else if (passParam['callback'] === 'providerdetail') {
+  //         this.showProviderDetails(passParam['providerId']);
+  //       } else if (passParam['callback'] === 'servicedetail') {
+  //         this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
+  //       } else {
+  //         this.showCheckin('consumer');
+  //       }
+  //     }
+  //   });
+  // }
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1586,16 +1586,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         this.shared_functions.sendMessage(pdata);
         this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId'], passParam['provider_name']);
+          // this.showCommunicate(passParam['providerId'], passParam['provider_name']);
         } else if (passParam['callback'] === 'providerdetail') {
           this.showProviderDetails(passParam['providerId']);
         } else if (passParam['callback'] === 'servicedetail') {
-          this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
+          // this.serviceClicked(passParam['mname'], passParam['mobj'], 'serviceClick');
         } else {
           this.showCheckin('consumer');
         }
       } else if (result === 'showsignup') {
-        this.doSignup(passParam);
+        // this.doSignup(passParam);
       }
     });
   }
@@ -1677,7 +1677,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       if (this.shared_functions.checkLogin()) {
         const ctype = this.shared_functions.isBusinessOwner('returntyp');
         if (ctype === 'consumer') {
-          this.showCommunicate(providforCommunicate, name);
+          // this.showCommunicate(providforCommunicate, name);
         }
       } else { // show consumer login
         const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name, current_provider: obj };
@@ -1685,24 +1685,24 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     }
   }
-  showCommunicate(provid, provider_name) {
-    this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        caption: 'Enquiry',
-        user_id: provid,
-        source: 'consumer-common',
-        type: 'send',
-        name: provider_name
-      }
-    });
+  // showCommunicate(provid, provider_name) {
+  //   this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       caption: 'Enquiry',
+  //       user_id: provid,
+  //       source: 'consumer-common',
+  //       type: 'send',
+  //       name: provider_name
+  //     }
+  //   });
 
-    this.commdialogRef.afterClosed().subscribe(result => {
+  //   this.commdialogRef.afterClosed().subscribe(result => {
 
-    });
-  }
+  //   });
+  // }
   additionalRefineCondition() {
     let retval = false;
     if (this.searchButtonClick) {
@@ -1867,26 +1867,26 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             });
         });
   }
-  openJdn(obj) {
-    const s3id = obj.fields.unique_id;
-    const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-    this.shared_functions.getS3Url('provider')
-      .then(
-        res => {
-          const s3url = res;
-          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'jaldeediscount', UTCstring)
-            .subscribe(jdnList => {
-              this.jdndialogRef = this.dialog.open(JdnComponent, {
-                width: '60%',
-                panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-                disableClose: true,
-                data: {
-                  jdnList: jdnList
-                }
-              });
-              this.jdndialogRef.afterClosed().subscribe(result => {
-              });
-            });
-        });
-  }
+  // openJdn(obj) {
+  //   const s3id = obj.fields.unique_id;
+  //   const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+  //   this.shared_functions.getS3Url('provider')
+  //     .then(
+  //       res => {
+  //         const s3url = res;
+  //         this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'jaldeediscount', UTCstring)
+  //           .subscribe(jdnList => {
+  //             this.jdndialogRef = this.dialog.open(JdnComponent, {
+  //               width: '60%',
+  //               panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+  //               disableClose: true,
+  //               data: {
+  //                 jdnList: jdnList
+  //               }
+  //             });
+  //             this.jdndialogRef.afterClosed().subscribe(result => {
+  //             });
+  //           });
+  //       });
+  // }
 }

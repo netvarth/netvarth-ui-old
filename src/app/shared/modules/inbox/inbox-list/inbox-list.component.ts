@@ -8,7 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { InboxServices } from '../inbox.service';
-import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
 
 @Component({
   selector: 'app-inbox-list',
@@ -111,13 +111,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
     pass_ob['terminologies'] = this.terminologies;
     pass_ob['name'] = name;
 
-    this.msgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: pass_ob,
-    });
+    // this.msgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   autoFocus: true,
+    //   data: pass_ob,
+    // });
 
     this.msgdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {

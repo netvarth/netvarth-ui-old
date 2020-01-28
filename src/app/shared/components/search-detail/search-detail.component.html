@@ -1,6 +1,6 @@
-<app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
+<!-- <app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
     (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"
-    [passedRefine]="searchcommononlyrefine_arr"></app-header>
+    [passedRefine]="searchcommononlyrefine_arr"></app-header> -->
 <section class="content">
     <div class="container">
         <div class="row">
@@ -138,12 +138,12 @@
                                                         </ng-container>
                                                     </div>
                                                 </div>
-                                                <div *ngIf="refine_data.dataType=='Rating'">
+                                                <!-- <div *ngIf="refine_data.dataType=='Rating'">
                                                     <app-rating-star [cloudindex]="refine_data.cloudSearchIndex"
                                                         [ratingval]="returnRefineCheckboxRetainValue(refine_data.cloudSearchIndex, '', refine_data.dataType)"
                                                         (ratingreturn)="handleratingClick($event)"
                                                         [includedFrom]="'refined'"></app-rating-star>
-                                                </div>
+                                                </div> -->
                                             </mat-expansion-panel>
                                         </mat-accordion>
                                     </ng-container>
@@ -570,4 +570,4 @@
         </div>
     </div>
 </section>
-<app-footer></app-footer>
+<!-- <app-footer></app-footer> -->

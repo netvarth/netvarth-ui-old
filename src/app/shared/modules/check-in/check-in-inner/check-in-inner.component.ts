@@ -9,9 +9,9 @@ import { Messages } from '../../../constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import * as moment from 'moment';
-import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+// import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+// import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 @Component({
   selector: 'app-check-in-inner',
   templateUrl: './check-in-inner.component.html',
@@ -192,7 +192,7 @@ export class CheckInInnerComponent implements OnInit {
   allSlots: any = [];
   availableSlots: any = [];
   constructor(public fed_service: FormMessageDisplayService,
-    private provider_services: ProviderServices,
+    // private provider_services: ProviderServices,
     public shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     public router: Router,
@@ -249,7 +249,7 @@ export class CheckInInnerComponent implements OnInit {
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     if (this.page_source === 'provider_checkin') {
-      this.getDisplayboardCount();
+      // this.getDisplayboardCount();
       if (this.fromKiosk) {
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
       } else {
@@ -978,15 +978,15 @@ export class CheckInInnerComponent implements OnInit {
         'accountId': this.account_id,
         'purpose': 'prePayment'
       };
-      const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          'details': payData,
-          'origin': 'consumer'
-        }
-      });
+      // const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+      //   width: '50%',
+      //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     'details': payData,
+      //     'origin': 'consumer'
+      //   }
+      // });
 
     } else {
       this.api_error = this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR');
@@ -1637,15 +1637,15 @@ export class CheckInInnerComponent implements OnInit {
         );
     });
   }
-  getDisplayboardCount() {
-    let layout_list: any = [];
-    this.provider_services.getDisplayboards()
-      .subscribe(
-        data => {
-          layout_list = data;
-          this.board_count = layout_list.length;
-        });
-  }
+  // getDisplayboardCount() {
+  //   let layout_list: any = [];
+  //   this.provider_services.getDisplayboards()
+  //     .subscribe(
+  //       data => {
+  //         layout_list = data;
+  //         this.board_count = layout_list.length;
+  //       });
+  // }
   getAvailableTimeSlots(QStartTime, QEndTime, interval) {
     const _this = this;
     const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
@@ -1663,34 +1663,34 @@ export class CheckInInnerComponent implements OnInit {
       future = true;
     }
     this.apptTime = '';
-    if (!future) {
-      _this.provider_services.getTodayWaitlist(filter).subscribe(
-        (waitlist: any) => {
-          for (let i = 0; i < waitlist.length; i++) {
-            if (waitlist[i]['appointmentTime']) {
-              activeSlots.push(waitlist[i]['appointmentTime']);
-            }
-          }
-          const slots = allSlots.filter(x => !activeSlots.includes(x));
-          this.availableSlots = slots;
-          this.apptTime = this.availableSlots[0];
-        }
-      );
-    } else {
-      filter['date-eq'] = _this.sel_checkindate;
-      _this.provider_services.getFutureWaitlist(filter).subscribe(
-        (waitlist: any) => {
-          for (let i = 0; i < waitlist.length; i++) {
-            if (waitlist[i]['appointmentTime']) {
-              activeSlots.push(waitlist[i]['appointmentTime']);
-            }
-          }
-          const slots = allSlots.filter(x => !activeSlots.includes(x));
-          this.availableSlots = slots;
-          this.apptTime = this.availableSlots[0];
-        }
-      );
-    }
+    // if (!future) {
+    //   _this.provider_services.getTodayWaitlist(filter).subscribe(
+    //     (waitlist: any) => {
+    //       for (let i = 0; i < waitlist.length; i++) {
+    //         if (waitlist[i]['appointmentTime']) {
+    //           activeSlots.push(waitlist[i]['appointmentTime']);
+    //         }
+    //       }
+    //       const slots = allSlots.filter(x => !activeSlots.includes(x));
+    //       this.availableSlots = slots;
+    //       this.apptTime = this.availableSlots[0];
+    //     }
+    //   );
+    // } else {
+    //   filter['date-eq'] = _this.sel_checkindate;
+    //   _this.provider_services.getFutureWaitlist(filter).subscribe(
+    //     (waitlist: any) => {
+    //       for (let i = 0; i < waitlist.length; i++) {
+    //         if (waitlist[i]['appointmentTime']) {
+    //           activeSlots.push(waitlist[i]['appointmentTime']);
+    //         }
+    //       }
+    //       const slots = allSlots.filter(x => !activeSlots.includes(x));
+    //       this.availableSlots = slots;
+    //       this.apptTime = this.availableSlots[0];
+    //     }
+    //   );
+    // }
   }
   timeSelected(slot) {
     this.apptTime = slot;

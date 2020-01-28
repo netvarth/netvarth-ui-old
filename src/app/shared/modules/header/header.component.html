@@ -47,10 +47,9 @@
                     </div>
                 </div>
                 <div class="lgmem">
+                    
                     <span class="lgin">
-                        <i *ngIf="qAvailability && qAvailability.availableNow" class="fa fa-circle avail"></i><i
-                            *ngIf="qAvailability && !qAvailability.availableNow"
-                            class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}
+                        
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                             <i class="icon-angle-down"></i>
                         </button>
@@ -204,9 +203,19 @@
                                 </div>
                             </ng-container>
                             <div class="lgmem" *ngIf="ctype=='consumer'">
-                                <span class="lgin">
-                                    {{userdet.userName}}
-                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <span>
+                                        <span>
+                                                <i *ngIf="qAvailability && qAvailability.availableNow" class="fa fa-circle avail"></i><i
+                                                *ngIf="qAvailability && !qAvailability.availableNow"
+                                                class="fa fa-circle notavail"></i>{{userdet.userName | capitalizeFirst}}
+                                        </span>
+                                        <span>
+                                                <button class="login-btn"  (click)="doLogout()">
+                                                        
+                                                        <span>{{logout_cap}}</span>
+                                                    </button>
+                                        </span>
+                                    <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
                                         <i class="icon-angle-down"></i>
                                     </button>
                                     <mat-menu #menu="matMenu">
@@ -229,7 +238,7 @@
                                         <button mat-menu-item (click)="redirectto('members')">
                                             <i class="icon-members"></i>
                                             <span>{{family_members}}</span>
-                                        </button>
+                                        </button> -->
                                         <!-- <button mat-menu-item (click)="switchtoProvider()"
                                             *ngIf="!isprovider && provider_loggedin">
                                             <i class="icon-switch"></i>
@@ -240,41 +249,41 @@
                                             <i class="icon-createprovider"></i>
                                             <span>{{create_pro_accnt}}</span>
                                         </button> -->
-                                        <button mat-menu-item (click)="help()">
+                                        <!-- <button mat-menu-item (click)="help()">
                                             <i data-icon="B"></i>
                                             <span>{{help_cap}}</span>
-                                        </button>
+                                        </button> -->
                                         <!-- <button mat-menu-item (click)="faq()">
         <i data-icon="B"></i>
         <span>FAQ</span>
     </button> -->
-                                        <button mat-menu-item (click)="doLogout()">
+                                        <!-- <button mat-menu-item (click)="doLogout()">
                                             <i class="icon-logout"></i>
                                             <span>{{logout_cap}}</span>
                                         </button>
-                                    </mat-menu>
+                                    </mat-menu> -->
                                 </span>
                             </div>
                         </div>
-                        <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
+                        <!-- <div class="isprovidertop" *ngIf="!shared_functions.checkLogin()"><b
                                 style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                                 (click)="providerLinkClicked()">{{click_here_cap}}</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-22 col-xs-12 col-sm-12 no-padding " *ngIf="source !== 'business'">
+        <!-- <div class="col-md-22 col-xs-12 col-sm-12 no-padding " *ngIf="source !== 'business'">
             <div class="tp-1">
                 <app-search style="width: 100%" [showopennow]="0" [searchfields]="searchfields"
                     [includedfrom]="'consumer_header'" [passedRefine]="passedRefine"
                     (searchclick)="handlesearchClick($event)" [passedDomain]="passedDomain" [passedkwdet]="passedkwdet">
                 </app-search>
             </div>
-        </div>
+        </div> -->
 
-        <div class="col-md-22 col-xs-12 col-sm-12 no-padding" *ngIf="source !== 'business'">
+        <!-- <div class="col-md-22 col-xs-12 col-sm-12 no-padding" *ngIf="source !== 'business'">
             <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="popSearches !== null && searchLength > 0">
                 <div class="row popular">
                     <p class="pop-search"><b style="padding-right: 10px; line-height:40px">Popular Searches: </b>
@@ -290,11 +299,11 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </header>
 
-<div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
+<!-- <div style="background: white" *ngIf="ctype=='provider' && headercls=='dashb'">
     <div class="col-md-12">
         <div class="row">
             <p *ngIf="active_license === 'Gold - FREE Trial 45 days' && license_message != ''"
@@ -311,10 +320,10 @@
                         (click)="upgradeMembership()" style="color: #00aef2" class="pointer-cursor"> <b> Upgrade license
                             now</b> </span> for more features.</span>
             </p>
-            <!-- <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
+            <p style="width: 100%; text-align: left;" *ngIf="active_license=='Diamond'">Your current
                 license is
                 <i style="color:red">{{active_license}}</i>.
             </p> -->
-        </div>
+        <!-- </div>
     </div>
-</div>
+</div>  -->

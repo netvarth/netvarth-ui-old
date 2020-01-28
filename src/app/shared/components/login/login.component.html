@@ -57,8 +57,8 @@ onSubmit(loginForm.value)" *ngIf="step==1">
     <div class="mat-dialog-actions">
         <button type="submit" mat-button [disabled]="api_loading" (click)="showError()">
             <span *ngIf="!api_loading">Login</span>
-            <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-            </app-common-innerloading-spinner>
+            <!-- <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+            </app-common-innerloading-spinner> -->
         </button>
         <a style="float: right; margin-top:10px;" class="forgotpass" (click)="doForgotPassword()">Forgot Password ?</a>
         <a style="float: right; margin-top:10px; padding-right: 20px" class="forgotpass" (click)="handleSignup()">Sign

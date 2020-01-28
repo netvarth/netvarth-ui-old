@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 
 import { PagerModule } from '../../modules/pager/pager.module';
-import { ViewBillModule } from '../../modules/view-bill/view-bill.module';
+// import { ViewBillModule } from '../../modules/view-bill/view-bill.module';
 
 import { ConsumerCheckInHistoryListComponent } from './components/consumer-checkin-history-list/consumer-checkin-history-list.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from './components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
@@ -25,7 +25,7 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
         ReactiveFormsModule,
         FormMessageDisplayModule,
         PagerModule,
-        ViewBillModule,
+        
     ],
     declarations: [
       ConsumerCheckInHistoryListComponent,

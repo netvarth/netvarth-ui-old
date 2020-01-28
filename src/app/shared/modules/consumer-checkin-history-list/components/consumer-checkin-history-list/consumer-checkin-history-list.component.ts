@@ -5,9 +5,9 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
-import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from '../consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
-import { ConsumerRateServicePopupComponent } from '../../../../components/consumer-rate-service-popup/consumer-rate-service-popup';
+// import { ConsumerRateServicePopupComponent } from '../../../../components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
 
 @Component({
@@ -126,25 +126,25 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.provider.id;
     pass_ob['name'] = waitlist.provider.businessName;
-    this.addNote(pass_ob);
+    // this.addNote(pass_ob);
 
   }
 
-  addNote(pass_ob) {
-    this.notedialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: pass_ob
-    });
+  // addNote(pass_ob) {
+  //   this.notedialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: pass_ob
+  //   });
 
-    this.notedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+  //   this.notedialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
   getWaitlistBill(waitlist) {
 
@@ -215,28 +215,28 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   }
 
 
-  rateService(waitlist) {
-    this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      autoFocus: true,
-      data: waitlist
-    });
+  // rateService(waitlist) {
+  //   this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: waitlist
+  //   });
 
-    this.ratedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getHistroy(this.params);
-      }
-    });
-  }
-  isRated(wait) {
-    if (wait.hasOwnProperty('rating')) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  //   this.ratedialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
+  //       this.getHistroy(this.params);
+  //     }
+  //   });
+  // }
+  // isRated(wait) {
+  //   if (wait.hasOwnProperty('rating')) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   providerDetail(provider) {
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }

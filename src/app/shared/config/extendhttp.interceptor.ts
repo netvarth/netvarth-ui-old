@@ -12,7 +12,7 @@ import { projectConstants } from '../constants/project-constants';
 import { SharedServices } from '../services/shared-services';
 import { Subject } from 'rxjs/Subject';
 import { throwError, EMPTY } from 'rxjs';
-import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
+// import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material';
 import { retry } from 'rxjs/operators';
 // import { version } from '../constants/version' ;
@@ -96,24 +96,24 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return;
   }
 
-  private _forceUpdate() {
-    this.forceUpdateCalled = true;
-    this.stopThisRequest = true;
-    const dialogRef = this.dialog.open(ForceDialogComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': 'This version of Jaldee is no longer supported. Please update to the latest version',
-        'heading': 'Jaldee Update Required'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.stopThisRequest = false;
-      }
-    });
-  }
+  // private _forceUpdate() {
+  //   this.forceUpdateCalled = true;
+  //   this.stopThisRequest = true;
+  //   const dialogRef = this.dialog.open(ForceDialogComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       'message': 'This version of Jaldee is no longer supported. Please update to the latest version',
+  //       'heading': 'Jaldee Update Required'
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.stopThisRequest = false;
+  //     }
+  //   });
+  // }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.stopThisRequest) {
@@ -129,7 +129,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             if (error.status === 301) {
               if (!this.forceUpdateCalled) {
-                this._forceUpdate();
+                // this._forceUpdate();
                 return EMPTY;
               } else {
                 return throwError(error);
@@ -178,7 +178,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return throwError(error);
             } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
-                this._forceUpdate();
+                // this._forceUpdate();
                 return EMPTY;
               } else {
                 return throwError(error);

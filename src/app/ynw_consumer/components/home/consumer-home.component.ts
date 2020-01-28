@@ -11,18 +11,18 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { NotificationListBoxComponent } from '../../shared/component/notification-list-box/notification-list-box.component';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
+// import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
-import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ViewConsumerWaitlistCheckInBillComponent } from '../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-view-bill/consumer-waitlist-view-bill.component';
-import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
+// import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { NgxCarousel } from 'ngx-carousel';
-import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+// import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 
 @Component({
   selector: 'app-consumer-home',
@@ -92,7 +92,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   settings_exists = false;
   futuredate_allowed = false;
   waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
-  public searchfields: SearchFields = new SearchFields();
+  
   reload_history_api = { status: true };
   subscription: Subscription;
   cronHandle: Subscription;
@@ -178,6 +178,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
+    this.providerDetail();
     this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -668,7 +669,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.provider.id;
     pass_ob['name'] = waitlist.provider.businessName;
-    this.addNote(pass_ob);
+    // this.addNote(pass_ob);
   }
 
   addCommonMessage(provider) {
@@ -676,22 +677,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     pass_ob['source'] = 'consumer-common';
     pass_ob['user_id'] = provider.id;
     pass_ob['name'] = provider.businessName;
-    this.addNote(pass_ob);
+    // this.addNote(pass_ob);
   }
 
-  addNote(pass_ob) {
-    this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      autoFocus: true,
-      data: pass_ob
-    });
-    this.addnotedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
-  }
+  // addNote(pass_ob) {
+  //   this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: pass_ob
+  //   });
+  //   this.addnotedialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
+  //     }
+  //   });
+  // }
 
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
@@ -732,8 +733,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+  providerDetail() {
+    this.router.navigate(['searchdetail', '75443']);
   }
 
   goCheckin(data, location, currdata, chdatereq, type) {
@@ -864,20 +865,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  rateService(waitlist) {
-    this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      autoFocus: true,
-      data: waitlist
-    });
-    this.ratedialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.getWaitlist();
-      }
-    });
-  }
+  // rateService(waitlist) {
+  //   this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: waitlist
+  //   });
+  //   this.ratedialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
+  //       this.getWaitlist();
+  //     }
+  //   });
+  // }
   isRated(wait) {
     if (wait.hasOwnProperty('rating')) {
       return true;
@@ -923,19 +924,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmSettleBill(waitlist) {
-    const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'details': waitlist,
-        'origin': 'consumer'
-      }
-    });
-    dialogrefd.afterClosed().subscribe(result => {
-    });
-  }
+  // confirmSettleBill(waitlist) {
+  //   const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       'details': waitlist,
+  //       'origin': 'consumer'
+  //     }
+  //   });
+  //   dialogrefd.afterClosed().subscribe(result => {
+  //   });
+  // }
   makeFailedPayment(waitlist) {
     let prepayamt = 0;
     this.shared_services.getServicesByLocationId(waitlist.queue.location.id)
@@ -952,15 +953,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
                 'accountId': waitlist.provider.id,
                 'purpose': 'prePayment'
               };
-              const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
-                width: '50%',
-                panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                disableClose: true,
-                data: {
-                  'details': payData,
-                  'origin': 'consumer'
-                }
-              });
+              // const dialogrefd = this.dialog.open(ConsumerPaymentmodeComponent, {
+              //   width: '50%',
+              //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+              //   disableClose: true,
+              //   data: {
+              //     'details': payData,
+              //     'origin': 'consumer'
+              //   }
+              // });
             } else {
               this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PREPAYMENT_ERROR'), { 'panelClass': 'snackbarerror' });
             }

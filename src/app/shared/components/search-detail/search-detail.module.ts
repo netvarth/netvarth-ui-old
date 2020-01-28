@@ -6,10 +6,10 @@ import { SearchDetailRoutingModule } from './search-detail.routing.module';
 import { HeaderModule } from '../../modules/header/header.module';
 import { MaterialModule } from '../../modules/common/material.module';
 import { FormsModule } from '@angular/forms';
-import { RatingStarModule } from '../../modules/ratingstar/ratingstart.module';
+// import { RatingStarModule } from '../../modules/ratingstar/ratingstart.module';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { PagerModule } from '../../modules/pager/pager.module';
-import { FooterModule } from '../../modules/footer/footer.module';
+// import { FooterModule } from '../../modules/footer/footer.module';
 import { ProviderDetailComponent } from '../provider-detail/provider-detail.component';
 import { ConsumerWaitlistHistoryComponent } from '../consumer-waitlist-history/consumer-waitlist-history.component';
 import { ModalGalleryModule } from 'angular-modal-gallery';
@@ -17,17 +17,17 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { SearchProviderComponent } from '../search-provider/search-provider.component';
 import { SearchProviderModule } from '../search-provider/search-provider.module';
-import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+// import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 @NgModule({
     imports: [
         CommonModule,
-        HeaderModule,
+        
         MaterialModule,
         FormsModule,
-        RatingStarModule,
+        
         CapitalizeFirstPipeModule,
         PagerModule,
-        FooterModule,
+        HeaderModule,
         ModalGalleryModule.forRoot(),
         Nl2BrPipeModule,
         ConsumerCheckinHistoryListModule,
@@ -38,11 +38,11 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
     declarations: [
         SearchDetailComponent,
         ProviderDetailComponent,
-        JdnComponent,
+        
         ConsumerWaitlistHistoryComponent
     ],
     entryComponents: [
-        JdnComponent 
+        
     ]
 })
 

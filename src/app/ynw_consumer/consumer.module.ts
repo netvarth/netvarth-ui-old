@@ -10,7 +10,7 @@ import 'hammerjs';
 
 
 import { ConsumerRoutingModule } from './consumer-routing.module';
-import { SearchModule } from '../shared/modules/search/search.module';
+// import { SearchModule } from '../shared/modules/search/search.module';
 import { HeaderModule } from '../shared/modules/header/header.module';
 import { CheckInModule } from '../shared/modules/check-in/check-in.module';
 import { BreadCrumbModule } from '../shared/modules/breadcrumb/breadcrumb.module';
@@ -18,7 +18,7 @@ import { AddMemberModule } from '../shared/modules/add-member/add-member.module'
 import { PagerModule } from '../shared/modules/pager/pager.module';
 import { ConsumerCheckinHistoryListModule } from '../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { InboxModule } from '../shared/modules/inbox/inbox.module';
-import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
+// import { RatingStarModule } from '../shared/modules/ratingstar/ratingstart.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 import {ConsumerServices } from './services/consumer-services.service';
@@ -48,7 +48,7 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
       CapitalizeFirstPipeModule,
         ConsumerRoutingModule,
         CommonModule,
-        SearchModule,
+        
         SharedModule,
         HeaderModule,
         CheckInModule,
@@ -57,7 +57,7 @@ import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
         PagerModule,
         ConsumerCheckinHistoryListModule,
         InboxModule,
-        RatingStarModule,
+        
         Nl2BrPipeModule,
         NgxCarouselModule
     ],

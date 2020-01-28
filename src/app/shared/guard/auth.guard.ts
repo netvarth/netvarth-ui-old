@@ -20,22 +20,6 @@ export class AuthGuardConsumer implements CanActivate {
 }
 
 @Injectable()
-export class AuthGuardProvider implements CanActivate {
-
-  constructor(private router: Router) { }
-
-  canActivate() {
-    if (localStorage.getItem('ynw-credentials')
-      && localStorage.getItem('isBusinessOwner') === 'true') {
-      return true;
-    }
-
-    this.router.navigate(['/logout']);
-    return false;
-  }
-}
-
-@Injectable()
 export class AuthGuardLogin implements CanActivate {
   constructor(private router: Router) { }
   canActivate() {
@@ -66,41 +50,5 @@ export class AuthGuardHome implements CanActivate {
       }
     }
     return true;
-  }
-}
-
-@Injectable()
-export class AuthGuardProviderHome implements CanActivate {
-  constructor(private router: Router, private shared_functions: SharedFunctions) { }
-  canActivate() {
-    if (localStorage.getItem('ynw-credentials')
-      && this.shared_functions.getitemFromGroupStorage('ynw-user')) {
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-      if (user.accStatus === 'ACTIVE') {
-        return true;
-      } else {
-        if (localStorage.getItem('new_provider')) {
-          // this.router.navigate(['/provider/tour']); // commented to make the bwizard work
-          this.router.navigate(['/provider/bwizard']);
-        } else {
-          // this.router.navigate(['/provider/settings']);
-          this.router.navigate(['/provider/settings/bprofile']);
-        }
-        return false;
-      }
-    }
-    this.router.navigate(['/logout']);
-    return false;
-  }
-}
-@Injectable()
-export class AuthGuardNewProviderHome implements CanActivate {
-  constructor(private router: Router) { }
-  canActivate() {
-    if (localStorage.getItem('new_provider')) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

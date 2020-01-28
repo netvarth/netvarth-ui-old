@@ -7,9 +7,9 @@ import { SearchDetailServices } from '../search-detail/search-detail-services.se
 import { Messages } from '../../constants/project-messages';
 import { CheckInComponent } from '../../modules/check-in/check-in.component';
 import { MatDialog } from '@angular/material';
-import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
-import { SignUpComponent } from '../signup/signup.component';
+// import { SignUpComponent } from '../signup/signup.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 
 @Component({
@@ -368,25 +368,25 @@ export class SearchProviderComponent implements OnInit, OnChanges {
       const providforCommunicate = arr[0];
       const ctype = this.shared_functions.isBusinessOwner('returntyp');
       if (ctype === 'consumer') {
-        this.showCommunicate(providforCommunicate, name);
+        // this.showCommunicate(providforCommunicate, name);
       }
     }
   }
-  showCommunicate(provid, provider_name) {
-    this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        user_id: provid,
-        source: 'consumer-common',
-        type: 'send',
-        name: provider_name
-      }
-    });
-    this.commdialogRef.afterClosed().subscribe(result => {
-    });
-  }
+  // showCommunicate(provid, provider_name) {
+  //   this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       user_id: provid,
+  //       source: 'consumer-common',
+  //       type: 'send',
+  //       name: provider_name
+  //     }
+  //   });
+  //   this.commdialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
 
   openCoupons(obj, type) {
     this.btn_clicked = true;
@@ -426,7 +426,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
             sector: claimdata['sector'],
             subSector: claimdata['subSector']
           };
-          this.SignupforClaimmable(pass_data);
+          // this.SignupforClaimmable(pass_data);
         }, error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
@@ -434,19 +434,19 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     }
   }
 
-  SignupforClaimmable(passData) {
-    this.claimdialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true',
-        claimData: passData
-      }
-    });
-    this.claimdialogRef.afterClosed().subscribe(result => {
-    });
-  }
+  // SignupforClaimmable(passData) {
+  //   this.claimdialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'true',
+  //       claimData: passData
+  //     }
+  //   });
+  //   this.claimdialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
 
   checkserviceClicked(name, obj) {
     this.btn_clicked = true;

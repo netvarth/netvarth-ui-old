@@ -1,4 +1,4 @@
-<section class="content consumer-dash">
+<!-- <section class="content consumer-dash">
     <div class="container">
         <div class="card c-checkins">
             <h2><span [matTooltipClass]="tooltipcls" [matTooltip]="currentcheckinsTooltip">Active Check-Ins
@@ -106,7 +106,7 @@
                                         </span><a class="bt3 cust-btn pointer-cursor"
                                             (click)="viewBill(waitlist)">Pay</a></span>
                                 </div>
-                                <div *ngIf="waitlist.waitlistStatus=='checkedIn'|| 'prepaymentPending'">
+                                <div *ngIf="waitlist.waitlistStatus=='checkedIn'|| 'prepaymentPending'"> -->
                                 
                                 <!-- <div class="lt0"
                                     *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime"> -->
@@ -187,7 +187,7 @@
                                         </div> -->
                                     <!-- </div> -->
                                 <!-- </div> -->
-                                <div class="lt0"  *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime" >
+                                <!-- <div class="lt0"  *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime" >
                                     <div  >
                                         <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable live tracking </label></span>
                                         <p *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'" class="form-level-settings">Automatic Live tracking is enabled</p>
@@ -197,16 +197,16 @@
                                         </span>
                                         
                                         <span class="" *ngIf="!changemode[i]">
-                                                <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i>
+                                                <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'DRIVING'" class="fa fa-car mgn-lt-20" aria-hidden="true"></i> -->
                                                 <!-- <i *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'BICYCLING'" class="fa fa-bicycle mgn-lt-20" aria-hidden="true"></i> -->
-                                                <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
+                                                <!-- <img src="./assets/images/walking.png" alt="" class="mgn-lt-20"
                                                                     style="width: 15px;height:15px;"  *ngIf="waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelMode == 'WALKING'" />
                                                 <i class="fa fa-pencil link mgn-lt-10 " (click)="changemode[i] = !changemode[i]"></i> 
                                                 </span>
                                                 <span *ngIf="changemode[i]" (click)="changemode[i] = !changemode[i]">
-                                                        <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i>
+                                                        <i class="fa fa-car mgn-lt-20" [class.driving]="driving" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'DRIVING',i)"></i> -->
                                                         <!-- <i class="fa fa-bicycle mgn-lt-20" [class.bicycling]="bicycling" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'BICYCLING',i)" aria-hidden="true"></i> -->
-                                                        <img src="./assets/images/walking.png" alt=""
+                                                        <!-- <img src="./assets/images/walking.png" alt=""
                                                                         class="walkingMode mgn-lt-20" [class.walking]="walking" aria-hidden="true" (click)="getTravelMod(waitlist.ynwUuid,waitlist.provider.id,'WALKING',i)"/>
                                                        </span>
                                                    
@@ -396,5 +396,5 @@
             </mat-accordion>
         </div>
     </div>
-</section>
+</section> -->
 <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>

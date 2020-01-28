@@ -5,9 +5,9 @@ import * as moment from 'moment';
 import { SharedServices } from '../../services/shared-services';
 import { MatDialog } from '@angular/material';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import { SignUpComponent } from '../../components/signup/signup.component';
+// import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
-import { SearchFields } from '../../modules/search/searchfields';
+// import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -100,7 +100,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isprovider = false;
   ctype;
   active_license;
-  public searchfields: SearchFields = new SearchFields();
+  // public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
   selected_domain = '';
@@ -349,21 +349,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.headercls = 'dashb';
     }
   }
-  doSignup(origin?, moreOptions = {}) {
-    if (origin === 'provider') {
-    }
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: this.checkProvider(origin),
-        moreOptions: moreOptions
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-    });
-  }
+  // doSignup(origin?, moreOptions = {}) {
+  //   if (origin === 'provider') {
+  //   }
+  //   const dialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: this.checkProvider(origin),
+  //       moreOptions: moreOptions
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
   doLogin(origin?) {
     if (origin === 'provider') {
     }
@@ -378,7 +378,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'showsignupfromlogin') {
-        this.doSignup(origin);
+        // this.doSignup(origin);
       }
     });
   }
@@ -499,7 +499,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           isCreateProv: true,
           dataCreateProv: storage_Data
         };
-        this.doSignup('provider', moreOptions);
+        // this.doSignup('provider', moreOptions);
         this.router.navigate(['/']);
       },
         () => {

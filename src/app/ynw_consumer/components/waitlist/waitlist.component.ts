@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ConsumerServices } from '../../services/consumer-services.service';
-import { SearchFields } from '../../../shared/modules/search/searchfields';
+// import { SearchFields } from '../../../shared/modules/search/searchfields';
 import { projectConstants } from '../../../shared/constants/project-constants';
-import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
+// import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -45,7 +45,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   canceldialogRef;
   remfavdialogRef;
 
-  public searchfields: SearchFields = new SearchFields();
+  // public searchfields: SearchFields = new SearchFields();
 
   constructor(private consumer_services: ConsumerServices,
     private shared_functions: SharedFunctions,
@@ -107,26 +107,26 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.provider.id;
     pass_ob['name'] = waitlist.provider.businessName;
-    this.addNote(pass_ob);
+    // this.addNote(pass_ob);
 
   }
 
-  addNote(pass_ob) {
+  // addNote(pass_ob) {
 
-    const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: pass_ob
-    });
+  //   const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: pass_ob
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'reloadlist') {
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
   doCancelWaitlist(waitlist) {
     if (!waitlist.ynwUuid || !waitlist.provider.id) {

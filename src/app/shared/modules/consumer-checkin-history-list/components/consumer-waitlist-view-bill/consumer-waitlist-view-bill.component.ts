@@ -6,7 +6,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
 import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+// import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
@@ -587,20 +587,20 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
       return false;
     }
   }
-  showJCCouponNote(coupon) {
-    if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
-      // alert('in if');
-    } else {
-      if (coupon.value.value === '0.0') {
-        const dialogref = this.dialog.open(JcCouponNoteComponent, {
-          width: '50%',
-          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
-          disableClose: true,
-          data: {
-            jCoupon: coupon
-          }
-        });
-      }
-    }
-  }
+  // showJCCouponNote(coupon) {
+  //   if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
+  //     // alert('in if');
+  //   } else {
+  //     if (coupon.value.value === '0.0') {
+  //       const dialogref = this.dialog.open(JcCouponNoteComponent, {
+  //         width: '50%',
+  //         panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'jcouponmessagepopupclass'],
+  //         disableClose: true,
+  //         data: {
+  //           jCoupon: coupon
+  //         }
+  //       });
+  //     }
+  //   }
+  // }
 }

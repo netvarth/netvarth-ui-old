@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { RouterModule } from '@angular/router';
 // import { HeaderModule } from '../../../shared/modules/header/header.module';
-import { FooterModule } from '../../../shared/modules/footer/footer.module';
-import { EditProfileModule } from '../../../shared/modules/edit-profile/edit-profile.module';
+// import { FooterModule } from '../../../shared/modules/footer/footer.module';
+// import { EditProfileModule } from '../../../shared/modules/edit-profile/edit-profile.module';
 import { ChangePasswordModule } from '../../../shared/modules/change-password/change-password.module';
-import { ChangeMobileModule } from '../../../shared/modules/change-mobile/change-mobile.module';
+// import { ChangeMobileModule } from '../../../shared/modules/change-mobile/change-mobile.module';
 import { ChangeEmailModule} from '../../../shared/modules/change-email/change-email.module';
 import { OtpFormModule } from '../../../shared/modules/otp-form/otp-form.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
@@ -26,12 +26,12 @@ import { CommonDataStorageService } from '.././../services/common-datastorage.se
         ReactiveFormsModule,
         RouterModule,
         // HeaderModule,
-        EditProfileModule,
+        // EditProfileModule,
         ChangePasswordModule,
-        ChangeMobileModule,
+        // ChangeMobileModule,
         ChangeEmailModule,
         OtpFormModule,
-        FooterModule,
+        // FooterModule,
         FormMessageDisplayModule,
         NgBootstrapModule
 
@@ -44,11 +44,11 @@ import { CommonDataStorageService } from '.././../services/common-datastorage.se
         RouterModule,
         // HeaderModule,
         OtpFormModule,
-        EditProfileModule,
+        // EditProfileModule,
         ChangePasswordModule,
-        ChangeMobileModule,
+        // ChangeMobileModule,
         ChangeEmailModule,
-        FooterModule,
+        // FooterModule,
         FormMessageDisplayModule,
         NgBootstrapModule
 
