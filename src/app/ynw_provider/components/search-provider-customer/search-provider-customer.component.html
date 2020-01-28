@@ -39,9 +39,6 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                         </div>
                     </mat-form-field>
                 </div>
-                <div class="mgn-up-10">
-                    Don't have a mobile number? <a class="pointer-cursor" (click)="skip()"> Click here.</a>
-                </div>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
             'minlength' : 'Enter a 10 digit mobile number',
@@ -51,6 +48,9 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                 </app-field-error-display>
                 <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Mobile number is required">
                 </app-field-error-display>
+                <div class="mgn-up-10" *ngIf="source === 'providerCheckin'">
+                    Don't have a mobile number? <a class="pointer-cursor" (click)="skip()"> Click here.</a>
+                </div>
             </div>
             <!-- <div class="form-group mobilecont">
                 <label class="col-form-label" for="mobile_number">{{mob_cap}} *</label>
@@ -71,8 +71,8 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                 <mat-form-field>
                     <input matInput type="text" class="form-control" id="first_last_name"
                         placeholder="Enter atleast first 3 letters of First / Last Name *"
-                        formControlName="first_last_name" autocomplete="off" style="text-transform: capitalize;"
-                        (blur)="onFieldBlur('first_last_name')">
+                        (keypress)="isNumeric('name')" formControlName="first_last_name" autocomplete="off"
+                        style="text-transform: capitalize;" (blur)="onFieldBlur('first_last_name')">
                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
                         [errorMsgs]="fed_service.getErrorMessage(amForm,'first_last_name',
                 {

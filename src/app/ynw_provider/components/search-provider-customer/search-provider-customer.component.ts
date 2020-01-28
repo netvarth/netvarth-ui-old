@@ -141,7 +141,6 @@ export class SearchProviderCustomerComponent implements OnInit {
   }
 
   onFieldBlur(key) {
-    this.showNameError = false;
     this.amForm.get(key).setValue(this.toCamelCase(this.amForm.get(key).value));
   }
 
@@ -153,8 +152,12 @@ export class SearchProviderCustomerComponent implements OnInit {
     }
   }
   isNumeric(evt) {
-    this.showError = false;
-    return this.shared_functions.isNumeric(evt);
+    if (evt === 'name') {
+      this.showNameError = false;
+    } else {
+      this.showError = false;
+      return this.shared_functions.isNumeric(evt);
+    }
   }
   skip() {
     const return_data = {
