@@ -39,14 +39,17 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                         </div>
                     </mat-form-field>
                 </div>
-
+                <div class="mgn-up-10">
+                    Don't have a mobile number? <a class="pointer-cursor" (click)="skip()"> Click here.</a>
+                </div>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
-            'required' : 'Mobile number is required',
             'minlength' : 'Enter a 10 digit mobile number',
             'maxlength' : 'Enter a 10 digit mobile number',
             'pattern' : 'Only numbers are allowed'
           })">
+                </app-field-error-display>
+                <app-field-error-display [displayError]="true" *ngIf="showError" errorMsg="Mobile number is required">
                 </app-field-error-display>
             </div>
             <!-- <div class="form-group mobilecont">
@@ -73,9 +76,11 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_last_name')"
                         [errorMsgs]="fed_service.getErrorMessage(amForm,'first_last_name',
                 {
-                    'required' : 'Please enter First Name / Last Name.',
                     'pattern' : 'Only alphabets are allowed'
                   })">
+                    </app-field-error-display>
+                    <app-field-error-display [displayError]="true" *ngIf="showNameError"
+                        errorMsg="Please enter First Name / Last Name.">
                     </app-field-error-display>
                 </mat-form-field>
             </div>
@@ -83,9 +88,6 @@ searchCustomer(amForm.value)" (keyup)="resetApiErrors($event)">
         </mat-dialog-content>
 
         <mat-dialog-actions>
-            <div>
-                Don't have a mobile number?  <a class="pointer-cursor" (click)="skip()"> Click here.</a>
-            </div>
             <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
                 <button type="button" mat-dialog-close class="cs-btn bt2">{{cancel_btn}}</button>
                 <button mat-button [disabled]="!amForm.valid || create_new" class="cs-btn bt1">

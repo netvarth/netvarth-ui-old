@@ -173,7 +173,8 @@
                   (click)="setSortByParam('sort_appointmentTime')">Appointment Time</button>
               </mat-menu>
             </span>
-            <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3">
+            <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3" [matTooltipClass]="tooltipcls"
+              [matTooltip]="'Print'">
               <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
             </span>
           </div>
@@ -304,12 +305,12 @@
             <!--Future-->
             <div class="col-md-12 future col-xs-12 future col-sm-12 no-padding-small" *ngIf="time_type==2">
               <div class="no-dta col-md-12"
-                *ngIf="check_in_list.length === 0 && selected_queue && selected_queue.appointment === 'Disable'">
+                *ngIf="check_in_list.length === 0 && selected_queue && (selected_queue.appointment === 'Disable' || (selected_queue.appointment === 'Enable' && calculationmode !== 'Fixed'))">
                 {{no_future_checkins}}
               </div>
               <!-- Timeslot disabled queue dashboard -->
               <div class="chkins col-md-12 col-xs-12 col-sm-12 no-padding mb10"
-                *ngIf="check_in_list.length>0 && selected_queue && selected_queue.appointment === 'Disable' && !loading">
+                *ngIf="check_in_list.length>0 && selected_queue && !loading && (selected_queue.appointment === 'Disable' || (selected_queue.appointment === 'Enable' && calculationmode !== 'Fixed'))">
                 <div class="col-md-12 col-sm-12 col-xs-12 box no-padding"
                   *ngFor="let checkin of check_in_list, let i=index">
                   <div class="info-box">
@@ -404,7 +405,7 @@
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <!-- Timeslot enabled queue dashboard -->
               <div class="chkins appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
-                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && !loading">
+                *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
                 <div class="border-btm col-md-12 col-sm-12 col-xs-12 no-padding appt-wl-section-row"
                   *ngFor="let slot of availableSlots, let i=index">
                   <div class="col-md-2 col-xs-3 col-sm-2 no-padding ">
@@ -845,12 +846,12 @@
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
                 <div class="no-dta col-md-12"
-                  *ngIf="selected_queue && selected_queue.appointment === 'Disable' && new_checkins_list.length === 0 && showstatus['new']">
+                  *ngIf="selected_queue && (selected_queue.appointment === 'Disable' || (selected_queue.appointment === 'Enable' && calculationmode !== 'Fixed')) && new_checkins_list.length === 0 && showstatus['new']">
                   {{no_today_checkin_msg}}
                 </div>
                 <!-- Timeslot disabled queue statusboard -->
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mb10" [class.chk-scroll]="showstatus['new']"
-                  *ngIf="selected_queue && selected_queue.appointment === 'Disable' && new_checkins_list.length>0 && showstatus['new'] && !loading">
+                  *ngIf="selected_queue && (selected_queue.appointment === 'Disable' || (selected_queue.appointment === 'Enable' && calculationmode !== 'Fixed')) && new_checkins_list.length>0 && showstatus['new'] && !loading">
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                     *ngFor="let checkin of check_in_list, let i=index" [class.selected-waitlist]="waitlistSelected[i]">
                     <div class="info-box" style="box-shadow:none"
@@ -883,9 +884,9 @@
                                 style="margin-right: 10px;">
                                 {{label.value}}
                               </span>
-                              <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
+                              <!-- <div *ngIf="checkin.appointmentTime" style="margin-right: 10px;font-size: smaller;">
                                 <span style="font-weight: 500;"> Appt Time: </span> {{checkin.appointmentTime}}
-                              </div>
+                              </div> -->
                             </div>
                             <div class="col-md-4 col-xs-4 p0">
                               <span class="icon-cloud icon-btn1 " *ngIf="checkin.waitlistedBy == 'CONSUMER'"
@@ -973,7 +974,7 @@
                 <!-- Timeslot enabled queue statusboard -->
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
                   [class.chk-scroll]="showstatus['new']"
-                  *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && !loading">
+                  *ngIf="showstatus['new'] && selected_queue && selected_queue.appointment === 'Enable' && calculationmode === 'Fixed' && !loading">
                   <!-- <span class="addbt" style="padding-left: 100px !important;padding-bottom: 40px !important;"
                         *ngIf="timeSlotCheckins && !timeSlotCheckins[slot]" (click)="checkinClicked(slot)">
                       </span> -->

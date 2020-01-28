@@ -1007,7 +1007,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.changeStatusType('all');
           }
-          if (this.selected_queue && this.selected_queue.appointment === 'Enable') {
+          if (this.selected_queue && this.selected_queue.appointment === 'Enable' && this.calculationmode === 'Fixed') {
             this.getAvaiableSlots('today');
             if (this.unAvailableSlots.length > 0) {
               setTimeout(() => {
@@ -1064,7 +1064,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              if (this.selected_queue && this.selected_queue.appointment === 'Enable') {
+              if (this.selected_queue && this.selected_queue.appointment === 'Enable' && this.calculationmode === 'Fixed') {
                 this.getAvaiableSlots();
                 if (this.futureUnAvailableSlots.length > 0) {
                   setTimeout(() => {
