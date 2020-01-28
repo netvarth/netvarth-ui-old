@@ -65,11 +65,11 @@
                         </li>
                     </ng-container>
                 </ul>
-                <ng-container *ngIf="page_source != 'provider_checkin'">
+                <ng-container>
                     <div class="input-group">
                         <label *ngIf="edit" class="col-form-label">
-                            <span class="chkin-ph" *ngIf="userPhone"><i
-                                    class="fa fa-mobile chkin-mobic"></i>&nbsp;{{userPhone}}</span>&nbsp;<i
+                            <i class="fa fa-mobile chkin-mobic"></i>&nbsp;
+                            <span class="chkin-ph" *ngIf="userPhone">{{userPhone}}</span>&nbsp;<i
                                 class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
                         </label>
                         <label *ngIf="!edit">

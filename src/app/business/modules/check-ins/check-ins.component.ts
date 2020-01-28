@@ -1651,17 +1651,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (result && result.message && result.message === 'noCustomer' && source === 'createCustomer') {
         this.createCustomer(result.data, source, appttime);
       } else if (result && result.message && (result.message === 'noCustomer' || result.message === 'newCustomer') && source === 'providerCheckin') {
-        this.createCustomer(result.data, source, appttime);
+        this.createCustomer(result.data, source, appttime, result.message);
       }
     });
   }
-  createCustomer(search_data, next_page = null, appttime) {
+  createCustomer(search_data, next_page = null, appttime, message?) {
     this.crtCustdialogRef = this.dialog.open(AddProviderCustomerComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkin-provider'],
       disableClose: true,
       data: {
-        search_data: search_data
+        search_data: search_data,
+        message: message
       }
     });
     this.crtCustdialogRef.afterClosed().subscribe(result => {
@@ -1905,15 +1906,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           let checkin_html = '';
           checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
           checkin_html += '<thead style="font-weight:600;font-size:1.2rem;">';
-          checkin_html += '<td style="padding:10px;"></td>';
+          checkin_html += '<td style="padding:10px;">Sl.No.</td>';
           checkin_html += '<td style="padding:10px;">Date & Time</td>';
-          checkin_html += '<td style="padding:10px;">Customer Name</td>';
+          checkin_html += '<td style="padding:10px;">Name</td>';
           checkin_html += '<td style="padding:10px;">Service</td>';
           checkin_html += '</thead>';
           for (let i = 0; i < this.historyCheckins.length; i++) {
             checkin_html += '<tr style="line-height:20px;padding:10px">';
-            checkin_html += '<td style="padding:10px">#' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].date + ' ' + this.historyCheckins[i].checkInTime + '</td>';
+            checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
+            checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
             checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
             checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
             checkin_html += '</tr>';

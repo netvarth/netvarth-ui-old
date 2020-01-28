@@ -78,7 +78,8 @@
                 <div class="item"><span class="ttle">{{waitlist_for_cap}}</span>
                   <span class="waitlist_for" *ngFor="let user of waitlist_data.waitlistingFor">
                     {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                    <span *ngIf="user.primaryMobileNo">({{user.primaryMobileNo}})</span>
+                    <span
+                      *ngIf="user.primaryMobileNo && user.primaryMobileNo.length === 10">({{user.primaryMobileNo}})</span>
                   </span>
                 </div>
                 <div class="item"><span class="ttle">{{service_cap}}</span><span> {{waitlist_data.service.name |

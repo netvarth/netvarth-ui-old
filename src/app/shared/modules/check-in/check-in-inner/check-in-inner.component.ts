@@ -498,9 +498,13 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
-          if (this.userData.userProfile !== undefined) {
+          if (this.userData.userProfile !== undefined && this.page_source !== 'provider_checkin') {
             this.userEmail = this.userData.userProfile.email || '';
             this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+            this.consumerPhoneNo = this.userPhone;
+          } else if (this.data.customer_data && this.data.customer_data.userProfile && this.page_source === 'provider_checkin') {
+            this.userEmail = this.data.customer_data.userProfile.email || '';
+            this.userPhone = this.data.customer_data.userProfile.primaryMobileNo || '';
             this.consumerPhoneNo = this.userPhone;
           }
           if (this.userEmail) {
@@ -955,6 +959,7 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   addCheckInProvider(post_Data) {
+    post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe((data) => {
