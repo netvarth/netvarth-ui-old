@@ -651,6 +651,7 @@ export class CheckInInnerComponent implements OnInit {
               this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
               this.sel_queue_id = this.queuejson[selindx].id;
             } else {
+              this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
               this.sel_queue_id = this.data.queue.id;
             }
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
