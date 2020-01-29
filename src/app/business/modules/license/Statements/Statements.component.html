@@ -2,7 +2,7 @@
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section>
 <section class="dashboard content pro-dash" *ngIf="!apiloading">
-     <div class="col-md-12 no-padding-small">
+      <div class="col-md-12 no-padding-small">     
         <div class="row">       
             <div class="card p0 w-dta"> 
                  <header *ngIf="source !== 'payment-history'" class="main-header dash chkin">   
@@ -10,10 +10,7 @@
                         <div class="col-md-12 no-padding">   
                             <ul class="nav cust-dash jd-custom-nav">
                                 <a class="dropdown-toggle navbar-item-color bold stat-style"
-                                    data-toggle="dropdown">           
-                                    <!-- <span *ngIf="source !== 'payment-history'"> {{statment_cap}}</span>
-                                    <span *ngIf="source === 'payment-history'"> Payment details</span>                      -->
-                                   
+                                    data-toggle="dropdown">                                             
                                 </a>
                                  <li class="dropdown notifications-menu">                                                                            
                                     <a (click)="makePayment()"
@@ -27,74 +24,63 @@
                         </div>
                     </nav>
                 </header>
-            <!-- </div>
-        </div>
-    </div>       -->
-      <div class="content m0">
-        <div class="col-md-12 no-padding-small">
+        <div class="content m0 ">
+           
             <div class="row">
                 <div class="card p0" *ngIf="api_loading">
                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-                                                      
                         <div class="card" style="height: 75px;">
                                 <div class="col-md-12 no-padding">
                                     <div class="row">
                                         <div class="col-md-6" *ngIf="!loading">
                                             <div><b>Jaldee Soft Pvt Ltd</b></div>
-                                            <!-- <div class="label">[City]</div>
-                                                    <div class="label">[Email]</div> -->
                                             <div>GSTIN: {{jaldeeegst_data}}</div>
                                         </div>
-                                        <!-- <div class="col-md-6 rightalign invoice-cap">INVOICE</div> -->
-                                    </div>
+                                     </div>
                                 </div>
                             </div>
                              
                             <div style="border-bottom:1px solid #ddd"></div>
-   
-                            <div class="col-md-12">
-                                    <div class="row align-style">
-                                           <div class="col-md-6 left-align">    
-                                                <div class="invoice">
-                                                      <div class="outer">
-                                                          <div class="ivc">
-                                                                  <div class="label" style="margin-top: 8px">Bill To:</div>
-                                                                   <div>{{bname | capitalizeFirst}}</div>
-                                                                   <div>GSTIN: {{gstNumber}}</div>
-                                                             </div>
-                                                         <div class="ivc">
-                                                                 <div class="label" *ngIf="source !== 'payment-history'" style="margin-top: 8px">
-                                                                          Statement Reference No:</div>
-                                                                    <div class="label" *ngIf="source === 'payment-history'" style="margin-top: 8px">
-                                                                        Invoice Reference No:</div>
-                                                                 <div class="result">{{invoice.invoiceRefNumber}}</div>
-                                                          </div>
-                                                        </div>
-                                                </div>
-                                         </div>
-                    
-                                <div class="col-md-6 right-align">
-                                    <div class="invoice">
-                                        <div class="outer">
-                                            <div class="ivc">
-                                                <div class="label" style="margin-top: 8px">{{serv_period}}</div>
-                                                <div class="result">{{invoice.periodFrom | date: dateFormat}}<span
-                                                        *ngIf="invoice.periodTo"> - {{invoice.periodTo | date:
-                                                        dateFormat}}</span></div>
-                                            </div>
-                                            <div class="ivc">
-                                                <div class="label" style="margin-top: 8px">Due On</div>
-                                                <div class="result">{{invoice.dueDate | date: dateFormat}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
+
+                         <div class="col-md-12 invoice-deatil no-padding">    
+                            <div class="invoice"> 
+                            <table class="table .table-hover" >
+                              <tbody>           
+                                    <tr >
+                                        <td style="margin-top: 8px">Bill To: </td>
+                                         <td class="previousDue" style="text-align: end;">{{serv_period}}</td>
+                                    </tr> 
+                                    <tr >                                        
+                                         <td >{{bname | capitalizeFirst}}</td>
+                                         <td  class="previousDue" style="text-align: end;">{{invoice.periodFrom | date: dateFormat}}<span *ngIf="invoice.periodTo"> - {{invoice.periodTo | date:
+                                                dateFormat}}</span></td>
+                                     </tr>  
+                                     <tr>
+                                            <td>GSTIN: {{gstNumber}}</td>    
+                                     </tr>
+
+                                     <br>  
+                                    <tr>
+                                        <td  *ngIf="source !== 'payment-history'" style="margin-top: 8px">Statement Reference No:</td>
+                                         <td  *ngIf="source === 'payment-history'" style="margin-top: 8px">Invoice Reference No:</td>
+                                         <td class="previousDue" style="text-align: end;">Due On </td>
+                                         
+                                    </tr>
+                                    
+
+                                     <tr >
+                                         <td >{{invoice.invoiceRefNumber}}</td>
+                                         <td class="previousDue" style="text-align: end;">{{invoice.dueDate | date: dateFormat}}</td> 
+                                    </tr>                                                                                                                                             
+                    
+                                </tbody>
+                            </table>
+                        </div>
+                   </div>                        
                         <div class="col-md-12">
                             <div style="border-bottom:2px solid #ddd"></div>
                             <div class="invoice" style="margin: 5px">
@@ -106,10 +92,12 @@
                     
                             </div>
                             <div style="border-bottom:2px solid #ddd"></div>
-                        </div>
-                         
-                        <div class="col-md-12 invoice-deatil no-padding">
-                            <table class="table .table-hover">
+                        </div>                         
+                        <!-- <div class="col-md-6 invoice-deatil no-padding"> -->
+                        <div class="col-md-12 invoice-deatil no-padding">    
+                            <div class="invoice"> 
+
+                            <table class="table .table-hover" >
                                 <thead>
                                     <tr style="background-color:white; color:#333">
                                         <th style="border-top: none">Transaction Summary</th>
@@ -138,22 +126,16 @@
                                         <td class="invoice-head" *ngIf="crdt_debtJson.type =='credit'">
                                             {{crdt_debtJson.amount | currency:'&#8377; '}}(Cr)</td>
                                     </tr>
-                                    <!-- <tr *ngIf="licenseDiscounts">
-                    
-                                        <td ><strong>Discount Details</strong></td>
-                                        <td ><strong></strong></td>
-                    
-                                      </tr> -->
                                     <tr class="invoice-discount" *ngFor="let discount of latestInvoiceDiscount">
-                                        <td class="invoiceTotal" style="text-align: left">{{discount.name}} <span
+                                        <td  style="text-align: left">{{discount.name}} <span
                                                 *ngIf="discount.calculationType === 'Percentage'">({{discount.discountValue}}%)</span>
                                         </td>
                                         <td class="price invoice-head">(-){{discount.discountedAmt| currency:'&#8377; '}}</td>
                                     </tr>
                     
                     
-                                    <tr class="invoice-discount">
-                                        <td class="invoiceTotal">Previous Balance </td>
+                                    <tr class="invoice-discount" >
+                                        <td>Previous Balance </td>
                                         <!-- <td class="previousDue" style="text-align: end;" (click)="togglePreviousDue();"><a class="pointlist" style="text-decoration: underline;">{{invoice.balance | currency:'INR':'symbol':'.2-2'}}</a></td> -->
                                         <td class="previousDue" style="text-align: end;">(+){{invoice.balance | currency:'INR':'symbol':'.2-2'}}</td>
                                       </tr> 
@@ -167,37 +149,37 @@
                                           </tr>
                                           <tr [hidden]="previousStatements.licensePkgDetailsArray.length === 0 || showPreviousDue == false" *ngFor="let license of previousStatements.licensePkgDetailsArray">
                                             <td >{{license.licenseName}}</td>
-                                            <td style="text-align: right">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal">(- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>                      </tr>
-                                        
-                                  
-                                      <tr>
+                                            <td style="text-align: right">{{license.amount| currency: 'INR':'symbol':'.2-2'}} <sub *ngIf="license.discountTotal">(- {{license.discountTotal| currency: 'INR':'symbol':'.2-2' }} )</sub></td>                     
+                                         </tr>
+                                                                          
+                                          <!-- <tr> -->
                     
                                     <tr>
-                                        <td class="invoiceTotal"><b>Total</b></td>
+                                        <td><b>Total</b></td>
                                         <td class="invoice-head">{{invoice.amount | currency:'&#8377; '}}</td>
                                     </tr>
                                 </tbody>
-                            </table>
-                        </div>
-
+                            </table>                                         
                         <div class="" *ngIf="source === 'payment-history' && payment_detail && payment_detail.length > 0">
                             <div class="payment-details" *ngFor=" let payment of payment_detail.slice().reverse()"> 
-                                <div class="ivc">
-                                    <div class="pay-det-row">
-                                        <span class="label">{{gateway_cap}} : <span class="result">
+                                <div class="ivc">                             
+                                  
+                                    <div >
+                                        <span >{{gateway_cap}} : <span class="result">
                                                 <b>{{payment.paymentGateway}}</b></span></span>
                                     </div>
                                     <div class="pay-det-row">
-                                        <span class="label">{{payment_cap}} {{mode_cap}} :
+                                        <span >{{payment_cap}} {{mode_cap}} :
+                                        <!-- <span class="inv-style">{{payment_cap}} {{mode_cap}} :     -->
                                             <span class="result"> <b>{{payment.paymentMode}}</b></span></span>
                                     </div>
                                     <div class="pay-det-row">
-                                        <span class="label">{{amount_cap}} :
-                                            <span class="result">
+                                        <span >{{amount_cap}} :
+                                            <span class="result">   
                                                 <b>{{payment.amount | currency:'&#8377; '}}</b></span></span>
                                     </div>
                                     <div class="pay-det-row">
-                                        <span class="label">{{payment_cap}} {{date_cap}} :
+                                        <span >{{payment_cap}} {{date_cap}} :
                                             <span class="result"><b> {{payment.paymentOn | date: dateFormat}}</b></span></span>
                                     </div> 
                                     <!-- <div class="pay-det-row"  *ngIf="paymentDetlId.paymentId">
@@ -205,23 +187,27 @@
                                                 <span class="result"><b> {{paymentDetlId.paymentId}}</b></span></span>
                                         </div> -->
                                     <div class="pay-det-row">
-                                        <span class="label">{{payment_cap}} {{ref_id_cap}} :
+                                        <span >{{payment_cap}} {{ref_id_cap}} :
                                             <span class="result"> <b>{{payment.paymentRefId}}</b></span></span>
                                     </div>
                                     <div class="pay-det-row">
-                                        <span class="label">{{status_cap}} :
+                                        <span >{{status_cap}} :
                                             <span class="result"><b> {{payment.status || 'FAILED'}}</b></span></span>
                                     </div>
                                </div>     
                             </div> 
                           </div>  
+                        </div> 
+                       </div> 
+                          
           </div> 
         </div>
-     </div>
+     
 
 
     </div>
     </div>
+    
     </div>
     </div>
      </div>

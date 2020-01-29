@@ -44,18 +44,6 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   activated_route: any;
   data: any;
 
-        // this.activated_route.queryParams.subscribe(
-        //   (qParams) => {
-        //     this.data = qParams;
-        //     console.log(this.data);
-        //   });     
-      
-
-
-
-
-
-
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
     private router: Router,
@@ -63,9 +51,6 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     private locationobj: Location
   )  {  
        
-
-
-
   }
 
   ngOnInit() {
@@ -105,7 +90,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     this.locationobj.back();
   }
    getInvoice(invoice){
-    console.log(invoice);
+    // console.log(invoice);
     // const dialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
     //   width: '50%',
     //   data: {
@@ -116,18 +101,16 @@ export class ProviderPaymentHistoryComponent implements OnInit {
     //   disableClose: true
     // });
     // dialogRef.afterClosed().subscribe(() => {
-    // });
-
-
-    // const url = 'provider/license/Statements';
+    // });    
  
     const invoiceJson = JSON.stringify(invoice);
     const navigationExtras: NavigationExtras = {
       queryParams: { invoice: invoiceJson,
-        source: 'payment-history'}
-      // sample_data: '2'}
+                     source: 'payment-history'},
+                     skipLocationChange: true
+     
         };
-      console.log(navigationExtras);
+          //  console.log(navigationExtras);
        this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
       
 

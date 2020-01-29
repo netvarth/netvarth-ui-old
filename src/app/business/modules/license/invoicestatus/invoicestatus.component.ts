@@ -4,6 +4,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material';
 import { ProviderLicenceInvoiceDetailComponent } from '../../../../ynw_provider/components/provider-licence-invoice-detail/provider-licence-invoice-detail.component';
 import { projectConstants } from '../../../../shared/constants/project-constants';
+import { NavigationExtras, Router } from '@angular/router';
+// import { SOURCE } from '@angular/core/src/di/injector';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class invoicestatuscomponent {
   ];
   //invoice: any = null;
   invoice_status = [];
+  temp3;
   selected = 0;
   check_status ;
   invoiceStatus =[];
@@ -65,29 +68,54 @@ export class invoicestatuscomponent {
   // };
 
    constructor(
+    private router: Router,     
     private dialog: MatDialog,
     public provider_services: ProviderServices)
   {  
     this.getInvoiceStatus();
   }
-  jaldeeStatement(invoice)
-  {
-     this.statusDialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, 
-    {
-      width: '50%',
-      data: 
-      {
-        invoice: invoice,
-        source: 'license-home'
-      },
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true
+  
+  jaldeeStatement(invoice) 
+  { 
+    //  this.statusDialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, 
+    // {
+    //   width: '50%',
+    //   data: 
+    //   {
+    //     invoice: invoice,
+    //     source: 'license-home'
+    //   },
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true
+    // }
+    // );
+    // this.statusDialogRef.afterClosed().subscribe(() => { });
+    // console.log(invoice)
+    this.temp3 = invoice.licensePaymentStatus;
+    const invoiceJson = JSON.stringify(invoice);
+    if(this.temp3 === "Paid"){
+      const navigationExtras: NavigationExtras = {
+        queryParams: { invoice: invoiceJson,
+                    source: 'payment-history'   ,
+                    data1: 'invo-statement NotPaid' //data1 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+                      },                      
+                     };
+         this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
     }
-    );
-    this.statusDialogRef.afterClosed().subscribe(() => { });
-   
-  }
+    else{
+      const navigationExtras: NavigationExtras = {
+        queryParams: { invoice: invoiceJson,
+                       source: 'license-home' , 
+                       data2: 'invo-statement Paid' //data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+                        
+                      }, 
+                     };
+         this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
+    }
+ 
+      
 
+  }
 
   setFilterData(type, status)
     {
@@ -111,7 +139,6 @@ export class invoicestatuscomponent {
                   this.invoiceStatus.splice(indexofStatus, 1 );
                }
             passingStatus= this.invoiceStatus.toString();
-            console.log(passingStatus);
             this.filter[type] = passingStatus;
             this.doSearch();
           }
@@ -145,6 +172,9 @@ export class invoicestatuscomponent {
     this.provider_services.getInvoiceStatus(Mfilter)
       .subscribe(
         data => {
+          for(let i in data){
+
+          }
           this.statusDetail = data;
            } );
   }
@@ -199,8 +229,6 @@ export class invoicestatuscomponent {
 
 
 
-
-
   clearFilter() 
   {
     // for (var i = 0; i < this.invoiceStatus.length; i++) {
@@ -227,7 +255,5 @@ export class invoicestatuscomponent {
     this.filter_sidebar = false;
   }
 
-
-  
 
 }
