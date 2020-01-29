@@ -120,6 +120,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter = {
     first_name: '',
     last_name: '',
+    age: '',
+    dob: null,
     phone_number: '',
     queue: 'all',
     service: 'all',
@@ -135,6 +137,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filters = {
     first_name: false,
     last_name: false,
+    age: false,
+    dob: false,
     phone_number: false,
     queue: false,
     service: false,
@@ -512,7 +516,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date') {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'dob') {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'waitlist_status' || type === 'service' || type === 'queue') {
         this.filter[type] = 'all';
@@ -1352,6 +1356,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
+    if (this.filter.age !== '') {
+      api_filter['age-eq'] = this.filter.age;
+    }
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
@@ -1363,6 +1370,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.waitlist_status !== 'all') {
       api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
+    }
+    if (this.filter.dob != null) {
+      api_filter['dob-eq'] = this.dateformat.transformTofilterDate(this.filter.dob);
     }
     if (this.time_type !== 1) {
       // if (this.filter.waitlist_status !== 'all') {
@@ -1393,7 +1403,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.age || this.filter.dob || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date) {
       this.filterapplied = true;
@@ -1406,6 +1416,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filters = {
       first_name: false,
       last_name: false,
+      age: false,
+      dob: false,
       phone_number: false,
       queue: false,
       service: false,
@@ -1419,6 +1431,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter = {
       first_name: '',
       last_name: '',
+      age: '',
+      dob: null,
       phone_number: '',
       queue: 'all',
       service: 'all',
