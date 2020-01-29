@@ -139,6 +139,8 @@
                                                                 <mat-icon>more_vert</mat-icon>
                                                             </button>
                                                             <mat-menu #menu="matMenu">
+                                                                <button type="button" (click)="qrCodegenerate(bProfile.customId)" mat-menu-item><i class="fa fa-qrcode"></i>
+                                                                    <span>QR generate</span></button>
                                                                 <button type="button"
                                                                     (click)="editCustomId(bProfile.customId)"
                                                                     mat-menu-item>
@@ -193,6 +195,12 @@
                                                 </div>
                                             </form>
                                         </div>
+                                    </div>
+                                    <div class="col-md-6" *ngIf="qr_code">
+                                             <ngx-qrcode  id="print-section"  [qrc-element-type]="elementType" [qrc-value] = "qr_value" >    
+                                                </ngx-qrcode>
+                                            <br>
+                                         <button (click)="printQr('print-section')"> <i class="fa fa-print" aria-hidden="true"></i></button>  
                                     </div>
                                 </div>
                                 <div class="pubs card adwds customBus w-dta">

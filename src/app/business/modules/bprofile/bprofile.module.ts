@@ -17,6 +17,7 @@ import { ProviderBprofileSearchDynamicComponent } from '../../../ynw_provider/co
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 import { PrivacyModule } from './privacy/privacy.module';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 @NgModule({
     imports: [
         BProfileRoutingModule,
@@ -29,7 +30,8 @@ import { PrivacyModule } from './privacy/privacy.module';
         Nl2BrPipeModule,
         DynamicFormModule,
         GalleryModule,
-        PrivacyModule
+        PrivacyModule,
+        NgxQRCodeModule
     ],
     declarations: [
         BProfileComponent,
