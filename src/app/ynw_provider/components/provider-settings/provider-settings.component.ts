@@ -449,15 +449,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
       case 'skins':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'skins']);
         break;
-      // case 'users':
-      //   this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users']);
-      //   break;
+      case 'users':
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+        break;
       case 'corporate':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'corporate']);
         break;
-      case 'users':
-        this.routerobj.navigate(['provider', 'settings', 'users']);
-        break;
+      // case 'users':
+      //   this.routerobj.navigate(['provider', 'settings', 'users']);
+      //   break;
         case 'doctorslist':
             const navigationExtras: NavigationExtras = {
               queryParams: { type: 'doctors'}

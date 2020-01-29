@@ -21,7 +21,7 @@ export class BranchUsersComponent implements OnInit {
             title: 'Miscellaneous'
         },
         {
-            title: 'Doctors'
+            title: 'Users'
         }
     ];
     api_loading: boolean;
@@ -41,6 +41,9 @@ export class BranchUsersComponent implements OnInit {
     }
     addBranchSP() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add']);
+    }
+    personalProfile() {
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
     }
     getBranchSPs() {
         const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
