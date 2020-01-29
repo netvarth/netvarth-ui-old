@@ -7147,3 +7147,7 @@ label.notifi-togl {
   color: #3c8dbc !important;
   font-weight: 800;
 }
+.dashboard-count
+{
+padding-left: 30px;
+}

@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs/Subscription';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { Router, RoutesRecognized } from '@angular/router';
+import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -289,7 +289,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialog: MatDialog,
     private shared_services: SharedServices,
     public dateformat: DateFormatPipe,
-    private _scrollToService: ScrollToService) {
+    private _scrollToService: ScrollToService,
+     public route: ActivatedRoute) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -375,6 +376,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getFutureCheckIn();
       }
     });
+     this.route.queryParams.subscribe((qparams)=>{
+     this.time_type =+qparams.time_type;
+     console.log(this.time_type);
+      if(this.time_type >= 0)
+      {
+         this.setTimeType(this.time_type);
+      }
+      });
+    
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -693,6 +703,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
               getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq') || '';
             }
+            /*const getsavedqueueid = this.shared_functions.getitemFromGroupStorage('pdq');
+            if (!getsavedqueueid) {
+              const selid = this.findCurrentActiveQueue(this.all_queues);
+              this.selectedQueue(this.all_queues[selid]);
+            }*/
             let selqid = 0;
             for (let ii = 0; ii < this.all_queues.length; ii++) {
               let schedule_arr = [];

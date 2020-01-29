@@ -46,13 +46,38 @@
       </form> -->
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+      <ul class="sidebar-menu" >
         <li class="">&nbsp;</li>
         <li>
-          <a class="pointer-cursor" (click)="dashboardClicked()" routerLinkActive="active-lnk">
+          <a class="pointer-cursor" (click)="dashboardClicked()" routerLinkActive="active-lnk" >
             <i class="fa fa-dashboard"></i> <span> Dashboard</span>
           </a>
         </li>
+          <li>
+            <a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:1}"routerLinkActive="active-lnk" >
+              <span class="dashboard-count" >
+                <i class="material-icons"style="font-size:20px">today</i>
+                  Today
+              </span>
+            </a>
+          </li>
+         <li>
+            <a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:2}"(click)="closeMenu()"routerLinkActive="active-lnk" >
+              <span class="dashboard-count">
+                <i class="material-icons"style="font-size:20px">next_week</i>
+                  Future
+              </span>
+            </a>
+          </li>
+        <li>
+            <a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:0}"(click)="closeMenu()"routerLinkActive="active-lnk" >
+              <span class="dashboard-count">
+                <i class="material-icons"style="font-size:20px">history</i>
+              History
+              </span>
+            </a>
+        </li>
+      <li class="separator"></li>
         <li class="treeview">
           <a class="pointer-cursor" routerLink="customers"  (click)="closeMenu()" routerLinkActive="active-lnk">
             <i class="fa fa-users"></i>

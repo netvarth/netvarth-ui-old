@@ -100,6 +100,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   badge_map_arr: any = [];
   loc_list: any = [];
   mapurl;
+  qr_code = false;
+  qr_value;
   base_loc: any = [];
 
   schedule_arr: any = [];
@@ -886,6 +888,25 @@ export class BProfileComponent implements OnInit, OnDestroy {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+  }
+  qrCodegenerate(valuetogenerate){
+    this.qr_value = this.path + '/#' + valuetogenerate;
+    this.qr_code = true;
+  }
+  printQr(printSectionId) {
+    const printContent = document.getElementById(printSectionId);
+    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    WindowPrt.document.write('<html><head><title></title>');
+    WindowPrt.document.write('</head><body style="border-style: dashed;width:500px;height:600px">');
+    WindowPrt.document.write('<div style="padding-left:190px;padding-top: 50px;">');
+    WindowPrt.document.write('<p style="font-size: xx-large;padding-left:24px;font-weight: 700;color: #183e7a;">Jaldee</p>');
+    WindowPrt.document.write(printContent.innerHTML);
+    WindowPrt.document.write('</div>');
+    WindowPrt.document.write('</body></html>');
+    WindowPrt.document.close();
+    WindowPrt.focus();
+    WindowPrt.print();
+    WindowPrt.close();
   }
   gotoMedia() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
