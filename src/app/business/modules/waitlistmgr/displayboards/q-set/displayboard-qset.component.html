@@ -14,7 +14,7 @@
                     <li class="dropdown notifications-menu pull-right">
                        <a class="bk-ctrl link">
                             <span class="bold pointer-cursor" (click)="goBack()"><i
-                                    class="bold fa fa-angle-left"></i><span class="backicon">Status board</span></span>
+                                    class="bold fa fa-angle-left"></i><span class="backicon">Queue board</span></span>
                         </a>
                     </li>
                     <!-- <li class="dropdown notifications-menu pull-right" (click)="addQSet()">
@@ -25,11 +25,11 @@
                             </mat-panel-description>
                         </li> -->
                     <li class="dropdown notifications-menu pull-right">
-                        <!-- <div class="title">Status board Criterias</div> -->
+                        <!-- <div class="title">queue board Criterias</div> -->
 
                         <a (click)="addQSet()" class="dropdown-toggle navbar-item-color bold pointer-cursor">
                             <span>
-                                <i class="fa fa-plus"></i> Status board Criteria
+                                <i class="fa fa-plus"></i> Queue board query
                             </span>
                         </a>
                     </li>
@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="board_list.length == 0">
                 <div class="no-dta">
-                    <p> Status board Criteria not found</p>
+                    <p> Queue board query not found</p>
                     <span class="cs-btn bt3" (click)="addQSet()">Add it now</span>
                 </div>
             </div>

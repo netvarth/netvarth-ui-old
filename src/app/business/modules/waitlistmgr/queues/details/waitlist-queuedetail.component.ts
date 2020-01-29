@@ -48,6 +48,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     ];
     breadcrumbs = this.breadcrumbs_init;
     customer_label = '';
+    appointment = false;
     api_loading = false;
     amForm: FormGroup;
     schedule_arr: any = [];
@@ -353,6 +354,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.queue_data = data;
+                    this.appointment = (this.queue_data.appointment === 'Enable') ? true : false;
                     let schedule_arr = [];
                     if (this.queue_data.queueSchedule) {
                         schedule_arr = this.shared_Functionsobj.queueSheduleLoop(this.queue_data.queueSchedule);
@@ -390,6 +392,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     goBack() {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'queues']);
+        this.api_loading = false;
     }
     addEditProviderQueue() {
         this.action = 'edit';
@@ -751,6 +754,15 @@ export class WaitlistQueueDetailComponent implements OnInit {
     onChangeLocationSelect(ev) {
         this.selected_location = this.loc_list[ev];
         this.selected_locationId = this.loc_list[ev].id;
+    }
+    
+    changeTimeslotStatus(ev) {
+        const status = (ev.checked) ? 'Enable' : 'Disable';
+        this.provider_services.changeApptStatus(status, this.queue_id).subscribe(
+            () => {
+                this.appointment = (status === 'Enable') ? true : false;
+                this.getQueueDetail();
+            });
     }
 }
 

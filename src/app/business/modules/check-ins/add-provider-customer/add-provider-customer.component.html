@@ -7,7 +7,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     </h1>
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     <mat-dialog-content>
-        <div class="form-group mobile-field">
+        <div class="form-group mobile-field" *ngIf="data.message !== 'newCustomer'">
             <mat-form-field>
                 <div class="input-group">
                     <div class="input-group-prepend mob-prefix">

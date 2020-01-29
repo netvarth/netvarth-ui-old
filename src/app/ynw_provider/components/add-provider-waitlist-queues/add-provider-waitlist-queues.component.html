@@ -203,12 +203,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     (keyup)="isvalid($event)">
             </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'">
-            Enable time slot  {{timeSlot}}
-            <mat-slide-toggle class="example-margin" formControlName="appointment"
-                (change)="changeTimeslotStatus($event)">
-            </mat-slide-toggle>
-            <mat-form-field class="example-full-width mgn-up-5" *ngIf="timeSlotStatus">
+        <div class="form-group" *ngIf="showAdvancedSettings">
+            <div *ngIf="data.type=='add'"> Enable time slot {{timeSlot}}
+                <mat-slide-toggle class="example-margin" formControlName="appointment"
+                    (change)="changeTimeslotStatus($event)">
+                </mat-slide-toggle>
+            </div>
+            <mat-form-field class="example-full-width mgn-up-5"
+                *ngIf="timeSlotStatus || (data.queue && data.queue.appointment === 'Enable')">
                 <input class="number-ip-sm" matInput min="0" max="100000" type="text" placeholder="Time Slot (min)"
                     formControlName="timeSlot" autocomplete="off" (keypress)="isNumeric($event)"
                     (keyup)="isvalid($event)">
