@@ -140,7 +140,6 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-        appointment: [false],
         timeSlot: [0, Validators.compose([Validators.required])]
         // futureWaitlist: [false],
         // onlineCheckIn: [false]
@@ -195,12 +194,10 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       qendtime: edtime || null,
       qcapacity: this.data.queue.capacity || null,
       qserveonce: this.data.queue.parallelServing || null,
-      appointment: (this.data.queue.appointment === 'Enable') ? true : false,
       timeSlot: this.data.queue.timeInterval || 0
       // futureWaitlist: this.data.queue.futureWaitlist || false,
       // onlineCheckIn: this.data.queue.onlineCheckIn || false
     });
-    this.timeSlotStatus = (this.data.queue.appointment === 'Enable') ? true : false;
     this.amForm.get('qlocation').disable();
     this.selday_arr = [];
     // extracting the selected days
@@ -751,7 +748,7 @@ export class AddProviderWaitlistQueuesComponent implements OnInit {
       this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);
     } else {
       this.timeSlotStatus = false;
-      this.amForm.get('timeSlot').setValue(0);
+      // this.amForm.get('timeSlot').setValue(0);
     }
   }
 }

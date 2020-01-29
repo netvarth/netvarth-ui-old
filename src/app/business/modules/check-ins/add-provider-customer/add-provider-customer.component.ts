@@ -53,20 +53,29 @@ export class AddProviderCustomerComponent implements OnInit {
     this.createForm();
   }
   createForm() {
-
-    this.amForm = this.fb.group({
-      mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
-      Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
-      email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
-      dob: [''],
-      gender: [''],
-      address: ['']
-    });
-
-    this.amForm.get('mobile_number').setValue(this.search_data.mobile_number);
-    this.amForm.get('first_name').setValue(this.search_data.first_last_name);
+    if (this.data.message === 'newCustomer') {
+      this.amForm = this.fb.group({
+        first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+        email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+        dob: [''],
+        gender: [''],
+        address: ['']
+      });
+    } else {
+      this.amForm = this.fb.group({
+        mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
+        Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
+        first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+        email_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
+        dob: [''],
+        gender: [''],
+        address: ['']
+      });
+      this.amForm.get('mobile_number').setValue(this.search_data.mobile_number);
+      this.amForm.get('first_name').setValue(this.search_data.first_last_name);
+    }
     this.api_loading = false;
   }
 

@@ -295,11 +295,11 @@ export class CheckInInnerComponent implements OnInit {
       this.search_obj = srch_fields;
       // this.sel_queue_id = this.search_obj.fields.waitingtime_res.nextAvailableQueue.id;
       this.sel_loc = this.data.moreparams.location.id;
-      if (this.page_source === 'provider_checkin') {
-        this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
-      } else {
-        this.sel_checkindate = this.data.moreparams.sel_date;
-      }
+      // if (this.page_source === 'provider_checkin') {
+      //   this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+      // } else {
+      this.sel_checkindate = this.data.moreparams.sel_date;
+      // }
       this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
     }
     if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
@@ -498,9 +498,13 @@ export class CheckInInnerComponent implements OnInit {
       .then(
         data => {
           this.userData = data;
-          if (this.userData.userProfile !== undefined) {
+          if (this.userData.userProfile !== undefined && this.page_source !== 'provider_checkin') {
             this.userEmail = this.userData.userProfile.email || '';
             this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+            this.consumerPhoneNo = this.userPhone;
+          } else if (this.data.customer_data && this.data.customer_data.userProfile && this.page_source === 'provider_checkin') {
+            this.userEmail = this.data.customer_data.userProfile.email || '';
+            this.userPhone = this.data.customer_data.userProfile.primaryMobileNo || '';
             this.consumerPhoneNo = this.userPhone;
           }
           if (this.userEmail) {
@@ -955,6 +959,7 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   addCheckInProvider(post_Data) {
+    post_Data['waitlistPhoneNumber'] = this.consumerPhoneNo;
     this.api_loading = true;
     this.shared_services.addProviderCheckin(post_Data)
       .subscribe((data) => {
@@ -1665,11 +1670,12 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
+    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+    const curTimeSub = moment(curTime).subtract(interval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
     const _this = this;
-    const allSlots = _this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
-    this.availableSlots = allSlots;
     const filter = {};
-    const activeSlots = [];
+    this.availableSlots = [];
     filter['queue-eq'] = _this.sel_queue_id;
     filter['location-eq'] = _this.sel_loc;
     filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
@@ -1684,6 +1690,8 @@ export class CheckInInnerComponent implements OnInit {
     if (!edit) {
       this.apptTime = '';
     }
+    const activeSlots = [];
+    const allSlots = this.sharedFunctionobj.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
     if (!future) {
       _this.provider_services.getTodayWaitlist(filter).subscribe(
         (waitlist: any) => {
@@ -1693,7 +1701,12 @@ export class CheckInInnerComponent implements OnInit {
             }
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
-          this.availableSlots = slots;
+          for (let i = 0; i < slots.length; i++) {
+            const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+            if (curTimeSubDt <= slotTime) {
+              this.availableSlots.push(slots[i]);
+            }
+          }
           if (!edit) {
             this.apptTime = this.availableSlots[0];
           }

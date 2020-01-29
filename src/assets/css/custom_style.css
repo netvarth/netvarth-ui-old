@@ -1319,6 +1319,12 @@ sup {
 .mgn-rt-10 {
   margin-right: 10px !important;
 }
+.mgn-rt-20 {
+  margin-right: 20px !important;
+}
+.mgn-rt-25 {
+  margin-right: 25px !important;
+}
 .mgn-up-4 {
   margin-top: 4px !important;
 }
@@ -7117,6 +7123,11 @@ label.notifi-togl {
   height: 150px;
   line-height: 150px;
   text-align: center;
+}
+.mobile-error app-field-error-display .sts-msg.error{
+  background: white !important;
+  color: #f24949 !important;
+  padding: 0px !important;
 }
 .queue-waitingdiv {line-height:25px !important}
 .gallery-class{

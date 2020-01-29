@@ -20,7 +20,7 @@ export class ContainersComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Status boards',
+            title: 'Queue Boards',
             url: '/provider/settings/q-manager/displayboards'
         },
         {

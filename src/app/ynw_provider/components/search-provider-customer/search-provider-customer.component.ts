@@ -35,7 +35,8 @@ export class SearchProviderCustomerComponent implements OnInit {
   queues;
   waitlist_set: any = [];
   showToken = false;
-
+  showError = false;
+  showNameError = false;
   frm_create_customer_cap_one = '';
   frm_create_customer_cap_two = '';
   frm_create_customer_cap_three = '';
@@ -65,55 +66,61 @@ export class SearchProviderCustomerComponent implements OnInit {
 
   createForm() {
     this.amForm = this.fb.group({
-      mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
+      mobile_number: ['', Validators.compose([Validators.maxLength(10),
       Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-      first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+      first_last_name: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
     });
   }
 
   searchCustomer(form_data) {
-    // this.resetApiErrors();
-    this.form_data = null;
-    this.create_new = false;
-    if (form_data.first_last_name.length >= 3) {
-      const post_data = {
-        'firstName-eq': form_data.first_last_name,
-        'lastName-eq': form_data.first_last_name,
-        'primaryMobileNo-eq': form_data.mobile_number
-      };
-
-      this.provider_services.getCustomer(post_data)
-        .subscribe(
-          (data: any) => {
-            if (data.length === 0) {
-              if (this.source === 'createCustomer') {
-                const return_data = {
-                  'message': 'noCustomer',
-                  'data': form_data
-                };
-                this.dialogRef.close(return_data);
-              } else if (this.source === 'providerCheckin') {
-                this.form_data = form_data;
-                this.create_new = true;
-              }
-            } else {
-              if (this.source === 'createCustomer') {
-                this.shared_functions.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_EXIST);
-              } else if (this.source === 'providerCheckin') {
-                const return_data = {
-                  'message': 'haveCustomer',
-                  'data': data[0]
-                };
-                this.dialogRef.close(return_data);
-              }
-            }
-          },
-          error => {
-            this.shared_functions.apiErrorAutoHide(this, error);
-          }
-        );
+    if (this.amForm.get('mobile_number').value === '') {
+      this.showError = true;
+    } else if (this.amForm.get('first_last_name').value === '') {
+      this.showNameError = true;
     } else {
-      this.shared_functions.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
+      // this.resetApiErrors();
+      this.form_data = null;
+      this.create_new = false;
+      if (form_data.first_last_name.length >= 3) {
+        const post_data = {
+          'firstName-eq': form_data.first_last_name,
+          'lastName-eq': form_data.first_last_name,
+          'primaryMobileNo-eq': form_data.mobile_number
+        };
+
+        this.provider_services.getCustomer(post_data)
+          .subscribe(
+            (data: any) => {
+              if (data.length === 0) {
+                if (this.source === 'createCustomer') {
+                  const return_data = {
+                    'message': 'noCustomer',
+                    'data': form_data
+                  };
+                  this.dialogRef.close(return_data);
+                } else if (this.source === 'providerCheckin') {
+                  this.form_data = form_data;
+                  this.create_new = true;
+                }
+              } else {
+                if (this.source === 'createCustomer') {
+                  this.shared_functions.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_EXIST);
+                } else if (this.source === 'providerCheckin') {
+                  const return_data = {
+                    'message': 'haveCustomer',
+                    'data': data[0]
+                  };
+                  this.dialogRef.close(return_data);
+                }
+              }
+            },
+            error => {
+              this.shared_functions.apiErrorAutoHide(this, error);
+            }
+          );
+      } else {
+        this.shared_functions.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
+      }
     }
   }
 
@@ -145,6 +152,17 @@ export class SearchProviderCustomerComponent implements OnInit {
     }
   }
   isNumeric(evt) {
-    return this.shared_functions.isNumeric(evt);
+    if (evt === 'name') {
+      this.showNameError = false;
+    } else {
+      this.showError = false;
+      return this.shared_functions.isNumeric(evt);
+    }
+  }
+  skip() {
+    const return_data = {
+      'message': 'newCustomer'
+    };
+    this.dialogRef.close(return_data);
   }
 }
