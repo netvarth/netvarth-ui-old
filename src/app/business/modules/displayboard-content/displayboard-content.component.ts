@@ -366,15 +366,17 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             const full_phone = checkin['waitlistingFor'][0]['primaryMobileNo'];
             const phLength = full_phone.length;
             const tele = [];
-            for (let i = 0; i < phLength; i++) {
-                if (i < 6) {
-                    tele[i] = full_phone[i].replace(/^\d+$/, '*');
-                } else {
-                    tele[i] = full_phone[i];
+            if (phLength === 10) {
+                for (let i = 0; i < phLength; i++) {
+                    if (i < 6) {
+                        tele[i] = full_phone[i].replace(/^\d+$/, '*');
+                    } else {
+                        tele[i] = full_phone[i];
+                    }
                 }
-            }
-            for (let i = 0; i < phLength; i++) {
-                fieldValue += tele[i];
+                for (let i = 0; i < phLength; i++) {
+                    fieldValue += tele[i];
+                }
             }
         } else {
             fieldValue = checkin[field.name];

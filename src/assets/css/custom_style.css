@@ -6608,7 +6608,7 @@ input.jdn_ip { width: 50px !important}
   margin-bottom: 0px !important;
 }
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 /* Track */
 ::-webkit-scrollbar-track {

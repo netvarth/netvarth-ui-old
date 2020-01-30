@@ -118,8 +118,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter = {
     first_name: '',
     last_name: '',
-    age: '',
-    dob: null,
+    dob_start_date: null,
+    dob_end_date: null,
     phone_number: '',
     queue: 'all',
     service: 'all',
@@ -135,8 +135,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filters = {
     first_name: false,
     last_name: false,
-    age: false,
-    dob: false,
+    dob_start_date: false,
+    dob_end_date: false,
     phone_number: false,
     queue: false,
     service: false,
@@ -151,6 +151,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filter_date_start_max = null;
   filter_date_end_min = null;
   filter_date_end_max = null;
+
+  filter_dob_start_min = null;
+  filter_dob_start_max = null;
+  filter_dob_end_min = null;
+  filter_dob_end_max = null;
+
   customer_label = '';
   provider_label = '';
   arrived_label = '';
@@ -510,7 +516,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
     if (!this.filters[type]) {
-      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'dob') {
+      if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'dob_start_date' || type === 'dob_end_date') {
         this.filter[type] = null;
       } else if (type === 'payment_status' || type === 'waitlist_status' || type === 'service' || type === 'queue') {
         this.filter[type] = 'all';
@@ -1169,6 +1175,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
     }
   }
+
+  setFilterdobMaxMin() {
+    this.filter_dob_start_max = new Date();
+    this.filter_dob_end_max = new Date();
+  }
+
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
@@ -1177,6 +1189,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.doSearch();
   }
+
+  checkFilterdobMaxMin(type) {
+    if (type === 'dob_start_date') {
+      this.filter_dob_end_min = this.filter.dob_start_date;
+    } else if (type === 'dob_end_date') {
+      this.filter_dob_start_max = this.filter.dob_end_date;
+    }
+    this.doSearch();
+  }
+
   loadApiSwitch(source) {
     this.resetAll();
     let chkSrc = true;
@@ -1331,6 +1353,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   toggleFilter() {
     this.open_filter = !this.open_filter;
+    if (this.open_filter) {
+      this.setFilterdobMaxMin();
+    }
   }
   setFilterData(type, value) {
     this.filter[type] = value;
@@ -1350,9 +1375,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
-    if (this.filter.age !== '') {
-      api_filter['age-eq'] = this.filter.age;
-    }
     if (this.filter.last_name !== '') {
       api_filter['lastName-eq'] = this.filter.last_name;
     }
@@ -1364,9 +1386,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filter.waitlist_status !== 'all') {
       api_filter['waitlistStatus-eq'] = this.filter.waitlist_status;
-    }
-    if (this.filter.dob != null) {
-      api_filter['dob-eq'] = this.dateformat.transformTofilterDate(this.filter.dob);
     }
     if (this.time_type !== 1) {
       // if (this.filter.waitlist_status !== 'all') {
@@ -1386,6 +1405,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
+      if (this.filter.dob_start_date != null) {
+        api_filter['dob-ge'] = this.dateformat.transformTofilterDate(this.filter.dob_start_date);
+      }
+      if (this.filter.dob_end_date != null) {
+        api_filter['dob-le'] = this.dateformat.transformTofilterDate(this.filter.dob_end_date);
+      }
     }
     api_filter['location-eq'] = this.selected_location.id;
     return api_filter;
@@ -1397,7 +1422,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   doSearch() {
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
-    if (this.filter.first_name || this.filter.last_name || this.filter.age || this.filter.dob || this.filter.phone_number || this.filter.service !== 'all' ||
+    if (this.filter.first_name || this.filter.last_name || this.filter.dob_start_date || this.filter.dob_end_date || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date) {
       this.filterapplied = true;
@@ -1410,8 +1435,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filters = {
       first_name: false,
       last_name: false,
-      age: false,
-      dob: false,
+      dob_start_date: false,
+      dob_end_date: false,
       phone_number: false,
       queue: false,
       service: false,
@@ -1425,8 +1450,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter = {
       first_name: '',
       last_name: '',
-      age: '',
-      dob: null,
+      dob_start_date: null,
+      dob_end_date: null,
       phone_number: '',
       queue: 'all',
       service: 'all',

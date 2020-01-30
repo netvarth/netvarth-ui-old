@@ -199,31 +199,32 @@
                       <input type="text" #Flname (blur)="doSearch()" (keyup)="focusInput($event,Flname)"
                         class="genTextHeight" [(ngModel)]="filter.last_name" [hidden]="!filters['last_name']">
                     </span>
-
-
-                    <span class="inl-blk filtr">
-                      <a [class.button_filter]="filters['age']" (click)="filterClicked('age')"
-                        class="anchorbutton remMarginRight genMarginLeft" name="age"><span>Age</span></a>
-                      <input type="text" #age (blur)="doSearch()" (keyup)="focusInput($event,age)"
-                        class="genTextHeight" [(ngModel)]="filter.age" [hidden]="!filters['age']">
-                    </span>
-                    <span class="inl-blk filtr">
-                      <a [class.button_filter]="filters['dob']" (click)="filterClicked('dob')"
-                        class="anchorbutton remMarginRight genMarginLeft" name="dob"><span>Date of birth</span></a>
-                        <input type="text" [(ngModel)]="filter.dob"
-                        [matDatepicker]="picker2" #Fstartdate
-                        class="genTextHeight" [hidden]="!filters['dob']">
-                      <mat-datepicker-toggle matSuffix [for]="picker2" [hidden]="!filters['dob']">
+                    <span class="inl-blk filtr" *ngIf="time_type == 3">
+                      <a [class.button_filter]="filters['dob_start_date']" (click)="filterClicked('dob_start_date')"
+                        class="anchorbutton remMarginRight genMarginLeft" name="dob_start_date"><span>Date of birth
+                          (start)</span></a>
+                      <input type="text" [(ngModel)]="filter.dob_start_date" [min]="filter_dob_start_min"
+                        [matDatepicker]="startpicker" #Fstartdate (dateChange)="checkFilterdobMaxMin('dob_start_date')"
+                        [max]="filter_dob_start_max" class="genTextHeight" [hidden]="!filters['dob_start_date']">
+                      <mat-datepicker-toggle matSuffix [for]="startpicker" [hidden]="!filters['dob_start_date']">
                       </mat-datepicker-toggle>
-                      <mat-datepicker #picker2 [hidden]="!filters['dob']"></mat-datepicker>
+                      <mat-datepicker #startpicker [hidden]="!filters['dob_start_date']"></mat-datepicker>
                     </span>
-
-
-
+                    <span class="inl-blk filtr" *ngIf="time_type == 3">
+                      <a [class.button_filter]="filters['dob_end_date']" (click)="filterClicked('dob_end_date')"
+                        class="anchorbutton remMarginRight genMarginLeft" name="dob_end_date"><span>Date of birth
+                          (end)</span></a>
+                      <input type="text" [(ngModel)]="filter.dob_end_date" [min]="filter_dob_end_min"
+                        [matDatepicker]="endpicker" #Fstartdate (dateChange)="checkFilterdobMaxMin('dob_end_date')"
+                        [max]="filter_dob_end_max" class="genTextHeight" [hidden]="!filters['dob_end_date']">
+                      <mat-datepicker-toggle matSuffix [for]="endpicker" [hidden]="!filters['dob_end_date']">
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #endpicker [hidden]="!filters['dob_end_date']"></mat-datepicker>
+                    </span>
                     <span class="inl-blk filtr">
                       <a [class.button_filter]="filters['phone_number']" *ngIf="time_type == 3"
                         (click)="filterClicked('phone_number')" class="anchorbutton remMarginRight genMarginLeft"
-                        name="phone_number" id="btn_phone_number_filter_id"><span>{{phone_no_cap}}</span></a>
+                        name="phone_number" id="btn_phone_number_filter_id"><span>Mobile</span></a>
                       <input *ngIf="time_type == 3" type="text" #Fphnumber (blur)="doSearch()"
                         (keyup)="focusInput($event,Fphnumber)" class="genTextHeight" [(ngModel)]="filter.phone_number"
                         [hidden]="!filters['phone_number']">
