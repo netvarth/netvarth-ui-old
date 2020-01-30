@@ -160,7 +160,8 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.fnameerror !== null || this.lnameerror !== null) {
             return;
         }
-        if (this.actionparam === 'add') {
+        console.log(this.actionparam);
+       // if (this.actionparam === 'add') {
 
 
             // const data = {
@@ -210,7 +211,21 @@ export class BranchUserDetailComponent implements OnInit {
                 'isAdmin': true,
                 'departmentCode': input.selectedDepartment
             };
-            this.provider_services.createBranchSP(post_data).subscribe(() => {
+            const post_data1 = {
+                
+                    'firstName': input.first_name.trim() || null,
+                    'lastName': input.last_name.trim() || null,
+                    'dob': date_format || null,
+                    'gender': input.gender || null,
+                    'email': input.email || '',
+                    'mobileNo': input.phonenumber,
+                'address': 'Near high road',
+                'city': 'thrissur',
+                'state': 'kerala',
+                'deptId': input.selectedDepartment,
+                'userType': 'PROVIDER'
+            };
+            this.provider_services.createAssistant(post_data1).subscribe(() => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
             },
@@ -218,7 +233,7 @@ export class BranchUserDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-    }
+  //  }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
     }
@@ -283,6 +298,7 @@ export class BranchUserDetailComponent implements OnInit {
             .subscribe(
                 data => {
                     this.departments = data['departments'];
+                    console.log(this.departments);
                     this.amForm.get('selectedDepartment').setValue(this.departments[0].departmentCode);
                     this.api_loading = false;
                 },

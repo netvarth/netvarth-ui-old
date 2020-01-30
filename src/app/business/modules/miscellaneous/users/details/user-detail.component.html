@@ -112,7 +112,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
             <mat-select placeholder="Select department *"
                 formControlName="selectedDepartment" #deptsel>
                 <mat-option *ngFor="let dept of departments"
-                    [value]="dept.departmentCode">
+                    [value]="dept.departmentId">
                     {{dept.departmentName}}
                 </mat-option>
             </mat-select>
