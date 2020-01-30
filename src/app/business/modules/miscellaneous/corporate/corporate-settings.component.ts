@@ -64,6 +64,8 @@ export class CorporateSettingsComponent implements OnInit {
                 this.corpType = '';
                 this.corpId = '';
                 this.getCorporateDetails();
+                const pdata = { 'ttype': 'upgradelicence' };
+                this.shared_functions.sendMessage(pdata);
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -92,6 +94,8 @@ export class CorporateSettingsComponent implements OnInit {
                 this.accountType = 'BRANCH';
                 this.shared_functions.openSnackBar(Messages.CREATECORP_SUCCESS);
                 this.getCorporateDetails();
+                const pdata = { 'ttype': 'upgradelicence' };
+                this.shared_functions.sendMessage(pdata);
             },
             (error) => {
                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
