@@ -7151,3 +7151,15 @@ label.notifi-togl {
 {
 padding-left: 30px;
 }
+.inv-style{
+  display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color:black !important;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}

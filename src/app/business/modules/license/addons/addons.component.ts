@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { Router } from '@angular/router';
+import { SWITCH_IVY_ENABLED__POST_R3__ } from '@angular/core/src/ivy_switch';
 
 @Component({
     selector: 'app-addons',
@@ -25,6 +26,9 @@ export class AddonsComponent implements OnInit, OnDestroy {
     current_lic;
     addonTooltip = '';
     domain;
+    showaddondetails = false;
+    // licPkgOrAddonId;
+    addonnss;
     learn_more = Messages.LEARN_MORE_CAP;
     history_cap = Messages.HISTORY_HOME_CAP;
     account_type;
@@ -37,6 +41,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
             title: 'Add-ons'
         }
     ];
+    addonDescription = '';
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
@@ -56,6 +61,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getLicenseDetails()
             .subscribe(data => {
                 this.currentlicense_details = data;
+                console.log(this.currentlicense_details.addons)
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
                 const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
@@ -87,6 +93,14 @@ export class AddonsComponent implements OnInit, OnDestroy {
         });
         this.addonhistorydialogRef.afterClosed().subscribe(() => {
         });
+    }
+
+    addondetails(addonnss){
+        
+        this.addonDescription = addonnss.description;
+        (this.showaddondetails); this.showaddondetails = true;
+        // (this.showaddondetails) ? this.showaddondetails = false : this.showaddondetails = true;
+
     }
     showadd_addons() {
         if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {

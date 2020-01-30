@@ -100,6 +100,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     annualdiscount: any = [];
     licenseDisplayName;
     account_type;
+    temp1: any;
+    refnumber: any;
 
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
@@ -374,29 +376,17 @@ export class LicenseComponent implements OnInit, OnDestroy {
     }
     getInvoice(invoice) {
         const invoiceJson = JSON.stringify(invoice);
+        console.log(invoiceJson)
          if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
             this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-        } else {
-            // this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-            // this.invoicedialogRef = this.dialog.open(statementcomponent, {
-            //     width: '50%',
-            //     data: {
-            //         invoice: invoice,
-            //         source: 'license-home'
-            //     },
-            //     panelClass: ['popup-class', 'commonpopupmainclass'],
-            //     disableClose: true
-            // });
-            // this.invoicedialogRef.afterClosed().subscribe(() => {
-            // });
-       
+        } else {              
             const navigationExtras: NavigationExtras = {
                 queryParams: {  invoice: invoiceJson,
-                                source: 'license-home' }
-              };
-            //   console.log(navigationExtras);
+                                source: 'license-home' 
+                             }
+              };         
             this.router.navigate(['provider', 'license', 'Statements'] , navigationExtras);
-            //  this.router.navigate(['provider', 'license', 'Statements']);
+            
         }
     }
     getInvoicePay(invoice, payMentShow) {
@@ -404,30 +394,17 @@ export class LicenseComponent implements OnInit, OnDestroy {
         if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
             this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
-             // this.invoicedialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, {
-                // this.invoicedialogRef = this.dialog.open(statementcomponent, {
-                //     width: '50%',
-                //     data: {
-                //         invoice: invoice,
-                //         payMent: payMentShow,
-                //         source: 'license-home'
-                //     },
-                //     panelClass: ['popup-class', 'commonpopupmainclass'],
-                //     disableClose: true
-                // });
-                // this.invoicedialogRef.afterClosed().subscribe(() => {
-                // });
-    
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {  invoice: invoiceJson,
+            this.temp1=JSON.parse(invoiceJson);
+            const navigationExtras: NavigationExtras = {
+                    queryParams: {  invoice: invoiceJson, 
                                     payMent: payMentShow,
-                                    source: 'license-home' }
+                                    source: 'license-home',
+                                   },
+                                    // skipLocationChange: true,
+                                                
                 };
-                // console.log(navigationExtras);
-
-                 this.router.navigate(['provider', 'license', 'Statements'] , navigationExtras);
-                //  this.router.navigate(['provider', 'license', 'Statements']);
-        }
+                this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
+              }
     }
     openAnnualSection() {
         if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {

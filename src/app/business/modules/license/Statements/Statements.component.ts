@@ -18,7 +18,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class statementcomponent implements OnInit {
 
-
   service_cap = Messages.SERVICES_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   mode_cap = Messages.MODE_CAP;
@@ -74,6 +73,7 @@ export class statementcomponent implements OnInit {
   showPreviousDue = false;
   show = false;
   temp;
+  temp4;
   discountDetailsTxt = 'Show discount details';
     // activated_route: any;
     
@@ -89,6 +89,9 @@ export class statementcomponent implements OnInit {
   ];
   breadcrumbs = this.breadcrumbs_init;
   customer_label: any;
+  tempp: any;
+  var: any;
+  temp1;
   constructor(
     public dialogRef: MatDialogRef<statementcomponent>,
     private dialog: MatDialog,
@@ -106,28 +109,61 @@ export class statementcomponent implements OnInit {
        this.activated_route.queryParams.subscribe(
         (qParams) => {
           this.data = qParams;
-          this.temp= this.data.source;
-
-          console.log(this.data.source);
+          this.temp= this.data.source;        
+                    
          });    
-                      
-    if(this.temp ==='payment-history'){
-      const breadcrumbs = [];
-      this.breadcrumbs_init.map((e) => {
-        breadcrumbs.push(e);
-      });
-      breadcrumbs.push({
-        title: 'Payment History',
-        url: '/provider/license/payment/history'
+            if(this.data.data1 === 'invo-statement NotPaid'){
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+          });
+         breadcrumbs.push({
+            title: 'Invoice / Statement',
+            url: '/provider/license/invoicestatus'
+           });
+          this.breadcrumbs = breadcrumbs;
+    
+          breadcrumbs.push({
+            title: 'Payment Details'
+          });
+          this.breadcrumbs = breadcrumbs;
+
+         }
+       
+      else if( this.data.data2 === 'invo-statement Paid'){
+          const breadcrumbs = [];
+          this.breadcrumbs_init.map((e) => {
+          breadcrumbs.push(e);
+          });
+       breadcrumbs.push({
+          title: 'Invoice / Statement',
+          url: '/provider/license/invoicestatus'
+          });
+         this.breadcrumbs = breadcrumbs;
+  
+         breadcrumbs.push({
+          title: 'Statements'
+         });
+         this.breadcrumbs = breadcrumbs;
+       }         
+                           
+      else if(this.temp ==='payment-history'){
+         const breadcrumbs = [];
+         this.breadcrumbs_init.map((e) => {
+           breadcrumbs.push(e);
+          });
+         breadcrumbs.push({
+         title: 'Payment History',
+         url: '/provider/license/payment/history'
+          });
+         this.breadcrumbs = breadcrumbs;
+
+         breadcrumbs.push({
+          title: 'Payment Details'
        });
       this.breadcrumbs = breadcrumbs;
-
-      breadcrumbs.push({
-        title: 'Payment Details'
-      });
-      this.breadcrumbs = breadcrumbs;
-    }
-    else{
+     }
+      else{
       const breadcrumbs = [];
       this.breadcrumbs_init.map((e) => {
         breadcrumbs.push(e);
@@ -144,10 +180,12 @@ export class statementcomponent implements OnInit {
     // this.payMentShow = data.payMent;
 
     this.invoice = this.data.invoice || null;
-    console.log(this.invoice);
-    console.log(JSON.parse(this.invoice));
+    // console.log(this.invoice);
+    // console.log(JSON.parse(this.invoice));
+   
+
     let invoiceJson = JSON.parse(this.invoice);
-    
+     
     this.source = this.data.source || 'payment-history';
     this.payMentShow = this.data.payMent;
 
@@ -155,7 +193,7 @@ export class statementcomponent implements OnInit {
     // this.pay_data.amount = this.invoice.null;
     
     this.pay_data.uuid =invoiceJson.ynwUuid;
-    console.log(this.pay_data.uuid);
+    // console.log(this.pay_data.uuid);
   }
 
   ngOnInit() {
@@ -316,26 +354,7 @@ export class statementcomponent implements OnInit {
           'details': this.pay_data,
           'origin': 'provider'
         }
-      });
-
-      // this.provider_services.providerPayment(this.pay_data)
-      //   .subscribe(
-      //     data => {
-      //       if (data['response']) {
-      //         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-      //         this.api_success = this.shared_functions.getProjectMesssages('PAYMENT_REDIRECT');
-      //         setTimeout(() => {
-      //           this.document.getElementById('payuform').submit();
-      //         }, 2000);
-      //       } else {
-      //         this.api_error = this.shared_functions.getProjectMesssages('CHECKIN_ERROR');
-      //       }
-      //     },
-      //     error => {
-      //       this.payment_loading = false;
-      //       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //     }
-      //   );
+      });    
     }
   }
   getgst() {
@@ -346,201 +365,6 @@ export class statementcomponent implements OnInit {
         }
       );
   }
-  // printMe() {
-  //   // window.print();
-  //   const params = [
-  //     'height=' + screen.height,
-  //     'width=' + screen.width,
-  //     'fullscreen=yes'
-  //   ].join(',');
-  //   const printWindow = window.open('', '', params);
-  //   let bill_html = '';
-  //   bill_html += '<table width="100%">';
-  //   bill_html += ' <tr><td style="border-bottom:1px solid #ddd;">';
-  //   bill_html += '<table width="100%">';
-  //   bill_html += ' <tr style="line-height:20px">';
-  //   bill_html += '<td width="50%"  style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.bill_data.createdDate + '</td>';
-  //   bill_html += ' </tr>';
-  //   bill_html += ' <tr>';
-  //   bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill #' + this.bill_data.billId + '</td>';
-  //   bill_html += '<td style="text-align:right;color:#000000; font-size:10pt;font-family:Ubuntu, Arial,sans-serif;">';
-  //   if (this.bill_data.gstNumber) {
-  //     bill_html += 'GSTIN ' + this.bill_data.gstNumber;
-  //   }
-  //   bill_html += '</td>';
-  //   bill_html += ' </tr>';
-  //   bill_html += '</table>';
-  //   bill_html += ' </td></tr>';
-  //   for (const service of this.bill_data.service) {
-  //     bill_html += ' <tr><td style="border-bottom:1px solid #ddd;">';
-  //     bill_html += '<table width="100%"';
-  //     bill_html += ' style="color:#000000; font-size:10pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-top:10px;padding-bottom:10px">';
-  //     bill_html += ' <tr >';
-  //     bill_html += '<td width="50%"';
-  //     bill_html += ' style="text-align:left;font-weight:bold;">';
-  //     bill_html += service.serviceName + ' @ &#x20b9;' + parseFloat(service.price).toFixed(2);
-  //     if (service.getGSTpercentage > 0) {
-  //       bill_html += '<span style="font-size: .60rem;;font-weight: 600;color: #fda60d;"><sup> Tax</sup></span>';
-  //     }
-  //     bill_html += '</td>';
-  //     bill_html += '<td width="20%"';
-  //     bill_html += ' style="text-align:right">Qty ' + service.quantity;
-  //     bill_html += '</td>';
-  //     bill_html += '<td width="30%"';
-  //     bill_html += ' style="text-align:right">&#x20b9;' + (service.quantity * service.price).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>';
-  //     // List<Discount> serviceDisounts = mapper.readValue(service.getDiscount().toString(), new TypeReference<List<Discount>>(){});
-  //     for (const serviceDiscount of service.discount) {
-  //       bill_html += ' <tr style="color:#aaa">';
-  //       bill_html += '<td style="text-align:right;"';
-  //       bill_html += ' colspan="2">' + serviceDiscount.name + '</td>';
-  //       bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(serviceDiscount.discountValue).toFixed(2);
-  //       bill_html += '</td>';
-  //       bill_html += ' </tr>';
-  //     }
-  //     if (service.discount && service.discount.length > 0) {
-  //       bill_html += ' <tr style="line-height:0;">';
-  //       bill_html += '<td style="text-align:right" colspan="2"></td>';
-  //       bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
-  //       bill_html += ' </tr>';
-  //       bill_html += ' <tr style="font-weight:bold">';
-  //       bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
-  //       bill_html += '<td style="text-align:right">&#x20b9;' + parseFloat(service.netRate).toFixed(2) + '</td>';
-  //       bill_html += ' </tr>';
-  //     }
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   for (const item of this.bill_data.items) {
-  //     bill_html += ' <tr><td style="border-bottom:1px solid #ddd;">';
-  //     bill_html += '<table width="100%"';
-  //     bill_html += ' style="color:#000000; font-size:10pt; line-height:25px; font-family:Ubuntu, Arial,sans-serif; padding-top:10px;padding-bottom:10px">';
-  //     bill_html += ' <tr>';
-  //     bill_html += '<td width="50%" style="text-align:left;font-weight:bold;">' + item.itemName + ' @ &#x20b9;' + parseFloat(item.price).toFixed(2);
-  //     if (item.GSTpercentage > 0) {
-  //       bill_html += '<span style="font-size: .60rem;;font-weight: 600;color: #fda60d;"><sup> Tax</sup></span>';
-  //     }
-  //     bill_html += '</td>';
-  //     bill_html += '<td width="20%" style="text-align:right">Qty ' + item.quantity + '</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + (item.quantity * item.price).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>';
-  //     // List<Discount> itemDiscounts = mapper.readValue(item.getDiscount().toString(), new TypeReference<List<Discount>>(){};
-  //     for (const itemDiscount of item.discount) {
-  //       bill_html += ' <tr style="color:#aaa">';
-  //       bill_html += '<td style="text-align:right" colspan="2">' + itemDiscount.name + '</td>';
-  //       bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(itemDiscount.discountValue).toFixed(2) + '</td>';
-  //       bill_html += ' </tr>';
-  //     }
-  //     if (item.discount && item.discount.length > 0) {
-  //       bill_html += ' <tr style="line-height:0;">';
-  //       bill_html += '<td style="text-align:right" colspan="2"></td>';
-  //       bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
-  //       bill_html += ' </tr>';
-  //       bill_html += ' <tr style="font-weight:bold">';
-  //       bill_html += '<td style="text-align:right" colspan="2">Sub Total</td>';
-  //       bill_html += '<td style="text-align:right">&#x20b9;' + parseFloat(item.netRate).toFixed(2) + '</td>';
-  //       bill_html += ' </tr>';
-  //     }
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   bill_html += ' <tr><td>';
-  //   bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; padding-top:10px;padding-bottom:5px">                                                                             ';
-  //   bill_html += ' <tr style="font-weight: bold">';
-  //   bill_html += '<td width="70%" style="text-align:right">Gross Amount</td>';
-  //   bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.bill_data.netTotal).toFixed(2) + '</td>';
-  //   bill_html += ' </tr>                                                                           ';
-  //   bill_html += '</table>';
-  //   bill_html += ' </td></tr>';
-  //   // List<Discount> billDisounts = mapper.readValue(bill.getDiscount().toString(), new TypeReference<List<Discount>>(){});
-  //   for (const billDiscount of this.bill_data.discount) {
-  //     bill_html += ' <tr><td>';
-  //     bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
-  //     bill_html += ' <tr style="color:#aaa">';
-  //     bill_html += '<td width="70%" style="text-align:right">' + billDiscount.name + '</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(billDiscount.discValue).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>';
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   // List<Coupon> providerCoupons = mapper.readValue(bill.getProviderCoupon().toString(), new TypeReference<List<Coupon>>(){});
-  //   for (const providerCoupon of this.bill_data.providerCoupon) {
-  //     bill_html += ' <tr><td>';
-  //     bill_html += '<table width="100%" style="color:#000000; font-size:10pt;  font-family:Ubuntu, Arial,sans-serif; padding-bottom:5px">';
-  //     bill_html += ' <tr style="color:#aaa">';
-  //     bill_html += '<td width="70%" style="text-align:right">' + providerCoupon.name + '</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(providerCoupon.couponValue).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>                                                                           ';
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   // List<JaldeeCoupon> jCoupons = new ArrayList<>();
-  //   // if(bill.getjCoupon()!=null) {
-  //   //   jCoupons = mapper.readValue(bill.getjCoupon().toString(), new TypeReference<List<JaldeeCoupon>>(){});
-  //   // }
-  //   if (this.bill_data.jCoupon) {
-  //     for (const [key, value] of Object.entries(this.bill_data.jCoupon)) {
-  //       bill_html += ' <tr><td>';
-  //       bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
-  //       bill_html += ' <tr style="color:#aaa">';
-  //       bill_html += '<td width="70%" style="text-align:right">' + key + '</td>';
-  //       bill_html += '<td width="30%" style="text-align:right">(-) &#x20b9;' + parseFloat(value['value']).toFixed(2) + '</td>';
-  //       bill_html += ' </tr>                                                                           ';
-  //       bill_html += '</table>';
-  //       bill_html += ' </td></tr>';
-  //     }
-  //   }
-  //   if (this.bill_data.taxableTotal !== 0) {
-  //     bill_html += ' <tr><td>';
-  //     bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
-  //     bill_html += ' <tr>';
-  //     bill_html += '<td width="70%" style="text-align:right">Tax ' + this.bill_data.taxPercentage + ' % of &#x20b9;' + parseFloat(this.bill_data.taxableTotal).toFixed(2) + '(CGST-' + (this.bill_data.taxPercentage() / 2) + '%, SGST-' + (this.bill_data.taxPercentage() / 2) + '%)</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">(+) &#x20b9;' + parseFloat(this.bill_data.totalTaxAmount).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>';
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   if (this.bill_data.netRate > 0) {
-  //     bill_html += ' <tr><td>';
-  //     bill_html += '<table width="100%"  style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
-  //     bill_html += ' <tr style="font-weight: bold;">';
-  //     bill_html += '<td width="70%" style="text-align:right">Net Total</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.bill_data.netRate).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>';
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   if (this.bill_data.getTotalAmountPaid > 0) {
-  //     bill_html += ' <tr><td>';
-  //     bill_html += '<table width="100%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
-  //     bill_html += ' <tr style="font-weight: bold;">';
-  //     bill_html += '<td width="70%" style="text-align:right">Amount Paid</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.bill_data.totalAmountPaid).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>';
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   if (this.bill_data.amountDue > 0) {
-  //     bill_html += ' <tr><td style="border-bottom:1px solid #ddd;">';
-  //     bill_html += '<table width="100%"';
-  //     bill_html += ' style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
-  //     bill_html += ' <tr style="font-weight: bold;"> ';
-  //     bill_html += '<td width="70%" style="text-align:right">Amount Due</td>';
-  //     bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.bill_data.amountDue).toFixed(2) + '</td>';
-  //     bill_html += ' </tr>                                                                           ';
-  //     bill_html += '</table>';
-  //     bill_html += ' </td></tr>';
-  //   }
-  //   bill_html += '</table>';
-  //   printWindow.document.write('<html><head><title></title>');
-  //   printWindow.document.write('</head><body >');
-  //   printWindow.document.write(bill_html);
-  //   printWindow.document.write('</body></html>');
-  //   printWindow.moveTo(0, 0);
-  //   printWindow.document.close();
-  //   printWindow.print();
-  //   printWindow.close();
-  // }
 }
 
 
