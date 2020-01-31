@@ -491,8 +491,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getInvoiceStatus(filter){
-     
-    const url='provider/license/invoice';
+    const url = 'provider/license/invoice';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getLicenseSubscription() {
@@ -915,7 +914,7 @@ export class ProviderServices {
     const url = 'provider/waitlist/queues/appointment/' + status + '/' + queueId;
     return this.servicemeta.httpPut(url);
   }
-  deleteUser(id) {
+  deleteAssistant(id) {
     const url = 'provider/assistant/' + id;
     return this.servicemeta.httpDelete(url);
   }
@@ -934,5 +933,9 @@ export class ProviderServices {
   changeAssistantStatus(status, assistantId) {
     const url = 'provider/assistant/ + ' + status + ' + /' + assistantId;
     return this.servicemeta.httpPut (url);
+  }
+  getUsers() {
+    const url = 'provider/filter';
+    return this.servicemeta.httpGet (url);
   }
 }

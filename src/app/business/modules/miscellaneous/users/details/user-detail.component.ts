@@ -57,7 +57,7 @@ export class BranchUserDetailComponent implements OnInit {
             url: '/provider/settings/miscellaneous'
         },
         {
-            title: 'Doctors',
+            title: 'Users',
             url: '/provider/settings/miscellaneous/users'
         }
     ];
@@ -133,7 +133,8 @@ export class BranchUserDetailComponent implements OnInit {
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
             password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             selectedSubDomain: [0, Validators.compose([Validators.required])],
-            selectedDepartment: []
+            selectedDepartment: [],
+            selectedUserType: []
         });
     }
     onItemSelect(subdomain) {
@@ -212,7 +213,6 @@ export class BranchUserDetailComponent implements OnInit {
                 'departmentCode': input.selectedDepartment
             };
             const post_data1 = {
-                
                     'firstName': input.first_name.trim() || null,
                     'lastName': input.last_name.trim() || null,
                     'dob': date_format || null,
@@ -223,8 +223,9 @@ export class BranchUserDetailComponent implements OnInit {
                 'city': 'thrissur',
                 'state': 'kerala',
                 'deptId': input.selectedDepartment,
-                'userType': 'PROVIDER'
+                'userType': input.selectedUserType
             };
+            console.log(input.selectedDepartment);
             this.provider_services.createAssistant(post_data1).subscribe(() => {
                 this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
@@ -258,6 +259,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.provider_services.getWaitlistMgr()
             .subscribe(
                 data => {
+                    console.log(data);
                     this.filterBydept = data['filterByDept'];
                     if (this.filterBydept) {
                         setTimeout(() => {

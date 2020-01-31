@@ -36,12 +36,12 @@ export class DoctorsComponent implements OnInit {
         private router: Router,
         private routerobj: Router,
         private shared_services: ProviderServices,
-        private activatedRoot:ActivatedRoute,
+        private activatedRoot: ActivatedRoute,
         private shared_functions: SharedFunctions) {
-            this.activatedRoot.queryParams.subscribe(data => {
-                this.userType = data;
+        this.activatedRoot.queryParams.subscribe(data => {
+            this.userType = data;
 
-            });
+        });
 
     }
     ngOnInit() {
@@ -56,30 +56,30 @@ export class DoctorsComponent implements OnInit {
             type = this.userType.type;
             this.shared_functions.setitemonLocalStorage('type', this.userType.type);
         }
-        
+
         this.typeOfUser = type;
         console.log(this.typeOfUser);
         const breadcrumbs = [];
-                        this.breadcrumbs_init.map((e) => {
-                            breadcrumbs.push(e);
-                        });
-                        breadcrumbs.push({
-                            title: type.charAt(0).toUpperCase() + type.slice(1)
-                        });
-                        this.breadcrumbs = breadcrumbs;
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: type.charAt(0).toUpperCase() + type.slice(1)
+        });
+        this.breadcrumbs = breadcrumbs;
         this.getBranchSPs();
         this.getAssistantlist();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
-    addBranchSP(usertype,usermode) {
-      //  console.log(usermode);
+    addBranchSP(usertype, usermode) {
+        //  console.log(usermode);
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: usertype,
-                            mode : usermode
-             }
+            queryParams: {
+                type: usertype,
+                mode: usermode
+            }
         };
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
-        //this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add']);
     }
     getBranchSPs() {
         const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
@@ -95,89 +95,88 @@ export class DoctorsComponent implements OnInit {
                 }
                 this.users_list = users;
                 this.api_loading = false;
-                //console.log(this.users_list);
             }
         );
     }
-getAssistantlist(){
-    const promise = this.getAssistants();
-    promise.then(
-      result => {
-        this.totalCnt = result;
-    });
-}
+    getAssistantlist() {
+        const promise = this.getAssistants();
+        promise.then(
+            result => {
+                this.totalCnt = result;
+            });
+    }
 
     getAssistants() {
         this.assistantData = [
             {
-              "id": 1,
-              "firstName": "ashly",
-              "lastName": "pol",
-              "address": "kuttikad",
-              "mobileNo": "5588996655",
-              "dob": "2019-12-21T05:22:11.702Z",
-              "gender": "female",
-              "userType": "ASSISTANT",
-              "status": "ACTIVE",
-              "emil": "xyz@gmail.com"
+                'id': 1,
+                'firstName': 'ashly',
+                'lastName': 'pol',
+                'address': 'kuttikad',
+                'mobileNo': '5588996655',
+                'dob': '2019-12-21T05:22:11.702Z',
+                'gender': 'female',
+                'userType': 'ASSISTANT',
+                'status': 'ACTIVE',
+                'emil': 'xyz@gmail.com'
             },
             {
-                "id": 3,
-                "firstName": "angel",
-                "lastName": "kol",
-                "address": "puttikad",
-                "mobileNo": "9988996655",
-                "dob": "2019-12-21T05:22:11.702Z",
-                "gender": "female",
-                "userType": "ASSISTANT",
-                "status": "ACTIVE",
-                "emil": "fgygz@gmail.com"
-              }
+                'id': 3,
+                'firstName': 'angel',
+                'lastName': 'kol',
+                'address': 'puttikad',
+                'mobileNo': '9988996655',
+                'dob': '2019-12-21T05:22:11.702Z',
+                'gender': 'female',
+                'userType': 'ASSISTANT',
+                'status': 'ACTIVE',
+                'emil': 'fgygz@gmail.com'
+            }
 
-          ];
+        ];
 
-          return new Promise((resolve) => {
-           // this.shared_services.getAssistants()
-             // .subscribe(
-              //  data => {
-                  resolve(this.assistantData);
-                  
-               // },
-               // () => {
-               // });
-          });
+        return new Promise((resolve) => {
+            // this.shared_services.getAssistants()
+            // .subscribe(
+            //  data => {
+            resolve(this.assistantData);
+            // },
+            // () => {
+            // });
+        });
     }
     // gotoBranchspDetails(user) {
     //      console.log(user);
     // }
-    manageProvider(accountId,name) {
+    manageProvider(accountId, name) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: accountId,
-                            mode : 'edit',
-                            username : name
-             }
+            queryParams: {
+                type: accountId,
+                mode: 'edit',
+                username: name
+            }
         };
-        //this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
+        // this.router.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
         this.routerobj.navigate(['provider', 'settings', 'users', 'doctors', 'add'], navigationExtras);
-       // window.open('#/manage/' + accountId, '_blank');
+        // window.open('#/manage/' + accountId, '_blank');
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
         }
-      }
+    }
 
-      selectUserlist(index) {
+    selectUserlist(index) {
         if (this.userlistSelected[index]) {
-          delete this.userlistSelected[index];
-          this.userlistSelection--;
+            delete this.userlistSelected[index];
+            this.userlistSelection--;
         } else {
-          this.userlistSelected[index] = true;
-          this.userlistSelection++;
+            this.userlistSelected[index] = true;
+            this.userlistSelection++;
         }
         if (this.userlistSelection === 1) {
             this.selectedUserlist = this.users_list[this.userlistSelected.indexOf(true)];
-           // console.log(this.selectedUserlist);
+            // console.log(this.selectedUserlist);
             this.profileStatus = true;
 
         } else {
@@ -185,11 +184,11 @@ getAssistantlist(){
         }
     }
     deleteUser() {
-        this.shared_services.deleteUser(this.selectedUserlist.id).subscribe(data => {
-        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_DELETED'), { 'panelclass': 'snackbarerror' });                  
+        this.shared_services.deleteAssistant(this.selectedUserlist.id).subscribe(data => {
+            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_DELETED'), { 'panelclass': 'snackbarerror' });
         }, error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
     }
 
     userProfile(info) {

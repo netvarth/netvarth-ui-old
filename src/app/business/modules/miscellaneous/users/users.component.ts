@@ -36,7 +36,7 @@ export class BranchUsersComponent implements OnInit {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        this.getBranchSPs();
+        this.getUsers();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     addBranchSP() {
@@ -45,19 +45,19 @@ export class BranchUsersComponent implements OnInit {
     personalProfile() {
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
     }
-    getBranchSPs() {
+    getUsers() {
         const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
         const users = [];
-        this.shared_services.getBranchSPs(accountId).subscribe(
+        this.shared_services.getUsers().subscribe(
             (data: any) => {
                 this.users_list = data;
-                for (let i = 0; i < this.users_list.length; i++) {
-                    if (this.users_list[i]['accountType'] === 'BRANCH') {
-                    } else {
-                        users.push(this.users_list[i]);
-                    }
-                }
-                this.users_list = users;
+                // for (let i = 0; i < this.users_list.length; i++) {
+                //     if (this.users_list[i]['accountType'] === 'BRANCH') {
+                //     } else {
+                //         users.push(this.users_list[i]);
+                //     }
+                // }
+                // this.users_list = users;
                 this.api_loading = false;
                 console.log(this.users_list);
             }
