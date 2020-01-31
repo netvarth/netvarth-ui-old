@@ -134,7 +134,10 @@ export class BranchUserDetailComponent implements OnInit {
             password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: [],
-            selectedUserType: []
+            selectedUserType: [],
+            address:[],
+            state:[],
+            city:[]
         });
     }
     onItemSelect(subdomain) {

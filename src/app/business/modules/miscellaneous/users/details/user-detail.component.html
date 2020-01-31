@@ -24,6 +24,20 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
         <mat-form-field>
+            <mat-label>Usertype</mat-label>
+            <mat-select  formControlName ="selectedUserType"(selectionChange)="onUserSelect()">
+                    <mat-option value="CONSUMER">Consumer</mat-option>
+                    <mat-option value="ASSISTANT">Assistant</mat-option>
+                    <mat-option value="ADMIN">Admin</mat-option>
+                    <mat-option value="PROVIDER">Provider</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
             <input matInput type="text" class="form-control" id="first_name"
                 placeholder="First Name *" formControlName="first_name"
                 autocomplete="off">
@@ -64,6 +78,41 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
     </div>
 </div>
 <div class="clearfix"></div>
+
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="add_ress"
+                placeholder="Address" formControlName="address"
+                autocomplete="off">
+        </mat-form-field>
+        
+    </div>
+</div>
+
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="city"
+                placeholder="City" formControlName="city"
+                autocomplete="off">
+        </mat-form-field>
+       
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput type="text" class="form-control" id="state"
+                placeholder="State" formControlName="state"
+                autocomplete="off">
+        </mat-form-field>
+        
+    </div>
+</div>
+<div class="clearfix"></div>
+
 <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group mobile-field" style="width: 100%">
         <mat-form-field>
@@ -105,18 +154,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
     </div>
 </div>
 <div class="clearfix"></div>
-<div class="col-md-6 col-sm-6 col-xs-12">
-    <div class="form-group">
-        <mat-form-field>
-            <mat-label>Usertype</mat-label>
-            <mat-select  formControlName ="selectedUserType">
-                    <mat-option value="CONSUMER">Consumer</mat-option>
-                    <mat-option value="ASSISTANT">Assistant</mat-option>
-                    <mat-option value="ADMIN">Admin</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-</div>
+
 
 <div class="clearfix"></div>
 <div class="col-md-6 col-sm-6 col-xs-12"
