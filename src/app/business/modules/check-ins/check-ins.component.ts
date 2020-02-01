@@ -129,7 +129,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
     futurecheckin_date: null,
-    age: ''
+    age: '',
+    gender: ''
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -142,7 +143,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     check_in_start_date: false,
     check_in_end_date: false,
     location_id: false,
-    age: false
+    age: false,
+    gender: false
   };
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -1417,6 +1419,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           api_filter['dob-le'] = adults;
         }
       }
+      if (this.filter.gender !== '') {
+        api_filter['gender-eq'] = this.filter.gender;
+      }
       // if (this.filter.dob_start_date != null) {
       //   api_filter['dob-ge'] = this.dateformat.transformTofilterDate(this.filter.dob_start_date);
       // }
@@ -1436,7 +1441,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age) {
+      || this.filter.check_in_end_date || this.filter.age || this.filter.gender) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1455,7 +1460,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       check_in_start_date: false,
       check_in_end_date: false,
       location_id: false,
-      age: false
+      age: false,
+      gender: false
     };
     this.filter = {
       first_name: '',
@@ -1471,7 +1477,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0,
       futurecheckin_date: null,
-      age: ''
+      age: '',
+      gender: ''
     };
   }
   goCheckinDetail(checkin) {
