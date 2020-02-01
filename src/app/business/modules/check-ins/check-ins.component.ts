@@ -1020,6 +1020,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.scrollToSection();
               }, 500);
             }
+          } else if (this.shared_functions.getitemFromGroupStorage('interval')) {
+            this.shared_functions.removeitemFromGroupStorage('interval');
           }
           this.loading = false;
         },
@@ -1077,6 +1079,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.scrollToSection();
                   }, 500);
                 }
+              } else if (this.shared_functions.getitemFromGroupStorage('interval')) {
+                this.shared_functions.removeitemFromGroupStorage('interval');
               }
               this.loading = false;
             },
