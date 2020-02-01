@@ -64,16 +64,16 @@
                                             <button mat-menu-item (click)="personalProfile()" >
                                                 Personal profile
                                             </button>
-                                            <button mat-menu-item (click)="manageProfile()" >
-                                                Manage profile
+                                            <button mat-menu-item (click)="manageOnlineProfile(user.id)" >
+                                                Manage online profile
                                             </button>
                                             <button mat-menu-item (click)="manageSettings()" >
                                                 Manage settings
                                             </button>
-                                            <button mat-menu-item (click)="createProfile()" >
-                                                Create profile
+                                            <button mat-menu-item (click)="createOnlineProfile()" >
+                                                Create online profile
                                             </button>
-                                            <button mat-menu-item (click)="linkProfile()" *ngIf="">
+                                            <button mat-menu-item (click)="linkProfile()">
                                                 Link profile
                                             </button>
                                         </mat-menu>

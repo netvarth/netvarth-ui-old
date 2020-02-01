@@ -25,7 +25,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
     <div class="form-group">
         <mat-form-field>
             <mat-label>Usertype</mat-label>
-            <mat-select  formControlName ="selectedUserType"(selectionChange)="onUserSelect()">
+            <mat-select  formControlName ="selectedUserType"(selectionChange)="onUserSelect($event)">
                     <mat-option value="CONSUMER">Consumer</mat-option>
                     <mat-option value="ASSISTANT">Assistant</mat-option>
                     <mat-option value="ADMIN">Admin</mat-option>
@@ -138,39 +138,8 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
         </app-field-error-display>
     </div>
 </div>
-<div class="col-md-6 col-sm-6 col-xs-12">
-    <div class="form-group">
-        <mat-form-field>
-            <mat-select placeholder="{{select_subdomain_cap}}" subdom
-                formControlName="selectedSubDomain" #subdom
-                (selectionChange)="onItemSelect(subdom.value)">
-                <mat-option *ngFor="let subdomain of subDomains; let i = index"
-                    [value]="subdomain">
-                    <!-- {{subdomain.displayName}} -->
-                    {{subdomain_displayname[subdomain.id]}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-</div>
-<div class="clearfix"></div>
 
 
-<div class="clearfix"></div>
-<div class="col-md-6 col-sm-6 col-xs-12"
-    *ngIf="filterBydept && departments.length > 0">
-    <div class="form-group">
-        <mat-form-field>
-            <mat-select placeholder="Select department *"
-                formControlName="selectedDepartment" #deptsel>
-                <mat-option *ngFor="let dept of departments"
-                    [value]="dept.departmentId">
-                    {{dept.departmentName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-</div>
 <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
         <mat-form-field>
@@ -185,6 +154,40 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
         </app-field-error-display>
     </div>
 </div>
+
+<div class="clearfix"></div>
+
+<div class="col-md-6 col-sm-6 col-xs-12" *ngIf="showPrvdrFields">
+    <div class="form-group">
+        <mat-form-field>
+            <mat-select placeholder="{{select_subdomain_cap}}" subdom
+                formControlName="selectedSubDomain" #subdom
+                (selectionChange)="onItemSelect(subdom.value)">
+                <mat-option *ngFor="let subdomain of subDomains; let i = index"
+                    [value]="subdomain">
+                    <!-- {{subdomain.displayName}} -->
+                    {{subdomain_displayname[subdomain.id]}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="col-md-6 col-sm-6 col-xs-12"
+    *ngIf="filterBydept && departments.length > 0 && showPrvdrFields">
+    <div class="form-group">
+        <mat-form-field>
+            <mat-select placeholder="Select department *"
+                formControlName="selectedDepartment" #deptsel>
+                <mat-option *ngFor="let dept of departments"
+                    [value]="dept.departmentId">
+                    {{dept.departmentName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
 <div class="clearfix"></div>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <a class="learnmore-pointer" (click)="advancedClick()"> Additional details</a>

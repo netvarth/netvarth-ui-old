@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
     'selector': 'app-branchusers',
@@ -44,6 +44,12 @@ export class BranchUsersComponent implements OnInit {
     }
     personalProfile() {
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
+    }
+    manageOnlineProfile(id) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: id}
+        };
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'manageonlineprofile'], navigationExtras);
     }
     getUsers() {
         const accountId = this.shared_functions.getitemFromGroupStorage('accountId');

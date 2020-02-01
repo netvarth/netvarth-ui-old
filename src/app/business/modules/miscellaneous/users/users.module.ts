@@ -8,15 +8,15 @@ import { LoadingSpinnerModule } from '../../../../ynw_provider/components/loadin
 import { BranchUserDetailComponent } from './details/user-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
-import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { ManageOnlineProfileComponent } from './manageOnlineProfile/manageonlineprofile.component';
 
 @NgModule({
     declarations: [
         BranchUsersComponent,
         BranchUserDetailComponent,
-        AdditionalInfoComponent
+        ManageOnlineProfileComponent
     ],
     imports: [
         UsersRoutingModule,

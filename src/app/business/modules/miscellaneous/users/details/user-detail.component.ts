@@ -47,6 +47,7 @@ export class BranchUserDetailComponent implements OnInit {
     id;
     tday = new Date();
     minday = new Date(1900, 0, 1);
+    showPrvdrFields = false;
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -142,6 +143,14 @@ export class BranchUserDetailComponent implements OnInit {
     }
     onItemSelect(subdomain) {
         // console.log(subdomain);
+    }
+    onUserSelect(event) {
+        if (event.value === 'PROVIDER') {
+            this.showPrvdrFields = true;
+        } else {
+            this.showPrvdrFields = false;
+        }
+console.log(event.value);
     }
     onSubmit(input) {
         let date_format = null;
