@@ -24,6 +24,7 @@ export class DisplayboardDetailComponent implements OnInit {
     statusse2 = false;
     statussel3 = false;
     showMode = 'DBOARD';
+
     // showQsets = true;
     // showQset = false;
     layoutData: any = [];
@@ -38,6 +39,7 @@ export class DisplayboardDetailComponent implements OnInit {
     action = 'show';
     api_loading: boolean;
     name;
+    containerName;
     layout = this.boardLayouts[0];
     displayName;
     serviceRoom;
@@ -59,7 +61,7 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Board',
+            title: 'QBoard',
             url: '/provider/settings/q-manager/displayboards'
         }
     ];
@@ -69,6 +71,9 @@ export class DisplayboardDetailComponent implements OnInit {
     qsetId;
     showDboard = true;
     source;
+    qboardSelected = false;
+    refreshInterval;
+    sbIds;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -230,6 +235,55 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
+        let containerName = '';
+        if (this.displayName) {
+            containerName = this.displayName.trim().replace(/ /g, '_');
+        }
+        const sbIds = this.sbIds.split(',');
+        if (this.actionparam === 'add') {
+            const post_data = {
+                'name': containerName,
+                'layout': '1_1',
+                'displayName': this.displayName,
+                'interval': this.refreshInterval,
+                'sbIds': sbIds,
+            };
+            this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                // this.editLayoutbyId(data);
+                // this.actionparam = 'view';
+                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+            // } else {
+            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+            // }
+        }
+        if (this.actionparam === 'edit') {
+            const sbids = this.sbIds.split(',');
+            const post_data = {
+                'id': this.layoutData.id,
+                'name': containerName,
+                'layout': '1_1',
+                'interval': this.refreshInterval,
+                'displayName': this.displayName,
+                'sbIds': sbids
+            };
+            this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+               // this.editLayoutbyId(this.layoutData.id);
+               this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
+
+
     }
     onCancel() {
         if (this.actionparam === 'edit') {
@@ -264,5 +318,8 @@ export class DisplayboardDetailComponent implements OnInit {
     // }
     gotoLicense() {
         this.router.navigate(['provider', 'license', 'addons']);
+    }
+    nestedQboardSelected(event){
+        this.qboardSelected = event.checked;
     }
 }
