@@ -63,13 +63,15 @@ export class BranchUserDetailComponent implements OnInit {
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
-    actionparam = 'show';
+    actionparam ;
     subDomainList: any = [];
     business_domains;
     showAdvancedSection = false;
     filterBydept = false;
     removeitemdialogRef;
     departments: any = [];
+   userId;
+   user_data: any = [];
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -81,24 +83,47 @@ export class BranchUserDetailComponent implements OnInit {
         private dialog: MatDialog,
         private fb: FormBuilder
     ) {
-        this.activated_route.params.subscribe(params => {
-            this.actionparam = params.id;
-        }
-        );
-        this.activated_route.queryParams.subscribe(
-            qparams => {
+        this.activated_route.queryParams.subscribe(data => {
+            console.log(data);
+            this.actionparam = data;
+            if (this.actionparam.val) {
+                this.userId = this.actionparam.val;
+            }
+            console.log(this.userId);
+             
                 const breadcrumbs = [];
                 this.breadcrumbs_init.map((e) => {
                     breadcrumbs.push(e);
                 });
                 breadcrumbs.push({
-                    title: 'Add'
+                    title: this.actionparam.type
                 });
                 this.breadcrumbs = breadcrumbs;
-            });
+           
+        }
+        );
+        // this.activated_route.queryParams.subscribe(
+        //     qparams => {
+        //         const breadcrumbs = [];
+        //         this.breadcrumbs_init.map((e) => {
+        //             breadcrumbs.push(e);
+        //         });
+        //         breadcrumbs.push({
+        //             title: 'Add'
+        //         });
+        //         this.breadcrumbs = breadcrumbs;
+        //     });
     }
     ngOnInit() {
         this.getWaitlistMgr();
+        if (this.userId) {
+            this.provider_services.getAssistant(this.userId)
+                .subscribe(
+                    res => {
+                        this.user_data = res;
+                    }
+                );
+        }
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (bConfig && bConfig.bdata) {
@@ -125,6 +150,11 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 );
         }
+        this.createForm();
+        
+    }
+    createForm() {
+
         this.amForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
@@ -140,6 +170,28 @@ export class BranchUserDetailComponent implements OnInit {
             state:[],
             city:[]
         });
+        if (this.actionparam === 'edit') {
+            this.updateForm();
+        }
+    }
+
+    updateForm() {
+        // this.amForm.setValue({
+        //     'first_name': this.user_data['userProfile']['firstName'] || this.amForm.get('first_name').value,
+        //     'last_name': this.user_data['userProfile']['lastName'] || this.amForm.get('last_name').value,
+        //     'gender': this.user_data['userProfile']['gender'] || this.amForm.get('gender').value,
+        //     'phonenumber': this.user_data['userProfile']['primaryMobileNo'] || this.amForm.get('phonenumber').value,
+        //     'dob': this.user_data['userProfile']['dob'] || this.amForm.get('dob').value,
+        //     'email': this.user_data['userProfile']['email'] || this.amForm.get('email').value,
+        //     'password': this.user_data['commonPassword'] || this.amForm.get('password').value,
+        //     'selectedSubDomain': this.user_data['subSector'] || this.amForm.get('selectedSubDomain').value,
+        //     'selectedDepartment': this.user_data['departmentCode'] || this.amForm.get('selectedDepartment').value,
+        //     'selectedUserType': this.user_data['userType'] || this.amForm.get('selectedUserType').value,
+        //     'address': this.user_data['address'] || this.amForm.get('address').value,
+        //     'state': this.user_data['state'] || this.amForm.get('state').value,
+        //     'city': this.user_data['city'] || this.amForm.get('city').value
+        // });
+
     }
     onItemSelect(subdomain) {
         // console.log(subdomain);

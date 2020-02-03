@@ -40,14 +40,27 @@ export class BranchUsersComponent implements OnInit {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     addBranchSP() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add']);
-    }
-    personalProfile() {
-        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
-    }
-    manageOnlineProfile(id) {
+       
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: id}
+            queryParams: { type: 'Add'}
+        };
+        
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add'], navigationExtras);
+    }
+    personalProfile(user) {
+        console.log(user);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: 'edit',
+                            val: user
+                        }
+        };
+        console.log(navigationExtras);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add'], navigationExtras);
+        //this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
+    }
+    manageOnlineProfile(name) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { type: name}
         };
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'manageonlineprofile'], navigationExtras);
     }

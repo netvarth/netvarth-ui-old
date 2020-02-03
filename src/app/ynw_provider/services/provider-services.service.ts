@@ -935,7 +935,11 @@ export class ProviderServices {
     return this.servicemeta.httpPut (url);
   }
   getUsers() {
-    const url = 'provider/filter';
+    const url = 'provider';
     return this.servicemeta.httpGet (url);
+  }
+  getUser(providerid) {
+    const url = 'provider/' + providerid;
+    return this.servicemeta.httpGet(url);
   }
 }

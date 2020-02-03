@@ -61,10 +61,10 @@
                                                
                                             </div>
                                         <mat-menu #appMenu="matMenu">
-                                            <button mat-menu-item (click)="personalProfile()" >
+                                            <button mat-menu-item (click)="personalProfile(user.id)" >
                                                 Personal profile
                                             </button>
-                                            <button mat-menu-item (click)="manageOnlineProfile(user.id)" >
+                                            <button mat-menu-item (click)="manageOnlineProfile(user.firstName)" >
                                                 Manage online profile
                                             </button>
                                             <button mat-menu-item (click)="manageSettings()" >
