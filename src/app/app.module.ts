@@ -64,6 +64,7 @@ import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.mod
 import { DisplayboardLayoutContentModule } from './business/modules/displayboard-content/displayboard-content.module';
 import { ManageProviderComponent } from './shared/components/manage-provider/manage-provider.component';
 import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.module';
+// import { MatSelectSearchComponent } from './shared/components/mat-select-search/mat-select-search/mat-select-search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +88,7 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
     AdminLoginComponent,
     ConsumerPaymentmodeComponent,
     ManageProviderComponent
+    
     // PhomeComponent,
   ],
   entryComponents: [
