@@ -25,9 +25,9 @@
                 <!-- <div class="item"><span class="ttle">Date:</span><span>{{waitlist_data.date | date:dateFormat}}</span></div> -->
                 <div class="item">
                   <!-- <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">Date/Est Service time:</span> -->
-                  <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data)">{{getAppxTime(waitlist_data,
+                  <span class="ttle" *ngIf="checkTimedisplayAllowed(waitlist_data) && pdtype !== 2">{{getAppxTime(waitlist_data,
                     true)}}:</span>
-                  <span class="ttle" *ngIf="!checkTimedisplayAllowed(waitlist_data)">{{date_cap}}</span>
+                  <span class="ttle" *ngIf="!checkTimedisplayAllowed(waitlist_data) || pdtype == 2">{{date_cap}}</span>
                   <span>
                     <!-- {{waitlist_data.date | date:dateFormatSp}} {{getAppxTime(waitlist_data)| date: timeFormat}} -->
                     {{waitlist_data.date | date:dateFormatSp}}
@@ -38,7 +38,8 @@
                 </div>
                 <div class="item otp_scr"
                   *ngIf="settings['calculationMode']!='NoCalc' && (waitlist_data.waitlistStatus == 'checkedIn' || waitlist_data.waitlistStatus == 'arrived')">
-                  <span class="ttle" *ngIf="getAppxTime(waitlist_data) != -1"> Est Wait Time</span>
+                  <span class="ttle" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==1"> Est Wait Time</span>
+                  <span class="ttle" *ngIf="getAppxTime(waitlist_data) != -1 && pdtype==2"> Est Service Time</span>
                   <span *ngIf="getAppxTime(waitlist_data) != -1 && !showEditView">
                     {{getAppxTime(waitlist_data)}}</span>
                   <span style="margin-left: 30px"
@@ -114,13 +115,15 @@
                       </p>
                     </mat-panel-title>
                   </mat-expansion-panel-header> -->
-                  <div class="item otp_scr mgn-bt-20" *ngIf="board_count > 0">
-                      <div class="ttle mgn-bt-10"> Appointment Time</div>
+                  <div class="item otp_scr mgn-bt-20"
+                *ngIf="(waitlist_data && waitlist_data.appointmentTime) || (availableSlots && availableSlots.length>0)">
+                <div class="ttle mgn-bt-10"> Appointment Time</div>
                 <span style="font-weight: 600;"
                   *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime">
                   {{waitlist_data.appointmentTime}} </span>
-                <span *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime" style="margin-left: 30px"
-                  class="editbt" (click)="editApptTime()"></span>
+                <span
+                  *ngIf="waitlist_data && waitlist_data.appointmentTime && !editAppntTime && availableSlots && availableSlots.length>1"
+                  style="margin-left: 30px" class="editbt" (click)="editApptTime()"></span>
                 <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-bt-20 no-padding ynw-common-form-nm"
                   *ngIf="editAppntTime || (waitlist_data && !waitlist_data.appointmentTime)">
                   <mat-chip-list class="check-in-chip">

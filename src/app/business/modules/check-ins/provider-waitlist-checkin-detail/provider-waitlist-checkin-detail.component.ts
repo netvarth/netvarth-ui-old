@@ -78,7 +78,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   editAppntTime = false;
   board_count = 0;
   showTimePicker = false;
-  availableSlots: any;
+  availableSlots: any = [];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -140,6 +140,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
+          if (interval) {
+            this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
+          }
           if (this.waitlist_data.appointmentTime) {
             // tslint:disable-next-line: radix
             // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
@@ -201,7 +205,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           }
           this.sortMessages();
           this.shared_Functionsobj.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
-
         },
         () => {
           //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -219,7 +222,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         return 0;
       }
     });
-
   }
 
   goBack() {
@@ -323,7 +325,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
     }
-
   }
   getAppxTime(waitlist, retcap?) {
     /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
@@ -440,8 +441,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   editApptTime() {
     // tslint:disable-next-line: radix
     this.editAppntTime = true;
-    const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
-    this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
     this.apptTime = this.waitlist_data.appointmentTime;
   }
   cancelUpdation() {

@@ -393,10 +393,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service, ev) {
+        const index = this.categoryIds.indexOf(service);
         if (ev === 'edit') {
-            this.categoryIds.push(service);
+            if (index === -1) {
+                this.categoryIds.push(service);
+            }
         } else {
-            const index = this.categoryIds.indexOf(service);
             if (ev.checked && index === -1) {
                 this.categoryIds.push(service);
             } else {
@@ -409,10 +411,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }];
     }
     departmentSelection(dept, ev) {
+        const index = this.categoryIds.indexOf(dept);
         if (ev === 'edit') {
-            this.categoryIds.push(dept);
+            if (index === -1) {
+                this.categoryIds.push(dept);
+            }
         } else {
-            const index = this.categoryIds.indexOf(dept);
             if (ev.checked && index === -1) {
                 this.categoryIds.push(dept);
             } else {
@@ -425,10 +429,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }];
     }
     queueSelection(queue, ev) {
+        const index = this.categoryIds.indexOf(queue);
         if (ev === 'edit') {
-            this.categoryIds.push(queue);
+            if (index === -1) {
+                this.categoryIds.push(queue);
+            }
         } else {
-            const index = this.categoryIds.indexOf(queue);
             if (ev.checked && index === -1) {
                 this.categoryIds.push(queue);
             } else {

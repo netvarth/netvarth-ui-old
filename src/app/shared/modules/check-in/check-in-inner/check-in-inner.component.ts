@@ -300,7 +300,9 @@ export class CheckInInnerComponent implements OnInit {
       // } else {
       this.sel_checkindate = this.data.moreparams.sel_date;
       // }
-      this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      if (this.sharedFunctionobj.getitemFromGroupStorage('pdtyp') && this.sharedFunctionobj.getitemFromGroupStorage('pdtyp') !== 2) {
+        this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      }
     }
     if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
       if (this.data.datechangereq) {

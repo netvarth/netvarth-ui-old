@@ -203,7 +203,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     (keyup)="isvalid($event)">
             </mat-form-field>
         </div>
-        <div class="form-group" *ngIf="showAdvancedSettings && waitlist_manager.calculationMode === 'Fixed'">
+        <div class="form-group" *ngIf="showAdvancedSettings">
             <div *ngIf="data.type=='add'"> Enable time slot {{timeSlot}}
                 <mat-slide-toggle class="example-margin" formControlName="appointment"
                     (change)="changeTimeslotStatus($event)">
