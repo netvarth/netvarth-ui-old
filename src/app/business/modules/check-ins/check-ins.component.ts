@@ -1509,7 +1509,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   viewBillPage(source, checkin?) {
     let checkin_details;
-    if (source === 'history') {
+    if (source === 'history' || source === 'future') {
       checkin_details = checkin;
     } else {
       checkin_details = this.selectedCheckin[source];

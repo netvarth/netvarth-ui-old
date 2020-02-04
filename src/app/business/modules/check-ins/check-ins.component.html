@@ -439,6 +439,13 @@
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
                       <i class="icon-note"></i> <span> Private Note </span>
                     </a>
+
+                    <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
+                    *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                    (click)="viewBillPage('future', checkin)">
+                    <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                  </a>
+
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"
                       *ngIf="(checkin.waitlistStatus == 'checkedIn' || checkin.waitlistStatus == 'arrived')">
