@@ -30,7 +30,7 @@ export class SearchDetailServices {
         return this.servicemetaobj.httpGet(path);
     }
     getClaimmable(id) {
-        const path = 'account/claim/' + id;
+        const path = 'provider/claim/' + id;
         return this.servicemetaobj.httpPost(path);
     }
 }

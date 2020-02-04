@@ -511,11 +511,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   getInboxUnreadCnt() {
     let usertype;
-    if (this.ctype === 'provider') {
-      usertype = 'account';
-    } else {
+    // if (this.ctype === 'provider') {
+    //   usertype = 'account';
+    // } else {
       usertype = this.ctype;
-    }
+   // }
     this.shared_service.getInboxUnreadCount(usertype)
       .subscribe(data => {
         this.inboxCntFetched = true;

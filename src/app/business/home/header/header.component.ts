@@ -164,11 +164,11 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       }
     }
     let type;
-    if (usertype === 'provider') {
-      type = 'account';
-    } else {
+    // if (usertype === 'provider') {
+    //   type = 'account';
+    // } else {
       type = usertype;
-    }
+   // }
     this.shared_service.getInboxUnreadCount(type)
       .subscribe(data => {
         this.inboxCntFetched = true;
