@@ -12,6 +12,7 @@ import { DisplayboardDetailComponent } from './detail/displayboard-details.compo
 import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
 import { ContainersComponent } from './containers/containers.component';
 import { ContainerDetailComponent } from './containers/detail/container-detail.component';
+import {MatSelectSearchModule} from '../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
 
 
 @NgModule({
@@ -29,9 +30,14 @@ import { ContainerDetailComponent } from './containers/detail/container-detail.c
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
         CommonModule,
-        DisplayboardQSetModule
+        DisplayboardQSetModule,
+        MatSelectSearchModule
+        
     ],
-    exports: [DisplayboardsComponent]
+    exports: [
+        DisplayboardsComponent,
+        
+    ]
 })
 export class DisplayboardsModule { }
 

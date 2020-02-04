@@ -1,16 +1,73 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Component,ViewChild,OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { MatSelect } from '@angular/material';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
+import { take, takeUntil } from 'rxjs/operators';
+
+
+interface Bank {
+    id : string;
+    name: string;
+}
 
 @Component({
     selector: 'app-displayboard-details',
     templateUrl: './displayboard-details.component.html'
 })
 export class DisplayboardDetailComponent implements OnInit {
+
+    /** control for the selected bank */
+  public bankCtrl: FormControl = new FormControl();
+
+  /** control for the MatSelect filter keyword */
+ public bankFilterCtrl: FormControl = new FormControl();
+
+   /** control for the selected bank for multi-selection */
+ public bankMultiCtrl: FormControl = new FormControl();
+
+  /** control for the MatSelect filter keyword multi-selection */
+ public bankMultiFilterCtrl: FormControl = new FormControl();
+
+  /** list of banks */
+  private banks: Bank[] = [
+    {name: 'Bank A (Switzerland)', id: 'A'},
+    {name: 'Bank B (Switzerland)', id: 'B'},
+    {name: 'Bank C (France)', id: 'C'},
+    {name: 'Bank D (France)', id: 'D'},
+    {name: 'Bank E (France)', id: 'E'},
+    {name: 'Bank F (Italy)', id: 'F'},
+    {name: 'Bank G (Italy)', id: 'G'},
+    {name: 'Bank H (Italy)', id: 'H'},
+    {name: 'Bank I (Italy)', id: 'I'},
+    {name: 'Bank J (Italy)', id: 'J'},
+    {name: 'Bank K (Italy)', id: 'K'},
+    {name: 'Bank L (Germany)', id: 'L'},
+    {name: 'Bank M (Germany)', id: 'M'},
+    {name: 'Bank N (Germany)', id: 'N'},
+    {name: 'Bank O (Germany)', id: 'O'},
+    {name: 'Bank P (Germany)', id: 'P'},
+    {name: 'Bank Q (Germany)', id: 'Q'},
+    {name: 'Bank R (Germany)', id: 'R'} 
+  ]
+
+  /** list of banks filtered by search keyword */
+  public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+
+  /** list of banks filtered by search keyword for multi-selection */
+  public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+
+  @ViewChild('singleSelect') singleSelect: MatSelect; 
+
+  /** Subject that emits when the component has been destroyed. */
+  private _onDestroy = new Subject<void>();
+
+
     amForm: FormGroup;
     char_count = 0;
     accountType;
@@ -26,6 +83,7 @@ export class DisplayboardDetailComponent implements OnInit {
     statusse2 = false;
     statussel3 = false;
     showMode = 'DBOARD';
+
     // showQsets = true;
     // showQset = false;
     layoutData: any = [];
@@ -40,6 +98,7 @@ export class DisplayboardDetailComponent implements OnInit {
     action = 'show';
     api_loading: boolean;
     name;
+    containerName;
     layout = this.boardLayouts[0];
     displayName;
     serviceRoom;
@@ -61,7 +120,7 @@ export class DisplayboardDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Board',
+            title: 'QBoard',
             url: '/provider/settings/q-manager/displayboards'
         }
     ];
@@ -71,6 +130,9 @@ export class DisplayboardDetailComponent implements OnInit {
     qsetId;
     showDboard = true;
     source;
+    qboardSelected = false;
+    refreshInterval;
+    sbIds;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -142,9 +204,67 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         return layoutActive;
     }
+   
     ngOnInit() {
         this.getDisplayboardQSets();
+        // set initial selection
+    this.bankCtrl.setValue(this.banks[10]);
+
+    // load the initial bank list
+    this.filteredBanks.next(this.banks.slice());
+    this.filteredBanksMulti.next(this.banks.slice());
+
+    // listen for search field value changes
+    this.bankFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterBanks();
+      });
+    this.bankMultiFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterBanksMulti();
+      });
+
     }
+    private filterBanks() {
+        if (!this.banks) {
+          return;
+        }
+        // get the search keyword
+        let search = this.bankFilterCtrl.value;
+        if (!search) {
+          this.filteredBanks.next(this.banks.slice());
+          return;
+        } else {
+          search = search.toLowerCase();
+        }
+        // filter the banks
+        this.filteredBanks.next(
+          this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+        );
+      }
+    
+      private filterBanksMulti() {
+        if (!this.banks) {
+          return;
+        }
+        // get the search keyword
+        let search = this.bankMultiFilterCtrl.value;
+        if (!search) {
+          this.filteredBanksMulti.next(this.banks.slice());
+          return;
+        } else {
+          search = search.toLowerCase();
+        }
+        // filter the banks
+        this.filteredBanksMulti.next(
+          this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+        );
+      }
+
+
+
     createRange(number) {
         const items = [];
         for (let i = 0; i < number; i++) {
@@ -237,6 +357,55 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
+        let containerName = '';
+        if (this.displayName) {
+            containerName = this.displayName.trim().replace(/ /g, '_');
+        }
+        const sbIds = this.sbIds.split(',');
+        if (this.actionparam === 'add') {
+            const post_data = {
+                'name': containerName,
+                'layout': '1_1',
+                'displayName': this.displayName,
+                'interval': this.refreshInterval,
+                'sbIds': sbIds,
+            };
+            this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                // this.editLayoutbyId(data);
+                // this.actionparam = 'view';
+                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+            // } else {
+            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+            // }
+        }
+        if (this.actionparam === 'edit') {
+            const sbids = this.sbIds.split(',');
+            const post_data = {
+                'id': this.layoutData.id,
+                'name': containerName,
+                'layout': '1_1',
+                'interval': this.refreshInterval,
+                'displayName': this.displayName,
+                'sbIds': sbids
+            };
+            this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
+                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+               // this.editLayoutbyId(this.layoutData.id);
+               this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+            },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
+
+
     }
     onCancel() {
         if (this.actionparam === 'edit') {
@@ -271,5 +440,8 @@ export class DisplayboardDetailComponent implements OnInit {
     // }
     gotoLicense() {
         this.router.navigate(['provider', 'license', 'addons']);
+    }
+    nestedQboardSelected(event){
+        this.qboardSelected = event.checked;
     }
 }

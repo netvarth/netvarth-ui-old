@@ -25,7 +25,10 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="dropdown notifications-menu pull-right" *ngIf="accountType=='BRANCH'">
+
+
+                                    <!--Containers-->
+                                    <!-- <li class="dropdown notifications-menu pull-right" *ngIf="accountType=='BRANCH'">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                             (click)="listContainers()"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">
@@ -33,7 +36,7 @@
                                                Containers ({{container_count}})
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <!-- <li class="dropdown notifications-menu pull-right">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                             (click)="gotoDisplayboardQSet()"
@@ -62,7 +65,8 @@
                                         </span>
                                         <h3 (click)="goDisplayboardLayoutDetails(layout, 'layout')"
                                             class="pointer-cursor">
-                                            {{layout.displayName | capitalizeFirst}}<span class="layout_name"> (Id - {{layout.id}})
+                                            <i *ngIf="layout.container" class="fa fa-refresh"></i>
+                                            {{layout.displayName | capitalizeFirst}}<span *ngIf="!layout.container" class="layout_name"> (Id - {{layout.id}})
                                             </span></h3>
                                         <mat-menu #appMenu="matMenu">
                                             <button mat-menu-item (click)="editDisplayboardLayout(layout)">
