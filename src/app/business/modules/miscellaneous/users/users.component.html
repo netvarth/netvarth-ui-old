@@ -24,7 +24,7 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="dropdown notifications-menu pull-right" >
+                                    <!-- <li class="dropdown notifications-menu pull-right" >
                                         <a 
                                             (click)="deleteUser()"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">
@@ -32,7 +32,7 @@
                                                 <i class="fa fa-trash"></i>Delete
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <div class="col-md-12" *ngIf="users_list.length==0">
@@ -75,6 +75,11 @@
                                             </button>
                                             <button mat-menu-item (click)="linkProfile()">
                                                 Link profile
+                                            </button>
+                                            <button mat-menu-item (click)="changeUserStatus(user)">
+                                                <i *ngIf="user.status=='INACTIVE' || !user.status" class="icon-enable"></i>
+                                                <i *ngIf="user.status=='ACTIVE'" class="icon-disable"></i>
+                                                {{(user.status=='ACTIVE') ? 'Disable' :'Enable'}}
                                             </button>
                                         </mat-menu>
                                     </div>

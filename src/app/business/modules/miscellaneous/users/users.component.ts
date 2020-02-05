@@ -64,8 +64,28 @@ export class BranchUsersComponent implements OnInit {
         };
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'manageonlineprofile'], navigationExtras);
     }
+    manageSettings(){
+        this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'managesettings']);
+    }
+    changeUserStatus(user) { 
+        let passingStatus;
+        if (user.status === 'ACTIVE') {
+            passingStatus = 'Disable';
+        } else {
+            passingStatus = 'Enable'; 
+        }
+        this.shared_services.disableEnableuser(user.id,passingStatus)
+            .subscribe(
+                () => {
+                    this.getUsers();
+                },
+                (error) => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getUsers();
+                });
+    }
     getUsers() {
-        const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
+       // const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
         const users = [];
         this.shared_services.getUsers().subscribe(
             (data: any) => {

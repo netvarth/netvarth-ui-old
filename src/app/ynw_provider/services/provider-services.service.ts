@@ -918,28 +918,41 @@ export class ProviderServices {
     const url = 'provider/assistant/' + id;
     return this.servicemeta.httpDelete(url);
   }
-  assistantFilter() {
-    const url = 'provider/assistant/filter';
-    return this.servicemeta.httpGet(url);
-  }
+  // assistantFilter() {
+  //   const url = 'provider/assistant/filter';
+  //   return this.servicemeta.httpGet(url);
+  // }
   assistantFilterCount() {
     const url = 'provider/assistant/filter/count';
     return this.servicemeta.httpGet(url);
   }
-  getAssistant(assistantId) {
-    const url = 'provider/assistant/' + assistantId;
-    return this.servicemeta.httpGet(url);
-  }
-  changeAssistantStatus(status, assistantId) {
-    const url = 'provider/assistant/ + ' + status + ' + /' + assistantId;
-    return this.servicemeta.httpPut (url);
-  }
+  // getAssistant(assistantId) {
+  //   const url = 'provider/assistant/' + assistantId;
+  //   return this.servicemeta.httpGet(url);
+  // }
+  // changeAssistantStatus(status, assistantId) {
+  //   const url = 'provider/assistant/ + ' + status + ' + /' + assistantId;
+  //   return this.servicemeta.httpPut (url);
+  // }
   getUsers() {
-    const url = 'provider';
+    const url = 'provider/user';
     return this.servicemeta.httpGet (url);
   }
+  createUser(post_data) {
+    const url = 'provider/user';
+    return this.servicemeta.httpPost(url, post_data);
+  }
+  updateUser(post_data) {
+    const url = 'provider/user';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   getUser(providerid) {
-    const url = 'provider/' + providerid;
+    const url = 'provider/user/' + providerid;
     return this.servicemeta.httpGet(url);
   }
+  disableEnableuser(userid, stat) {
+   const url = 'provider/user/' + stat + '/' + userid;
+   return this.servicemeta.httpPut(url);
+  }
+
 }
