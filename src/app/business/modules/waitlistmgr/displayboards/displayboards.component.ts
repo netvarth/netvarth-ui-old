@@ -50,7 +50,7 @@ export class DisplayboardsComponent implements OnInit {
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
-        this.getDisplayboardContainers();
+        // this.getDisplayboardContainers();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         this.domain = user.sector;
@@ -60,8 +60,19 @@ export class DisplayboardsComponent implements OnInit {
         this.layout_list = [];
         this.provider_services.getDisplayboards()
             .subscribe(
-                data => {
-                    this.layout_list = data;
+                (data: any) => {
+                    const alldisplayBoards = data;
+                    this.layout_list = [];
+                    let count = 0;
+                    alldisplayBoards.forEach(element => {
+                        if(element.container) {
+                            count ++;
+                        } else {
+                            this.layout_list.push(element);
+                        }
+                    });
+                    this.container_count = count;
+                    // this.layout_list = data;
                     this.api_loading = false;
                 },
                 error => {

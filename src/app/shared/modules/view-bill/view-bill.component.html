@@ -153,6 +153,12 @@
 											</span> <span class="mode"> <span class="title">{{mode_cap}}</span>
 												<span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
 											</span>
+											<span class="mode" *ngIf="payment.paymentMode"> <span class="title">Payment Mode</span>
+												<span>{{payment.paymentMode}}</span>
+											</span>
+											<span class="mode" *ngIf="payment.paymentGateway"> <span class="title">Payment Gateway</span>
+												<span>{{payment.paymentGateway}}</span>
+											</span>
 										</span>
 									</div>
 									<div class="td three">

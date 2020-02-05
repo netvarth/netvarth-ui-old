@@ -42,7 +42,7 @@ export class ContainerDetailComponent implements OnInit {
             url: '/provider/settings/q-manager'
         },
         {
-            title: 'Queue Board',
+            title: 'QBoard',
             url: '/provider/settings/q-manager/displayboards'
         },
         {
@@ -123,17 +123,13 @@ export class ContainerDetailComponent implements OnInit {
             name = this.displayName.trim().replace(/ /g, '_');
         }
         const sbIds = this.sbIds.split(',');
-        let sbIdslist = [];
-        for (const id of sbIds) {
-            sbIdslist.push({ sbId: id, sbInterval: this.refreshInterval });
-        }
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': name,
                 'layout': '1_1',
                 'displayName': this.displayName,
                 'interval': this.refreshInterval,
-                'sbDetails': sbIdslist,
+                'sbIds': sbIds,
             };
             this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
@@ -150,23 +146,19 @@ export class ContainerDetailComponent implements OnInit {
             // }
         }
         if (this.actionparam === 'edit') {
-            const sbIds = this.sbIds.split(',');
-            let sbIdslist = [];
-            for (const id of sbIds) {
-                sbIdslist.push({ sbId: id, sbInterval: this.refreshInterval });
-            }
+            const sbids = this.sbIds.split(',');
             const post_data = {
                 'id': this.layoutData.id,
                 'name': name,
                 'layout': '1_1',
                 'interval': this.refreshInterval,
                 'displayName': this.displayName,
-                'sbDetails': sbIdslist
+                'sbIds': sbids
             };
             this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                // this.editLayoutbyId(this.layoutData.id);
-                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+               // this.editLayoutbyId(this.layoutData.id);
+               this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
             },
                 error => {
                     this.api_loading = false;
@@ -178,7 +170,7 @@ export class ContainerDetailComponent implements OnInit {
         // if (this.actionparam === 'edit') {
         //     this.actionparam = 'view';
         // } else {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
         // }
     }
     editlayout(id) {

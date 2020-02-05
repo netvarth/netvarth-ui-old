@@ -464,12 +464,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
         });
   }
   getDisplayboardCount() {
-    let layout_list: any = [];
     this.provider_services.getDisplayboards()
       .subscribe(
-        data => {
-          layout_list = data;
-          this.board_count = layout_list.length;
+        (data: any) => {
+          const alldisplayBoards = data;
+          let count = 0;
+          alldisplayBoards.forEach(element => {
+              if(element.container) {
+              } else {
+                count ++;
+              }
+          });
+          this.board_count = count;
         });
   }
   getServiceCount() {
