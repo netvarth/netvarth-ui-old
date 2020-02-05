@@ -174,6 +174,7 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
   deptlist: any = [];
   selectedDepartment;
   showServices = false;
+  arr_provdr: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     private providerdetailserviceobj: ProviderDetailService,
@@ -264,6 +265,23 @@ export class BusinessPageComponent implements OnInit, OnDestroy {
             this.businessjson = res;
             this.business_exists = true;
             this.provider_bussiness_id = this.businessjson.id;
+            if (this.isLoggedIn) {
+              this.shared_services.getFavProvider()
+                .subscribe((data) => {
+                  this.arr_provdr = data;
+                  if (this.arr_provdr.length > 0) {
+                    for (let i in data) {
+                      if (data[i].uniqueId === this.provider_id) {
+                        this.isInFav = true;
+                      } else {
+                        this.handle_Fav('add');
+                      }
+                    }
+                  } else {
+                    this.handle_Fav('add');
+                  }
+                });
+            }
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
