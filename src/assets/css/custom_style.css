@@ -6992,7 +6992,7 @@ board-box {
   margin-bottom: 0px !important;
 }
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 5px;
 }
 /* Track */
 ::-webkit-scrollbar-track {
@@ -7167,3 +7167,40 @@ padding-left: 30px;
   color: #fff !important;
   background-color: #00aef2 !important;
 }
+/* .nav-dots li{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  color: #fff;
+  background: #999;
+  margin: 0 10px 0 0;
+}
+.nav-dots .active{
+  background: #00aef2;
+}
+.nav-dots {
+  display: flex;
+}
+.qset-detail .footer{
+  border-top: 1px solid #dbdbdb;
+  padding: 1.25em 1.875em;
+} */
+.liner {
+  height: 2px;
+  background: #ddd;
+  position: absolute;
+  width: 80%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: 1;
+}
+/* .nav-tabs > li a {
+  width: 70px;
+  height: 70px;
+  margin: 20px auto;
+  border-radius: 100%;
+  padding: 0;
+  display: block;
+} */

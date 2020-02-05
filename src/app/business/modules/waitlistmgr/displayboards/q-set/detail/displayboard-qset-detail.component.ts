@@ -6,6 +6,9 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { FormControl } from '@angular/forms';
+import { Subject, ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-displayboard-qset-detail',
@@ -24,6 +27,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     @Input() source;
     @Output() idSelected = new EventEmitter<any>();
     departments: any = [];
+    departmentList: any = [];
     services_list: any = [];
     actionparam;
     display_schedule: any = [];
@@ -50,6 +54,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     board_count = 0;
     categoryIds: any = [];
     api_loading = false;
+    step = 1;
+    waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
+    deptMultiCtrl: any = [];
+    servMultiCtrl: any = [];
+    qMultiCtrl: any = [];
+    public deptMultiFilterCtrl: FormControl = new FormControl();
+    public labelMultiFilterCtrl: FormControl = new FormControl();
+    private _onDestroy = new Subject<void>();
+
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -60,6 +73,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
     }
     ngOnInit() {
+        this.deptMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+          this.filterBanksMulti();
+        });
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         if (loc_details) {
@@ -70,6 +88,25 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.sortByField('sort_token');
         }
     }
+
+
+    filterBanksMulti() {
+        if (!this.departments) {
+          return;
+        }
+        let search = this.deptMultiFilterCtrl.value;
+        if (!search) {
+            this.departmentList = this.departments.slice();
+          return;
+        } else {
+          search = search.toLowerCase();
+        }
+        console.log(this.departments);
+        console.log(search);
+        this.departmentList = this.departments.filter(dept => console.log(dept.departmentName.toLowerCase().indexOf(search)));
+        console.log(this.departmentList);
+      }
+
     resetFields() {
         this.boardDisplayname = '';
         this.boardName = '';
@@ -281,6 +318,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                             this.selectedCategory = 'DEPARTMENT';
                         }
                         resolve();
+                        this.departmentList = this.departments;
                     },
                     error => {
                         this.shared_Functionsobj.apiErrorAutoHide(this, error);
@@ -393,7 +431,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service, ev) {
-        const index = this.categoryIds.indexOf(service);
+         const index = this.categoryIds.indexOf(service);
         if (ev === 'edit') {
             if (index === -1) {
                 this.categoryIds.push(service);
@@ -417,6 +455,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.categoryIds.push(dept);
             }
         } else {
+            const index = this.categoryIds.indexOf(dept);
             if (ev.checked && index === -1) {
                 this.categoryIds.push(dept);
             } else {
@@ -429,7 +468,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }];
     }
     queueSelection(queue, ev) {
-        const index = this.categoryIds.indexOf(queue);
+       const index = this.categoryIds.indexOf(queue);
         if (ev === 'edit') {
             if (index === -1) {
                 this.categoryIds.push(queue);
@@ -481,5 +520,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     layout_list = data;
                     this.board_count = layout_list.length;
                 });
+    }
+    showStep(step) {
+this.step = step;
     }
 }

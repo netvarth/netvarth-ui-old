@@ -10,6 +10,7 @@ import { SharedModule } from '../../../../../shared/modules/common/shared.module
 import { DisplayboardQSetComponent } from './displayboard-qset.component';
 import { DisplayboardQSetDetailComponent } from './detail/displayboard-qset-detail.component';
 import { DisplayboardQSetRoutingModule } from './displayboard-qset.routing.module';
+import { MatSelectSearchModule } from '../../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { DisplayboardQSetRoutingModule } from './displayboard-qset.routing.modul
         CapitalizeFirstPipeModule,
         CommonModule,
         SharedModule,
+        MatSelectSearchModule
     ],
     exports: [DisplayboardQSetComponent, DisplayboardQSetDetailComponent]
 })

@@ -72,7 +72,7 @@ export class DepartmentsComponent implements OnInit {
         if (dept.departmentStatus === 'ACTIVE') {
             this.provider_services.disableDepartment(dept.departmentId).subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Department disabled successfully', { 'panelClass': 'snackbarnormal' });
+                    this.shared_functions.openSnackBar('Department and its services disabled successfully', { 'panelClass': 'snackbarnormal' });
                     this.getDepartments();
                 },
                 error => {
@@ -82,7 +82,7 @@ export class DepartmentsComponent implements OnInit {
         } else {
             this.provider_services.enableDepartment(dept.departmentId).subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Department enabled successfully', { 'panelClass': 'snackbarnormal' });
+                    this.shared_functions.openSnackBar('Department and its services enabled successfully', { 'panelClass': 'snackbarnormal' });
                     this.getDepartments();
                 },
                 error => {

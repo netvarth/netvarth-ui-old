@@ -103,6 +103,7 @@ export const projectConstants = {
   PIPE_DISPLAY_DATE_TIME_FORMAT: 'dd/MM/y h:mm a',
   POST_DATE_FORMAT: 'YYYY-MM-DD',
   POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD HH:mm a',
+  POST_DATE_FORMAT_WITHTIME_A: 'YYYY-MM-DD HH:mm A',
   BASE_SCHEDULE: [
     {
       day: 4,
