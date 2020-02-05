@@ -128,7 +128,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     location_id: 'all',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
-    futurecheckin_date: null
+    futurecheckin_date: null,
+    age: '',
+    gender: ''
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -141,12 +143,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     check_in_start_date: false,
     check_in_end_date: false,
     location_id: false,
-
+    age: false,
+    gender: false
   };
   filter_date_start_min = null;
   filter_date_start_max = null;
   filter_date_end_min = null;
   filter_date_end_max = null;
+
+  filter_dob_start_min = null;
+  filter_dob_start_max = null;
+  filter_dob_end_min = null;
+  filter_dob_end_max = null;
+
   customer_label = '';
   provider_label = '';
   arrived_label = '';
@@ -727,13 +736,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
-    const seldate_checker = new Date(server);
+    this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
     if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.dateformat.transformTofilterDate(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.dateformat.transformTofilterDate(servdate)) {
       this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
-      this.tomorrowDate = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
+      // this.tomorrowDate = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
     } else {
-      this.filter.futurecheckin_date = new Date(seldate_checker.setDate(servdate.getDate() + 1));
-      this.tomorrowDate = new Date(seldate_checker.setDate(servdate.getDate() + 1));
+      this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
   }
   getQueueListByDate() {
@@ -1007,13 +1015,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.changeStatusType('all');
           }
-          if (this.selected_queue && this.selected_queue.appointment === 'Enable') {
+          if (this.selected_queue && this.selected_queue.appointment === 'Enable' && this.calculationmode === 'Fixed') {
             this.getAvaiableSlots('today');
             if (this.unAvailableSlots.length > 0) {
               setTimeout(() => {
                 this.scrollToSection();
               }, 500);
             }
+          } else if (this.shared_functions.getitemFromGroupStorage('interval')) {
+            this.shared_functions.removeitemFromGroupStorage('interval');
           }
           this.loading = false;
         },
@@ -1064,13 +1074,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               } else {
                 this.noFilter = true;
               }
-              if (this.selected_queue && this.selected_queue.appointment === 'Enable') {
+              if (this.selected_queue && this.selected_queue.appointment === 'Enable' && this.calculationmode === 'Fixed') {
                 this.getAvaiableSlots();
                 if (this.futureUnAvailableSlots.length > 0) {
                   setTimeout(() => {
                     this.scrollToSection();
                   }, 500);
                 }
+              } else if (this.shared_functions.getitemFromGroupStorage('interval')) {
+                this.shared_functions.removeitemFromGroupStorage('interval');
               }
               this.loading = false;
             },
@@ -1165,6 +1177,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filter_date_end_min = moment(new Date()).add(+1, 'days');
     }
   }
+
+  setFilterdobMaxMin() {
+    this.filter_dob_start_max = new Date();
+    this.filter_dob_end_max = new Date();
+  }
+
   checkFilterDateMaxMin(type) {
     if (type === 'check_in_start_date') {
       this.filter_date_end_min = this.filter.check_in_start_date;
@@ -1173,6 +1191,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.doSearch();
   }
+
+  // checkFilterdobMaxMin(type) {
+  //   if (type === 'dob_start_date') {
+  //     this.filter_dob_end_min = this.filter.dob_start_date;
+  //   } else if (type === 'dob_end_date') {
+  //     this.filter_dob_start_max = this.filter.dob_end_date;
+  //   }
+  //   this.doSearch();
+  // }
+
   loadApiSwitch(source) {
     this.resetAll();
     let chkSrc = true;
@@ -1327,6 +1355,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   toggleFilter() {
     this.open_filter = !this.open_filter;
+    if (this.open_filter) {
+      this.setFilterdobMaxMin();
+    }
   }
   setFilterData(type, value) {
     this.filter[type] = value;
@@ -1376,6 +1407,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
+      if (this.filter.age !== '') {
+        const kids = moment(new Date()).add(-15, 'year').format('YYYY-MM-DD');
+        const adults = moment(new Date()).add(-60, 'year').format('YYYY-MM-DD');
+        if (this.filter.age === 'kids') {
+          api_filter['dob-ge'] = kids;
+        } else if (this.filter.age === 'adults') {
+          api_filter['dob-le'] = kids;
+          api_filter['dob-ge'] = adults;
+        } else if (this.filter.age === 'senior') {
+          api_filter['dob-le'] = adults;
+        }
+      }
+      if (this.filter.gender !== '') {
+        api_filter['gender-eq'] = this.filter.gender;
+      }
+      // if (this.filter.dob_start_date != null) {
+      //   api_filter['dob-ge'] = this.dateformat.transformTofilterDate(this.filter.dob_start_date);
+      // }
+      // if (this.filter.dob_end_date != null) {
+      //   api_filter['dob-le'] = this.dateformat.transformTofilterDate(this.filter.dob_end_date);
+      // }
     }
     api_filter['location-eq'] = this.selected_location.id;
     return api_filter;
@@ -1389,7 +1441,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date) {
+      || this.filter.check_in_end_date || this.filter.age || this.filter.gender) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1408,7 +1460,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       check_in_start_date: false,
       check_in_end_date: false,
       location_id: false,
-
+      age: false,
+      gender: false
     };
     this.filter = {
       first_name: '',
@@ -1423,7 +1476,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       location_id: 'all',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 0,
-      futurecheckin_date: null
+      futurecheckin_date: null,
+      age: '',
+      gender: ''
     };
   }
   goCheckinDetail(checkin) {
@@ -1454,7 +1509,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   viewBillPage(source, checkin?) {
     let checkin_details;
-    if (source === 'history') {
+    if (source === 'history' || source === 'future') {
       checkin_details = checkin;
     } else {
       checkin_details = this.selectedCheckin[source];
@@ -2233,9 +2288,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return true;
   }
   getAvaiableSlots(type?) {
-    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-    const curTimeSub = moment(curTime).subtract(this.selected_queue.timeInterval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
+    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(this.selected_queue.timeInterval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
     this.availableSlots = [];
     this.unAvailableSlots = [];
     this.futureUnAvailableSlots = [];
@@ -2244,8 +2298,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
       if (type) {
         for (let i = 0; i < allSlots.length; i++) {
-          const slotTime = moment(this.shared_functions.getDateFromTimeString(allSlots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-          // if (startTime.isAfter(endTime))
+          const slotTime = moment(this.shared_functions.getDateFromTimeString(allSlots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
           if (curTimeSubDt <= slotTime) {
             this.unAvailableSlots.push(allSlots[i]);
           }

@@ -300,7 +300,9 @@ export class CheckInInnerComponent implements OnInit {
       // } else {
       this.sel_checkindate = this.data.moreparams.sel_date;
       // }
-      this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      if (this.sharedFunctionobj.getitemFromGroupStorage('pdtyp') && this.sharedFunctionobj.getitemFromGroupStorage('pdtyp') !== 2) {
+        this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
+      }
     }
     if (this.page_source !== 'provider_checkin') { // not came from provider, but came by clicking "Do you want to check in for a different date"
       if (this.data.datechangereq) {
@@ -651,6 +653,7 @@ export class CheckInInnerComponent implements OnInit {
               this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
               this.sel_queue_id = this.queuejson[selindx].id;
             } else {
+              this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
               this.sel_queue_id = this.data.queue.id;
             }
             this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
@@ -1670,9 +1673,8 @@ export class CheckInInnerComponent implements OnInit {
         });
   }
   getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
-    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-    const curTimeSub = moment(curTime).subtract(interval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
+    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
     const _this = this;
     const filter = {};
     this.availableSlots = [];
@@ -1702,7 +1704,7 @@ export class CheckInInnerComponent implements OnInit {
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           for (let i = 0; i < slots.length; i++) {
-            const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+            const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
             if (curTimeSubDt <= slotTime) {
               this.availableSlots.push(slots[i]);
             }

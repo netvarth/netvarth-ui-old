@@ -66,14 +66,15 @@
                     </ng-container>
                 </ul>
                 <ng-container>
-                    <div class="input-group">
+                    <div class="mgn-up-5 input-group mobile-error">
                         <label *ngIf="edit" class="col-form-label">
                             <i class="fa fa-mobile chkin-mobic"></i>&nbsp;
                             <span class="chkin-ph" *ngIf="userPhone">{{userPhone}}</span>&nbsp;<i
                                 class="fa fa-pencil pointer-cursor" (click)="editPhone()"></i>
                         </label>
                         <label *ngIf="!edit">
-                            <input type="text" style="width: 75px; border-bottom: 1px solid; font-size:.75rem"
+                            <input type="text" maxlength="10"
+                                style="width: 85px; border-bottom: 1px solid; font-size:.75rem"
                                 placeholder="Contact number" class=" emailPrepay" [(ngModel)]="selected_phone" />
                             <span (click)="addPhone()" style="color: #00aef2; padding-left:5px">Ok</span>
                             <app-field-error-display [displayError]="true" *ngIf="phoneerror != null"

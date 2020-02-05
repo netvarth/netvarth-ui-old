@@ -6746,6 +6746,11 @@ label.notifi-togl {
   line-height: 150px;
   text-align: center;
 }
+.mobile-error app-field-error-display .sts-msg.error{
+  background: white !important;
+  color: #f24949 !important;
+  padding: 0px !important;
+}
 /* .nav-dots li{
   width: 8px;
   height: 8px;

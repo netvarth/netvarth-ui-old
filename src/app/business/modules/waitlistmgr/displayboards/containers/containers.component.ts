@@ -51,17 +51,38 @@ export class ContainersComponent implements OnInit {
     getDisplayboardContainers() {
         this.api_loading = true;
         this.layout_list = [];
-        this.provider_services.getDisplayboardContainers()
-            .subscribe(
-                data => {
-                    this.layout_list = data;
-                    this.api_loading = false;
-                },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
-                }
-            );
+        this.provider_services.getDisplayboards()
+        .subscribe(
+            (data: any) => {
+                const alldisplayBoards = data;
+                this.layout_list = [];
+
+                alldisplayBoards.forEach(element => {
+                    if(element.container) {
+                        this.layout_list.push(element);
+                    }
+                });
+                // this.layout_list = data;
+                this.api_loading = false;
+            },
+            error => {
+                this.api_loading = false;
+                this.shared_functions.apiErrorAutoHide(this, error);
+            }
+        );
+
+
+        // this.provider_services.getDisplayboardContainers()
+        //     .subscribe(
+        //         data => {
+        //             this.layout_list = data;
+        //             this.api_loading = false;
+        //         },
+        //         error => {
+        //             this.api_loading = false;
+        //             this.shared_functions.apiErrorAutoHide(this, error);
+        //         }
+        //     );
     }
     performActions(action) {
         this.addDisplayboardContainer();

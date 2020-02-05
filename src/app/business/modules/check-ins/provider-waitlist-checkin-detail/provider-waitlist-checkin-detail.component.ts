@@ -78,7 +78,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   editAppntTime = false;
   board_count = 0;
   showTimePicker = false;
-  availableSlots: any;
+  availableSlots: any = [];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -140,6 +140,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
+          if (interval) {
+            this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
+          }
           if (this.waitlist_data.appointmentTime) {
             // tslint:disable-next-line: radix
             // this.appttime = { hour: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('HH')), minute: parseInt(moment(this.waitlist_data.appointmentTime, ['h:mm A']).format('mm')) };
@@ -201,7 +205,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           }
           this.sortMessages();
           this.shared_Functionsobj.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
-
         },
         () => {
           //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -219,7 +222,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         return 0;
       }
     });
-
   }
 
   goBack() {
@@ -277,12 +279,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getTimeSlots(QStartTime, QEndTime, interval) {
     this.availableSlots = [];
     const _this = this;
-    // const allSlots = _this.shared_Functionsobj.getTimeSlotsFromQTimings(30, QStartTime, QEndTime);
-    // this.availableSlots = allSlots;
     const locId = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
-    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-    const curTimeSub = moment(curTime).subtract(interval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
+    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
     const filter = {};
     this.availableSlots = [];
     filter['queue-eq'] = _this.shared_Functionsobj.getitemFromGroupStorage('pdq');
@@ -301,7 +300,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           for (let i = 0; i < slots.length; i++) {
-            const slotTime = moment(this.shared_Functionsobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
+            const slotTime = moment(this.shared_Functionsobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
             if (curTimeSubDt <= slotTime) {
               this.availableSlots.push(slots[i]);
             }
@@ -323,7 +322,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         }
       );
     }
-
   }
   getAppxTime(waitlist, retcap?) {
     /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
@@ -440,8 +438,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   editApptTime() {
     // tslint:disable-next-line: radix
     this.editAppntTime = true;
-    const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
-    this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
     this.apptTime = this.waitlist_data.appointmentTime;
   }
   cancelUpdation() {
