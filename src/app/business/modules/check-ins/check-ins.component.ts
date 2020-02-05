@@ -2288,9 +2288,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return true;
   }
   getAvaiableSlots(type?) {
-    const curTime = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-    const curTimeSub = moment(curTime).subtract(this.selected_queue.timeInterval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DD hh:mm a');
+    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(this.selected_queue.timeInterval, 'm');
+    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
     this.availableSlots = [];
     this.unAvailableSlots = [];
     this.futureUnAvailableSlots = [];
@@ -2299,8 +2298,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const allSlots = this.shared_functions.getTimeSlotsFromQTimings(this.selected_queue.timeInterval, this.selected_queue.queueSchedule.timeSlots[0]['sTime'], this.selected_queue.queueSchedule.timeSlots[0]['eTime']);
       if (type) {
         for (let i = 0; i < allSlots.length; i++) {
-          const slotTime = moment(this.shared_functions.getDateFromTimeString(allSlots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME);
-          // if (startTime.isAfter(endTime))
+          const slotTime = moment(this.shared_functions.getDateFromTimeString(allSlots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
           if (curTimeSubDt <= slotTime) {
             this.unAvailableSlots.push(allSlots[i]);
           }
