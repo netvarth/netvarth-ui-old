@@ -11,12 +11,14 @@ import { FormMessageDisplayModule } from '../../../../shared/modules/form-messag
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ManageOnlineProfileComponent } from './manageOnlineProfile/manageonlineprofile.component';
+import { ManageSettingsComponent } from './manageSettings/manageSettings.component';
 
 @NgModule({
     declarations: [
         BranchUsersComponent,
         BranchUserDetailComponent,
-        ManageOnlineProfileComponent
+        ManageOnlineProfileComponent,
+        ManageSettingsComponent
     ],
     imports: [
         UsersRoutingModule,

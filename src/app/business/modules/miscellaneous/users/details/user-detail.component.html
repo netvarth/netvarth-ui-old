@@ -11,7 +11,7 @@
 <div class="card" *ngIf="api_loading">
 <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
-<div class="col-md-12" *ngIf="actionparam !== 'view' && !api_loading">
+<div class="col-md-12" *ngIf="actionparam.type !== 'view' && !api_loading">
 <div *ngIf="!filterBydept" class="create-dept">
 <ul class="info-lst serviceadd-info">
     <li>Department feature needs to enabled to add a doctor. <a class="pointlist"
@@ -19,8 +19,8 @@
     </li>
 </ul>
 </div>
-<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
-onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+<form [formGroup]="userForm"  (ngSubmit)="userForm.valid &&
+onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
         <mat-form-field>
@@ -43,15 +43,15 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                 autocomplete="off">
         </mat-form-field>
         <app-field-error-display
-            [displayError]="fed_service.isFieldValid(amForm,'first_name')"
-            [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+            [displayError]="fed_service.isFieldValid(userForm,'first_name')"
+            [errorMsgs]="fed_service.getErrorMessage(userForm,'first_name',
                         {
                         'required' : 'First name is required',
                         'pattern' : 'Only alphabets are allowed'
                         })">
         </app-field-error-display>
         <app-field-error-display [displayError]="true"
-            *ngIf="fnameerror != null && !fed_service.isFieldValid(amForm,'first_name')"
+            *ngIf="fnameerror != null && !fed_service.isFieldValid(userForm,'first_name')"
             [errorMsg]="fnameerror">
         </app-field-error-display>
     </div>
@@ -64,15 +64,15 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                 autocomplete="off">
         </mat-form-field>
         <app-field-error-display
-            [displayError]="fed_service.isFieldValid(amForm,'last_name')"
-            [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+            [displayError]="fed_service.isFieldValid(userForm,'last_name')"
+            [errorMsgs]="fed_service.getErrorMessage(userForm,'last_name',
                         {
                         'required' : 'Last name is required',
                         'pattern' : 'Only alphabets are allowed'
                         })">
         </app-field-error-display>
         <app-field-error-display [displayError]="true"
-            *ngIf="!fed_service.isFieldValid(amForm,'last_name')"
+            *ngIf="!fed_service.isFieldValid(userForm,'last_name')"
             [errorMsg]="lnameerror">
         </app-field-error-display>
     </div>
@@ -123,12 +123,12 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                 <input type="text" (keypress)="isNumeric($event)" matInput
                     class="form-control text-width" id="phonenumber"
                     placeholder="Enter Mobile # *" formControlName="phonenumber"
-                    autocomplete="off" ngModel maxlength="10">
+                    autocomplete="off" maxlength="10">
             </div>
         </mat-form-field>
         <app-field-error-display
-            [displayError]="fed_service.isFieldValid(amForm,'phonenumber')"
-            [errorMsgs]="fed_service.getErrorMessage(amForm,'phonenumber',
+            [displayError]="fed_service.isFieldValid(userForm,'phonenumber')"
+            [errorMsgs]="fed_service.getErrorMessage(userForm,'phonenumber',
             {
             'required' : 'Mobile number is required',
             'minlength' : 'Enter a 10 digit mobile number',
@@ -140,20 +140,20 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
 </div>
 
 
-<div class="col-md-6 col-sm-6 col-xs-12">
+<!-- <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
         <mat-form-field>
             <input class="form-control" placeholder="Enter default password *"
                 matInput formControlName="password" reverse="true" type="password">
         </mat-form-field>
         <app-field-error-display
-            [displayError]="fed_service.isFieldValid(amForm,'password')"
-            [errorMsgs]="fed_service.getErrorMessage(amForm,'password',
+            [displayError]="fed_service.isFieldValid(userForm,'password')"
+            [errorMsgs]="fed_service.getErrorMessage(userForm,'password',
                 {'required' : 'Enter Password Required',
                 'pattern' : 'Use minimum 8 characters with atleast one uppercase, lowercase and number'})">
         </app-field-error-display>
     </div>
-</div>
+</div> -->
 
 <div class="clearfix"></div>
 
@@ -203,7 +203,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                     ondrop="return false">
             </mat-form-field>
             <app-field-error-display [displayError]="true"
-                *ngIf="emailerror != null && !fed_service.isFieldValid(amForm,'email')"
+                *ngIf="emailerror != null && !fed_service.isFieldValid(userForm,'email')"
                 [errorMsg]="emailerror">
             </app-field-error-display>
         </div>
@@ -219,7 +219,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
             </mat-form-field>
             <app-field-error-display
-                [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                [displayError]="fed_service.isFieldValid(userForm,'dob')"
                 errorMsg="Please select the date of birth.">
             </app-field-error-display>
         </div>
@@ -233,7 +233,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                 <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
             </mat-radio-group>
             <app-field-error-display
-                [displayError]="fed_service.isFieldValid(amForm,'gender')"
+                [displayError]="fed_service.isFieldValid(userForm,'gender')"
                 errorMsg="Please select the gender.">
             </app-field-error-display>
         </div>
@@ -244,7 +244,7 @@ onSubmit(amForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
         <button (click)="onCancel()" type="button"
             class="cs-btn bt2">{{cancel_btn}}</button>
         &nbsp;
-        <button type="submit" mat-button [disabled]="!amForm.valid"
+        <button type="submit" mat-button [disabled]="!userForm.valid"
             class="cs-btn bt2">{{button_title}}</button>
     </div>
 </div>

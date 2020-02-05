@@ -27,7 +27,7 @@ export class BranchUserDetailComponent implements OnInit {
     mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
     select_subdomain_cap = Messages.SELECT_SB_DMN_CAP;
     subdomain_displayname = projectConstants.SUBDOMAIN_DISPLAYNAME;
-    amForm: FormGroup;
+    userForm: FormGroup;
     char_count = 0;
     max_char_count = 250;
     isfocused = false;
@@ -86,44 +86,20 @@ export class BranchUserDetailComponent implements OnInit {
         this.activated_route.queryParams.subscribe(data => {
             console.log(data);
             this.actionparam = data;
-            if (this.actionparam.val) {
-                this.userId = this.actionparam.val;
-            }
-            console.log(this.userId);
-             
-                const breadcrumbs = [];
-                this.breadcrumbs_init.map((e) => {
-                    breadcrumbs.push(e);
-                });
-                breadcrumbs.push({
-                    title: this.actionparam.type
-                });
-                this.breadcrumbs = breadcrumbs;
-           
+            
         }
         );
-        // this.activated_route.queryParams.subscribe(
-        //     qparams => {
-        //         const breadcrumbs = [];
-        //         this.breadcrumbs_init.map((e) => {
-        //             breadcrumbs.push(e);
-        //         });
-        //         breadcrumbs.push({
-        //             title: 'Add'
-        //         });
-        //         this.breadcrumbs = breadcrumbs;
-        //     });
+        
     }
     ngOnInit() {
         this.getWaitlistMgr();
-        if (this.userId) {
-            this.provider_services.getAssistant(this.userId)
-                .subscribe(
-                    res => {
-                        this.user_data = res;
-                    }
-                );
+        if (this.actionparam.val) {
+            this.userId = this.actionparam.val;
+            this.getUserData();
+        }else {
+            this.createForm();
         }
+        
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (bConfig && bConfig.bdata) {
@@ -150,19 +126,20 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 );
         }
-        this.createForm();
+        // setTimeout(() => {
+        //     this.createForm(); 
+        // }, 100);
         
     }
     createForm() {
-
-        this.amForm = this.fb.group({
+        this.userForm = this.fb.group({
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
             gender: [''],
             phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
-            password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+          //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: [],
             selectedUserType: [],
@@ -170,27 +147,47 @@ export class BranchUserDetailComponent implements OnInit {
             state:[],
             city:[]
         });
-        if (this.actionparam === 'edit') {
+        if (this.actionparam.type === 'edit') {
             this.updateForm();
         }
     }
-
+getUserData() {
+    if (this.userId) {
+        this.provider_services.getUser(this.userId)
+            .subscribe(
+                res => {
+                    this.user_data = res;
+                    this.createForm();
+                    const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: this.user_data.firstName
+            });
+            this.breadcrumbs = breadcrumbs;
+                }
+            );
+    }
+}
     updateForm() {
-        // this.amForm.setValue({
-        //     'first_name': this.user_data['userProfile']['firstName'] || this.amForm.get('first_name').value,
-        //     'last_name': this.user_data['userProfile']['lastName'] || this.amForm.get('last_name').value,
-        //     'gender': this.user_data['userProfile']['gender'] || this.amForm.get('gender').value,
-        //     'phonenumber': this.user_data['userProfile']['primaryMobileNo'] || this.amForm.get('phonenumber').value,
-        //     'dob': this.user_data['userProfile']['dob'] || this.amForm.get('dob').value,
-        //     'email': this.user_data['userProfile']['email'] || this.amForm.get('email').value,
-        //     'password': this.user_data['commonPassword'] || this.amForm.get('password').value,
-        //     'selectedSubDomain': this.user_data['subSector'] || this.amForm.get('selectedSubDomain').value,
-        //     'selectedDepartment': this.user_data['departmentCode'] || this.amForm.get('selectedDepartment').value,
-        //     'selectedUserType': this.user_data['userType'] || this.amForm.get('selectedUserType').value,
-        //     'address': this.user_data['address'] || this.amForm.get('address').value,
-        //     'state': this.user_data['state'] || this.amForm.get('state').value,
-        //     'city': this.user_data['city'] || this.amForm.get('city').value
-        // });
+        console.log(this.user_data);
+        console.log("up form");
+        this.userForm.setValue({
+            'first_name': this.user_data.firstName || null,
+            'last_name': this.user_data.lastName || null ,
+            'gender': this.user_data.gender || null ,
+            'phonenumber': this.user_data.mobileNo || null,
+            'dob': this.user_data.dob || null,
+            'email': this.user_data.email || null,
+            //'password': this.user_data.commonPassword || this.userForm.get('password').value,
+            'selectedSubDomain': this.user_data.subSector || null,
+            'selectedDepartment': this.user_data.departmentCode || null,
+            'selectedUserType': this.user_data.userType || null,
+            'address': this.user_data.address || null,
+            'state': this.user_data.state || null,
+            'city': this.user_data.city || null
+        });
 
     }
     onItemSelect(subdomain) {
@@ -261,21 +258,21 @@ console.log(event.value);
             //     'departmentCode': input.selectedDepartment
             // };
 
-            const post_data = {
-                'userProfile': {
-                    'firstName': input.first_name.trim() || null,
-                    'lastName': input.last_name.trim() || null,
-                    'dob': date_format || null,
-                    'gender': input.gender || null,
-                    'email': input.email || '',
-                    'countryCode': '+91',
-                    'primaryMobileNo': input.phonenumber
-                },
-                'subSector': input.selectedSubDomain.subDomain,
-                'commonPassword': input.password,
-                'isAdmin': true,
-                'departmentCode': input.selectedDepartment
-            };
+            // const post_data = {
+            //     'userProfile': {
+            //         'firstName': input.first_name.trim() || null,
+            //         'lastName': input.last_name.trim() || null,
+            //         'dob': date_format || null,
+            //         'gender': input.gender || null,
+            //         'email': input.email || '',
+            //         'countryCode': '+91',
+            //         'primaryMobileNo': input.phonenumber
+            //     },
+            //     'subSector': input.selectedSubDomain.subDomain,
+            //     'commonPassword': input.password,
+            //     'isAdmin': true,
+            //     'departmentCode': input.selectedDepartment
+            // };
             const post_data1 = {
                     'firstName': input.first_name.trim() || null,
                     'lastName': input.last_name.trim() || null,
@@ -283,20 +280,34 @@ console.log(event.value);
                     'gender': input.gender || null,
                     'email': input.email || '',
                     'mobileNo': input.phonenumber,
-                'address': 'Near high road',
-                'city': 'thrissur',
-                'state': 'kerala',
-                'deptId': input.selectedDepartment,
+                'address': input.address,
+                'city': input.city,
+                'state': input.state,
+               // 'deptId': input.selectedDepartment,
                 'userType': input.selectedUserType
             };
             console.log(input.selectedDepartment);
-            this.provider_services.createAssistant(post_data1).subscribe(() => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
-                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
-            },
-                error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+            if (input.selectedUserType === 'PROVIDER') {
+                post_data1['deptId'] = input.selectedDepartment;
+            }
+            
+                if (this.actionparam.type === 'edit') {
+                    this.provider_services.updateUser(post_data1).subscribe(() => {
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
+                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+                    },
+                        error => {
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                } else {
+                    this.provider_services.createUser(post_data1).subscribe(() => {
+                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
+                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+                    },
+                        error => {
+                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        });
+                }
         }
   //  }
     onCancel() {
@@ -365,7 +376,7 @@ console.log(event.value);
                 data => {
                     this.departments = data['departments'];
                     console.log(this.departments);
-                    this.amForm.get('selectedDepartment').setValue(this.departments[0].departmentCode);
+                    this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentCode);
                     this.api_loading = false;
                 },
                 error => {
