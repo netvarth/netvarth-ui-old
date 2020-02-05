@@ -7163,3 +7163,7 @@ padding-left: 30px;
     vertical-align: baseline;
     border-radius: .25em;
 }
+.p-checkin .btn-modes bt3.active {
+  color: #fff !important;
+  background-color: #00aef2 !important;
+}

@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs/Subscription';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
+import { Router, RoutesRecognized, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -196,7 +196,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   makPaydialogRef;
   sendmsgdialogRef;
   locateCustomerdialogRef;
-  
   screenWidth;
   isCheckin;
   small_device_display = false;
@@ -282,7 +281,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   loading = false;
   unAvailableSlots: any = [];
   departments: any = [];
-    futureUnAvailableSlots: any = [];
+  futureUnAvailableSlots: any = [];
   tomorrowDate;
   historyCheckins: any = [];
   constructor(private provider_services: ProviderServices,
@@ -295,7 +294,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private shared_services: SharedServices,
     public dateformat: DateFormatPipe,
     private _scrollToService: ScrollToService,
-     public route: ActivatedRoute) {
+    public route: ActivatedRoute) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
@@ -381,15 +380,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getFutureCheckIn();
       }
     });
-     this.route.queryParams.subscribe((qparams)=>{
-     this.time_type =+qparams.time_type;
-     console.log(this.time_type);
-      if(this.time_type >= 0)
-      {
-         this.setTimeType(this.time_type);
+    this.route.queryParams.subscribe((qparams) => {
+      this.time_type = +qparams.time_type;
+      console.log(this.time_type);
+      if (this.time_type >= 0) {
+        this.setTimeType(this.time_type);
       }
-      });
-    
+    });
+
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -728,7 +726,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
             this.selected_queue = this.all_queues[selqid];
-            
+
             if (!getsavedqueueid) {
               const selid = this.findCurrentActiveQueue(this.all_queues);
               this.selectedQueue(this.all_queues[selid]);
@@ -1676,39 +1674,45 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
   }
-  checkinClicked(appttime) {
-    if (this.isCheckinActive()) {
-      this.provider_services.getServicesList()
-        .subscribe(
-          data => {
-            if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
-              this.isCheckin = 4;
-              this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
-              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
-              return false;
-            } else {
-              this.provider_services.getProviderQueues()
-                .subscribe(
-                  data1 => {
-                    if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
-                      this.isCheckin = 5;
-                      this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
-                      this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
-                      return false;
-                    } else {
-                      this.searchCustomer('providerCheckin', appttime);
-                      return true;
-                    }
-                  },
-                  () => {
-                  });
-            }
-          },
-          () => {
-          }
-        );
-    }
+  checkinClicked() {
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: { action: 'editbase' }
+    // };
+    this.router.navigate(['provider', 'check-ins', 'add']);
   }
+  // checkinClicked(appttime) {
+  //   if (this.isCheckinActive()) {
+  //     this.provider_services.getServicesList()
+  //       .subscribe(
+  //         data => {
+  //           if (this.shared_functions.filterJson(data, 'status', 'ACTIVE').length === 0) {
+  //             this.isCheckin = 4;
+  //             this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
+  //             this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+  //             return false;
+  //           } else {
+  //             this.provider_services.getProviderQueues()
+  //               .subscribe(
+  //                 data1 => {
+  //                   if (this.shared_functions.filterJson(data1, 'queueState', 'ENABLED').length === 0) {
+  //                     this.isCheckin = 5;
+  //                     this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
+  //                     this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+  //                     return false;
+  //                   } else {
+  //                     this.searchCustomer('providerCheckin', appttime);
+  //                     return true;
+  //                   }
+  //                 },
+  //                 () => {
+  //                 });
+  //           }
+  //         },
+  //         () => {
+  //         }
+  //       );
+  //   }
+  // }
   searchCustomer(source, appttime) {
     this.srchcustdialogRef = this.dialog.open(SearchProviderCustomerComponent, {
       width: '50%',
@@ -2067,7 +2071,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
- locateCustomerMsg(details) {
+  locateCustomerMsg(details) {
     if (details && details.jaldeeDistance) {
       const distance = details.jaldeeDistance.distance;
       const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
@@ -2268,14 +2272,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getDepartments() {
     this.provider_services.getDepartments()
-        .subscribe(
-            data => {
-                this.departments = data['departments'];
-            },
-            error => {
-            }
-        );
-}
+      .subscribe(
+        data => {
+          this.departments = data['departments'];
+        },
+        error => {
+        }
+      );
+  }
 
   resetAll() {
     this.waitlistSelected = [];
@@ -2289,11 +2293,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
-    //console.log(this.filter_sidebar);
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
-    //console.log(this.filter_sidebar);
   }
   setSortByParam(sortBy) {
     this.sortBy = sortBy;

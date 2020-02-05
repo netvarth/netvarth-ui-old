@@ -9,6 +9,17 @@
                 <div class="card p0" *ngIf="!showCheckin">
                     <div class="col-md-12">
                         <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
+                            <div class="col-md-12">
+                                Search Customer By
+                            </div>
+                            <div class="btn-modes col-md-12 mgn-up-10">
+                                <span class="bt3 pointer-cursor mgn-rt-10" (click)="selectMode('phone')"
+                                    [ngClass]="{'active': (selectedMode == 'phone')}">Phone Number</span>
+                                <span class="bt3 pointer-cursor mgn-rt-10" (click)="selectMode('email')"
+                                    [ngClass]="{'active': (selectedMode == 'email')}">Email Id</span>
+                                <span class=" bt3 pointer-cursor" (click)="selectMode('custId')"
+                                    [ngClass]="{'active': (selectedMode == 'custId')}">Patient Id</span>
+                            </div>
                             <div class="form-group mgn-up-10 sc-frm">
                                 <div class="col-md-9 col-xs-10 col-sm-10">
                                     <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
@@ -20,7 +31,8 @@
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                         <mat-form-field>
                                             <input matInput placeholder="Enter Phone Number" type="text"
-                                                class="form-control" formControlName="mobile_number" (keypress)="findCustomer(searchForm.value, $event)">
+                                                class="form-control" formControlName="mobile_number"
+                                                (keypress)="findCustomer(searchForm.value, $event)">
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -80,8 +92,8 @@
                                         <div class="date-body">
                                             <span class="selected-date"> <span class="icon-minus"
                                                     [class.disable]="disableMinus()"
-                                                    (click)="calculateDate(-1)"></span>{{sel_day}} {{sel_checkindate |
-                                    date: dateFormat}} <span class="icon-add" (click)="calculateDate(1)"></span></span>
+                                                    (click)="calculateDate(-1)"></span>{{sel_day}} {{sel_checkindate | date: dateFormat}} 
+                                                    <span class="icon-add" (click)="calculateDate(1)"></span></span>
                                             <div class="form-group dt">
                                                 <div class="pickerouter">
                                                     <mat-datepicker-toggle matSuffix [for]="picker">

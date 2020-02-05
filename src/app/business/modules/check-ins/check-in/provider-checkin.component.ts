@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import * as moment from 'moment';
@@ -163,12 +163,16 @@ export class ProviderCheckinComponent implements OnInit {
     board_count = 0;
     allSlots: any = [];
     availableSlots: any = [];
+    selectedMode: any = 'phone';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
+        private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
+            this.activated_route.queryParams.subscribe(qparams => {
+            });
     }
     ngOnInit() {
         this.createForm();
@@ -198,6 +202,9 @@ export class ProviderCheckinComponent implements OnInit {
             Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
         });
+    }
+    selectMode(type) {
+        this.selectedMode = type;
     }
     findCustomer(form_data, event) {
         console.log(event.key);
