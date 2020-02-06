@@ -173,7 +173,7 @@ export class ManageOnlineProfileComponent implements OnInit {
         this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
         this.activatedRoot.queryParams.subscribe(data => {
             this.userName = data;
-            console.log( this.userName);
+            console.log( this.userName.id);
 
         });
     }
@@ -223,11 +223,13 @@ export class ManageOnlineProfileComponent implements OnInit {
       }
 
       getBusinessProfile() {
+        console.log('businessprofile');
         this.bProfile = [];
         this.getBussinessProfileApi()
           .then(
             data => {
               this.bProfile = data;
+              console.log(this.bProfile);
               this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
                 domainfields => {
                   this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
@@ -280,11 +282,13 @@ export class ManageOnlineProfileComponent implements OnInit {
       }
 
       getBussinessProfileApi() {
+        console.log("api");
         const _this = this;
         return new Promise(function (resolve, reject) {
-          _this.provider_services.getBussinessProfile()
+          _this.provider_services.getUserBussinessProfile(_this.userName.id)
             .subscribe(
               data => {
+                console.log(data);
                 resolve(data);
               },
               () => {

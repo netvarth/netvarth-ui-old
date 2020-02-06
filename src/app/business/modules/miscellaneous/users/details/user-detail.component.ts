@@ -292,7 +292,7 @@ console.log(event.value);
             }
             
                 if (this.actionparam.type === 'edit') {
-                    this.provider_services.updateUser(post_data1).subscribe(() => {
+                    this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
                         this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
                         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
                     },

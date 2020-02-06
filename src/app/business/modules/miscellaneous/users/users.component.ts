@@ -58,9 +58,12 @@ export class BranchUsersComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add'], navigationExtras);
         //this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
     }
-    manageOnlineProfile(name) {
+    manageOnlineProfile(name,userId) {
+        console.log(userId);
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: name}
+            queryParams: { type: name,
+                id:userId
+                            }
         };
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'manageonlineprofile'], navigationExtras);
     }

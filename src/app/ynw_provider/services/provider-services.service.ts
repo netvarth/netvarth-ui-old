@@ -942,8 +942,8 @@ export class ProviderServices {
     const url = 'provider/user';
     return this.servicemeta.httpPost(url, post_data);
   }
-  updateUser(post_data) {
-    const url = 'provider/user';
+  updateUser(post_data , id) {
+    const url = 'provider/user' + id;
     return this.servicemeta.httpPut(url, post_data);
   }
   getUser(providerid) {
@@ -953,6 +953,11 @@ export class ProviderServices {
   disableEnableuser(userid, stat) {
    const url = 'provider/user/' + stat + '/' + userid;
    return this.servicemeta.httpPut(url);
+  }
+  getUserBussinessProfile(id) {
+    console.log(id);
+    const url = 'provider/user/providerBprofile/' + id;
+    return this.servicemeta.httpGet(url);
   }
 
 }
