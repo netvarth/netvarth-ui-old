@@ -6748,3 +6748,8 @@ label.notifi-togl {
   color: #f24949 !important;
   padding: 0px !important;
 }
+.chkin .ft-dt {
+  max-width: 100px !important;
+  background-color: transparent;
+  border: none;
+}
