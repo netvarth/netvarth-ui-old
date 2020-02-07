@@ -90,6 +90,9 @@ export class DisplayboardsComponent implements OnInit {
     addDisplayboardLayout() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
     }
+    addGlobalSettings() {
+        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'global']);
+    }
     listContainers() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
     }

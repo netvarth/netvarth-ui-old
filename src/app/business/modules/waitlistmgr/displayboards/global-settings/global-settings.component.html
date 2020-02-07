@@ -1,0 +1,63 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section>
+<section>
+    <div *ngIf="!is_preview" class="col-md-12 col-xs-12 col-sm-12">
+        <div class="table-outer">
+                <div class="pubs card adwds w-dta">
+                        <h6>Header Settings</h6>
+                        <div class="add" style="padding-top: 10px;padding-left: 40px;display: flex;">
+                            <div>
+                                <span>
+                                    <span *ngIf="!is_image"><img style="width: 90px;" src="assets/images/img_uplod.png"
+                                            alt="Jaldee"></span>
+                                    <span *ngIf="is_image"><img style="width: 150px;height:150px;object-fit: scale-down;"
+                                            *ngIf="imageUrl" [src]="imageUrl" class="image"></span>
+                                    <br>
+                                </span>
+                                <input type="file" style="padding-top: 10px;" (change)="onFileSelected($event.target.files)">
+                            </div>
+                            <div>
+                                width<input type="text" [(ngModel)]="width"><br><br>
+                                height<input type="text" [(ngModel)]="height"><br><br>
+                                <mat-form-field>
+                                    <select matNativeControl required>
+                                        <option value="left">Right</option>
+                                        <option value="right">Left</option>
+                                    </select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- <div [innerHTML]="model.editorData"></div>
+                        <div style="padding-left: 200px;padding-top: 30px;">
+                            <ckeditor [(ngModel)]="model.editorData" [editor]="Editor"></ckeditor>
+                        </div> -->
+                    </div>
+        </div>
+        
+        <div class="table-outer">
+            <div class="pubs card adwds w-dta">
+                <h6>Footer Settings</h6>
+                <!-- <div style="padding-left: 200px;">
+                    <ckeditor [editor]="Editor"></ckeditor>
+                </div> -->
+            </div>
+            <div class="pubs card adwds w-dta" style="margin-bottom:10px;display: inline-flex;padding-top: 30px;">
+                <button type="button" class="cs-btn bt2">Cancel</button> &nbsp;
+                <button type="submit" (click)="showPreview()" class="cs-btn bt1">Preview</button>&nbsp;
+                <button type="submit" class="cs-btn bt1">Save</button>
+            </div>
+    
+        </div>
+        
+        
+    </div>
+    <div *ngIf="is_preview" class="col-md-12 col-xs-12 col-sm-12">
+        <div class="pubs card adwds w-dta">
+            <img [ngStyle]="{ 'height' : height+'px', 'width' : width+'px'}" *ngIf="imageUrl" [src]="imageUrl"
+                class="image">
+            <div [innerHTML]="model.editorData"></div>
+            <button (click)="closePrevw()">close</button>
+        </div>
+    </div>
+</section>

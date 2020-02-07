@@ -16,7 +16,7 @@
                         <div class="copy">
                             <div class="col-md-12 no-padding">
                                 <ul class="nav jd-custom-nav chkn-dash">
-                                    <li class="dropdown notifications-menu pull-right">
+                                    <li class="dropdown notifications-menu pull-right" style="display: flex;">
                                         <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                             (click)="addDisplayboardLayout()"
                                             class="dropdown-toggle navbar-item-color bold pointer-cursor">
@@ -24,6 +24,13 @@
                                                 <i class="fa fa-plus"></i> {{statusboard_cap}}
                                             </span>
                                         </a>
+                                        <!-- <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                            (click)="addGlobalSettings()"
+                                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                            <span>
+                                                <i class="fa fa-plus"></i> Global settings
+                                            </span>
+                                        </a> -->
                                     </li>
 
 

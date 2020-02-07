@@ -9,20 +9,22 @@ import { CommonModule } from '@angular/common';
 import { DisplayboardsComponent } from './displayboards.component';
 import { DisplayboardsRoutingModule } from './displayboards.routing.module';
 import { DisplayboardDetailComponent } from './detail/displayboard-details.component';
+import { GlobalSettingsComponent } from './global-settings/global-settings.component';
 import { DisplayboardQSetModule } from './q-set/displayboard-qset.module';
 import { ContainersComponent } from './containers/containers.component';
 import { ContainerDetailComponent } from './containers/detail/container-detail.component';
 import {MatSelectSearchModule} from '../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
-
-
+//import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
     declarations: [
         DisplayboardsComponent,
-        DisplayboardDetailComponent
+        DisplayboardDetailComponent,
+        GlobalSettingsComponent
     ],
     imports: [
         DisplayboardsRoutingModule,
         BreadCrumbModule,
+       // CKEditorModule,
         MaterialModule,
         FormMessageDisplayModule,
         FormsModule,
@@ -32,11 +34,9 @@ import {MatSelectSearchModule} from '../../../../shared/components/mat-select-se
         CommonModule,
         DisplayboardQSetModule,
         MatSelectSearchModule
-        
     ],
     exports: [
         DisplayboardsComponent,
-        
     ]
 })
 export class DisplayboardsModule { }
