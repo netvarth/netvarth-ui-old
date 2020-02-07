@@ -49,4 +49,4 @@ import { WaitlistQueuesModule } from './queues/waitlist-queues.module';
         ManageSettingsComponent
     ]
 })
-export class WaitlistMgrModule { }
+export class ManageSettingsModule { }

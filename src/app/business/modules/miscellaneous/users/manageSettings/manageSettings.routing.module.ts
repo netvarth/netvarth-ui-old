@@ -7,9 +7,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { ManageSettingsComponent } from './manageSettings.component';
 
 const routes: Routes = [
-     //{path: '', component: ManageSettingsComponent},
+     {path: '', component: ManageSettingsComponent},
       {path: 'services', loadChildren: './services/waitlist-services.module#WaitlistServicesModule'},
-      {path: 'queues', loadChildren: './manageSettings/queues/waitlist-queues.module#WaitlistQueuesModule'},
+      {path: 'queues', loadChildren: './queues/waitlist-queues.module#WaitlistQueuesModule'},
       // { path: '',
       // children: [
       //   {path: 'services', loadChildren: './manageSettings/services/waitlist-services.module#WaitlistServicesModule'},

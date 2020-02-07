@@ -18,7 +18,7 @@ import { ManageSettingsComponent } from './manageSettings/manageSettings.compone
         BranchUsersComponent,
         BranchUserDetailComponent,
         ManageOnlineProfileComponent,
-        ManageSettingsComponent
+       // ManageSettingsComponent
     ],
     imports: [
         UsersRoutingModule,

@@ -8,7 +8,7 @@ import { ManageSettingsComponent } from './manageSettings/manageSettings.compone
 const routes: Routes = [
     { path: '', component: BranchUsersComponent },
     { path: 'add', component: BranchUserDetailComponent },
-    { path: 'managesettings', component: ManageSettingsComponent},
+    { path: 'managesettings', loadChildren: './manageSettings/manageSettings.module#ManageSettingsModule'},
     { path: 'manageonlineprofile', component: ManageOnlineProfileComponent},
  { path: 'manageonlineprofile',
     children: [
