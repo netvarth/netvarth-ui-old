@@ -188,10 +188,12 @@ export class CheckInInnerComponent implements OnInit {
   liveTrackMessage;
   firstTimeClick = true;
   apptTime: any;
-  board_count = 0;
+  // board_count = 0;
   allSlots: any = [];
   availableSlots: any = [];
   showEditView = false;
+  disable_btn = false;
+  q_preselected = false;
   constructor(public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     public shared_services: SharedServices,
@@ -256,7 +258,12 @@ export class CheckInInnerComponent implements OnInit {
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     if (this.page_source === 'provider_checkin') {
-      this.getDisplayboardCount();
+      if (this.data.queue) {
+        // this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
+        this.sel_queue_id = this.data.queue.id;
+        this.q_preselected = true;
+      }
+      // this.getDisplayboardCount();
       if (this.fromKiosk) {
         this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.name });
       } else {
@@ -630,6 +637,7 @@ export class CheckInInnerComponent implements OnInit {
     // }
   }
   getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+    this.disable_btn = false;
     this.queueQryExecuted = false;
     if (locid && servid) {
       this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
@@ -637,43 +645,62 @@ export class CheckInInnerComponent implements OnInit {
           this.queuejson = data;
           this.queueQryExecuted = true;
           if (this.queuejson.length > 0) {
-            let selindx = 0;
-            for (let i = 0; i < this.queuejson.length; i++) {
-              if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
-                selindx = i;
+            let selindx = -1;
+            if (this.q_preselected) {
+              for (let i = 0; i < this.queuejson.length; i++) {
+                if (this.queuejson[i].id === this.sel_queue_id) {
+                  selindx = i;
+                  break;
+                }
               }
-            }
-            this.sel_queue_indx = selindx;
-            // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
-            this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
-            this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
-            this.sel_queue_name = this.queuejson[selindx].name;
-            // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
-            if (!this.data.queue) {
-              this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
-              this.sel_queue_id = this.queuejson[selindx].id;
             } else {
-              this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
-              this.sel_queue_id = this.data.queue.id;
-            }
-            this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-            this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
-            this.setTerminologyLabels();
-            if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
-              if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
-                this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
-              } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
-                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+              selindx = 0;
+              for (let i = 0; i < this.queuejson.length; i++) {
+                if (this.queuejson[i]['queueWaitingTime'] !== undefined) {
+                  selindx = i;
+                  break;
+                }
               }
+            }
+            if (selindx !== -1) {
+              this.sel_queue_indx = selindx;
+              // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
+              this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+              this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
+              this.sel_queue_name = this.queuejson[selindx].name;
+              // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
+              if (!this.data.queue) {
+                this.sel_queue_timecaption = this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'];
+                this.sel_queue_id = this.queuejson[selindx].id;
+              } else {
+                this.sel_queue_timecaption = this.data.queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.data.queue.queueSchedule.timeSlots[0]['eTime'];
+                this.sel_queue_id = this.data.queue.id;
+              }
+              this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
+              this.calc_mode = this.queuejson[this.sel_queue_indx].calculationMode;
+              this.setTerminologyLabels();
+              if (this.page_source === 'provider_checkin' && !this.data.apptTime && this.calc_mode === 'Fixed') {
+                if (this.data.queue && this.data.queue.timeInterval && this.data.queue.timeInterval !== 0) {
+                  this.getAvailableTimeSlots(this.data.queue.queueSchedule.timeSlots[0]['sTime'], this.data.queue.queueSchedule.timeSlots[0]['eTime'], this.data.queue.timeInterval);
+                } else if (this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
+                  this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
+                }
+              }
+            } else {
+              this.api_error = ' The business hours for the day have ended.Please try again during working hours.';
+              this.disable_btn = true;
             }
           } else {
-            this.sel_queue_indx = -1;
-            this.sel_queue_id = 0;
-            this.sel_queue_waitingmins = 0;
-            this.sel_queue_servicetime = '';
-            this.sel_queue_name = '';
-            this.sel_queue_timecaption = '';
-            this.sel_queue_personaahead = 0;
+            if (this.q_preselected) {
+            } else {
+              this.sel_queue_indx = -1;
+              this.sel_queue_id = 0;
+              this.sel_queue_timecaption = '';
+              this.sel_queue_name = '';
+              this.sel_queue_waitingmins = 0;
+              this.sel_queue_servicetime = '';
+              this.sel_queue_personaahead = 0;
+            }
           }
         });
     }
@@ -725,6 +752,9 @@ export class CheckInInnerComponent implements OnInit {
   // }
   handleQueueSel(mod) {
     this.resetApi();
+    if (this.q_preselected) {
+      return false;
+    }
     if (mod === 'next') {
       if ((this.queuejson.length - 1) > this.sel_queue_indx) {
         this.sel_queue_indx = this.sel_queue_indx + 1;
@@ -1663,15 +1693,15 @@ export class CheckInInnerComponent implements OnInit {
         );
     });
   }
-  getDisplayboardCount() {
-    let layout_list: any = [];
-    this.provider_services.getDisplayboards()
-      .subscribe(
-        data => {
-          layout_list = data;
-          this.board_count = layout_list.length;
-        });
-  }
+  // getDisplayboardCount() {
+  //   let layout_list: any = [];
+  //   this.provider_services.getDisplayboards()
+  //     .subscribe(
+  //       data => {
+  //         layout_list = data;
+  //         this.board_count = layout_list.length;
+  //       });
+  // }
   getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
     const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
     const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);

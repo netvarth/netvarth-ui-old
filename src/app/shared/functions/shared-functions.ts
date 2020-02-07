@@ -914,20 +914,24 @@ export class SharedFunctions {
 
   getTimeSlotsFromQTimings(interval, startTime, endTime) {
     const slotList = [];
-    slotList.push(startTime);
-    const endDTime = this.getDateFromTimeString(endTime);
+    // slotList.push(startTime);
+    const startTimeStr = moment(startTime, ['HH:mm A']).format('HH:mm A').toString();
+    let startingDTime = this.getDateFromTimeString(startTimeStr);
+    slotList.push( moment(startTime, ['HH:mm A']).format('hh:mm A').toString());
+    const endTimeStr = moment(endTime, ['HH:mm A']).format('HH:mm A').toString();
+    const endDTime = this.getDateFromTimeString(endTimeStr);
     // tslint:disable-next-line:radix
     const endDate = parseInt(moment(endDTime, ['DD']).format('DD').toString());
-    let startingDTime = this.getDateFromTimeString(startTime);
+    // let startingDTime = this.getDateFromTimeString(startTime);
     let exitLoop = false;
     while (!exitLoop) {
       const nextTime = moment(startingDTime).add(interval, 'm');
       // tslint:disable-next-line:radix
       const nextDate = parseInt(nextTime.format('DD'));
-      const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+      const nextTimeDt = this.getDateFromTimeString(moment(nextTime, ['HH:mm A']).format('HH:mm A').toString());
       if (nextDate === endDate) {
         if (nextTimeDt.getTime() <= endDTime.getTime()) {
-          slotList.push(moment(nextTime, ['hh:mm A']).format('hh:mm A').toString());
+          slotList.push(moment(nextTime, ['HH:mm A']).format('hh:mm A').toString());
         } else {
           exitLoop = true;
         }
