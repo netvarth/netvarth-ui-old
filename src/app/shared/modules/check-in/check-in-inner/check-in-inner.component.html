@@ -395,7 +395,7 @@
 <div [class.mat-dialog-actions]="!fromKiosk" [class.kioskactions]="fromKiosk"
     *ngIf="queuejson.length > 0 && servicesjson.length > 0 && !liveTrack">
 
-    <div class="waitlist-button-outer" *ngIf="!apptTime">
+    <div class="waitlist-button-outer" *ngIf="!apptTime && !disable_btn">
         <div class="showDetOuter" *ngIf="queuejson.length > 0 && step==1">
             <div class="showDetService" *ngIf="sel_ser_det.name">
                 <strong><span
@@ -436,7 +436,7 @@
     <ng-container *ngIf="step==1 && this.checkinLabel">
         <div class="waitlist-action"> <button mat-button class="cs-btn bt1" [class.confirmbtn]="step == 1"
                 (click)="handleCheckinClicked()"
-                [disabled]="api_loading ||(sel_ser_det.isPrePayment && page_source != 'provider_checkin'&& !emailExist)">{{showCheckinButtonCaption()}}</button>
+                [disabled]="api_loading ||(sel_ser_det.isPrePayment && page_source != 'provider_checkin'&& !emailExist) || disable_btn">{{showCheckinButtonCaption()}}</button>
             <div class="disable-msg">{{checkindisablemsg}}</div>
         </div>
     </ng-container>

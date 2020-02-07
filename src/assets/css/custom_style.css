@@ -6788,3 +6788,8 @@ label.notifi-togl {
   padding: 0;
   display: block;
 } */
+.chkin .ft-dt {
+  max-width: 100px !important;
+  background-color: transparent;
+  border: none;
+}
