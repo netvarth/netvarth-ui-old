@@ -20,6 +20,7 @@ import { ProviderLicenceInvoiceDetailComponent } from '../../../ynw_provider/com
 import { statementcomponent } from './Statements/Statements.component';
 import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { licenseusageComponent } from './licenseusage/licenseusage.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         ProviderAddonAuditlogsComponent,
         KeywordsComponent,
         invoicestatuscomponent,
+        licenseusageComponent,
         UpgradeLicenseComponent,
         ProviderLicenseUsageComponent,
         ProviderAuditLogComponent,

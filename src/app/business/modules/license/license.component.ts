@@ -263,16 +263,17 @@ export class LicenseComponent implements OnInit, OnDestroy {
             );
     }
     showLicenseUsage() {
-        this.licenseusedialogRef = this.dialog.open(ProviderLicenseUsageComponent, {
-            width: '50%',
-            data: {
-                metrics: this.metrics
-            },
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true
-        });
-        this.licenseusedialogRef.afterClosed().subscribe(() => {
-        });
+        // this.licenseusedialogRef = this.dialog.open(ProviderLicenseUsageComponent, {
+        //     width: '50%',
+        //     data: {
+        //         metrics: this.metrics
+        //     },
+        //     panelClass: ['popup-class', 'commonpopupmainclass'],
+        //     disableClose: true
+        // });
+        // this.licenseusedialogRef.afterClosed().subscribe(() => {
+        // });
+        this.router.navigate(['provider', 'license', 'licenseusage']);
     }
     getInvoiceList() {
         this.provider_servicesobj.getInvoicesWithStatus()
@@ -389,6 +390,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             
         }
     }
+    
     getInvoicePay(invoice, payMentShow) {
         const invoiceJson = JSON.stringify(invoice);
         if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {

@@ -6,6 +6,7 @@ import { AddonsComponent } from './addons/addons.component';
 import { KeywordsComponent } from './keywords/keywords.component';
 import { statementcomponent } from './Statements/Statements.component';
 import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
+import { licenseusageComponent } from './licenseusage/licenseusage.component';
 
 const routes: Routes = [
   { path: '', component: LicenseComponent },
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'invoicestatus', 
         component: invoicestatuscomponent
+      },
+      {
+        path: 'licenseusage', 
+        component: licenseusageComponent
       }
     ]
   },

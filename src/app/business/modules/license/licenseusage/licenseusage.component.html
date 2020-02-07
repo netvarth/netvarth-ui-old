@@ -1,0 +1,65 @@
+<section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions" (performAction)="performActions($event)"></app-breadcrumb>
+</section>
+
+               
+<section>
+    <div class="copy one col-xs-12 col-sm-12 no-padding">
+       <div class="col-md-6 col-sm-6 col-xs-12">
+            <table id="tblOne" style="width:100%; float:left" >
+                <div class="pay-section card ng-star-inserted">
+                    <div class="row">
+                        <table class="table" >
+                                <thead>
+                                    <tr class="tble-filtr-tr">
+                                       <th>License</th>
+                                       <th >Total</th >
+                                       <th>Used</th>
+                                       <th>Compliance Info </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of metrics">
+                                       <td>{{data.metricName}}</td>
+                                       <td>{{data.total }} {{data.unitValue}}</td>
+                                       <td>{{data.used }}  {{metric.unitValue}}</td>
+                                       <td>{{data.ComplainceInfo}}</td>
+                                    </tr>
+                                </tbody>
+                        </table> 
+                     </div>
+                </div>
+            </table>
+       
+        </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <table id="tblTwo" style="width:100%; float:left">
+            <div class="pay-section card ng-star-inserted">
+                <div class="row">
+                    <table class="table">
+                       <thead>
+                            <tr class="tble-filtr-tr">
+                                <th>License</th>
+                                <th>Allowed</th>
+                                <th>Used</th>
+                                 <th>Compliance Info </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of metrices">
+                                 <td>{{data.metricName}}</td>
+                                 <td>{{data.isAllowed }} </td>
+                                <td>{{data.isUsed }} </td>
+                            <td>{{data.ComplainceInfo}}</td>
+                         </tr>
+                        </tbody>
+                    </table>
+            </div>  
+            </div>
+        </table> 
+    </div>
+    
+</div>
+</section>
+
+
