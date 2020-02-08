@@ -29,8 +29,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     departments: any = [];
     departmentList: any = [];
     services_list: any = [];
+    servicesList: any = [];
     actionparam;
     display_schedule: any = [];
+    display_scheduleList: any = [];
     defaultLables: any = [];
     showLabelEdit: any = [];
     selectedCategory = '';
@@ -46,6 +48,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     boardName;
     boardDisplayname;
     providerLabels: any = [];
+    providerLabelsList: any = [];
     labelfromConstants = projectConstants.STATUS_BOARD;
     submit_btn;
     id;
@@ -60,6 +63,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     servMultiCtrl: any = [];
     qMultiCtrl: any = [];
     public deptMultiFilterCtrl: FormControl = new FormControl();
+    public serviceMultiFilterCtrl: FormControl = new FormControl();
+    public qMultiFilterCtrl: FormControl = new FormControl();
     public labelMultiFilterCtrl: FormControl = new FormControl();
     private _onDestroy = new Subject<void>();
 
@@ -76,7 +81,26 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.deptMultiFilterCtrl.valueChanges
         .pipe(takeUntil(this._onDestroy))
         .subscribe(() => {
-          this.filterBanksMulti();
+            console.log('dept');
+          this.filterDeptbySearch();
+        });
+        this.serviceMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+            console.log('service');
+          this.filterServicebySearch();
+        });
+        this.qMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+            console.log('q');
+          this.filterQbySearch();
+        });
+        this.labelMultiFilterCtrl.valueChanges
+        .pipe(takeUntil(this._onDestroy))
+        .subscribe(() => {
+            console.log('label');
+          this.filterLabelbySearch();
         });
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
@@ -90,7 +114,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
 
 
-    filterBanksMulti() {
+    filterDeptbySearch() {
         if (!this.departments) {
           return;
         }
@@ -101,11 +125,54 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         } else {
           search = search.toLowerCase();
         }
-        console.log(this.departments);
         console.log(search);
-        this.departmentList = this.departments.filter(dept => console.log(dept.departmentName.toLowerCase().indexOf(search)));
-        console.log(this.departmentList);
+        this.departmentList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
       }
+
+      filterServicebySearch() {
+          console.log('hgh');
+        if (!this.services_list) {
+          return;
+        }
+        let search = this.deptMultiFilterCtrl.value;
+        if (!search) {
+            this.servicesList = this.services_list.slice();
+          return;
+        } else {
+          search = search.toLowerCase();
+        }
+        console.log(search);
+        this.servicesList = this.services_list.filter(service => service.name.toLowerCase().indexOf(search) > -1);
+      }
+
+      filterQbySearch() {
+        if (!this.display_schedule) {
+          return;
+        }
+        let search = this.deptMultiFilterCtrl.value;
+        if (!search) {
+            this.display_scheduleList = this.display_schedule.slice();
+          return;
+        } else {
+          search = search.toLowerCase();
+        }
+        console.log(search);
+        this.display_scheduleList = this.display_schedule.filter(queue => queue.name.toLowerCase().indexOf(search) > -1);
+      }
+      filterLabelbySearch() {
+        if (!this.providerLabels) {
+            return;
+          }
+          let search = this.deptMultiFilterCtrl.value;
+          if (!search) {
+              this.providerLabelsList = this.providerLabels.slice();
+            return;
+          } else {
+            search = search.toLowerCase();
+          }
+          console.log(search);
+          this.providerLabelsList = this.providerLabels.filter(label => label.displayName.toLowerCase().indexOf(search) > -1);
+        }
 
     resetFields() {
         this.boardDisplayname = '';
@@ -294,6 +361,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
                     this.services_list = data;
+                    this.servicesList = this.services_list;
                     if (this.actionparam === 'add' && this.selectedCategory === '' && this.services_list.length > 0) {
                         this.selectedCategory = 'SERVICE';
                     }
@@ -334,6 +402,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.provider_services.getProviderQueues()
                 .subscribe(data => {
                     this.display_schedule = data;
+                    this.display_scheduleList = this.display_schedule;
                     if (this.actionparam === 'add' && this.selectedCategory === '' && this.display_schedule.length > 0) {
                         this.selectedCategory = 'QUEUE';
                     }
@@ -360,6 +429,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.providerLabelsList = this.providerLabels;
             for (let i = 0; i < this.providerLabels.length; i++) {
                 this.defaultLables.push({
                     'name': this.providerLabels[i].label,

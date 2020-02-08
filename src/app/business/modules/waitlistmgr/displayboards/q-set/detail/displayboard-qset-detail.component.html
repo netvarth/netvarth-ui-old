@@ -165,8 +165,8 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
-                            <mat-select-search [formControl]="deptMultiFilterCtrl"></mat-select-search>
-                            <mat-option *ngFor="let service of services_list" [value]="service"
+                            <mat-select-search [formControl]="serviceMultiFilterCtrl"></mat-select-search>
+                            <mat-option *ngFor="let service of servicesList" [value]="service"
                                 (click)="serviceSelection(service.id, $event)">
                                 {{service.name | capitalizeFirst}}
                             </mat-option>
@@ -189,8 +189,8 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                            <mat-select-search [formControl]="deptMultiFilterCtrl"></mat-select-search>
-                            <mat-option *ngFor="let schedule of display_schedule" [value]="schedule"
+                            <mat-select-search [formControl]="qMultiFilterCtrl"></mat-select-search>
+                            <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, $event)">
                                 {{schedule.displayQ.dstr | capitalizeFirst}}
                                 {{schedule.displayQ.time}}
@@ -230,7 +230,7 @@
                     <mat-form-field>
                         <mat-select [formControl]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                             <mat-select-search [formControl]="labelMultiFilterCtrl"></mat-select-search>
-                            <mat-option *ngFor="let label of providerLabels" [value]="schedule">
+                            <mat-option *ngFor="let label of providerLabelsList" [value]="schedule">
                                 {{label.displayName}}
 
                                 <!-- <mat-select [formControl]="qMultiCtrl" placeholder="Queues" [multiple]="true">
