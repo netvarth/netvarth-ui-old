@@ -58,10 +58,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     categoryIds: any = [];
     api_loading = false;
     step = 1;
+    selectedWtlstList: any = [];
     waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
-    deptMultiCtrl: any = [];
-    servMultiCtrl: any = [];
-    qMultiCtrl: any = [];
+    qMultiCtrl: FormControl = new FormControl();
+    deptMultiCtrl: FormControl = new FormControl();
+    servMultiCtrl: FormControl = new FormControl();
+    labelMultiCtrl: FormControl = new FormControl();
     public deptMultiFilterCtrl: FormControl = new FormControl();
     public serviceMultiFilterCtrl: FormControl = new FormControl();
     public qMultiFilterCtrl: FormControl = new FormControl();
@@ -79,29 +81,25 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     ngOnInit() {
         this.deptMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-            console.log('dept');
-          this.filterDeptbySearch();
-        });
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterDeptbySearch();
+            });
         this.serviceMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-            console.log('service');
-          this.filterServicebySearch();
-        });
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterServicebySearch();
+            });
         this.qMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-            console.log('q');
-          this.filterQbySearch();
-        });
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterQbySearch();
+            });
         this.labelMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-            console.log('label');
-          this.filterLabelbySearch();
-        });
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterLabelbySearch();
+            });
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         if (loc_details) {
@@ -116,63 +114,58 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
 
     filterDeptbySearch() {
         if (!this.departments) {
-          return;
+            return;
         }
         let search = this.deptMultiFilterCtrl.value;
         if (!search) {
             this.departmentList = this.departments.slice();
-          return;
+            return;
         } else {
-          search = search.toLowerCase();
+            search = search.toLowerCase();
         }
-        console.log(search);
         this.departmentList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
-      }
+    }
 
-      filterServicebySearch() {
-          console.log('hgh');
+    filterServicebySearch() {
         if (!this.services_list) {
-          return;
+            return;
         }
-        let search = this.deptMultiFilterCtrl.value;
+        let search = this.serviceMultiFilterCtrl.value;
         if (!search) {
             this.servicesList = this.services_list.slice();
-          return;
+            return;
         } else {
-          search = search.toLowerCase();
+            search = search.toLowerCase();
         }
-        console.log(search);
         this.servicesList = this.services_list.filter(service => service.name.toLowerCase().indexOf(search) > -1);
-      }
+    }
 
-      filterQbySearch() {
+    filterQbySearch() {
         if (!this.display_schedule) {
-          return;
+            return;
         }
-        let search = this.deptMultiFilterCtrl.value;
+        let search = this.qMultiFilterCtrl.value;
         if (!search) {
             this.display_scheduleList = this.display_schedule.slice();
-          return;
+            return;
         } else {
-          search = search.toLowerCase();
+            search = search.toLowerCase();
         }
-        console.log(search);
         this.display_scheduleList = this.display_schedule.filter(queue => queue.name.toLowerCase().indexOf(search) > -1);
-      }
-      filterLabelbySearch() {
+    }
+    filterLabelbySearch() {
         if (!this.providerLabels) {
             return;
-          }
-          let search = this.deptMultiFilterCtrl.value;
-          if (!search) {
-              this.providerLabelsList = this.providerLabels.slice();
-            return;
-          } else {
-            search = search.toLowerCase();
-          }
-          console.log(search);
-          this.providerLabelsList = this.providerLabels.filter(label => label.displayName.toLowerCase().indexOf(search) > -1);
         }
+        let search = this.labelMultiFilterCtrl.value;
+        if (!search) {
+            this.providerLabelsList = this.providerLabels.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.providerLabelsList = this.providerLabels.filter(label => label.displayName.toLowerCase().indexOf(search) > -1);
+    }
 
     resetFields() {
         this.boardDisplayname = '';
@@ -501,7 +494,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
     serviceSelection(service, ev) {
-         const index = this.categoryIds.indexOf(service);
+        const index = this.categoryIds.indexOf(service);
         if (ev === 'edit') {
             if (index === -1) {
                 this.categoryIds.push(service);
@@ -538,7 +531,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }];
     }
     queueSelection(queue, ev) {
-       const index = this.categoryIds.indexOf(queue);
+        const index = this.categoryIds.indexOf(queue);
         if (ev === 'edit') {
             if (index === -1) {
                 this.categoryIds.push(queue);
@@ -592,6 +585,13 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 });
     }
     showStep(step) {
-this.step = step;
+        this.step = step;
+    }
+    waitlistSelection(status) {
+        if (this.selectedWtlstList.indexOf(status) === -1) {
+        this.selectedWtlstList.push(status);
+        }
+        console.log(this.selectedWtlstList);
+
     }
 }

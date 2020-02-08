@@ -118,13 +118,13 @@
                         <mat-radio-button class="mgright50" [value]="'DEPARTMENT'"
                             *ngIf="departments.length > 0 && filterByDept" (change)="categorySelection('DEPARTMENT')">
                             {{department_cap}}s</mat-radio-button>
-                        <mat-radio-button class="mgright50" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
-                            (change)="categorySelection('QUEUE')">
-                            {{queue_cap}}
-                        </mat-radio-button>
                         <mat-radio-button class="mgright50" [value]="'SERVICE'" *ngIf="services_list.length > 0"
                             (change)="categorySelection('SERVICE')">
                             {{service_caption}}
+                        </mat-radio-button>
+                        <mat-radio-button class="mgright50" [value]="'QUEUE'" *ngIf="display_schedule.length > 0"
+                            (change)="categorySelection('QUEUE')">
+                            {{queue_cap}}
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
@@ -149,7 +149,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="deptMultiCtrl">
                     <p>
                         Selected Departments:
                     </p>
@@ -173,7 +173,7 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="servMultiCtrl">
                     <p>
                         Selected Services:
                     </p>
@@ -192,24 +192,25 @@
                             <mat-select-search [formControl]="qMultiFilterCtrl"></mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, $event)">
+                                {{schedule.name}}
                                 {{schedule.displayQ.dstr | capitalizeFirst}}
                                 {{schedule.displayQ.time}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                    <p>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="qMultiCtrl">
+                    <label class="col-form-label mgn-bt-10">
                         Selected Queues:
-                    </p>
+                    </label>
                     <ul *ngFor="let schedule of qMultiCtrl?.value">
                         <li>
-                            <!-- {{schedule.displayQ.dstr | capitalizeFirst}}{{schedule.displayQ.time}} -->
                             {{schedule.name}}
                         </li>
                     </ul>
                 </div>
             </div>
+
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button type="button" (click)="showStep(1)" class="cs-btn bt1">Back</button>&nbsp;
                 <button type="button" (click)="showStep(3)" class="cs-btn bt1">Next</button>
@@ -217,36 +218,45 @@
         </div>
 
         <div class="step3 mgn-up-20 col-md-12" *ngIf="step === 3">
-            Select waitlist status
-            <div style="display: flex;">
-                <mat-checkbox class="example-margin" *ngFor="let status of waitlistStatuses" style="margin-left: 30px"
-                    [value]="status.value">
-                    {{status.displayName}}
-                </mat-checkbox>
+            <div class="col-md-12 mgn-bt-20">
+                <label class="col-form-label mgn-bt-10">
+                    Select waitlist status
+                </label>
+                <div class="mgn-up-10">
+                    <mat-checkbox class="example-margin" *ngFor="let status of waitlistStatuses"
+                        style="margin-left: 30px" [value]="status.value" (change)="waitlistSelection(status.value)">
+                        {{status.displayName}}
+                    </mat-checkbox>
+                </div>
             </div>
-            <div>
-                Select label
-                <div class="">
+
+            <div class="col-md-12 mgn-bt-20">
+                <label class="col-form-label">
+                    Select Labels
+                </label>
+                <div class="col-md-6">
                     <mat-form-field>
                         <mat-select [formControl]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                             <mat-select-search [formControl]="labelMultiFilterCtrl"></mat-select-search>
-                            <mat-option *ngFor="let label of providerLabelsList" [value]="schedule">
+                            <mat-option *ngFor="let label of providerLabelsList" [value]="label">
                                 {{label.displayName}}
-
-                                <!-- <mat-select [formControl]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                                    <mat-select-search [formControl]="labelMultiFilterCtrl"></mat-select-search>
-                                    <mat-option *ngFor="let label of defaultLables" [value]="schedule">
-                                        {{label.displayname}}
-                                    </mat-option>
-                                </mat-select> -->
-
-
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div class="form-group" *ngIf="labelMultiCtrl">
+                    <span class="mgn-up-20 mgn-bt-10">
+                        Selected Labels:
+                    </span>
+                    <ul *ngFor="let label of labelMultiCtrl?.value">
+                        <li>
+                            {{label.displayName}}
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div>
+
+            <div class="sort-label col-md-12">
                 <label class="col-form-label mgn-bt-10">
                     Sort by
                 </label>
@@ -260,6 +270,7 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
+
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button type="button" (click)="showStep(2)" class="cs-btn bt1">Back</button>&nbsp;
                 <button type="button" (click)="showStep(4)" class="cs-btn bt1">Next</button>
@@ -297,8 +308,12 @@
             </div>
         </div>
 
-        <div class="step5 mgn-up-20" *ngIf="step === 5">
-            Select order of QBoard fields
+        <div class="step5 mgn-up-20 col-md-12" *ngIf="step === 5">
+            <label class="col-form-label mgn-bt-10">
+                Select order of QBoard fields</label>
+            <div *ngFor="let field of labelsList" class="field-box">
+                {{field.displayName}}
+            </div>
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button type="button" (click)="showStep(4)" class="cs-btn bt1">Back</button>&nbsp;
                 <button type="button" (click)="onSubmit()" class="cs-btn bt1">Create</button>
