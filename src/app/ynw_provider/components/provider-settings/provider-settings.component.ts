@@ -248,6 +248,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy {
   }
   getDomainSubdomainSettings() {
     const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    console.log(user_data);
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {

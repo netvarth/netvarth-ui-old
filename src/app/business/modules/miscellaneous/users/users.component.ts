@@ -40,44 +40,45 @@ export class BranchUsersComponent implements OnInit {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     addBranchSP() {
-       
+
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'Add'}
+            queryParams: { type: 'Add' }
         };
-        
+
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add'], navigationExtras);
     }
     personalProfile(user) {
         console.log(user);
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'edit',
-                            val: user
-                        }
+            queryParams: {
+                type: 'edit',
+                val: user
+            }
         };
         console.log(navigationExtras);
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'add'], navigationExtras);
-        //this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'additionalinfo']);
     }
-    manageOnlineProfile(name,userId) {
+    manageOnlineProfile(name, userId) {
         console.log(userId);
         const navigationExtras: NavigationExtras = {
-            queryParams: { type: name,
-                id:userId
-                            }
+            queryParams: {
+                type: name,
+                id: userId
+            }
         };
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'manageonlineprofile'], navigationExtras);
     }
-    manageSettings(){
+    manageSettings() {
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', 'managesettings']);
     }
-    changeUserStatus(user) { 
+    changeUserStatus(user) {
         let passingStatus;
         if (user.status === 'ACTIVE') {
             passingStatus = 'Disable';
         } else {
-            passingStatus = 'Enable'; 
+            passingStatus = 'Enable';
         }
-        this.shared_services.disableEnableuser(user.id,passingStatus)
+        this.shared_services.disableEnableuser(user.id, passingStatus)
             .subscribe(
                 () => {
                     this.getUsers();
@@ -88,32 +89,21 @@ export class BranchUsersComponent implements OnInit {
                 });
     }
     getUsers() {
-       // const accountId = this.shared_functions.getitemFromGroupStorage('accountId');
         const users = [];
         this.shared_services.getUsers().subscribe(
             (data: any) => {
                 this.users_list = data;
-                // for (let i = 0; i < this.users_list.length; i++) {
-                //     if (this.users_list[i]['accountType'] === 'BRANCH') {
-                //     } else {
-                //         users.push(this.users_list[i]);
-                //     }
-                // }
-                // this.users_list = users;
                 this.api_loading = false;
                 console.log(this.users_list);
             }
         );
     }
-    // gotoBranchspDetails(user) {
-    //      console.log(user);
-    // }
     manageProvider(accountId) {
         window.open('#/manage/' + accountId, '_blank');
     }
     performActions(action) {
         if (action === 'learnmore') {
-          this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
+            this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->branchsps']);
         }
-      }
+    }
 }
