@@ -1703,8 +1703,9 @@ export class CheckInInnerComponent implements OnInit {
   //       });
   // }
   getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
-    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+    // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
+    // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+    const nextTimeDt = this.sharedFunctionobj.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const _this = this;
     const filter = {};
     this.availableSlots = [];
@@ -1733,9 +1734,16 @@ export class CheckInInnerComponent implements OnInit {
             }
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
+          // for (let i = 0; i < slots.length; i++) {
+          //   const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+          //   if (curTimeSubDt <= slotTime) {
+          //     this.availableSlots.push(slots[i]);
+          //   }
+          // }
           for (let i = 0; i < slots.length; i++) {
-            const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
-            if (curTimeSubDt <= slotTime) {
+            const endTimeStr = moment(slots[i], ['HH:mm A']).format('HH:mm A').toString();
+            const endDTime = this.sharedFunctionobj.getDateFromTimeString(endTimeStr);
+            if (nextTimeDt <= endDTime) {
               this.availableSlots.push(slots[i]);
             }
           }
