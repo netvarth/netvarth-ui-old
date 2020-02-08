@@ -280,8 +280,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.availableSlots = [];
     const _this = this;
     const locId = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
-    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+    // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
+    // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+    const nextTimeDt = this.shared_Functionsobj.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const filter = {};
     this.availableSlots = [];
     filter['queue-eq'] = _this.shared_Functionsobj.getitemFromGroupStorage('pdq');
@@ -300,8 +301,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           activeSlots.splice(activeSlots.indexOf(this.waitlist_data.appointmentTime), 1);
           const slots = allSlots.filter(x => !activeSlots.includes(x));
           for (let i = 0; i < slots.length; i++) {
-            const slotTime = moment(this.shared_Functionsobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
-            if (curTimeSubDt <= slotTime) {
+            const endTimeStr = moment(slots[i], ['HH:mm A']).format('HH:mm A').toString();
+            const endDTime = this.shared_Functionsobj.getDateFromTimeString(endTimeStr);
+            if (nextTimeDt <= endDTime) {
               this.availableSlots.push(slots[i]);
             }
           }
