@@ -6752,4 +6752,10 @@ label.notifi-togl {
   max-width: 100px !important;
   background-color: transparent;
   border: none;
+  margin-bottom: 15px;
+}
+@media only screen and (max-width: 380px) {
+  .chkin .ft-dt {
+    max-width: 80px !important;
+  }
 }
