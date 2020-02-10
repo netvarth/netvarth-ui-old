@@ -39,7 +39,7 @@ export class ManageSettingsComponent implements OnInit {
     provider_domain_name = '';
     customer_label = '';
     provider_label = '';
-    userName;
+    user;
 
     you_have_cap = Messages.YOU_HAVE_CAP;
     more_cap = Messages.MORE_CAP;
@@ -172,8 +172,8 @@ export class ManageSettingsComponent implements OnInit {
         this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
         this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
         this.activatedRoot.queryParams.subscribe(data => {
-            this.userName = data;
-            console.log( this.userName);
+            this.user = data;
+            console.log( this.user);
 
         });
     }
@@ -183,7 +183,7 @@ export class ManageSettingsComponent implements OnInit {
         //     breadcrumbs.push(e);
         // });
         // breadcrumbs.push({
-        //     title: this.userName.type.charAt(0).toUpperCase() + this.userName.type.slice(1)
+        //     title: this.user.type.charAt(0).toUpperCase() + this.user.type.slice(1)
             
         // });
         // breadcrumbs.push({
@@ -436,20 +436,20 @@ export class ManageSettingsComponent implements OnInit {
 
 
     services() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', 'managesettings', 'services']);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings', 'services']);
     }
     Queues() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','managesettings', 'queues']);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings', 'queues']);
     }
-    additionalInfo() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','additionalinfo']);
-    }
-    languagesKnown() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','languages']);
-    }
-    galerySocialmedia() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','media']);
-    }
+    // additionalInfo() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','additionalinfo']);
+    // }
+    // languagesKnown() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','languages']);
+    // }
+    // galerySocialmedia() {
+    //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','media']);
+    // }
     
     learnmore_clicked(mod, e) {
         e.stopPropagation();

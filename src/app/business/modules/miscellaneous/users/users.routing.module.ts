@@ -9,7 +9,7 @@ const routes: Routes = [
     { path: ':id', component: BranchUserDetailComponent },
     { path: ':id/bprofile', loadChildren: './bprofile/bprofile.module#BProfileModule'},
     { path: ':id/settings', loadChildren: './manageSettings/manageSettings.module#ManageSettingsModule'},
-    // { path: 'manageonlineprofile', component: ManageOnlineProfileComponent}
+    //{ path: 'manageonlineprofile', component: ManageOnlineProfileComponent}
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
