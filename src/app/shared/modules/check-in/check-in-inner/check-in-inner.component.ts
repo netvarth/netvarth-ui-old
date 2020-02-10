@@ -715,6 +715,7 @@ export class CheckInInnerComponent implements OnInit {
     this.sel_queue_servicetime = '';
     this.sel_queue_personaahead = 0;
     this.sel_queue_name = '';
+    this.q_preselected = false;
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
