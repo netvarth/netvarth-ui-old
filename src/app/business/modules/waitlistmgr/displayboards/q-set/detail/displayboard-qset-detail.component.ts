@@ -60,15 +60,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     step = 1;
     selectedWtlstList: any = [];
     waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
-    qMultiCtrl: FormControl = new FormControl();
-    deptMultiCtrl: FormControl = new FormControl();
-    servMultiCtrl: FormControl = new FormControl();
+    qMultiCtrl: any = [];
+    deptMultiCtrl: any = [];
+    servMultiCtrl: any = [];
     labelMultiCtrl: FormControl = new FormControl();
-    public deptMultiFilterCtrl: FormControl = new FormControl();
-    public serviceMultiFilterCtrl: FormControl = new FormControl();
-    public qMultiFilterCtrl: FormControl = new FormControl();
-    public labelMultiFilterCtrl: FormControl = new FormControl();
-    private _onDestroy = new Subject<void>();
+    deptMultiFilterCtrl: FormControl = new FormControl();
+    serviceMultiFilterCtrl: FormControl = new FormControl();
+    qMultiFilterCtrl: FormControl = new FormControl();
+    labelMultiFilterCtrl: FormControl = new FormControl();
+    onDestroy = new Subject<void>();
 
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -81,22 +81,22 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     ngOnInit() {
         this.deptMultiFilterCtrl.valueChanges
-            .pipe(takeUntil(this._onDestroy))
+            .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterDeptbySearch();
             });
         this.serviceMultiFilterCtrl.valueChanges
-            .pipe(takeUntil(this._onDestroy))
+            .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterServicebySearch();
             });
         this.qMultiFilterCtrl.valueChanges
-            .pipe(takeUntil(this._onDestroy))
+            .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterQbySearch();
             });
         this.labelMultiFilterCtrl.valueChanges
-            .pipe(takeUntil(this._onDestroy))
+            .pipe(takeUntil(this.onDestroy))
             .subscribe(() => {
                 this.filterLabelbySearch();
             });
@@ -233,7 +233,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     selectedService(ids) {
         for (let i = 0; i < this.services_list.length; i++) {
             for (let j = 0; j < ids.length; j++) {
-                this.serviceSelection(ids[j], 'edit');
+                // this.serviceSelection(ids[j], 'edit');
                 if (this.services_list[i].id === ids[j]) {
                     this.services_list[i].checked = true;
                 }
@@ -243,7 +243,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     selectedDept(ids) {
         for (let i = 0; i < this.departments.length; i++) {
             for (let j = 0; j < ids.length; j++) {
-                this.departmentSelection(ids[j], 'edit');
+                // this.departmentSelection(ids[j], 'edit');
                 if (this.departments[i].departmentId === ids[j]) {
                     this.departments[i].checked = true;
                 }
@@ -253,7 +253,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     selectedQueues(ids) {
         for (let i = 0; i < this.display_schedule.length; i++) {
             for (let j = 0; j < ids.length; j++) {
-                this.queueSelection(ids[j], 'edit');
+                // this.queueSelection(ids[j], 'edit');
                 if (this.display_schedule[i].id === ids[j]) {
                     this.display_schedule[i].checked = true;
                 }
@@ -493,61 +493,86 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
-    serviceSelection(service, ev) {
-        const index = this.categoryIds.indexOf(service);
-        if (ev === 'edit') {
+    // serviceSelection(service, ev) {
+    //     const index = this.categoryIds.indexOf(service);
+    //     if (ev === 'edit') {
+    //         if (index === -1) {
+    //             this.categoryIds.push(service);
+    //         }
+    //     } else {
+    //         if (ev.checked && index === -1) {
+    //             this.categoryIds.push(service);
+    //         } else {
+    //             this.categoryIds.splice(index, 1);
+    //         }
+    //     }
+    //     this.statusBoardfor = [{
+    //         'type': 'SERVICE',
+    //         'id': this.categoryIds
+    //     }];
+    // }
+    // departmentSelection(dept, ev) {
+    //     const index = this.categoryIds.indexOf(dept);
+    //     if (ev === 'edit') {
+    //         if (index === -1) {
+    //             this.categoryIds.push(dept);
+    //         }
+    //     } else {
+    //         const index = this.categoryIds.indexOf(dept);
+    //         if (ev.checked && index === -1) {
+    //             this.categoryIds.push(dept);
+    //         } else {
+    //             this.categoryIds.splice(index, 1);
+    //         }
+    //     }
+    //     this.statusBoardfor = [{
+    //         'type': 'DEPARTMENT',
+    //         'id': this.categoryIds
+    //     }];
+    // }
+    // queueSelection(queue, ev) {
+    //     const index = this.categoryIds.indexOf(queue);
+    //     if (ev === 'edit') {
+    //         if (index === -1) {
+    //             this.categoryIds.push(queue);
+    //         }
+    //     } else {
+    //         if (ev.checked && index === -1) {
+    //             this.categoryIds.push(queue);
+    //         } else {
+    //             this.categoryIds.splice(index, 1);
+    //         }
+    //     }
+    //     this.statusBoardfor = [{
+    //         'type': 'QUEUE',
+    //         'id': this.categoryIds
+    //     }];
+    // }
+
+
+    qsetForSelection(field, type) {
+        console.log(field);
+        console.log(this.categoryIds);
+        console.log(this.qMultiCtrl);
+        const index = this.categoryIds.indexOf(field);
+        if (type === 'edit') {
             if (index === -1) {
-                this.categoryIds.push(service);
+                this.categoryIds.push(field);
             }
         } else {
-            if (ev.checked && index === -1) {
-                this.categoryIds.push(service);
+            if (index === -1) {
+                this.categoryIds.push(field);
             } else {
                 this.categoryIds.splice(index, 1);
             }
         }
-        this.statusBoardfor = [{
-            'type': 'SERVICE',
-            'id': this.categoryIds
-        }];
+        this.statusBoardfor.push({
+            'type': type,
+            'id': this.categoryIds});
+            console.log(this.statusBoardfor);
     }
-    departmentSelection(dept, ev) {
-        const index = this.categoryIds.indexOf(dept);
-        if (ev === 'edit') {
-            if (index === -1) {
-                this.categoryIds.push(dept);
-            }
-        } else {
-            const index = this.categoryIds.indexOf(dept);
-            if (ev.checked && index === -1) {
-                this.categoryIds.push(dept);
-            } else {
-                this.categoryIds.splice(index, 1);
-            }
-        }
-        this.statusBoardfor = [{
-            'type': 'DEPARTMENT',
-            'id': this.categoryIds
-        }];
-    }
-    queueSelection(queue, ev) {
-        const index = this.categoryIds.indexOf(queue);
-        if (ev === 'edit') {
-            if (index === -1) {
-                this.categoryIds.push(queue);
-            }
-        } else {
-            if (ev.checked && index === -1) {
-                this.categoryIds.push(queue);
-            } else {
-                this.categoryIds.splice(index, 1);
-            }
-        }
-        this.statusBoardfor = [{
-            'type': 'QUEUE',
-            'id': this.categoryIds
-        }];
-    }
+
+
     getNamefromId(id, type) {
         let displayName;
         if (type === 'SERVICE') {
@@ -589,9 +614,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     waitlistSelection(status) {
         if (this.selectedWtlstList.indexOf(status) === -1) {
-        this.selectedWtlstList.push(status);
+            this.selectedWtlstList.push(status);
         }
         console.log(this.selectedWtlstList);
-
     }
 }
