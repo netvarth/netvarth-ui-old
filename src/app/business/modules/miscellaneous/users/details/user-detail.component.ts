@@ -72,6 +72,7 @@ export class BranchUserDetailComponent implements OnInit {
     departments: any = [];
    userId;
    user_data: any = [];
+   userTypesFormfill : any = [ 'CONSUMER','ASSISTANT','ADMIN','PROVIDER']
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -84,7 +85,7 @@ export class BranchUserDetailComponent implements OnInit {
         private fb: FormBuilder
     ) {
         this.activated_route.queryParams.subscribe(data => {
-            console.log(data);
+            // console.log(data);
             this.actionparam = data;
             
         }
@@ -92,13 +93,15 @@ export class BranchUserDetailComponent implements OnInit {
         
     }
     ngOnInit() {
-        this.getWaitlistMgr();
+        this.createForm();
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
             this.getUserData();
-        }else {
-            this.createForm();
         }
+        // else {
+        //     console.log('élse');
+        //     this.createForm();
+        // }
         
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -140,16 +143,17 @@ export class BranchUserDetailComponent implements OnInit {
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
           //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-            selectedSubDomain: [0, Validators.compose([Validators.required])],
+           // selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: [],
-            selectedUserType: [],
+            selectedUserType: ['', Validators.compose([Validators.maxLength(500)])],
             address:[],
             state:[],
             city:[]
         });
-        if (this.actionparam.type === 'edit') {
-            this.updateForm();
-        }
+        this.getWaitlistMgr();
+        // if (this.actionparam.type === 'edit') {
+        //     this.updateForm();
+        // }
     }
 getUserData() {
     if (this.userId) {
@@ -157,7 +161,11 @@ getUserData() {
             .subscribe(
                 res => {
                     this.user_data = res;
-                    this.createForm();
+                    console.log(this.user_data);
+                    if (this.actionparam.type === 'edit') {
+                    //this.createForm();
+                    this.updateForm();
+                    }
                     const breadcrumbs = [];
             this.breadcrumbs_init.map((e) => {
                 breadcrumbs.push(e);
@@ -168,11 +176,14 @@ getUserData() {
             this.breadcrumbs = breadcrumbs;
                 }
             );
+            // if (this.actionparam.type === 'edit') {
+            //     this.createForm();
+            //     }
     }
 }
     updateForm() {
-        console.log(this.user_data);
-        console.log("up form");
+        console.log(this.user_data.firstName);
+        // console.log("up form");
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
             'last_name': this.user_data.lastName || null ,
@@ -181,14 +192,13 @@ getUserData() {
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
             //'password': this.user_data.commonPassword || this.userForm.get('password').value,
-            'selectedSubDomain': this.user_data.subSector || null,
+           // 'selectedSubDomain': this.user_data.subSector || null,
             'selectedDepartment': this.user_data.departmentCode || null,
             'selectedUserType': this.user_data.userType || null,
             'address': this.user_data.address || null,
             'state': this.user_data.state || null,
             'city': this.user_data.city || null
         });
-
     }
     onItemSelect(subdomain) {
         // console.log(subdomain);
@@ -222,7 +232,8 @@ console.log(event.value);
         if (this.fnameerror !== null || this.lnameerror !== null) {
             return;
         }
-        console.log(this.actionparam);
+        
+        // console.log(this.actionparam);
        // if (this.actionparam === 'add') {
 
 
@@ -286,7 +297,7 @@ console.log(event.value);
                // 'deptId': input.selectedDepartment,
                 'userType': input.selectedUserType
             };
-            console.log(input.selectedDepartment);
+            // console.log(input.selectedDepartment);
             if (input.selectedUserType === 'PROVIDER') {
                 post_data1['deptId'] = input.selectedDepartment;
             }
@@ -334,7 +345,7 @@ console.log(event.value);
         this.provider_services.getWaitlistMgr()
             .subscribe(
                 data => {
-                    console.log(data);
+                    console.log('department');
                     this.filterBydept = data['filterByDept'];
                     if (this.filterBydept) {
                         setTimeout(() => {
@@ -375,7 +386,7 @@ console.log(event.value);
             .subscribe(
                 data => {
                     this.departments = data['departments'];
-                    console.log(this.departments);
+                    // console.log(this.departments);
                     this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentCode);
                     this.api_loading = false;
                 },

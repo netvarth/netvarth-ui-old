@@ -943,7 +943,7 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, post_data);
   }
   updateUser(post_data , id) {
-    const url = 'provider/user' + id;
+    const url = 'provider/user/' + id;
     return this.servicemeta.httpPut(url, post_data);
   }
   getUser(providerid) {
