@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-managesettings',
-    templateUrl: './managesettings.component.html'
+    templateUrl: './manageSettings.component.html'
 })
 export class ManageSettingsComponent implements OnInit {
     breadcrumbs_init = [
@@ -40,6 +40,7 @@ export class ManageSettingsComponent implements OnInit {
     customer_label = '';
     provider_label = '';
     user;
+    holiday;
 
     you_have_cap = Messages.YOU_HAVE_CAP;
     more_cap = Messages.MORE_CAP;
@@ -440,6 +441,9 @@ export class ManageSettingsComponent implements OnInit {
     }
     Queues() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings', 'queues']);
+    }
+    NonWorkingDay(){
+      this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id, 'settings', 'holidays']);
     }
     // additionalInfo() {
     //     this.router.navigate(['provider', 'settings', 'miscellaneous', 'users','manageonlineprofile','bprofile','additionalinfo']);

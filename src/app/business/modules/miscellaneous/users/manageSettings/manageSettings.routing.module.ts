@@ -10,6 +10,7 @@ const routes: Routes = [
       {path: '', component: ManageSettingsComponent},
       {path: 'services', loadChildren: './services/waitlist-services.module#WaitlistServicesModule'},
       {path: 'queues', loadChildren: './queues/waitlist-queues.module#WaitlistQueuesModule'},
+      {path: 'holidays',loadChildren:'./NonWorkingDay/NonWorkingDay.module#NonWorkingDaymodule'}
       // { path: '',
       // children: [
       //   {path: 'services', loadChildren: './manageSettings/services/waitlist-services.module#WaitlistServicesModule'},
