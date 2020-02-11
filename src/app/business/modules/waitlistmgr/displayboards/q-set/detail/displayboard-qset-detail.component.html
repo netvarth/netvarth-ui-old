@@ -209,9 +209,10 @@
                 </label>
                 <div class="mgn-up-10">
                     <mat-checkbox class="example-margin" *ngFor="let status of waitlistStatuses"
-                        style="margin-left: 30px" [value]="status.value" (change)="waitlistSelection(status.value)">
+                        style="margin-left: 30px" [value]="status.value" (change)="waitlistSelection(status.value)"
+                        [checked]="selectedWtlstList.indexOf(status.value) !==-1">
                         {{status.displayName}}
-                    </mat-checkbox>
+                    </mat-checkbox> 
                 </div>
             </div>
             <div class="col-md-12 mgn-bt-20">
