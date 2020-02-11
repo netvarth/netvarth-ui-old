@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { NonWorkingDayroutingmodule } from './NonWorkingDay.routing.module';
+import { nonWorkingDayroutingmodule } from './nonWorkingDay.routing.module';
 import { BreadCrumbModule } from '../../../../../../shared/modules/breadcrumb/breadcrumb.module';
 import { FormMessageDisplayModule } from '../../../../../../shared/modules/form-message-display/form-message-display.module'
 import { DeclareFunctionStmt } from '@angular/compiler';
-import { NonWorkingDaylistcomponent } from './NonWorkingDaylist/NonWorkingDay-list.component';
-import { NonWorkingDaydetailscomponent } from './NonWorkingDaydetails/NonWorkingDay-details.component';
+import { nonWorkingDaylistcomponent } from './nonWorkingDaylist/nonWorkingDaylist.component';
+import { nonWorkingDaydetailscomponent } from './nonWorkingDaydetails/nonWorkingDaydetails.component';
 import { CommonModule } from '@angular/common';
 import {  FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { LoadingSpinnerModule } from '../../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
@@ -13,7 +13,7 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
-        NonWorkingDayroutingmodule,
+        nonWorkingDayroutingmodule,
         BreadCrumbModule,
         NgbTimepickerModule,
         FormMessageDisplayModule,
@@ -24,10 +24,10 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
         MaterialModule
     ],
     declarations:[
-        NonWorkingDaylistcomponent,
-        NonWorkingDaydetailscomponent
+        nonWorkingDaylistcomponent,
+        nonWorkingDaydetailscomponent
     ],
-    exports:[NonWorkingDaylistcomponent]
+    exports:[nonWorkingDaylistcomponent]
 })
 
-export class NonWorkingDaymodule { }
+export class nonWorkingDaymodule { }
