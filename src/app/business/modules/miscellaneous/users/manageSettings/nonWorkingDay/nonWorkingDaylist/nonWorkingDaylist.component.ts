@@ -38,6 +38,11 @@ export class nonWorkingDaylistcomponent  implements OnInit, OnDestroy {
         url: '/provider/settings/miscellaneous',
         title: 'Miscellaneous'
     },
+    {
+      url: '/provider/settings/miscellaneous/users',
+      title: 'Users'
+
+    }, 
       {
         title: 'Non Working Day/Hour',
         url: '/provider/settings/miscellaneous/holidays'

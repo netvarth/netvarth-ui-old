@@ -29,6 +29,7 @@ export class ManageOnlineProfileComponent implements OnInit {
             title: 'Users',
             url: '/provider/settings/miscellaneous/users'
         }
+        
     ];
     domain;
     breadcrumbs = this.breadcrumbs_init;

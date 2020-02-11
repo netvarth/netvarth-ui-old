@@ -26,9 +26,16 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             url: '/provider/settings'
         },
         {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
+          },
+        
+        {
+            url: '/provider/settings/miscellaneous/users',
+            title: 'Users'
+      
+          },
+         
         {
             title: 'Services'
         }

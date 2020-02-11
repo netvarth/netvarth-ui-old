@@ -437,7 +437,7 @@ export class ManageSettingsComponent implements OnInit {
 
 
     services() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings', 'services']);
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings',  'services']);
     }
     Queues() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings', 'queues']);

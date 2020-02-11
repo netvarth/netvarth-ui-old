@@ -36,13 +36,25 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             title: 'Settings',
             url: '/provider/settings'
         },
+        // {
+        //     title: Messages.WAITLIST_MANAGE_CAP,
+        //     url: '/provider/settings/q-manager'
+        // },
         {
-            title: Messages.WAITLIST_MANAGE_CAP,
-            url: '/provider/settings/q-manager'
-        },
+            url: '/provider/settings/miscellaneous',
+            title: 'Miscellaneous'
+          },
+        
+        {
+            url: '/provider/settings/miscellaneous/users',
+            title: 'Users'
+      
+          },
+          
         {
             title: this.work_hours
         }
+
     ];
     queuedialogRef;
     isCheckin;
