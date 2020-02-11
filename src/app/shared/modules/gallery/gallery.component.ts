@@ -2,7 +2,7 @@ import { OnInit, Component, EventEmitter, Output, Input, OnChanges } from '@angu
 import { ButtonEvent, Image, ButtonType, ButtonsStrategy, ButtonsConfig, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig } from 'angular-modal-gallery';
 import { MatDialog } from '@angular/material';
 import { GalleryImportComponent } from './import/gallery-import.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { GalleryService } from './galery-service';
 import { Messages } from '../../constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';

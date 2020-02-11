@@ -13,11 +13,9 @@ import { NavigationExtras, Router } from '@angular/router';
   selector: 'app-invoicestatus',
   templateUrl: './invoicestatus.component.html'
 })
-export class invoicestatuscomponent {
-  [x: string]: any;
-
+export class InvoiceStatusComponent {
+  statusDetail: any;
   breadcrumb_moreoptions: any = [];
-
   breadcrumbs = [
     {
       title: 'License & Invoice',
@@ -27,12 +25,11 @@ export class invoicestatuscomponent {
       title: 'Invoice / Statement'
     }
   ];
-  //invoice: any = null;
   invoice_status = [];
   temp3;
   selected = 0;
-  check_status ;
-  invoiceStatus =[];
+  check_status;
+  invoiceStatus = [];
   invoice_status_filter = projectConstants.INVOICE_STATUS_FILTER;
   statusDialogRef;
   open_filter = false;
@@ -45,9 +42,6 @@ export class invoicestatuscomponent {
     Waived: '',
     Obsolete: '',
     invoiceStatus: 'all',
-   // selected:''
-    //page_count: projectConstants.PERPAGING_LIMIT,
-    //page: 1
   };
   filters = {
     Paid: false,
@@ -56,204 +50,133 @@ export class invoicestatuscomponent {
     Waived: false,
     Obsolete: false,
     invoiceStatus: false,
-     };
+  };
   invoice_status_cap = Messages.INVOICE_STATUS_CAP;
-  //all_cap = Messages.ALL_CAP;
-
-  //any_cap = Messages.SYS_ALERTS_ANY_CAP;
-  // pagination: any = {
-  //   startpageval: 1,
-  //   totalCnt: 0,
-  //   perPage: this.filter.page_count
-  // };
-
-   constructor(
-    private router: Router,     
+  constructor(
+    private router: Router,
     private dialog: MatDialog,
-    public provider_services: ProviderServices)
-  {  
+    public provider_services: ProviderServices) {
     this.getInvoiceStatus();
   }
-  
-  jaldeeStatement(invoice) 
-  { 
-    //  this.statusDialogRef = this.dialog.open(ProviderLicenceInvoiceDetailComponent, 
-    // {
-    //   width: '50%',
-    //   data: 
-    //   {
-    //     invoice: invoice,
-    //     source: 'license-home'
-    //   },
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true
-    // }
-    // );
-    // this.statusDialogRef.afterClosed().subscribe(() => { });
-    // console.log(invoice)
+
+  jaldeeStatement(invoice) {
     this.temp3 = invoice.licensePaymentStatus;
     const invoiceJson = JSON.stringify(invoice);
-    if(this.temp3 === "Paid"){
+    if (this.temp3 === 'Paid') {
       const navigationExtras: NavigationExtras = {
-        queryParams: { invoice: invoiceJson,
-                    source: 'payment-history'   ,
-                    data1: 'invo-statement NotPaid' //data1 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
-                      },                      
-                     };
-         this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
-    }
-    else{
+        queryParams: {
+          invoice: invoiceJson,
+          source: 'payment-history',
+          data1: 'invo-statement NotPaid'
+          // data1 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+        },
+      };
+      this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
+    } else {
       const navigationExtras: NavigationExtras = {
-        queryParams: { invoice: invoiceJson,
-                       source: 'license-home' , 
-                       data2: 'invo-statement Paid' //data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
-                        
-                      }, 
-                     };
-         this.router.navigate(['provider', 'license', 'Statements'],navigationExtras);
+        queryParams: {
+          invoice: invoiceJson,
+          source: 'license-home',
+          data2: 'invo-statement Paid'
+          // data2 variable used To declare breadcrumbs in License & Invoice ..>Invoice / Statement(@shiva)
+
+        },
+      };
+      this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
     }
- 
-      
+
+
 
   }
 
-  setFilterData(type, status)
-    {
-      let passingStatus;
-    //this.filter[type] = status;
-      if(status && this.selected === 0)
-       {
-          this.selected =1;
-          this.invoiceStatus.push(status);
-          passingStatus= this.invoiceStatus.toString();
-          this.filter[type] = passingStatus;
-          this.doSearch();
-       }
-       else if(status && this.selected === 1)
-       {
-          if(this.invoiceStatus.indexOf(status)!==-1)
-          {
-            let indexofStatus = this.invoiceStatus.indexOf(status);
-              if (indexofStatus >= 0)
-               {
-                  this.invoiceStatus.splice(indexofStatus, 1 );
-               }
-            passingStatus= this.invoiceStatus.toString();
-            this.filter[type] = passingStatus;
-            this.doSearch();
-          }
-         else
-         {
-           this.invoiceStatus.push(status);
-           passingStatus= this.invoiceStatus.toString();
-           this.filter[type] = passingStatus;
-           this.doSearch();
-        } 
-     
+  setFilterData(type, status) {
+    let passingStatus;
+    if (status && this.selected === 0) {
+      this.selected = 1;
+      this.invoiceStatus.push(status);
+      passingStatus = this.invoiceStatus.toString();
+      this.filter[type] = passingStatus;
+      this.doSearch();
+    } else if (status && this.selected === 1) {
+      if (this.invoiceStatus.indexOf(status) !== -1) {
+        const indexofStatus = this.invoiceStatus.indexOf(status);
+        if (indexofStatus >= 0) {
+          this.invoiceStatus.splice(indexofStatus, 1);
+        }
+        passingStatus = this.invoiceStatus.toString();
+        this.filter[type] = passingStatus;
+        this.doSearch();
+      } else {
+        this.invoiceStatus.push(status);
+        passingStatus = this.invoiceStatus.toString();
+        this.filter[type] = passingStatus;
+        this.doSearch();
       }
-      this.check_status='';
-    }  
 
-
-  setFilterForApi() 
-  {
-    const api_filter = {};
-    if (this.filter.invoiceStatus !== 'all')
-   {
-      api_filter['invoiceStatus-eq'] = this.filter.invoiceStatus;
-   }
-   return api_filter;
+    }
+    this.check_status = '';
   }
-  
+  setFilterForApi() {
+    const api_filter = {};
+    if (this.filter.invoiceStatus !== 'all') {
+      api_filter['invoiceStatus-eq'] = this.filter.invoiceStatus;
+    }
+    return api_filter;
+  }
 
-  getInvoiceStatus() 
-  {
+  getInvoiceStatus() {
     const Mfilter = this.setFilterForApi();
     this.provider_services.getInvoiceStatus(Mfilter)
       .subscribe(
         data => {
-          for(let i in data){
+          for (let i in data) {
 
           }
           this.statusDetail = data;
-           } );
+        });
   }
- 
-  // setPaginationFilter(api_filter)
-  // {
-  //   api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
-  //   api_filter['count'] = this.filter.page_count;
-  //   return api_filter;
-  // }
- 
- 
- 
-  doSearch() 
-  {
-    if (this.filter.invoiceStatus !== 'all')
-     
-     {
+  doSearch() {
+    if (this.filter.invoiceStatus !== 'all') {
       this.filterapplied = true;
-     }
-     else 
-    {
+    } else {
       this.filterapplied = false;
     }
     this.getInvoiceStatus();
   }
 
-  resetFilter()
-  {
+  resetFilter() {
     this.filters = {
-    Paid: false,
-    Notpaid: false,
-    Cancel: false,
-    Waived: false,
-    Obsolete: false,
-    invoiceStatus: false,};
-    
-  
+      Paid: false,
+      Notpaid: false,
+      Cancel: false,
+      Waived: false,
+      Obsolete: false,
+      invoiceStatus: false,
+    };
+
     this.filter = {
-    Paid: '',
-    Notpaid: '',
-    Cancel: '',
-    Waived: '',
-    Obsolete: '',
-    invoiceStatus: 'all', };
-   
-   
-    // page_count: projectConstants.PERPAGING_LIMIT,
-    // page: 1 };
- 
+      Paid: '',
+      Notpaid: '',
+      Cancel: '',
+      Waived: '',
+      Obsolete: '',
+      invoiceStatus: 'all',
+    };
   }
-
-
-
-  clearFilter() 
-  {
-    // for (var i = 0; i < this.invoiceStatus.length; i++) {
-    // //   this.invoiceStatus[i].isSelected = this.check_status ;
-
-    // // }
-    
+  clearFilter() {
     this.check_status = false;
-    this.invoiceStatus =[];
+    this.invoiceStatus = [];
     this.resetFilter();
-    this.filterapplied =false;
+    this.filterapplied = false;
     this.getInvoiceStatus();
-    
   }
-  
-  
-  showFilterSidebar() 
-  {
+
+
+  showFilterSidebar() {
     this.filter_sidebar = true;
   }
 
-  hideFilterSidebar() 
-  {
+  hideFilterSidebar() {
     this.filter_sidebar = false;
   }
-
-
 }

@@ -1,8 +1,9 @@
+
+import {interval as observableInterval,  Subscription, Observable } from 'rxjs';
 import { Component, OnInit, HostListener, ViewChildren, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { Subscription, Observable } from 'rxjs';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../shared/constants/project-constants';
 
@@ -105,7 +106,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                             this.accountType = 'BRANCH_SP';
                             this.shared_functions.setitemOnSessionStorage('tabSession', tabInfo);
                             this.getStatusboard(this.inputStatusboards[this.showIndex]);
-                            this.cronHandle = Observable.interval(container.interval * 1000).subscribe(() => {
+                            this.cronHandle = observableInterval(container.interval * 1000).subscribe(() => {
                                 if (this.showIndex === (this.inputStatusboards.length - 1)) {
                                     this.showIndex = 0;
                                 } else {
@@ -117,7 +118,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     );
                 });
         } else {
-            this.cronHandle = Observable.interval(20000).subscribe(() => {
+            this.cronHandle = observableInterval(20000).subscribe(() => {
                 this.getSingleStatusboard();
             });
         }

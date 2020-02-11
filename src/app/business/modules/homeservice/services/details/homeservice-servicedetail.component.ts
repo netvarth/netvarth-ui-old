@@ -4,7 +4,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
 

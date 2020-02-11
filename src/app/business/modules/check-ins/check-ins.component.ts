@@ -1,3 +1,5 @@
+
+import {interval as observableInterval,  Subscription ,  Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
@@ -5,7 +7,6 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlis
 import { AdjustQueueDelayComponent } from './queue-delay/adjust-queue-delay.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs/Subscription';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { Router, RoutesRecognized, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -18,7 +19,6 @@ import { AddProviderCustomerComponent } from './add-provider-customer/add-provid
 // import { CheckInComponent } from '../../../shared/modules/check-in/check-in.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
-import { Observable } from 'rxjs/Observable';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 @Component({
@@ -372,7 +372,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.getDisplayboardCount();
     this.showstatus['new'] = true;
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       if (this.time_type === 1) {
         this.getTodayCheckIn();
       }

@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-homeservice',

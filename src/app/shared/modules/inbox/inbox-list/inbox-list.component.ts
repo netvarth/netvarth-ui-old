@@ -1,7 +1,5 @@
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Subscription } from 'rxjs/Subscription';
+import {interval as observableInterval,  Observable ,  Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -74,7 +72,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.loading = false;
     }
 
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.reloadApi.emit();
     });
 

@@ -4,9 +4,9 @@ import { LicenseComponent } from './license.component';
 import { ProviderPaymentHistoryComponent } from '../../../ynw_provider/components/provider-payment-history/provider-payment-history.component';
 import { AddonsComponent } from './addons/addons.component';
 import { KeywordsComponent } from './keywords/keywords.component';
-import { statementcomponent } from './Statements/Statements.component';
-import { invoicestatuscomponent } from './invoicestatus/invoicestatus.component';
 import { licenseusageComponent } from './licenseusage/licenseusage.component';
+import { StatementsComponent } from './statements/statements.component';
+import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
 
 const routes: Routes = [
   { path: '', component: LicenseComponent },
@@ -27,14 +27,14 @@ const routes: Routes = [
       },
       {
         path: 'Statements',
-        component: statementcomponent
+        component: StatementsComponent
       },
       {
-        path: 'invoicestatus', 
-        component: invoicestatuscomponent
+        path: 'invoicestatus',
+        component: InvoiceStatusComponent
       },
       {
-        path: 'licenseusage', 
+        path: 'licenseusage',
         component: licenseusageComponent
       }
     ]

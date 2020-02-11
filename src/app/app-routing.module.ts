@@ -12,31 +12,31 @@ import { ManageProviderComponent } from './shared/components/manage-provider/man
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
-        path: 'provider', loadChildren: './business/business.module#BusinessModule',
+        path: 'provider', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
         canActivate: [AuthGuardProvider]
     },
     {
-        path: 'consumer', loadChildren: './ynw_consumer/consumer.module#ConsumerModule',
+        path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
         canActivate: [AuthGuardConsumer]
     },
     {
-        path: 'kiosk', loadChildren: './ynw_kiosk/kiosk.module#KioskModule',
+        path: 'kiosk', loadChildren: () => import('./ynw_kiosk/kiosk.module').then(m => m.KioskModule),
         canActivate: [AuthGuardProvider]
     },
     { path: '', component: HomeComponent, canActivate: [AuthGuardHome] },
-    { path: 'provider-home', loadChildren: './shared/components/phome/phome.module#PhomeModule' },
+    { path: 'provider-home', loadChildren: () => import('./shared/components/phome/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
-    { path: 'not-found', loadChildren: './shared/modules/not-found/not-found.module#NotFoundModule' },
-    { path: 'searchdetail', loadChildren: './shared/components/search-detail/search-detail.module#SearchDetailModule' },
+    { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
+    { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
     { path: 'payment-return/:id', component: ReturnPaymentComponent },
-    { path: 'terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule' },
-    { path: 'provider-home/terms', loadChildren: './shared/modules/terms-static/terms-static.module#TermsStaticModule' },
+    { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
+    { path: 'provider-home/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
     {
-        path: 'displayboard/:id', loadChildren: './business/modules/displayboard-content/displayboard-content.module#DisplayboardLayoutContentModule',
+        path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
         canActivate: [AuthGuardProvider]
     },
-    { path: 'home/:id', loadChildren: './shared/modules/about-jaldee/about-jaldee.module#AboutJaldeeModule' },
+    { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: ':id', component: BusinessPageComponent },
       { path: 'manage/:id', component: ManageProviderComponent}

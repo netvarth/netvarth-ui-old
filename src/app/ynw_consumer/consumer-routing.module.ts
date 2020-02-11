@@ -12,18 +12,18 @@ import { ChangeEmailComponent } from '../shared/modules/change-email/change-emai
 const routes: Routes = [
   {path: '', component: ConsumerComponent, children: [
     {path: '', component: ConsumerHomeComponent},
-    {path: 'checkin', loadChildren: '../ynw_consumer/components/waitlist/check-in/consumer-checkin.module#ConsumerCheckinModule'},
+    {path: 'checkin', loadChildren: () => import('../ynw_consumer/components/waitlist/check-in/consumer-checkin.module').then(m => m.ConsumerCheckinModule)},
     {path: 'waitlist/:provider_id/:uuid', component: WaitlistComponent},
     { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },
     { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin]},
     { path: 'change-email', component: ChangeEmailComponent, canActivate: [AuthGuardLogin]},
     { path: 'members', component: MembersComponent, canActivate: [AuthGuardLogin]},
-    { path: 'learn_more', loadChildren: './components/help/consumer-learnmore.module#ConsumerLearnmoreModule', canActivate: [AuthGuardLogin]},
-    { path: 'faq', loadChildren: './components/consumer-faq/consumer-faq.module#ConsumerFaqModule', canActivate: [AuthGuardLogin]},
+    { path: 'learn_more', loadChildren: () => import('./components/help/consumer-learnmore.module').then(m => m.ConsumerLearnmoreModule), canActivate: [AuthGuardLogin]},
+    { path: 'faq', loadChildren: () => import('./components/consumer-faq/consumer-faq.module').then(m => m.ConsumerFaqModule), canActivate: [AuthGuardLogin]},
     {
       path: 'inbox',
-      loadChildren: '../shared/modules/inbox/inbox.module#InboxModule'
+      loadChildren: () => import('../shared/modules/inbox/inbox.module').then(m => m.InboxModule)
     },
   ]}
 ];

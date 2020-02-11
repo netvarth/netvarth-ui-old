@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Subscription } from 'rxjs/Subscription';
+
+import {interval as observableInterval,  Observable ,  Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -178,14 +177,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getWaitlist();
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(x => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
 
-    this.countercronHandle = Observable.interval(this.counterrefreshTime * 1000).subscribe(x => {
+    this.countercronHandle = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
-    this.cronHandleTrack = Observable.interval(this.refreshTime * 2000).subscribe(x => {
+    this.cronHandleTrack = observableInterval(this.refreshTime * 2000).subscribe(x => {
       this.liveTrackPolling();
     });
 

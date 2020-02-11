@@ -17,8 +17,8 @@ import { SharedServices } from '../../../shared/services/shared-services';
 })
 export class GoogleMapComponent implements OnInit {
 
-  @ViewChild('gmap') gmapElement: any;
-  @ViewChild('search')
+  @ViewChild('gmap', {static: false}) gmapElement: any;
+  @ViewChild('search', {static: false})
   public searchElementRef: ElementRef;
   choose_location_cap = Messages.LOCATION_MAP_CAP;
   mark_map_cap = Messages.MARK_MAP_CAP;

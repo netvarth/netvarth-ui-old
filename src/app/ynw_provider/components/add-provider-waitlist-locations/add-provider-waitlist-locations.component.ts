@@ -15,7 +15,7 @@ import { Messages } from '../../../shared/constants/project-messages';
   styleUrls: ['./add-provider-waitlist-locations.component.css']
 })
 export class AddProviderWaitlistLocationsComponent implements OnInit {
-  @ViewChild('loc') private elementRef: ElementRef;
+  @ViewChild('loc', {static: false}) private elementRef: ElementRef;
 
   select_cap = Messages.PAY_SET_SELECT_CAP;
   location_cap = Messages.LOCATION_CAP;

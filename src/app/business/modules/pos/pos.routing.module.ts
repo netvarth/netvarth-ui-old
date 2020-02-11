@@ -39,7 +39,7 @@ const routes: Routes = [
         component: ProviderJcouponDetailsComponent
     },
     {
-        path: 'items', loadChildren: './items/items.module#ItemsModule'
+        path: 'items', loadChildren: () => import('./items/items.module').then(m => m.ItemsModule)
     },
     {
         path: 'taxsettings',
@@ -50,10 +50,10 @@ const routes: Routes = [
         component: ProviderPaymentSettingsComponent
     },
     {
-        path: 'coupon', loadChildren: './coupons/pos-coupons.module#CouponsModule'
+        path: 'coupon', loadChildren: () => import('./coupons/pos-coupons.module').then(m => m.CouponsModule)
     },
     {
-        path: 'discount', loadChildren: './discount/discount.module#discountModule'
+        path: 'discount', loadChildren: () => import('./discount/discount.module').then(m => m.discountModule)
     }
 
 ];

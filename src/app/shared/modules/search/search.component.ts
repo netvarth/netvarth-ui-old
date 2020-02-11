@@ -1,5 +1,5 @@
 /* tslint:disable:forin */
-import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger, MatSelect, MatInput } from '@angular/material';
@@ -10,7 +10,6 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { SearchFields } from './searchfields';
 import * as locationjson from '../../../../assets/json/locations.json';
 import * as metrojson from '../../../../assets/json/metros_capital.json';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { projectConstants } from '../../constants/project-constants';
 import { Subscription } from 'rxjs';
 export class Locscls {
@@ -101,9 +100,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   showmoreoptionsSec = false;
   holdsrchlocname = '';
   clearLocationCalled = false;
-  @ViewChild('locrefrence') private locRef: ElementRef;
-  @ViewChild('locrefrence', { read: MatAutocompleteTrigger }) locationRef: MatAutocompleteTrigger;
-  @ViewChild('provbox', { read: MatAutocompleteTrigger }) provRef: MatAutocompleteTrigger;
+  @ViewChild('locrefrence', {static: false}) private locRef: ElementRef;
+  @ViewChild('locrefrence', { read: MatAutocompleteTrigger, static: false }) locationRef: MatAutocompleteTrigger;
+  @ViewChild('provbox', { read: MatAutocompleteTrigger, static: false }) provRef: MatAutocompleteTrigger;
   moreoptionsTooltip = '';
   show = false;
   showmorepopularoptions = false;
@@ -121,7 +120,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   isCurrentLocation = false;
   searchLength = 0;
   showmoreSearch = false;
-  @ViewChild('seldomain') seldomain: MatSelect;
+  @ViewChild('seldomain', {static: false}) seldomain: MatSelect;
 
   constructor(
     private shared_service: SharedServices,

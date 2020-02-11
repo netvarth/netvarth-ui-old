@@ -7,7 +7,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../shared/constants/project-constants';
 import { Router } from '@angular/router';
-import { SWITCH_IVY_ENABLED__POST_R3__ } from '@angular/core/src/ivy_switch';
 
 @Component({
     selector: 'app-addons',
@@ -95,8 +94,8 @@ export class AddonsComponent implements OnInit, OnDestroy {
         });
     }
 
-    addondetails(addonnss){
-        
+    addondetails(addonnss) {
+
         this.addonDescription = addonnss.description;
         (this.showaddondetails); this.showaddondetails = true;
         // (this.showaddondetails) ? this.showaddondetails = false : this.showaddondetails = true;

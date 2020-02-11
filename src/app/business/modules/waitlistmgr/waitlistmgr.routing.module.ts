@@ -16,9 +16,9 @@ const routes: Routes = [
     //     path: 'location-detail/:id',
     //     component: ProviderWaitlistLocationDetailComponent
     //   },
-    {path: 'locations', loadChildren: '../../../business/modules/waitlistmgr/locations/locations-list.module#LocationListModule'},
-      {path: 'services', loadChildren: '../../../business/modules/waitlistmgr/services/waitlist-services.module#WaitlistServicesModule'},
-      {path: 'queues', loadChildren: '../../../business/modules/waitlistmgr/queues/waitlist-queues.module#WaitlistQueuesModule'},
+    {path: 'locations', loadChildren: () => import('../../../business/modules/waitlistmgr/locations/locations-list.module').then(m => m.LocationListModule)},
+      {path: 'services', loadChildren: () => import('../../../business/modules/waitlistmgr/services/waitlist-services.module').then(m => m.WaitlistServicesModule)},
+      {path: 'queues', loadChildren: () => import('../../../business/modules/waitlistmgr/queues/waitlist-queues.module').then(m => m.WaitlistQueuesModule)},
       {
         path: 'departments',
         component: DepartmentsComponent
@@ -27,7 +27,7 @@ const routes: Routes = [
         path: 'department/:id',
         component: DepartmentDetailComponent
       },
-      {path: 'displayboards', loadChildren: '../../../business/modules/waitlistmgr/displayboards/displayboards.module#DisplayboardsModule'}
+      {path: 'displayboards', loadChildren: () => import('../../../business/modules/waitlistmgr/displayboards/displayboards.module').then(m => m.DisplayboardsModule)}
 ];
 
 @NgModule({

@@ -96,7 +96,7 @@ export class ProviderbWizardComponent implements OnInit {
   foodServc_frmsentns = Messages.FOODSRVC_FORMLEVEL_CAP;
   remem_msg = Messages.REMEM_MSG_CAP;
   rupee_symbol = '₹';
-  @ViewChild('bnameId') bnameIdref: ElementRef;
+  @ViewChild('bnameId', {static: false}) bnameIdref: ElementRef;
   tbprof;
 
 

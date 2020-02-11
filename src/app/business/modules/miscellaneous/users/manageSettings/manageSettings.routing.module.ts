@@ -8,9 +8,9 @@ import { ManageSettingsComponent } from './manageSettings.component';
 
 const routes: Routes = [
       {path: '', component: ManageSettingsComponent},
-      {path: 'services', loadChildren: './services/waitlist-services.module#WaitlistServicesModule'},
-      {path: 'queues', loadChildren: './queues/waitlist-queues.module#WaitlistQueuesModule'},
-      {path: 'holidays',loadChildren:'./nonWorkingDay/nonWorkingDay.module#nonWorkingDaymodule'}
+      {path: 'services', loadChildren: () => import('./services/waitlist-services.module').then(m => m.WaitlistServicesModule)},
+      {path: 'queues', loadChildren: () => import('./queues/waitlist-queues.module').then(m => m.WaitlistQueuesModule)},
+      {path: 'holidays',loadChildren:() => import('./nonWorkingDay/nonWorkingDay.module').then(m => m.nonWorkingDaymodule)}
       // { path: '',
       // children: [
       //   {path: 'services', loadChildren: './manageSettings/services/waitlist-services.module#WaitlistServicesModule'},

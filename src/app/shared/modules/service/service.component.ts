@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 // import { Messages } from '../../../../shared/constants/project-messages';
 // import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ServicesService } from './services.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { projectConstants } from '../../constants/project-constants';
 import { Messages } from '../../constants/project-messages';
 import { FormMessageDisplayService } from '../form-message-display/form-message-display.service';

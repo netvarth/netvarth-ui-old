@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import {Subscription } from 'rxjs/Subscription';
+
+import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
@@ -15,10 +14,10 @@ import { Messages } from '../../../shared/constants/project-messages';
   templateUrl: './kiosk-home.component.html'
 })
 export class KioskHomeComponent implements OnInit, OnDestroy {
-  @ViewChild('srchname') private srchname: ElementRef;
-  @ViewChild('regmobile') private regmobile: ElementRef;
-  @ViewChild('regfname') private regfname: ElementRef;
-  @ViewChild('reglname') private reglname: ElementRef;
+  @ViewChild('srchname', {static: false}) private srchname: ElementRef;
+  @ViewChild('regmobile', {static: false}) private regmobile: ElementRef;
+  @ViewChild('regfname', {static: false}) private regfname: ElementRef;
+  @ViewChild('reglname', {static: false}) private reglname: ElementRef;
 
   welcome_cap = Messages.WELCOME_CAP;
   checkin_youself_cap = Messages.CHECKIN_YOURSELF_CAP;
@@ -113,7 +112,7 @@ export class KioskHomeComponent implements OnInit, OnDestroy {
     // this.getInboxUnreadCnt();
     // Section which handles the periodic reload
     if (this.ctype === 'provider') {
-      this.subscription = Observable.interval(5 * 1000).subscribe(() => {
+      this.subscription = observableInterval(5 * 1000).subscribe(() => {
         this.checkloggedIn();
       });
     } else {

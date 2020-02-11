@@ -5,7 +5,7 @@ import { SharedFunctions } from '../shared/functions/shared-functions';
 import { CommonDataStorageService } from '../shared/services/common-datastorage.service';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedServices } from '../shared/services/shared-services';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-business',

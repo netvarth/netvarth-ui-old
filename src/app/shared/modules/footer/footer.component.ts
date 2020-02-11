@@ -1,12 +1,11 @@
+
+import {interval as observableInterval,  Observable ,  Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -97,7 +96,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
       this.getAlertCount();
     }
     if (this.ctype === 'provider') {
-      this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
+      this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
         this.reloadHandler();
       });
     } else {

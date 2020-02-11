@@ -6,8 +6,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatSelect } from '@angular/material';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Subject } from 'rxjs/Subject';
+import { ReplaySubject ,  Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 
@@ -62,7 +61,7 @@ export class DisplayboardDetailComponent implements OnInit {
   /** list of banks filtered by search keyword for multi-selection */
   public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
-  @ViewChild('singleSelect') singleSelect: MatSelect; 
+  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect; 
 
   /** Subject that emits when the component has been destroyed. */
   private _onDestroy = new Subject<void>();

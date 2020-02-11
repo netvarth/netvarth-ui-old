@@ -21,12 +21,12 @@ const routes: Routes = [
       component: JDNComponent
     },
 
-    { path: 'holidays', loadChildren: './NonWorkingDay/NonWorkingDay.module#NonWorkingDaymodule'},
-    { path: 'labels', loadChildren: './labels/labels.module#LabelsModule'},
-    { path: 'skins', loadChildren: './skins/provider-skins.module#ProviderSkinsModule' },
-    { path: 'users', loadChildren: './users/users.module#UsersModule' },
-    { path: 'corporate', loadChildren: './corporate/corporate.module#CorporateModule' },
-    { path: 'notifications', loadChildren: './notifications/notifications.module#NotificationsModule'}
+    { path: 'holidays', loadChildren: () => import('./NonWorkingDay/NonWorkingDay.module').then(m => m.NonWorkingDaymodule)},
+    { path: 'labels', loadChildren: () => import('./labels/labels.module').then(m => m.LabelsModule)},
+    { path: 'skins', loadChildren: () => import('./skins/provider-skins.module').then(m => m.ProviderSkinsModule) },
+    { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+    { path: 'corporate', loadChildren: () => import('./corporate/corporate.module').then(m => m.CorporateModule) },
+    { path: 'notifications', loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)}
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],

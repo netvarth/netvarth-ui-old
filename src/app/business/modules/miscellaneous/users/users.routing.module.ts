@@ -7,8 +7,8 @@ import { ManageOnlineProfileComponent } from './manageOnlineProfile/manageonline
 const routes: Routes = [
     { path: '', component: BranchUsersComponent },
     { path: ':id', component: BranchUserDetailComponent },
-    { path: ':id/bprofile', loadChildren: './bprofile/bprofile.module#BProfileModule'},
-    { path: ':id/settings', loadChildren: './manageSettings/manageSettings.module#ManageSettingsModule'},
+    { path: ':id/bprofile', loadChildren: () => import('./bprofile/bprofile.module').then(m => m.BProfileModule)},
+    { path: ':id/settings', loadChildren: () => import('./manageSettings/manageSettings.module').then(m => m.ManageSettingsModule)},
     //{ path: 'manageonlineprofile', component: ManageOnlineProfileComponent}
 ];
 @NgModule({

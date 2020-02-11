@@ -1,9 +1,9 @@
+
+import {interval as observableInterval,  Subscription ,  Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -105,7 +105,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.reloadHandler();
     this.getBusinessdetFromLocalstorage();
     this.enable_disable = Messages.ENBLE_DISABLE_TOOLTIP.replace('[waitlist]', this.waitlist_label);
-    this.cronHandle = Observable.interval(this.refreshTime * 1000).subscribe(() => {
+    this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
       this.reloadHandler();
     });
   }

@@ -50,7 +50,7 @@ export class AddProviderItemComponent implements OnInit {
   api_loading1 = true;
   disableButton = false;
 
-  @ViewChild('caption') private captionRef: ElementRef;
+  @ViewChild('caption', {static: false}) private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

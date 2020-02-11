@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../shared/constants/project-messages';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { Router } from '@angular/router';

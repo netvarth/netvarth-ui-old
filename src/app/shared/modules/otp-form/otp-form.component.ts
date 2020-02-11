@@ -1,7 +1,5 @@
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import {Subscription } from 'rxjs/Subscription';
+import {interval as observableInterval,  Observable , Subscription } from 'rxjs';
 import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -58,7 +56,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.resetCounter(this.refreshTime);
-    this.cronHandle = Observable.interval(1000).subscribe(() => {
+    this.cronHandle = observableInterval(1000).subscribe(() => {
       if (this.resetCounterVal > 0) {
         this.resetCounterVal = this.resetCounterVal - 1;
       }

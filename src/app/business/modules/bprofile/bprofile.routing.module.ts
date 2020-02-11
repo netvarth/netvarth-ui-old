@@ -5,7 +5,6 @@ import { MediaComponent } from './media/media.component';
 import { SpecializationsComponent } from './specializations/specializations.component';
 import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
-import { PrivacyComponent } from './privacy/privacy.component';
 
 const routes: Routes = [
     {path: '', component: BProfileComponent },
@@ -16,7 +15,7 @@ const routes: Routes = [
         {path: 'additionalinfo', component: AdditionalInfoComponent },
     ]},
     {
-        path: 'privacy', loadChildren: './privacy/privacy.module#PrivacyModule'
+        path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule)
     }
 ];
 

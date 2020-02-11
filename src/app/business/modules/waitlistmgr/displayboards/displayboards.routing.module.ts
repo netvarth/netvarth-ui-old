@@ -6,8 +6,8 @@ import { GlobalSettingsComponent } from './global-settings/global-settings.compo
 
 const routes: Routes = [
     { path: '', component: DisplayboardsComponent},
-    { path: 'q-set', loadChildren: './q-set/displayboard-qset.module#DisplayboardQSetModule' },
-    { path: 'containers', loadChildren: './containers/container.module#ContainerModule' },
+    { path: 'q-set', loadChildren: () => import('./q-set/displayboard-qset.module').then(m => m.DisplayboardQSetModule) },
+    { path: 'containers', loadChildren: () => import('./containers/container.module').then(m => m.ContainerModule) },
     { path: ':id', component: DisplayboardDetailComponent },
   //  { path: 'global', component: GlobalSettingsComponent },
 ];

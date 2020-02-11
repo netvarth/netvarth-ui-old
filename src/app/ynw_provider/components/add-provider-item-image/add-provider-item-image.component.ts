@@ -35,7 +35,7 @@ export class AddProviderItemImageComponent implements OnInit {
   show_img_select = true;
   upload_button_caption = 'Upload';
   uploading = false;
-  @ViewChild('caption') private captionRef: ElementRef;
+  @ViewChild('caption', {static: false}) private captionRef: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<AddProviderItemImageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

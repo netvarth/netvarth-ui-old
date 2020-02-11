@@ -1,7 +1,6 @@
-import {map} from 'rxjs/operators/map';
-import { catchError} from 'rxjs/operators/catchError';
+import {map,  catchError} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
 import { ProviderServices } from './provider-services.service';

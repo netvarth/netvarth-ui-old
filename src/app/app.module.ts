@@ -8,7 +8,6 @@ import { ScrollbarModule } from 'ngx-scrollbar';
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
-import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -109,7 +108,6 @@ import { SalesChannelModule } from './shared/modules/saleschannel/saleschannel.m
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    SlimLoadingBarModule.forRoot(),
     MatDialogModule,
     FormMessageDisplayModule,
     AngularMultiSelectModule,

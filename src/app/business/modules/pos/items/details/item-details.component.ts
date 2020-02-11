@@ -51,7 +51,7 @@ export class ItemDetailsComponent {
     api_loading = true;
     disableButton = false;
 
-    @ViewChild('caption') private captionRef: ElementRef;
+    @ViewChild('caption', {static: false}) private captionRef: ElementRef;
     customer_label;
     action;
     breadcrumbs_init = [

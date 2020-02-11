@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'bprofile', loadChildren: '../../../business/modules/bprofile/bprofile.module#BProfileModule'},
-      { path: 'pos', loadChildren: '../../../business/modules/pos/pos.module#POSModule'},
-      { path: 'miscellaneous', loadChildren: '../../../business/modules/miscellaneous/miscellaneous.module#MiscellaneousModule'},
-      { path: 'users', loadChildren: '../../../business/modules/miscellaneous/users/users.module#UsersModule'},
-      { path: 'home-service', loadChildren: '../../../business/modules/homeservice/homeservice.module#HomeServiceModule'},
-      { path: 'q-manager', loadChildren: '../../../business/modules/waitlistmgr/waitlistmgr.module#WaitlistMgrModule' }
+      { path: 'bprofile', loadChildren: () => import('../../../business/modules/bprofile/bprofile.module').then(m => m.BProfileModule)},
+      { path: 'pos', loadChildren: () => import('../../../business/modules/pos/pos.module').then(m => m.POSModule)},
+      { path: 'miscellaneous', loadChildren: () => import('../../../business/modules/miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule)},
+      { path: 'users', loadChildren: () => import('../../../business/modules/miscellaneous/users/users.module').then(m => m.UsersModule)},
+      { path: 'home-service', loadChildren: () => import('../../../business/modules/homeservice/homeservice.module').then(m => m.HomeServiceModule)},
+      { path: 'q-manager', loadChildren: () => import('../../../business/modules/waitlistmgr/waitlistmgr.module').then(m => m.WaitlistMgrModule) }
     ]
   },
 ];

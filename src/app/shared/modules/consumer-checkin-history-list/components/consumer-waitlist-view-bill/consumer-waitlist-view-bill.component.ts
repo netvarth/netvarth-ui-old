@@ -4,7 +4,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { CheckInHistoryServices } from '../../consumer-checkin-history-list.service';
-import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';import { DOCUMENT } from "@angular/common";
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -13,7 +13,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   templateUrl: './consumer-waitlist-view-bill.component.html'
 })
 export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
-  @ViewChild('itemservicesearch') item_service_search;
+  @ViewChild('itemservicesearch', {static: false}) item_service_search;
 
   new_cap = Messages.NEW_CAP;
   bill_cap = Messages.BILL_CAPTION;
