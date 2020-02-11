@@ -34,10 +34,9 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
 
     <div class="ynw-common-form-nm" *ngIf="!api_loading && actionparam !== 'view'">
-
-
         <ul class="nav nav-tabs" id="myTab">
             <li style="width: 20%;">
                 <a style="text-align: center;" [class.active-tab]="step === 1" (click)="showStep(1)">
@@ -76,9 +75,6 @@
             </li>
         </ul>
         <div class="clearfix"></div>
-
-
-
 
         <div class="step1 mgn-up-20" *ngIf="step ===1">
             <div class="form-group col-md-6">
@@ -122,6 +118,7 @@
                 <button type="button" (click)="showStep(2)" class="cs-btn bt1">Next</button>
             </div>
         </div>
+        <div class="clearfix"></div>
 
         <div class="step2 mgn-up-20" *ngIf="step ===2">
             <div class="form-group col-md-12" *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE'">
@@ -132,7 +129,7 @@
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
                             <mat-select-search [formControl]="deptMultiFilterCtrl"></mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
-                                (click)="qsetForSelection(department.departmentId, 'DEPARTMENT')">
+                                (click)="departmentSelection(department, 'DEPARTMENT')">
                                 {{department.departmentName | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -149,7 +146,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="form-group col-md-12" *ngIf="selectedCategory !== 'QUEUE'">
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Services</label>
@@ -158,7 +154,7 @@
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
                             <mat-select-search [formControl]="serviceMultiFilterCtrl"></mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
-                                (click)="qsetForSelection(service.id, 'SERVICE')">
+                                (click)="serviceSelection(service.id, 'SERVICE')">
                                 {{service.name | capitalizeFirst}}
                             </mat-option>
                         </mat-select>
@@ -173,7 +169,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="form-group col-md-12">
                 <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     Queues</label>
@@ -182,10 +177,9 @@
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
                             <mat-select-search [formControl]="qMultiFilterCtrl"></mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
-                                (click)="qsetForSelection(schedule.id, 'QUEUE')">
+                                (click)="queueSelection(schedule.id, 'QUEUE')">
                                 {{schedule.name}}
-                                {{schedule.displayQ.dstr | capitalizeFirst}}
-                                {{schedule.displayQ.time}}
+                                [{{schedule.displayQ.dstr | capitalizeFirst}} - {{schedule.displayQ.time}}]
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -201,12 +195,12 @@
                     </ul>
                 </div>
             </div>
-
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button type="button" (click)="showStep(1)" class="cs-btn bt1">Back</button>&nbsp;
                 <button type="button" (click)="showStep(3)" class="cs-btn bt1">Next</button>
             </div>
         </div>
+        <div class="clearfix"></div>
 
         <div class="step3 mgn-up-20 col-md-12" *ngIf="step === 3">
             <div class="col-md-12 mgn-bt-20">
@@ -220,12 +214,10 @@
                     </mat-checkbox>
                 </div>
             </div>
-
             <div class="col-md-12 mgn-bt-20">
                 <label class="col-form-label">
                     Select Labels
                 </label>
-                <!-- <div class="col-md-6"> -->
                 <mat-form-field>
                     <mat-select [formControl]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                         <mat-select-search [formControl]="labelMultiFilterCtrl"></mat-select-search>
@@ -234,7 +226,6 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <!-- </div> -->
                 <div class="form-group" *ngIf="labelMultiCtrl.value">
                     <span class="mgn-up-20 mgn-bt-10">
                         Selected Labels:
@@ -253,7 +244,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="sort-label col-md-12">
                 <label class="col-form-label mgn-bt-10">
                     Sort by
@@ -268,15 +258,15 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
-
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button type="button" (click)="showStep(2)" class="cs-btn bt1">Back</button>&nbsp;
                 <button type="button" (click)="showStep(4)" class="cs-btn bt1">Next</button>
             </div>
         </div>
+        <div class="clearfix"></div>
 
         <div class="step4 mgn-up-20 col-md-12" *ngIf="step === 4">
-            <label class="col-form-label">QBoard field to display</label>
+            <label class="col-form-label mgn-lt-20 mgn-bt-20">QBoard field to display</label>
             <div class="disply-field" *ngFor="let label of defaultLables; let i = index">
                 <mat-checkbox class="example-margin" style="margin-left: 30px"
                     (change)="labelSelection(i,$event,label.name)" [checked]="defaultLables[i].checked">
@@ -305,18 +295,25 @@
                 <button type="button" (click)="showStep(5)" class="cs-btn bt1">Next</button>
             </div>
         </div>
+        <div class="clearfix"></div>
 
         <div class="step5 mgn-up-20 col-md-12" *ngIf="step === 5">
-            <label class="col-form-label mgn-bt-10">
+            <label class="col-form-label mgn-lt-20">
                 Select order of QBoard fields</label>
-            <div *ngFor="let field of labelsList" class="field-box">
-                {{field.displayName}}
+            <ul class="info-lst serviceadd-info mgn-lt-20 mgn-bt-30">
+                <li>To change the QBoard fields order, drag and drop.
+                </li>
+            </ul>
+            <div cdkDropList class="field-list mgn-lt-20 mgn-rt-20" (cdkDropListDropped)="drop($event)"
+                *ngIf="labelsList.length > 0">
+                <div class="QBfield-box" *ngFor="let field of labelsList" cdkDrag>{{field.displayName}}</div>
             </div>
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button type="button" (click)="showStep(4)" class="cs-btn bt1">Back</button>&nbsp;
                 <button type="button" (click)="onSubmit()" class="cs-btn bt1">Create</button>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 </div>
