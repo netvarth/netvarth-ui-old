@@ -81,7 +81,7 @@ export class CheckInInnerComponent implements OnInit {
   sel_queue_waitingmins;
   sel_queue_servicetime = '';
   sel_queue_name;
-  sel_queue_timecaption;
+  sel_queue_timecaption = '';
   sel_queue_indx;
   sel_queue_det;
   sel_queue_personaahead = 0;
@@ -710,12 +710,13 @@ export class CheckInInnerComponent implements OnInit {
     this.sel_ser = obj;
     this.setServiceDetails(obj);
     this.queuejson = [];
-    this.sel_queue_id = 0;
+    // this.sel_queue_id = 0;
     this.sel_queue_waitingmins = 0;
     this.sel_queue_servicetime = '';
     this.sel_queue_personaahead = 0;
     this.sel_queue_name = '';
-    this.q_preselected = false;
+    this.sel_queue_timecaption = '';
+    // this.q_preselected = false;
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
@@ -1075,6 +1076,7 @@ export class CheckInInnerComponent implements OnInit {
         } else {
           this.main_heading = this.checkinLabel;
         }
+        this.handleServiceSel(this.sel_ser);
         break;
       case 3:
         this.main_heading = 'Family Members';
