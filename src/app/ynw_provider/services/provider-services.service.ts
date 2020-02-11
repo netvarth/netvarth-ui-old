@@ -959,5 +959,11 @@ export class ProviderServices {
     const url = 'provider/user/providerBprofile/' + id;
     return this.servicemeta.httpGet(url);
   }
+  patchUserbProfile(data, id) {
+    return this.servicemeta.httpPatch('provider/user/providerBprofile/' + id, data);
+  }
+  updateUserPrimaryFields(data, id) {
+    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
+  }
 
 }

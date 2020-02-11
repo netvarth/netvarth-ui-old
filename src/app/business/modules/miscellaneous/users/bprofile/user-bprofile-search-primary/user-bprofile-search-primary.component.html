@@ -1,0 +1,48 @@
+<h1 class="mat-dialog-title"> {{profile_name_summary_cap}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
+    class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
+
+<mat-dialog-content>
+<div class="form-group">
+    <mat-form-field>
+        <input type="text" matInput class="form-control" id="bname" #bname formControlName="bname" autocomplete="off"
+            placeholder="{{business_name_cap}}">
+    </mat-form-field>
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bname')" errorMsg="Please enter the business name">
+    </app-field-error-display>
+</div>
+
+<div class="form-group">
+    <mat-form-field>
+        <textarea  maxlength="2000" matInput class="form-control" id="bdesc" formControlName="bdesc" row="4" placeholder="A short description about your service (Max 2000 characters)"></textarea>
+        <!-- <input type="text" class="form-control" id="bdesc"
+formControlName="bdesc"> -->
+    </mat-form-field>
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please enter the profile summary">
+    </app-field-error-display>
+</div>
+<div class="form-group">
+    <mat-form-field>
+    <mat-select placeholder="{{select_subdomain_cap}}" subdom
+    formControlName="selectedSubDomain" #subdom
+    (selectionChange)="onItemSelect(subdom.value)">
+    <mat-option *ngFor="let subdomain of subDomains; let i = index"
+    [value]="subdomain">
+    <!-- {{subdomain.displayName}} -->
+    {{subdomain_displayname[subdomain.id]}}
+    </mat-option>
+    </mat-select>
+    </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+<div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
+<button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
+<button type="submit" [disabled]="!amForm.valid || disableButton" class="cs-btn bt1" mat-button>{{save_btn_cap}}</button>
+</div>
+</mat-dialog-actions>
+</form>
+
+<app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+<app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}"></app-form-success-display>

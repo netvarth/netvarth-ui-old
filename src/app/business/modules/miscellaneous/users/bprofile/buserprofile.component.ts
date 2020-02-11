@@ -2,27 +2,24 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
 import { projectConstants } from '../../../../../shared/constants/project-constants';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { ProviderBprofileSearchPrimaryComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-primary/provider-bprofile-search-primary.component';
-import { AddProviderWaitlistLocationsComponent } from '../../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
-import { ProviderBprofileSearchSchedulepopupComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-schedulepopup/provider-bprofile-search-schedulepopup';
-import { AddProviderBprofileSearchAdwordsComponent } from '../../../../../ynw_provider/components/add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
+import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
 
 @Component({
-  selector: 'app-bprofile',
-  templateUrl: './bprofile.component.html'
+  selector: 'app-buserprofile',
+  templateUrl: './buserprofile.component.html'
 })
 
-export class BProfileComponent implements OnInit, OnDestroy {
+export class BuserProfileComponent implements OnInit, OnDestroy {
   you_have_cap = Messages.YOU_HAVE_CAP;
   more_cap = Messages.MORE_CAP;
   add_cap = Messages.ADD_BTN;
@@ -66,6 +63,8 @@ export class BProfileComponent implements OnInit, OnDestroy {
   visible_cap = Messages.BPROFILE_VISIBLE_CAP;
   add_circle_outline = Messages.BPROFILE_ADD_CIRCLE_CAP;
   name_cap = Messages.PRO_NAME_CAP;
+  description_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
+  to_turn_search = Messages.BPROFILE_TURN_ON_PUBLIC_SEARCH;
   
 
   checked = false;
@@ -160,7 +159,7 @@ export class BProfileComponent implements OnInit, OnDestroy {
   active_user;
   frm_lang_cap = '';
   domain;
-
+  userdata;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -170,9 +169,16 @@ export class BProfileComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
+    private activated_route: ActivatedRoute,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices) {
     this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    this.activated_route.queryParams.subscribe(data => {
+      // console.log(data);
+      this.userdata = data;
+      console.log(this.userdata.id);
+  }
+  );
 
   }
 
@@ -260,16 +266,17 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
         },
         () => {
-
+          this.normal_basicinfo_show = 2;
         }
       );
   }
   getBussinessProfileApi() {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.provider_services.getBussinessProfile()
+      _this.provider_services.getUserBussinessProfile(_this.userdata.id)
         .subscribe(
           data => {
+            console.log(data);
             resolve(data);
           },
           () => {
@@ -281,14 +288,15 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
   showBPrimary() {
-    this.primarydialogRef = this.dialog.open(ProviderBprofileSearchPrimaryComponent, {
+    this.primarydialogRef = this.dialog.open(UserBprofileSearchPrimaryComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       autoFocus: true,
       data: {
         type: 'edit',
-        bprofile: this.bProfile
+        bprofile: this.bProfile,
+        userId: this.userdata.id
       }
     });
     this.primarydialogRef.afterClosed().subscribe(result => {
@@ -429,20 +437,17 @@ export class BProfileComponent implements OnInit, OnDestroy {
 
 
 
-
-  gotoMedia() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
-  }
-  gotoSpecializations() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'specializations']);
-  }
-  gotoLanguages() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'languages']);
-  }
-  gotoPrivacy() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'privacy']);
-  }
-  gotoAdditionalInfo() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'additionalinfo']);
-  }
+specializations() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','specializations']);
+}
+additionalInfo() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','additionalinfo']);
+}
+languagesKnown() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','languages']);
+}
+galerySocialmedia() {
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','media']);
+}
+  
 }

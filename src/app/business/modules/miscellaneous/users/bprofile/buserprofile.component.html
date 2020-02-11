@@ -23,7 +23,7 @@
                                         <mat-expansion-panel-header class="min100">
                                             <mat-panel-title class="block-level">
                                                 {{profile_summary_cap}} <i
-                                                    *ngIf="reqFields.name || reqFields.location || reqFields.schedule"
+                                                    *ngIf="reqFields.name "
                                                     class="req-flds-cap">*required fields missing</i>
                                                 <p class="form-level-settings">{{frm_profile_name_cap}}<a
                                                         class="learnmore-pointer" id="customer-help"
@@ -87,61 +87,42 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row">
+            
+            <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotoSpecializations()">
-                        <h2>Specializations <i *ngIf="reqFields.specialization" class="req-flds-cap">*required fields
-                                missing</i></h2>
-                        <span class="form-level-settings">{{frm_specialization_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('specializations', $event)">Learn
-                                More</a></span>
+                    <span class="b-link" (click)="specializations()">
+                        <h2>Specializations</h2>
+                        <span class="form-level-settings"> Mention your specializations here.</span>
                     </span>
                 </div>
-            </div> -->
-            <!-- <div class="row">
+            </div>
+            <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotoLanguages()">
+                    <span class="b-link" (click)="additionalInfo()">
+                        <h2>Additional Info</h2>
+                        <span class="form-level-settings">Add more details to your online profile.</span>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card p0">
+                    <span class="b-link" (click)="languagesKnown()">
                         <h2>Languages Known</h2>
-                        <span class="form-level-settings">{{frm_lang_cap}}<a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('languages-known', $event)">Learn
-                                More</a></span>
+                        <span class="form-level-settings">Add languages you know, to increase visibility.</span>
                     </span>
                 </div>
-            </div> -->
-            <!-- <div class="row">
+            </div>
+            <div class="row">
                 <div class="card p0">
-                    <span class="b-link" (click)="gotoPrivacy()">
-                        <h2>Privacy</h2>
-                        <span class="form-level-settings">{{frm_privacy_cap}} <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('privacy-settings', $event)">Learn
-                                More</a></span>
-                    </span>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="gotoAdditionalInfo()">
-                        <h2>
-                            Additional Info <i *ngIf="reqFields.domainvirtual || reqFields.subdomainvirtual"
-                                class="req-flds-cap">*required fields missing</i>
-                        </h2>
-                        <span class="form-level-settings">{{frm_additional_cap}} <a class="learnmore-pointer"
-                                id="customer-help" (click)="learnmore_clicked('additional-info', $event)">Learn
-                                More</a></span>
-                    </span>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                <div class="card p0">
-                    <span class="b-link" (click)="gotoMedia()">
+                    <span class="b-link" (click)="galerySocialmedia()">
                         <h2>Gallery & Social Media</h2>
-                        <span class="form-level-settings">{{frm_gallery_cap}},{{frm_social_cap}}
-                            <a class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('your-social-media', $event)">Learn
-                                More</a></span>
+                        <span class="form-level-settings">Add catchy images and social media platforms.</span>
                     </span>
                 </div>
-            </div> -->
+            </div>
+            
+           
+           
         </div>
         <div class="clearfix"></div>
     </div>
