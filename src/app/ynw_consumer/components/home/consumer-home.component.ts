@@ -20,8 +20,9 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { NgxCarousel } from 'ngx-carousel';
+// import { NgxCarousel } from 'ngx-carousel';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+import { NguCarouselConfig } from '@ngu/carousel';
 
 @Component({
   selector: 'app-consumer-home',
@@ -154,7 +155,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer) {
   }
-  public carouselOne: NgxCarousel;
+  // public carouselOne: NgxCarousel;
+  public carouselOne: NguCarouselConfig;
 
   ngOnInit() {
     this.setSystemDate();
@@ -163,7 +165,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
       slide: 3,
       speed: 400,
-      interval: 1000,
+      // interval: 1000,
+      interval: {
+        timing: 1000
+      },
+      // velocity: 1000,
       point: {
         visible: false
       },

@@ -5,8 +5,8 @@
                     <ng-container *ngIf="waitlists && waitlists.length>0">({{waitlists.length}})</ng-container></span>
             </h2>
             <div class="outer">
-                <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
-                    <ngx-item NgxCarouselItem *ngFor="let waitlist of waitlists; let i=index">
+                <ngu-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)" class="banner">
+                    <ngu-item NguCarouselItem *ngFor="let waitlist of waitlists; let i=index">
                         <div class="header">
                             <div class="lt">
                                 <div class="title" (click)="providerDetail(waitlist.provider)">
@@ -252,10 +252,10 @@
                                 </ul>
                             </div>
                         </div>
-                    </ngx-item>
-                    <button NgxCarouselPrev class='leftRs'>&lt;</button>
-                    <button NgxCarouselNext class='rightRs'>&gt;</button>
-                </ngx-carousel>
+                    </ngu-item>
+                    <button NguCarouselPrev  class='leftRs'>&lt;</button>
+                    <button NguCarouselNext  class='rightRs'>&gt;</button>
+                </ngu-carousel>
                 <div *ngIf="loadcomplete.waitlist && waitlists && waitlists.length == 0" class="nocheckins">
                     <p>{{no_checkins_cap}}</p>
                 </div>
