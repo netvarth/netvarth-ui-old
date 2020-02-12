@@ -6754,43 +6754,58 @@ label.notifi-togl {
   color: #f24949 !important;
   padding: 0px !important;
 }
-/* .nav-dots li{
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  color: #fff;
-  background: #999;
-  margin: 0 10px 0 0;
-}
-.nav-dots .active{
-  background: #00aef2;
-}
-.nav-dots {
-  display: flex;
-}
-.qset-detail .footer{
-  border-top: 1px solid #dbdbdb;
-  padding: 1.25em 1.875em;
-} */
-.liner {
+/* for qset multi-step wizard - start*/
+.qwizard .liner {
+  margin-left: 100px;
   height: 2px;
   background: #ddd;
   position: absolute;
   width: 80%;
-  margin: 0 auto;
   left: 0;
   right: 0;
   top: 50%;
   z-index: 1;
 }
-/* .nav-tabs > li a {
-  width: 70px;
-  height: 70px;
+.qwizard .nav-tabs{
+  position: relative;
+  border-bottom: 1px solid #ddd;
+}
+.qwizard .nav-tabs > li {
+  width: 20%;
+}
+.qwizard .nav-tabs > li a {
+  width: 60px;
+  height: 50px;
   margin: 20px auto;
-  border-radius: 100%;
-  padding: 0;
+  border: none;
+}
+.qwizard .nav-tabs > li a:hover {
+  background: transparent;
+  border: none;
+}
+.qwizard .nav>li>a {
+  position: relative;
   display: block;
-} */
+}
+.qwizard span.round-tabs {
+  border: 2px solid #ddd;
+}
+.qwizard a.active span.round-tabs {
+  background: #3c8dbc;
+  border: 2px solid #3c8dbc;
+}
+.qwizard span.round-tabs {
+  width: 30px;
+  height: 30px;
+  line-height: 70px;
+  border-radius: 100px;
+  background: white;
+  z-index: 2;
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+}
+/* for qset multi-step wizard - end */
 .chkin .ft-dt {
   max-width: 100px !important;
   background-color: transparent;
@@ -6809,13 +6824,8 @@ label.notifi-togl {
   border: 1px solid #ddd !important;
   border-bottom-color: transparent !important;
 }
-.field-list {
-  /* border: solid 1px #ccc; */
-}
 .QBfield-box {
   padding: 20px 10px;
-  /* border-bottom: solid 1px #ccc; */
-  /* cursor: move; */
   background: white;
   font-size: 14px;
 }
