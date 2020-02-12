@@ -6810,12 +6810,12 @@ label.notifi-togl {
   border-bottom-color: transparent !important;
 }
 .field-list {
-  border: solid 1px #ccc;
+  /* border: solid 1px #ccc; */
 }
 .QBfield-box {
-  padding: 10px;
-  border-bottom: solid 1px #ccc;
-  cursor: move;
+  padding: 20px 10px;
+  /* border-bottom: solid 1px #ccc; */
+  /* cursor: move; */
   background: white;
   font-size: 14px;
 }

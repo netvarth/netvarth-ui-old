@@ -34,7 +34,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     actionparam;
     display_schedule: any = [];
     display_scheduleList: any = [];
-    defaultLables: any = [];
+    defaultLabels: any = [];
     showLabelEdit: any = [];
     selectedCategory = '';
     selectedSortField = '';
@@ -219,14 +219,14 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.sortByField(key);
             });
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
-                for (let j = 0; j < this.defaultLables.length; j++) {
-                    if (this.displayBoardData.fieldList[i].name === this.defaultLables[j].name) {
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
                         this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
                         this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
                         if (this.displayBoardData.fieldList[i].defaultValue) {
                             this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
                         }
-                        this.defaultLables[j].checked = true;
+                        this.defaultLabels[j].checked = true;
                         this.labelSelection(j, 'edit');
                     }
                 }
@@ -419,23 +419,23 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
     }
     getLabels() {
-        this.defaultLables = this.labelfromConstants;
-        for (let i = 0; i < this.defaultLables.length; i++) {
-            this.defaultLables[i].checked = false;
+        this.defaultLabels = this.labelfromConstants;
+        for (let i = 0; i < this.defaultLabels.length; i++) {
+            this.defaultLabels[i].checked = false;
         }
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
             this.providerLabelsList = this.providerLabels;
             for (let i = 0; i < this.providerLabels.length; i++) {
-                this.defaultLables.push({
+                this.defaultLabels.push({
                     'name': this.providerLabels[i].label,
                     'displayname': this.providerLabels[i].displayName,
                     'label': true,
-                    'order': this.defaultLables.length + 1
+                    'order': this.defaultLabels.length + 1
                 });
             }
         });
-        this.defaultLables = this.shared_Functionsobj.removeDuplicates(this.defaultLables, 'name');
+        this.defaultLabels = this.shared_Functionsobj.removeDuplicates(this.defaultLabels, 'name');
     }
     labelSelection(index, event, name?) {
         if (event === 'edit') {
@@ -443,16 +443,16 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.saveLabels(index);
         } else if (event.checked) {
             this.showLabelEdit[index] = true;
-            this.defaultLables[index].checked = true;
-            this.labelDisplayname[index] = this.defaultLables[index].displayname;
-            this.labelOrder[index] = this.defaultLables[index].order;
-            if (this.defaultLables[index].defaultValue) {
-                this.labelDefaultvalue[index] = this.defaultLables[index].defaultValue;
+            this.defaultLabels[index].checked = true;
+            this.labelDisplayname[index] = this.defaultLabels[index].displayname;
+            this.labelOrder[index] = this.defaultLabels[index].order;
+            if (this.defaultLabels[index].defaultValue) {
+                this.labelDefaultvalue[index] = this.defaultLabels[index].defaultValue;
             }
             this.saveLabels(index);
         } else if (!event.checked) {
             this.showLabelEdit[index] = false;
-            this.defaultLables[index].checked = false;
+            this.defaultLabels[index].checked = false;
             this.removeLabels(name);
         }
     }
@@ -494,10 +494,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     saveLabels(index) {
         this.labelsList.push({
-            'name': this.defaultLables[index].name,
+            'name': this.defaultLabels[index].name,
             'displayName': this.labelDisplayname[index],
             'defaultValue': this.labelDefaultvalue[index] || '',
-            'label': this.defaultLables[index].label,
+            'label': this.defaultLabels[index].label,
             'order': this.labelOrder[index]
         });
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
@@ -654,5 +654,14 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         if (this.selectedWtlstList.indexOf(status) === -1) {
             this.selectedWtlstList.push(status);
         }
+    }
+    removeFIeldFromArray(field, index) {
+        this.defaultLabels.forEach(element => {
+            if (element.name === field) {
+                this.defaultLabels[this.defaultLabels.indexOf(element)].checked = false;
+                this.showLabelEdit[this.defaultLabels.indexOf(element)] = false;
+            }
+        });
+        this.labelsList.splice(index, 1);
     }
 }
