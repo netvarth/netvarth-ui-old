@@ -206,8 +206,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private shared_services: SharedServices,
     private routerobj: Router,
     private dialog: MatDialog,
-    private searchdetailserviceobj: SearchDetailServices,
-    private checkinService: CheckInService
+    private searchdetailserviceobj: SearchDetailServices
   ) { }
 
   ngOnInit() {

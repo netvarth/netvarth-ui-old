@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-statements',
-  templateUrl: './Statements.component.html'
+  templateUrl: './statements.component.html'
 })
 
 export class StatementsComponent implements OnInit {
@@ -76,6 +76,7 @@ export class StatementsComponent implements OnInit {
   temp4;
   discountDetailsTxt = 'Show discount details';
   // activated_route: any;
+  apiloading = false;
 
 
   breadcrumbs_init = [

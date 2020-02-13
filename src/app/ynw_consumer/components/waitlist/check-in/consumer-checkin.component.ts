@@ -170,6 +170,7 @@ export class ConsumerCheckinComponent implements OnInit {
     subscription: Subscription;
     showCouponWB: boolean;
     change_date: any;
+    liveTrack = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,

@@ -14,6 +14,7 @@ import { NavigationExtras, Router } from '@angular/router';
   templateUrl: './invoicestatus.component.html'
 })
 export class InvoiceStatusComponent {
+  api_loading;
   statusDetail: any;
   breadcrumb_moreoptions: any = [];
   breadcrumbs = [

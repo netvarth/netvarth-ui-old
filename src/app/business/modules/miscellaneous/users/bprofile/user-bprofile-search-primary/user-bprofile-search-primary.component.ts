@@ -16,7 +16,7 @@ import { SharedServices } from '../../../../../../shared/services/shared-service
 })
 
 export class UserBprofileSearchPrimaryComponent implements OnInit {
-
+    select_subdomain_cap;
     profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
     business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
     profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
@@ -91,6 +91,9 @@ if (this.bProfile) {
     this.updateForm();
 }
         
+    }
+    onItemSelect(a) {
+
     }
 updateForm() {
     this.amForm.setValue({

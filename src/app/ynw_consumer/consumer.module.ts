@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/modules/common/shared.module';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 // import { NgxCarouselModule } from 'ngx-carousel';
-import 'hammerjs';
+// import 'hammerjs';
 // import { ModalGalleryModule } from 'angular-modal-gallery';
 
 
@@ -39,7 +39,7 @@ import { AddManagePrivacyComponent } from './components/add-manage-privacy/add-m
 
 import { projectConstants } from '../shared/constants/project-constants';
 import { CapitalizeFirstPipeModule } from '../shared/pipes/capitalize.module';
-import { NguCarouselModule } from '@ngu/carousel';
+import { OwlModule } from 'ngx-owl-carousel';
 
 
 
@@ -53,15 +53,14 @@ import { NguCarouselModule } from '@ngu/carousel';
         SharedModule,
         HeaderModule,
         CheckInModule,
+        OwlModule,
         BreadCrumbModule,
         AddMemberModule,
         PagerModule,
         ConsumerCheckinHistoryListModule,
         InboxModule,
         RatingStarModule,
-        Nl2BrPipeModule,
-        NguCarouselModule
-        // NgxCarouselModule
+        Nl2BrPipeModule
     ],
     declarations: [
       ConsumerComponent,

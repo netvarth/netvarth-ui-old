@@ -79,7 +79,7 @@
                                                                             <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                                                 <mat-form-field>
                                                                                     <mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true">
-                                                                                      <mat-select-search [formControl]="bankMultiFilterCtrl"></mat-select-search>
+                                                                                      <app-mat-select-search [formControl]="bankMultiFilterCtrl"></app-mat-select-search>
                                                                                       <mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">
                                                                                         {{bank.name}}
                                                                                       </mat-option>

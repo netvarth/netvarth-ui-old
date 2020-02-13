@@ -22,7 +22,6 @@ import { CouponsComponent } from '../../../shared/components/coupons/coupons.com
 import { trigger, state, style, animate, transition } from '@angular/animations';
 // import { NgxCarousel } from 'ngx-carousel';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
-import { NguCarouselConfig } from '@ngu/carousel';
 
 @Component({
   selector: 'app-consumer-home',
@@ -156,27 +155,45 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     public _sanitizer: DomSanitizer) {
   }
   // public carouselOne: NgxCarousel;
-  public carouselOne: NguCarouselConfig;
+  public carouselOne;
 
   ngOnInit() {
     this.setSystemDate();
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    // this.carouselOne = {
+    //   grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
+    //   slide: 3,
+    //   speed: 400,
+    //   // interval: 1000,
+    //   interval: {
+    //     timing: 1000
+    //   },
+    //   // velocity: 1000,
+    //   point: {
+    //     visible: false
+    //   },
+    //   load: 2,
+    //   touch: true,
+    //   loop: false,
+    //   easing: 'ease'
+    // };
     this.carouselOne = {
-      grid: { xs: 1, sm: 1, md: 2, lg: 3, all: 0 },
-      slide: 3,
-      speed: 400,
-      // interval: 1000,
-      interval: {
-        timing: 1000
-      },
-      // velocity: 1000,
-      point: {
-        visible: false
-      },
-      load: 2,
-      touch: true,
+      dots: false,
+      nav: true,
+      navContainer: '.custom-nav',
+      navText: [
+        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+      ],
+      autoplay: false,
+      // autoplayTimeout: 6000,
+      // autoplaySpeed: 1000,
+      // autoplayHoverPause: true,
+      mouseDrag: true,
+      touchDrag: true,
+      pullDrag: true,
       loop: false,
-      easing: 'ease'
+      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
     };
     this.currentcheckinsTooltip = this.shared_functions.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.shared_functions.getProjectMesssages('FAVORITE_TOOLTIP');
@@ -201,11 +218,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-  public myfunc(event: Event) {
-    // carouselLoad will trigger this funnction when your load value reaches
-    // it is helps to load the data by parts to increase the performance of the app
-    // must use feature to all carousel
   }
   closeCounters() {
     if (this.cronHandle) {

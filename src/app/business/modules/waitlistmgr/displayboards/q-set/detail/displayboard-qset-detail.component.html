@@ -141,7 +141,7 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
-                            <mat-select-search [formControl]="deptMultiFilterCtrl"></mat-select-search>
+                            <app-mat-select-search [formControl]="deptMultiFilterCtrl"></app-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
                                 (click)="departmentSelection(department.departmentId, $event)">
                                 {{department.departmentName | capitalizeFirst}}
@@ -165,7 +165,7 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
-                            <mat-select-search [formControl]="deptMultiFilterCtrl"></mat-select-search>
+                            <app-mat-select-search [formControl]="deptMultiFilterCtrl"></app-mat-select-search>
                             <mat-option *ngFor="let service of services_list" [value]="service"
                                 (click)="serviceSelection(service.id, $event)">
                                 {{service.name | capitalizeFirst}}
@@ -189,7 +189,7 @@
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field>
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
-                            <mat-select-search [formControl]="deptMultiFilterCtrl"></mat-select-search>
+                            <app-mat-select-search [formControl]="deptMultiFilterCtrl"></app-mat-select-search>
                             <mat-option *ngFor="let schedule of display_schedule" [value]="schedule"
                                 (click)="queueSelection(schedule.id, $event)">
                                 {{schedule.displayQ.dstr | capitalizeFirst}}
@@ -229,7 +229,7 @@
                 <div class="">
                     <mat-form-field>
                         <mat-select [formControl]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
-                            <mat-select-search [formControl]="labelMultiFilterCtrl"></mat-select-search>
+                            <app-mat-select-search [formControl]="labelMultiFilterCtrl"></app-mat-select-search>
                             <mat-option *ngFor="let label of providerLabels" [value]="schedule">
                                 {{label.displayName}}
 

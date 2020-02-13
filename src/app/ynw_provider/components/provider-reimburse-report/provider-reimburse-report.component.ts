@@ -49,7 +49,7 @@ export class ProviderReimburseReportComponent implements OnInit {
       title: 'Reports'
     }
   ];
-
+  tooltipcls = '';
   open_filter = false;
   filter = {
     from_date: null,

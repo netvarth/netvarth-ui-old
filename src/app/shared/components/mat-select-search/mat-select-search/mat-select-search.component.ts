@@ -87,7 +87,7 @@ import { take, takeUntil } from 'rxjs/operators';
  * }
  */
 @Component({
-  selector: 'mat-select-search',
+  selector: 'app-mat-select-search',
   templateUrl: './mat-select-search.component.html',
   styleUrls: ['./mat-select-search.component.scss'],
   providers: [
@@ -107,6 +107,8 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
   get value(): string {
     return this._value;
   }
+  noEntriesFoundLabel;
+  placeholderLabel;
   private _value: string;
 
   onChange: Function = (_: any) => {};
