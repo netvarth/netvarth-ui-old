@@ -30,8 +30,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-provider-bprofile-search',
-  templateUrl: './provider-bprofile-search.component.html',
-  styleUrls: ['./provider-bprofile-search.component.scss']
+  templateUrl: './provider-bprofile-search.component.html'
 })
 
 export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
