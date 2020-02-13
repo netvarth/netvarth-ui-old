@@ -21,7 +21,8 @@ const routes: Routes = [
     children: [
       { path: '', component: BusinessHomeComponent, canActivate: [AuthGuardProviderHome] },
       { path: 'faq', loadChildren: './modules/faq/provider-faq.module#ProviderFaqModule' },
-      { path: 'customers', loadChildren: './modules/customers/customers.module#CustomersModule' },
+      { path: 'kiosk', loadChildren: '../ynw_kiosk/kiosk.module#KioskModule' },
+      { path: 'customers', loadChildren: '../ynw_kiosk/kiosk.module#KioskModule' },
       {path: 'bill/:id', component: AddProviderWaitlistCheckInBillComponent},
       { path: 'settings', loadChildren: '../ynw_provider/components/provider-settings/provider-settings.module#ProviderSettingsModule' },
       { path: 'profile', component: EditProfileComponent, canActivate: [AuthGuardLogin] },

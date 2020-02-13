@@ -6841,3 +6841,35 @@ label.notifi-togl {
 .field-list.cdk-drop-list-dragging .QBfield-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?f0a5t9');
+  src:  url('../fonts/icomoon.eot?f0a5t9#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?f0a5t9') format('truetype'),
+    url('../fonts/icomoon.woff?f0a5t9') format('woff'),
+    url('../fonts/icomoon.svg?f0a5t9#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 20px;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-interactiv-kiosk {
+  content: "\e900";
+}
+
