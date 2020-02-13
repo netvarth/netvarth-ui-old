@@ -21,19 +21,18 @@ formControlName="bdesc"> -->
     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'bdesc')" errorMsg="Please enter the profile summary">
     </app-field-error-display>
 </div>
-<div class="form-group">
+<!-- <div class="form-group">
     <mat-form-field>
     <mat-select placeholder="{{select_subdomain_cap}}" subdom
-    formControlName="selectedSubDomain" #subdom
-    (selectionChange)="onItemSelect(subdom.value)">
+    formControlName="selectedSubDomain" #subdom>
     <mat-option *ngFor="let subdomain of subDomains; let i = index"
-    [value]="subdomain">
-    <!-- {{subdomain.displayName}} -->
+    [value]="subdomain.id">
+    {{subdomain.displayName}} 
     {{subdomain_displayname[subdomain.id]}}
     </mat-option>
     </mat-select>
     </mat-form-field>
-    </div>
+    </div> -->
 </mat-dialog-content>
 <mat-dialog-actions>
 <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">

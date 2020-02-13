@@ -116,8 +116,6 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
         
     </div>
 </div>
-<div class="clearfix"></div>
-
 <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group mobile-field" style="width: 100%">
         <mat-form-field>
@@ -144,6 +142,9 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
     </div>
 </div>
 
+<div class="clearfix"></div>
+
+
 
 <!-- <div class="col-md-6 col-sm-6 col-xs-12">
     <div class="form-group">
@@ -159,6 +160,21 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
         </app-field-error-display>
     </div>
 </div> -->
+<div class="col-md-6 col-sm-6 col-xs-12"
+    *ngIf="showPrvdrFields">
+    <div class="form-group">
+        <mat-form-field>
+            <mat-select placeholder="{{select_subdomain_cap}}" subdom
+            formControlName="selectedSubDomain" #subdom>
+                <mat-option *ngFor="let subdomain of subDomains; let i = index"
+                [value]="subdomain.id">
+                {{subdomain.displayName}} 
+                <!-- {{subdomain_displayname[subdomain.id]}} -->
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
+    </div>  
 <div class="col-md-6 col-sm-6 col-xs-12"
     *ngIf="filterBydept && departments.length > 0 && showPrvdrFields">
     <div class="form-group">

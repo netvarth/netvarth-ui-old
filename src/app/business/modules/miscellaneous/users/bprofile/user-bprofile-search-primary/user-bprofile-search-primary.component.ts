@@ -32,6 +32,7 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
     prov_curstatus = '';
     disableButton = false;
     subDomains: any = [];
+    user_arr;
 
     constructor(
         private fb: FormBuilder,
@@ -47,43 +48,43 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
 
     ngOnInit() {
         this.bProfile = this.data.bprofile;
+        this.getUser();
         // calling method to create the form
         this.createForm();
         // this.elementRef.nativeElement.focus();
         const bConfig = this.sharedfunctionObj.getitemfromLocalStorage('ynw-bconf');
         const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
-        if (bConfig && bConfig.bdata) {
-            for (let i = 0; i < bConfig.bdata.length; i++) {
-                if (user.sector === bConfig.bdata[i].domain) {
-                    for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
-                        if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
-                            this.subDomains.push(bConfig.bdata[i].subDomains[j]);
-                        }
-                    }
-                    break;
-                }
-            }
-        } else {
-            this.shared_services.bussinessDomains()
-                .subscribe(
-                    res => {
-                        const today = new Date();
-                        const postdata = {
-                            cdate: today,
-                            bdata: res
-                        };
-                        this.sharedfunctionObj.setitemonLocalStorage('ynw-bconf', postdata);
-                    }
-                );
-        }
+        // if (bConfig && bConfig.bdata) {
+        //     for (let i = 0; i < bConfig.bdata.length; i++) {
+        //         if (user.sector === bConfig.bdata[i].domain) {
+        //             for (let j = 0; j < bConfig.bdata[i].subDomains.length; j++) {
+        //                 if (!bConfig.bdata[i].subDomains[j].isMultilevel) {
+        //                     this.subDomains.push(bConfig.bdata[i].subDomains[j]);
+        //                 }
+        //             }
+        //             break;
+        //         }
+        //     }
+        // } else {
+        //     this.shared_services.bussinessDomains()
+        //         .subscribe(
+        //             res => {
+        //                 const today = new Date();
+        //                 const postdata = {
+        //                     cdate: today,
+        //                     bdata: res
+        //                 };
+        //                 this.sharedfunctionObj.setitemonLocalStorage('ynw-bconf', postdata);
+        //             }
+        //         );
+        // }
     }
 
     // Creates the form element
     createForm() {
         this.formfields = {
             bname: [{ value: '' }, Validators.compose([Validators.required])],
-            bdesc: [{ value: '' }],
-            selectedSubDomain: [0, Validators.compose([Validators.required])],
+            bdesc: [{ value: '' }]
         };
         this.amForm = this.fb.group(this.formfields);
         // this.prov_curstatus = this.bProfile.status;
@@ -98,14 +99,20 @@ if (this.bProfile) {
 updateForm() {
     this.amForm.setValue({
         'bname': this.bProfile.businessName || '',
-         'bdesc': this.bProfile.businessDesc || '',
-         'selectedSubDomain': this.bProfile.subSector || null,
+         'bdesc': this.bProfile.businessDesc || ''
     })
 }
     // resets the error messages holders
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
+    }
+    getUser(){
+        this.provider_servicesobj.getUser(this.data.userId)
+        .subscribe(data => {
+            this.user_arr = data;
+            console.log(this.user_arr.subdomain);
+        });
     }
 
     // Method to handle the add / edit for bprofile
@@ -128,7 +135,7 @@ updateForm() {
             const post_itemdata = {
                 'businessName': form_data.bname,
                 'businessDesc': form_data.bdesc,
-                'userSubdomain': form_data.selectedSubDomain
+                'userSubdomain': this.user_arr.subdomain
             };
             // calling the method to update the primarty fields in bProfile edit page
             this.UpdatePrimaryFields(post_itemdata);

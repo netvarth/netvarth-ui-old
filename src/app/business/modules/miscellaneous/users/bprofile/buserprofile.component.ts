@@ -9,7 +9,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
@@ -438,7 +438,12 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
 
 specializations() {
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','specializations']);
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+        id: this.userdata.id
+    }
+};
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','specializations'], navigationExtras);
 }
 additionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','additionalinfo']);

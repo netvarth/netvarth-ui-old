@@ -73,6 +73,8 @@ export class BranchUserDetailComponent implements OnInit {
    userId;
    user_data: any = [];
    userTypesFormfill : any = [ 'CONSUMER','ASSISTANT','ADMIN','PROVIDER']
+    dept: any;
+    subDom;
     // selected_dept;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -93,16 +95,12 @@ export class BranchUserDetailComponent implements OnInit {
         
     }
     ngOnInit() {
-        this.createForm();
+         this.createForm();
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
             this.getUserData();
         }
-        // else {
-        //     console.log('élse');
-        //     this.createForm();
-        // }
-        
+       
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (bConfig && bConfig.bdata) {
@@ -129,10 +127,6 @@ export class BranchUserDetailComponent implements OnInit {
                     }
                 );
         }
-        // setTimeout(() => {
-        //     this.createForm(); 
-        // }, 100);
-        
     }
     createForm() {
         this.userForm = this.fb.group({
@@ -143,17 +137,18 @@ export class BranchUserDetailComponent implements OnInit {
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
           //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-           // selectedSubDomain: [0, Validators.compose([Validators.required])],
+            selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: [],
             selectedUserType: ['', Validators.compose([Validators.maxLength(500)])],
             address:[],
             state:[],
             city:[]
         });
-        this.getWaitlistMgr();
+       
         // if (this.actionparam.type === 'edit') {
         //     this.updateForm();
         // }
+        this.getWaitlistMgr();
     }
 getUserData() {
     if (this.userId) {
@@ -183,6 +178,29 @@ getUserData() {
 }
     updateForm() {
         console.log(this.user_data.firstName);
+        if (this.user_data.userType === 'PROVIDER') {
+            this.showPrvdrFields = true;
+            // for (let subDomain of this.subDomains) {
+            //     console.log(subDomain.id);
+            //     console.log(this.user_data.subdomain);
+            //     if (subDomain.id === this.user_data.subdomain){
+            //         console.log('domain');
+            //         this.subDom = subDomain.id;
+            //         console.log(this.subDom);
+            //     }
+            // }
+            console.log(this.user_data.deptId);
+            // for (let dept of this.departments) {
+            //     console.log(dept.id);
+            //     console.log(this.user_data.deptId);
+            //     if (dept.id === this.user_data.deptId){
+            //         console.log('dept');
+            //         this.dept = dept.displayName;
+            //         console.log(this.dept);
+            //     }
+            // }
+    
+        }
         // console.log("up form");
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
@@ -192,14 +210,15 @@ getUserData() {
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
             //'password': this.user_data.commonPassword || this.userForm.get('password').value,
-           // 'selectedSubDomain': this.user_data.subSector || null,
-            'selectedDepartment': this.user_data.departmentCode || null,
+            'selectedSubDomain': this.user_data.subdomain || null,
+            'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
             'address': this.user_data.address || null,
             'state': this.user_data.state || null,
             'city': this.user_data.city || null
         });
-    }
+        
+}
     onItemSelect(subdomain) {
         // console.log(subdomain);
     }
@@ -300,6 +319,7 @@ console.log(event.value);
             // console.log(input.selectedDepartment);
             if (input.selectedUserType === 'PROVIDER') {
                 post_data1['deptId'] = input.selectedDepartment;
+                post_data1['subdomain'] = input.selectedSubDomain;
             }
             
                 if (this.actionparam.type === 'edit') {
@@ -386,8 +406,9 @@ console.log(event.value);
             .subscribe(
                 data => {
                     this.departments = data['departments'];
-                    // console.log(this.departments);
-                    this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentCode);
+                    if (this.actionparam.type !== 'edit') {
+                    this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentId);
+                    }
                     this.api_loading = false;
                 },
                 error => {
