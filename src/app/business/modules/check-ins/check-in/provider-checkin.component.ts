@@ -171,8 +171,8 @@ export class ProviderCheckinComponent implements OnInit {
         public router: Router,
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
-            this.activated_route.queryParams.subscribe(qparams => {
-            });
+        this.activated_route.queryParams.subscribe(qparams => {
+        });
     }
     ngOnInit() {
         this.createForm();
@@ -198,9 +198,12 @@ export class ProviderCheckinComponent implements OnInit {
     }
     createForm() {
         this.searchForm = this.fb.group({
-            mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
+            mobile_number: ['', Validators.compose([Validators.maxLength(10),
             Validators.minLength(10), Validators.pattern(projectConstants.VALIDATOR_NUMBERONLY)])],
-            first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            first_name: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            last_name: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            customer_id: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_CHARONLY)])],
+            email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])]
         });
     }
     selectMode(type) {
@@ -212,37 +215,71 @@ export class ProviderCheckinComponent implements OnInit {
             this.searchCustomer(form_data);
         }
     }
-    searchCustomer(form_data) {
+    searchCustomer(form_data, mode?) {
+        console.log(mode);
         // this.resetApiErrors();
         this.form_data = null;
         this.create_new = false;
-        if (form_data.first_last_name.length >= 3) {
-            const post_data = {
-                'firstName-eq': form_data.first_last_name,
-                'lastName-eq': form_data.first_last_name,
-                'primaryMobileNo-eq': form_data.mobile_number
-            };
-
-            this.provider_services.getCustomer(post_data)
-                .subscribe(
-                    (data: any) => {
-                        if (data.length === 0) {
-                            this.form_data = form_data;
-                            this.create_new = true;
-                        } else {
-                            this.customer_data = data[0];
-                            this.getFamilyMembers();
-                            this.initCheckIn();
-                        }
-                    },
-                    error => {
-                        this.sharedFunctionobj.apiErrorAutoHide(this, error);
-                    }
-                );
-        } else {
-            this.sharedFunctionobj.openSnackBar('Please enter atleast the first 3 letters of First/Last Name', { 'panelClass': 'snackbarerror' });
-            // this.sharedFunctionobj.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
+        console.log(form_data);
+        let post_data = {};
+        switch (mode) {
+            case 'phone':
+                post_data = {
+                    'phoneNo-eq': form_data.mobile_number
+                };
+                break;
+            case 'email':
+                post_data = {
+                    'email-eq': form_data.email
+                };
+                break;
+            case 'customer_id':
+                post_data = {
+                    'id-eq': form_data.first_name
+                };
+                break;
+            case 'name':
+                if (form_data.first_name.length < 3) {
+                    this.sharedFunctionobj.openSnackBar('Please enter atleast the first 3 letters of First Name', { 'panelClass': 'snackbarerror' });
+                    return false;
+                }
+                if (form_data.last_name.length < 3) {
+                    this.sharedFunctionobj.openSnackBar('Please enter atleast the first 3 letters of Last Name', { 'panelClass': 'snackbarerror' });
+                    return false;
+                }
+                post_data = {
+                    'firstName-eq': form_data.first_name,
+                    'lastName-eq': form_data.last_name,
+                };
+                break;
         }
+        // if (form_data.first_last_name.length >= 3) {
+        //     post_data = {
+        //         'firstName-eq': form_data.first_last_name,
+        //         'lastName-eq': form_data.first_last_name,
+        //         'primaryMobileNo-eq': form_data.mobile_number
+        //     };
+console.log(post_data);
+        this.provider_services.getCustomer(post_data)
+            .subscribe(
+                (data: any) => {
+                    if (data.length === 0) {
+                        this.form_data = form_data;
+                        this.create_new = true;
+                    } else {
+                        this.customer_data = data[0];
+                        this.getFamilyMembers();
+                        this.initCheckIn();
+                    }
+                },
+                error => {
+                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                }
+            );
+        // } else {
+        //     this.sharedFunctionobj.openSnackBar('Please enter atleast the first 3 letters of First/Last Name', { 'panelClass': 'snackbarerror' });
+        //     // this.sharedFunctionobj.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
+        // }
     }
     initCheckIn() {
         this.showCheckin = true;

@@ -20,7 +20,6 @@ import { projectConstants } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-// import { NgxCarousel } from 'ngx-carousel';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 
 @Component({

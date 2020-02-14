@@ -7209,3 +7209,6 @@ padding-left: 30px;
   background-color: transparent;
   border: none;
 }
+hr.wide-separator-line{
+  border-top: 1px solid #ece8e8;
+}

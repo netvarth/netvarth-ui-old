@@ -7,9 +7,9 @@
         <div class="col-md-12 no-padding-small ">
             <div class="row">
                 <div class="card p0" *ngIf="!showCheckin">
-                    <div class="col-md-12">
+                    <div class="col-md-12 no-padding">
                         <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors($event)">
-                            <div class="col-md-12">
+                            <div class="col-md-12 mgn-up-10">
                                 Search Customer By
                             </div>
                             <div class="btn-modes col-md-12 mgn-up-10">
@@ -17,17 +17,16 @@
                                     [ngClass]="{'active': (selectedMode == 'phone')}">Phone Number</span>
                                 <span class="bt3 pointer-cursor mgn-rt-10" (click)="selectMode('email')"
                                     [ngClass]="{'active': (selectedMode == 'email')}">Email Id</span>
-                                <span class=" bt3 pointer-cursor" (click)="selectMode('custId')"
+                                <span class=" bt3 pointer-cursor mgn-rt-10" (click)="selectMode('custId')"
                                     [ngClass]="{'active': (selectedMode == 'custId')}">Patient Id</span>
+                                <span class=" bt3 pointer-cursor" (click)="selectMode('name')"
+                                    [ngClass]="{'active': (selectedMode == 'name')}">Name</span>
                             </div>
-                            <div class="form-group mgn-up-10 sc-frm">
-                                <div class="col-md-9 col-xs-10 col-sm-10">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Enter 3 Digit of First/Last Name" type="text"
-                                                class="form-control" formControlName="first_last_name">
-                                        </mat-form-field>
-                                    </div>
+                            <div class="col-md-12 no-padding">
+                                <hr class="wide-separator-line"/>
+                            </div>                  
+                            <div class="form-group col-md-12 mgn-up-10 sc-frm" >
+                                <div class="col-md-9 col-xs-10 col-sm-10 no-padding" *ngIf="selectedMode == 'phone'">
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                         <mat-form-field>
                                             <input matInput placeholder="Enter Phone Number" type="text"
@@ -35,13 +34,61 @@
                                                 (keypress)="findCustomer(searchForm.value, $event)">
                                         </mat-form-field>
                                     </div>
+                                    <div class="col-md-3 col-xs-2 col-sm-2">
+                                        <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
+                                        searchCustomer(searchForm.value,selectedMode)"></i>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-xs-2 col-sm-2">
+                                <div class="col-md-9 col-xs-10 col-sm-10 no-padding" *ngIf="selectedMode == 'email'">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Enter Email Id" type="text"
+                                                class="form-control" formControlName="email">
+                                        </mat-form-field>
+                                    </div>     
+                                    <div class="col-md-3 col-xs-2 col-sm-2">
+                                        <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
+                                        searchCustomer(searchForm.value, selectedMode)"></i>
+                                    </div>                              
+                                </div>
+                                <div class="col-md-9 col-xs-10 col-sm-10 no-padding" *ngIf="selectedMode == 'name'">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Enter 3 Digit of First Name" type="text"
+                                                class="form-control" formControlName="first_name">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Enter 3 Digit of Last Name" type="text"
+                                                class="form-control" formControlName="last_name"
+                                                (keypress)="findCustomer(searchForm.value, $event)">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-2 col-sm-2"  *ngIf="selectedMode == 'name'">
                                     <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
-                                    searchCustomer(searchForm.value)"></i>
-                                </div>
+                                    searchCustomer(searchForm.value, selectedMode)"></i>
+                                </div>   
+                                <div class="col-md-9 col-xs-10 col-sm-10 no-padding" *ngIf="selectedMode == 'custId'">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Enter Customer Id" type="text"
+                                                class="form-control" formControlName="customer_id">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3 col-xs-2 col-sm-2">
+                                        <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
+                                        searchCustomer(searchForm.value, selectedMode)"></i>
+                                    </div>
+                                </div>                                                                
                             </div>
                         </form>
+                    </div>
+                    <div class="create_new" *ngIf="create_new">
+                        <!-- <span class="create_new_oops">{{oops_cap}}</span> -->
+                        <span>Sorry, We were not able to find thhe record in our {{customer_label}}s list.</span>
+                        <button class="create_new_button cs-btn bt3" (click)="createNew()">{{create_cap}} {{customer_label}}</button>
                     </div>
                 </div>
                 <div class="card p0" *ngIf="showCheckin">
