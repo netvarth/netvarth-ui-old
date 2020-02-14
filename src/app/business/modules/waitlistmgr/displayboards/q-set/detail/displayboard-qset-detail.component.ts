@@ -648,7 +648,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 });
     }
     showStep(step) {
-        this.step = step;
+        if (step === 5 && this.labelsList.length === 0) {
+            this.shared_Functionsobj.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
+        } else {
+            this.step = step;
+        }
     }
     waitlistSelection(status) {
         if (this.selectedWtlstList.indexOf(status) === -1) {

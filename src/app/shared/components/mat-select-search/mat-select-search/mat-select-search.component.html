@@ -11,7 +11,7 @@
          (blur)="onBlur($event.target.value)"
          [placeholder]="placeholderLabel"
   />
-  <button mat-button *ngIf="value"
+  <button *ngIf="value"
           mat-icon-button
           aria-label="Clear"
           (click)="_reset(true)"
