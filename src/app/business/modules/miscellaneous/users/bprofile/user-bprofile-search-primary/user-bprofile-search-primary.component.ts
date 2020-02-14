@@ -138,16 +138,38 @@ updateForm() {
                 'userSubdomain': this.user_arr.subdomain
             };
             // calling the method to update the primarty fields in bProfile edit page
-            this.UpdatePrimaryFields(post_itemdata);
+            if (this.bProfile) {
+                this.updatePrimaryFields(post_itemdata);
+            } else {
+            this.createPrimaryFields(post_itemdata);
+            }
         }
     }
 
    
 
     // updating the primary field from the bprofile edit page
-    UpdatePrimaryFields(pdata) {
+    createPrimaryFields(pdata) {
         this.disableButton = true;
         this.provider_servicesobj.patchUserbProfile(pdata, this.data.userId)
+            .subscribe(
+                () => {
+                    this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_CREATED');
+                    setTimeout(() => {
+                        this.dialogRef.close('reloadlist');
+                    }, projectConstants.TIMEOUT_DELAY);
+                },
+                error => {
+                    this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+                    this.disableButton = false;
+                }
+            );
+    }
+
+
+    updatePrimaryFields(pdata) {
+        this.disableButton = true;
+        this.provider_servicesobj.updateUserbProfile(pdata, this.data.userId)
             .subscribe(
                 () => {
                     this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
@@ -161,7 +183,6 @@ updateForm() {
                 }
             );
     }
-
     // gets the bprofile details
     getBusinessProfile() {
         this.provider_servicesobj.getBussinessProfile()

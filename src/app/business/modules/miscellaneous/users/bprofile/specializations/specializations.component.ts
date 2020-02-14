@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { MatDialog } from '@angular/material';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { AddProviderBprofileSpecializationsComponent } from '../../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-specializatons',
     templateUrl: './specializations.component.html'
@@ -22,6 +22,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     domain;
     normal_specilization_show = 1;
     breadcrumb_moreoptions: any = [];
+    userdata;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -48,11 +49,18 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
-        private provider_datastorage: ProviderDataStorageService,
+        private activated_route: ActivatedRoute,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
-    ) { }
+    ) {
+        this.activated_route.queryParams.subscribe(data => {
+            // console.log(data);
+            this.userdata = data;
+            console.log(this.userdata.id);
+        }
+        );
+     }
     ngOnDestroy() {
         if (this.specialdialogRef) {
             this.specialdialogRef.close();
@@ -92,12 +100,17 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     } else {
                         this.normal_specilization_show = 2;
                     }
-                });
+                },
+                () => {
+                    this.normal_specilization_show = 2;
+                  }
+                );
     }
     getSpecializations(domain, subdomain) {
         this.provider_services.getSpecializations(domain, subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
+                console.log(this.specialization_arr);
             });
     }
     getSpecializationName(n) {
@@ -111,7 +124,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         const _this = this;
         return new Promise(function (resolve, reject) {
 
-            _this.provider_services.getBussinessProfile()
+            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
                 .subscribe(
                     data => {
                         resolve(data);

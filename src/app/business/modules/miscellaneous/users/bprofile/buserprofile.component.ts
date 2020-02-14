@@ -220,49 +220,51 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       .then(
         data => {
           this.bProfile = data;
-          this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
-            domainfields => {
-              this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
-                subdomainfields => {
-                  this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
-                });
-            });
-          this.provider_datastorage.set('bProfile', data);
+          console.log(this.bProfile);
+          // this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+          //   domainfields => {
+          //     this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
+          //       subdomainfields => {
+          //         this.reqFields = this.provider_shared_functions.getProfileRequiredFields(this.bProfile, domainfields, subdomainfields);
+          //       });
+          //   });
+         // this.provider_datastorage.set('bProfile', data);
 
-          const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+          //const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
-          loginuserdata.accStatus = this.bProfile.status;
+          //loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
-          this.serviceSector = data['serviceSector']['displayName'] || null;
+          //this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
+         // this.serviceSector = data['serviceSector']['displayName'] || null;
           if (this.bProfile.status === 'ACTIVE') {
             this.normal_profile_active = 3;
           } else {
             this.normal_profile_active = 2;
           }
 
-          if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-            const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-            // calling function which saves the business related details to show in the header
-            this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-              || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
-            const pdata = { 'ttype': 'updateuserdetails' };
-            this.sharedfunctionobj.sendMessage(pdata);
-            this.getProviderLogo();
-          }
+          // if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
+          //   const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          //   // calling function which saves the business related details to show in the header
+          //   this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+          //     || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+          //   const pdata = { 'ttype': 'updateuserdetails' };
+          //   this.sharedfunctionobj.sendMessage(pdata);
+          //   this.getProviderLogo();
+          // }
 
 
           // check whether normal business profile section can be displayed
           if ((this.bProfile.businessName !== '' && this.bProfile.businessName !== undefined)
             || (this.bProfile.businessDesc !== '' && this.bProfile.businessDesc !== undefined)) {
+              this.getProviderLogo();
             this.normal_basicinfo_show = 3;
           } else {
             this.normal_basicinfo_show = 2;
           }
 
           // check whether domain fields exists
-          const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
-          this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
+         // const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
+          //this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
 
         },
         () => {
@@ -363,11 +365,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
           } else {
             logo = '';
           }
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+        //  const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           // calling function which saves the business related details to show in the header
-          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', logo);
-
+          this.sharedfunctionobj.setBusinessDetailsforHeaderDisp('', '', '', logo);
           const pdata = { 'ttype': 'updateuserdetails' };
           this.sharedfunctionobj.sendMessage(pdata);
         },

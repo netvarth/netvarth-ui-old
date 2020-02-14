@@ -962,7 +962,7 @@ export class ProviderServices {
   patchUserbProfile(data, id) {
     return this.servicemeta.httpPatch('provider/user/providerBprofile/' + id, data);
   }
-  updateUserPrimaryFields(data, id) {
+  updateUserbProfile(data, id) {
     return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
   }
 
