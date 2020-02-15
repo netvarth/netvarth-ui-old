@@ -7212,3 +7212,6 @@ padding-left: 30px;
 hr.wide-separator-line{
   border-top: 1px solid #ece8e8;
 }
+.pro-dash .main-header{
+  max-height: 150px !important;
+}

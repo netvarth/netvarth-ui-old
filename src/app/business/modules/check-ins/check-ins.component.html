@@ -150,14 +150,14 @@
         </header>
         <div class="head">
           <div class="col-md-12 today col-xs-12 col-sm-12 no-padding-small" *ngIf="selected_location">
-            <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
+            <!-- <span class="btn-primary-n" (click)="setTimeType(1)" [ngClass]="{'active': time_type==1}">
               {{today_cap}} ({{today_waitlist_count}})
             </span>
             <span class="btn-primary-n" (click)="setTimeType(2)" [ngClass]="{'active': time_type==2}">
               {{future_cap}} ({{future_waitlist_count}})
             </span>
             <span class="btn-primary-n" (click)="setTimeType(3)" [ngClass]="{'active': time_type==3}">
-              {{history_cap}}</span>
+              {{history_cap}}</span> -->
             <span class="btn-primary-n pull-right clr-fltr " (click)="toggleFilter()">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="dropdown">
                 <i class="icon-filter-one-op" *ngIf="open_filter" [matTooltipClass]="tooltipcls"
