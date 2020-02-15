@@ -29,44 +29,48 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="form-group agree create-dept">
-                                    <mat-checkbox class="terms-margin" (change)= "nestedQboardSelected($event)"[value]=true></mat-checkbox> 
-                                    <span
-                                      class="terms-link">Nested QBoard
-                                    </span>
-                                  </div>
-
-
-
+                                <form class="ynw-common-form-nm wiz-service labelForm serviceform">
+                                    <ng-container>
+                                            <div class="form-group col-md-6">
+                                                    <mat-form-field>
+                                                        <input matInput type="text" class="form-control" id="displayName"
+                                                            placeholder="Display Name for QBoard *"
+                                                            [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}"
+                                                            autocomplete="off">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="lbl col-md-12">
+                                                        <mat-checkbox class="terms-margin" (change)= "nestedQboardSelected($event)"[value]=true></mat-checkbox> 
+                                                        <span
+                                                          class="nested-qboard">Nested QBoard
+                                                        </span>
+                                                </div>
+                                    </ng-container>
+                                    <div *ngIf = "qboardSelected" class="form-group col-md-6">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="refreshInterval1"
+                                                placeholder="Enter refresh interval in seconds *"
+                                                [(ngModel)]="refreshInterval" [ngModelOptions]="{standalone: true}"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                </div>
+                                </form>
+                                
                                   <div *ngIf = "qboardSelected">                                    
-                                                        <div class="lbl col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                        <div class="lbl col-md-12  no-padding">
                                                                 <div class="cl1" *ngIf="actionparam === 'view'">
                                                                     <span class="editbt" (click)="editlayout(layoutData.id)"></span>
                                                                     <div class="ot-it">
                                                                         <h3>{{layoutData.displayName | capitalizeFirst}}</h3>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20"
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20 search-qboard"
                                                                     *ngIf="actionparam !== 'view'">
                                                                     <form novalidate (keyup)="resetApiErrors()"
                                                                         class="ynw-common-form-nm wiz-service labelForm serviceform">
                                                                         <ng-container>
-                                                                            <!-- <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                                                                <mat-form-field>
-                                                                                    <input matInput type="text" class="form-control" id="displayName"
-                                                                                        placeholder="Enter the name for the container *"
-                                                                                        [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}"
-                                                                                        autocomplete="off">
-                                                                                </mat-form-field>
-                                                                            </div> -->
-                                                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                                                                <mat-form-field>
-                                                                                    <input matInput type="text" class="form-control" id="refreshInterval"
-                                                                                        placeholder="Enter refresh interval in seconds *"
-                                                                                        [(ngModel)]="refreshInterval" [ngModelOptions]="{standalone: true}"
-                                                                                        autocomplete="off">
-                                                                                </mat-form-field>
-                                                                            </div>
+                                                                            
+                                                                            
                                                                             <div class="clearfix"></div>
                                                                             <!-- <div class="form-group col-md-12 col-xs-12 col-sm-12">
                                                                                 <mat-form-field>
@@ -76,23 +80,86 @@
                                                                                         autocomplete="off">
                                                                                 </mat-form-field>
                                                                             </div> -->
-                                                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                                                            <!-- <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                                                 <mat-form-field>
-                                                                                    <mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true">
-                                                                                      <mat-select-search [formControl]="bankMultiFilterCtrl"></mat-select-search>
-                                                                                      <mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">
-                                                                                        {{bank.name}}
+                                                                                    <mat-select [formControl]="bankMultiCtrl" placeholder="Select QBoard" [multiple]="true">
+                                                                                      <mat-select-search [formControl]="qBoardFilterMultictrl"></mat-select-search>
+                                                                                      <mat-option placeholder="Search QBoard" *ngFor="let qboard of filteredQboardList" [value]="qboard">
+                                                                                        {{qboard.displayName}}
                                                                                       </mat-option>
                                                                                     </mat-select>
                                                                                   </mat-form-field>
+                                                                            </div> -->
+
+
+                                                                            
+                                                                            <div class="form-group col-md-6">
+                                                                                    <mat-form-field>
+                                                                                      <input type="text" placeholder="Search QBoard" aria-label="Number" matInput [formControl]="qBoardFilterMultictrl" [matAutocomplete]="auto">
+                                                                                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                                                                        <mat-option *ngFor="let qboard of filteredQboardList" [value]="qboard.displayName">
+                                                                                          {{qboard.displayName}}
+                                                                                        </mat-option>
+                                                                                      </mat-autocomplete>
+                                                                                    </mat-form-field>
                                                                             </div>
-                                                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
-                                                                                <p>
-                                                                                    Selected Banks: 
-                                                                                  </p>
-                                                                                  <ul *ngFor="let bank of bankMultiCtrl?.value">
-                                                                                    <li>{{bank.name}}</li>
-                                                                                  </ul>
+                                                                            <div class="form-group col-md-4">
+                                                                                    <mat-form-field>
+                                                                                        <input matInput type="text" class="form-control" id="refreshInterval"
+                                                                                            placeholder="Enter refresh interval in seconds *"
+                                                                                            [(ngModel)]="nestedRefreshInterval" [ngModelOptions]="{standalone: true}"
+                                                                                            autocomplete="off" >
+                                                                                    </mat-form-field>
+                                                                                    
+                                                                                </div>
+                                                                                <div class="mgn-up-25 col-md-2 no-padding-small">
+                                                                                    <button type="submit" class="cs-btn bt3" (click)="addBtnClicked()">Add</button>
+                                                                                </div>
+                                                                            
+
+                                                                            <div  *ngIf = "selectedQboardlist.length > 0" class="col-md-12 no-padding">
+                                                                                    <div class="table-outer q-itm">
+                                                                                            <table class="table">
+                                                                                                <thead class = "qBoardselected-table">
+                                                                                                    <tr>
+                                                                                                        <th>Selected QBoards</th>
+                                                                                                        <th>Refresh Interval</th>
+                                                                                                        <th></th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr *ngFor="let qboard of selectedQboardlist">
+                                                                                                        <td class="filtr_space">
+                                                                                                            <span>{{qboard.qBoard}}</span> 
+                                                                                                        </td>
+                                                                                                        <td>{{qboard.interval}}</td>
+                                                                                                        <td class="action"><span class="mbt">
+                                                                                                                <button type="button"
+                                                                                                                    mat-icon-button
+                                                                                                                    [matMenuTriggerFor]="menu">
+                                                                                                                    <mat-icon>more_vert
+                                                                                                                    </mat-icon>
+                                                                                                                </button>
+                                                                                                                <mat-menu #menu="matMenu">
+                                                                                                                    <button type="button"
+                                                                                                                        mat-menu-item>
+                                                                                                                        <i class="icon-edit"></i>
+                                                                                                                        <span>Edit</span>
+                                                                                                                    </button>
+                                                                                                                    <button type="button"
+                                                                                                                        mat-menu-item>
+                                                                                                                        <i class="icon-delete"></i>
+                                                                                                                        <span>Delete</span>
+                                                                                                                    </button>
+                                                                                                                </mat-menu>
+                                                                                                            </span>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+
+                                                                                
                                                                             </div>
                                                                             
                                                                             <div class="col-md-12 col-xs-12 col-sm-12 actiondiv labelsave mgn-up-20">
@@ -141,14 +208,14 @@
                                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                                             </mat-form-field>
                                         </div> -->
-                                            <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                                            <!-- <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="displayName"
                                                         placeholder="Enter the name for the QBoard *"
                                                         [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}"
                                                         autocomplete="off">
                                                 </mat-form-field>
-                                            </div>
+                                            </div> -->
                                             <!-- <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="serviceRoom"

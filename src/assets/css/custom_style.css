@@ -6879,3 +6879,13 @@ label.notifi-togl {
 .mat-select-search .mat-button-wrapper {
   color: black !important;
 }
+.nested-qboard {
+  padding-left: 7px;
+}
+.search-qboard {
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
+}
+.qBoardselected-table{
+  background: #d8e2f1;
+}
