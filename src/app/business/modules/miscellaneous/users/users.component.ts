@@ -68,7 +68,7 @@ export class BranchUsersComponent implements OnInit {
         };
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', userId, 'bprofile' ], navigationExtras);
     }
-    manageSettings(name,userId) {
+     manageSettings(name,userId) {
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 id: userId,

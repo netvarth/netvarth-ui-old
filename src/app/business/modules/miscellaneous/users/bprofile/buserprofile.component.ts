@@ -120,7 +120,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       }
     ]
   };
-  breadcrumbs_init = [
+   breadcrumbs_init = [
     {
       title: 'Settings',
       url: '/provider/settings'

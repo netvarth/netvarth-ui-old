@@ -134,7 +134,7 @@ updateForm() {
         } else {
             const post_itemdata = {
                 'businessName': form_data.bname,
-                'businessDesc': form_data.bdesc
+                 'businessDesc': form_data.bdesc
             };
             if (this.user_arr.userType === 'PROVIDER') {
                 post_itemdata['userSubdomain'] = this.user_arr.subdomain;
