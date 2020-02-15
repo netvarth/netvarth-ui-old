@@ -23,7 +23,8 @@
                         <li *ngFor="let location of locations;let i = index" [(value)]="i"
                           [ngClass]="{'active': (location.place == selected_location.place)}">
                           <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
-                            <h4 *ngIf="location.place.length>='27'">{{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
+                            <h4 *ngIf="location.place.length>='27'">
+                              {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
                             <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
                           </a>
                         </li>
@@ -40,7 +41,8 @@
                       {{selected_queue.queueSchedule.timeSlots[0].sTime }} -
                       {{selected_queue.queueSchedule.timeSlots[0].eTime }}<div class="dashboard-qname"
                         *ngIf="!selected_queue.instantQueue">[{{ selected_queue.name | capitalizeFirst }}]</div>
-                      <div class="instantQ" *ngIf="selected_queue && selected_queue.instantQueue"> [Only for today]</div>
+                      <div class="instantQ" *ngIf="selected_queue && selected_queue.instantQueue"> [Only for today]
+                      </div>
                     </span>
                   </a>
                   <ul class="dropdown-menu ques">
@@ -117,35 +119,37 @@
                     </li>
                   </ul>
                 </li>
-                <li class="mgn-lt-10">
-                  <div class="ynw-common-form-nm">
+              </ul>
+            </div>
+            <ul class="col-md-12 no-padding" style="list-style: none;">
+              <li class="col-md-5">
+                <div class="ynw-common-form-nm">
                   <mat-form-field>
                     <mat-label>Departments</mat-label>
                     <mat-select>
-                      <mat-option *ngFor="let dept of departments"[value]="dept.departmentCode">
-                          {{dept.departmentName}}
-                     </mat-option>
+                      <mat-option *ngFor="let dept of departments" [value]="dept.departmentCode">
+                        {{dept.departmentName}}
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
-                  </div>
-                </li>
-                <li class="mgn-lt-10">
-                    <div class="ynw-common-form-nm">
-                    <mat-form-field>
-                      <mat-label>Doctors</mat-label>
-                      <mat-select>
-                          <mat-option>
-                              Dr.kishu
-                         </mat-option>
-                        <!-- <mat-option *ngFor="let doc of Doctors"[value]="dept.departmentCode">
-                            {{doc.docName}}
-                       </mat-option> -->
-                      </mat-select>
-                    </mat-form-field>
-                    </div>
-                  </li>
-              </ul>
-            </div>
+                </div>
+              </li>
+              <li class="col-md-5">
+                <div class="ynw-common-form-nm">
+                  <mat-form-field>
+                    <mat-label>Doctors</mat-label>
+                    <mat-select>
+                      <mat-option>
+                        Dr.kishu
+                      </mat-option>
+                      <!-- <mat-option *ngFor="let doc of Doctors"[value]="dept.departmentCode">
+                          {{doc.docName}}
+                     </mat-option> -->
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </li>
+            </ul>
           </nav>
         </header>
         <div class="head">
@@ -453,10 +457,10 @@
                     </a>
 
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
-                    *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
-                    (click)="viewBillPage('future', checkin)">
-                    <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
-                  </a>
+                      *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      (click)="viewBillPage('future', checkin)">
+                      <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                    </a>
 
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"
@@ -648,7 +652,7 @@
                       <i class="fa fa-play"></i> <span> Start</span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="addConsumerInboxMessage('single', checkin)"
-                    [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Send message'">
                       <i class="fa fa-comments-o "></i> <span> Message</span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
@@ -657,7 +661,7 @@
                       <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
                     </a>
                     <a class="btn-play pointer-cursor" (click)="addProviderNote('history', checkin)"
-                    [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Private Note'">
                       <i class="fa icon-note"></i> <span> Private Note </span>
                     </a>
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls"
@@ -824,7 +828,7 @@
                       </div>
                       <div class="col-md-12 col-xs-12 p0">
                         <a class="btn-play pointer-cursor " (click)="changeWaitlistStatus(checkin, 'DONE')"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
+                          [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'">
                           <i class="fa fa-check-circle" style="color: green;"></i> <span> {{done_cap}} </span>
                         </a>
                         <!-- <a class="btn-play pointer-cursor"
@@ -909,13 +913,13 @@
                     <i class="fa fa-newspaper-o" (click)="viewBillPage('new')"></i> </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Private Note'">
                     <i class="fa icon-note" (click)="addProviderNote('new')"></i> </div>
-                    <div *ngIf="consumerTrackstatus && waitlistSelection===1"
-                          class="statuslink popup" (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
-                          <i class="fa fa-location-arrow"></i>
-                          <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
-                          <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
+                  <div *ngIf="consumerTrackstatus && waitlistSelection===1" class="statuslink popup"
+                    (click)="locateCustomer('new')" [matTooltip]="'Where is my customer'">
+                    <i class="fa fa-location-arrow"></i>
+                    <!-- <span class="popuptext" id="myPopup">{{customerMsg}}</span> -->
+                    <!-- <span class="popuptext" id="myPopup">Your customer is {{distance}} {{unit}} away
                             from you and will reach in {{hours}} Hours and {{minutes}} Mintues</span> -->
-                        </div>
+                  </div>
                   <div class="statuslink " *ngIf="waitlistSelection===1" [matTooltip]="'Cancel'">
                     <i class="fa fa-trash-o" (click)="changeWaitlistStatus('new', 'CANCEL')"></i> </div>
                 </div>
@@ -1013,7 +1017,6 @@
                         </div>
                       </div>
                     </div>
-                    
                     <div class="clearfix"></div>
                     <div class="info-box-footer-more" *ngIf="section_new[i]">
                       <div class="col-md-12 col-xs-12 p0" *ngIf="checkin.label">
@@ -1045,7 +1048,7 @@
                     </div>
                   </div>
                 </div>
-             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                 <!-- Timeslot enabled queue statusboard -->
                 <div class="appt-wl-section col-md-12 col-xs-12 col-sm-12 no-padding mb10"
                   [class.chk-scroll]="showstatus['new']"

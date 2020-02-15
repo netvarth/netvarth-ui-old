@@ -7205,13 +7205,14 @@ padding-left: 30px;
   display: block;
 } */
 .chkin .ft-dt {
-  max-width: 100px !important;
+  max-width: 80px !important;
   background-color: transparent;
   border: none;
+  margin-bottom: 15px;
 }
 hr.wide-separator-line{
   border-top: 1px solid #ece8e8;
 }
 .pro-dash .main-header{
-  max-height: 150px !important;
+  max-height: 200px !important;
 }
