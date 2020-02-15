@@ -1,6 +1,6 @@
 
-import {interval as observableInterval,  Subscription ,  Observable } from 'rxjs';
-import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { interval as observableInterval, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Output, EventEmitter, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { projectConstants } from '../../../shared/constants/project-constants';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
@@ -9,7 +9,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
-import { Router, RoutesRecognized, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -20,7 +20,7 @@ import { AddProviderCustomerComponent } from './add-provider-customer/add-provid
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { LocateCustomerComponent } from './locate-customer/locate-customer.component';
-import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -289,11 +289,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    private sharedfunctionobj: SharedFunctions,
     private dialog: MatDialog,
     private shared_services: SharedServices,
     public dateformat: DateFormatPipe,
-    private _scrollToService: ScrollToService,
     public route: ActivatedRoute) {
     this.onResize();
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -334,7 +332,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.unAvailableSlots.length > 0) {
         this.scrollToSection();
       }
-
 
       if (this.futureUnAvailableSlots.length > 0) {
         this.scrollToSection();
@@ -381,8 +378,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.route.queryParams.subscribe((qparams) => {
-      this.time_type = +qparams.time_type;
-      console.log(this.time_type);
+      this.time_type = +qparams.time_type || 1;
       if (this.time_type >= 0) {
         this.setTimeType(this.time_type);
       }
@@ -700,7 +696,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             if (this.all_queues.length === 0) { // this is done to handle the case if no queues exists which are in enabled state
               return;
             }
-            let getsavedqueueid;
+            let getsavedqueueid = '';
             if (this.time_type === 2) {
               getsavedqueueid = this.shared_functions.getitemFromGroupStorage('f_pdq') || this.shared_functions.getitemFromGroupStorage('pdq');
             } else {
@@ -726,8 +722,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
             this.selected_queue = this.all_queues[selqid];
-
-            if (!getsavedqueueid) {
+            if (getsavedqueueid === '') {
               const selid = this.findCurrentActiveQueue(this.all_queues);
               this.selectedQueue(this.all_queues[selid]);
             }
@@ -2040,10 +2035,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomer(source) {
     const waitlistData = this.selectedCheckin[source];
     this.provider_services.getCustomerTrackStatus(waitlistData.ynwUuid).subscribe(data => {
-      console.log(data);
       this.trackDetail = data;
       this.customerMsg = this.locateCustomerMsg(this.trackDetail);
-
       this.locateCustomerdialogRef = this.dialog.open(LocateCustomerComponent, {
         width: '40%',
         panelClass: ['popup-class', 'locatecustomer-class', 'commonpopupmainclass'],
