@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-additionalinfo',
@@ -37,6 +37,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     edit_cap = Messages.EDIT_BTN;
     delete_btn = Messages.DELETE_BTN;
     domain;
+    subDomain;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     breadcrumbs = [
         {
@@ -46,33 +47,41 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         {
             url: '/provider/settings/miscellaneous',
             title: 'Miscellaneous'
-          },
-          {
+        },
+        {
             url: '/provider/settings/miscellaneous/users',
             title: 'Users'
-      
-          },
-          {
+
+        },
+        {
             url: '/provider/settings/miscellaneous/users/manageonlineprofile',
             title: 'Manageonlineprofile'
-      
-          },
-       
+
+        },
+
         {
             title: 'Additional Info'
         }
     ];
+    userdata: any;
+    domainList: any = [];
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
         private dialog: MatDialog,
         private routerobj: Router,
+        private activated_route: ActivatedRoute,
         public shared_functions: SharedFunctions,
         private service: QuestionService
     ) {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
         this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+        this.activated_route.queryParams.subscribe(data => {
+            // console.log(data);
+            this.userdata = data;
+        }
+        );
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
@@ -80,15 +89,31 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         this.domain = user.sector;
+        this.getUser();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
-        this.getBusinessProfile();
     }
     ngOnDestroy() {
         if (this.dynamicdialogRef) {
             this.dynamicdialogRef.close();
         }
+    }
+    getUser() {
+        this.provider_services.getUser(this.userdata.id)
+            .subscribe((data: any) => {
+                for (let i = 0; i < this.domainList.bdata.length; i++) {
+                    if (this.domainList.bdata[i].domain === this.domain) {
+                        for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
+                            if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
+                                this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
+                                this.getBusinessProfile();
+                            }
+                        }
+                    }
+                }
+            });
     }
     getBusinessProfile() {
         this.bProfile = [];
@@ -96,31 +121,41 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             .then(
                 data => {
                     this.bProfile = data;
-                    this.provider_datastorage.set('bProfile', data);
-                    const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+                    console.log(this.bProfile);
+                    //  this.provider_datastorage.set('bProfile', data);
+                    //  const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+                    //  console.log(loginuserdata);
                     // setting the status of the customer from the profile details obtained from the API call
-                    loginuserdata.accStatus = this.bProfile.status;
+                    //  loginuserdata.accStatus = this.bProfile.status;
                     // Updating the status (ACTIVE / INACTIVE) in the local storage
-                    this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
-                    this.serviceSector = data['serviceSector']['displayName'] || null;
-                    this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
-                    if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-                        if (this.bProfile['domainVirtualFields'] &&
-                            Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
-                            this.normal_domainfield_show = 2;
-                        }
-                        this.getDomainVirtualFields();
-                        if (this.bProfile['subDomainVirtualFields'] &&
-                            Object.keys(this.bProfile['subDomainVirtualFields']).length === 0) {
-                            this.normal_subdomainfield_show = 2;
-                        }
-                        if (this.bProfile['serviceSubSector']['subDomain']) {
-                            this.getSubDomainVirtualFields();
-                        }
+                    //   this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
+                    //  this.serviceSector = data['serviceSector']['displayName'] || null;
+                    //  this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
+                    // if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
+                    //     if (this.bProfile['domainVirtualFields'] &&
+                    //     Object.keys(this.bProfile['domainVirtualFields']).length === 0) {
+                    //     this.normal_domainfield_show = 2;
+                    // }
+                    console.log(this.domain);
+                    console.log(this.subDomain);
+                    this.getDomainVirtualFields();
+                    // if (this.bProfile['subDomainVirtualFields'] &&
+                    //     Object.keys(this.bProfile['subDomainVirtualFields']).length === 0) {
+                    //     this.normal_subdomainfield_show = 2;
+                    // }
+                    if (this.subDomain) {
+                       // this.getSubDomainVirtualFields();
                     }
+                    //}
                 },
                 () => {
-
+                    console.log(this.domain);
+                    console.log(this.subDomain);
+                    this.getDomainVirtualFields();
+                    if (this.subDomain) {
+                       // this.getSubDomainVirtualFields();
+                    }
+                    // this.normal_domainfield_show = 3;
                 }
             );
     }
@@ -128,7 +163,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     //     return Object.keys(obj);
     //   }
     getDomainVirtualFields() {
-        this.getVirtualFields(this.bProfile['serviceSector']['domain'])
+        this.getVirtualFields(this.domain)
             .then(
                 data => {
                     // this.domain_questions = data;
@@ -224,7 +259,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         const _this = this;
         return new Promise(function (resolve, reject) {
 
-            _this.provider_services.getBussinessProfile()
+            _this.provider_services.getUserBussinessProfile(this.userdata.id)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -236,8 +271,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         });
     }
     getSubDomainVirtualFields() {
-        this.getVirtualFields(this.bProfile['serviceSector']['domain'],
-            this.bProfile['serviceSubSector']['subDomain']).then(
+        this.getVirtualFields(this.domain,
+            this.subDomain).then(
                 data => {
                     this.subdomain_fields = data['fields'];
                     this.subdomain_questions = data['questions'] || [];

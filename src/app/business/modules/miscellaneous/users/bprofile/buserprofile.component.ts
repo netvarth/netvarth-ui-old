@@ -120,7 +120,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       }
     ]
   };
-  breadcrumbs = [
+  breadcrumbs_init = [
     {
       title: 'Settings',
       url: '/provider/settings'
@@ -133,16 +133,9 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
       url: '/provider/settings/miscellaneous/users',
       title: 'Users'
 
-    },
-    {
-      url: '/provider/settings/miscellaneous/users/manageonlineprofile',
-      title: 'Manageonlineprofile'
-
-    },
-    {
-      title: 'Online Profile'
     }
   ];
+  breadcrumbs = this.breadcrumbs_init;
   businessConfig: any = [];
   customer_label = '';
   maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
@@ -191,6 +184,14 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
     this.domain = user.sector;
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
     this.getBusinessConfiguration();
+    const breadcrumbs = [];
+            this.breadcrumbs_init.map((e) => {
+                breadcrumbs.push(e);
+            });
+            breadcrumbs.push({
+                title: this.userdata.type
+            });
+            this.breadcrumbs = breadcrumbs;
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
 
@@ -446,7 +447,12 @@ specializations() {
     this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','specializations'], navigationExtras);
 }
 additionalInfo() {
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','additionalinfo']);
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+        id: this.userdata.id
+    }
+};
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','additionalinfo'], navigationExtras);
 }
 languagesKnown() {
     this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','languages']);

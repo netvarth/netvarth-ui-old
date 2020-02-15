@@ -134,9 +134,11 @@ updateForm() {
         } else {
             const post_itemdata = {
                 'businessName': form_data.bname,
-                'businessDesc': form_data.bdesc,
-                'userSubdomain': this.user_arr.subdomain
+                'businessDesc': form_data.bdesc
             };
+            if (this.user_arr.userType === 'PROVIDER') {
+                post_itemdata['userSubdomain'] = this.user_arr.subdomain;
+            }
             // calling the method to update the primarty fields in bProfile edit page
             if (this.bProfile) {
                 this.updatePrimaryFields(post_itemdata);
