@@ -48,6 +48,7 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
 
     ngOnInit() {
         this.bProfile = this.data.bprofile;
+        console.log(this.bProfile);
         this.getUser();
         // calling method to create the form
         this.createForm();
@@ -140,10 +141,12 @@ updateForm() {
                 post_itemdata['userSubdomain'] = this.user_arr.subdomain;
             }
             // calling the method to update the primarty fields in bProfile edit page
-            if (this.bProfile) {
-                this.updatePrimaryFields(post_itemdata);
+            if (this.bProfile.length === 0) {
+                this.createPrimaryFields(post_itemdata);
+                
             } else {
-            this.createPrimaryFields(post_itemdata);
+                console.log("create");
+                this.updatePrimaryFields(post_itemdata);
             }
         }
     }
@@ -171,7 +174,7 @@ updateForm() {
 
     updatePrimaryFields(pdata) {
         this.disableButton = true;
-        this.provider_servicesobj.updateUserbProfile(pdata, this.data.userId)
+        this.provider_servicesobj.createUserbProfile(pdata, this.data.userId)
             .subscribe(
                 () => {
                     this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');

@@ -21,6 +21,8 @@ export class ProviderServices {
     return this.servicemeta.httpPut(path);
   }
   getVirtualFields(domain, subdomain = null) {
+    console.log(domain);
+    console.log(subdomain);
     const path = (!subdomain) ? 'provider/ynwConf/dataModel/' + domain :
       'provider/ynwConf/dataModel/' + domain + '/' + subdomain;
 
@@ -962,7 +964,7 @@ export class ProviderServices {
   patchUserbProfile(data, id) {
     return this.servicemeta.httpPatch('provider/user/providerBprofile/' + id, data);
   }
-  updateUserbProfile(data, id) {
+  createUserbProfile(data, id) {
     return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
   }
 
