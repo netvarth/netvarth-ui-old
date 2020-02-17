@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderBprofileSearchDynamicComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
- import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-additionalinfo',
@@ -144,7 +144,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     //     this.normal_subdomainfield_show = 2;
                     // }
                     if (this.subDomain) {
-                       // this.getSubDomainVirtualFields();
+                        this.getSubDomainVirtualFields();
                     }
                     //}
                 },
@@ -153,7 +153,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     console.log(this.subDomain);
                     this.getDomainVirtualFields();
                     if (this.subDomain) {
-                       // this.getSubDomainVirtualFields();
+                        this.getSubDomainVirtualFields();
                     }
                     // this.normal_domainfield_show = 3;
                 }
