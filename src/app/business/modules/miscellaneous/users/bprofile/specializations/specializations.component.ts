@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { ProviderDataStorageService } from '../../../../../../ynw_provider/services/provider-datastorage.service';
 import { AddProviderBprofileSpecializationsComponent } from '../../../../../../ynw_provider/components/add-provider-bprofile-specializations/add-provider-bprofile-specializations.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import {  userspecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
     selector: 'app-specializatons',
     templateUrl: './specializations.component.html'
@@ -13,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SpecializationsComponent implements OnInit, OnDestroy {
     specialization_arr: any = [];
     special_cap = Messages.BPROFILE_SPECIAL_CAP;
-    specialization_title = '';
+    
     bProfile = null;
     frm_specialization_cap = Messages.FRM_LEVEL_SPEC_MSG;
     have_not_add_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
@@ -23,29 +24,25 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     normal_specilization_show = 1;
     breadcrumb_moreoptions: any = [];
     userdata;
-    breadcrumbs = [
+    specn;
+    domainList: any = [];
+    subDomain;
+    breadcrumbs_init = [
         {
-            title: 'Settings',
-            url: '/provider/settings'
+          title: 'Settings',
+          url: '/provider/settings'
         },
         {
-            url: '/provider/settings/miscellaneous',
-            title: 'Miscellaneous'
-          },
-          {
-            url: '/provider/settings/miscellaneous/users',
-            title: 'Users'
-      
-          },
-          {
-            url: '/provider/settings/miscellaneous/users/manageonlineprofile',
-            title: 'Manageonlineprofile'
-      
-          },
+          url: '/provider/settings/miscellaneous',
+          title: 'Miscellaneous'
+        },
         {
-            title: 'Specializations'
+          url: '/provider/settings/miscellaneous/users',
+          title: 'Users'
+    
         }
-    ];
+      ];
+      breadcrumbs = this.breadcrumbs_init;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -55,11 +52,14 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private dialog: MatDialog
     ) {
         this.activated_route.queryParams.subscribe(data => {
-            // console.log(data);
             this.userdata = data;
-            console.log(this.userdata.id);
+            console.log(this.userdata);
+            console.log(this.userdata.type);
         }
         );
+
+       
+      
      }
     ngOnDestroy() {
         if (this.specialdialogRef) {
@@ -67,10 +67,24 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-        this.initSpecializations();
+       
+        
+        this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.getUser(); 
+      
+        const breadcrumbs = [];
+        this.breadcrumbs_init.map((e) => {
+            breadcrumbs.push(e);
+        });
+        breadcrumbs.push({
+            title: this.userdata.type
+        
+        });
+        this.breadcrumbs = breadcrumbs;
+        
+        this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     // learnmore_clicked(parent, child) {}
     performActions() {
@@ -82,16 +96,38 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->']);
       }
+
+      getUser() {
+        this.provider_services.getUser(this.userdata.id)
+            .subscribe((data: any) => {
+                for (let i = 0; i < this.domainList.bdata.length; i++) {
+                    if (this.domainList.bdata[i].domain === this.domain) {
+                        for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
+                            if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
+                                this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
+                                console.log(this.subDomain);
+                                this.initSpecializations();
+                            }
+                        }
+                    }
+                }
+            });
+            
+    }
+
     initSpecializations() {
         this.bProfile = [];
+       
         this.getBussinessProfileApi()
             .then(
                 data => {
+                    
                     this.bProfile = data;
-                    this.getSpecializations(data['serviceSector']['domain'], data['serviceSubSector']['subDomain']);
-                    this.specialization_title = (data['serviceSubSector']['displayName']) ?
-                        data['serviceSubSector']['displayName'] : '';
-                    if (this.bProfile.specialization) {
+                    console.log(this.domain);
+                   console.log(this.subDomain);
+                  this.getSpecializations(this.domain,this.subDomain);
+                   
+                  if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
                             this.normal_specilization_show = 3;
                         } else {
@@ -100,6 +136,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     } else {
                         this.normal_specilization_show = 2;
                     }
+                  
                 },
                 () => {
                     this.normal_specilization_show = 2;
@@ -107,6 +144,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                 );
     }
     getSpecializations(domain, subdomain) {
+        
         this.provider_services.getSpecializations(domain, subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
@@ -127,6 +165,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
             _this.provider_services.getUserBussinessProfile(_this.userdata.id)
                 .subscribe(
                     data => {
+                        console.log(data)
                         resolve(data);
                     },
                     () => {
@@ -146,14 +185,16 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
 
         const bprof = holdselspec;
         const special = this.specialization_arr;
-        this.specialdialogRef = this.dialog.open(AddProviderBprofileSpecializationsComponent, {
+        this.specialdialogRef = this.dialog.open(userspecializationComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
             disableClose: true,
             autoFocus: false,
             data: {
                 selspecializations: bprof,
-                specializations: special
+                specializations: special,
+                userId:this.userdata.id,
+                
             }
         });
         this.specialdialogRef.afterClosed().subscribe(result => {
