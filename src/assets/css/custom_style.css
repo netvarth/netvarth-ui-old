@@ -6759,3 +6759,11 @@ label.notifi-togl {
     max-width: 80px !important;
   }
 }
+.gallery-li {
+  width: 40% !important;
+  margin-top: 0px !important;
+  margin-right: 5px !important;
+}
+.gallery-li .galbx{
+  height: 200px !important;
+}
