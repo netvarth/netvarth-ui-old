@@ -25,6 +25,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     breadcrumb_moreoptions: any = [];
     userdata;
     specn;
+    username;
     domainList: any = [];
     subDomain;
     breadcrumbs_init = [
@@ -40,7 +41,8 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
           url: '/provider/settings/miscellaneous/users',
           title: 'Users'
     
-        }
+        },
+        
       ];
       breadcrumbs = this.breadcrumbs_init;
     constructor(
@@ -52,14 +54,10 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private dialog: MatDialog
     ) {
         this.activated_route.queryParams.subscribe(data => {
+            console.log(data);
             this.userdata = data;
-            console.log(this.userdata);
-            console.log(this.userdata.type);
-        }
+             }
         );
-
-       
-      
      }
     ngOnDestroy() {
         if (this.specialdialogRef) {
@@ -67,23 +65,10 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-       
-        
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getUser(); 
-      
-        const breadcrumbs = [];
-        this.breadcrumbs_init.map((e) => {
-            breadcrumbs.push(e);
-        });
-        breadcrumbs.push({
-            title: this.userdata.type
-        
-        });
-        this.breadcrumbs = breadcrumbs;
-        
         this.breadcrumb_moreoptions = {  'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     // learnmore_clicked(parent, child) {}
@@ -97,9 +82,21 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->']);
       }
 
-      getUser() {
+    getUser()
+    {
         this.provider_services.getUser(this.userdata.id)
             .subscribe((data: any) => {
+                    this.username = data.firstName;
+                    const breadcrumbs = [];
+                    this.breadcrumbs_init.map((e) => {
+                        breadcrumbs.push(e);
+                    });
+                    breadcrumbs.push({
+                        title: this.username
+                    
+                    });
+                    this.breadcrumbs = breadcrumbs;
+                    
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
@@ -112,22 +109,21 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                     }
                 }
             });
+           
             
     }
 
-    initSpecializations() {
+    initSpecializations() 
+    {
         this.bProfile = [];
-       
         this.getBussinessProfileApi()
             .then(
                 data => {
-                    
                     this.bProfile = data;
                     console.log(this.domain);
-                   console.log(this.subDomain);
-                  this.getSpecializations(this.domain,this.subDomain);
-                   
-                  if (this.bProfile.specialization) {
+                    console.log(this.subDomain);
+                    this.getSpecializations(this.domain,this.subDomain);
+                if (this.bProfile.specialization) {
                         if (this.bProfile.specialization.length > 0) {
                             this.normal_specilization_show = 3;
                         } else {
@@ -143,8 +139,8 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
                   }
                 );
     }
-    getSpecializations(domain, subdomain) {
-        
+    getSpecializations(domain, subdomain) 
+    {
         this.provider_services.getSpecializations(domain, subdomain)
             .subscribe(data => {
                 this.specialization_arr = data;
@@ -161,8 +157,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-
-            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
+         _this.provider_services.getUserBussinessProfile(_this.userdata.id)
                 .subscribe(
                     data => {
                         console.log(data)
@@ -200,7 +195,6 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         this.specialdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (result['mod'] === 'reloadlist') {
-                    // this.getBusinessProfile();
                     this.bProfile = result['data'];
                     this.initSpecializations();
                     if (this.bProfile && this.bProfile.selspecializations) {

@@ -439,10 +439,12 @@ export class BuserProfileComponent implements OnInit, OnDestroy {
 
 
 specializations() {
+  console.log(this.userdata);
   const navigationExtras: NavigationExtras = {
     queryParams: {
         id: this.userdata.id
-    }
+        }
+
 };
     this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','specializations'], navigationExtras);
 }
