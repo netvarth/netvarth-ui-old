@@ -967,5 +967,9 @@ export class ProviderServices {
   createUserbProfile(data, id) {
     return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
   }
+  updateuserSpecializationPrimaryFields(data,id){
+    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
+
+  }
 
 }
