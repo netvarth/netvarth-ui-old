@@ -114,6 +114,7 @@ export class DisplayboardDetailComponent implements OnInit {
     qboard_list: any = [];
     displayBoardData: any = [];
     selectedQboardlist: any = [];
+    sbDetailslist: any = [];
     boardLayoutFields = {};
     boardRows = 1;
     boardCols = 1;
@@ -233,6 +234,7 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         // get the search keyword
         let search = this.qBoardFilterMultictrl.value;
+        console.log(this.qBoardFilterMultictrl.value);
         if (!search) {
         //   this.filteredQboardsMulti.next(this.qboard_list.slice());
         this.filteredQboardList = this.qboard_list.slice();
@@ -291,6 +293,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
+        if (!this.qboardSelected){
         this.metric = [];
         let name = '';
         if (this.displayName) {
@@ -341,18 +344,19 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-        let containerName = '';
+    }
+    else {
+        let name = '';
         if (this.displayName) {
-            containerName = this.displayName.trim().replace(/ /g, '_');
+            name = this.displayName.trim().replace(/ /g, '_');
         }
-        const sbIds = this.sbIds.split(',');
         if (this.actionparam === 'add') {
             const post_data = {
-                'name': containerName,
+                'name': name,
                 'layout': '1_1',
                 'displayName': this.displayName,
                 'interval': this.refreshInterval,
-                'sbIds': sbIds,
+                'sbDetails': this.sbDetailslist
             };
             this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
@@ -369,28 +373,26 @@ export class DisplayboardDetailComponent implements OnInit {
             // }
         }
         if (this.actionparam === 'edit') {
-            const sbids = this.sbIds.split(',');
             const post_data = {
                 'id': this.layoutData.id,
-                'name': containerName,
+                'name': name,
                 'layout': '1_1',
                 'interval': this.refreshInterval,
                 'displayName': this.displayName,
-                'sbIds': sbids
+                'sbDetails': this.sbDetailslist
             };
             this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-               // this.editLayoutbyId(this.layoutData.id);
-               this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+                // this.editLayoutbyId(this.layoutData.id);
+                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
             },
                 error => {
                     this.api_loading = false;
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-
-
     }
+}
     onCancel() {
         if (this.actionparam === 'edit') {
             this.actionparam = 'view';
@@ -444,16 +446,14 @@ export class DisplayboardDetailComponent implements OnInit {
     nestedQboardSelected(event) {
         this.qboardSelected = event.checked;
     }
-    selectedQboards(qBoardName) {
-        this.selectedQboardlist.push(qBoardName);
-        // this.clearQboardSelected();
-    }
     clearQboardSelected() {
         this.qBoardFilterMultictrl.reset();
         this.nestedRefreshInterval = '';
     }
     addBtnClicked() {
-        this.selectedQboardlist.push({'qBoard' : this.qBoardFilterMultictrl.value, 'interval' : this.nestedRefreshInterval});
+        this.selectedQboardlist.push({'qBoard' : this.qBoardFilterMultictrl.value.displayName, 'interval' : this.nestedRefreshInterval});
+        // console.log(this.qBoardFilterMultictrl.value);
+        this.sbDetailslist.push({'sbId' : this.qBoardFilterMultictrl.value.id, 'sbInterval' : this.nestedRefreshInterval});
         this.clearQboardSelected();
     }
 }
