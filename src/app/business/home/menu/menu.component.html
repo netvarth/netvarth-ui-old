@@ -48,23 +48,23 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="">&nbsp;</li>
-      <li class="active menu-open" style="height: auto;">
-        <a class="pointer-cursor" (click)="dashboardClicked()" routerLink="check-ins" [queryParams]="{time_type:1}">
+      <li class="menu-open dashb" style="height: auto;">
+        <a class="pointer-cursor" (click)="dashboardClicked()">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-          <span class="pull-right-container treeview">
+          <!-- <span class="pull-right-container treeview">
             <i class="fa fa-angle-left pull-right"></i>
-          </span>
+          </span> -->
         </a>
         <ul class="treeview-menu">
           <li><a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:1}" (click)="closeMenu()"
               routerLinkActive="active-lnk">
-              <i class="material-icons" style="font-size:20px">today</i> <span>Today </span></a></li>
+              <i class="material-icons" style="font-size:20px">today</i> <span> Today </span></a></li>
           <li><a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:2}" (click)="closeMenu()"
               routerLinkActive="active-lnk">
-              <i class="material-icons" style="font-size:20px">next_week</i> <span>Future </span></a></li>
+              <i class="material-icons" style="font-size:20px">next_week</i> <span> Future </span></a></li>
           <li><a class="pointer-cursor" routerLink="check-ins" [queryParams]="{time_type:3}" (click)="closeMenu()"
               routerLinkActive="active-lnk">
-              <i class="material-icons" style="font-size:20px">history</i><span> History</span> </a></li>
+              <i class="material-icons" style="font-size:20px">history</i><span> History </span> </a></li>
         </ul>
       </li>
       <li class="separator"></li>

@@ -7216,3 +7216,6 @@ hr.wide-separator-line{
 .pro-dash .main-header{
   max-height: 200px !important;
 }
+.sidebar-menu .dashb .treeview-menu{
+  display: block !important;
+}
