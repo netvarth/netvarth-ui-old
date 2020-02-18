@@ -187,7 +187,7 @@
                                         </div> -->
                                     <!-- </div> -->
                                 <!-- </div> -->
-                                <div class="lt0"  *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime" >
+                                <div class="lt0"  *ngIf="waitlist.jaldeeWaitlistDistanceTime && waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime && waitlist.waitlistStatus === 'checkedIn'" >
                                     <div  >
                                         <span *ngIf="waitlist.jaldeeStartTimeType == 'AFTERSTART'"> <label>Enable live tracking </label></span>
                                         <p *ngIf="waitlist.jaldeeStartTimeType == 'ONEHOUR'" class="form-level-settings">Automatic Live tracking is enabled</p>
