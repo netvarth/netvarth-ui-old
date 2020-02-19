@@ -219,11 +219,11 @@ export class SharedServices {
     return this.servicemeta.httpGet('consumer/familyMember');
   }
   getProviderCustomerFamilyMembers(consumer_id) {
-    const url = 'provider/familyMember/' + consumer_id;
+    const url = 'provider/customers/familyMember/' + consumer_id;
     return this.servicemeta.httpGet(url);
   }
   addProviderCustomerFamilyMember(data) {
-    return this.servicemeta.httpPost('provider/familyMember', data);
+    return this.servicemeta.httpPost('provider/customers/familyMember', data);
   }
   addMembers(data) {
     return this.servicemeta.httpPost('consumer/familyMember', data);

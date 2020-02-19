@@ -272,7 +272,8 @@ export class ProviderCheckinComponent implements OnInit {
                         this.create_new = true;
                     } else {
                         this.customer_data = data[0];
-                        // this.getFamilyMembers();
+                        this.getFamilyMembers();
+                        console.log(this.customer_data);
                         this.initCheckIn();
                     }
                 },
@@ -283,9 +284,8 @@ export class ProviderCheckinComponent implements OnInit {
     }
     initCheckIn() {
         this.showCheckin = true;
-
         this.waitlist_for = [];
-        this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.userProfile.firstName + ' ' + this.customer_data.userProfile.lastName });
+        this.waitlist_for.push({ id: this.customer_data.id, name: this.customer_data.firstName + ' ' + this.customer_data.lastName });
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -305,6 +305,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.sel_loc = loc.id;
 
         this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+        console.log(this.sel_checkindate);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const ddd = new Date(day);
@@ -435,8 +436,8 @@ export class ProviderCheckinComponent implements OnInit {
         self_obj = {
             'userProfile': {
                 'id': this.customer_data.id,
-                'firstName': this.customer_data.userProfile.firstName,
-                'lastName': this.customer_data.userProfile.lastName
+                'firstName': this.customer_data.firstName,
+                'lastName': this.customer_data.lastName
             }
         };
         fn.subscribe(data => {

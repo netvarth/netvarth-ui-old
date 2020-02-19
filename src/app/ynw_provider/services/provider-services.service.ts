@@ -204,7 +204,7 @@ export class ProviderServices {
   updateDomainSubDomainFields(data, domain, subdomain = null) {
     const path = (!subdomain) ? 'provider/bProfile/domain' :
       'provider/bProfile/' + subdomain;
-console.log(data);
+    console.log(data);
     return this.servicemeta.httpPut(path, data);
   }
   updateSocialMediaLinks(data) {
@@ -491,7 +491,7 @@ console.log(data);
     const url = 'provider/license/invoices/' + status + '/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getInvoiceStatus(filter){
+  getInvoiceStatus(filter) {
     const url = 'provider/license/invoice';
     return this.servicemeta.httpGet(url, null, filter);
   }
@@ -580,12 +580,20 @@ console.log(data);
   acknowledgeAlert(id) {
     return this.servicemeta.httpPut('provider/alerts/' + id);
   }
+  // getProviderCustomers(filter = {}) {
+  //   const url = 'provider/waitlist/consumers';
+  //   return this.servicemeta.httpGet(url, null, filter);
+  // }
+  // getProviderCustomersCount(filter = {}) {
+  //   const url = 'provider/waitlist/consumers/count';
+  //   return this.servicemeta.httpGet(url, null, filter);
+  // }
   getProviderCustomers(filter = {}) {
-    const url = 'provider/waitlist/consumers';
+    const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getProviderCustomersCount(filter = {}) {
-    const url = 'provider/waitlist/consumers/count';
+    const url = 'provider/customers/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
   createProviderCustomer(data) {
@@ -937,13 +945,13 @@ console.log(data);
   // }
   getUsers() {
     const url = 'provider/user';
-    return this.servicemeta.httpGet (url);
+    return this.servicemeta.httpGet(url);
   }
   createUser(post_data) {
     const url = 'provider/user';
     return this.servicemeta.httpPost(url, post_data);
   }
-  updateUser(post_data , id) {
+  updateUser(post_data, id) {
     const url = 'provider/user/' + id;
     return this.servicemeta.httpPut(url, post_data);
   }
@@ -952,8 +960,8 @@ console.log(data);
     return this.servicemeta.httpGet(url);
   }
   disableEnableuser(userid, stat) {
-   const url = 'provider/user/' + stat + '/' + userid;
-   return this.servicemeta.httpPut(url);
+    const url = 'provider/user/' + stat + '/' + userid;
+    return this.servicemeta.httpPut(url);
   }
   getUserBussinessProfile(id) {
     const url = 'provider/user/providerBprofile/' + id;
@@ -963,18 +971,18 @@ console.log(data);
     return this.servicemeta.httpPatch('provider/user/providerBprofile/' + id, data);
   }
   createUserbProfile(data, id) {
-    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
+    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id, data);
   }
-  updateuserSpecializationPrimaryFields(data,id){
-    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
+  updateuserSpecializationPrimaryFields(data, id) {
+    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id, data);
 
   }
-  updateDomainFields(id ,postdata) {
+  updateDomainFields(id, postdata) {
     console.log(postdata);
     const url = 'provider/user/providerBprofile/domain' + '/' + id;
     return this.servicemeta.httpPut(url, postdata);
-}
-updatesubDomainFields(id , postdata , subdomainId) {
-  return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + id , postdata);
-}
+  }
+  updatesubDomainFields(id, postdata, subdomainId) {
+    return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + id, postdata);
+  }
 }

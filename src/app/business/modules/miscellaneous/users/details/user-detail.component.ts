@@ -63,16 +63,16 @@ export class BranchUserDetailComponent implements OnInit {
         }
     ];
     breadcrumbs = this.breadcrumbs_init;
-    actionparam ;
+    actionparam;
     subDomainList: any = [];
     business_domains;
     showAdvancedSection = false;
     filterBydept = false;
     removeitemdialogRef;
     departments: any = [];
-   userId;
-   user_data: any = [];
-   userTypesFormfill : any = [ 'CONSUMER','ASSISTANT','ADMIN','PROVIDER']
+    userId;
+    user_data: any = [];
+    userTypesFormfill: any = ['CONSUMER', 'ASSISTANT', 'ADMIN', 'PROVIDER'];
     dept: any;
     subDom;
     // selected_dept;
@@ -89,18 +89,18 @@ export class BranchUserDetailComponent implements OnInit {
         this.activated_route.queryParams.subscribe(data => {
             // console.log(data);
             this.actionparam = data;
-            
+
         }
         );
-        
+
     }
     ngOnInit() {
-         this.createForm();
+        this.createForm();
         if (this.actionparam.val) {
             this.userId = this.actionparam.val;
             this.getUserData();
         }
-       
+
         const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         if (bConfig && bConfig.bdata) {
@@ -136,46 +136,46 @@ export class BranchUserDetailComponent implements OnInit {
             phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstants.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstants.VALIDATOR_EMAIL)])],
-          //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+            //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
             selectedSubDomain: [0, Validators.compose([Validators.required])],
             selectedDepartment: [],
             selectedUserType: ['', Validators.compose([Validators.maxLength(500)])],
-            address:[],
-            state:[],
-            city:[]
+            address: [],
+            state: [],
+            city: []
         });
-       
+
         // if (this.actionparam.type === 'edit') {
         //     this.updateForm();
         // }
         this.getWaitlistMgr();
     }
-getUserData() {
-    if (this.userId) {
-        this.provider_services.getUser(this.userId)
-            .subscribe(
-                res => {
-                    this.user_data = res;
-                    console.log(this.user_data);
-                    if (this.actionparam.type === 'edit') {
-                    //this.createForm();
-                    this.updateForm();
+    getUserData() {
+        if (this.userId) {
+            this.provider_services.getUser(this.userId)
+                .subscribe(
+                    res => {
+                        this.user_data = res;
+                        console.log(this.user_data);
+                        if (this.actionparam.type === 'edit') {
+                            // this.createForm();
+                            this.updateForm();
+                        }
+                        const breadcrumbs = [];
+                        this.breadcrumbs_init.map((e) => {
+                            breadcrumbs.push(e);
+                        });
+                        breadcrumbs.push({
+                            title: this.user_data.firstName
+                        });
+                        this.breadcrumbs = breadcrumbs;
                     }
-                    const breadcrumbs = [];
-            this.breadcrumbs_init.map((e) => {
-                breadcrumbs.push(e);
-            });
-            breadcrumbs.push({
-                title: this.user_data.firstName
-            });
-            this.breadcrumbs = breadcrumbs;
-                }
-            );
+                );
             // if (this.actionparam.type === 'edit') {
             //     this.createForm();
             //     }
+        }
     }
-}
     updateForm() {
         console.log(this.user_data.firstName);
         if (this.user_data.userType === 'PROVIDER') {
@@ -199,17 +199,17 @@ getUserData() {
             //         console.log(this.dept);
             //     }
             // }
-    
+
         }
         // console.log("up form");
         this.userForm.setValue({
             'first_name': this.user_data.firstName || null,
-            'last_name': this.user_data.lastName || null ,
-            'gender': this.user_data.gender || null ,
+            'last_name': this.user_data.lastName || null,
+            'gender': this.user_data.gender || null,
             'phonenumber': this.user_data.mobileNo || null,
             'dob': this.user_data.dob || null,
             'email': this.user_data.email || null,
-            //'password': this.user_data.commonPassword || this.userForm.get('password').value,
+            // 'password': this.user_data.commonPassword || this.userForm.get('password').value,
             'selectedSubDomain': this.user_data.subdomain || null,
             'selectedDepartment': this.user_data.deptId || null,
             'selectedUserType': this.user_data.userType || null,
@@ -217,8 +217,8 @@ getUserData() {
             'state': this.user_data.state || null,
             'city': this.user_data.city || null
         });
-        
-}
+
+    }
     onItemSelect(subdomain) {
         // console.log(subdomain);
     }
@@ -228,7 +228,7 @@ getUserData() {
         } else {
             this.showPrvdrFields = false;
         }
-console.log(event.value);
+        console.log(event.value);
     }
     onSubmit(input) {
         let date_format = null;
@@ -251,96 +251,96 @@ console.log(event.value);
         if (this.fnameerror !== null || this.lnameerror !== null) {
             return;
         }
-        
+
         // console.log(this.actionparam);
-       // if (this.actionparam === 'add') {
+        // if (this.actionparam === 'add') {
 
 
-            // const data = {
-            //     'firstName': 'string',
-            //     'lastName': 'string',
-            //     'address': 'string',
-            //     'mobileNo': 0,
-            //     'dob': '2020-01-21T09:12:18.734Z',
-            //     'gender': 'string',
-            //     'userType': 'CONSUMER',
-            //     'email': 'string',
-            //     'city': 'string',
-            //     'state': 'string'
-            // };
+        // const data = {
+        //     'firstName': 'string',
+        //     'lastName': 'string',
+        //     'address': 'string',
+        //     'mobileNo': 0,
+        //     'dob': '2020-01-21T09:12:18.734Z',
+        //     'gender': 'string',
+        //     'userType': 'CONSUMER',
+        //     'email': 'string',
+        //     'city': 'string',
+        //     'state': 'string'
+        // };
 
-            // const post_data = {
-            //     'userProfile': {
-            //         'firstName': input.first_name.trim() || null,
-            //         'lastName': input.last_name.trim() || null,
-            //         'address': 'ff',
-            //         'mobileNo': input.phonenumber,
-            //         'dob': date_format || null,
-            //         'gender': input.gender || null,
-            //         'userType': 'CONSUMER',
-            //         'email': input.email || '',
-            //         'city': 'string',
-            //         'state': 'string'
-            //     },
-            //     'subSector': input.selectedSubDomain.subDomain,
-            //     'commonPassword': input.password,
-            //     'isAdmin': true,
-            //     'departmentCode': input.selectedDepartment
-            // };
+        // const post_data = {
+        //     'userProfile': {
+        //         'firstName': input.first_name.trim() || null,
+        //         'lastName': input.last_name.trim() || null,
+        //         'address': 'ff',
+        //         'mobileNo': input.phonenumber,
+        //         'dob': date_format || null,
+        //         'gender': input.gender || null,
+        //         'userType': 'CONSUMER',
+        //         'email': input.email || '',
+        //         'city': 'string',
+        //         'state': 'string'
+        //     },
+        //     'subSector': input.selectedSubDomain.subDomain,
+        //     'commonPassword': input.password,
+        //     'isAdmin': true,
+        //     'departmentCode': input.selectedDepartment
+        // };
 
-            // const post_data = {
-            //     'userProfile': {
-            //         'firstName': input.first_name.trim() || null,
-            //         'lastName': input.last_name.trim() || null,
-            //         'dob': date_format || null,
-            //         'gender': input.gender || null,
-            //         'email': input.email || '',
-            //         'countryCode': '+91',
-            //         'primaryMobileNo': input.phonenumber
-            //     },
-            //     'subSector': input.selectedSubDomain.subDomain,
-            //     'commonPassword': input.password,
-            //     'isAdmin': true,
-            //     'departmentCode': input.selectedDepartment
-            // };
-            const post_data1 = {
-                    'firstName': input.first_name.trim() || null,
-                    'lastName': input.last_name.trim() || null,
-                    'dob': date_format || null,
-                    'gender': input.gender || null,
-                    'email': input.email || '',
-                    'mobileNo': input.phonenumber,
-                'address': input.address,
-                'city': input.city,
-                'state': input.state,
-               // 'deptId': input.selectedDepartment,
-                'userType': input.selectedUserType
-            };
-            // console.log(input.selectedDepartment);
-            if (input.selectedUserType === 'PROVIDER') {
-                post_data1['deptId'] = input.selectedDepartment;
-                post_data1['subdomain'] = input.selectedSubDomain;
-            }
-            
-                if (this.actionparam.type === 'edit') {
-                    this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
-                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
-                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
-                    },
-                        error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
-                } else {
-                    this.provider_services.createUser(post_data1).subscribe(() => {
-                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
-                        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
-                    },
-                        error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
-                }
+        // const post_data = {
+        //     'userProfile': {
+        //         'firstName': input.first_name.trim() || null,
+        //         'lastName': input.last_name.trim() || null,
+        //         'dob': date_format || null,
+        //         'gender': input.gender || null,
+        //         'email': input.email || '',
+        //         'countryCode': '+91',
+        //         'primaryMobileNo': input.phonenumber
+        //     },
+        //     'subSector': input.selectedSubDomain.subDomain,
+        //     'commonPassword': input.password,
+        //     'isAdmin': true,
+        //     'departmentCode': input.selectedDepartment
+        // };
+        const post_data1 = {
+            'firstName': input.first_name.trim() || null,
+            'lastName': input.last_name.trim() || null,
+            'dob': date_format || null,
+            'gender': input.gender || null,
+            'email': input.email || '',
+            'mobileNo': input.phonenumber,
+            'address': input.address,
+            'city': input.city,
+            'state': input.state,
+            // 'deptId': input.selectedDepartment,
+            'userType': input.selectedUserType
+        };
+        // console.log(input.selectedDepartment);
+        if (input.selectedUserType === 'PROVIDER') {
+            post_data1['deptId'] = input.selectedDepartment;
+            post_data1['subdomain'] = input.selectedSubDomain;
         }
-  //  }
+
+        if (this.actionparam.type === 'edit') {
+            this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
+                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+            },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        } else {
+            this.provider_services.createUser(post_data1).subscribe(() => {
+                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('BRANCHUSER_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
+            },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
+    }
+    //  }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users']);
     }
@@ -407,7 +407,7 @@ console.log(event.value);
                 data => {
                     this.departments = data['departments'];
                     if (this.actionparam.type !== 'edit') {
-                    this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentId);
+                        this.userForm.get('selectedDepartment').setValue(this.departments[0].departmentId);
                     }
                     this.api_loading = false;
                 },

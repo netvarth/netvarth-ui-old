@@ -118,12 +118,12 @@
           </div> -->
           <div class="col-md-12 custs no-padding pt10 pb10" *ngFor="let customer of customers">
             <div class="col-md-4 col-sm-7 mt5">
-              {{customer.consumer.userProfile.firstName}} {{customer.consumer.userProfile.lastName}}
+              {{customer.firstName}} {{customer.lastName}}
             </div>
-            <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.consumer.userProfile.primaryMobileNo.length === 10">
-              <span><i class="fa fa-mobile"></i>{{customer.consumer.userProfile.primaryMobileNo}}</span></div>
-            <div class="col-md-4 col-sm-7 mt5"><span *ngIf="customer.consumer.userProfile.email"><i
-                  class="fa fa-envelope"></i>{{customer.consumer.userProfile.email}}</span></div>
+            <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.primaryMobileNo.length === 10">
+              <span><i class="fa fa-mobile"></i>{{customer.primaryMobileNo}}</span></div>
+            <div class="col-md-4 col-sm-7 mt5"><span *ngIf="customer.email"><i
+                  class="fa fa-envelope"></i>{{customer.email}}</span></div>
             <div class="col-md-2 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on
                 {{customer.lastVisitedDate | date: dateFormat }}</span></div>
             <div class="clearfix"></div>
