@@ -32,8 +32,8 @@ export const Messages = {
   'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
   'DISCOUNT_DELETED': 'Discount deleted successfully',
   'DISCOUNT_LISTEMPTY': 'No Discounts exist',
-  //Bill/Discountdetails
-  'DISCOUNT_NAME_MAND_CAP':'Enter the name of discount *',
+  // Bill/Discountdetails
+  'DISCOUNT_NAME_MAND_CAP': 'Enter the name of discount *',
 
   // Bill Coupons
   'COUPON_CREATED': 'Coupon created successfully',
@@ -942,18 +942,18 @@ export const Messages = {
   'PAY_BUTTON': 'Statement to Pay',
   'DUE_DATE_CAP': 'Due Date',
   'SUBSC_PACKAGE': 'Subscription/Package',
-   
+
   // App-ynw_provider-component-provider-license-invoicestatus
-  'INVOICE_STATUS_CAP':'Invoice Status',
-  'PAID':'Paid', 
-  'UNPAID':'Notpaid',
-  'CANCEL':'Cancel',
-  'WAIVED':'Waived',
-  'OBSOLETE':'Obsolete',
+  'INVOICE_STATUS_CAP': 'Invoice Status',
+  'PAID': 'Paid',
+  'UNPAID': 'Notpaid',
+  'CANCEL': 'Cancel',
+  'WAIVED': 'Waived',
+  'OBSOLETE': 'Obsolete',
 
- 
 
-   // App-ynw_provider-components-provider-license-usage
+
+  // App-ynw_provider-components-provider-license-usage
   'TOTAL_CAP': 'Total',
   'USED_CAP': 'Used',
   'COMPLIANCE_CAP': 'Compliance Info',
@@ -1446,15 +1446,15 @@ export const Messages = {
   // live track
   'TRACKINGENABLED': 'Tracking Enabled successfully',
   'CONSUMERSETTINGSSUCCESS': 'Consumer notification settings updated successfully',
-   'TRACKINGCANCELENABLED': 'You have allowed [provider_name] to track your ETA',
+  'TRACKINGCANCELENABLED': 'You have allowed [provider_name] to track your ETA',
   'TRACKINGCANCELDISABLED': 'You have not allowed [provider_name] to track your ETA',
   'CONTACT_SUPERADMIN': 'Please contact administrator for license related operations',
   'DISPLAYBOARD_OPTIONAL_FIELDS': 'QBoard optional field',
-  //Doctor
+  // Doctor
   'BRANCHDOCTOR_ADDED': 'Doctor created successfully',
   'BRANCHDOCTOR_UPDATED': 'Doctor updated successfully',
-  //Assistants
+  // Assistants
   'BRANCHASSISTANT_ADDED': 'Assistant created successfully',
   'BRANCHASSISTANT_UPDATED': 'Assistant updated successfully',
-  'BRANCHUSER_DELETED':'User deleted successfully'
+  'BRANCHUSER_DELETED': 'User deleted successfully'
 };
