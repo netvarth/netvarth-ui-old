@@ -8,6 +8,7 @@ import { ProviderBprofileSearchDynamicComponent } from '../../../../../../ynw_pr
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
+import { ProviderUserBprofileSearchDynamicComponent } from './provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',
@@ -15,7 +16,6 @@ import { projectConstants } from '../../../../../../shared/constants/project-con
 })
 export class AdditionalInfoComponent implements OnInit, OnDestroy {
     frm_additional_cap = '';
-    bProfile = null;
     dynamicdialogRef;
     customer_label = '';
     domain_fields = [];
@@ -38,6 +38,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     delete_btn = Messages.DELETE_BTN;
     domain;
     subDomain;
+    bProfile:any = [];
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     breadcrumbs = [
         {
@@ -65,6 +66,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     ];
     userdata: any;
     domainList: any = [];
+    subDomainId;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -91,6 +93,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
         this.domain = user.sector;
+        this.bProfile['domain'] = this.domain;
         this.getUser();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
@@ -103,11 +106,13 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     getUser() {
         this.provider_services.getUser(this.userdata.id)
             .subscribe((data: any) => {
+                this.subDomainId = data.subdomain;
                 for (let i = 0; i < this.domainList.bdata.length; i++) {
                     if (this.domainList.bdata[i].domain === this.domain) {
                         for (let j = 0; j < this.domainList.bdata[i].subDomains.length; j++) {
                             if (this.domainList.bdata[i].subDomains[j].id === data.subdomain) {
                                 this.subDomain = this.domainList.bdata[i].subDomains[j].subDomain;
+                                this.bProfile['subDomain'] = this.subDomain;
                                 this.getBusinessProfile();
                             }
                         }
@@ -116,7 +121,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
             });
     }
     getBusinessProfile() {
-        this.bProfile = [];
+       
         this.getBussinessProfileApi()
             .then(
                 data => {
@@ -166,6 +171,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.getVirtualFields(this.domain)
             .then(
                 data => {
+                    this.bProfile['domainVirtualFields'] = data;
                     // this.domain_questions = data;
                     this.domain_fields = data['fields'];
                     this.domain_questions = data['questions'] || [];
@@ -222,7 +228,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.showDynamicFieldPopup(field, type);
     }
     showDynamicFieldPopup(field, type, grid_row_index = null) {
-        this.dynamicdialogRef = this.dialog.open(ProviderBprofileSearchDynamicComponent, {
+        this.dynamicdialogRef = this.dialog.open(ProviderUserBprofileSearchDynamicComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
@@ -231,7 +237,9 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 type: type,
                 questions: field,
                 bProfile: this.bProfile,
-                grid_row_index: grid_row_index
+                grid_row_index: grid_row_index,
+                userId: this.userdata.id,
+                subDomainId:this.subDomainId
             }
         });
         this.dynamicdialogRef.afterClosed().subscribe(result => {
@@ -259,7 +267,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         const _this = this;
         return new Promise(function (resolve, reject) {
 
-            _this.provider_services.getUserBussinessProfile(this.userdata.id)
+            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -274,6 +282,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
         this.getVirtualFields(this.domain,
             this.subDomain).then(
                 data => {
+                    this.bProfile['subDomainVirtualFields'] = data;
                     this.subdomain_fields = data['fields'];
                     this.subdomain_questions = data['questions'] || [];
                     this.normal_subdomainfield_show = (this.normal_subdomainfield_show === 2) ? 4 : 3;
