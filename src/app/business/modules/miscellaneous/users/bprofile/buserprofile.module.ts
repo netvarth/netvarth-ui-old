@@ -18,6 +18,7 @@ import { DynamicFormModule } from '../../../dynamic-form/dynamic-form.module';
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
+import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 import { userspecializationComponent } from './specializations/userspecialization/userspecialization.component';
 @NgModule({
     imports: [
@@ -37,7 +38,7 @@ import { userspecializationComponent } from './specializations/userspecializatio
         BuserProfileComponent,
         MediaComponent,
        // AddProviderBprofileSpokenLanguagesComponent,
-        //ProviderBprofileSearchDynamicComponent,
+       ProviderUserBprofileSearchDynamicComponent,
         LanguagesComponent,
         AdditionalInfoComponent,
         SpecializationsComponent,
@@ -46,7 +47,7 @@ import { userspecializationComponent } from './specializations/userspecializatio
     ],
     entryComponents: [
        // AddProviderBprofileSpokenLanguagesComponent,
-        //ProviderBprofileSearchDynamicComponent
+       ProviderUserBprofileSearchDynamicComponent,
         UserBprofileSearchPrimaryComponent,
         userspecializationComponent
     ],

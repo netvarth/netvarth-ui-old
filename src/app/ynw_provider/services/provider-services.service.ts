@@ -21,8 +21,6 @@ export class ProviderServices {
     return this.servicemeta.httpPut(path);
   }
   getVirtualFields(domain, subdomain = null) {
-    console.log(domain);
-    console.log(subdomain);
     const path = (!subdomain) ? 'provider/ynwConf/dataModel/' + domain :
       'provider/ynwConf/dataModel/' + domain + '/' + subdomain;
 
@@ -206,6 +204,7 @@ export class ProviderServices {
   updateDomainSubDomainFields(data, domain, subdomain = null) {
     const path = (!subdomain) ? 'provider/bProfile/domain' :
       'provider/bProfile/' + subdomain;
+console.log(data);
     return this.servicemeta.httpPut(path, data);
   }
   updateSocialMediaLinks(data) {
@@ -957,7 +956,6 @@ export class ProviderServices {
    return this.servicemeta.httpPut(url);
   }
   getUserBussinessProfile(id) {
-    console.log(id);
     const url = 'provider/user/providerBprofile/' + id;
     return this.servicemeta.httpGet(url);
   }
@@ -971,5 +969,12 @@ export class ProviderServices {
     return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
 
   }
-
+  updateDomainFields(id ,postdata) {
+    console.log(postdata);
+    const url = 'provider/user/providerBprofile/domain' + '/' + id;
+    return this.servicemeta.httpPut(url, postdata);
+}
+updatesubDomainFields(id , postdata , subdomainId) {
+  return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + id , postdata);
+}
 }
