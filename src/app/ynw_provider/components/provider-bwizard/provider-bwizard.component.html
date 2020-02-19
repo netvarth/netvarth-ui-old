@@ -94,14 +94,14 @@
                             <span class="expl">{{gps_coordinated_needeed_cap}}
                                 {{customer_label}}{{mob_for_loc_proximity_cap}}</span>
                             <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-6 col-12 no-padding-small">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="blatId"
                                             [(ngModel)]="wizard_data_holder['lat']" name="lat" placeholder="Latitude"
                                             autocomplete="off" (keyup)="handlekeyup('coord_error')"></mat-form-field>
                                     <div class="sts-msg error" *ngIf="laterror_Exists">{{lati_error}}</div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-6 col-12 no-padding-small">
                                     <mat-form-field><input matInput type="text" class="form-control" id=""
                                             [(ngModel)]="wizard_data_holder['lon']" name="lon" placeholder="Longitude"
                                             autocomplete="off" (keyup)="handlekeyup('coord_error')">

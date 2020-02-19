@@ -396,8 +396,8 @@
                       </span>
                     </div>
                     <div class="info-box-content">
-                      <div class="col-md-12 p0">
-                        <div class="col-md-7 col-xs-8 p0">
+                      <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0">
+                        <div class="col-md-7 col-xs-7 p0">
                           <div class="col-md-8 col-xs-8 p0">
                             <span class="info-box-text forwhom pointer-cursor"
                               *ngFor="let user of checkin.waitlistingFor" (click)="goCheckinDetail(checkin)">
@@ -432,7 +432,7 @@
                             </span>
                           </div>
                         </div>
-                        <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
+                        <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
                           <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
                             [matTooltip]="'Send message'" (click)="addConsumerInboxMessage('single', checkin)">
                             <i class="fa fa-comments-o "></i> <span *ngIf="!small_device_display"> Message </span>
@@ -498,7 +498,7 @@
                   <div class="info-box-content"
                     *ngIf="timeSlotCheckins && timeSlotCheckins[slot] && timeSlotCheckins[slot][0]">
                     <div class="col-md-10 col-xs-9 col-sm-10 pad-rt-0">
-                      <div class="col-md-7 col-xs-8 p0">
+                      <div class="col-md-7 col-xs-7 p0">
                         <div class="col-md-8 col-xs-8 p0">
                           <span class="info-box-text forwhom pointer-cursor"
                             *ngFor="let user of timeSlotCheckins[slot][0].waitlistingFor"
@@ -539,7 +539,7 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-5 col-xs-4 p0 info-box-icon-right">
+                      <div class="col-md-5 col-xs-5 p0 info-box-icon-right">
                         <a class="btn-play pointer-cursor" *ngIf="!section_future[i]" [matTooltipClass]="tooltipcls"
                           [matTooltip]="'Send message'"
                           (click)="addConsumerInboxMessage('single', timeSlotCheckins[slot][0])">

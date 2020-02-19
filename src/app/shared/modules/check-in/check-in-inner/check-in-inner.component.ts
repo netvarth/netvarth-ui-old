@@ -81,7 +81,7 @@ export class CheckInInnerComponent implements OnInit {
   sel_queue_waitingmins;
   sel_queue_servicetime = '';
   sel_queue_name;
-  sel_queue_timecaption;
+  sel_queue_timecaption = '';
   sel_queue_indx;
   sel_queue_det;
   sel_queue_personaahead = 0;
@@ -710,11 +710,13 @@ export class CheckInInnerComponent implements OnInit {
     this.sel_ser = obj;
     this.setServiceDetails(obj);
     this.queuejson = [];
-    this.sel_queue_id = 0;
+    // this.sel_queue_id = 0;
     this.sel_queue_waitingmins = 0;
     this.sel_queue_servicetime = '';
     this.sel_queue_personaahead = 0;
     this.sel_queue_name = '';
+    this.sel_queue_timecaption = '';
+    // this.q_preselected = false;
     this.resetApi();
     this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
@@ -1074,6 +1076,7 @@ export class CheckInInnerComponent implements OnInit {
         } else {
           this.main_heading = this.checkinLabel;
         }
+        this.handleServiceSel(this.sel_ser);
         break;
       case 3:
         this.main_heading = 'Family Members';
@@ -1703,8 +1706,9 @@ export class CheckInInnerComponent implements OnInit {
   //       });
   // }
   getAvailableTimeSlots(QStartTime, QEndTime, interval, edit?) {
-    const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
-    const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+    // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
+    // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+    const nextTimeDt = this.sharedFunctionobj.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const _this = this;
     const filter = {};
     this.availableSlots = [];
@@ -1733,9 +1737,16 @@ export class CheckInInnerComponent implements OnInit {
             }
           }
           const slots = allSlots.filter(x => !activeSlots.includes(x));
+          // for (let i = 0; i < slots.length; i++) {
+          //   const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
+          //   if (curTimeSubDt <= slotTime) {
+          //     this.availableSlots.push(slots[i]);
+          //   }
+          // }
           for (let i = 0; i < slots.length; i++) {
-            const slotTime = moment(this.sharedFunctionobj.getDateFromTimeString(slots[i])).format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
-            if (curTimeSubDt <= slotTime) {
+            const endTimeStr = moment(slots[i], ['HH:mm A']).format('HH:mm A').toString();
+            const endDTime = this.sharedFunctionobj.getDateFromTimeString(endTimeStr);
+            if (nextTimeDt <= endDTime) {
               this.availableSlots.push(slots[i]);
             }
           }

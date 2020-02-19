@@ -5539,7 +5539,7 @@ li.separator.setsplit {
 
 @media (min-width: 768px) {
   .sidebar-mini.sidebar-collapse .main-sidebar {
-    z-index: 6 !important;
+    z-index: 1 !important;
   }
 }
 
@@ -6869,7 +6869,7 @@ input.jdn_ip { width: 50px !important}
 }
 
 .display-layout .branch-sp .categoryspec{
-  font-size: 0.80rem;
+  font-size: 1.5rem;
 }
 
 .display-layout .logo img {
@@ -6992,7 +6992,7 @@ board-box {
   margin-bottom: 0px !important;
 }
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 /* Track */
 ::-webkit-scrollbar-track {
@@ -7218,4 +7218,12 @@ hr.wide-separator-line{
 }
 .sidebar-menu .dashb .treeview-menu{
   display: block !important;
+}
+.gallery-li {
+  width: 40% !important;
+  margin-top: 0px !important;
+  margin-right: 5px !important;
+}
+.gallery-li .galbx{
+  height: 200px !important;
 }

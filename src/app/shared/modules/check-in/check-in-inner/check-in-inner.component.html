@@ -129,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class='q-list-outer' *ngIf="(step==1 && queuejson.length == 1) || data.queue">
+                    <div class='q-list-outer' *ngIf="((step==1 && queuejson.length == 1) || data.queue) && sel_queue_timecaption !== ''">
                         <div class="queue-head">{{serv_time_window_cap}}
                             <div class="queue-body">
                                 <span class="sel-queue">
