@@ -12,6 +12,7 @@ import { JaldeeFilterModule } from '../../../shared/modules/filter/filter.module
 import { DateFormatPipeModule } from '../../../shared/pipes/date-format/date-format.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { CustomerModule } from '../customer/customer.module';
+import { CustomerDetailComponent } from './detail/customer-detail.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,7 @@ import { CustomerModule } from '../customer/customer.module';
         FormMessageDisplayModule,
         CustomerModule
     ],
-    declarations: [CustomersListComponent],
+    declarations: [CustomersListComponent, CustomerDetailComponent],
     entryComponents: [],
     exports: [CustomersListComponent]
 })

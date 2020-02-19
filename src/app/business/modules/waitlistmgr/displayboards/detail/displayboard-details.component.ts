@@ -6,15 +6,13 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatSelect } from '@angular/material';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Subject } from 'rxjs/Subject';
 import { take, takeUntil, startWith, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import value from '*.json';
 
 
 interface Bank {
-    id : string;
+    id: string;
     name: string;
 }
 
@@ -25,53 +23,53 @@ interface Bank {
 export class DisplayboardDetailComponent implements OnInit {
 
     myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+    options: string[] = ['One', 'Two', 'Three'];
+    filteredOptions: Observable<string[]>;
 
     /** control for the selected bank */
-  public bankCtrl: FormControl = new FormControl();
+    public bankCtrl: FormControl = new FormControl();
 
-  /** control for the MatSelect filter keyword */
- public bankFilterCtrl: FormControl = new FormControl();
+    /** control for the MatSelect filter keyword */
+    public bankFilterCtrl: FormControl = new FormControl();
 
-   /** control for the selected bank for multi-selection */
- public bankMultiCtrl: FormControl = new FormControl();
+    /** control for the selected bank for multi-selection */
+    public bankMultiCtrl: FormControl = new FormControl();
 
-  /** control for the MatSelect filter keyword multi-selection */
- public qBoardFilterMultictrl: FormControl = new FormControl();
+    /** control for the MatSelect filter keyword multi-selection */
+    public qBoardFilterMultictrl: FormControl = new FormControl();
 
-  /** list of banks */
-//   private banks: Bank[] = [
-//     {name: 'Bank A (Switzerland)', id: 'A'},
-//     {name: 'Bank B (Switzerland)', id: 'B'},
-//     {name: 'Bank C (France)', id: 'C'},
-//     {name: 'Bank D (France)', id: 'D'},
-//     {name: 'Bank E (France)', id: 'E'},
-//     {name: 'Bank F (Italy)', id: 'F'},
-//     {name: 'Bank G (Italy)', id: 'G'},
-//     {name: 'Bank H (Italy)', id: 'H'},
-//     {name: 'Bank I (Italy)', id: 'I'},
-//     {name: 'Bank J (Italy)', id: 'J'},
-//     {name: 'Bank K (Italy)', id: 'K'},
-//     {name: 'Bank L (Germany)', id: 'L'},
-//     {name: 'Bank M (Germany)', id: 'M'},
-//     {name: 'Bank N (Germany)', id: 'N'},
-//     {name: 'Bank O (Germany)', id: 'O'},
-//     {name: 'Bank P (Germany)', id: 'P'},
-//     {name: 'Bank Q (Germany)', id: 'Q'},
-//     {name: 'Bank R (Germany)', id: 'R'}
-//   ]
+    /** list of banks */
+    //   private banks: Bank[] = [
+    //     {name: 'Bank A (Switzerland)', id: 'A'},
+    //     {name: 'Bank B (Switzerland)', id: 'B'},
+    //     {name: 'Bank C (France)', id: 'C'},
+    //     {name: 'Bank D (France)', id: 'D'},
+    //     {name: 'Bank E (France)', id: 'E'},
+    //     {name: 'Bank F (Italy)', id: 'F'},
+    //     {name: 'Bank G (Italy)', id: 'G'},
+    //     {name: 'Bank H (Italy)', id: 'H'},
+    //     {name: 'Bank I (Italy)', id: 'I'},
+    //     {name: 'Bank J (Italy)', id: 'J'},
+    //     {name: 'Bank K (Italy)', id: 'K'},
+    //     {name: 'Bank L (Germany)', id: 'L'},
+    //     {name: 'Bank M (Germany)', id: 'M'},
+    //     {name: 'Bank N (Germany)', id: 'N'},
+    //     {name: 'Bank O (Germany)', id: 'O'},
+    //     {name: 'Bank P (Germany)', id: 'P'},
+    //     {name: 'Bank Q (Germany)', id: 'Q'},
+    //     {name: 'Bank R (Germany)', id: 'R'}
+    //   ]
 
-  /** list of banks filtered by search keyword */
-  public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+    /** list of banks filtered by search keyword */
+    public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
-  /** list of banks filtered by search keyword for multi-selection */
-  public filteredQboardsMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+    /** list of banks filtered by search keyword for multi-selection */
+    public filteredQboardsMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
-  @ViewChild('singleSelect') singleSelect: MatSelect;
+    @ViewChild('singleSelect', { static: false }) singleSelect: MatSelect;
 
-  /** Subject that emits when the component has been destroyed. */
-  private _onDestroy = new Subject<void>();
+    /** Subject that emits when the component has been destroyed. */
+    private _onDestroy = new Subject<void>();
 
 
     amForm: FormGroup;
@@ -210,44 +208,46 @@ export class DisplayboardDetailComponent implements OnInit {
     }
     ngOnInit() {
         this.filteredOptions = this.myControl.valueChanges.pipe(
+            // tslint:disable-next-line:no-shadowed-variable
             startWith(''), map(value => this._filter(value))
         );
 
 
-    this.getDisplayboardQSets();
-    this.qBoardFilterMultictrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterBanksMulti();
-      });
-      // load qboard list
-      this.getQboardlist();
+        this.getDisplayboardQSets();
+        this.qBoardFilterMultictrl.valueChanges
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(() => {
+                this.filterBanksMulti();
+            });
+        // load qboard list
+        this.getQboardlist();
 
     }
+    // tslint:disable-next-line:no-shadowed-variable
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-      }
-      private filterBanksMulti() {
+    }
+    private filterBanksMulti() {
         if (!this.qboard_list) {
-          return;
+            return;
         }
         // get the search keyword
         let search = this.qBoardFilterMultictrl.value;
         console.log(this.qBoardFilterMultictrl.value);
         if (!search) {
-        //   this.filteredQboardsMulti.next(this.qboard_list.slice());
-        this.filteredQboardList = this.qboard_list.slice();
-          return;
+            //   this.filteredQboardsMulti.next(this.qboard_list.slice());
+            this.filteredQboardList = this.qboard_list.slice();
+            return;
         } else {
-          search = search.toLowerCase();
+            search = search.toLowerCase();
         }
         this.filteredQboardList = this.qboard_list.filter(qboard => qboard.name.toLowerCase().indexOf(search) > -1);
         // filter the banks
         // this.filteredQboardsMulti.next(
         //   this.qboard_list.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
         // );
-      }
+    }
 
 
 
@@ -293,106 +293,105 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
-        if (!this.qboardSelected){
-        this.metric = [];
-        let name = '';
-        if (this.displayName) {
-            name = this.displayName.trim().replace(/ /g, '_');
-        }
-        for (let i = 0; i < this.boardRows; i++) {
-            for (let j = 0; j < this.boardCols; j++) {
-                this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
+        if (!this.qboardSelected) {
+            this.metric = [];
+            let name = '';
+            if (this.displayName) {
+                name = this.displayName.trim().replace(/ /g, '_');
+            }
+            for (let i = 0; i < this.boardRows; i++) {
+                for (let j = 0; j < this.boardCols; j++) {
+                    this.metric.push({ 'position': i + '_' + j, 'sbId': this.metricSelected[i + '_' + j] });
+                }
+            }
+            if (this.actionparam === 'add') {
+                const post_data = {
+                    'name': name,
+                    'layout': this.layout.value,
+                    'displayName': this.displayName,
+                    'serviceRoom': this.serviceRoom,
+                    'metric': this.metric,
+                };
+                this.provider_services.createDisplayboard(post_data).subscribe(data => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                    this.editLayoutbyId(data);
+                    this.actionparam = 'view';
+                },
+                    error => {
+                        this.api_loading = false;
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+                // } else {
+                //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+                // }
+            }
+            if (this.actionparam === 'edit') {
+                const post_data = {
+                    'id': this.layoutData.id,
+                    'name': name,
+                    'layout': this.layout.value,
+                    'displayName': this.displayName,
+                    'serviceRoom': this.serviceRoom,
+                    'metric': this.metric
+                };
+                this.provider_services.updateDisplayboard(post_data).subscribe(data => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                    this.editLayoutbyId(this.layoutData.id);
+                    this.actionparam = 'view';
+                },
+                    error => {
+                        this.api_loading = false;
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+            }
+        } else {
+            let name = '';
+            if (this.displayName) {
+                name = this.displayName.trim().replace(/ /g, '_');
+            }
+            if (this.actionparam === 'add') {
+                const post_data = {
+                    'name': name,
+                    'layout': '1_1',
+                    'displayName': this.displayName,
+                    'interval': this.refreshInterval,
+                    'sbDetails': this.sbDetailslist
+                };
+                this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                    // this.editLayoutbyId(data);
+                    // this.actionparam = 'view';
+                    this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+                },
+                    error => {
+                        this.api_loading = false;
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+                // } else {
+                //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
+                // }
+            }
+            if (this.actionparam === 'edit') {
+                const post_data = {
+                    'id': this.layoutData.id,
+                    'name': name,
+                    'layout': '1_1',
+                    'interval': this.refreshInterval,
+                    'displayName': this.displayName,
+                    'sbDetails': this.sbDetailslist
+                };
+                this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                    // this.editLayoutbyId(this.layoutData.id);
+                    this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+                },
+                    error => {
+                        this.api_loading = false;
+                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
             }
         }
-        if (this.actionparam === 'add') {
-            const post_data = {
-                'name': name,
-                'layout': this.layout.value,
-                'displayName': this.displayName,
-                'serviceRoom': this.serviceRoom,
-                'metric': this.metric,
-            };
-            this.provider_services.createDisplayboard(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
-                this.editLayoutbyId(data);
-                this.actionparam = 'view';
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-            // } else {
-            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-            // }
-        }
-        if (this.actionparam === 'edit') {
-            const post_data = {
-                'id': this.layoutData.id,
-                'name': name,
-                'layout': this.layout.value,
-                'displayName': this.displayName,
-                'serviceRoom': this.serviceRoom,
-                'metric': this.metric
-            };
-            this.provider_services.updateDisplayboard(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                this.editLayoutbyId(this.layoutData.id);
-                this.actionparam = 'view';
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-        }
     }
-    else {
-        let name = '';
-        if (this.displayName) {
-            name = this.displayName.trim().replace(/ /g, '_');
-        }
-        if (this.actionparam === 'add') {
-            const post_data = {
-                'name': name,
-                'layout': '1_1',
-                'displayName': this.displayName,
-                'interval': this.refreshInterval,
-                'sbDetails': this.sbDetailslist
-            };
-            this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
-                // this.editLayoutbyId(data);
-                // this.actionparam = 'view';
-                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-            // } else {
-            //     this.shared_Functionsobj.openSnackBar('Please enter the display name', { 'panelClass': 'snackbarerror' });
-            // }
-        }
-        if (this.actionparam === 'edit') {
-            const post_data = {
-                'id': this.layoutData.id,
-                'name': name,
-                'layout': '1_1',
-                'interval': this.refreshInterval,
-                'displayName': this.displayName,
-                'sbDetails': this.sbDetailslist
-            };
-            this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-                // this.editLayoutbyId(this.layoutData.id);
-                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
-            },
-                error => {
-                    this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
-        }
-    }
-}
     onCancel() {
         if (this.actionparam === 'edit') {
             this.actionparam = 'view';
@@ -451,9 +450,9 @@ export class DisplayboardDetailComponent implements OnInit {
         this.nestedRefreshInterval = '';
     }
     addBtnClicked() {
-        this.selectedQboardlist.push({'qBoard' : this.qBoardFilterMultictrl.value.displayName, 'interval' : this.nestedRefreshInterval});
+        this.selectedQboardlist.push({ 'qBoard': this.qBoardFilterMultictrl.value.displayName, 'interval': this.nestedRefreshInterval });
         // console.log(this.qBoardFilterMultictrl.value);
-        this.sbDetailslist.push({'sbId' : this.qBoardFilterMultictrl.value.id, 'sbInterval' : this.nestedRefreshInterval});
+        this.sbDetailslist.push({ 'sbId': this.qBoardFilterMultictrl.value.id, 'sbInterval': this.nestedRefreshInterval });
         this.clearQboardSelected();
     }
 }
