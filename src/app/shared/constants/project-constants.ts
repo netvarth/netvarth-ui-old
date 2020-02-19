@@ -397,7 +397,7 @@ export const projectConstants = {
 
 
   CHECK_IN_STATUSES_FILTER: [
-    { displayName: 'checked in', value: 'checkedIn' },
+    { displayName: 'Checked in', value: 'checkedIn' },
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Completed', value: 'done' },

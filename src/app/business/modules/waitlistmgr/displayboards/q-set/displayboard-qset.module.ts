@@ -11,11 +11,12 @@ import { DisplayboardQSetComponent } from './displayboard-qset.component';
 import { DisplayboardQSetDetailComponent } from './detail/displayboard-qset-detail.component';
 import { DisplayboardQSetRoutingModule } from './displayboard-qset.routing.module';
 import { MatSelectSearchModule } from '../../../../../shared/components/mat-select-search/mat-select-search/mat-select-search.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
     declarations: [
         DisplayboardQSetComponent,
-       DisplayboardQSetDetailComponent
+        DisplayboardQSetDetailComponent
     ],
     imports: [
         // DisplayboardQSetRoutingModule,
@@ -28,8 +29,9 @@ import { MatSelectSearchModule } from '../../../../../shared/components/mat-sele
         CapitalizeFirstPipeModule,
         CommonModule,
         SharedModule,
-        MatSelectSearchModule
+        MatSelectSearchModule,
+        DragDropModule
     ],
     exports: [DisplayboardQSetComponent, DisplayboardQSetDetailComponent]
 })
-export class DisplayboardQSetModule {}
+export class DisplayboardQSetModule { }

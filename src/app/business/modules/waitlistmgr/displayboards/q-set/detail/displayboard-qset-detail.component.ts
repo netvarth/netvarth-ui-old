@@ -7,8 +7,9 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstants } from '../../../../../../shared/constants/project-constants';
 import { FormControl } from '@angular/forms';
-import { Subject, ReplaySubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-displayboard-qset-detail',
@@ -29,9 +30,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     departments: any = [];
     departmentList: any = [];
     services_list: any = [];
+    servicesList: any = [];
     actionparam;
     display_schedule: any = [];
-    defaultLables: any = [];
+    display_scheduleList: any = [];
+    defaultLabels: any = [];
     showLabelEdit: any = [];
     selectedCategory = '';
     selectedSortField = '';
@@ -46,6 +49,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     boardName;
     boardDisplayname;
     providerLabels: any = [];
+    providerLabelsList: any = [];
     labelfromConstants = projectConstants.STATUS_BOARD;
     submit_btn;
     id;
@@ -55,13 +59,17 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     categoryIds: any = [];
     api_loading = false;
     step = 1;
+    selectedWtlstList: any = [];
     waitlistStatuses = projectConstants.CHECK_IN_STATUSES_FILTER;
+    qMultiCtrl: any = [];
     deptMultiCtrl: any = [];
     servMultiCtrl: any = [];
-    qMultiCtrl: any = [];
-    public deptMultiFilterCtrl: FormControl = new FormControl();
-    public labelMultiFilterCtrl: FormControl = new FormControl();
-    private _onDestroy = new Subject<void>();
+    labelMultiCtrl: FormControl = new FormControl();
+    deptMultiFilterCtrl: FormControl = new FormControl();
+    serviceMultiFilterCtrl: FormControl = new FormControl();
+    qMultiFilterCtrl: FormControl = new FormControl();
+    labelMultiFilterCtrl: FormControl = new FormControl();
+    onDestroy = new Subject<void>();
 
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -74,10 +82,25 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     ngOnInit() {
         this.deptMultiFilterCtrl.valueChanges
-        .pipe(takeUntil(this._onDestroy))
-        .subscribe(() => {
-          this.filterBanksMulti();
-        });
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterDeptbySearch();
+            });
+        this.serviceMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterServicebySearch();
+            });
+        this.qMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterQbySearch();
+            });
+        this.labelMultiFilterCtrl.valueChanges
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(() => {
+                this.filterLabelbySearch();
+            });
         this.resetFields();
         const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
         if (loc_details) {
@@ -88,24 +111,64 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.sortByField('sort_token');
         }
     }
+    drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.labelsList, event.previousIndex, event.currentIndex);
+    }
 
-
-    filterBanksMulti() {
+    filterDeptbySearch() {
         if (!this.departments) {
-          return;
+            return;
         }
         let search = this.deptMultiFilterCtrl.value;
         if (!search) {
             this.departmentList = this.departments.slice();
-          return;
+            return;
         } else {
-          search = search.toLowerCase();
+            search = search.toLowerCase();
         }
-        console.log(this.departments);
-        console.log(search);
-        this.departmentList = this.departments.filter(dept => console.log(dept.departmentName.toLowerCase().indexOf(search)));
-        console.log(this.departmentList);
-      }
+        this.departmentList = this.departments.filter(dept => dept.departmentName.toLowerCase().indexOf(search) > -1);
+    }
+
+    filterServicebySearch() {
+        if (!this.services_list) {
+            return;
+        }
+        let search = this.serviceMultiFilterCtrl.value;
+        if (!search) {
+            this.servicesList = this.services_list.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.servicesList = this.services_list.filter(service => service.name.toLowerCase().indexOf(search) > -1);
+    }
+
+    filterQbySearch() {
+        if (!this.display_schedule) {
+            return;
+        }
+        let search = this.qMultiFilterCtrl.value;
+        if (!search) {
+            this.display_scheduleList = this.display_schedule.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.display_scheduleList = this.display_schedule.filter(queue => queue.name.toLowerCase().indexOf(search) > -1);
+    }
+    filterLabelbySearch() {
+        if (!this.providerLabels) {
+            return;
+        }
+        let search = this.labelMultiFilterCtrl.value;
+        if (!search) {
+            this.providerLabelsList = this.providerLabels.slice();
+            return;
+        } else {
+            search = search.toLowerCase();
+        }
+        this.providerLabelsList = this.providerLabels.filter(label => label.displayName.toLowerCase().indexOf(search) > -1);
+    }
 
     resetFields() {
         this.boardDisplayname = '';
@@ -120,8 +183,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.resetFields();
         this.actionparam = this.action;
         this.getDepartments();
-        this.getProviderQueues();
         this.getProviderServices();
+        this.getProviderQueues();
         setTimeout(() => {
             if (this.id) {
                 this.getDisplaydashboardbyId(this.id);
@@ -156,14 +219,14 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.sortByField(key);
             });
             for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
-                for (let j = 0; j < this.defaultLables.length; j++) {
-                    if (this.displayBoardData.fieldList[i].name === this.defaultLables[j].name) {
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
                         this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
                         this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
                         if (this.displayBoardData.fieldList[i].defaultValue) {
                             this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
                         }
-                        this.defaultLables[j].checked = true;
+                        this.defaultLabels[j].checked = true;
                         this.labelSelection(j, 'edit');
                     }
                 }
@@ -294,6 +357,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
                     this.services_list = data;
+                    this.servicesList = this.services_list;
                     if (this.actionparam === 'add' && this.selectedCategory === '' && this.services_list.length > 0) {
                         this.selectedCategory = 'SERVICE';
                     }
@@ -334,6 +398,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.provider_services.getProviderQueues()
                 .subscribe(data => {
                     this.display_schedule = data;
+                    this.display_scheduleList = this.display_schedule;
                     if (this.actionparam === 'add' && this.selectedCategory === '' && this.display_schedule.length > 0) {
                         this.selectedCategory = 'QUEUE';
                     }
@@ -354,22 +419,23 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
     }
     getLabels() {
-        this.defaultLables = this.labelfromConstants;
-        for (let i = 0; i < this.defaultLables.length; i++) {
-            this.defaultLables[i].checked = false;
+        this.defaultLabels = this.labelfromConstants;
+        for (let i = 0; i < this.defaultLabels.length; i++) {
+            this.defaultLabels[i].checked = false;
         }
         this.provider_services.getLabelList().subscribe(data => {
             this.providerLabels = data;
+            this.providerLabelsList = this.providerLabels;
             for (let i = 0; i < this.providerLabels.length; i++) {
-                this.defaultLables.push({
+                this.defaultLabels.push({
                     'name': this.providerLabels[i].label,
                     'displayname': this.providerLabels[i].displayName,
                     'label': true,
-                    'order': this.defaultLables.length + 1
+                    'order': this.defaultLabels.length + 1
                 });
             }
         });
-        this.defaultLables = this.shared_Functionsobj.removeDuplicates(this.defaultLables, 'name');
+        this.defaultLabels = this.shared_Functionsobj.removeDuplicates(this.defaultLabels, 'name');
     }
     labelSelection(index, event, name?) {
         if (event === 'edit') {
@@ -377,14 +443,16 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.saveLabels(index);
         } else if (event.checked) {
             this.showLabelEdit[index] = true;
-            this.labelDisplayname[index] = this.defaultLables[index].displayname;
-            this.labelOrder[index] = this.defaultLables[index].order;
-            if (this.defaultLables[index].defaultValue) {
-                this.labelDefaultvalue[index] = this.defaultLables[index].defaultValue;
+            this.defaultLabels[index].checked = true;
+            this.labelDisplayname[index] = this.defaultLabels[index].displayname;
+            this.labelOrder[index] = this.defaultLabels[index].order;
+            if (this.defaultLabels[index].defaultValue) {
+                this.labelDefaultvalue[index] = this.defaultLabels[index].defaultValue;
             }
             this.saveLabels(index);
         } else if (!event.checked) {
             this.showLabelEdit[index] = false;
+            this.defaultLabels[index].checked = false;
             this.removeLabels(name);
         }
     }
@@ -419,56 +487,91 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     categorySelection(value) {
         this.selectedCategory = value;
         this.categoryIds = [];
+        this.departmentList = this.departments;
+        this.deptMultiCtrl = [];
+        this.departmentSelection();
+        this.serviceSelection();
     }
     saveLabels(index) {
         this.labelsList.push({
-            'name': this.defaultLables[index].name,
+            'name': this.defaultLabels[index].name,
             'displayName': this.labelDisplayname[index],
             'defaultValue': this.labelDefaultvalue[index] || '',
-            'label': this.defaultLables[index].label,
+            'label': this.defaultLabels[index].label,
             'order': this.labelOrder[index]
         });
         this.labelsList = this.shared_Functionsobj.removeDuplicates(this.labelsList, 'name');
     }
-    serviceSelection(service, ev) {
-         const index = this.categoryIds.indexOf(service);
-        if (ev === 'edit') {
-            if (index === -1) {
-                this.categoryIds.push(service);
+    serviceSelection(service?, ev?) {
+        this.qMultiCtrl = [];
+        this.display_scheduleList = [];
+        if (this.servMultiCtrl && this.servMultiCtrl.length > 0) {
+            for (let i = 0; i < this.servMultiCtrl.length; i++) {
+                for (let j = 0; j < this.display_schedule.length; j++) {
+                    for (let k = 0; k < this.display_schedule[j].services.length; k++) {
+                        if (this.display_schedule[j].services[k].id === this.servMultiCtrl[i].id && this.display_scheduleList.indexOf(this.display_schedule[j]) === -1) {
+                            this.display_scheduleList.push(this.display_schedule[j]);
+                        }
+                    }
+                }
             }
         } else {
-            if (ev.checked && index === -1) {
-                this.categoryIds.push(service);
-            } else {
-                this.categoryIds.splice(index, 1);
-            }
+            this.display_scheduleList = this.display_schedule;
         }
-        this.statusBoardfor = [{
-            'type': 'SERVICE',
-            'id': this.categoryIds
-        }];
+        // const index = this.categoryIds.indexOf(service);
+        // if (ev === 'edit') {
+        //     if (index === -1) {
+        //         this.categoryIds.push(service);
+        //     }
+        // } else {
+        //     if (ev.checked && index === -1) {
+        //         this.categoryIds.push(service);
+        //     } else {
+        //         this.categoryIds.splice(index, 1);
+        //     }
+        // }
+        // this.statusBoardfor = [{
+        //     'type': 'SERVICE',
+        //     'id': this.categoryIds
+        // }];
     }
-    departmentSelection(dept, ev) {
-        const index = this.categoryIds.indexOf(dept);
-        if (ev === 'edit') {
-            if (index === -1) {
-                this.categoryIds.push(dept);
+    departmentSelection(dept?, ev?) {
+        this.servMultiCtrl = [];
+        this.qMultiCtrl = [];
+        this.servicesList = [];
+        if (this.deptMultiCtrl && this.deptMultiCtrl.length > 0) {
+            for (let i = 0; i < this.deptMultiCtrl.length; i++) {
+                for (let j = 0; j < this.deptMultiCtrl[i].serviceIds.length; j++) {
+                    for (let k = 0; k < this.services_list.length; k++) {
+                        if (this.services_list[k].id === this.deptMultiCtrl[i].serviceIds[j] && this.servicesList.indexOf(this.services_list[k]) === -1) {
+                            this.servicesList.push(this.services_list[k]);
+                        }
+                    }
+                }
             }
         } else {
-            const index = this.categoryIds.indexOf(dept);
-            if (ev.checked && index === -1) {
-                this.categoryIds.push(dept);
-            } else {
-                this.categoryIds.splice(index, 1);
-            }
+            this.servicesList = this.services_list;
         }
-        this.statusBoardfor = [{
-            'type': 'DEPARTMENT',
-            'id': this.categoryIds
-        }];
+        // const index = this.categoryIds.indexOf(dept);
+        // if (ev === 'edit') {
+        //     if (index === -1) {
+        //         this.categoryIds.push(dept);
+        //     }
+        // } else {
+        //     const index = this.categoryIds.indexOf(dept);
+        //     if (ev.checked && index === -1) {
+        //         this.categoryIds.push(dept);
+        //     } else {
+        //         this.categoryIds.splice(index, 1);
+        //     }
+        // }
+        // this.statusBoardfor = [{
+        //     'type': 'DEPARTMENT',
+        //     'id': this.categoryIds
+        // }];
     }
     queueSelection(queue, ev) {
-       const index = this.categoryIds.indexOf(queue);
+        const index = this.categoryIds.indexOf(queue);
         if (ev === 'edit') {
             if (index === -1) {
                 this.categoryIds.push(queue);
@@ -485,6 +588,29 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'id': this.categoryIds
         }];
     }
+
+    // qsetForSelection(field, type) {
+    //     console.log(field);
+    //     console.log(this.categoryIds);
+    //     console.log(this.qMultiCtrl);
+    //     const index = this.categoryIds.indexOf(field);
+    //     if (type === 'edit') {
+    //         if (index === -1) {
+    //             this.categoryIds.push(field);
+    //         }
+    //     } else {
+    //         if (index === -1) {
+    //             this.categoryIds.push(field);
+    //         } else {
+    //             this.categoryIds.splice(index, 1);
+    //         }
+    //     }
+    //     this.statusBoardfor.push({
+    //         'type': type,
+    //         'id': this.categoryIds});
+    //         console.log(this.statusBoardfor);
+    // }
+
     getNamefromId(id, type) {
         let displayName;
         if (type === 'SERVICE') {
@@ -522,6 +648,24 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 });
     }
     showStep(step) {
-this.step = step;
+        if (step === 5 && this.labelsList.length === 0) {
+            this.shared_Functionsobj.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
+        } else {
+            this.step = step;
+        }
+    }
+    waitlistSelection(status) {
+        if (this.selectedWtlstList.indexOf(status) === -1) {
+            this.selectedWtlstList.push(status);
+        }
+    }
+    removeFIeldFromArray(field, index) {
+        this.defaultLabels.forEach(element => {
+            if (element.name === field) {
+                this.defaultLabels[this.defaultLabels.indexOf(element)].checked = false;
+                this.showLabelEdit[this.defaultLabels.indexOf(element)] = false;
+            }
+        });
+        this.labelsList.splice(index, 1);
     }
 }

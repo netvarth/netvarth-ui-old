@@ -1,4 +1,4 @@
-import { Component,ViewChild,OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -6,8 +6,11 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatSelect } from '@angular/material';
-import { ReplaySubject ,  Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
+import { take, takeUntil, startWith, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import value from '*.json';
 
 
 interface Bank {
@@ -21,6 +24,10 @@ interface Bank {
 })
 export class DisplayboardDetailComponent implements OnInit {
 
+    myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
+
     /** control for the selected bank */
   public bankCtrl: FormControl = new FormControl();
 
@@ -31,37 +38,37 @@ export class DisplayboardDetailComponent implements OnInit {
  public bankMultiCtrl: FormControl = new FormControl();
 
   /** control for the MatSelect filter keyword multi-selection */
- public bankMultiFilterCtrl: FormControl = new FormControl();
+ public qBoardFilterMultictrl: FormControl = new FormControl();
 
   /** list of banks */
-  private banks: Bank[] = [
-    {name: 'Bank A (Switzerland)', id: 'A'},
-    {name: 'Bank B (Switzerland)', id: 'B'},
-    {name: 'Bank C (France)', id: 'C'},
-    {name: 'Bank D (France)', id: 'D'},
-    {name: 'Bank E (France)', id: 'E'},
-    {name: 'Bank F (Italy)', id: 'F'},
-    {name: 'Bank G (Italy)', id: 'G'},
-    {name: 'Bank H (Italy)', id: 'H'},
-    {name: 'Bank I (Italy)', id: 'I'},
-    {name: 'Bank J (Italy)', id: 'J'},
-    {name: 'Bank K (Italy)', id: 'K'},
-    {name: 'Bank L (Germany)', id: 'L'},
-    {name: 'Bank M (Germany)', id: 'M'},
-    {name: 'Bank N (Germany)', id: 'N'},
-    {name: 'Bank O (Germany)', id: 'O'},
-    {name: 'Bank P (Germany)', id: 'P'},
-    {name: 'Bank Q (Germany)', id: 'Q'},
-    {name: 'Bank R (Germany)', id: 'R'} 
-  ]
+//   private banks: Bank[] = [
+//     {name: 'Bank A (Switzerland)', id: 'A'},
+//     {name: 'Bank B (Switzerland)', id: 'B'},
+//     {name: 'Bank C (France)', id: 'C'},
+//     {name: 'Bank D (France)', id: 'D'},
+//     {name: 'Bank E (France)', id: 'E'},
+//     {name: 'Bank F (Italy)', id: 'F'},
+//     {name: 'Bank G (Italy)', id: 'G'},
+//     {name: 'Bank H (Italy)', id: 'H'},
+//     {name: 'Bank I (Italy)', id: 'I'},
+//     {name: 'Bank J (Italy)', id: 'J'},
+//     {name: 'Bank K (Italy)', id: 'K'},
+//     {name: 'Bank L (Germany)', id: 'L'},
+//     {name: 'Bank M (Germany)', id: 'M'},
+//     {name: 'Bank N (Germany)', id: 'N'},
+//     {name: 'Bank O (Germany)', id: 'O'},
+//     {name: 'Bank P (Germany)', id: 'P'},
+//     {name: 'Bank Q (Germany)', id: 'Q'},
+//     {name: 'Bank R (Germany)', id: 'R'}
+//   ]
 
   /** list of banks filtered by search keyword */
   public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
   /** list of banks filtered by search keyword for multi-selection */
-  public filteredBanksMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
+  public filteredQboardsMulti: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);
 
-  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect; 
+  @ViewChild('singleSelect') singleSelect: MatSelect;
 
   /** Subject that emits when the component has been destroyed. */
   private _onDestroy = new Subject<void>();
@@ -69,8 +76,6 @@ export class DisplayboardDetailComponent implements OnInit {
 
     amForm: FormGroup;
     char_count = 0;
-    accountType;
-    frm_lvl_msg = false;
     max_char_count = 250;
     isfocused = false;
     layout_id;
@@ -105,7 +110,11 @@ export class DisplayboardDetailComponent implements OnInit {
     metricSelected = {};
     id;
     qset_list: any = [];
+    filteredQboardList;
+    qboard_list: any = [];
     displayBoardData: any = [];
+    selectedQboardlist: any = [];
+    sbDetailslist: any = [];
     boardLayoutFields = {};
     boardRows = 1;
     boardCols = 1;
@@ -131,6 +140,7 @@ export class DisplayboardDetailComponent implements OnInit {
     source;
     qboardSelected = false;
     refreshInterval;
+    nestedRefreshInterval;
     sbIds;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -160,11 +170,6 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.breadcrumbs = breadcrumbs;
                 }
             });
-            const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
-            this.accountType = cuser.accountType;
-            if (this.accountType === 'BRANCH' || this.accountType === 'BRANCH_SP') {
-               this.frm_lvl_msg = true;
-            }
     }
     addQSet() {
         this.qsetAction = 'add';
@@ -203,63 +208,45 @@ export class DisplayboardDetailComponent implements OnInit {
         }
         return layoutActive;
     }
-   
     ngOnInit() {
-        this.getDisplayboardQSets();
-        // set initial selection
-    this.bankCtrl.setValue(this.banks[10]);
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+            startWith(''), map(value => this._filter(value))
+        );
 
-    // load the initial bank list
-    this.filteredBanks.next(this.banks.slice());
-    this.filteredBanksMulti.next(this.banks.slice());
 
-    // listen for search field value changes
-    this.bankFilterCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.filterBanks();
-      });
-    this.bankMultiFilterCtrl.valueChanges
+    this.getDisplayboardQSets();
+    this.qBoardFilterMultictrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterBanksMulti();
       });
+      // load qboard list
+      this.getQboardlist();
 
     }
-    private filterBanks() {
-        if (!this.banks) {
-          return;
-        }
-        // get the search keyword
-        let search = this.bankFilterCtrl.value;
-        if (!search) {
-          this.filteredBanks.next(this.banks.slice());
-          return;
-        } else {
-          search = search.toLowerCase();
-        }
-        // filter the banks
-        this.filteredBanks.next(
-          this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
-        );
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
       }
-    
       private filterBanksMulti() {
-        if (!this.banks) {
+        if (!this.qboard_list) {
           return;
         }
         // get the search keyword
-        let search = this.bankMultiFilterCtrl.value;
+        let search = this.qBoardFilterMultictrl.value;
+        console.log(this.qBoardFilterMultictrl.value);
         if (!search) {
-          this.filteredBanksMulti.next(this.banks.slice());
+        //   this.filteredQboardsMulti.next(this.qboard_list.slice());
+        this.filteredQboardList = this.qboard_list.slice();
           return;
         } else {
           search = search.toLowerCase();
         }
+        this.filteredQboardList = this.qboard_list.filter(qboard => qboard.name.toLowerCase().indexOf(search) > -1);
         // filter the banks
-        this.filteredBanksMulti.next(
-          this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
-        );
+        // this.filteredQboardsMulti.next(
+        //   this.qboard_list.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+        // );
       }
 
 
@@ -306,6 +293,7 @@ export class DisplayboardDetailComponent implements OnInit {
         this.metricSelected[position] = selectedItem;
     }
     onSubmit() {
+        if (!this.qboardSelected){
         this.metric = [];
         let name = '';
         if (this.displayName) {
@@ -356,18 +344,19 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-        let containerName = '';
+    }
+    else {
+        let name = '';
         if (this.displayName) {
-            containerName = this.displayName.trim().replace(/ /g, '_');
+            name = this.displayName.trim().replace(/ /g, '_');
         }
-        const sbIds = this.sbIds.split(',');
         if (this.actionparam === 'add') {
             const post_data = {
-                'name': containerName,
+                'name': name,
                 'layout': '1_1',
                 'displayName': this.displayName,
                 'interval': this.refreshInterval,
-                'sbIds': sbIds,
+                'sbDetails': this.sbDetailslist
             };
             this.provider_services.createDisplayboardContainer(post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
@@ -384,28 +373,26 @@ export class DisplayboardDetailComponent implements OnInit {
             // }
         }
         if (this.actionparam === 'edit') {
-            const sbids = this.sbIds.split(',');
             const post_data = {
                 'id': this.layoutData.id,
-                'name': containerName,
+                'name': name,
                 'layout': '1_1',
                 'interval': this.refreshInterval,
                 'displayName': this.displayName,
-                'sbIds': sbids
+                'sbDetails': this.sbDetailslist
             };
             this.provider_services.updateDisplayboardContainer(this.layoutData.id, post_data).subscribe(data => {
                 this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
-               // this.editLayoutbyId(this.layoutData.id);
-               this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
+                // this.editLayoutbyId(this.layoutData.id);
+                this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'containers']);
             },
                 error => {
                     this.api_loading = false;
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
-
-
     }
+}
     onCancel() {
         if (this.actionparam === 'edit') {
             this.actionparam = 'view';
@@ -428,6 +415,22 @@ export class DisplayboardDetailComponent implements OnInit {
                 }
             );
     }
+    getQboardlist() {
+        this.api_loading = true;
+        this.qboard_list = [];
+        this.provider_services.getDisplayboards()
+            .subscribe(
+                data => {
+                    this.qboard_list = data;
+                    this.filteredQboardList = data;
+                    this.api_loading = false;
+                },
+                error => {
+                    this.api_loading = false;
+                    this.shared_functions.apiErrorAutoHide(this, error);
+                }
+            );
+    }
     editlayout(id) {
         this.actionparam = 'edit';
         this.editLayoutbyId(id);
@@ -440,7 +443,17 @@ export class DisplayboardDetailComponent implements OnInit {
     gotoLicense() {
         this.router.navigate(['provider', 'license', 'addons']);
     }
-    nestedQboardSelected(event){
+    nestedQboardSelected(event) {
         this.qboardSelected = event.checked;
+    }
+    clearQboardSelected() {
+        this.qBoardFilterMultictrl.reset();
+        this.nestedRefreshInterval = '';
+    }
+    addBtnClicked() {
+        this.selectedQboardlist.push({'qBoard' : this.qBoardFilterMultictrl.value.displayName, 'interval' : this.nestedRefreshInterval});
+        // console.log(this.qBoardFilterMultictrl.value);
+        this.sbDetailslist.push({'sbId' : this.qBoardFilterMultictrl.value.id, 'sbInterval' : this.nestedRefreshInterval});
+        this.clearQboardSelected();
     }
 }
