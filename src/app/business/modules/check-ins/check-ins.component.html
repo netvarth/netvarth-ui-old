@@ -161,7 +161,7 @@
                     alt="" /> &nbsp;</i>
               </a>
             </span>
-            <span *ngIf="board_count > 0" class="pull-right" style="padding-top: 5px;">
+            <!-- <span *ngIf="board_count > 0" class="pull-right" style="padding-top: 5px;">
               <button style="display:flex;justify-content:center;align-items:center;" [matTooltipClass]="tooltipcls"
                 [matTooltip]="sortTooltip" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>swap_vert</mat-icon>
@@ -172,7 +172,7 @@
                 <button class="sort-menu-item" mat-menu-item [class.active]="sortBy=='sort_appointmentTime'"
                   (click)="setSortByParam('sort_appointmentTime')">Appointment Time</button>
               </mat-menu>
-            </span>
+            </span> -->
             <span class="pull-right mgn-up-10 pointer-cursor" *ngIf="time_type === 3" [matTooltipClass]="tooltipcls"
               [matTooltip]="'Print'">
               <i class="fa fa-print" (click)="printHistoryCheckin()"></i>
@@ -351,6 +351,20 @@
                       </mat-datepicker-toggle>
                       <mat-datepicker #picker1 [hidden]="!filters['check_in_end_date']"></mat-datepicker>
                     </span>
+                    <span class="inl-blk filtr" *ngFor="let label of providerLabels; let i = index">
+                      <a [class.button_filter]="labelFilter[i]" *ngIf="time_type == 3" (click)="labelfilterClicked(i, label.label)"
+                        class="anchorbutton remMarginRight genMarginLeft" name="label"
+                        id="btn_payment_status_filter_id">
+                        <span>{{label.displayName}}</span>
+                      </a>
+                      <mat-form-field *ngIf="time_type == 3 && labelFilter[i]">
+                        <mat-select [(ngModel)]="labelMultiCtrl[label.label]" [multiple]="true">
+                          <mat-option *ngFor="let valueset of label.valueSet" [value]="valueset.value">
+                            {{valueset.shortValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </span>
                     <input type="button" value=" Go " (click)="doSearch()" id="btn1Go"
                       class="genMarginLeft genTextHeight btn_black qo_bt">
                   </div>
@@ -441,10 +455,10 @@
                     </a>
 
                     <a class="btn-play pointer-cursor" [matTooltipClass]="tooltipcls" [matTooltip]="'Bill'"
-                    *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
-                    (click)="viewBillPage('future', checkin)">
-                    <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
-                  </a>
+                      *ngIf="pos && checkin.waitlistStatus != 'prepaymentPending' && !checkin.parentUuid"
+                      (click)="viewBillPage('future', checkin)">
+                      <i class="fa fa-newspaper-o" style="font-size: smaller;"></i> <span class=""> Bill </span>
+                    </a>
 
                     <a class="btn-play pointer-cursor" (click)="changeWaitlistStatus(checkin, 'CANCEL')"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Cancel ' + checkin_label"

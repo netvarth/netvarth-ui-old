@@ -282,6 +282,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   futureUnAvailableSlots: any = [];
   tomorrowDate;
   historyCheckins: any = [];
+  labelMultiCtrl: any = [];
+  labelFilter: any = [];
+  labelFilterData = '';
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1351,6 +1354,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   clearFilter() {
     this.resetFilter();
     this.filterapplied = false;
+    this.labelMultiCtrl = [];
+    this.labelFilter = [];
     this.loadApiSwitch('doSearch');
   }
   toggleFilter() {
@@ -1404,6 +1409,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (this.time_type === 3) {
+      if (this.labelFilterData !== '') {
+        api_filter['label_eq'] = this.labelFilterData;
+      }
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
@@ -1438,10 +1446,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    this.labelSelection();
     this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.waitlist_status !== 'all' || this.filter.payment_status !== 'all' || this.filter.check_in_start_date
-      || this.filter.check_in_end_date || this.filter.age || this.filter.gender) {
+      || this.filter.check_in_end_date || this.filter.age || this.filter.gender || this.labelMultiCtrl) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -1965,6 +1974,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           checkin_html += '<td style="padding:10px;">Date & Time</td>';
           checkin_html += '<td style="padding:10px;">Name</td>';
           checkin_html += '<td style="padding:10px;">Service</td>';
+          checkin_html += '<td style="padding:10px;">Label</td>';
           checkin_html += '</thead>';
           for (let i = 0; i < this.historyCheckins.length; i++) {
             checkin_html += '<tr style="line-height:20px;padding:10px">';
@@ -1972,6 +1982,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
             checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
             checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
+            // checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].label + '</td>';
             checkin_html += '</tr>';
           }
           checkin_html += '</table>';
@@ -2326,6 +2337,31 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.futureUnAvailableSlots = allSlots.filter(x => !availableSlots.includes(x));
       this.timeSlotCheckins = this.shared_functions.groupBy(checkins, 'appointmentTime');
       this.availableSlots = allSlots.filter(x => !activeSlots.includes(x));
+    }
+  }
+  labelSelection() {
+    this.labelFilterData = '';
+    let count = 0;
+    Object.keys(this.labelMultiCtrl).forEach(key => {
+      if (this.labelMultiCtrl[key].length > 0) {
+        count++;
+        if (!this.labelFilterData.includes(key)) {
+          if (count === 1) {
+            this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
+          } else {
+            this.labelFilterData = this.labelFilterData + '.and.' + key + '::' + this.labelMultiCtrl[key].join(',');
+          }
+        }
+      } else {
+        delete this.labelMultiCtrl[key];
+      }
+    });
+  }
+  labelfilterClicked(index, label) {
+    delete this.labelMultiCtrl[label];
+    this.labelFilter[index] = !this.labelFilter[index];
+    if (!this.labelFilter[index]) {
+      this.doSearch();
     }
   }
 }
