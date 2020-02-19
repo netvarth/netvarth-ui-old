@@ -8,9 +8,11 @@ import { ProviderDataStorageService } from '../../../../../../ynw_provider/servi
 import { ProviderBprofileSearchSocialMediaComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-socialmedia/provider-bprofile-search-socialmedia.component';
 import { MatDialog } from '@angular/material';
 import { ProviderBprofileSearchGalleryComponent } from '../../../../../../ynw_provider/components/provider-bprofile-search-gallery/provider-bprofile-search-gallery.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
+import { providerUserBprofileSearchSocialMediaComponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
+// import { ProviderUserBprofileSearchSocialMediacomponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -58,6 +60,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
     };
+    userdata;
     breadcrumbs = [
         {
             title: 'Settings',
@@ -83,15 +86,23 @@ export class MediaComponent implements OnInit, OnDestroy {
         }
     ];
     subscription: Subscription;
+
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
+        private activated_route: ActivatedRoute,
         private routerobj: Router,
         private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
-    ) { }
+    ) {
+        this.activated_route.queryParams.subscribe(data => {
+            this.userdata = data;
+            console.log(this.userdata.id);
+        }
+        );
+     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -99,27 +110,11 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
         this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
-        this.getGalleryImages();
-        this.getBusinessProfile();
-        this.subscription = this.galleryService.getMessage().subscribe(input => {
-            if (input.ttype === 'image-upload') {
-                this.provider_services.uploadGalleryImages(input.value)
-                    .subscribe(
-                        () => {
-                            this.getGalleryImages();
-                            this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
-                            this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-                        },
-                        error => {
-                            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                            this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-                        }
-                    );
-            } else if (input.ttype === 'delete-image') {
-                this.deleteImage(input.value);
-            }
-        });
+        // this.getGalleryImages();
+        this.getBusinessProfile();       
+        
     }
+
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/profile-search->' + mod]);
@@ -128,36 +123,12 @@ export class MediaComponent implements OnInit, OnDestroy {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();
         }
-        if (this.gallerydialogRef) {
-            this.gallerydialogRef.close();
-        }
         if (this.delgaldialogRef) {
             this.delgaldialogRef.close();
         }
-    }
-    
+    }  
 
-    handleGalleryImages() {
-        this.gallerydialogRef = this.dialog.open(ProviderBprofileSearchGalleryComponent, {
-            width: '50%',
-            // panelClass: 'gallerymainclass',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            autoFocus: false,
-            data: {
-                bprofile: this.bProfile,
-                type: 'edit'
-            }
-        });
-        this.gallerydialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                if (result === 'reloadlist') {
-                    this.getGalleryImages();
-                }
-            }
-        });
-    }
-    getBusinessProfile() {
+    getBusinessProfile() {        
         this.showaddsocialmedia = false;
         this.bProfile = [];
         this.getBussinessProfileApi()
@@ -179,17 +150,25 @@ export class MediaComponent implements OnInit, OnDestroy {
                     }
                     if (this.social_arr.length < this.orgsocial_list.length) {
                         this.showaddsocialmedia = true;
-                    }
-                });
+                    } 
+
+                },
+
+                () => {
+                    this.normal_socialmedia_show = 2; 
+                  }
+               );
     }
+
+
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getBussinessProfile()
+            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
                 .subscribe(
                     data => {
                         resolve(data);
-                    },
+                    },                    
                     () => {
                         reject();
                     }
@@ -202,72 +181,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         file.keyName = skey;
         this.sharedfunctionobj.confirmGalleryImageDelete(this, file);
     }
-    getGalleryImages() {
-        this.provider_services.getGalleryImages()
-            .subscribe(
-                data => {
-                    this.image_list = data;
-                },
-                () => {
-
-                }
-            );
-    }
-    deleteImage(file) {
-        this.provider_services.deleteProviderGalleryImage(file)
-            .subscribe(
-                () => {
-                    this.getGalleryImages();
-                },
-                () => {
-
-                }
-            );
-    }
-    onButtonBeforeHook(event: ButtonEvent) {
-        if (!event || !event.button) {
-            return;
-        }
-        // Invoked after a click on a button, but before that the related
-        // action is applied.
-        // For instance: this method will be invoked after a click
-        // of 'close' button, but before that the modal gallery
-        // will be really closed.
-        // if (event.button.type === ButtonType.DELETE) {
-        if (event.button.type === ButtonType.DELETE) {
-            // remove the current image and reassign all other to the array of images
-            const knamearr = event.image.modal.img.split('/');
-            const kname = knamearr[(knamearr.length - 1)];
-            const file = {
-                id: event.image.id,
-                keyName: kname,
-                modal: {
-                    img: event.image.modal.img
-                },
-                plain: undefined
-            };
-            // this.confirmDelete(file, event.image.id);
-            this.deleteImage(file);
-            this.image_list_popup = this.image_list_popup.filter((val: Image) => event.image && val.id !== event.image.id);
-        }
-    }
-
-    onButtonAfterHook(event: ButtonEvent) {
-        if (!event || !event.button) {
-            return;
-        }
-        // Invoked after both a click on a button and its related action.
-    }
-    onVisibleIndex() {
-    }
-    openImageModalRow(image: Image) {
-        const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-        this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-    }
-
-    private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-        return image ? images.indexOf(image) : -1;
-    }
+     
     getSocialdet(key, field) {
         const retdet = this.orgsocial_list.filter(
             soc => soc.key === key);
@@ -283,7 +197,8 @@ export class MediaComponent implements OnInit, OnDestroy {
         return false;
     }
     handleSocialmedia(key) {
-        this.socialdialogRef = this.dialog.open(ProviderBprofileSearchSocialMediaComponent, {
+        console.log(key);
+        this.socialdialogRef = this.dialog.open(providerUserBprofileSearchSocialMediaComponent, {
             width: '50%',
             // panelClass: 'socialmediamainclass',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -291,7 +206,8 @@ export class MediaComponent implements OnInit, OnDestroy {
             autoFocus: true,
             data: {
                 bprofile: this.bProfile,
-                editkey: key || ''
+                editkey: key || '' ,
+                userId: this.userdata.id
             }
         });
         this.socialdialogRef.afterClosed().subscribe(result => {

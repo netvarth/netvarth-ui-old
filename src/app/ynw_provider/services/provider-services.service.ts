@@ -975,7 +975,12 @@ export class ProviderServices {
   }
   updateuserSpecializationPrimaryFields(data, id) {
     return this.servicemeta.httpPut('provider/user/providerBprofile/' + id, data);
-
+  }
+  updateUserbProfile(data, id) {
+    return this.servicemeta.httpPut('provider/user/providerBprofile/' + id , data);
+  }
+  updateUserSocialMediaLinks(data , id) {
+    return this.servicemeta.httpPut('provider/user/providerBprofile/socialMedia/' +id, data);
   }
   updateDomainFields(id, postdata) {
     console.log(postdata);

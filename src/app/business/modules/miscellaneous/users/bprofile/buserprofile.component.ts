@@ -457,10 +457,20 @@ additionalInfo() {
     this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','additionalinfo'], navigationExtras);
 }
 languagesKnown() {
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','languages']);
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+        id: this.userdata.id
+    }
+};
+    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','languages'], navigationExtras);
 }
 galerySocialmedia() {
-    this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','media']);
+const navigationExtras: NavigationExtras = {
+  queryParams: {
+      id: this.userdata.id
+  }
+}; 
+   this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users',this.userdata.id,'bprofile','media'],navigationExtras);
 }
   
 }

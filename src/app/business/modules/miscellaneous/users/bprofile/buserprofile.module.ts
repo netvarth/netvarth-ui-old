@@ -20,6 +20,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { UserBprofileSearchPrimaryComponent } from './user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 import { userspecializationComponent } from './specializations/userspecialization/userspecialization.component';
+import { AddProviderUserBprofileSpokenLanguagesComponent } from './languages/addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
+import { providerUserBprofileSearchSocialMediaComponent } from './media/providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 @NgModule({
     imports: [
         BuserProfileRoutingModule,
@@ -43,13 +45,17 @@ import { userspecializationComponent } from './specializations/userspecializatio
         AdditionalInfoComponent,
         SpecializationsComponent,
         userspecializationComponent,
-        UserBprofileSearchPrimaryComponent
+        UserBprofileSearchPrimaryComponent,
+        providerUserBprofileSearchSocialMediaComponent,
+        AddProviderUserBprofileSpokenLanguagesComponent
     ],
     entryComponents: [
        // AddProviderBprofileSpokenLanguagesComponent,
        ProviderUserBprofileSearchDynamicComponent,
         UserBprofileSearchPrimaryComponent,
-        userspecializationComponent
+        userspecializationComponent,
+        providerUserBprofileSearchSocialMediaComponent,
+        AddProviderUserBprofileSpokenLanguagesComponent
     ],
     exports: [
         BuserProfileComponent

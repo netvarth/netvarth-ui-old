@@ -5,7 +5,8 @@ import { ProviderDataStorageService } from '../../../../../../ynw_provider/servi
 import { MatDialog } from '@angular/material';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { AddProviderBprofileSpokenLanguagesComponent } from '../../../../../../ynw_provider/components/add-provider-bprofile-spoken-languages/add-provider-bprofile-spoken-languages.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AddProviderUserBprofileSpokenLanguagesComponent } from './addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 @Component({
     selector: 'app-languages',
     templateUrl: './languages.component.html'
@@ -46,15 +47,23 @@ export class LanguagesComponent implements OnInit, OnDestroy {
             title: 'Languages Known'
         }
     ];
+   
+    userdata: any;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
+        private activated_route: ActivatedRoute,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
         private dialog: MatDialog
     ) {
-        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+        this.activated_route.queryParams.subscribe(data => {
+            this.userdata = data;
+            console.log(this.userdata.id);
+        }
+        );
+         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -86,7 +95,11 @@ export class LanguagesComponent implements OnInit, OnDestroy {
                     } else {
                         this.normal_language_show = 2;
                     }
-                });
+                },
+                () => {
+                    this.normal_language_show = 2;
+                  }
+                );
     }
 
     ngOnDestroy() {
@@ -97,7 +110,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     getBussinessProfileApi() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getBussinessProfile()
+            _this.provider_services.getUserBussinessProfile(_this.userdata.id)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -131,14 +144,15 @@ export class LanguagesComponent implements OnInit, OnDestroy {
 
         const bprof = holdsellang;
         const lang = this.languages_arr;
-        this.langdialogRef = this.dialog.open(AddProviderBprofileSpokenLanguagesComponent, {
+        this.langdialogRef = this.dialog.open(AddProviderUserBprofileSpokenLanguagesComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
             disableClose: true,
             autoFocus: false,
             data: {
                 sellanguages: bprof,
-                languagesSpoken: lang
+                languagesSpoken: lang,
+                userId : this.userdata.id
             }
         });
         this.langdialogRef.afterClosed().subscribe(result => {
