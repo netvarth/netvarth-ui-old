@@ -285,6 +285,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelMultiCtrl: any = [];
   labelFilter: any = [];
   labelFilterData = '';
+  labelsCount: any = [];
   constructor(private provider_services: ProviderServices,
     private provider_shared_functions: ProviderSharedFuctions,
     private router: Router,
@@ -1221,6 +1222,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
         this.resetFilter();
+        this.resetLabelFilter();
       }
     }
     switch (this.time_type) {
@@ -1235,6 +1237,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.noOfColumns = 9;
         break;
     }
+  }
+  resetLabelFilter() {
+    this.labelMultiCtrl = [];
+    this.labelFilter = [];
+    this.labelFilterData = '';
   }
   showAdjustDelay() {
     if (this.queues.length === 0 || !this.selected_queue || (this.selected_queue && !this.selected_queue.id)) {
@@ -1353,9 +1360,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   clearFilter() {
     this.resetFilter();
+    this.resetLabelFilter();
     this.filterapplied = false;
-    this.labelMultiCtrl = [];
-    this.labelFilter = [];
     this.loadApiSwitch('doSearch');
   }
   toggleFilter() {
@@ -1408,10 +1414,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       }
     }
-    if (this.time_type === 3) {
+    if (this.time_type !== 2) {
       if (this.labelFilterData !== '') {
-        api_filter['label_eq'] = this.labelFilterData;
+        api_filter['label-eq'] = this.labelFilterData;
       }
+    }
+    if (this.time_type === 3) {
       if (this.filter.payment_status !== 'all') {
         api_filter['billPaymentStatus-eq'] = this.filter.payment_status;
       }
@@ -1957,46 +1965,59 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   printHistoryCheckin() {
     const Mfilter = this.setFilterForApi();
-    this.provider_services.getHistroryWaitlist(Mfilter)
-      .subscribe(
-        data => {
-          this.historyCheckins = data;
-          const params = [
-            'height=' + screen.height,
-            'width=' + screen.width,
-            'fullscreen=yes'
-          ].join(',');
-          const printWindow = window.open('', '', params);
-          let checkin_html = '';
-          checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
-          checkin_html += '<thead style="font-weight:600;font-size:1.2rem;">';
-          checkin_html += '<td style="padding:10px;">Sl.No.</td>';
-          checkin_html += '<td style="padding:10px;">Date & Time</td>';
-          checkin_html += '<td style="padding:10px;">Name</td>';
-          checkin_html += '<td style="padding:10px;">Service</td>';
-          checkin_html += '<td style="padding:10px;">Label</td>';
-          checkin_html += '</thead>';
-          for (let i = 0; i < this.historyCheckins.length; i++) {
-            checkin_html += '<tr style="line-height:20px;padding:10px">';
-            checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-            checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
-            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
-            checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-            // checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].label + '</td>';
-            checkin_html += '</tr>';
-          }
-          checkin_html += '</table>';
-          printWindow.document.write('<html><head><title></title>');
-          printWindow.document.write('</head><body >');
-          printWindow.document.write(checkin_html);
-          printWindow.document.write('</body></html>');
-          printWindow.moveTo(0, 0);
-          printWindow.print();
-          printWindow.document.close();
-          setTimeout(() => {
-            printWindow.close();
-          }, 500);
-        });
+    const promise = this.getHistoryCheckinCount(Mfilter);
+    promise.then(
+      result => {
+        this.provider_services.getHistroryWaitlist(Mfilter)
+          .subscribe(
+            data => {
+              this.historyCheckins = data;
+              const params = [
+                'height=' + screen.height,
+                'width=' + screen.width,
+                'fullscreen=yes'
+              ].join(',');
+              const printWindow = window.open('', '', params);
+              let checkin_html = '';
+              checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
+              checkin_html += '<td style="padding:10px;">Sl.No.</td>';
+              checkin_html += '<td style="padding:10px;">Date & Time</td>';
+              checkin_html += '<td style="padding:10px;">Name</td>';
+              checkin_html += '<td style="padding:10px;">Service</td>';
+              checkin_html += '<td style="padding:10px;">Label</td>';
+              checkin_html += '</thead>';
+              for (let i = 0; i < this.historyCheckins.length; i++) {
+                checkin_html += '<tr style="line-height:20px;padding:10px">';
+                checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
+                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
+                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
+                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
+                Object.keys(this.historyCheckins[i].label).forEach(key => {
+                  checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].label[key] + '</td>';
+                });
+                checkin_html += '</tr>';
+              }
+              checkin_html += '</table>';
+              checkin_html += '<div style="margin:10px">';
+              checkin_html += '<div style="float:right;">' + 'Total - ' + result + ' Check-ins</div>';
+              if (!this.labelFilterData.match('.and.')) {
+                for (const count of this.labelsCount) {
+                  checkin_html += '<div style="padding-bottom:10px;">' + count + ' Check-ins</div>';
+                }
+              }
+              checkin_html += '</div>';
+              printWindow.document.write('<html><head><title></title>');
+              printWindow.document.write('</head><body >');
+              printWindow.document.write(checkin_html);
+              printWindow.document.write('</body></html>');
+              printWindow.moveTo(0, 0);
+              printWindow.print();
+              printWindow.document.close();
+              setTimeout(() => {
+                printWindow.close();
+              }, 500);
+            });
+      });
   }
 
   filterbyStatus(status) {
@@ -2341,11 +2362,26 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   labelSelection() {
     this.labelFilterData = '';
+    this.labelsCount = [];
     let count = 0;
     Object.keys(this.labelMultiCtrl).forEach(key => {
       if (this.labelMultiCtrl[key].length > 0) {
         count++;
         if (!this.labelFilterData.includes(key)) {
+          const labelvalues = this.labelMultiCtrl[key].join(',');
+          const labelvaluesArray = labelvalues.split(',');
+          for (const value of labelvaluesArray) {
+            const lblFilter = key + '::' + value;
+            const Mfilter = this.setFilterForApi();
+            Mfilter['label-eq'] = lblFilter;
+            const promise = this.getHistoryCheckinCount(Mfilter);
+            promise.then(
+              result => {
+                if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
+                  this.labelsCount.push(value + ' - ' + result);
+                }
+              });
+          }
           if (count === 1) {
             this.labelFilterData = this.labelFilterData + key + '::' + this.labelMultiCtrl[key].join(',');
           } else {
