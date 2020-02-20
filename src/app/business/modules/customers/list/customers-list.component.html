@@ -10,13 +10,10 @@
         <!-- <header class="main-header dash chkin"> -->
         <!-- <nav class="navbar navbar-static-top" role="navigation"> -->
         <!-- <div class="navbar-custom-menu"> -->
-        <div class="col-md-12 no-padding cust_label" *ngIf="customer_count !== 0">
+        <!-- <div class="col-md-12 no-padding cust_label" *ngIf="customer_count !== 0">
           <span class="cust_count">{{customer_label | capitalizeFirst}}s {{checkedin_label}}:
             {{customer_count}}</span>
-          <!-- <span *ngIf="customer_count === 0">
-              {{no_customer_cap}}
-            </span> -->
-        </div>
+        </div> -->
         <div class="col-md-12 no-padding">
           <ul class="nav cust-dash jd-custom-nav">
               <li class="dropdown notifications-menu">
@@ -120,8 +117,8 @@
             <div class="col-md-4 col-sm-7 mt5">
               {{customer.firstName}} {{customer.lastName}}
             </div>
-            <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.primaryMobileNo.length === 10">
-              <span><i class="fa fa-mobile"></i>{{customer.primaryMobileNo}}</span></div>
+            <div class="col-md-2 col-sm-5 mt5" *ngIf="customer.phoneNo.length === 10">
+              <span><i class="fa fa-mobile"></i>{{customer.phoneNo}}</span></div>
             <div class="col-md-4 col-sm-7 mt5"><span *ngIf="customer.email"><i
                   class="fa fa-envelope"></i>{{customer.email}}</span></div>
             <div class="col-md-2 col-sm-5 mt5"><span *ngIf="customer.lastVisitedDate">Last visited on

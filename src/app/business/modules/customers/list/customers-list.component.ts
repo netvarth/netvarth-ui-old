@@ -124,6 +124,8 @@ export class CustomersListComponent implements OnInit {
                         .subscribe(
                             data => {
                                 this.customers = data;
+console.log(this.customers);
+
                                 this.loadComplete = true;
                             },
                             error => {
