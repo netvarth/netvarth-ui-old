@@ -1806,7 +1806,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         datechangereq: true,
         apptTime: appttime,
-        queue: this.selected_queue
+        // queue: this.selected_queue
       }
     });
     this.ChkindialogRef.afterClosed().subscribe(result => {
@@ -1999,10 +1999,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
-              checkin_html += '<div style="float:right;">' + 'Total - ' + result + ' Check-ins</div>';
+              checkin_html += '<div style="padding-bottom:10px;">' + 'Total - ' + result + ' Records</div>';
               if (!this.labelFilterData.match('.and.')) {
                 for (const count of this.labelsCount) {
-                  checkin_html += '<div style="padding-bottom:10px;">' + count + ' Check-ins</div>';
+                  checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
                 }
               }
               checkin_html += '</div>';

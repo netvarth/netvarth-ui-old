@@ -110,7 +110,7 @@
                     <span class="qtime">&nbsp; [ {{que.queueSchedule.timeSlots[0].sTime}} - {{que.queueSchedule.timeSlots[0].eTime}} ]</span>
                     </mat-chip>
                     </mat-chip-list> -->
-                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1 && !data.queue">
+                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length > 1">
                         <div class="queue-head" *ngIf="step==1 && queuejson.length > 1">{{serv_time_window_cap}}
                             <div class="queue-body">
                                 <span class="leftarrow" (click)="handleQueueSel('prev')" *ngIf="sel_queue_indx > 0"><i
@@ -129,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class='q-list-outer' *ngIf="((step==1 && queuejson.length == 1) || data.queue) && sel_queue_timecaption !== ''">
+                    <div class='q-list-outer' *ngIf="step==1 && queuejson.length == 1 && sel_queue_timecaption !== ''">
                         <div class="queue-head">{{serv_time_window_cap}}
                             <div class="queue-body">
                                 <span class="sel-queue">
