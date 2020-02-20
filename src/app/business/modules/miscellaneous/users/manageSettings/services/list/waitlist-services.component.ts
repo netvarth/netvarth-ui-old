@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../ynw_provider/services/provider-services.service';
@@ -41,18 +41,29 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         }
     ];
     domain: any;
+    domainList: any = [];
+    subDomain;
+    userdata: any;
 
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
+        private activated_route:ActivatedRoute,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
-        public router: Router) { }
+        public router: Router){
+            this.activated_route.queryParams.subscribe(data => {
+                console.log(data);
+                this.userdata = data;
+                 }
+            );
+         }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        this.getDomainSubdomainSettings();
+        this.getUser();
+       // this.getDomainSubdomainSettings();
         this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'checkinmanager->settings-services', 'classname': 'b-service',
@@ -73,10 +84,13 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     }
     getServices() {
         this.api_loading = true;
-        this.provider_services.getServicesList()
+        this.provider_services.getUserServicesList(this.userdata.id)
             .subscribe(
                 data => {
-                    this.service_list = data;
+                    console.log(data);
+                   this.service_list = data;
+                  
+                  
                     this.api_loading = false;
                 },
                 error => {
@@ -125,13 +139,22 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'q-manager',
             'services', service.id]);
     }
+    getUser()
+    {
+        
+        this.provider_services.getUser(this.userdata.id)
+            .subscribe((data) => {
+                
+                console.log(data);
+                });
+    }
 
+   
     getDomainSubdomainSettings() {
-        this.api_loading = true;
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        const domain = user_data.sector || null;
-        const sub_domain = user_data.subSector || null;
-        this.provider_services.domainSubdomainSettings(domain, sub_domain)
+        //const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+       //const domain = user_data.sector || null;
+        //const sub_domain = user_data.subSector || null;
+        this.provider_services.domainSubdomainSettings(this.domain, this.subDomain)
             .subscribe(
                 (data: any) => {
                     if (data.serviceBillable) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute ,NavigationExtras} from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -437,7 +437,12 @@ export class ManageSettingsComponent implements OnInit {
 
 
     services() {
-        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings',  'services']);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+            id: this.user.id
+        }
+    };
+        this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings',  'services'],navigationExtras);
     }
     Queues() {
         this.router.navigate(['provider', 'settings', 'miscellaneous', 'users', this.user.id , 'settings', 'queues']);

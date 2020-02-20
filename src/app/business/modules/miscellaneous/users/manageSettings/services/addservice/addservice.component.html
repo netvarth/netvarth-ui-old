@@ -1,0 +1,207 @@
+<div class="col-md-12" *ngIf="showService">
+    <div class="cl1" *ngIf="action=='show'">
+        <span class="editbt" (click)="editService()" *ngIf="service_data.status=='ACTIVE'"></span>hehj
+        <div class="ot-it">
+            <h4>{{service_data.name | capitalizeFirst}}</h4>
+            <div class="it-des">
+                {{service_data.description | capitalizeFirst}}
+            </div>
+            <div class="c-ot">
+                <div class="item" *ngIf="departmentName">
+                    <span class="ttle">Department Name</span>
+                    <span>{{departmentName}}</span>
+                </div>
+                <div class="item" *ngIf="subdomainsettings.serviceBillable">
+                    <span class="ttle">{{est_duration_cap}}</span>
+                    <span class="icon-time"> {{getAppxTime(service_data.serviceDuration)}}
+                    </span>
+                </div>
+                <div class="item" *ngIf="service_data.totalAmount!=0">
+                    <span class="ttle">{{price_cap}}</span>
+                    <span>{{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                </div>
+                <div class="item" *ngIf="service_data.isPrePayment">
+                    <span class=" ttle">{{pre_pay_amt}}</span>
+                    <span>{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
+                </div>
+            </div>
+            <div class="c-ot m0">
+                <div class="item">
+                    <span>{{tax_applicable_cap}}:
+                        <span class="noti-it" [class.yes]="service_data.taxable==true"
+                            [class.no]="service_data.taxable==false">{{(service_data.taxable) ?
+                        'Yes' : 'No'}}</span></span>
+                </div>
+                <div class="item" *ngIf="service_data.notificationType">
+                    <span>{{end_service_notify_cap}}:
+                        <span class="noti-it" *ngIf="!service_data.notification">{{end_of_service_notify['none']}}</span>
+                        <span class="noti-it" *ngIf="service_data.notification">{{end_of_service_notify[service_data.notificationType]}}</span></span>
+                </div>
+            </div>
+            <div class="btm-ctrl">
+                <div class="ctrl enable-disable">
+                    <span class="ttle">{{serv_status}}</span>
+                    <span>
+                        <mat-slide-toggle [checked]="service_data.status=='ACTIVE'" [(ngModel)]="servstatus"
+                            (change)="changeServiceStatus(service_data)"></mat-slide-toggle>
+                    </span>
+                    <span class='enabled' *ngIf="service_data.status=='ACTIVE'">{{enable_cap}}</span>
+                    <span class='disabled'
+                        *ngIf="service_data.status=='INACTIVE' || !service_data.status">{{disbale_cap}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cop-r" *ngIf="action=='show'" style="margin-bottom: 10px;margin-top: 10px;">
+        <ul class="info-lst serviceadd-info">
+            <li>Please add this service to the relevant <a class="pointlist" (click)="gotoManageQueue()">Queues </a>by editing it
+            </li>
+        </ul>
+    </div>
+    <form [formGroup]="serviceForm" novalidate (ngSubmit)="serviceForm.valid &&
+onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'"
+        class="ynw-common-form-nm wiz-service serviceform">
+        <ng-container>
+            <div class="form-group">
+                <mat-form-field>
+                    <input matInput type="text" class="form-control" id="service_name"
+                        placeholder="{{service_name_cap}}" formControlName="name" autocomplete="off">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'name')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'name',
+    {
+      'required' : 'Please enter the service name.',
+      'maxlength' : 'Name can contain only 100 characters'
+    })">
+                </app-field-error-display>
+            </div>
+            <div class="form-group">
+                <mat-form-field>
+                    <textarea matInput class="form-control" id="description" placeholder="Briefly describe service"
+                        formControlName="description" (keyup)="setCharCount($event)" (focus)="setDescFocus()"
+                        (blur)="lostDescFocus()" maxlength="500"> </textarea>
+                </mat-form-field>
+
+                <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'description')"
+                    [errorMsg]="fed_service.getErrorMessage(serviceForm,'description',
+    {
+      'required' : 'Please enter the service description.',
+      'maxlength' : 'Description can contain only 500 characters'
+    })">
+                </app-field-error-display>
+                <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
+            </div>
+            <div class="form-group" *ngIf="filterDepart">
+                <mat-form-field>
+                    <mat-select formControlName="department" placeholder="Choose Department *">
+                        <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
+                            {{dept.departmentName | capitalizeFirst}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
+                <ng-container class="example-full-width">
+                    <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
+                    <!-- <mat-form-field> -->
+                    <!-- <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm"
+                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="estimated_duration"
+                        placeholder="{{est_duration_cap}}*" formControlName="serviceDuration" autocomplete="off"> -->
+                    <ngb-timepicker [(ngModel)]="duration" (keyup)="isvalid($event)" formControlName="serviceDuration">
+                    </ngb-timepicker>
+                    <!-- </mat-form-field> -->
+                    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'serviceDuration')"
+                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'serviceDuration',
+    {'required' : 'Please enter estimated duration.',
+    'pattern' : 'Estimated duration should be an integer value (e.g. 1, 10, 15 etc)',
+    'maxlength' : 'Only 10 digits are allowed'
+  })"> </app-field-error-display> -->
+                </ng-container>
+            </div>
+            <div class="form-group" *ngIf="subdomainsettings.serviceBillable">
+                <mat-form-field>
+                    <input min="0" max={{maxlimit}} matInput type="text" class="form-control number-ip-sm" id="price"
+                        maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
+                        placeholder="{{service_price_cap}} ({{rupee_symbol}}) *" formControlName="totalAmount"
+                        autocomplete="off">
+                </mat-form-field>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'totalAmount')"
+                    [errorMsgs]="fed_service.getErrorMessage(serviceForm,'totalAmount',
+    {'required' : 'Please enter price',
+    'pattern' : 'Enter a valid price',
+    'maxlength' : 'Only 10 digits are allowed'})">
+                </app-field-error-display>
+            </div>
+
+            <a class="learnmore-pointer" (click)="advancedClick()"> Advanced settings</a>
+            <div class="row" style="margin-top: 20px; margin-left: 10px;" *ngIf="showAdvancedSettings">
+                <!-- <mat-accordion>
+                            <mat-expansion-panel> -->
+                <!-- <mat-expansion-panel-header class="advancedheader">
+                                <mat-panel-title>Advanced</mat-panel-title></mat-expansion-panel-header> -->
+
+                <div class="form-group inline" style="margin-top: 10px" *ngIf="subdomainsettings.serviceBillable">
+                    <label class="col-form-label">{{enable_prepayment_cap}}</label>
+                    <mat-slide-toggle class="example-margin" formControlName="isPrePayment"
+                        (change)="changePrepayment()">
+
+                    </mat-slide-toggle>
+                </div>
+                <ng-container *ngIf="subdomainsettings.serviceBillable">
+                    <div class="form-group" *ngIf="serviceForm.get('isPrePayment').value === true">
+                        <mat-form-field>
+                            <input matInput min="0" max={{maxlimit}} type="text" (keyup)="isvalid($event)"
+                                (keypress)="isNumeric($event)" maxlength="10" class="form-control number-ip-sm"
+                                id="prepayment_amount" placeholder="{{prepayment_cap}} ({{rupee_symbol}}) *"
+                                formControlName="minPrePaymentAmount" autocomplete="off">
+                        </mat-form-field>
+                        <app-field-error-display
+                            [displayError]="fed_service.isFieldValid(serviceForm,'minPrePaymentAmount')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minPrePaymentAmount',
+      {'required' : 'Please enter prepayment amount',
+      'pattern' : 'Enter a valid amount'})">
+                        </app-field-error-display>
+                    </div>
+                </ng-container>
+                <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
+                    <label class="col-form-label">{{tax_applicable_cap}}</label>
+                    <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">
+                    </mat-slide-toggle>
+                </div>
+                <div class="form-group inline">
+                    <label class="col-form-label">{{end_service_notify_cap}}</label>
+                    <mat-slide-toggle class="example-margin" formControlName="notification"
+                        (change)="changeNotification()">
+                    </mat-slide-toggle>
+                </div>
+                <mat-radio-group *ngIf="serviceForm.get('notification').value === true"
+                    formControlName="notificationType">
+                    <mat-radio-button value="pushMsg">{{push_message_cap}}</mat-radio-button>
+                    <mat-radio-button value="email">{{service_email_cap}}</mat-radio-button>
+                </mat-radio-group>
+
+                <!-- </mat-expansion-panel>
+</mat-accordion> -->
+            </div>
+            <div class="actiondiv" style="margin-top: 10px;">
+                <div style="margin-bottom:30px;display: inline-flex;">
+                    <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
+                    <button type="submit" mat-button [disabled]="!serviceForm.valid || savedisabled"
+                        class="cs-btn bt1">{{button_title}}</button>
+                </div>
+                <div *ngIf="action == 'add'">
+                    <span class="addservice-tooltip">
+                        <i class="icon-bell"></i>
+                        {{tooltip}}
+                    </span>
+                </div> 
+            </div>
+            <br />
+        </ng-container>
+        <ng-container *ngIf="mode=='afteradd'">
+            <div class="message-one">
+                <p class="p1">{{normaladd_msg1}}</p>
+                <p class="p2">{{normaladd_msg2}}</p>
+            </div>
+            <div class="message-two" (click)="gotoManageQueue()">{{go_to_service_cap}}</div>
+        </ng-container>
+    </form>
+</div>

@@ -990,4 +990,8 @@ export class ProviderServices {
   updatesubDomainFields(id, postdata, subdomainId) {
     return this.servicemeta.httpPut('provider/user/providerBprofile/' + subdomainId + '/' + id, postdata);
   }
+  getUserServicesList(id){
+    const url = 'provider/services/?provider-eq=' + id;
+    return this.servicemeta.httpGet(url);
+    }
 }
