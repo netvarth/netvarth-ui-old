@@ -1806,7 +1806,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         datechangereq: true,
         apptTime: appttime,
-        // queue: this.selected_queue
+        queue: this.selected_queue
       }
     });
     this.ChkindialogRef.afterClosed().subscribe(result => {
